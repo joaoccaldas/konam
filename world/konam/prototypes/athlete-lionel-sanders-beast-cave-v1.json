@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "id": "athlete-lionel-sanders-beast-cave-v1",
+  "parent_room_id": "room-026",
+  "status": "prototype-unwired",
+  "public_navigation": false,
+  "title": "Beast Cave",
+  "athlete": "Lionel Sanders",
+  "partner_theme": "Zwift",
+  "concept_line": "Zwift is the companion. Kona is the destination.",
+  "dimensions_m": {
+    "width": 28,
+    "depth": 22,
+    "height": 5.6
+  },
+  "art_direction": {
+    "shell": "Kona.m golden visual contract",
+    "principles": [
+      "Calm shell, alive world.",
+      "One dominant action.",
+      "Lava is action, selection and progress.",
+      "Room identity comes from atmosphere and content, never replacement global chrome.",
+      "Photography and authored 3D create place and emotion.",
+      "Complexity appears progressively."
+    ],
+    "materials": [
+      "dark volcanic basalt",
+      "raw charcoal concrete",
+      "matte black steel",
+      "warm smoked wood",
+      "black rubber training floor",
+      "low-gloss bike carbon",
+      "small lava-orange emissive details"
+    ],
+    "lighting": {
+      "base": "warm indirect 2600-3000K practicals",
+      "training": "cool screen spill plus narrow orange cove light",
+      "accent": "#ff6a2a",
+      "avoid": [
+        "generic red cyberpunk",
+        "neon nightclub",
+        "glossy sci-fi HUD overload"
+      ]
+    }
+  },
+  "zones": [
+    {
+      "id": "threshold",
+      "name": "The Threshold",
+      "purpose": "Slow reveal into the room from a rough basalt portal.",
+      "anchor": [-11.5, 0, 0],
+      "radius_m": 3.0
+    },
+    {
+      "id": "trainer",
+      "name": "The Machine",
+      "purpose": "Primary indoor-bike and Zwift flow-state area.",
+      "anchor": [-2.5, 0, -2.0],
+      "radius_m": 4.8
+    },
+    {
+      "id": "data-wall",
+      "name": "The Science Lab",
+      "purpose": "Large ride display, compact secondary data display, workout notes and controlled-environment cues.",
+      "anchor": [2.0, 0, -8.7],
+      "radius_m": 4.0
+    },
+    {
+      "id": "heat",
+      "name": "Heat Protocol",
+      "purpose": "Fans, towels, bottles and environmental-control storytelling.",
+      "anchor": [9.5, 0, -3.5],
+      "radius_m": 3.3
+    },
+    {
+      "id": "gear",
+      "name": "Gear Wall",
+      "purpose": "Bike, helmet, shoes, race kit, bibs, medals and race-prep objects.",
+      "anchor": [9.5, 0, 5.5],
+      "radius_m": 3.8
+    },
+    {
+      "id": "recovery",
+      "name": "Reset",
+      "purpose": "Low sofa, mat, roller, dumbbells and quieter post-session corner.",
+      "anchor": [2.5, 0, 7.0],
+      "radius_m": 4.0
+    },
+    {
+      "id": "kona-horizon",
+      "name": "Kona Horizon",
+      "purpose": "A framed ocean-and-lava horizon that keeps Kona visually present from the trainer.",
+      "anchor": [-7.5, 0, 7.0],
+      "radius_m": 4.2
+    }
+  ],
+  "interaction_hotspots": [
+    {
+      "id": "zwift-console",
+      "zone": "trainer",
+      "kind": "inspect",
+      "copy": "Indoor training as controlled work: repeatable intervals, environment and data."
+    },
+    {
+      "id": "speedmax",
+      "zone": "trainer",
+      "kind": "inspect",
+      "copy": "Current-generation Speedmax reference hook. Do not claim athlete-specific component configuration without a sourced manifest."
+    },
+    {
+      "id": "fans",
+      "zone": "heat",
+      "kind": "inspect",
+      "copy": "Cooling and heat-protocol storytelling."
+    },
+    {
+      "id": "workout-board",
+      "zone": "data-wall",
+      "kind": "inspect",
+      "copy": "Structured work, repeatability and progression."
+    },
+    {
+      "id": "gear-wall",
+      "zone": "gear",
+      "kind": "collection",
+      "copy": "Race-prep objects and equipment history."
+    },
+    {
+      "id": "kona-window",
+      "zone": "kona-horizon",
+      "kind": "story",
+      "copy": "Everything in the room points toward Kona."
+    }
+  ],
+  "evidence": [
+    {
+      "claim": "Sanders is a prominent advocate of indoor training and has described the controlled indoor environment as a way to turn training into a science lab for heat adaptation and data-driven progression.",
+      "source": "https://www.tri247.com/zwift/zwift-professional-triathletes",
+      "class": "secondary"
+    },
+    {
+      "claim": "Sanders publicly introduced the new Canyon Speedmax in July 2026 after testing and fitting work with Canyon.",
+      "source": "https://www.youtube.com/watch?v=R50lLMEN56U",
+      "class": "athlete-primary"
+    },
+    {
+      "claim": "Canyon launched the new Speedmax platform in July 2026 with revised geometry, integrated hydration/storage and expanded adjustability.",
+      "source": "https://media-centre.canyon.com/en-INT/267363-pure-personal-pure-cycling-new-canyon-speedmax-enables-every-triathlete-to-achieve-their-full-aerodynamic-potential/",
+      "class": "brand-primary"
+    },
+    {
+      "claim": "Zwift supports structured workouts, virtual worlds, community rides and smart-trainer integration.",
+      "source": "https://www.zwift.com/uk/how-it-works",
+      "class": "brand-primary"
+    }
+  ],
+  "asset_policy": {
+    "procedural_first": true,
+    "bundle_unlicensed_portrait": false,
+    "bundle_unlicensed_brand_photography": false,
+    "likeness_slot": "optional external media hook; disabled by default",
+    "bike_asset": "reuse an existing repo Speedmax or neutral triathlon-bike GLB only after exact provenance is verified",
+    "logos": "use text/shape treatment only in prototype; official partner marks require explicit approval before public wiring"
+  },
+  "performance": {
+    "desktop_target_draw_calls": 80,
+    "mobile_target_draw_calls": 45,
+    "mobile_strategy": [
+      "instanced repeated props",
+      "procedural low-poly decor",
+      "single authored hero bike asset",
+      "baked/emissive screen light rather than many dynamic point lights",
+      "proxy-first loading",
+      "dispose on room exit"
+    ]
+  },
+  "acceptance": [
+    "No import from production navigation, hall or world registry.",
+    "Full-room overview reads clearly on entry.",
+    "Trainer area is the visual hero but room remains explorable.",
+    "At least seven spatially distinct zones.",
+    "Kona.m typography/chrome semantics remain unchanged.",
+    "No unsupported athlete quote is rendered.",
+    "No personal data is embedded.",
+    "No claim of sponsorship, endorsement or official partnership.",
+    "Mobile lite mode preserves layout and interaction targets."
+  ]
+}
