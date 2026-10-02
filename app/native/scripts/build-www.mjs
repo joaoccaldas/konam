@@ -28,6 +28,9 @@ rmSync(join(www, 'sw.js'), { force: true });
 // Keep promo.html available only if explicitly navigated from the staged bundle, but do not
 // ship its web-only controller into the native runtime surface.
 rmSync(join(www, 'web', 'src', 'promo.js'), { force: true });
+// Standalone 3D review surfaces are public-web inspection tools, not part of the sealed native app.
+rmSync(join(www, 'review', 'norwegian-engine'), { recursive: true, force: true });
+rmSync(join(www, 'web', 'src', 'rooms'), { recursive: true, force: true });
 
 const versionCode = Number.parseInt(process.env.SPEEDMAX_VERSION_CODE || '0', 10) || 0;
 const versionName = (process.env.SPEEDMAX_VERSION_NAME || 'dev').replace(/[^\w.-]/g, '').slice(0, 20);
