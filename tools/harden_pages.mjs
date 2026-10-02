@@ -14,7 +14,7 @@ const normalizeSite = value => {
 };
 const SITE = normalizeSite(process.env.PUBLIC_SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : productMeta.canonical_site));
 const NAME = productMeta.product_name || 'Kona.m';
-const DISCLAIMER = 'An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.';
+const DISCLAIMER = 'An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by World Triathlon Corporation, IRONMAN, Canyon Bicycles GmbH or any referenced athlete or brand. IRONMAN® is a registered trademark of World Triathlon Corporation. Canyon and Speedmax are trademarks of their owners.';
 
 // Explicit image providers: Wikimedia and validated YouTube video thumbnails; no wildcard origins.
 const CSP_BASE = [
@@ -34,8 +34,8 @@ const PAGES = [
   {file:'privacy.html',type:'WebPage',image:'assets/share/konam.png',title:'Privacy & data · Kona.m',description:'Device storage, optional cloud backup and public account availability.'},
   {file:'credits.html',type:'WebPage',image:'assets/share/konam.png',title:'Photo credits · Kona.m',description:'Source, author, licenses and adaptations for Kona.m photography.'},
   { file: 'index.html', type: 'SoftwareApplication', image: 'assets/share/konam.png',
-    title: 'Kona.m · Race the version of yourself',
-    description: 'Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.' },
+    title: 'Kona.m · Kona triathlon 3D world, bikes & race week',
+    description: 'Explore Kona triathlon race week, IRONMAN World Championship history, 3D bikes, athlete identity, gear, places, stories and an immersive museum.' },
   { file: 'Canyon_Collection.html', type: 'CollectionPage', image: 'assets/share/collection.jpg',
     title: 'Canyon Triathlon Collection · every Speedmax generation, compared',
     description: 'Every Canyon Speedmax generation on record, 1999–2027: interactive 3D exhibits, side-by-side specifications, an aero calculator and a sourced archive of the bikes that were never modelled.' },
@@ -74,18 +74,63 @@ const GLOBAL_USER_STUDIO = '<!--global-user-studio:start--><a class="global-user
 
 function block(p) {
   const url = SITE + (p.file === 'index.html' ? '' : p.file), img = SITE + p.image;
-  const ld = {
-    '@context': 'https://schema.org', '@type': p.type, name: p.title, description: p.description, url, image: img, inLanguage: 'en',
-    isAccessibleForFree: true, publisher: { '@type': 'Organization', name: NAME },
-    about: [{ '@type': 'Thing', name: 'Canyon Speedmax' }, { '@type': 'SportsEvent', name: 'IRONMAN World Championship', location: 'Kailua-Kona, Hawaii' }],
+  const pageId = url + '#page';
+  const websiteId = SITE + '#website';
+  const orgId = SITE + '#organization';
+  const pageNode = {
+    '@id': pageId,
+    '@type': p.type,
+    name: p.title,
+    description: p.description,
+    url,
+    image: img,
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    isPartOf: { '@id': websiteId },
+    publisher: { '@id': orgId },
+    contentLocation: { '@type': 'Place', name: 'Kailua-Kona, Hawaiʻi', address: { '@type': 'PostalAddress', addressLocality: 'Kailua-Kona', addressRegion: 'HI', addressCountry: 'US' } },
+    about: [
+      { '@type': 'Thing', name: 'Triathlon' },
+      { '@type': 'SportsEvent', name: 'IRONMAN World Championship', location: { '@type': 'Place', name: 'Kailua-Kona, Hawaiʻi' } },
+      { '@type': 'Thing', name: 'Kona race week' },
+      { '@type': 'Thing', name: 'Triathlon bikes and equipment' }
+    ],
+    keywords: ['Kona triathlon','IRONMAN World Championship','triathlon','Kailua-Kona','race week','3D triathlon bikes','triathlon gear','triathlon history'],
     disambiguatingDescription: DISCLAIMER,
+  };
+  if (p.file === 'index.html') {
+    pageNode.applicationCategory = 'SportsApplication';
+    pageNode.operatingSystem = 'Web, Android';
+    pageNode.availableOnDevice = 'Mobile, tablet, desktop';
+  }
+  const ld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@id': websiteId,
+        '@type': 'WebSite',
+        name: NAME,
+        alternateName: 'Kona.m triathlon world',
+        url: SITE,
+        inLanguage: 'en',
+        publisher: { '@id': orgId }
+      },
+      {
+        '@id': orgId,
+        '@type': 'Organization',
+        name: NAME,
+        url: SITE,
+        logo: { '@type': 'ImageObject', url: SITE + 'assets/pwa/icon-v3-512.png', width: 512, height: 512 }
+      },
+      pageNode
+    ]
   };
   return `<!--harden:start-->
 <meta http-equiv="Content-Security-Policy" content="${cspFor(p.file)}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <link rel="canonical" href="${url}">
-<meta property="og:type" content="website"><meta property="og:site_name" content="${NAME}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="${NAME}"><meta property="og:locale" content="en_US">
 <meta property="og:title" content="${esc(p.title)}"><meta property="og:description" content="${esc(p.description)}">
 <meta property="og:url" content="${url}"><meta property="og:image" content="${img}"><meta property="og:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself. Explore, build and discover.':esc(p.title)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(p.title)}"><meta name="twitter:description" content="${esc(p.description)}"><meta name="twitter:image" content="${img}"><meta name="twitter:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself. Explore, build and discover.':esc(p.title)}">
