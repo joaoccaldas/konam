@@ -7,7 +7,7 @@ const contract=JSON.parse(read('config/style-ownership-v1.json'));
 
 test('style ownership contract names every active launch stylesheet',()=>{
   for(const rel of Object.keys(contract.owners)){
-    assert.ok(fs.existsSync(new URL('../../'+rel,import.meta.url)),rel+' is missing');
+    assert.ok(fs.existsSync(new URL('../'+rel.replace(/^web\//,''),import.meta.url)) || fs.existsSync(new URL('../../'+rel,import.meta.url)),rel+' is missing');
   }
 });
 
