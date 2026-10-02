@@ -355,10 +355,10 @@ function buildTrainer(group, obstacles, pickables, lite) {
   box(trainer, 'TRAINER_BASE', [1.55, .10, .30], [0, 0, .92], metal);
   box(trainer, 'TRAINER_LEG_L', [.13,.09,.92], [-.64,-.01,.92], metal, [0,.55,0]);
   box(trainer, 'TRAINER_LEG_R', [.13,.09,.92], [.64,-.01,.92], metal, [0,-.55,0]);
-  cylinder(trainer, 'TRAINER_FLYWHEEL', .48, .24, [0, .38, .92], dark, [Math.PI / 2, 0, 0], 48);
-  cylinder(trainer, 'TRAINER_HUB', .13, .42, [0,.48,.92], metal, [Math.PI/2,0,0],24);
-  for(let i=0;i<7;i++) cylinder(trainer,'TRAINER_COG',.11+i*.013,.018,[0,.48,.77-i*.018],metal,[Math.PI/2,0,0],24);
-  box(trainer, 'TRAINER_ACCENT', [.035, .30, .78], [.13, .38, .92], orange);
+  cylinder(trainer, 'TRAINER_FLYWHEEL', .48, .24, [0, .33, .92], dark, [Math.PI / 2, 0, 0], 48);
+  cylinder(trainer, 'TRAINER_HUB', .13, .42, [0,.42,.92], metal, [Math.PI/2,0,0],24);
+  for(let i=0;i<7;i++) cylinder(trainer,'TRAINER_COG',.085+i*.011,.016,[0,.42,.80-i*.016],metal,[Math.PI/2,0,0],24);
+  box(trainer, 'TRAINER_ACCENT', [.03, .23, .62], [.11, .32, .92], orange);
 
   // Aerobar towel.
   box(group, 'TRAINER_TOWEL', [.50, .018, .88], [-1.25, 1.52, -2.0], towel, [0, .05, .10]);
@@ -775,7 +775,7 @@ export async function attachBeastCaveBike(built, loader, glbPath, { directDrive 
 
   const box3 = new THREE.Box3().setFromObject(root);
   const size = box3.getSize(new THREE.Vector3());
-  const scale = 2.25 / Math.max(size.x, size.y, size.z, .001);
+  const scale = 2.72 / Math.max(size.x, size.y, size.z, .001);
   root.scale.setScalar(scale);
   root.updateMatrixWorld(true);
   const b2 = new THREE.Box3().setFromObject(root);
