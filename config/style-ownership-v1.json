@@ -101,7 +101,7 @@
   },
   "important_budget": {
     "rule": "Launch stabilization is monotonic: existing legacy debt may stay, but it may not grow without changing this reviewed contract.",
-    "web/styles/hall-mobile.css": 105,
+    "web/styles/hall-mobile.css": 99,
     "web/styles/hall-web.css": 25,
     "web/styles/system.css": 7,
     "web/styles/shell-mobile.css": 1,
