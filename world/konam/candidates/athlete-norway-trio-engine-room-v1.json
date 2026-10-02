@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "id": "athlete-norway-trio-engine-room-v1",
+  "parent_room_id": "room-026",
+  "status": "production-candidate-unwired",
+  "public_navigation": false,
+  "title": "NOR // 3 · The Norwegian Engine",
+  "athletes": ["Kristian Blummenfelt", "Gustav Iden", "Casper Stornes"],
+  "concept_line": "Three lanes. One system. Measure. Adapt. Repeat.",
+  "concept_line_is_editorial_not_quote": true,
+  "architecture_parent": "feat/lionel-zwift-beast-cave",
+  "dimensions_m": {"width": 30, "depth": 24, "height": 6.2},
+  "art_direction": {
+    "shell": "Kona.m golden visual contract",
+    "identity": "Bergen fjord performance laboratory: quiet, wet, engineered, human, never sci-fi",
+    "principles": [
+      "Calm shell, alive world.",
+      "One dominant spatial idea: three parallel lanes converging at one protocol table.",
+      "Room identity comes from material, weather and objects, never replacement global chrome.",
+      "Scientific detail should feel handled and used, not sterile or glossy.",
+      "Lava/sunrise remains a sparse Kona.m action accent; cold blue belongs to atmosphere, not UI chrome.",
+      "No athlete likeness or exact sponsor mark is bundled before rights review.",
+      "Complexity appears progressively and mobile lite mode preserves the silhouette."
+    ],
+    "palette": {
+      "deep_lava_obsidian": "#080B0E",
+      "basalt_slate": "#282F36",
+      "kona_sand": "#F4EFE7",
+      "raw_salt_mist": "#E6E9ED",
+      "pacific_ocean": "#00A7C7",
+      "hawaiian_sunrise": "#FF6A00",
+      "fjord_blue_room_only": "#18384A",
+      "glacier_light_room_only": "#9CCBD6"
+    },
+    "materials": [
+      "wet honed basalt with imperfect specular breakup",
+      "brushed aluminium and anodised dark steel",
+      "smoked oak benches with visible grain direction",
+      "black high-friction rubber training lanes",
+      "low-iron glass with condensation edge treatment",
+      "matte carbon equipment proxies",
+      "paper tape, towels and handwritten protocol cards for human texture"
+    ],
+    "lighting": {
+      "key": "cool 6200-7000K skylight through north clerestory",
+      "fill": "soft 4200K bounce from wet floor and glasshouse",
+      "rim": "narrow 2800-3000K museum spots on achievement discs and bikes",
+      "action_accent": "#FF6A00 used sparingly on protocol status and Kona horizon",
+      "depth": "volumetric-style fog, layered ceiling baffles, translucent altitude glasshouse and backlit rain wall",
+      "avoid": ["plastic toy gloss", "generic cyberpunk neon", "flag-themed red/white/blue saturation", "hospital laboratory sterility"]
+    }
+  },
+  "zones": [
+    {"id":"rain-lock","name":"Rain Lock","purpose":"Entry through a narrow wet-stone vestibule with a backlit rain plane and boot/gear drain.","anchor":[-12.3,0,0],"radius_m":3.2},
+    {"id":"three-rails","name":"Three Rails","purpose":"Three parallel bike/run lanes: shared architecture, individualized setup.","anchor":[-3.8,0,-2.2],"radius_m":6.0},
+    {"id":"protocol-table","name":"Protocol Table","purpose":"Central lactate, notes, bottles, timing and analysis island; the social/scientific heart of the room.","anchor":[2.0,0,0],"radius_m":4.3},
+    {"id":"altitude-glasshouse","name":"Altitude Glasshouse","purpose":"Glazed controlled-environment bay representing altitude and environmental adaptation work.","anchor":[9.4,0,-5.0],"radius_m":4.0},
+    {"id":"heat-cool","name":"Heat / Cool","purpose":"Fans, towels, heat lamp and cold-air contrast without turning the room into a spa cliché.","anchor":[10.0,0,4.0],"radius_m":3.6},
+    {"id":"podium-vault","name":"Podium Vault","purpose":"Abstract achievement discs: shared sweeps first, then individual championships.","anchor":[3.0,0,10.4],"radius_m":5.0},
+    {"id":"fjord-wall","name":"Fjord Wall","purpose":"Layered Bergen/Askøy-inspired topographic relief, rain light and dark timber bench; no copied map tiles.","anchor":[-7.8,0,9.5],"radius_m":4.4},
+    {"id":"kona-line","name":"Kona Line","purpose":"A razor-thin warm horizon visible from every training lane, keeping destination separate from method.","anchor":[-8.0,0,-10.7],"radius_m":4.0}
+  ],
+  "achievement_objects": {
+    "shared": [
+      {"event":"World Triathlon Series Bermuda","year":2018,"result":"Stornes 1st · Blummenfelt 2nd · Iden 3rd","treatment":"three interlocking brushed-metal discs; abstract, not medal replica"},
+      {"event":"IRONMAN World Championship Nice","year":2025,"result":"Stornes 1st · Iden 2nd · Blummenfelt 3rd","treatment":"three vertical stone-and-metal blades with engraved placement and race time"}
+    ],
+    "kristian_blummenfelt": [
+      "Tokyo 2020 Olympic Champion (race held 2021)",
+      "2021 World Triathlon Champion",
+      "2021 IRONMAN World Champion",
+      "2022 IRONMAN 70.3 World Champion",
+      "2025 IRONMAN Pro Series Champion"
+    ],
+    "gustav_iden": [
+      "2019 IRONMAN 70.3 World Champion",
+      "2021 IRONMAN 70.3 World Champion",
+      "2022 IRONMAN World Champion · Kona",
+      "2025 IRONMAN World Championship · 2nd"
+    ],
+    "casper_stornes": [
+      "2018 World Triathlon Series Bermuda Champion",
+      "2025 IRONMAN World Champion · Nice",
+      "2025 IRONMAN World Championship marathon · 2:29:25"
+    ]
+  },
+  "interaction_hotspots": [
+    {"id":"lactate-kit","zone":"protocol-table","kind":"inspect","copy":"Measured feedback is part of the story; no medical interpretation is presented."},
+    {"id":"three-lanes","zone":"three-rails","kind":"inspect","copy":"Shared team system, individualized athlete execution."},
+    {"id":"altitude-bay","zone":"altitude-glasshouse","kind":"inspect","copy":"Controlled-environment training is represented as a spatial idea, not a claim about one exact session."},
+    {"id":"bermuda-2018","zone":"podium-vault","kind":"story","copy":"The first men’s WTS podium sweep by one nation: Stornes, Blummenfelt, Iden."},
+    {"id":"nice-2025","zone":"podium-vault","kind":"story","copy":"Norway swept the 2025 IRONMAN World Championship men’s podium in Nice."},
+    {"id":"kona-line","zone":"kona-line","kind":"story","copy":"The room is about method; the horizon is the destination."}
+  ],
+  "evidence": [
+    {"claim":"Norway swept the 2018 WTS Bermuda men's podium, with Casper Stornes first, Kristian Blummenfelt second and Gustav Iden third.","source":"https://triathlon.org/news/norway-becomes-first-mens-team-to-sweep-wts-podium-in-bermuda","class":"governing-body-primary"},
+    {"claim":"World Triathlon documented the Norwegian team's extensive use of measurements including repeated lactate, watts, speed, muscle oxygen saturation, aerodynamics and rolling resistance during altitude training.","source":"https://triathlon.org/news/high-altitude-training-with-the-worlds-best-triathletes","class":"governing-body-primary"},
+    {"claim":"Kristian Blummenfelt's official profile lists Olympic, World Triathlon, IRONMAN and IRONMAN 70.3 world titles.","source":"https://triathlon.org/athletes/profile/41322/kristian-blummenfelt","class":"governing-body-primary"},
+    {"claim":"Gustav Iden won the 2019 and 2021 IRONMAN 70.3 World Championships.","source":"https://kommunikasjon.ntb.no/pressemelding/17916012/regjerende-verdensmester-pa-703-gustav-iden-med-ny-verdensmestertittel-i-triatlon?publisherId=17847164","class":"federation-primary"},
+    {"claim":"Gustav Iden won the 2022 IRONMAN World Championship in Kona.","source":"https://press.on-running.com/on-athlete-gustav-iden-claims-ironman-crown","class":"brand-primary"},
+    {"claim":"Casper Stornes won the 2025 IRONMAN World Championship in Nice; Iden was second and Blummenfelt third.","source":"https://www.ironman.com/proseries/standings/2025","class":"organizer-primary"},
+    {"claim":"Casper Stornes ran 2:29:25 in the 2025 IRONMAN World Championship marathon.","source":"https://stats.protriathletes.org/race/ironman-nice-world-championships/2025/results","class":"results-secondary"}
+  ],
+  "asset_policy": {
+    "procedural_first": true,
+    "bundle_unlicensed_portrait": false,
+    "bundle_unlicensed_brand_photography": false,
+    "exact_medal_replica": false,
+    "exact_sponsor_logo": false,
+    "likeness_slot":"optional external media hook; disabled by default",
+    "bikes":"neutral low-logo triathlon-bike geometry until exact provenance and partner rights are approved",
+    "achievement_treatment":"abstract discs/blades with factual text, not copied medal or trophy designs"
+  },
+  "estimated_external_production_cost_eur": {
+    "prototype_current_branch":"0 external studio spend; procedural code and generator authored in-repo",
+    "polished_web_ready":"4000-10000",
+    "hero_environment_with_custom_pbr_and_exact_gear":"15000-35000",
+    "rights_cleared_partner_grade_with_likeness_audio_and_exact_assets":"40000-90000+",
+    "note":"Planning estimate, not a vendor quote. Rights/licensing and exact-scanned equipment can dominate cost."
+  },
+  "performance": {
+    "desktop_target_draw_calls": 95,
+    "mobile_target_draw_calls": 50,
+    "mobile_strategy":["instanced repeating ribs and lights","shared geometries across three lanes","proxy bikes in initial room","baked/emissive rain and horizon surfaces","dynamic shadows disabled on coarse-pointer lite mode","dispose materials and textures on exit"]
+  },
+  "acceptance": [
+    "No import from production navigation, hall or canonical room registry.",
+    "Full-room overview reads as one coherent room on entry.",
+    "The three parallel lanes are immediately legible without labels.",
+    "Shared achievement sweeps visually outrank individual trophy shelves.",
+    "Kona.m typography and global chrome semantics remain unchanged.",
+    "No unsupported athlete quote is rendered.",
+    "No athlete likeness, exact sponsor mark or copied event photography is bundled.",
+    "Materials read as wet stone, metal, timber, rubber and glass rather than plastic.",
+    "Mobile lite mode preserves the core depth silhouette and all interaction targets."
+  ]
+}
