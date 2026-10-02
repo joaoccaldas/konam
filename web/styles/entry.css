@@ -286,3 +286,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-bike-silhouette svg{width:85%;height:auto;fill:none;stroke:currentColor;stroke-width:3;}
 
 .entry-story-note{margin:16px 0 0;font:500 13px/1.6 var(--brand-font-ui);color:var(--brand-mist)}.entry-story-note a,.onboarding-story a{color:inherit;text-decoration:underline;text-underline-offset:4px}.entry-story-note a:focus-visible,.onboarding-story a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+
+@media(max-width:520px){
+  #intro.kona-entry #buildSelf{min-width:160px}
+}
