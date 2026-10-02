@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-02T12:45:00.000Z",
+  "concepts": [
+    {
+      "id": "lava-line-tee",
+      "name": "Lava Line",
+      "product": "tee",
+      "status": "concept",
+      "headline": "RACE THE VERSION OF YOURSELF",
+      "subline": "KONA.M · 19.6400° N",
+      "background": "#080b0e",
+      "ink": "#f4efe7",
+      "accent": "#ff6a00",
+      "rights": "original-kona-m-brand-only",
+      "visual": "assets/merch/concepts/lava-line-tee.svg",
+      "provider": null,
+      "sellable": false
+    },
+    {
+      "id": "rabbit-hole-tote",
+      "name": "Rabbit Hole",
+      "product": "tote",
+      "status": "concept",
+      "headline": "I TOOK THE SCENIC ROUTE",
+      "subline": "AND FOUND KONA.M",
+      "background": "#f4efe7",
+      "ink": "#12181d",
+      "accent": "#ff2d6d",
+      "rights": "original-kona-m-brand-only",
+      "visual": "assets/merch/concepts/rabbit-hole-tote.svg",
+      "provider": null,
+      "sellable": false
+    },
+    {
+      "id": "intern-cap",
+      "name": "First Day Intern",
+      "product": "cap",
+      "status": "concept",
+      "headline": "THE INTERN",
+      "subline": "FIRST DAY. SOMEHOW STILL HERE.",
+      "background": "#282f36",
+      "ink": "#f4efe7",
+      "accent": "#00a7c7",
+      "rights": "original-kona-m-brand-only",
+      "visual": "assets/merch/concepts/intern-cap.svg",
+      "provider": null,
+      "sellable": false
+    }
+  ]
+}
