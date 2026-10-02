@@ -6,6 +6,7 @@ on:
       - fix/launch-readiness-critical
     paths:
       - .github/workflows/sync-public-certification.yml
+      - tools/scan_public_surface.mjs
 
 permissions:
   contents: write
