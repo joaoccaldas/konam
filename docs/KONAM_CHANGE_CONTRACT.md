@@ -1,86 +1,96 @@
 # Kona.m Change Contract
 
-This document is the explicit before/after contract for any pre-migration PR that changes runtime source, dependencies, persistence, auth, release controls or user-facing flow.
-
-Update this file in the same PR when one of those surfaces changes.
-
 ## Change
 
-- Date:
-- PR:
-- Owner:
-- Purpose:
+- Date: 2026-10-02
+- PR: Kona.m #2
+- Phase: M1 identity convergence
+- Purpose: move the primary consumer identity from KONA to Kona.m while preserving architecture, state, dependencies, Canyon Museum provenance and launch behavior.
 
 ## Before
 
-Describe the exact pre-change behavior and evidence.
-
-- Runtime behavior:
-- User flow:
-- State/persistence:
-- Dependencies:
-- Security/privacy:
-- Performance:
-- Release/deployment:
+- Runtime behavior: M0 behavior-equivalent Canyon Museum/KONA import at merge SHA `38f05063b7e13323123664dec1666f9414175148`.
+- User flow: guest-first entry; Home / Discover / Garage / Plan / Me internal routes; 3D world optional.
+- State/persistence: canonical `kona.*` localStorage adapter with `speedmax.*` compatibility; optional account backup.
+- Dependencies: Three.js + esbuild + meshoptimizer + glTF transform; no Vite production authority.
+- Security/privacy: exact-SHA release gate, secret/private-data scanner, dependency audits, local-first default.
+- Performance: no intentional renderer/asset/runtime architecture change.
+- Release/deployment: Canyon Museum public origin still used for compatibility/update metadata.
 
 ## After
 
-Describe the intended post-change behavior and evidence.
+- Runtime behavior: same product flow and internal route IDs.
+- User flow: visible master consumer name becomes **Kona.m** on primary entry/onboarding/shell surfaces.
+- State/persistence: unchanged.
+- Dependencies: unchanged.
+- Security/privacy: unchanged plus launch-claim tests for false partnership/cryptography/scientific/cultural claims.
+- Performance: no intentional rendering or asset cost change; product metadata adds negligible core bytes.
+- Release/deployment: origin intentionally unchanged in M1 identity PR; canonical target origin is a separate decision/gate.
 
-- Runtime behavior:
-- User flow:
-- State/persistence:
-- Dependencies:
-- Security/privacy:
-- Performance:
-- Release/deployment:
+## Intentional source changes
 
-## Invariants that must not regress
+- `config/product-meta.json`: canonical product identity/disclosure metadata.
+- `web/src/product-meta.js`: shared runtime product-name source.
+- `web/landing.template.html`: visible entry identity.
+- `web/src/entry.js`: onboarding copy identity.
+- `web/src/ui/kona-shell.js`: shell identity.
+- `web/src/app-shell.js`: update UI identity only; download origin preserved.
+- `manifest.webmanifest`: PWA display name.
+- `tools/harden_pages.mjs`: generated title/name identity.
+- README / STATUS / launch truth documentation.
+- deterministic generated outputs produced by canonical builders.
 
-- Guest path remains usable unless explicitly approved otherwise.
-- Existing saved state remains readable or has a tested migration.
-- Canonical internal routes remain available: `home`, `discover`, `garage`, `plan`, `me`.
-- No new direct `speedmax.*` storage keys.
-- No new secret/private data exposure.
-- No new `eval()` or `document.write` use.
-- Existing security/release workflows are not silently removed.
-- Generated outputs are changed only through their owning builder.
-- Dependency additions/removals/upgrades are explicit and justified.
-- Rollback path exists for runtime-affecting changes.
+## Explicit non-changes
+
+- no route ID rename;
+- no storage namespace rename;
+- no user-state migration;
+- no Android appId change;
+- no Supabase migration;
+- no hosting switch;
+- no Three.js/renderer refactor;
+- no CSS restyle;
+- no dependency version update;
+- no Canyon/Speedmax historical/product facts renamed;
+- no partner/sponsor claim introduced.
+
+## Invariants
+
+- Canyon Museum remains Canyon Museum.
+- Old `speedmax.*` state remains readable.
+- Guest use remains possible.
+- Account remains optional.
+- All 14 founding rooms remain launch-visible in canonical world data.
+- Public primary surfaces do not claim unearned sponsorship, cryptographic passport/NFC, sacred-Hawaiian archetype gamification, Navier-Stokes precision or certified compatibility.
+- Exact generated outputs must match canonical build.
+- M0 release/security/interaction/visual quality must not regress.
 
 ## Risks
 
-- User-visible:
-- Data:
-- Security/privacy:
-- Rendering/mobile:
-- Deployment:
-- Third-party/dependency:
+- Brand-string interpolation could render literal template syntax or stale KONA text.
+- Generated pages/service-worker metadata could drift from source.
+- PWA installed-name change could produce platform-specific update behavior.
+- Old public origin may look inconsistent until canonical deployment-origin phase.
 
 ## Rollback
 
-State the exact rollback mechanism.
+Revert PR #2. M0 main remains the complete behavior-equivalent recovery point.
 
 ## Verification
 
-Record actual results, not intentions.
-
-- Unit:
-- Repository hygiene:
-- Secret/private-data scan:
-- Dependency audit:
-- Integration:
-- P0 journey:
-- UI interaction:
-- Visual:
-- World contract:
-- Physical Android:
-- Physical iPhone:
-- Post-deploy exact-SHA smoke:
+Required on one exact head SHA:
+- unit tests including `launch-truth.test.mjs`;
+- deterministic build/generation;
+- repository hygiene;
+- brand authority;
+- release security;
+- integration contract;
+- Museum/P0 journey;
+- App release seal;
+- UI interaction evidence;
+- Visual Evidence V2;
+- M1 before/after comparator.
 
 ## Result
 
-- Before/after comparison:
-- Known differences:
-- Known unchanged areas:
-- Remaining blocker(s):
+Pending exact-head CI.
