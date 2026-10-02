@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#071116">
 <title>Kona.m · NOR // 3 Norwegian Engine review</title>
-<style>
-:root{--bg:#071116;--surface:#0d1920;--ink:#f5f3ee;--muted:#b4c0c8;--line:rgba(238,247,250,.13);--accent:#ff6a22;--ocean:#39c8ef}
+<link rel="stylesheet" href="../../brand/tokens.css"><link rel="stylesheet" href="../../brand/typography.css"><style>
+:root{--bg:var(--brand-lava);--surface:var(--brand-basalt);--ink:var(--brand-mist);--muted:var(--brand-faint);--line:rgba(230,233,237,.13);--accent:var(--brand-sunrise);--ocean:var(--brand-ocean)}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif}
 #stage{position:fixed;inset:0}
 #hud{position:fixed;inset:0;pointer-events:none}
@@ -48,7 +48,7 @@ button:hover{background:var(--accent)}
 <script type="module">
 window.addEventListener('error',e=>{const el=document.getElementById('error');if(el){el.style.display='block';el.textContent='Render error: '+(e.message||'unknown error')}});
 try{
-  await import('../../web/src/rooms/norwegian-engine-preview.js');
+  await import('./norwegian-engine-preview.js');
   const ready=()=>{if(window.__NOR_ENGINE_RENDER_READY){document.getElementById('loading')?.classList.add('hidden');return}requestAnimationFrame(ready)};
   ready();
 }catch(err){
