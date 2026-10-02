@@ -45,24 +45,37 @@
 <body class="promo-page">
 <a class="promo-skip" href="#main">Skip to field guide</a>
 
-<header class="promo-header" data-header>
+<header class="promo-header promo-header-hero" data-header>
   <a class="promo-wordmark" href="./" aria-label="Kona.m home">
     <strong>Kona.m</strong>
-    <span>FIELD GUIDE</span>
+    <span>FIELD GUIDE / INTERN EDITION</span>
   </a>
-  <nav class="promo-nav" aria-label="Field guide navigation">
-    <a href="#play">Play</a>
-    <a href="#world">World</a>
-    <a href="#story">Story</a>
-    <a href="#intern">Field Manual</a>
-    <a href="#lab">Lab</a>
-    <a href="#faq">FAQ</a>
-  </nav>
   <div class="promo-header-actions">
     <button class="promo-system-trigger" type="button" data-system-open aria-controls="systemPanel" aria-expanded="false">◉ System</button>
     <a class="promo-enter" href="./">Enter Kona.m <span aria-hidden="true">↗</span></a>
   </div>
 </header>
+
+<aside class="field-rail" data-field-rail aria-label="Field Guide menu">
+  <button class="field-rail-toggle" type="button" data-rail-toggle aria-expanded="false" aria-controls="fieldRailNav">
+    <span class="rail-toggle-machine" aria-hidden="true"><i></i><i></i><i></i></span>
+    <b>GUIDE</b>
+    <small data-rail-state>CLOSED / AERODYNAMIC</small>
+  </button>
+  <nav id="fieldRailNav" class="field-rail-nav">
+    <div class="field-rail-head"><strong>KONA.M</strong><span>FIELD GUIDE</span><small>compiled by the Intern</small></div>
+    <a href="#play" data-rail-link><span>01</span><b>How to play</b><small>minimum viable instructions</small></a>
+    <a href="#tour" data-rail-link><span>02</span><b>Live tour</b><small>actual app, less talking</small></a>
+    <a href="#intern" data-rail-link><span>03</span><b>Intern manual</b><small>support department = same guy</small></a>
+    <a href="#rewards" data-rail-link><span>04</span><b>Founding 141</b><small>spoilers aggressively withheld</small></a>
+    <a href="#world" data-rail-link><span>05</span><b>Worlds</b><small>bikes required somewhere to live</small></a>
+    <a href="#features" data-rail-link><span>06</span><b>Features-ish</b><small>things currently surviving</small></a>
+    <a href="#story" data-rail-link><span>07</span><b>Why</b><small>finish something, then see</small></a>
+    <a href="#lab" data-rail-link><span>08</span><b>The Lab</b><small>ideas escaping containment</small></a>
+    <a href="#faq" data-rail-link><span>09</span><b>FAQ</b><small>questions we anticipated</small></a>
+    <div class="field-rail-foot"><i></i><span data-rail-progress>00%</span><small>scroll telemetry</small></div>
+  </nav>
+</aside>
 
 <main id="main">
   <section class="promo-hero" id="top">
@@ -330,9 +343,75 @@
     </div>
   </section>
 
+  <section class="promo-section promo-rewards" id="rewards">
+    <div class="promo-section-heading">
+      <div>
+        <p class="t-label">04 / THE FOUNDING 141</p>
+        <h2 class="t-title">There are 141 things.<br><em>No, you may not see them.</em></h2>
+      </div>
+      <p>The collection is real: 14 founding rooms × 10 collectibles, plus one roomless oddity called The Point Six. The catalog exists from launch. Finding it is another matter.</p>
+    </div>
+
+    <div class="reward-vault">
+      <div class="reward-vault-head">
+        <div><small>FOUNDING COLLECTION</small><strong>140.6 → 141</strong></div>
+        <div><small>ROOMS</small><strong>14</strong></div>
+        <div><small>KNOWN TO INTERN</small><strong>141</strong></div>
+        <div><small>SHOWN HERE</small><strong>ABSOLUTELY NOT</strong></div>
+      </div>
+      <div class="reward-vault-grid" data-reward-vault aria-label="141 obscured Founding collectibles"></div>
+      <div class="reward-vault-scan" aria-hidden="true"></div>
+      <div class="reward-vault-message" data-vault-message>
+        <p class="t-hand">The intern has blurred the evidence for legal, ethical and dramatic reasons.</p>
+        <span>Tap a silhouette if you enjoy disappointment.</span>
+      </div>
+    </div>
+    <div class="reward-logic">
+      <article><span>01</span><h3>Explore</h3><p>Some things are simply somewhere. This is the suspiciously reasonable category.</p></article>
+      <article><span>02</span><h3>Notice</h3><p>Some things reward looking properly rather than moving quickly.</p></article>
+      <article><span>03</span><h3>Earn</h3><p>Quests, challenges, timing and mastery can make the world answer back.</p></article>
+      <article><span>04</span><h3>Wait</h3><p>Not everything is obtainable immediately. The intern has learned the dangerous power of withholding.</p></article>
+    </div>
+  </section>
+
+  <section class="promo-section promo-feature-reel" id="features">
+    <div class="promo-section-heading">
+      <div><p class="t-label">06 / FEATURES, APPARENTLY</p><h2 class="t-title">A trailer made from<br><em>the actual app.</em></h2></div>
+      <p>No concept art in this reel. These are existing Kona.m visual assets and live surfaces, rearranged into a slightly overdramatic product trailer.</p>
+    </div>
+    <div class="feature-reel" data-feature-reel>
+      <div class="feature-reel-stage">
+        <article class="feature-shot is-active" data-feature-shot="0">
+          <img src="assets/entry/triathlete.webp" alt="Kona.m athlete identity visual">
+          <div><small>USER STUDIO</small><strong>Become someone.</strong><span>Preferably someone with excellent bike taste.</span></div>
+        </article>
+        <article class="feature-shot" data-feature-shot="1">
+          <img src="assets/entry/catalog/edition-film-stay-weird.webp" alt="Kona.m Stay Weird bike studio edition">
+          <div><small>BIKE STUDIO</small><strong>Build the machine.</strong><span>Serious carbon. Questionable artistic supervision.</span></div>
+        </article>
+        <article class="feature-shot" data-feature-shot="2">
+          <img src="assets/entry/catalog/edition-galleries-horror.webp" alt="Kona.m horror gallery experience">
+          <div><small>ROOMS</small><strong>Open the wrong door.</strong><span>The product roadmap became less normal around here.</span></div>
+        </article>
+        <article class="feature-shot" data-feature-shot="3">
+          <img src="assets/share/konam.png" alt="Kona.m world and interface">
+          <div><small>WORLDS</small><strong>Go somewhere.</strong><span>Kona first. Then apparently Nevada. Nobody stopped the intern.</span></div>
+        </article>
+        <div class="feature-reel-hud"><span data-feature-counter>01 / 04</span><i></i><b>REAL APP ASSETS</b></div>
+      </div>
+      <div class="feature-reel-controls" role="tablist" aria-label="Kona.m feature trailer">
+        <button class="is-active" type="button" data-feature-button="0"><span>01</span>YOU</button>
+        <button type="button" data-feature-button="1"><span>02</span>BIKE</button>
+        <button type="button" data-feature-button="2"><span>03</span>ROOM</button>
+        <button type="button" data-feature-button="3"><span>04</span>WORLD</button>
+      </div>
+      <p class="feature-reel-note t-hand">show enough to make you curious. hide enough to make you click.</p>
+    </div>
+  </section>
+
   <section class="promo-section promo-world" id="world">
     <div class="promo-section-heading">
-      <div><p class="t-label">02 / THE WORLD</p><h2 class="t-title">The bikes needed<br><em>somewhere to live.</em></h2></div>
+      <div><p class="t-label">05 / THE WORLD</p><h2 class="t-title">The bikes needed<br><em>somewhere to live.</em></h2></div>
       <p>So the project escaped the museum and started becoming places.</p>
     </div>
 
@@ -364,7 +443,7 @@
 
   <section class="promo-section promo-things">
     <div class="promo-section-heading">
-      <div><p class="t-label">03 / THINGS TO DO</p><h2 class="t-title">Touch things.<br><em>Turn things.</em></h2></div>
+      <div><p class="t-label">06.5 / THINGS TO TOUCH</p><h2 class="t-title">Touch things.<br><em>Turn things.</em></h2></div>
       <p>A product should demonstrate its ideas rather than hide them inside a slide deck.</p>
     </div>
 
@@ -411,7 +490,7 @@
   </section>
 
   <section class="promo-section promo-story" id="story">
-    <div class="promo-section-number">04</div>
+    <div class="promo-section-number">07</div>
     <div class="promo-story-grid">
       <div class="promo-story-lead">
         <p class="t-label">WHY KONA.M EXISTS</p>
