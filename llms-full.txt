@@ -1,13 +1,13 @@
 # Kona.m — full machine-readable guide
 
-An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.
+An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by World Triathlon Corporation, IRONMAN, Canyon Bicycles GmbH or any referenced athlete or brand. IRONMAN® is a registered trademark of World Triathlon Corporation. Canyon and Speedmax are trademarks of their owners.
 
 This file is generated from the same museum registries used by the public app. Stable ids in the JSON/data files are preferred over names for programmatic references.
 
 ## Public pages
 - Privacy & data · Kona.m: https://joaoccaldas.github.io/konam/privacy.html
 - Photo credits · Kona.m: https://joaoccaldas.github.io/konam/credits.html
-- Kona.m · Race the version of yourself: https://joaoccaldas.github.io/konam/
+- Kona.m · Kona triathlon 3D world, bikes & race week: https://joaoccaldas.github.io/konam/
 - Canyon Triathlon Collection · every Speedmax generation, compared: https://joaoccaldas.github.io/konam/Canyon_Collection.html
 - Studio · Speedmax Museum — build, paint and share a time-trial bike: https://joaoccaldas.github.io/konam/Studio.html
 - Speedmax Nights & History Lane · Canyon Speedmax Museum: https://joaoccaldas.github.io/konam/Experiences.html

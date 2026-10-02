@@ -1,13 +1,13 @@
 # Kona.m
 
-> Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.
+> Explore Kona triathlon race week, IRONMAN World Championship history, 3D bikes, athlete identity, gear, places, stories and an immersive museum.
 
-An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.
+An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by World Triathlon Corporation, IRONMAN, Canyon Bicycles GmbH or any referenced athlete or brand. IRONMAN® is a registered trademark of World Triathlon Corporation. Canyon and Speedmax are trademarks of their owners.
 
 ## Pages
 - [Privacy & data · Kona.m](https://joaoccaldas.github.io/konam/privacy.html): Device storage, optional cloud backup and public account availability.
 - [Photo credits · Kona.m](https://joaoccaldas.github.io/konam/credits.html): Source, author, licenses and adaptations for Kona.m photography.
-- [Kona.m · Race the version of yourself](https://joaoccaldas.github.io/konam/): Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.
+- [Kona.m · Kona triathlon 3D world, bikes & race week](https://joaoccaldas.github.io/konam/): Explore Kona triathlon race week, IRONMAN World Championship history, 3D bikes, athlete identity, gear, places, stories and an immersive museum.
 - [Canyon Triathlon Collection · every Speedmax generation, compared](https://joaoccaldas.github.io/konam/Canyon_Collection.html): Every Canyon Speedmax generation on record, 1999–2027: interactive 3D exhibits, side-by-side specifications, an aero calculator and a sourced archive of the bikes that were never modelled.
 - [Studio · Speedmax Museum — build, paint and share a time-trial bike](https://joaoccaldas.github.io/konam/Studio.html): Every bike in the Speedmax Museum and more, in 3D: paint it, give it a film theme, set the scene, dream it in motion and share it. Canyon generations, named machines and studio designs.
 - [Speedmax Nights & History Lane · Canyon Speedmax Museum](https://joaoccaldas.github.io/konam/Experiences.html): Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.
