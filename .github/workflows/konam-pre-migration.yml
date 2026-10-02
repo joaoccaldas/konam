@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   compare:
+    if: github.repository == 'joaoccaldas/canyonmuseum'
     name: Before / after product and technical contract
     runs-on: ubuntu-latest
     timeout-minutes: 10
