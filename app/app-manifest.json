@@ -1,5 +1,5 @@
 {
- "version": "33f612c703ce",
+ "version": "adda41889973",
  "core": [
   "index.html",
   "about.html",
@@ -89,6 +89,7 @@
   "Speedmax_SLX_Museum.html": "rGvgxOZEeGZ4LC1GOWm2r4kFfmX/nKmWgBPWjvPOeJ0=",
   "Speedmax_Three_2005_Museum.html": "5TqrTGBOJ1BGZx35D9FF51IRfduiKVpxJzK1c52tCZo=",
   "Studio.html": "nGOVpzOSJoj5dbiLz54tKcM4gvDgaqPTOXqn08eEQcI=",
+  "promo.html": "YU4ErxrGf+ai+uBnG9ZWTZMrBJiT2svV8z/6G4PXN3o=",
   "assets/art/paintings/builders-bench.jpg": "AYYSF1BMlgQJodQ0jhQyrPoDM/VWMje/TnPEjvBVAoA=",
   "assets/art/paintings/crosswind.jpg": "6to32GpQsK0TRot+06sdVSc6asouaIiOKRxxCxZ1dXg=",
   "assets/art/paintings/kohala-turn.jpg": "EG0TNXObOZ/Ur52EvO5RADs+fP2tp486ACrkGCx+ArM=",
@@ -249,7 +250,6 @@
   "assets/reference/paintings/speedmax-three-2005.jpg": "7aHIi/BnX+O+QmSh1Bi8mgKnIBhMB1WE4N0sjLq1/aM=",
   "assets/share/collection.jpg": "W6lRq4vdhYr3rNejeGLQnYbIlPXgnmvRBkAD6wN8+vo=",
   "assets/share/konam.png": "F8UvxFJ1beRZ1VXDtciBTpmcDKbeDwv1niH675TWHlE=",
-  "assets/share/museum.jpg": "MR9MD9E1O+efqEOc6xucgpUDOD9++PbpLjoyrd0S2PU=",
-  "promo.html": "YU4ErxrGf+ai+uBnG9ZWTZMrBJiT2svV8z/6G4PXN3o="
+  "assets/share/museum.jpg": "MR9MD9E1O+efqEOc6xucgpUDOD9++PbpLjoyrd0S2PU="
  }
 }
