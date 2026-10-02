@@ -1,0 +1,63 @@
+name: Integration contract
+
+on:
+  push:
+    branches:
+      - feat/integration-platform-v1-rebased-20260930
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate integration contract
+        run: node tools/validate_integration_contract.mjs
+      - name: Verify generated public catalog is current
+        run: node tools/build_public_catalog.mjs --check
+      - name: Exercise public catalog adapter
+        run: node integrations/public-catalog.test.mjs
+      - name: Exercise MCP read prototype
+        run: node integrations/mcp-read-adapter.test.mjs
+      - name: Validate story contract
+        run: node integrations/story-contract.test.mjs
+      - name: Verify generated triathlon graph is current
+        run: node tools/build_triathlon_graph.mjs --check
+      - name: Validate triathlon graph integrity
+        run: node integrations/triathlon-graph.test.mjs
+
+      - name: Validate candidate product intake
+        run: node integrations/candidate-products.test.mjs
+
+      - name: Validate commerce contracts
+        run: node integrations/commerce-contract.test.mjs
+
+      - name: Validate reusable component intake
+        run: node integrations/candidate-components.test.mjs
+      - name: Validate equipment compatibility
+        run: node integrations/equipment-compatibility.test.mjs
+
+      - name: Validate affiliate and maintenance contracts
+        run: node integrations/affiliate-maintenance.test.mjs
+
+      - name: Validate tech room contract
+        run: node integrations/tech-room.test.mjs
+
+      - name: Validate rider-interface candidate intake
+        run: node integrations/candidate-rider-interface.test.mjs
+
+      - name: Validate product experience aggregation
+        run: node integrations/product-experience.test.mjs
+
+      - name: Validate affiliate revenue priority
+        run: node integrations/affiliate-priority.test.mjs
