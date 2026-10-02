@@ -46,7 +46,22 @@ test('obsolete standalone Norwegian renderer and review page are absent',()=>{
     'web/src/rooms/norwegian-engine.js',
     'web/src/rooms/norwegian-engine-preview.js',
     'review/norwegian-engine/index.html',
-    'tools/build_norwegian_engine_review.mjs',
-    'blender/norwegian_engine_assets.py'
+    'tools/build_norwegian_engine_review.mjs'
   ]) assert.equal(fs.existsSync(path.join(ROOT,p)),false,p+' must not exist');
+});
+
+
+test('NOR // 3 reusable assets and lane map are explicit but remain candidate-only',()=>{
+  const assets=json('world/konam/candidates/norwegian-engine-assets-v1.json');
+  const layout=json('world/konam/candidates/norwegian-engine-room-layout-v1.json');
+  assert.equal(assets.athletes.length,3);
+  assert.deepEqual(assets.lanes.map(x=>x.id),['lane-01','lane-02','lane-03']);
+  assert.ok(assets.assets.length>=10);
+  assert.ok(assets.assets.every(x=>x.reusable===true));
+  assert.equal(layout.release_rules.register_in_rooms_json,false);
+  assert.equal(layout.release_rules.add_to_public_navigation,false);
+  assert.equal(layout.release_rules.athlete_bike_assignment_requires_verified_source,true);
+  assert.ok(fs.existsSync(path.join(ROOT,'blender/norwegian_engine_assets.py')));
+  const rooms=read('museum/world/rooms.json');
+  assert.doesNotMatch(rooms,/norwegian-engine-room-layout|norwegian-engine-assets/);
 });
