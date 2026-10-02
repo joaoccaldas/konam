@@ -2,13 +2,14 @@
 
 ## Positioning
 
-Kona.m is the race-week, gear, identity, story and challenge companion for triathlon.
+Kona.m is a race-week, gear, identity, story and challenge companion for triathlon.
 
 It should not attempt to replace:
-- Strava's activity/social graph;
-- TrainingPeaks' training-analysis/planning depth;
-- IRONMAN's authoritative timing/event infrastructure;
-- Zwift's indoor training platform.
+
+- Strava's activity/social graph
+- TrainingPeaks' training-analysis/planning depth
+- IRONMAN's authoritative timing/event infrastructure
+- Zwift's indoor training platform
 
 Its differentiating layer is:
 
@@ -19,12 +20,13 @@ Its differentiating layer is:
 The primary consumer object is `RaceIdentity`.
 
 A RaceIdentity combines:
-- event;
-- real/dream/surprise mode;
-- equipment references;
-- goal;
-- avatar;
-- share state.
+
+- event
+- real/dream/surprise mode
+- equipment references
+- goal
+- avatar
+- share state
 
 ## Core loop
 
@@ -35,12 +37,12 @@ A RaceIdentity combines:
 Value precedes registration.
 
 1. Understand what Kona.m is.
-2. Continue as guest or choose account path.
+2. Continue as guest or choose the account path.
 3. Build enough identity/setup to make the experience personal.
 4. Reach Home quickly.
-5. Discover/collect something real.
-6. Optional save/sign-in/backup.
-7. Optional share.
+5. Discover or collect something real.
+6. Optionally save/backup.
+7. Optionally share.
 
 Do not turn the first session into a questionnaire, account wall, 3D loading screen or product tutorial.
 
@@ -49,18 +51,27 @@ Do not turn the first session into a questionnaire, account wall, 3D loading scr
 Returning users should see continuity, not onboarding again.
 
 Prioritize:
-- next useful action;
-- RaceIdentity/setup continuity;
-- race-week context;
-- progression;
-- new relevant content;
-- collection/challenge progress.
+
+- next useful action
+- RaceIdentity/setup continuity
+- race-week context
+- progression
+- new relevant content
+- collection/challenge progress
+
+## Product proposition
+
+**Race the version of yourself.**
+
+The promise is personal rather than transactional: build the athlete, understand the machine, know the place, discover the stories, and keep moving.
+
+Kona.m should feel useful before it feels impressive.
 
 ## Launch language
 
-English is the only required launch language.
+English is the required initial language.
 
-pt-BR is the first expansion locale after primary runtime copy extraction, translated metadata/hreflang and human QA.
+Additional locales belong behind complete runtime extraction, translated metadata and human QA rather than partial UI translation.
 
 ## 3D rule
 
@@ -68,44 +79,25 @@ pt-BR is the first expansion locale after primary runtime copy extraction, trans
 
 A user must be able to understand, personalize and navigate the core app without loading the immersive world. High-fidelity 3D is used where it creates meaning, product understanding or memorable discovery, not as a default rendering tax.
 
-## Monetization
+## About/company story
 
-Launch-ready offers:
-- approved affiliate commerce where approval exists;
-- immersive brand/product prototypes;
-- athlete/event activation prototypes;
-- branded collections/exhibitions;
-- content/3D production;
-- hosting/maintenance retainers.
+The public About surface may explain the origin through three depths:
 
-These are capabilities/offers, not evidence of an existing partnership.
+- Short
+- Scenic Route
+- Unfiltered / ADHD
 
-Later:
-- repeatable white-label/activation service;
-- premium consumer features after retention proof;
-- opt-in aggregate demand insight after scale and privacy thresholds.
-
-## Product boundary
-
-Do not add for launch:
-- another top-level navigation shell;
-- another profile/state database;
-- another progression economy;
-- ordinary rooms without a product/story reason;
-- training analytics clone;
-- social feed clone;
-- speculative marketplace;
-- multiplayer;
-- WebXR.
+The story stays anonymous on the frontend. It can be personal in voice without identifying the builder by name.
 
 ## Launch decision rule
 
-A change belongs before launch only if it:
-- fixes reliability/security/privacy;
-- prevents state loss;
-- materially improves first-use understanding;
-- materially improves mobile accessibility/performance;
-- removes an unsupported claim;
-- reduces a serious architecture ambiguity without destabilizing runtime.
+A pre-launch change must strengthen one of these:
 
-Everything else waits.
+- reliability, security or privacy
+- state continuity
+- first-use understanding
+- mobile accessibility or performance
+- factual/provenance accuracy
+- architectural clarity without destabilizing runtime
+
+Everything else is outside the launch surface.
