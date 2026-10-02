@@ -39,7 +39,7 @@ for(const abs of files){
 }
 
 if(findings.length){
-  for(const f of findings)console.error(`::error file=${f.rel},line=${f.line}::public-surface privacy violation: ${f.kind}`);
+  for(const f of findings)console.error(`${f.rel}:${f.line}: public-surface privacy violation: ${f.kind}`);
   process.exit(1);
 }
 console.log(`public-surface privacy PASS · ${files.length} staged files checked · no contributor name, email, phone, local path, Person publisher/author, or credential leak`);
