@@ -41,4 +41,6 @@ jobs:
             exit 0
           fi
           git commit -m "build: sync Kona.m M1 deterministic outputs"
+          git fetch origin migration/m1-konam-identity-20261002
+          git rebase origin/migration/m1-konam-identity-20261002
           git push origin HEAD:migration/m1-konam-identity-20261002
