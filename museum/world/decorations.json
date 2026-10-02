@@ -47,6 +47,18 @@
    "source": "web/src/engine/room-installations.js",
    "min_width": 8.6,
    "min_depth": 4.45
+  },
+  {
+   "id": "norwegian-engine",
+   "name": "NOR // 3 · The Norwegian Engine",
+   "builder": "norwegian",
+   "source": "web/src/engine/room-installations.js",
+   "min_width": 8.6,
+   "min_depth": 4.45,
+   "asset_manifest": "world/konam/candidates/norwegian-engine-assets-v1.json",
+   "layout_manifest": "world/konam/candidates/norwegian-engine-room-layout-v1.json",
+   "asset_generator": "blender/norwegian_engine_assets.py",
+   "release_state": "candidate-unwired"
   }
  ]
 }
