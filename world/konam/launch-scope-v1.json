@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "authority": "launch-scope-v1",
+  "launch_objective": "A serious, fast, local-first triathlon world where users can enter as guests, understand the product immediately, explore the 14 founding rooms, discover/collect meaningful artifacts, personalize their race identity and return without losing state.",
+  "blockers": [
+    "consumer identity and deployment origin are coherent",
+    "guest-first entry works",
+    "state persistence and legacy compatibility are proven",
+    "14 founding rooms are reachable without contradictory XP room gating",
+    "Founding 141 registry is stable and launch subset is obtainable",
+    "security/release exact-SHA checks pass",
+    "no false partnership/scientific/physical-device claims",
+    "WebGL fallback and navigation recovery work"
+  ],
+  "defer": [
+    "Mauna Kea cinematic onboarding flyover",
+    "sacred/deity avatar archetypes",
+    "141 bespoke high-fidelity 3D assets",
+    "rooms 15-28 implementation",
+    "Strava production integration",
+    "trading/marketplace",
+    "NFC member card",
+    "AI biomechanical copilot",
+    "real CFD/Navier-Stokes claims",
+    "Zwift world export",
+    "paid telemetry subscription",
+    "physical merchandise program",
+    "brand/athlete sponsorship claims without agreements",
+    "large framework/build-system migration"
+  ],
+  "public_claim_rules": [
+    {
+      "topic": "partnership",
+      "rule": "Say independent study/concept unless contracted."
+    },
+    {
+      "topic": "geometry",
+      "rule": "Say geometry study unless exact/CAD provenance is documented."
+    },
+    {
+      "topic": "aero",
+      "rule": "Label first-order estimates and uncertainty; do not claim wind-tunnel/CFD precision without evidence."
+    },
+    {
+      "topic": "privacy",
+      "rule": "Local-first is accurate; do not call storage cryptographic unless it is."
+    },
+    {
+      "topic": "device-proof",
+      "rule": "Headless browser evidence is not physical-device certification."
+    },
+    {
+      "topic": "culture",
+      "rule": "No sacred/restricted Hawaiian object or deity-based gamification without qualified cultural review."
+    }
+  ]
+}
