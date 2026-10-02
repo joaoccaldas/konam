@@ -1,4 +1,4 @@
-import meta from '../../config/product-meta.json';
+import meta from '../../config/product-meta.json' with { type: 'json' };
 
 export const PRODUCT_NAME = String(meta.product_name || 'Kona.m');
 export const PRODUCT_TAGLINE = String(meta.product_tagline || 'Race the version of yourself.');
