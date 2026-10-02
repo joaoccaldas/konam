@@ -1,0 +1,53 @@
+name: Museum checks
+
+# Every push and pull request: unit tests, the bike asset contract, and a rebuild that must match
+# what is committed. The Pages deploy runs the same gate before it publishes (pages.yml).
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install
+        run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Unit tests
+        run: npm test
+        working-directory: web
+      - name: Bike asset contract
+        run: node tools/validate-bikes.mjs
+      - name: Repository hygiene
+        run: node tools/repo-hygiene.mjs
+      - name: Brand authority
+        run: node tools/brand-hygiene.mjs
+      - name: Published asset contract
+        run: bash tools/stage_site.sh
+      - name: P0 browser journey
+        run: |
+          python3 -m http.server 8744 > /tmp/kona-p0-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8744/ >/dev/null && break; sleep 0.5; done
+          CHROME_PATH=/usr/bin/google-chrome node web/p0-journey-smoke.mjs http://127.0.0.1:8744/
+          CHROME_PATH=/usr/bin/google-chrome node web/studio-launch-audit.mjs http://127.0.0.1:8744
+          CHROME_PATH=/usr/bin/google-chrome node web/launch-regression-browser.mjs http://127.0.0.1:8744/
+          CHROME_PATH=/usr/bin/google-chrome node web/install-launch-audit.mjs http://127.0.0.1:8744
+      - name: Built pages are up to date
+        run: |
+          node tools/build_pages.mjs
+          git diff --stat --exit-code -- museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json integrations/triathlon-graph.json docs/ROOMS.md '*.html' 'web/dist/*.html' app/kona-core.js app/admin-assets.json app/admin-asset-preview.js app/race-self-stage.js app/collectible-stage.js app/museum-data.js app/hall.js app/studio.js app/studio-catalog.js \
+            || { echo "::error::built pages/bundles are stale: run node tools/build_pages.mjs and commit all generated outputs"; exit 1; }
