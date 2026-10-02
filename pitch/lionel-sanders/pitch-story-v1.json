@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "status": "pitch-prototype",
+  "audience": "Lionel Sanders",
+  "title": "A room for the work nobody sees",
+  "subtitle": "Kona.m × Lionel Sanders × Zwift — concept only, not an announced partnership",
+  "tone": [
+    "minimal",
+    "warm",
+    "self-aware",
+    "human",
+    "slightly weird",
+    "never hero-worship",
+    "never corporate-sponsor-deck"
+  ],
+  "core_idea": "The pitch should feel like entering the room, not watching a sales presentation.",
+  "about_me": {
+    "public": {
+      "title": "Why I made Kona.m",
+      "copy": [
+        "It started with getting pulled back toward triathlon.",
+        "Then I wanted to understand the bike. That became data. The data became 3D. The bike needed a room. The room somehow became a world.",
+        "Kona.m is where I put things I care about in the same place: triathlon, learning, AI, design, systems, stories and the joy of making something I did not know how to make.",
+        "A big part of it is simply learning to finish enough of an idea to let other people in."
+      ],
+      "visual_arc": "training → spreadsheet/data → AI → bike → room → museum → island/world"
+    },
+    "lionel": {
+      "title": "The version I wanted you to see",
+      "copy": [
+        "One reason I wanted to make this room for you is that your public story has never looked perfectly polished.",
+        "You have shown the experiments, the bad calls, the missed races, the overthinking, the rebuilding and the moments when reality forced a change.",
+        "That matters to me more than a clean highlight reel.",
+        "I have spent the last few years trying to turn curiosity, difficult periods, creativity and a lot of learning into something constructive. Kona.m became one of the ways I could do that.",
+        "So this is not really a monument to winning. It is a room about doing the work, being willing to look at what did not work, changing, and coming back."
+      ],
+      "guardrail": "Frame this as the creator's response to Lionel's documented public openness. Do not diagnose, speculate about motives, or claim private similarity."
+    }
+  },
+  "storyboard": [
+    {
+      "beat": 1,
+      "duration_s": 4,
+      "title": "Black",
+      "visual": "Almost-black screen. Small KONA.m mark. Room ambience before image.",
+      "copy": "I built you a room."
+    },
+    {
+      "beat": 2,
+      "duration_s": 6,
+      "title": "Threshold",
+      "visual": "Slow dolly through the basalt entrance. Trainer screen visible far inside.",
+      "copy": "Not a trophy room."
+    },
+    {
+      "beat": 3,
+      "duration_s": 8,
+      "title": "The machine",
+      "visual": "Orbit around bike + smart trainer + giant training screen. Fans wake subtly. Data appears.",
+      "copy": "A room for the work nobody sees."
+    },
+    {
+      "beat": 4,
+      "duration_s": 7,
+      "title": "Zwift",
+      "visual": "Camera crosses the screen, desk, bottles and heat zone. UI labels appear as understated KONA.m annotations.",
+      "copy": "Zwift is the companion. Kona is the destination."
+    },
+    {
+      "beat": 5,
+      "duration_s": 9,
+      "title": "Iterations",
+      "visual": "Four race-story artworks: sketch, editorial, blueprint, manga. Never copied race photographs.",
+      "copy": "Experiment. Miss. Inspect. Adapt. Return."
+    },
+    {
+      "beat": 6,
+      "duration_s": 7,
+      "title": "2017",
+      "visual": "Abstract sculpture 'The Gap'. A narrow orange line between two stone forms. 8:04:07 appears quietly.",
+      "copy": "Second in Kona. Not the ending."
+    },
+    {
+      "beat": 7,
+      "duration_s": 8,
+      "title": "The weird bits",
+      "visual": "Treadmill, recovery mat, tiny overthinking joke board, medal drawer, hidden collectible, dog easter-egg slot reserved but off by default.",
+      "copy": "Serious work. Not always a serious room."
+    },
+    {
+      "beat": 8,
+      "duration_s": 9,
+      "title": "About",
+      "visual": "World pulls back. Brief creator origin sequence: training → data → 3D bike → room → world.",
+      "copy": "I did not start by trying to build a company. I started by trying to understand something."
+    },
+    {
+      "beat": 9,
+      "duration_s": 12,
+      "title": "The version for Lionel",
+      "visual": "Return to the cave after the lights soften. Show imperfect notes, crossed-out training ideas and the Silver Lining sculpture.",
+      "copy": "What stayed with me was not only the results. It was the willingness to show the messy part between them."
+    },
+    {
+      "beat": 10,
+      "duration_s": 7,
+      "title": "Open ending",
+      "visual": "Camera faces the Kona horizon from behind the trainer. No athlete avatar. Empty bike waiting.",
+      "copy": "This is only the first room. What would you put in it?"
+    }
+  ],
+  "capture_requirements": [
+    "Use screenshots/renders from the actual branch implementation, not generated fake UI, for final pitch.",
+    "Use generated concept art only as transition material and clearly separate it from actual product footage.",
+    "Final room footage must show free camera movement through a genuinely explorable 3D space.",
+    "Keep KONA.m shell typography and minimal chrome.",
+    "Do not imply Zwift, Lionel Sanders, Canyon or IRONMAN approval or sponsorship."
+  ],
+  "evidence_notes": [
+    {
+      "topic": "adversity",
+      "source": "Slowtwitch interview, 2015",
+      "note": "Sanders said he was starting to welcome adversity because it let him practice staying composed when races did not go to plan."
+    },
+    {
+      "topic": "acknowledging reality",
+      "source": "TRI247 interview, 2024",
+      "note": "Sanders described acknowledging reality as a theme and discussed becoming smarter about recovery."
+    },
+    {
+      "topic": "change",
+      "source": "Triathlete profile, 2014",
+      "note": "Sanders said he did not regret everything in his past because it shaped him, and framed his goal as proof that people can change."
+    },
+    {
+      "topic": "Kona 2017",
+      "source": "2017 IRONMAN World Championship result",
+      "note": "Second place, 8:04:07 after leading much of the marathon."
+    }
+  ]
+}
