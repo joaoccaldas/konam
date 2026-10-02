@@ -77,3 +77,26 @@ addEventListener('scroll',()=>{
   if(header){header.style.transform=(y>lastY&&y>180)?'translateY(-125%)':'translateY(0)';header.style.transition='transform .25s ease';}
   lastY=y;
 },{passive:true});
+
+const tourFrame=qs('[data-tour-frame]');
+const tourOpen=qs('[data-tour-open]');
+const tourUrl=qs('[data-tour-url]');
+const tourKicker=qs('[data-tour-kicker]');
+const tourTitle=qs('[data-tour-title]');
+const tourCopy=qs('[data-tour-copy]');
+let tourTimer=null;
+const tourButtons=qsa('[data-tour-src]');
+function setTour(btn){
+  tourButtons.forEach(x=>x.classList.toggle('is-active',x===btn));
+  if(tourFrame) tourFrame.src=btn.dataset.tourSrc;
+  if(tourOpen) tourOpen.href=btn.dataset.tourHref;
+  if(tourUrl) tourUrl.textContent=btn.dataset.tourUrlLabel||'konam';
+  if(tourKicker) tourKicker.textContent=btn.dataset.tourKickerLabel||'REAL APP';
+  if(tourTitle) tourTitle.textContent=btn.dataset.tourTitleLabel||'Kona.m';
+  if(tourCopy) tourCopy.textContent=btn.dataset.tourCopyLabel||'';
+}
+tourButtons.forEach(btn=>btn.addEventListener('click',()=>{setTour(btn); if(tourTimer){clearInterval(tourTimer);tourTimer=null;}}));
+if(tourButtons.length>1 && !matchMedia('(prefers-reduced-motion:reduce)').matches){
+  let i=0;
+  tourTimer=setInterval(()=>{i=(i+1)%tourButtons.length;setTour(tourButtons[i]);},9000);
+}
