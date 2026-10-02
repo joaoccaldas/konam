@@ -424,3 +424,6 @@ body.return-moment-open{overflow:hidden}
 .home-world-hero-copy p{max-width:34rem;margin:0 0 18px;color:color-mix(in srgb,var(--brand-mist) 88%,transparent);line-height:1.5}
 .home-world-hero-copy .kona-primary{min-height:52px}
 @media(max-width:520px){.home-world-hero,.home-world-hero-copy{min-height:310px}}
+
+/* Release touch-target floor for contextual text links surfaced in account/progression/garage states. */
+.kona-note a,#konaAccount a,.garage-level-note a{min-height:48px;display:inline-flex;align-items:center}
