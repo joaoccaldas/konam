@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b0e">
+<title>Kona.m · Lionel Sanders · Beast Cave</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/brand/tokens.css">
+<link rel="stylesheet" href="/brand/typography.css">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080b0e;color:#f4efe7;font-family:var(--brand-font-ui)}
+body{overscroll-behavior:none}
+#stage{position:fixed;inset:0}
+#stage canvas{display:block;width:100%;height:100%;touch-action:none}
+.immersive-ui{position:fixed;inset:0;pointer-events:none;z-index:4}
+.topline{position:absolute;left:max(20px,env(safe-area-inset-left));right:max(20px,env(safe-area-inset-right));top:max(18px,env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;transition:opacity .45s ease}
+.wordmark{font:750 12px/1 var(--brand-font-ui);letter-spacing:.22em}
+.room-index{font:700 10px/1 var(--brand-font-data);letter-spacing:.14em;color:rgba(244,239,231,.58)}
+.room-index strong{color:#ff6a00}
+#reticle{position:absolute;left:50%;top:50%;width:5px;height:5px;border-radius:50%;background:rgba(244,239,231,.8);transform:translate(-50%,-50%);box-shadow:0 0 0 7px rgba(244,239,231,.05);opacity:0;transition:opacity .3s}
+body.entered #reticle{opacity:.72}
+#whisper{position:absolute;left:50%;bottom:max(22px,calc(env(safe-area-inset-bottom) + 14px));transform:translateX(-50%);font:650 10px/1.35 var(--brand-font-ui);letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,231,.58);transition:opacity .6s;white-space:nowrap}
+body.has-sheet #whisper{opacity:0}
+.spatial{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;opacity:0;transition:opacity .25s ease,transform .25s ease}
+.spatial.visible{opacity:1}
+.spatial button{appearance:none;border:0;background:none;color:#f4efe7;padding:0;cursor:pointer;text-align:left;display:grid;grid-template-columns:34px auto;align-items:center;gap:10px}
+.spatial-dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(244,239,231,.35);background:rgba(8,11,14,.38);backdrop-filter:blur(12px)}
+.spatial-dot::after{content:"";width:6px;height:6px;border-radius:50%;background:#ff6a00;box-shadow:0 0 22px rgba(255,106,0,.58)}
+.spatial-copy{display:grid;gap:3px;padding:7px 10px 8px;border-left:1px solid rgba(244,239,231,.22);text-shadow:0 2px 12px #000}
+.spatial-copy small{font:700 9px/1 var(--brand-font-data);letter-spacing:.14em;color:rgba(244,239,231,.54)}
+.spatial-copy b{font:500 18px/.95 var(--brand-font-editorial);letter-spacing:-.01em}
+.spatial:hover{transform:translate(-50%,-50%) scale(1.03)}
+#entry{position:fixed;inset:0;z-index:10;display:grid;align-items:end;padding:max(28px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(36px,calc(env(safe-area-inset-bottom) + 26px)) max(24px,env(safe-area-inset-left));background:linear-gradient(180deg,rgba(8,11,14,.08) 0%,rgba(8,11,14,.20) 34%,rgba(8,11,14,.92) 84%,#080b0e 100%);transition:opacity .8s ease,visibility .8s}
+#entry.hidden{opacity:0;visibility:hidden}
+.entry-inner{max-width:840px;display:grid;gap:18px}
+.entry-kicker{font:750 10px/1 var(--brand-font-ui);letter-spacing:.22em;text-transform:uppercase;color:#ff6a00}
+.entry-title{font:400 clamp(58px,10vw,132px)/.82 var(--brand-font-editorial);letter-spacing:-.045em;margin:0;text-wrap:balance}
+.entry-lede{max-width:590px;font:500 clamp(15px,1.5vw,19px)/1.55 var(--brand-font-ui);color:rgba(244,239,231,.72);margin:0}
+.entry-note{font:600 10px/1.5 var(--brand-font-data);letter-spacing:.08em;color:rgba(244,239,231,.45);max-width:560px}
+#enterRoom{pointer-events:auto;justify-self:start;min-height:52px;border:0;border-radius:0;background:#f4efe7;color:#080b0e;padding:0 22px;font:800 12px/1 var(--brand-font-ui);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+#enterRoom::after{content:"  →";color:#ff6a00}
+#storySheet{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:max(20px,calc(env(safe-area-inset-bottom) + 12px));width:min(520px,calc(100vw - 40px));pointer-events:auto;transform:translateY(calc(100% + 40px));opacity:0;transition:transform .52s cubic-bezier(.2,.75,.2,1),opacity .35s;background:rgba(244,239,231,.965);color:#12181d;border-radius:var(--brand-sheet-radius);box-shadow:0 30px 80px rgba(0,0,0,.32);overflow:hidden}
+body.has-sheet #storySheet{transform:translateY(0);opacity:1}
+.story-art{height:6px;background:#ff6a00}
+.story-inner{padding:22px 22px 20px;display:grid;gap:13px}
+.story-kicker{font:800 9px/1 var(--brand-font-ui);letter-spacing:.18em;text-transform:uppercase;color:#ff6a00}
+.story-title{font:400 clamp(32px,7vw,52px)/.91 var(--brand-font-editorial);letter-spacing:-.03em;margin:0}
+.story-copy{font:500 13px/1.58 var(--brand-font-ui);color:#5f6a72;margin:0;max-width:48ch}
+.story-data{padding-top:12px;border-top:1px solid rgba(18,24,29,.12);display:flex;gap:18px;flex-wrap:wrap;font:650 9px/1.3 var(--brand-font-data);letter-spacing:.08em;color:#8e979d}
+#closeStory{position:absolute;right:15px;top:16px;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:#12181d;font-size:25px;cursor:pointer}
+#miniMap{position:absolute;right:max(18px,env(safe-area-inset-right));bottom:max(18px,calc(env(safe-area-inset-bottom) + 10px));width:116px;height:84px;opacity:.66;transition:opacity .3s}
+body.has-sheet #miniMap{opacity:.15}
+.map-box{position:absolute;inset:0;border:1px solid rgba(244,239,231,.24);border-radius:14px;background:rgba(8,11,14,.28);backdrop-filter:blur(10px)}
+.map-box::before{content:"";position:absolute;left:14px;right:14px;top:19px;bottom:16px;border:1px solid rgba(244,239,231,.16)}
+.map-mark{position:absolute;width:7px;height:7px;border-radius:50%;background:#ff6a00;left:50%;top:50%;box-shadow:0 0 14px rgba(255,106,0,.7);transform:translate(-50%,-50%)}
+.map-name{position:absolute;left:10px;top:8px;font:700 7px/1 var(--brand-font-data);letter-spacing:.14em;color:rgba(244,239,231,.55)}
+@media(max-width:600px){
+  .entry-title{font-size:clamp(54px,18vw,82px)}
+  .entry-lede{font-size:14px}
+  .room-index{display:none}
+  #miniMap{width:92px;height:68px}
+  .spatial-copy b{font-size:16px}
+  .spatial-copy small{display:none}
+  .spatial-dot{width:31px;height:31px}
+  .spatial button{grid-template-columns:31px auto}
+  #storySheet{width:calc(100vw - 28px);left:14px;bottom:max(14px,calc(env(safe-area-inset-bottom) + 8px))}
+  .story-inner{padding:19px 18px 18px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+
+<div id="entry">
+  <div class="entry-inner">
+    <div class="entry-kicker">Kona.m · Athlete Room 01</div>
+    <h1 class="entry-title">The Beast Cave</h1>
+    <p class="entry-lede">A room about the work nobody sees. Zwift beside you. Kona somewhere in front of you. Everything else gets quieter.</p>
+    <button id="enterRoom">Enter the room</button>
+    <div class="entry-note">Independent Kona.m experience. No athlete or brand endorsement is implied.</div>
+  </div>
+</div>
+
+<div class="immersive-ui">
+  <div class="topline">
+    <div class="wordmark">KONA.M</div>
+    <div class="room-index">ROOM 26 · ATHLETE ROOMS · <strong>LIONEL SANDERS</strong></div>
+  </div>
+  <div id="reticle"></div>
+  <div id="whisper">Drag to look · WASD / arrows to move · tap what catches your eye</div>
+
+  <div id="hotspots"></div>
+
+  <section id="storySheet" aria-live="polite">
+    <div class="story-art"></div>
+    <button id="closeStory" aria-label="Close">×</button>
+    <div class="story-inner">
+      <div id="storyKicker" class="story-kicker">Inside the room</div>
+      <h2 id="storyTitle" class="story-title">The Machine</h2>
+      <p id="storyCopy" class="story-copy"></p>
+      <div id="storyData" class="story-data"></div>
+    </div>
+  </section>
+
+  <div id="miniMap">
+    <div class="map-box"><div class="map-name">BEAST CAVE</div><div class="map-mark"></div></div>
+  </div>
+</div>
+
+<script src="./beast-cave-experience.bundle.js"></script>
+</body>
+</html>
