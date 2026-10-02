@@ -159,7 +159,7 @@ for (const p of PAGES) {
     .map(href => `<link rel="stylesheet" href="${href}">`).join('');
   html = html.replace(/<\/head>/i, `<!--design-system:start-->${fonts}${missing}<!--design-system:end-->\n</head>`);
   html = html.replace(/<!--global-user-studio:start-->[\s\S]*?<!--global-user-studio:end-->\n?/g, '');
-  if (!['index.html','about.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
+  if (!['index.html','about.html','promo.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
     html = html.replace(/<body([^>]*)>/i, match => match + GLOBAL_USER_STUDIO);
   }
   html=html.replace(/<script src="app\/standalone-access.js"><\/script>\n?/g,'');

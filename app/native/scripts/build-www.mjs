@@ -24,6 +24,10 @@ execFileSync('bash', [join(root, 'tools', 'stage_site.sh')], { cwd: root, stdio:
 rmSync(www, { recursive: true, force: true });
 cpSync(staged, www, { recursive: true });
 rmSync(join(www, 'sw.js'), { force: true });
+// The Field Guide is a public web portal, not part of the installable Android experience.
+// Keep promo.html available only if explicitly navigated from the staged bundle, but do not
+// ship its web-only controller into the native runtime surface.
+rmSync(join(www, 'web', 'src', 'promo.js'), { force: true });
 
 const versionCode = Number.parseInt(process.env.SPEEDMAX_VERSION_CODE || '0', 10) || 0;
 const versionName = (process.env.SPEEDMAX_VERSION_NAME || 'dev').replace(/[^\w.-]/g, '').slice(0, 20);
