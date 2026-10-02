@@ -1,6 +1,7 @@
 // ui/onboarding-questions.js
 import { readStorage, writeStorage } from '../engine/storage.js';
 import { applyStoredEvent, ensureProgression, LEVELS } from '../engine/progression.js';
+import { PRODUCT_NAME } from '../product-meta.js';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const QUESTIONS=[
@@ -20,7 +21,7 @@ const QUESTIONS=[
     id:'tri-history',tone:'credentials',mark:'02',
     kicker:'ATHLETIC CREDENTIALS',
     title:'How deep in the rabbit hole are we?',
-    note:'This calibrates the amount of useful nonsense KONA is allowed to send your way.',
+    note:`This calibrates the amount of useful nonsense ${PRODUCT_NAME} is allowed to send your way.`,
     answers:[
       ['never','ROOKIE','No triathlons yet. I do own shoes though.'],
       ['some','INITIATED','A few. I know where the body glide lives.'],
