@@ -7,6 +7,12 @@ on:
     paths:
       - .github/workflows/sync-public-certification.yml
       - tools/scan_public_surface.mjs
+      - tools/harden_pages.mjs
+      - web/landing.template.html
+      - web/src/**
+      - web/styles/**
+      - manifest.webmanifest
+      - privacy.html
 
 permissions:
   contents: write
