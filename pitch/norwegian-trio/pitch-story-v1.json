@@ -115,7 +115,8 @@
     "Generated imagery may be reference/transition material only and must not be presented as implemented UI or geometry.",
     "Show genuine free-camera movement through the explorable room.",
     "Preserve KONA.m typography and shared interaction grammar.",
-    "Do not imply athlete, federation, equipment-brand or IRONMAN approval, sponsorship or collaboration."
+    "Do not imply athlete, federation, equipment-brand or IRONMAN approval, sponsorship or collaboration.",
+    "Include an optional final invitation card offering an in-person Kona walkthrough and collaborative 3D/content capture, without implying agreement or attendance."
   ],
   "evidence_notes": [
     {
@@ -123,5 +124,14 @@
       "status": "not yet sourced in this branch",
       "rule": "Add documented public-source evidence before attaching a quote, exact protocol, bike, accessory or personal claim to an athlete."
     }
-  ]
+  ],
+  "in_person_invitation": {
+    "title": "If this is more interesting in person",
+    "copy": [
+      "I am happy to fly to Kona and show this properly face-to-face.",
+      "We could walk through the room together, change what is wrong, add what is missing, and decide whether any of it deserves to become something bigger.",
+      "And if it is fun, we can make something from Kona while we are there: a small 3D capture, an object, a room detail, a deliberately strange piece of content, or the beginning of the next space."
+    ],
+    "posture": "An open invitation, not an assumption of access, partnership, travel reimbursement or participation."
+  }
 }
