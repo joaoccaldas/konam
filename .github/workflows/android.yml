@@ -1,0 +1,180 @@
+name: KONA Android App
+
+# Builds the Android app (Capacitor shell bundling the museum), boots it on an emulator as a
+# smoke test, then publishes the APK to the website at downloads/KONA.apk together
+# with app/android-version.json (version, size, SHA-256), which installed apps check over
+# HTTPS to offer the update. Android installs an update only if it is signed with the same key.
+#
+# Repository secrets for a stable release signature (strongly recommended — without them the
+# APK is debug-signed and updates can't install over a previous version):
+#   SPEEDMAX_KEYSTORE_BASE64, SPEEDMAX_KEYSTORE_PASSWORD, SPEEDMAX_KEY_ALIAS, SPEEDMAX_KEY_PASSWORD
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - '*_Museum.html'
+      - 'Canyon_Collection.html'
+      - 'assets/**'
+      - 'app/kona-core.js'
+      - 'app/viewport.js'
+      - 'app/world-shell.html'
+      - 'app/race-self-stage.js'
+      - 'app/entry-data.json'
+      - 'app/admin-assets.json'
+      - 'app/admin-asset-preview.js'
+      - 'app/museum-data.js'
+      - 'app/hall.js'
+      - 'app/studio.js'
+      - 'app/studio-catalog.js'
+      - 'web/src/**'
+      - 'web/styles/**'
+      - 'web/build_landing.mjs'
+      - 'web/package.json'
+      - 'web/package-lock.json'
+      - 'tools/build_app.mjs'
+      - 'brand/**'
+      - 'integrations/**'
+      - 'manifest.webmanifest'
+      - 'app/native/**'
+      - '.github/workflows/android.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kona-android
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      signed: ${{ steps.signing.outputs.signed }}
+    defaults:
+      run:
+        working-directory: app/native
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+      - name: Install web build dependencies
+        working-directory: .
+        run: npm ci --prefix web --no-audit --no-fund
+      - name: Build current KONA web runtime
+        working-directory: .
+        run: |
+          node tools/build_pages.mjs
+          node tools/build_app.mjs
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Prepare signing key
+        id: signing
+        env:
+          KEYSTORE_B64: ${{ secrets.SPEEDMAX_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/speedmax.keystore"
+            echo "SPEEDMAX_KEYSTORE_FILE=$RUNNER_TEMP/speedmax.keystore" >> "$GITHUB_ENV"
+            echo "signed=true" >> "$GITHUB_OUTPUT"
+            echo "release signing key configured"
+          else
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::No stable release key configured. A debug APK may be smoke-tested, but it will not be published to users."
+          fi
+      - name: Build APK
+        env:
+          SPEEDMAX_KEYSTORE_PASSWORD: ${{ secrets.SPEEDMAX_KEYSTORE_PASSWORD }}
+          SPEEDMAX_KEY_ALIAS: ${{ secrets.SPEEDMAX_KEY_ALIAS }}
+          SPEEDMAX_KEY_PASSWORD: ${{ secrets.SPEEDMAX_KEY_PASSWORD }}
+        run: |
+          export SPEEDMAX_VERSION_CODE=$(( ${{ github.run_number }} + 1 ))
+          export SPEEDMAX_VERSION_NAME="1.${{ github.run_number }}"
+          npm run sync
+          (cd android && ./gradlew assembleRelease --no-daemon)
+          cp android/app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/KONA.apk"
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs "$GITHUB_WORKSPACE/KONA.apk"
+          sha=$(sha256sum "$GITHUB_WORKSPACE/KONA.apk" | cut -d' ' -f1)
+          bytes=$(stat -c %s "$GITHUB_WORKSPACE/KONA.apk")
+          printf '{"versionCode":%s,"versionName":"%s","apk":"downloads/KONA.apk","sha256":"%s","bytes":%s}\n' \
+            "$SPEEDMAX_VERSION_CODE" "$SPEEDMAX_VERSION_NAME" "$sha" "$bytes" > "$GITHUB_WORKSPACE/android-version.json"
+          cat "$GITHUB_WORKSPACE/android-version.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KONA-apk
+          path: |
+            KONA.apk
+            android-version.json
+          if-no-files-found: error
+
+  smoke-test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: KONA-apk
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install and launch on an emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          script: |
+            adb install -r KONA.apk
+            adb shell am start -W -n com.caldasstudio.speedmaxmuseum/.MainActivity
+            sleep 25
+            adb shell pidof com.caldasstudio.speedmaxmuseum
+            adb exec-out screencap -p > launch.png
+            adb logcat -d | grep -iE "AndroidRuntime|FATAL|Capacitor|chromium" | tail -80 > logcat.txt || true
+            ! grep -q "FATAL EXCEPTION" logcat.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: KONA-smoke-test
+          path: |
+            launch.png
+            logcat.txt
+
+  publish:
+    needs: [build, smoke-test]
+    if: needs.build.outputs.signed == 'true' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: KONA-apk
+          path: ${{ runner.temp }}/apk
+      - name: Commit APK to the website
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p downloads app
+          cp "$RUNNER_TEMP/apk/KONA.apk" downloads/KONA.apk
+          cp "$RUNNER_TEMP/apk/android-version.json" app/android-version.json
+          node -e "const fs=require('fs');const p='app/android-version.json';const v=JSON.parse(fs.readFileSync(p,'utf8'));v.published=true;v.apk=v.apk||'downloads/KONA.apk';fs.writeFileSync(p,JSON.stringify(v,null,2)+'\n')"
+          git add -f downloads/KONA.apk app/android-version.json
+          if git diff --cached --quiet; then echo "APK unchanged"; exit 0; fi
+          git commit -m "build(app): publish Android app [skip ci]"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
