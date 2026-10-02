@@ -76,6 +76,22 @@ def build_bottles():
       cyl("bottle",(x,0,.18),.055,.34,dark); cyl("cap",(x,0,.37),.035,.045,cap)
     export("bottle-set")
 
+def build_lane_architecture():
+    reset(); stone=mat("wet basalt",(.025,.032,.034),.08,.82); steel=mat("blackened steel",(.055,.065,.068),.82,.27); glass=mat("low iron glass",(.36,.55,.60),.05,.10); warm=mat("warm practical",(.52,.19,.035),.22,.34)
+    # modular portal, plinth and recessed light reveal; repeatable per lane
+    cube("plinth",(0,0,.07),(1.05,.58,.07),stone,.025)
+    for x in (-1.18,1.18): cube("portal-upright",(x,0,1.65),(.055,.075,1.65),steel,.018)
+    cube("portal-head",(0,0,3.27),(1.24,.075,.055),steel,.018)
+    cube("rear-glass",(0,.54,1.58),(1.12,.012,1.50),glass,0)
+    cube("light-reveal",(0,.49,2.96),(.82,.018,.018),warm,.006)
+    export("lane-architecture")
+
+def build_protocol_wall():
+    reset(); stone=mat("basalt",(.026,.032,.034),.05,.84); steel=mat("frame",(.14,.17,.18),.78,.28); chalk=mat("chalk panel",(.055,.065,.067),0,.78)
+    cube("wall",(0,0,1.45),(1.9,.08,1.45),stone,.02); cube("data-board",(0,-.09,1.55),(1.35,.025,.72),chalk,.012)
+    for x in (-1.52,1.52): cube("rail",(x,-.10,1.55),(.025,.025,.78),steel,.006)
+    export("protocol-wall")
+
 def build_bay():
     reset(); steel=mat("frame",(.18,.21,.22),.8,.27); glass=mat("low iron glass",(.48,.68,.72),.05,.12)
     for x in (-.86,.86):
@@ -105,4 +121,4 @@ def build_relief():
       cube("ridge",(x,y,.25+h),( .035,.065,h),stone,.015)
     cube("base",(0,0,.10),(.40,1.45,.10),oak,.025); export("fjord-relief")
 
-for fn in (build_trainer,build_run_deck,build_table,build_analyser,build_vials,build_towel_rail,build_bottles,build_bay,build_fan,build_vault,build_relief): fn()
+for fn in (build_lane_architecture,build_protocol_wall,build_trainer,build_run_deck,build_table,build_analyser,build_vials,build_towel_rail,build_bottles,build_bay,build_fan,build_vault,build_relief): fn()
