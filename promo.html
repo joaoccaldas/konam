@@ -39,791 +39,281 @@
 <link rel="stylesheet" href="brand/typography.css">
 <link rel="stylesheet" href="web/styles/system.css">
 <link rel="stylesheet" href="web/styles/components.css">
-<link rel="stylesheet" href="web/styles/promo.css">
+<link rel="stylesheet" href="web/styles/entry.css">\n<link rel="stylesheet" href="web/styles/about.css">\n<link rel="stylesheet" href="web/styles/promo.css">
 <!--design-system:start--><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300..800&display=swap"><!--design-system:end-->
 </head>
-<body class="promo-page">
-<a class="promo-skip" href="#main">Skip to field guide</a>
+<body class="about-page">
+<a class="about-skip" href="#fieldGuide">Skip to field guide</a>
 
-<header class="promo-header promo-header-hero" data-header>
-  <a class="promo-wordmark" href="./" aria-label="Kona.m home">
-    <strong>Kona.m</strong>
-    <span>FIELD GUIDE / INTERN EDITION</span>
-  </a>
-  <div class="promo-header-actions">
-    <button class="promo-system-trigger" type="button" data-system-open aria-controls="systemPanel" aria-expanded="false">◉ System</button>
-    <a class="promo-enter" href="./">Enter Kona.m <span aria-hidden="true">↗</span></a>
+<section id="intro" class="kona-entry">
+  <div class="entry-media" aria-hidden="true"><img src="assets/kona-years/queen-k.jpg" alt="" decoding="async" fetchpriority="high"></div>
+  <div class="intro-inner">
+    <div class="entry-copy">
+      <div class="entry-mast"><span class="eyebrow">Kona.m</span><span class="entry-event">FIELD GUIDE · INTERN EDITION</span></div>
+      <h1>Oh.<br><em>Here you are.</em></h1>
+      <p class="lede">You might be trying to figure out what Kona.m is. Funny enough, so am I.</p>
+      <p class="promo-native-copy">Right now it appears to be 3D bikes + game + dreaming + worlds + collecting things + triathlon + some AI + ideas that escaped their original scope.</p>
+    </div>
+    <div class="entry-product">
+      <div class="entry-product-stage" id="entryProductStage" aria-label="The real Kona.m athlete and bike preview"></div>
+      <div class="entry-product-nav" aria-label="What is inside Kona.m">
+        <span><b>01</b> Build yourself</span><span><b>02</b> Choose a bike</span><span><b>03</b> Enter a world</span>
+      </div>
+      <div class="entry-race-clock"><small>STATUS</small><strong>FINISHED ENOUGH TO LET YOU IN</strong></div>
+    </div>
+    <div class="entry-actions-wrap">
+      <div class="entry-actions">
+        <a class="btn primary" href="./">Enter Kona.m <span aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="#worlds">See the real rooms ↓</a>
+      </div>
+      <div class="entry-trust">
+        <span>No account required</span><span>Built from the actual Kona.m system</span>
+        <a class="btn text" href="about.html">Why this exists</a>
+      </div>
+      <p class="entry-story-note">The Intern is still working on the elevator pitch. The app was less cooperative.</p>
+      <p class="entry-global-note"><strong>I am proud this exists.</strong> Not because it is finished. Because a pile of half-connected ideas became something real enough to explore.</p>
+      <p class="entry-legal-note">Independent project. Not affiliated with or endorsed by IRONMAN, World Triathlon Corporation, Canyon or any featured athlete or brand.</p>
+    </div>
   </div>
+</section>
+
+<header class="about-header">
+  <a class="about-wordmark" href="./" aria-label="Kona.m home"><span>Kona.m</span><small>FIELD GUIDE</small></a>
+  <nav class="about-nav" aria-label="Field Guide navigation">
+    <a href="#why">Why</a>
+    <a href="#how">How to play</a>
+    <a href="#worlds">Worlds</a>
+    <a href="#collect">141</a>
+    <a href="#intern">Intern</a>
+    <a href="#lab">Lab</a>
+  </nav>
 </header>
 
-<aside class="field-rail" data-field-rail aria-label="Field Guide menu">
-  <button class="field-rail-toggle" type="button" data-rail-toggle aria-expanded="false" aria-controls="fieldRailNav">
-    <span class="rail-toggle-machine" aria-hidden="true"><i></i><i></i><i></i></span>
-    <b>GUIDE</b>
-    <small data-rail-state>CLOSED / AERODYNAMIC</small>
-  </button>
-  <nav id="fieldRailNav" class="field-rail-nav">
-    <div class="field-rail-head"><strong>KONA.M</strong><span>FIELD GUIDE</span><small>compiled by the Intern · accuracy varies with coffee</small></div>
-    <a href="#why-three-ways" data-rail-link><span>00</span><b>Why</b><small>proud first, explanation later</small></a>
-    <a href="#start" data-rail-link><span>01</span><b>Start</b><small>no account, no paperwork</small></a>
-    <a href="#play" data-rail-link><span>02</span><b>How to play</b><small>minimum viable instructions</small></a>
-    <a href="#tour" data-rail-link><span>03</span><b>Tutorial theatre</b><small>real captured UI states</small></a>
-    <a href="#intern" data-rail-link><span>04</span><b>The Intern</b><small>all departments, unfortunately</small></a>
-    <a href="#rewards" data-rail-link><span>05</span><b>Collect</b><small>141 reasons to look twice</small></a>
-    <a href="#world" data-rail-link><span>06</span><b>Worlds + rooms</b><small>bikes required somewhere to live</small></a>
-    <a href="#lab" data-rail-link><span>07</span><b>Other experiments</b><small>ideas escaping containment</small></a>
-    <a href="#collab" data-rail-link><span>08</span><b>Build together</b><small>cash or Kona logistics accepted</small></a>
-    <a href="#faq" data-rail-link><span>09</span><b>FAQ-ish</b><small>reasonable and unreasonable</small></a>
-    <div class="field-rail-foot"><i></i><span data-rail-progress>00%</span><small>scroll telemetry · definitely essential</small></div>
-  </nav>
-</aside>
+<main id="fieldGuide">
+  <section class="about-shell" id="why">
+    <header class="about-story-head">
+      <span class="about-index">00</span>
+      <div><h1>Why this exists.</h1><span class="about-estimate">pick your attention span</span></div>
+    </header>
 
-<main id="main">
-  <section class="promo-hero" id="top">
-    <div class="promo-hero-grid" aria-hidden="true"></div>
-    <div class="promo-orbit promo-orbit-a" aria-hidden="true"></div>
-    <div class="promo-orbit promo-orbit-b" aria-hidden="true"></div>
-    <div class="promo-hero-copy">
-      <p class="t-label promo-kicker">KONA.M / FIELD GUIDE / 001</p>
-      <h1 class="t-display">Oh.<br><em>Here you are.</em></h1>
-      <p class="promo-hero-lede">You might be trying to figure out what Kona.m is.</p>
-      <p class="promo-hero-sub"><strong>Before anything else: I am proud this exists.</strong> Not because it is finished, and definitely not because I know exactly where it goes next. I am proud because a lot of scattered ideas finally became something whole enough to let other people into.</p>
-      <p class="promo-hero-sub"><strong>Funny enough, I am still figuring it out too.</strong> I started trying to build a better triathlon thing. Then there were 3D bikes. Then a game. Then dreams. Then worlds. Then collectibles. Then some AI. Then several ideas that should probably have stayed in a notebook.</p>
-      <p class="promo-hero-sub">So, in a nutshell: <strong>gaming + 3D + cool bikes + dreaming + random + worlds + triathlon + whatever survives the next build.</strong></p>
-      <div class="promo-hero-actions">
-        <a class="promo-button primary" href="./">Enter Kona.m <span>→</span></a>
-        <a class="promo-button ghost" href="#why-three-ways">Why does this exist?</a>
-      </div>
-      <p class="promo-hero-note t-hand">the intern is still working on the elevator pitch.</p>
-    </div>
-
-    <div class="promo-hero-stage" data-parallax-stage>
-      <div class="promo-stage-glow"></div>
-      <div class="promo-bike-ghost" aria-hidden="true">
-        <svg viewBox="0 0 760 410" role="presentation">
-          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="188" cy="300" r="93"/>
-            <circle cx="582" cy="300" r="93"/>
-            <path d="M188 300 307 174 406 300 250 300 307 174 482 178 582 300"/>
-            <path d="M406 300 482 178M462 155l55 3M290 158l-38-8M307 174l-15-46"/>
-            <path d="M242 299h191"/>
-          </g>
-        </svg>
-      </div>
-      <div class="promo-stage-label promo-stage-label-a">
-        <span>01</span><b>BIKES</b><small>dream machines, built one polygon at a time</small>
-      </div>
-      <div class="promo-stage-label promo-stage-label-b">
-        <span>02</span><b>WORLDS</b><small>Kona · Nice · St. George · Vegas</small>
-      </div>
-      <div class="promo-stage-label promo-stage-label-c">
-        <span>03</span><b>WHAT IF?</b><small>AI triathlon, maybe. Let's find out.</small>
-      </div>
-      <div class="promo-stage-status">
-        <i></i><span>LIVE EXPERIMENT</span><strong>KONA.M</strong>
-      </div>
-    </div>
-
-    <div class="promo-scroll-cue"><span>Scroll to explore</span><i></i></div>
-  </section>
-
-  <section class="promo-manifesto promo-section promo-why-gateway" id="why-three-ways">
-    <div class="promo-section-number">00</div>
-    <div class="promo-manifesto-copy">
-      <p class="t-label">WHY KONA.M EXISTS / PICK YOUR VERSION</p>
-      <h2 class="t-title">Same story.<br><em>Different attention spans.</em></h2>
-      <p class="promo-large-copy"><strong>I am proud we got here.</strong> That is probably the most important part of the story.</p>
-      <p class="promo-large-copy">I could pretend there was a master plan. There wasn't. There was training, an Excel sheet, AI, bikes, rooms, an island, and a suspicious number of side quests.</p>
-      <p class="promo-large-copy">Pick how much explanation you can tolerate.</p>
-    </div>
-    <aside class="promo-definition">
-      <small>INTERN STATUS</small>
-      <p>Still figuring out what this app is. Surprisingly comfortable with that.</p>
-      <div class="promo-definition-meta"><span>CURRENT STRATEGY</span><strong>BUILD → LEARN → REPEAT</strong></div>
-    </aside>
-
-    <div class="why-version-grid">
-      <a class="why-version-card" href="about.html?story=short">
-        <span>01</span>
-        <small>~ 15 SECONDS</small>
-        <h3>The Short Version</h3>
-        <p>One of my favourite people inspired me to get back into triathlon. So I made an Excel sheet.</p>
-        <strong>I am proud this one became real. Now there is an island.</strong>
-        <em>That escalated →</em>
+    <section class="about-choices" aria-label="Choose a version of the Kona.m story">
+      <a class="about-choice" href="about.html?story=short">
+        <div class="about-choice-top"><span class="about-index">01</span><div><h2>The Short Version</h2><span class="about-estimate">~ 15 seconds</span></div></div>
+        <p>One of my favourite people inspired me to get back into triathlon.</p>
+        <p>So, naturally, I made an Excel sheet.</p>
+        <p><strong>Now there is an island.</strong></p>
+        <div class="about-choice-foot"><small>Small tracking sheet. Big consequences.</small><span class="about-circle-arrow">→</span></div>
       </a>
-      <a class="why-version-card" href="about.html?story=scenic">
-        <span>02</span>
-        <small>~ 1 MINUTE</small>
-        <h3>The Scenic Route</h3>
-        <p>Training → Excel → AI → bikes → 3D bikes → room → museum → island.</p>
-        <strong>The next interesting puzzle became the product.</strong>
-        <em>Take the scenic route →</em>
+      <a class="about-choice" href="about.html?story=scenic">
+        <div class="about-choice-top"><span class="about-index">02</span><div><h2>The Scenic Route</h2><span class="about-estimate">~ 1 minute</span></div></div>
+        <p>Training → Excel → AI → Bikes → 3D bikes → A room → A museum → An island.</p>
+        <p>The next interesting puzzle became the product.</p>
+        <div class="about-choice-foot"><small>Curiosity leads the way.</small><span class="about-circle-arrow">→</span></div>
       </a>
-      <a class="why-version-card why-version-card-chaos" href="about.html?story=unfiltered">
-        <span>03</span>
-        <small>HONESTLY, WHO KNOWS?</small>
-        <h3>The Unfiltered Version</h3>
+      <a class="about-choice" href="about.html?story=unfiltered">
+        <div class="about-choice-top"><span class="about-index">03</span><div><h2>The Unfiltered Version</h2><span class="about-estimate">honestly, who knows?</span></div></div>
         <p>Side quest. Side quest. Completely unnecessary detail that is now absolutely essential. Side quest.</p>
-        <strong>Somehow it became fun to learn again.</strong>
-        <em>Enter carefully →</em>
+        <p><strong>Somehow it became fun to learn again.</strong></p>
+        <div class="about-choice-foot"><small>Same brain. Bigger map.</small><span class="about-circle-arrow">→</span></div>
       </a>
-    </div>
+    </section>
 
-    <div class="why-feedback">
-      <div>
-        <p class="t-hand">I am all ears.</p>
-        <h3>If you have an idea, tell the Intern.</h3>
-        <p>Kona.m is still becoming whatever it is. Feedback, weird ideas, broken buttons and “what if…” suggestions are useful fuel.</p>
-      </div>
-      <a class="promo-button primary" href="https://github.com/joaoccaldas/konam/issues" target="_blank" rel="noopener">Leave feedback <span>↗</span></a>
-    </div>
+    <div class="about-note">Still figuring out what the app is. Surprisingly comfortable with that.</div>
   </section>
 
-
-  <section class="promo-section promo-start" id="start">
-    <div class="promo-section-heading">
-      <div>
-        <p class="t-label">01 / START HERE</p>
-        <h2 class="t-title">Registration is<br><em>suspiciously easy.</em></h2>
-      </div>
-      <p>Mostly because there is no public account registration yet. Kona.m starts on your device, keeps the first-run profile local, and lets you get to the interesting bits before anyone asks for a password.</p>
-    </div>
-
-    <div class="start-layout">
-      <div class="start-live-card">
-        <div class="start-live-bar"><i></i><i></i><i></i><span>konam / front door</span><b>LIVE</b></div>
-        <div class="start-live-stage">
-          <iframe src="./" title="Live Kona.m entry screen" loading="lazy" tabindex="-1"></iframe>
-          <a href="./" class="start-live-open">Open the real front door ↗</a>
+  <section class="about-shell about-story" id="how">
+    <header class="about-story-head">
+      <span class="about-index">01</span>
+      <div><h1>How to play.</h1><span class="about-estimate">minimum viable instructions</span></div>
+    </header>
+    <div class="about-story-grid">
+      <div class="about-story-copy">
+        <p class="about-big">There is no correct path.</p>
+        <p>Start somewhere, then follow whatever makes you curious.</p>
+        <div class="about-path">
+          <div class="about-path-item"><span class="about-path-num">01</span><strong>Create</strong><span>Build your Race Self. Pick what you are training, chasing or merely daydreaming about.</span></div>
+          <div class="about-path-item"><span class="about-path-num">02</span><strong>Choose</strong><span>Pick a machine. Spend an unreasonable amount of time rotating it.</span></div>
+          <div class="about-path-item"><span class="about-path-num">03</span><strong>Explore</strong><span>Enter the world. Rooms, race places and stories are spatial on purpose.</span></div>
+          <div class="about-path-item"><span class="about-path-num">04</span><strong>Collect</strong><span>Find things. Some are obvious. Some are absolutely not.</span></div>
+          <div class="about-path-item"><span class="about-path-num">05</span><strong>Return</strong><span>Your passport remembers where you have been. The world does not need to explain everything on day one.</span></div>
         </div>
-        <p class="t-hand">yes, the website is demonstrating itself inside itself. the intern discovered iframes.</p>
+        <a class="btn-primary" href="./">Start instead of reading →</a>
       </div>
-
-      <div class="start-steps">
-        <article><span>01</span><div><small>ENTER</small><h3>No account required.</h3><p>Tap <strong>Enter Kona.m</strong>. Public email sign-in is currently unavailable, so the correct onboarding strategy is gloriously simple: continue without an account.</p></div></article>
-        <article><span>02</span><div><small>ANSWER FIVE EXTREMELY SERIOUS QUESTIONS</small><h3>Tell the app what kind of trouble you want.</h3><p>Racing, supporting, dreaming, or following a bike somewhere. The onboarding stores your answers on-device and awards progression XP.</p></div></article>
-        <article><span>03</span><div><small>BUILD YOUR RACE SELF</small><h3>Create the local passport.</h3><p>Your athlete/profile, stamps, finds, badges and progress are designed to live on the device. A passport code can move progress between devices.</p></div></article>
-        <article><span>04</span><div><small>IGNORE THE MANUAL</small><h3>Start touching things.</h3><p>Garage, Discover, rooms, worlds, bikes and suspicious doors. The product is deliberately more playground than tax return.</p></div></article>
-      </div>
-    </div>
-    <div class="start-trust-row">
-      <span>NO ACCOUNT REQUIRED</span><span>LOCAL-FIRST PROFILE</span><span>PUBLIC EMAIL SIGN-IN: NOT YET</span><span>SKIP BUTTON: YES</span>
-    </div>
-  </section>
-
-  <section class="promo-section promo-play" id="play">
-    <div class="promo-section-heading">
-      <div><p class="t-label">01 / HOW TO PLAY</p><h2 class="t-title">No manual required.<br><em>But here's one anyway.</em></h2></div>
-      <p>Start anywhere. There is no correct path through Kona.m. The system rewards curiosity more than obedience.</p>
-    </div>
-
-    <div class="promo-play-path" role="list">
-      <article class="promo-step" role="listitem">
-        <span class="promo-step-index">01</span>
-        <div class="promo-step-icon" aria-hidden="true">◫</div>
-        <h3>Create yourself</h3>
-        <p>Build an athlete identity, choose a bike and decide what you are training or dreaming toward.</p>
-        <small>USER STUDIO</small>
-      </article>
-      <article class="promo-step" role="listitem">
-        <span class="promo-step-index">02</span>
-        <div class="promo-step-icon" aria-hidden="true">⌖</div>
-        <h3>Explore</h3>
-        <p>Move between race places, stories and reconstructed worlds. Some are useful. Some are just fun.</p>
-        <small>WORLD ENGINE</small>
-      </article>
-      <article class="promo-step" role="listitem">
-        <span class="promo-step-index">03</span>
-        <div class="promo-step-icon" aria-hidden="true">◇</div>
-        <h3>Find things</h3>
-        <p>Collect artifacts, badges, stamps, keys and clues. Hidden things should remain at least a little hidden.</p>
-        <small>COLLECTIONS</small>
-      </article>
-      <article class="promo-step" role="listitem">
-        <span class="promo-step-index">04</span>
-        <div class="promo-step-icon" aria-hidden="true">↟</div>
-        <h3>Train</h3>
-        <p>Connect the playful layer to real endurance preparation, race planning and performance data.</p>
-        <small>PERFORMANCE</small>
-      </article>
-      <article class="promo-step" role="listitem">
-        <span class="promo-step-index">05</span>
-        <div class="promo-step-icon" aria-hidden="true">⌑</div>
-        <h3>Unlock</h3>
-        <p>Rooms, equipment, stories and experiments open over time. Not everything should be available immediately.</p>
-        <small>PROGRESSION</small>
-      </article>
-    </div>
-  </section>
-
-  <section class="promo-section promo-real-tour promo-tutorial-theatre" id="tour">
-    <div class="promo-section-heading">
-      <div><p class="t-label">03 / TUTORIAL THEATRE</p><h2 class="t-title">Actual screens.<br><em>Less brochure.</em></h2></div>
-      <p>Captured states from the real Kona world / studio build. Pick a step and the Intern will point at the part he hopes is self-explanatory.</p>
-    </div>
-
-    <div class="guide-theatre" data-guide-theatre>
-      <div class="guide-screen" data-guide-screen>
-        <div class="guide-screen-bar"><i></i><i></i><i></i><span data-guide-path>world / overview</span><b>REAL CAPTURE</b></div>
-        <a data-guide-open href="https://joaoccaldas.github.io/studio-kona/preview-v2/" target="_blank" rel="noopener">
-          <img data-guide-image src="https://joaoccaldas.github.io/studio-kona/renders/review/30_verified_overview.png" alt="Kona world overview from the real studio-kona build">
-        </a>
-        <div class="guide-scanline" aria-hidden="true"></div>
-        <div class="guide-pointer" aria-hidden="true"><span></span><b>intern cursor</b></div>
-        <div class="guide-caption">
-          <small data-guide-kicker>EXPLORE / STEP 01</small>
-          <h3 data-guide-title>Land in the world.</h3>
-          <p data-guide-copy>Start with the overview. Find the pier, the route, the places, then zoom your attention into whichever thing looks most clickable.</p>
-        </div>
-      </div>
-
-      <div class="guide-steps" role="tablist" aria-label="Kona.m tutorial steps">
-        <button class="is-active" type="button" data-guide-step
-          data-guide-src="https://joaoccaldas.github.io/studio-kona/renders/review/30_verified_overview.png"
-          data-guide-href="https://joaoccaldas.github.io/studio-kona/preview-v2/"
-          data-guide-path-label="world / overview"
-          data-guide-kicker-label="EXPLORE / STEP 01"
-          data-guide-title-label="Land in the world."
-          data-guide-copy-label="Start with the overview. Find the pier, the route, the places, then zoom your attention into whichever thing looks most clickable.">
-          <span>01</span><div><b>Explore</b><small>World overview</small></div><em>⌖</em>
-        </button>
-        <button type="button" data-guide-step
-          data-guide-src="https://joaoccaldas.github.io/studio-kona/renders/review/32_verified_walk_mode.png"
-          data-guide-href="https://joaoccaldas.github.io/studio-kona/preview-v2/"
-          data-guide-path-label="world / walk mode"
-          data-guide-kicker-label="MOVE / STEP 02"
-          data-guide-title-label="Stop being a satellite."
-          data-guide-copy-label="Drop into walk mode. Rooms, pedestals, beacons and details make much more sense when you are standing next to them.">
-          <span>02</span><div><b>Walk</b><small>Enter the scene</small></div><em>↟</em>
-        </button>
-        <button type="button" data-guide-step
-          data-guide-src="https://joaoccaldas.github.io/studio-kona/renders/review/08_artifact_modal_unlocked.png"
-          data-guide-href="https://joaoccaldas.github.io/studio-kona/preview-v2/"
-          data-guide-path-label="world / artifact unlocked"
-          data-guide-kicker-label="COLLECT / STEP 03"
-          data-guide-title-label="Find something."
-          data-guide-copy-label="A collectible is not just a number changing. The world answers back with an unlock state, context and a reason to look for the next one.">
-          <span>03</span><div><b>Collect</b><small>Artifact unlocked</small></div><em>◇</em>
-        </button>
-        <button type="button" data-guide-step
-          data-guide-src="https://joaoccaldas.github.io/studio-kona/renders/review/15_artifact_modal_3d_viewer.png"
-          data-guide-href="Speedmax_Museum.html"
-          data-guide-path-label="artifact / 3d viewer"
-          data-guide-kicker-label="INSPECT / STEP 04"
-          data-guide-title-label="Turn the thing around."
-          data-guide-copy-label="Collected objects can become inspectable objects. Rotate, inspect, compare and make the museum behave less like a museum label.">
-          <span>04</span><div><b>Inspect 3D</b><small>Artifact viewer</small></div><em>↻</em>
-        </button>
-        <button type="button" data-guide-step
-          data-guide-src="https://joaoccaldas.github.io/studio-kona/renders/review/16_museum_drawer_with_collected_bike.png"
-          data-guide-href="Canyon_Collection.html"
-          data-guide-path-label="museum / collected bike"
-          data-guide-kicker-label="REMEMBER / STEP 05"
-          data-guide-title-label="Your collection remembers."
-          data-guide-copy-label="The museum drawer keeps what you have discovered visible. Progress becomes a trail rather than a disposable toast notification.">
-          <span>05</span><div><b>Collect bikes</b><small>Museum drawer</small></div><em>▣</em>
-        </button>
-        <button type="button" data-guide-step
-          data-guide-src="https://joaoccaldas.github.io/studio-kona/renders/review/33_verified_studio_2019.png"
-          data-guide-href="Studio.html"
-          data-guide-path-label="bike studio / 2019"
-          data-guide-kicker-label="BUILD / STEP 06"
-          data-guide-title-label="Now make the bike yours."
-          data-guide-copy-label="Bike Studio turns the machine into a playground: generations, paint, parts, scenes and an unreasonable amount of attention to carbon.">
-          <span>06</span><div><b>Build</b><small>Bike Studio</small></div><em>＋</em>
-        </button>
-      </div>
-    </div>
-
-    <div class="guide-proof">
-      <span>CAPTURE SOURCE</span>
-      <strong>studio-kona / renders / review</strong>
-      <p>These are repository-backed captured states, not newly invented concept art. The live experiences remain linked from every step.</p>
-    </div>
-  </section>
-
-  <section class="promo-section promo-intern" id="intern">
-    <div class="promo-section-heading">
-      <div><p class="t-label">06 / THE INTERN'S MANUAL</p><h2 class="t-title">Hired to build an app.<br><em>Accidentally became the company.</em></h2></div>
-      <p>The Intern is still learning how to program. This would be easier if he were not also Product, 3D, QA, Marketing, PR, IT, Support, Customer Service, Documentation, Maintenance and the person expected to know why your button did that.</p>
-    </div>
-
-    <div class="intern-board">
-      <aside class="intern-id">
-        <div class="face" aria-hidden="true">i</div>
-        <p class="t-label">EMPLOYEE 001 / PROBABLY</p>
-        <h3>The Intern</h3>
-        <p>Current headcount: one. Current departments: statistically concerning. Helpful ideas, bug reports, introductions and adult supervision are all appreciated.</p>
-        <div class="intern-jobs intern-departments" aria-label="Intern responsibilities">
-          <span>ENGINEERING</span><span>PRODUCT</span><span>3D</span><span>QA</span><span>MARKETING</span><span>PR</span><span>IT</span><span>SUPPORT</span><span>CUSTOMER SERVICE</span><span>DOCS</span><span>COFFEE</span><span>TRAIN?</span>
-        </div>
-        <div class="intern-status">
-          <div><span>SITE</span><b>ONLINE</b></div>
-          <div><span>COFFEE</span><b data-coffee-status>ADEQUATE</b></div>
-          <div><span>TRAINING</span><b data-training-status>SHOULD HAPPEN</b></div>
-          <div><span>CONFIDENCE</span><b>UNREASONABLY HIGH</b></div>
-        </div>
+      <aside class="about-story-aside">
+        <figure class="about-photo-card"><img src="assets/share/konam.png" alt="Kona.m product overview"><figcaption>Explore.<br>Build.<br>Get lost.</figcaption></figure>
+        <div class="about-note">If you are already clicking random things, the tutorial has worked.</div>
       </aside>
-
-      <div class="intern-manual">
-        <article class="intern-card">
-          <header><small>START HERE / 90 SECONDS</small><span>INTERN NOTE #001</span></header>
-          <h3>First time in Kona.m?</h3>
-          <p>You do not need to understand everything. Pick an identity, choose a machine, then follow whichever thing looks interesting. The app is intentionally more playground than spreadsheet.</p>
-          <div class="intern-tutorial-flow">
-            <div><small>STEP 01</small><b>Build yourself</b><i>→ User Studio</i></div>
-            <div><small>STEP 02</small><b>Pick a bike</b><i>→ Garage</i></div>
-            <div><small>STEP 03</small><b>Go somewhere</b><i>→ Discover</i></div>
-            <div><small>STEP 04</small><b>Touch things</b><i>→ Seriously</i></div>
-          </div>
-          <p class="intern-note">If you are already clicking random things, excellent. Tutorial complete.</p>
-          <div class="intern-actions"><a href="./">Start Kona.m →</a><button type="button" data-onboarding-start>Help me choose a path</button></div>
-        </article>
-
-        <article class="intern-card" data-onboarding-card hidden>
-          <header><small>UNOFFICIAL ONBOARDING WIZARD</small><span>NO ACCOUNT REQUIRED</span></header>
-          <h3 data-onboarding-title>What brought you here?</h3>
-          <p data-onboarding-copy>There are no wrong answers. There are several questionable ones.</p>
-          <div class="intern-actions intern-choice-actions" data-onboarding-choices>
-            <button type="button" data-path="race">I have a race</button>
-            <button type="button" data-path="dream">I am dreaming of Kona</button>
-            <button type="button" data-path="bikes">Show me bikes</button>
-            <button type="button" data-path="wander">I have no idea</button>
-          </div>
-          <div class="intern-onboarding-result" data-onboarding-result hidden></div>
-        </article>
-
-        <article class="intern-card">
-          <header><small>THE FIRST FIVE MINUTES</small><span>INTERN NOTE #004</span></header>
-          <h3>Things worth trying before judging us.</h3>
-          <p>“Us” is doing substantial work in that sentence.</p>
-          <div class="intern-tutorial-flow">
-            <div><small>00:30</small><b>Change your athlete</b><i>Identity first</i></div>
-            <div><small>01:30</small><b>Open the Garage</b><i>Spin something expensive</i></div>
-            <div><small>03:00</small><b>Find a world</b><i>Kona is a good start</i></div>
-            <div><small>05:00</small><b>Collect one thing</b><i>Congratulations, attachment</i></div>
-          </div>
-        </article>
-
-        <article class="intern-card">
-          <header><small>I'M LOST</small><span>SUPPORT DEPARTMENT</span></header>
-          <h3>Good. Here is the emergency procedure.</h3>
-          <p><strong>Home</strong> tells you what matters now. <strong>Discover</strong> is where stories and places live. <strong>Garage</strong> is equipment. <strong>Plan</strong> is where the serious athlete briefly appears. <strong>Me</strong> remembers what you have done.</p>
-          <p class="intern-note">Worst case: go Home. This is also my debugging strategy.</p>
-          <div class="intern-actions"><a href="./">Return to Home →</a><a href="#faq">Open FAQ</a></div>
-        </article>
-
-        <article class="intern-card">
-          <header><small>HOW TO APPROACH THIS APP</small><span>INTERN PHILOSOPHY</span></header>
-          <h3>Curiosity beats completion.</h3>
-          <p>You are not expected to consume everything. Follow a bike. Read one weird story. Enter a room. Leave. Come back later. The world should feel slightly larger than the amount of time you have.</p>
-          <p class="intern-note">Also please report broken buttons. I apparently made those too.</p>
-        </article>
-      </div>
     </div>
   </section>
 
-  <section class="promo-section promo-rewards" id="rewards">
-    <div class="promo-section-heading">
-      <div>
-        <p class="t-label">04 / THE FOUNDING 141</p>
-        <h2 class="t-title">There are 141 things.<br><em>No, you may not see them.</em></h2>
-      </div>
-      <p>The collection is real: 14 founding rooms × 10 collectibles, plus one roomless oddity called The Point Six. The catalog exists from launch. Finding it is another matter.</p>
-    </div>
-
-    <div class="reward-vault">
-      <div class="reward-vault-head">
-        <div><small>FOUNDING COLLECTION</small><strong>140.6 → 141</strong></div>
-        <div><small>ROOMS</small><strong>14</strong></div>
-        <div><small>KNOWN TO INTERN</small><strong>141</strong></div>
-        <div><small>SHOWN HERE</small><strong>ABSOLUTELY NOT</strong></div>
-      </div>
-      <div class="reward-vault-grid" data-reward-vault aria-label="141 obscured Founding collectibles"></div>
-      <div class="reward-vault-scan" aria-hidden="true"></div>
-      <div class="reward-vault-message" data-vault-message>
-        <p class="t-hand">The intern has blurred the evidence for legal, ethical and dramatic reasons.</p>
-        <span>Tap a silhouette if you enjoy disappointment.</span>
-      </div>
-    </div>
-    <div class="reward-logic">
-      <article><span>01</span><h3>Explore</h3><p>Some things are simply somewhere. This is the suspiciously reasonable category.</p></article>
-      <article><span>02</span><h3>Notice</h3><p>Some things reward looking properly rather than moving quickly.</p></article>
-      <article><span>03</span><h3>Earn</h3><p>Quests, challenges, timing and mastery can make the world answer back.</p></article>
-      <article><span>04</span><h3>Wait</h3><p>Not everything is obtainable immediately. The intern has learned the dangerous power of withholding.</p></article>
-    </div>
-  </section>
-
-  <section class="promo-section promo-feature-reel" id="features">
-    <div class="promo-section-heading">
-      <div><p class="t-label">06 / FEATURES, APPARENTLY</p><h2 class="t-title">A trailer made from<br><em>the actual app.</em></h2></div>
-      <p>No concept art in this reel. These are existing Kona.m visual assets and live surfaces, rearranged into a slightly overdramatic product trailer.</p>
-    </div>
-    <div class="feature-reel" data-feature-reel>
-      <div class="feature-reel-stage">
-        <article class="feature-shot is-active" data-feature-shot="0">
-          <img src="assets/entry/triathlete.webp" alt="Kona.m athlete identity visual">
-          <div><small>USER STUDIO</small><strong>Become someone.</strong><span>Preferably someone with excellent bike taste.</span></div>
-        </article>
-        <article class="feature-shot" data-feature-shot="1">
-          <img src="assets/entry/catalog/edition-film-stay-weird.webp" alt="Kona.m Stay Weird bike studio edition">
-          <div><small>BIKE STUDIO</small><strong>Build the machine.</strong><span>Serious carbon. Questionable artistic supervision.</span></div>
-        </article>
-        <article class="feature-shot" data-feature-shot="2">
-          <img src="assets/entry/catalog/edition-galleries-horror.webp" alt="Kona.m horror gallery experience">
-          <div><small>ROOMS</small><strong>Open the wrong door.</strong><span>The product roadmap became less normal around here.</span></div>
-        </article>
-        <article class="feature-shot" data-feature-shot="3">
-          <img src="assets/share/konam.png" alt="Kona.m world and interface">
-          <div><small>WORLDS</small><strong>Go somewhere.</strong><span>Kona first. Then apparently Nevada. Nobody stopped the intern.</span></div>
-        </article>
-        <div class="feature-reel-hud"><span data-feature-counter>01 / 04</span><i></i><b>REAL APP ASSETS</b></div>
-      </div>
-      <div class="feature-reel-controls" role="tablist" aria-label="Kona.m feature trailer">
-        <button class="is-active" type="button" data-feature-button="0"><span>01</span>YOU</button>
-        <button type="button" data-feature-button="1"><span>02</span>BIKE</button>
-        <button type="button" data-feature-button="2"><span>03</span>ROOM</button>
-        <button type="button" data-feature-button="3"><span>04</span>WORLD</button>
-      </div>
-      <p class="feature-reel-note t-hand">show enough to make you curious. hide enough to make you click.</p>
-    </div>
-  </section>
-
-  <section class="promo-section promo-world" id="world">
-    <div class="promo-section-heading">
-      <div><p class="t-label">05 / THE WORLD</p><h2 class="t-title">The bikes needed<br><em>somewhere to live.</em></h2></div>
-      <p>So the project escaped the museum and started becoming places.</p>
-    </div>
-
-    <div class="promo-world-console">
-      <div class="promo-world-viewport" data-world-viewport>
-        <div class="promo-map-lines" aria-hidden="true"></div>
-        <button class="promo-world-node is-active" type="button" style="--x:22%;--y:54%" data-world="kona"><i></i><b>KONA</b><small>HAWAIʻI</small></button>
-        <button class="promo-world-node" type="button" style="--x:55%;--y:35%" data-world="vegas"><i></i><b>LAS VEGAS</b><small>NEVADA</small></button>
-        <button class="promo-world-node" type="button" style="--x:62%;--y:46%" data-world="stgeorge"><i></i><b>ST. GEORGE</b><small>2022</small></button>
-        <button class="promo-world-node" type="button" style="--x:79%;--y:31%" data-world="nice"><i></i><b>NICE</b><small>FRANCE</small></button>
-        <div class="promo-world-pulse" aria-hidden="true"></div>
-      </div>
-      <div class="promo-world-info" data-world-info>
-        <p class="t-label">ACTIVE WORLD</p>
-        <h3>Kona</h3>
-        <p>The emotional and geographic center of the experiment. Race week, equipment, memory, discovery and the question that started the whole thing.</p>
-        <a href="./">Enter Kona.m <span>↗</span></a>
-      </div>
-    </div>
-
-    <div class="promo-world-link">
-      <a href="https://joaoccaldas.github.io/studio-kona/preview-v2/" target="_blank" rel="noopener">
-        <span>LIVE WORLD ENGINE</span>
-        <strong>Open the spatial prototype</strong>
-        <em>↗</em>
-      </a>
-    </div>
-  </section>
-
-  <section class="promo-section promo-things">
-    <div class="promo-section-heading">
-      <div><p class="t-label">06.5 / THINGS TO TOUCH</p><h2 class="t-title">Touch things.<br><em>Turn things.</em></h2></div>
-      <p>A product should demonstrate its ideas rather than hide them inside a slide deck.</p>
-    </div>
-
-    <div class="promo-demo-grid">
-      <article class="promo-demo-card promo-demo-bike">
-        <div class="promo-demo-stage">
-          <svg viewBox="0 0 760 410" class="promo-demo-bike-svg" aria-hidden="true">
-            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="188" cy="300" r="93"/><circle cx="582" cy="300" r="93"/>
-              <path d="M188 300 307 174 406 300 250 300 307 174 482 178 582 300M406 300 482 178M462 155l55 3M290 158l-38-8M307 174l-15-46"/>
-            </g>
-          </svg>
-          <div class="promo-demo-chip">DRAG IN APP</div>
+  <section class="about-shell about-story" id="worlds">
+    <header class="about-story-head">
+      <span class="about-index">02</span>
+      <div><h1>The real rooms.</h1><span class="about-estimate">same renderer · same lights · same world</span></div>
+    </header>
+    <div class="about-story-grid">
+      <div class="about-story-copy">
+        <p class="about-big">No promo reconstruction.</p>
+        <p>This is the actual Kona.m world running below. The buttons only change where the existing app enters. Fog, exposure, floor materials, lights, animations and depth all belong to the parent world.</p>
+        <div class="ui-cluster" aria-label="Choose a real Kona.m room">
+          <button class="btn-secondary" type="button" data-native-room="./?room=hall" data-native-label="Queen K Hall">Queen K Hall</button>
+          <button class="btn-secondary" type="button" data-native-room="./?room=room-bio" data-native-label="Bio">Bio</button>
+          <button class="btn-secondary" type="button" data-native-room="./?room=room-horror" data-native-label="Horror">Horror</button>
+          <button class="btn-secondary" type="button" data-native-room="./?room=room-alien" data-native-label="Alien">Alien</button>
+          <button class="btn-secondary" type="button" data-native-room="./?room=room-zombie" data-native-label="Zombie">Zombie</button>
+          <button class="btn-secondary" type="button" data-native-room="./?room=hween" data-native-label="Lava Night">Lava Night</button>
+          <button class="btn-secondary" type="button" data-native-room="Studio.html?p=canyon-cfr-2027&amp;s=eyJ0Ijoic3RheS13ZWlyZCJ9&amp;scene=film" data-native-label="Bike Studio">Bike Studio</button>
         </div>
-        <p class="t-label">GARAGE</p><h3>Build the bikes you always wanted.</h3><p>Models become objects, objects become collections, and collections eventually become stories you can ride through.</p>
+        <div class="about-sidequest">
+          <div class="about-sidequest-label">The useful bit:</div>
+          <p class="about-ui-copy">These are not videos. Open the full view and move around. The themed rooms are built by the same room runtime used by Kona.m itself.</p>
+        </div>
+      </div>
+      <aside class="about-story-aside promo-native-world-aside">
+        <figure class="about-photo-card promo-native-live">
+          <iframe data-native-frame src="./?room=room-horror" title="Live Kona.m 3D room" loading="lazy" allow="fullscreen"></iframe>
+          <figcaption><span data-native-label>Horror</span> · live Kona.m</figcaption>
+        </figure>
+        <a class="btn-secondary" data-native-open href="./?room=room-horror">Open this room full-screen ↗</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="about-shell about-story" id="collect">
+    <header class="about-story-head">
+      <span class="about-index">03</span>
+      <div><h1>The Founding 141.</h1><span class="about-estimate">visible catalog · withheld answers</span></div>
+    </header>
+    <div class="about-story-grid">
+      <div class="about-story-copy">
+        <p class="about-big">14 rooms × 10 things.<br>Then one more.</p>
+        <p>The collection is a real data contract. That does not mean there are 141 launch GLBs, and the Field Guide is not a cheat sheet.</p>
+        <div class="about-path" aria-label="Fourteen founding rooms and their hidden collectible slots">
+          <div class="about-path-item"><span class="about-path-num">01</span><strong>The Queen K</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">02</span><strong>The Bay</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">03</span><strong>The Pier</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">04</span><strong>Aliʻi</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">05</span><strong>Champions</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">06</span><strong>Against the Clock</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">07</span><strong>Canyon Museum</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">08</span><strong>The Aero Lab</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">09</span><strong>The Kit Room</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">10</span><strong>Transition</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">11</span><strong>Race Week</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">12</span><strong>Island Stories</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">13</span><strong>The Archive</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+<div class="about-path-item"><span class="about-path-num">14</span><strong>Lost & Found</strong><span aria-label="ten hidden collectibles">■ ■ ■ ■ ■ ■ ■ ■ ■ ■</span></div>
+        </div>
+        <section class="about-sidequest">
+          <div class="about-sidequest-label">#141</div>
+          <div class="about-countdown">■ ■ ■ ■ ■ ■</div>
+          <p>One roomless final collectible. The catalog knows. The Intern is declining further questions.</p>
+        </section>
+      </div>
+      <aside class="about-story-aside">
+        <div class="about-note">At launch, the catalog can be visible while only a meaningful subset is obtainable. Mystery is not a rendering bug.</div>
+        <figure class="about-photo-card"><img src="assets/kona-years/finds.glb" alt="" hidden><img src="assets/kona-years/kailua-bay.jpg" alt="Kailua Bay"><figcaption>Look twice.<br>Some things hide.</figcaption></figure>
+      </aside>
+    </div>
+  </section>
+
+  <section class="about-shell about-story" id="intern">
+    <header class="about-story-head">
+      <span class="about-index">04</span>
+      <div><h1>The Intern.</h1><span class="about-estimate">apparently all departments</span></div>
+    </header>
+    <div class="about-story-grid">
+      <div class="about-story-copy">
+        <p class="about-big">One employee.<br>An optimistic org chart.</p>
+        <div class="about-path">
+          <div class="about-path-item"><span class="about-path-num">01</span><strong>Engineering</strong><span>Code it, break it, discover the test that should have existed yesterday.</span></div>
+          <div class="about-path-item"><span class="about-path-num">02</span><strong>3D</strong><span>Build the bikes. Build rooms for the bikes. Accidentally build an island.</span></div>
+          <div class="about-path-item"><span class="about-path-num">03</span><strong>Product</strong><span>Ask what this app is. Receive several incompatible answers. Continue.</span></div>
+          <div class="about-path-item"><span class="about-path-num">04</span><strong>Support</strong><span>If a button does nothing, this department would like to hear about it.</span></div>
+          <div class="about-path-item"><span class="about-path-num">05</span><strong>Coffee</strong><span>Mission-critical infrastructure. No failover currently documented.</span></div>
+          <div class="about-path-item"><span class="about-path-num">06</span><strong>Training</strong><span>Still on the roadmap. The athlete has raised concerns about Engineering.</span></div>
+        </div>
+      </div>
+      <aside class="about-story-aside">
+        <div class="about-note">The Intern wrote this section. Governance remains weak.</div>
+        <figure class="about-photo-card"><img src="assets/entry/triathlete.webp" alt="Kona.m block triathlete"><figcaption>Also trying<br>to train.</figcaption></figure>
+      </aside>
+    </div>
+  </section>
+
+  <section class="about-shell" id="lab">
+    <header class="about-story-head">
+      <span class="about-index">05</span>
+      <div><h1>The Lab.</h1><span class="about-estimate">same curiosity · different containers</span></div>
+    </header>
+    <section class="about-choices">
+      <a class="about-choice" href="https://joaoccaldas.github.io/ai/studio/sokai/" target="_blank" rel="noopener">
+        <div class="about-choice-top"><span class="about-index">01</span><div><h2>SOKAI</h2><span class="about-estimate">3D object study</span></div></div>
+        <p>Material, light and object storytelling around an interactive katana.</p>
+        <div class="about-choice-foot"><small>Blender · Three.js · WebGL</small><span class="about-circle-arrow">↗</span></div>
+      </a>
+      <a class="about-choice" href="https://joaoccaldas.github.io/ai/studio/" target="_blank" rel="noopener">
+        <div class="about-choice-top"><span class="about-index">02</span><div><h2>AI Studio</h2><span class="about-estimate">experiment gallery</span></div></div>
+        <p>Visual, generative and interactive prototypes that are allowed to become strange before they become useful.</p>
+        <div class="about-choice-foot"><small>GenAI · Interaction · Prototypes</small><span class="about-circle-arrow">↗</span></div>
+      </a>
+      <a class="about-choice" href="https://performance-os-cloud.vercel.app" target="_blank" rel="noopener">
+        <div class="about-choice-top"><span class="about-index">03</span><div><h2>Performance OS</h2><span class="about-estimate">private data system</span></div></div>
+        <p>Training, signals, prediction and feedback. Public Field Guide visuals use synthetic data only; the real system stays authenticated.</p>
+        <div class="about-choice-foot"><small>Data · Forecasting · Agents</small><span class="about-circle-arrow">↗</span></div>
+      </a>
+    </section>
+  </section>
+
+  <section class="about-shell" id="faq">
+    <header class="about-story-head">
+      <span class="about-index">06</span>
+      <div><h1>FAQ-ish.</h1><span class="about-estimate">reasonable questions, mostly</span></div>
+    </header>
+    <section class="about-choices">
+      <article class="about-choice">
+        <div class="about-choice-top"><span class="about-index">Q1</span><div><h2>Is it a game?</h2></div></div>
+        <p>Partly. It borrows identity, progression, discovery and collecting from games, then mixes them with training, equipment, history and places.</p>
       </article>
-
-      <article class="promo-demo-card promo-demo-door">
-        <div class="promo-door" data-door>
-          <div class="promo-door-frame"><span class="promo-door-panel"><i></i></span></div>
-          <button type="button" data-door-button>Try the door</button>
-        </div>
-        <p class="t-label">HIDDEN ROOMS</p><h3>Not everything has to explain itself.</h3><p>Keys, guesses, timed access and strange doors give the world a reason to stay surprising.</p>
+      <article class="about-choice">
+        <div class="about-choice-top"><span class="about-index">Q2</span><div><h2>Is it finished?</h2></div></div>
+        <p>Enough to exist. Not enough to stop changing. The Intern has decided this is a legitimate production philosophy.</p>
       </article>
-
-      <article class="promo-demo-card promo-demo-passport">
-        <div class="promo-passport">
-          <div><small>PASSPORT</small><strong>KONA.M</strong><span>EXPLORE / COLLECT / RETURN</span></div>
-          <i>KONA</i><i>NICE</i><i>SG22</i>
-        </div>
-        <p class="t-label">PROGRESSION</p><h3>Remember where you've been.</h3><p>Stamps, finds, badges and artifacts turn exploration into a personal trail through the system.</p>
+      <article class="about-choice">
+        <div class="about-choice-top"><span class="about-index">Q3</span><div><h2>Where does AI fit?</h2></div></div>
+        <p>Generation, agents, analysis, knowledge and future world behavior. It is a capability layer, not a decorative chatbot.</p>
       </article>
-
-      <article class="promo-demo-card promo-demo-data">
-        <div class="promo-data-viz" aria-hidden="true">
-          <div class="promo-chart">
-            <span style="--h:36%"></span><span style="--h:52%"></span><span style="--h:48%"></span><span style="--h:68%"></span><span style="--h:73%"></span><span style="--h:81%"></span><span style="--h:91%"></span>
-          </div>
-          <div class="promo-data-meta"><b>FORM</b><strong>↗</strong><small>learning from the signal</small></div>
-        </div>
-        <p class="t-label">PERFORMANCE</p><h3>Play can meet real data.</h3><p>Performance OS explores how training, recovery, observations and predictions can become a useful feedback loop.</p>
+      <article class="about-choice">
+        <div class="about-choice-top"><span class="about-index">Q4</span><div><h2>Why Kona?</h2></div></div>
+        <p>Because Kona is a place, a race-week ecosystem and a powerful symbol inside long-course triathlon. It became the anchor for the world.</p>
       </article>
-    </div>
-  </section>
-
-  <section class="promo-section promo-story" id="story">
-    <div class="promo-section-number">07</div>
-    <div class="promo-story-grid">
-      <div class="promo-story-lead">
-        <p class="t-label">WHY KONA.M EXISTS</p>
-        <h2 class="t-title">I wanted to finish<br><em>something.</em></h2>
-      </div>
-      <div class="promo-story-copy">
-        <p class="promo-large-copy"><strong>I am proud of where this is now.</strong> That matters before the explanation gets complicated.</p>
-        <p>For a while, finishing something felt more important than knowing exactly what it would become. Pieces had been scattered across projects and years, and this arrived during a hard stretch. Finishing it did not solve everything. It did prove I could still bring the pieces together.</p>
-        <p>There is a smaller version of the same story. I once had a package waiting to be delivered for more than a week. Then I counted: <strong>5 · 4 · 3 · 2 · 1.</strong> I picked it up and moved. The visible action took seconds. The time before it was much longer. Some of that was friction; some of it may also have been preparation. Either way, those five seconds turned everything before them into movement.</p>
-        <p>Kona.m feels like that at a different scale. Years of experiments, unfinished ideas, bikes, software, AI, rooms and worlds finally converged into one thing I can look at and feel satisfied with.</p>
-        <p><strong>That does not mean stopping.</strong> It means I no longer need to know exactly what comes next in order to be glad I got here.</p>
-        <p class="promo-story-pull">The whole map does not have to be clear. Sometimes the next five seconds are enough.</p>
-        <a class="promo-text-link" href="about.html">Read the longer story <span>→</span></a>
-      </div>
-    </div>
-  </section>
-
-  
-  <section class="promo-section promo-lab" id="lab">
-    <div class="promo-section-heading">
-      <div><p class="t-label">06 / THE LAB</p><h2 class="t-title">Things that escaped<br><em>the main experiment.</em></h2></div>
-      <p>These are not unrelated side projects. They are different tests of the same question: what becomes possible when software can see, reason, remember, generate and inhabit space?</p>
-    </div>
-
-    <div class="promo-lab-grid">
-      <a class="promo-project-card promo-project-kona" href="./">
-        <div class="promo-project-visual promo-project-thumb">
-          <img src="https://joaoccaldas.github.io/studio-kona/renders/review/30_verified_overview.png" alt="Kona world overview from the studio-kona build">
-          <div class="pv-screenbar"><i></i><span>KONA.M / WORLD</span><b>REAL CAPTURE</b></div>
-          <span class="thumb-tag">ENTER THE WORLD</span>
-        </div>
-        <div class="promo-project-top"><span>01</span><small>PLAYABLE WORLD</small></div>
-        <h3>Kona.m</h3>
-        <p>Triathlon as a place you can enter: athlete identity, bikes, stories, collections, race-week context and experiments.</p>
-        <div class="promo-project-tags"><span>3D</span><span>PWA</span><span>GAME SYSTEMS</span><span>AI</span></div>
-        <b>Enter project ↗</b>
-      </a>
-
-      <a class="promo-project-card" href="https://joaoccaldas.github.io/ai/studio/sokai/" target="_blank" rel="noopener">
-        <div class="promo-project-visual promo-project-thumb">
-          <img src="https://joaoccaldas.github.io/ai/studio/gallery/sokai.jpg" alt="SOKAI project thumbnail from the AI Studio gallery">
-          <div class="pv-screenbar"><i></i><span>SOKAI / OBJECT STUDY</span><b>3D</b></div>
-          <span class="thumb-tag">LIGHT · MATERIAL · FORM</span>
-        </div>
-        <div class="promo-project-top"><span>02</span><small>SPATIAL OBJECT</small></div>
-        <h3>SOKAI</h3>
-        <p>An interactive katana modeled in Blender and rendered live in-browser, exploring material, light and object storytelling.</p>
-        <div class="promo-project-tags"><span>BLENDER</span><span>THREE.JS</span><span>WEBGL</span></div>
-        <b>Open experience ↗</b>
-      </a>
-
-      <a class="promo-project-card" href="https://joaoccaldas.github.io/ai/studio/" target="_blank" rel="noopener">
-        <div class="promo-project-visual promo-project-collage">
-          <img src="https://joaoccaldas.github.io/ai/studio/gallery/belong.jpg" alt="Belong project from AI Studio">
-          <img src="https://joaoccaldas.github.io/ai/studio/gallery/wander.jpg" alt="Wander project from AI Studio">
-          <img src="https://joaoccaldas.github.io/ai/studio/gallery/eclat.jpg" alt="Eclat project from AI Studio">
-          <div class="pv-screenbar"><i></i><span>AI STUDIO / 3D GALLERY</span><b>MUSEUM</b></div>
-          <span class="thumb-tag">WEBSITES YOU CAN WALK INTO</span>
-        </div>
-        <div class="promo-project-top"><span>03</span><small>EXPERIMENT GALLERY</small></div>
-        <h3>AI Studio / 3D Gallery</h3>
-        <p>A museum of visual, generative and interactive experiments: websites as rooms, objects as interfaces, and prototypes that are allowed to become strange before they acquire obligations.</p>
-        <div class="promo-project-tags"><span>GENAI</span><span>INTERACTION</span><span>PROTOTYPES</span></div>
-        <b>Visit studio ↗</b>
-      </a>
-
-      <a class="promo-project-card" href="https://joaoccaldas.github.io/studio-kona/preview-v2/" target="_blank" rel="noopener">
-        <div class="promo-project-visual promo-project-thumb">
-          <img src="https://joaoccaldas.github.io/studio-kona/renders/review/32_verified_walk_mode.png" alt="Walk mode in the studio-kona spatial prototype">
-          <div class="pv-screenbar"><i></i><span>WORLD ENGINE</span><b>WALK MODE</b></div>
-          <span class="thumb-tag">KONA · VEGAS · ST. GEORGE · NICE</span>
-        </div>
-        <div class="promo-project-top"><span>04</span><small>WORLD ENGINE</small></div>
-        <h3>3D Worlds</h3>
-        <p>A spatial sandbox for Kona, Las Vegas, St. George and Nice: geography, memory, race context and browser-native 3D.</p>
-        <div class="promo-project-tags"><span>THREE.JS</span><span>WORLD STREAMING</span><span>SPATIAL UI</span></div>
-        <b>Enter world ↗</b>
-      </a>
-
-      <a class="promo-project-card promo-project-performance" href="https://performance-os-cloud.vercel.app" target="_blank" rel="noopener">
-        <div class="promo-project-visual pv-performance">
-          <div class="pv-screenbar"><i></i><span>PERFORMANCE OS</span><b>DEMO DATA</b></div>
-          <div class="pv-perf-top" aria-hidden="true">
-            <div><small>READINESS</small><strong>82</strong><span>+6</span></div>
-            <div><small>LOAD</small><strong>61</strong><span>steady</span></div>
-            <div><small>RECOVERY</small><strong>74</strong><span>↗</span></div>
-          </div>
-          <div class="pv-perf-chart" aria-hidden="true">
-            <svg viewBox="0 0 500 160" preserveAspectRatio="none">
-              <path class="grid" d="M0 28H500M0 68H500M0 108H500M0 148H500"/>
-              <path class="actual" d="M0 125 C48 112 61 128 102 101 S161 82 200 91 S264 61 307 71 S361 43 403 57 S457 28 500 35"/>
-              <path class="forecast" d="M307 71 C348 66 363 52 403 57 S462 43 500 45"/>
-            </svg>
-            <div class="pv-perf-legend"><span><i></i>OBSERVED</span><span><i></i>FORECAST</span></div>
-          </div>
-          <p class="pv-demo-disclaimer">Synthetic values for visualization only. No personal health or training data is shown.</p>
-        </div>
-        <div class="promo-project-top"><span>05</span><small>PERSONAL SYSTEM</small></div>
-        <h3>Performance OS</h3>
-        <p>An authenticated experiment in personal performance intelligence: training, health signals, prediction, observations and feedback.</p>
-        <div class="promo-project-tags"><span>DATA</span><span>FORECASTING</span><span>AGENTS</span><span>HEALTH</span></div>
-        <b>Open access layer ↗</b>
-      </a>
-
-      <article class="promo-project-card promo-project-future">
-        <div class="promo-project-visual pv-future" aria-hidden="true">
-          <div class="pv-screenbar"><i></i><span>UNKNOWN SYSTEM</span><b>?</b></div>
-          <div class="pv-future-rings"><i></i><i></i><i></i><strong>?</strong></div>
-          <div class="pv-future-labels"><span>DIGITAL TWINS</span><span>GENERATED RACES</span><span>ADAPTIVE WORLDS</span><span>?</span></div>
-        </div>
-        <div class="promo-project-top"><span>06</span><small>NEXT</small></div>
-        <h3>AI Triathlon?</h3>
-        <p>Training worlds. Generated races. Adaptive coaching. Digital twins. Multiplayer experiments. Or none of those. The question mark stays.</p>
-        <div class="promo-project-tags"><span>UNKNOWN</span><span>GOOD</span></div>
-        <b>Still building.</b>
+      <article class="about-choice">
+        <div class="about-choice-top"><span class="about-index">Q5</span><div><h2>Can I help?</h2></div></div>
+        <p>Yes. Useful feedback, source material, introductions, broken-button reports and defensible “what if…” ideas are welcome.</p>
+        <div class="about-choice-foot"><small>GitHub Issues</small><a class="about-circle-arrow" href="https://github.com/joaoccaldas/konam/issues" target="_blank" rel="noopener">↗</a></div>
       </article>
-    </div>
+      <article class="about-choice">
+        <div class="about-choice-top"><span class="about-index">Q6</span><div><h2>Do the brands endorse this?</h2></div></div>
+        <p>No. Kona.m is independent and unofficial. Referenced trademarks and product names belong to their respective owners.</p>
+      </article>
+    </section>
   </section>
 
-  <section class="promo-section promo-underhood">
-    <div class="promo-section-heading">
-      <div><p class="t-label">07 / UNDER THE HOOD</p><h2 class="t-title">The machinery<br><em>is part of the story.</em></h2></div>
-      <p>Tap a system to see how the experiments connect.</p>
+  <section class="about-final">
+    <div class="about-final-inner">
+      <div class="about-hand">Anyway… enough explaining.</div>
+      <h1>Go inside.</h1>
+      <p>Explore · discover · build · keep moving</p>
+      <a class="btn primary" href="./">Enter Kona.m <span aria-hidden="true">→</span></a>
     </div>
-
-    <div class="promo-architecture" data-architecture>
-      <button class="promo-arch-node promo-arch-center is-active" type="button" data-arch="kona"><span>KONA.M</span><small>PUBLIC EXPERIENCE</small></button>
-      <button class="promo-arch-node n1" type="button" data-arch="world"><span>WORLD ENGINE</span><small>SPATIAL</small></button>
-      <button class="promo-arch-node n2" type="button" data-arch="progress"><span>PROGRESSION</span><small>GAME SYSTEMS</small></button>
-      <button class="promo-arch-node n3" type="button" data-arch="performance"><span>PERFORMANCE</span><small>DATA</small></button>
-      <button class="promo-arch-node n4" type="button" data-arch="agents"><span>AGENTS</span><small>AI</small></button>
-      <button class="promo-arch-node n5" type="button" data-arch="assets"><span>3D ASSETS</span><small>PIPELINE</small></button>
-      <button class="promo-arch-node n6" type="button" data-arch="knowledge"><span>KNOWLEDGE</span><small>CONTEXT</small></button>
-      <svg class="promo-arch-lines" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M500 280 180 110M500 280 500 72M500 280 820 110M500 280 180 450M500 280 500 500M500 280 820 450"/>
-      </svg>
-      <div class="promo-arch-detail">
-        <p class="t-label" data-arch-label>SYSTEM / KONA.M</p>
-        <h3 data-arch-title>The public experience</h3>
-        <p data-arch-body>The layer where worlds, identity, equipment, stories, progression and experiments meet.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="promo-section promo-log">
-    <div class="promo-section-heading">
-      <div><p class="t-label">08 / BUILD LOG</p><h2 class="t-title">A project with<br><em>visible fingerprints.</em></h2></div>
-      <p>The failures belong here too. They are often where the reusable knowledge comes from.</p>
-    </div>
-    <div class="promo-log-list">
-      <article><time>START</time><div><small>QUESTION</small><h3>What if a bike museum felt like somewhere you could go?</h3></div></article>
-      <article><time>+1</time><div><small>ESCALATION</small><h3>The museum became a world.</h3><p>Once objects existed in 3D, static pages started feeling suspiciously flat.</p></div></article>
-      <article><time>+2</time><div><small>CONSEQUENCE</small><h3>The world needed a person.</h3><p>Avatars, identity, equipment and progression arrived because places feel different when you belong in them.</p></div></article>
-      <article class="promo-log-fail"><time>FAIL</time><div><small>USEFUL FAILURE</small><h3>Turns out browsers notice when you try to load everything.</h3><p>Performance budgets, streaming, asset discipline and mobile constraints stopped being theory.</p></div></article>
-      <article><time>NOW</time><div><small>KONA.M</small><h3>Finished enough to become real. Unfinished enough to stay interesting.</h3></div></article>
-    </div>
-  </section>
-
-  <section class="promo-section promo-partners">
-    <p class="t-label">09 / WHAT THIS COULD BECOME</p>
-    <h2 class="t-title">Brands. Athletes. Events.<br><em>Places. Strange collaborations.</em></h2>
-    <div class="promo-partner-grid">
-      <article><span>BRANDS</span><h3>Products you can enter.</h3><p>Interactive equipment, digital twins, exploded views, collectibles, stories and commerce without turning everything into an ad.</p></article>
-      <article><span>ATHLETES</span><h3>Rooms with a point of view.</h3><p>Race stories, equipment histories, challenges and personal worlds that preserve more than a highlight reel.</p></article>
-      <article><span>EVENTS + PLACES</span><h3>Race week before race week.</h3><p>Virtual courses, destination storytelling, preparation, discovery and digital souvenirs tied to real places.</p></article>
-    </div>
-    <p class="promo-partners-note">The project is independent and unofficial. Referenced brands, athletes and events do not imply affiliation, sponsorship or endorsement.</p>
-  </section>
-
-
-  <section class="promo-section promo-collab" id="collab">
-    <div class="promo-collab-grid">
-      <div class="promo-collab-copy">
-        <p class="t-label">08 / BUILD SOMETHING TOGETHER</p>
-        <h2 class="t-title">Have a project?<br><em>The Intern has email.</em></h2>
-        <p class="promo-large-copy">Brands, athletes, events, tourism, 3D products, AI experiments, interactive stories, strange rooms, useful systems, or something we have not named yet.</p>
-        <p>If you think there is something worth building together, write to <a href="mailto:joaoccaldas&#64;gmail.com?subject=Kona.m%20%E2%80%94%20let%27s%20build%20something">joaoccaldas&#64;gmail.com</a>. A clear idea is helpful. A weird but defensible idea is also helpful.</p>
-        <div class="promo-final-actions promo-collab-actions">
-          <a class="promo-button primary" href="mailto:joaoccaldas&#64;gmail.com?subject=Kona.m%20%E2%80%94%20let%27s%20build%20something">Email me <span>→</span></a>
-          <a class="promo-button ghost" href="mailto:joaoccaldas&#64;gmail.com?subject=Kona.m%20%E2%80%94%20shall%20we%20talk%20in%20Kona%3F">Propose a Kona meeting <span>↗</span></a>
-        </div>
-      </div>
-      <div class="promo-collab-cards">
-        <article><span>01 / MONEY</span><h3>Cash works.</h3><p>The Finance department has confirmed that servers, software and coffee continue to reject payment in pure enthusiasm.</p></article>
-        <article><span>02 / FIELD RESEARCH</span><h3>Kona also works.</h3><p>If this is better discussed face-to-face in Kona, flights and accommodation are a perfectly acceptable way to move the meeting there. I will bring a laptop.</p></article>
-        <article><span>03 / HELP THE INTERN</span><h3>Introductions count.</h3><p>Useful feedback, partnerships, source material, access, expertise and “you should talk to this person” messages can be more valuable than another feature request.</p></article>
-      </div>
-    </div>
-    <p class="promo-partners-note">Independent project. Collaboration invitations do not imply any existing sponsorship, endorsement or affiliation.</p>
-  </section>
-
-  <section class="promo-section promo-faq" id="faq">
-    <div class="promo-section-heading">
-      <div><p class="t-label">10 / FAQ</p><h2 class="t-title">Reasonable questions.<br><em>Mostly.</em></h2></div>
-    </div>
-    <div class="promo-faq-list">
-      <p class="intern-note" style="margin:0 0 28px">Support hours: whenever the intern notices the problem.</p>
-      <details open><summary>Is Kona.m a game?</summary><div><p>Partly. It borrows progression, discovery, identity and collectibles from games, but it also behaves like a museum, training companion, travel guide and experiment platform.</p></div></details>
-      <details><summary>Is it a training app?</summary><div><p>Training is one layer, not the whole product. The broader idea is to connect the practical side of endurance sport with the emotional, historical and playful sides.</p></div></details>
-      <details><summary>Why Kona?</summary><div><p>Kona is both a real place and a powerful symbol inside long-course triathlon. For this project it became the anchor point for equipment, race-week memory, aspiration and exploration.</p></div></details>
-      <details><summary>What can I collect?</summary><div><p>Bikes, equipment, artifacts, stamps, badges, hidden finds and access items. The collection system is designed to grow with the worlds.</p></div></details>
-      <details><summary>What are rooms and keys?</summary><div><p>Some spaces are intentionally gated. Keys, discoveries and occasional guessing challenges can unlock rooms before they become broadly accessible.</p></div></details>
-      <details><summary>Where does AI fit?</summary><div><p>Across generation, agents, personalization, knowledge, analysis and future world behavior. The project treats AI as a capability layer rather than a decorative chatbot.</p></div></details>
-      <details><summary>Is this affiliated with IRONMAN, Canyon or the brands shown?</summary><div><p>No. Kona.m is an independent, unofficial fan and research project. Trademarks and product names belong to their respective owners.</p></div></details>
-      <details><summary>Who built it?</summary><div><p>The Intern. Engineering, 3D, product, support, copy, maintenance, coffee logistics and a training plan currently marked “optimistic.” There appears to be no second employee.</p></div></details>
-      <details><summary>Is it finished?</summary><div><p>Enough to exist. Not enough to stop changing. That balance is intentional. The intern calls this “production.”</p></div></details>
-      <details><summary>I clicked something and nothing happened. What now?</summary><div><p>First, try once more with conviction. If it still does nothing, that is a bug rather than a philosophical feature. Return Home, continue exploring, and treat the broken button as a tiny contribution to quality assurance.</p></div></details>
-      <details><summary>Who handles support?</summary><div><p>The same intern who handles engineering, design, maintenance, copy, coffee and an occasionally neglected training schedule. Expectations should therefore be ambitious but elastic.</p></div></details>
-      <details class="faq-absurd"><summary>Do I need an account, a coach, or a blood oath?</summary><div><p>No. Public account registration is not required. Start without an account; the current first-run profile and passport are local-first. A coach remains optional. Blood oaths are outside the product roadmap.</p></div></details>
-      <details class="faq-absurd"><summary>Can I qualify for Kona by collecting all 141 things?</summary><div><p>No. Kona.m progression is a game layer. It does not alter any real-world race qualification, ranking or entry process. It may, however, make you unusually determined to inspect virtual objects.</p></div></details>
-      <details class="faq-absurd"><summary>Is the Intern actually qualified to run Engineering, Marketing, PR, IT and Support?</summary><div><p>The org chart says yes. The org chart was made by the Intern. Please interpret this evidence responsibly.</p></div></details>
-      <details class="faq-absurd"><summary>Why does the menu care about aerodynamics?</summary><div><p>Because every interface problem eventually becomes a bike problem if you leave the Intern alone long enough.</p></div></details>
-      <details class="faq-absurd"><summary>Can I pay in exposure?</summary><div><p>The Finance department has raised concerns. Cash is easier. If the project genuinely benefits from being discussed in Kona, flights and accommodation are also a highly specific way to get the laptop and its operator there.</p></div></details>
-    </div>
-  </section>
-
-  <section class="promo-final">
-    <div class="promo-final-noise" aria-hidden="true"></div>
-    <p class="t-label">END OF FIELD GUIDE / START OF SOMETHING ELSE</p>
-    <h2 class="t-display">Go inside.</h2>
-    <p>Choose a bike. Find a door. Wander somewhere unnecessary.</p>
-    <div class="promo-final-actions">
-      <a class="promo-button primary" href="./">Enter Kona.m <span>→</span></a>
-      <button class="promo-button ghost" type="button" data-system-open>Open system map</button>
-    </div>
-    <p class="t-hand">the useful part might be the part we haven't named yet.</p>
   </section>
 </main>
 
-<footer class="promo-footer">
-  <a class="promo-wordmark" href="./"><strong>Kona.m</strong><span>SWIM · BIKE · RUN · EXPLORE</span></a>
-  <div><a href="about.html">Story</a><a href="privacy.html">Privacy</a><a href="credits.html">Credits</a><a href="https://github.com/joaoccaldas/konam" target="_blank" rel="noopener">GitHub ↗</a></div>
-  <p>Independent project · built from curiosity · no affiliation implied.</p>
+<footer class="about-footer">
+  <a class="about-wordmark" href="./"><span>Kona.m</span><small>SWIM · BIKE · RUN · EXPLORE</small></a>
+  <p>Built from curiosity. Finished enough to let you in.</p>
+  <a href="privacy.html">Privacy & data →</a>
 </footer>
-
-<div class="promo-system-panel" id="systemPanel" hidden data-system-panel>
-  <div class="promo-system-backdrop" data-system-close></div>
-  <aside role="dialog" aria-modal="true" aria-labelledby="systemTitle">
-    <div class="promo-system-head">
-      <div><p class="t-label">LIVE SYSTEM MAP</p><h2 id="systemTitle">Kona.m / systems</h2></div>
-      <button type="button" data-system-close aria-label="Close system map">×</button>
-    </div>
-    <div class="promo-system-list">
-      <a href="./"><i class="online"></i><span><b>Kona.m</b><small>Public experience</small></span><strong>ONLINE</strong></a>
-      <a href="https://joaoccaldas.github.io/studio-kona/preview-v2/" target="_blank" rel="noopener"><i class="online"></i><span><b>World engine</b><small>Kona · Vegas · St. George · Nice</small></span><strong>LIVE</strong></a>
-      <a href="https://joaoccaldas.github.io/ai/studio/" target="_blank" rel="noopener"><i class="online"></i><span><b>AI Studio</b><small>Visual + generative experiments</small></span><strong>LAB</strong></a>
-      <a href="https://joaoccaldas.github.io/ai/studio/sokai/" target="_blank" rel="noopener"><i class="online"></i><span><b>SOKAI</b><small>Interactive 3D object study</small></span><strong>LIVE</strong></a>
-      <a href="https://performance-os-cloud.vercel.app" target="_blank" rel="noopener"><i class="private"></i><span><b>Performance OS</b><small>Personal performance intelligence</small></span><strong>AUTH</strong></a>
-      <div><i class="future"></i><span><b>AI triathlon?</b><small>Unknown on purpose</small></span><strong>?</strong></div>
-    </div>
-    <p class="promo-system-foot">Public status only. Private data, internal services and personal systems are intentionally not exposed here.</p>
-  </aside>
-</div>
 
 <script type="module" src="web/src/promo.js"></script>
 </body>
