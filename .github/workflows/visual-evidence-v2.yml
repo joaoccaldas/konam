@@ -53,3 +53,43 @@ jobs:
           name: visual-evidence-v2-${{ matrix.viewport }}-${{ github.event.pull_request.head.sha || github.sha }}
           path: visual-evidence-v2/
           retention-days: 14
+
+  beast-cave:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Build Beast Cave production-candidate review
+        run: node tools/build_beast_cave_review.mjs
+      - name: Start exact review surface
+        run: |
+          python3 -m http.server 8755 > /tmp/beast-http.log 2>&1 &
+          echo $! > /tmp/beast-http.pid
+          for i in {1..30}; do curl -fsS http://127.0.0.1:8755/review/beast-cave/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/beast-http.log
+          exit 1
+      - name: Capture real Beast Cave angles
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: node web/beast-cave-evidence.mjs http://127.0.0.1:8755/review/beast-cave/
+      - name: Verify evidence
+        run: |
+          test -f docs/evidence/beast-cave/desktop-01-overview.png
+          test -f docs/evidence/beast-cave/desktop-10-inspect-card.png
+          test -f docs/evidence/beast-cave/mobile-01-overview.png
+          node -e "const a=require('./docs/evidence/beast-cave/browser-errors.json'); const b=require('./docs/evidence/beast-cave/mobile-browser-errors.json'); if(a.length||b.length){console.error({desktop:a,mobile:b});process.exit(1)}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: beast-cave-real-render-${{ github.event.pull_request.head.sha || github.sha }}
+          path: docs/evidence/beast-cave/
+          retention-days: 14
