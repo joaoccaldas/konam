@@ -7,11 +7,14 @@ const studio=fs.readFileSync(new URL('../src/ui/avatar-home.js',import.meta.url)
 const shell=fs.readFileSync(new URL('../src/ui/kona-shell.js',import.meta.url),'utf8');
 const auth=fs.readFileSync(new URL('../src/cloud/supabase-lite.js',import.meta.url),'utf8');
 const build=fs.readFileSync(new URL('../../tools/build_admin_assets.mjs',import.meta.url),'utf8');
+const merch=fs.readFileSync(new URL('../src/ui/admin-merch.js',import.meta.url),'utf8');
+const merchBuild=fs.readFileSync(new URL('../../tools/build_merch_concepts.mjs',import.meta.url),'utf8');
 
 test('admin access is role-based and hidden from non-admin users',()=>{
   assert.match(auth,/app_metadata\?\.role === 'admin'/);
   assert.match(shell,/isAdminUser/);
   assert.match(studio,/isAdmin\?menuItem\('assets'/);
+  assert.match(studio,/isAdmin\?menuItem\('merch'/);
   assert.match(ui,/if\(!isAdminUser\(user\)\)/);
   assert.doesNotMatch(auth,/joaoccaldas@gmail\.com|@gmail\.com/);
 });
@@ -41,4 +44,13 @@ test('every generated asset class has a visual preview path',()=>{
 test('admin library exposes useful filters without becoming public navigation',()=>{
   for(const marker of ['data-asset-q','data-asset-type','data-asset-brand','data-asset-year','data-asset-group']) assert.match(ui,new RegExp(marker));
   assert.match(studio,/Asset Library/);
+});
+
+
+test('Merch Studio is admin-only, generated and non-sellable by default',()=>{
+  assert.match(merch,/if\(!isAdminUser\(user\)\)/);
+  assert.match(merch,/admin-merch-concepts\.json/);
+  assert.match(merch,/Concept only/);
+  assert.match(merchBuild,/integrations\/merch\/concepts\.json/);
+  assert.match(merchBuild,/sellable:false/);
 });
