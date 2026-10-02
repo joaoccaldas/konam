@@ -6,6 +6,7 @@ import { collectionSummary } from '../engine/items.js';
 import { avatarItem, normaliseAvatarStyle } from '../engine/avatar.js';
 import { ensureProgression, applyStoredEvent, readProgression } from '../engine/progression.js';
 import { discoveryHorizon } from '../engine/discovery.js';
+import { PRODUCT_NAME } from '../product-meta.js';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const daysUntil=iso=>{const n=Math.ceil((new Date(iso+'T12:00:00')-Date.now())/86400000);return Number.isFinite(n)?Math.max(0,n):null};
@@ -39,7 +40,7 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
 
   root.innerHTML=
     '<section class="kona-hero-card artifact artifact--hero home-today">'+
-      '<small>'+esc(event.name||'KONA · TODAY')+'</small>'+
+      '<small>'+esc(event.name||PRODUCT_NAME+' · TODAY')+'</small>'+
       '<h3 data-countdown-value>'+esc(headline)+'</h3><p>'+esc(note)+'</p>'+
       '<button class="kona-primary" type="button" data-home-plan>What matters next <span>→</span></button>'+
     '</section>'+
@@ -50,12 +51,12 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
         '<div class="home-race-self-actions"><button type="button" class="kona-primary" data-home-self>Open User Studio <span>→</span></button><button type="button" class="kona-link-btn" data-home-garage>Open Garage</button></div>'+
       '</div>'+
     '</section>'+
-    '<section class="kona-section artifact artifact--label home-first-find"><small>YOUR FIRST DETOUR</small><h3>Something small is hiding here.</h3><p>Spot the volcanic rock. Tap it. KONA Finds will keep the story.</p><div class="ui-cluster"><span class="t-hand" aria-hidden="true">That suspicious little rock →</span><button type="button" class="btn-icon" data-first-find aria-label="Collect Perfect Volcanic Rock"'+(firstFound?' disabled':'')+'><svg viewBox="0 0 100 70" aria-hidden="true"><path d="M12 52 24 25 47 12 72 18 89 45 70 60 36 64Z" fill="currentColor"/></svg></button></div><p class="kona-source-note" role="status" data-first-find-status>'+(firstFound?'Perfect Volcanic Rock is saved in KONA Finds.':'Your first Find is waiting.')+'</p><button type="button" class="btn-text" data-home-finds>Open KONA Finds →</button></section>'+
+    '<section class="kona-section artifact artifact--label home-first-find"><small>YOUR FIRST DETOUR</small><h3>Something small is hiding here.</h3><p>Spot the volcanic rock. Tap it. '+PRODUCT_NAME+' Finds will keep the story.</p><div class="ui-cluster"><span class="t-hand" aria-hidden="true">That suspicious little rock →</span><button type="button" class="btn-icon" data-first-find aria-label="Collect Perfect Volcanic Rock"'+(firstFound?' disabled':'')+'><svg viewBox="0 0 100 70" aria-hidden="true"><path d="M12 52 24 25 47 12 72 18 89 45 70 60 36 64Z" fill="currentColor"/></svg></button></div><p class="kona-source-note" role="status" data-first-find-status>'+(firstFound?'Perfect Volcanic Rock is saved in '+PRODUCT_NAME+' Finds.':'Your first Find is waiting.')+'</p><button type="button" class="btn-text" data-home-finds>Open '+PRODUCT_NAME+' Finds →</button></section>'+
     '<section class="home-postcard artifact artifact--photo">'+
       '<div class="home-postcard-photo" aria-hidden="true"><img src="assets/kona-years/queen-k.jpg" alt="" loading="lazy" decoding="async"></div>'+
       '<div class="home-postcard-copy"><small>KAILUA-KONA · HAWAIʻI</small><h3>Not just a race.</h3><p>Roads, lava, people, machines and strange little details worth finding.</p><button type="button" class="kona-link-btn" data-home-discover>Discover something →</button></div>'+
     '</section>'+
-    (nudgesEnabled?'<section class="home-nudge artifact artifact--label"><div><small>KONA NUDGE · +5 XP</small><h3>'+esc(nudge)+'</h3><p>No urgency. No streak panic. Just a small reason to look around.</p></div><button type="button" class="kona-link-btn" data-home-nudge>Read it. Apparently this counts.</button></section>':'')+
+    (nudgesEnabled?'<section class="home-nudge artifact artifact--label"><div><small>'+PRODUCT_NAME+' NUDGE · +5 XP</small><h3>'+esc(nudge)+'</h3><p>No urgency. No streak panic. Just a small reason to look around.</p></div><button type="button" class="kona-link-btn" data-home-nudge>Read it. Apparently this counts.</button></section>':'')+
     '<section class="home-horizon artifact artifact--label"><div class="home-horizon-head"><div><small>OVER THE HORIZON</small><h3>There is always something else.</h3></div><span class="t-data">'+(admin?'ADMIN · ALL LEVELS':'LVL '+esc(progression.level))+'</span></div><div class="home-horizon-grid">'+horizonHtml+'</div><p class="t-hand">Curiosity is a training plan too.</p></section>';
 
   const disposeCount=mountCountdown(root.querySelector('.home-today'),event);
@@ -66,7 +67,7 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
       const before=ensureProgression();
       const after=applyStoredEvent({type:'FIND_DISCOVERED',id:'first-find:lava',subject:'find:shore:lava'});
       if(!readProgression()?.discoveries.includes('find:shore:lava'))throw new Error('save-failed');
-      button.disabled=true;status.textContent='Perfect Volcanic Rock saved in KONA Finds. +'+(after.xp-before.xp)+' XP · +'+(after.credits-before.credits)+' KC';
+      button.disabled=true;status.textContent='Perfect Volcanic Rock saved in '+PRODUCT_NAME+' Finds. +'+(after.xp-before.xp)+' XP · +'+(after.credits-before.credits)+' KC';
     }catch{status.textContent='Could not save your Find. Tap the rock to try again.';}
   });
   root.querySelector('[data-home-self]')?.addEventListener('click',()=>openRaceSelf?.());
