@@ -40,6 +40,36 @@ function tex(base, vein) {
   return t;
 }
 
+function resolveRoomTexture(spec, room, seed, rw, rd) {
+  if (!spec?.kind) throw new Error(`Room ${room.id} is missing a surface texture kind`);
+  const value = v => v === '$floor' ? room.floor : v === '$vein' ? room.vein : v;
+  const base=value(spec.base), vein=value(spec.vein);
+  const repeat=spec.repeat || [
+    rw / (spec.repeat_divisor?.[0] || 2.4),
+    rd / (spec.repeat_divisor?.[1] || 2.4)
+  ];
+  if(spec.kind==='root') return rootTex(base,vein,seed,repeat,spec.detail);
+  if(spec.kind==='crack') return crackTex(base,vein,seed,repeat,spec.detail,spec.accent);
+  if(spec.kind==='plaster') return plasterTex(base,vein,seed,repeat);
+  if(spec.kind==='hex') return hexTex(base,vein,repeat);
+  if(spec.kind==='panel') return panelTex(base,vein,seed,repeat);
+  throw new Error(`Unknown room surface texture: ${spec.kind}`);
+}
+
+function roomSurface(room, seed, rw, rd) {
+  const s=room.surface;
+  if(!s?.floor || !s?.wall) throw new Error(`Room ${room.id} has no declarative surface contract`);
+  return {
+    floor:resolveRoomTexture(s.floor,room,seed,rw,rd),
+    wall:resolveRoomTexture(s.wall,room,seed+1,rw,rd),
+    rough:s.roughness,
+    metal:s.metalness,
+    floorEmissiveMap:!!s.floor_emissive_map,
+    ceiling:s.ceiling || {kind:'solid'},
+    ink:s.ink || '#f3ede4'
+  };
+}
+
 export function buildGalleries(ctx) {
   const { scene, lettering, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX } = ctx;
   const group = new THREE.Group(); group.name = 'galleries'; scene.add(group);
@@ -116,18 +146,15 @@ export function buildGalleries(ctx) {
     const put = (mesh, x, y, z) => { mesh.position.set(x, y, z); rg.add(mesh); return mesh; };
     const box = (w, h, d, x, y, z, mat) => put(new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat), x, y, z);
     const seed = 101 + i * 37;
-    const surf = {
-      bio: { floor: rootTex(r.floor, r.vein, seed, [rw / 2.4, rd / 2.4]), wall: rootTex('#0f2417', '#2f8a45', seed + 1, [2, 1], .55), rough: .5, metal: 0 },
-      horror: { floor: crackTex('#1b1114', '#050203', seed, [rw / 2.2, rd / 2.2], 4), wall: plasterTex('#2a1a1c', '#0b0304', seed + 1, [2, 1]), rough: .16, metal: .35 },
-      alien: { floor: hexTex('#07141c', '#3dffe0', [rw / 1.6, rd / 1.6]), wall: panelTex('#0a1a22', '#3dffe0', seed + 1, [2, 1]), rough: .28, metal: .45 },
-      zombie: { floor: crackTex('#3a3a26', '#15160c', seed, [rw / 2.6, rd / 2.6], 3, '#5a6a2a'), wall: crackTex('#34342a', '#1c1c14', seed + 1, [2, 1], 2), rough: .92, metal: 0 },
-    }[r.id];
+    const surf = roomSurface(r,seed,rw,rd);
     const floorMat = new THREE.MeshStandardMaterial({ map: surf.floor, roughness: surf.rough, metalness: surf.metal, emissive: r.vein, emissiveIntensity: .06 });
-    if (r.id === 'bio' || r.id === 'alien') floorMat.emissiveMap = surf.floor;
+    if (surf.floorEmissiveMap) floorMat.emissiveMap = surf.floor;
     const slab = new THREE.Mesh(new THREE.BoxGeometry(rw, .1, rd), floorMat);
     slab.userData.floor = true;
     put(slab, cx, Y - .04, cz); floors.push(slab); pickables.push(slab);
-    const ceilMat = r.id === 'zombie' ? new THREE.MeshBasicMaterial({ map: skyTex('#1d1a22', seed), fog: false }) : new THREE.MeshStandardMaterial({ color: r.floor, roughness: 1 });
+    const ceilMat = surf.ceiling.kind === 'sky'
+      ? new THREE.MeshBasicMaterial({ map: skyTex(surf.ceiling.color || r.floor, seed), fog: false })
+      : new THREE.MeshStandardMaterial({ color: surf.ceiling.color || r.floor, roughness: 1 });
     box(rw, .1, rd, cx, Y + 4.05, cz, ceilMat);
     const wallMat = new THREE.MeshStandardMaterial({ map: surf.wall, color: '#ffffff', roughness: .9, emissive: r.vein, emissiveIntensity: .03 });
     box(rw, 4.0, .16, cx, Y + 2.0, r.z0, wallMat);
@@ -136,17 +163,19 @@ export function buildGalleries(ctx) {
     // a lit threshold where the nave floor becomes the room's
     const sill = new THREE.Mesh(new THREE.BoxGeometry(.06, .012, rd - .3), new THREE.MeshBasicMaterial({ color: r.vein, transparent: true, opacity: .55 }));
     put(sill, NAVE.x1 - .1, Y + .012, cz);
-    const ink = r.id === 'bio' || r.id === 'alien' ? '#e9ffe8' : r.id === 'zombie' ? '#f3f0c8' : '#ffd0d4';
+    const ink = surf.ink;
     const mark = lettering(2.6, .62, g => {
       g.fillStyle = ink; g.font = `700 .18px ${FONT}`; g.fillText(r.name.toUpperCase(), 0, .26);
       g.font = `italic 400 .18px ${SERIF}`; g.fillText(r.sub, 0, .52);
     }, 512);
     at(mark, NAVE.x1 + .12, Y + 2.5, cz); mark.rotation.y = Math.PI / 2;
-    const standX = r.id === 'horror' ? cx : cx - 2.55;
-    const standZ = r.id === 'horror' ? cz + 1.7 : cz;
-    const specimen = r.id === 'horror' ? new THREE.Vector3(cx, Y, cz - 1.05) : new THREE.Vector3(cx + .55, Y, cz);
-    const spot = { ...r, index: i, kind: 'gallery', floorMat, group: rg, pos: new THREE.Vector3(cx, Y, cz), specimen, specimenYaw: r.id === 'horror' ? 0 : Math.PI / 2, face: new THREE.Vector3(specimen.x, Y + 1.05, specimen.z), view: new THREE.Vector3(standX, Y, standZ), bounds: { x0: NAVE.x1, x1: NAVE.x1 + rw, z0: r.z1, z1: r.z0 } };
-    const lamp = new THREE.PointLight(r.id === 'horror' ? '#ffd0b0' : '#fff4e4', lite ? 7 : (r.id === 'horror' ? 2.5 : 11), 12, 1.5);
+    const staging=r.staging || {};
+    const standX = cx + (staging.stand_dx ?? -2.55);
+    const standZ = cz + (staging.stand_dz ?? 0);
+    const specimen = new THREE.Vector3(cx + (staging.specimen_dx ?? .55), Y, cz + (staging.specimen_dz ?? 0));
+    const spot = { ...r, index: i, kind: 'gallery', floorMat, group: rg, pos: new THREE.Vector3(cx, Y, cz), specimen, specimenYaw: staging.specimen_yaw ?? Math.PI / 2, face: new THREE.Vector3(specimen.x, Y + 1.05, specimen.z), view: new THREE.Vector3(standX, Y, standZ), bounds: { x0: NAVE.x1, x1: NAVE.x1 + rw, z0: r.z1, z1: r.z0 } };
+    const lampSpec=r.lamp || {};
+    const lamp = new THREE.PointLight(lampSpec.color || '#fff4e4', lite ? (lampSpec.lite_intensity ?? 7) : (lampSpec.intensity ?? 11), 12, 1.5);
     lamp.position.set(specimen.x, Y + 2.8, specimen.z); rg.add(lamp);
     slab.userData.gallery = spot;
     const L = buildInstallation(r.decoration,{group:rg,bounds:spot.bounds,elevation:Y,specimen,lite,obstacles,floorMat,seed});
@@ -207,41 +236,7 @@ export function buildGalleries(ctx) {
       for (const m of L.motes) m.points.visible = on;
       if (!on || reduce) continue;
       for (const m of L.motes) m.step(t);
-      if (L.id === 'bio') {
-        L.pose(t);
-        L.floorMat.emissiveIntensity = .12 + Math.sin(t * 1.1) * .06;
-        L.podMat.emissiveIntensity = .22 + Math.sin(t * 1.9) * .1;
-        L.tipMat.color.setScalar(.75 + Math.sin(t * 2.6) * .25).multiply(new THREE.Color('#c8ff7a'));
-        L.glow.intensity = (lite ? 2 : 4) * (.75 + Math.sin(t * .8) * .25);
-      } else if (L.id === 'horror') {
-        L.pivot.rotation.z = Math.sin(t * 1.05) * .32; L.pivot.rotation.x = Math.sin(t * .7) * .08;
-        const flick = (Math.sin(t * 17) > .93 || Math.sin(t * 5.3 + 1) > .985) ? .12 : 1;
-        L.bulbMat.color.setScalar(flick);
-        L.bulbLight.intensity = (lite ? 5 : 9) * flick;
-        L.pool.material.opacity = .22 * flick;
-        L.pool.position.x = L.spot.pos.x + Math.sin(L.pivot.rotation.z) * 1.55;
-        L.floorMat.emissiveIntensity = .03 + flick * .05;
-        for (const e of L.pairs) {                                      // blink, and now and then look a little further out
-          const c = (t * e.rate + e.ph) % 7;
-          e.g.scale.y = c < .12 ? .08 : 1;
-          e.g.visible = c < 5.2 || flick < 1;
-          e.g.position.x = e.home.x + Math.sin(t * .3 + e.ph) * .05;
-        }
-        for (const c of L.chains) c.g.rotation.z = Math.sin(t * .9 + c.ph) * .03;
-      } else if (L.id === 'alien') {
-        L.rings.forEach((ring, i) => { ring.rotation.z = t * (.3 + i * .1) * (i % 2 ? -1 : 1); ring.rotation.x = Math.PI / 2 + Math.sin(t * .4 + i) * .12; });
-        L.beam.scale.y = .94 + Math.sin(t * 2.4) * .06;
-        const u = (Math.sin(t * .9) + 1) / 2;                           // scan sweeps 0.15 m → 1.6 m and back
-        L.scan.position.y = UPPER + .15 + u * 1.45;
-        L.scanMat.opacity = .1 + Math.abs(Math.cos(t * .9)) * .12;
-        L.glyphs.material.opacity = .4 + (Math.sin(t * 13) > .97 ? .35 : 0) + Math.sin(t * .6) * .1;
-        L.floorMat.emissiveIntensity = .14 + Math.sin(t * 2.2) * .05;
-      } else if (L.id === 'zombie') {
-        L.pose(t);
-        L.mist.forEach((m, i) => { m.material.map.offset.set(t * (.012 + i * .006), t * (i % 2 ? -.008 : .006)); });
-        const buzz = Math.sin(t * 23) > .96 ? .35 : 1;
-        L.sodium.intensity = (lite ? 4 : 8) * buzz; L.sodiumMat.color.setScalar(buzz).multiply(new THREE.Color('#ffb35a'));
-      }
+      L.update?.(t);
     }
     return inside;
   }
