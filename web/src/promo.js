@@ -258,3 +258,35 @@ if(guideButtons.length>1&&!matchMedia('(prefers-reduced-motion:reduce)').matches
   },6800);
   qs('[data-guide-theatre]')?.addEventListener('pointerenter',()=>{if(guideTimer){clearInterval(guideTimer);guideTimer=null;}},{once:true});
 }
+
+
+// Production motion system: restrained reveal, no scroll-jacking ----------------
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  document.body.classList.add('js-reveal-ready');
+  const sectionObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        sectionObserver.unobserve(entry.target);
+      }
+    });
+  },{rootMargin:'0px 0px -9% 0px',threshold:.08});
+  qsa('.promo-section').forEach(section=>sectionObserver.observe(section));
+}else{
+  qsa('.promo-section').forEach(section=>section.classList.add('is-visible'));
+}
+
+// Keep the machine stage tactile but subtle, matching the production landing.
+if(stage && matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches){
+  stage.addEventListener('pointermove',e=>{
+    const r=stage.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    stage.style.setProperty('--stage-ry',(x*3-1.5)+'deg');
+    stage.style.setProperty('--stage-rx',(-y*2.2)+'deg');
+  });
+  stage.addEventListener('pointerleave',()=>{
+    stage.style.setProperty('--stage-ry','-1.5deg');
+    stage.style.setProperty('--stage-rx','0deg');
+  });
+}
