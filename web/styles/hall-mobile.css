@@ -7,7 +7,7 @@
   .c-years{font-size:11.5px;letter-spacing:.2em}.c-mat{font-size:12px}
   .c-stats b{font-size:19px}.c-stats small{font-size:11px}
   #card::before{content:"";display:block;width:42px;height:4px;border-radius:2px;background:rgba(18,24,29,.18);margin:0 auto 12px}
-  #card .close{width:44px;height:44px;top:12px;right:12px;font-size:20px}
+  #card .close{font-size:20px}
   .plabel i{width:30px;height:30px;font-size:12px}
   #toast{font-size:13px;padding:11px 18px;white-space:normal;text-align:center;max-width:calc(100vw - 40px)}
   #nearby{top:calc(66px + env(safe-area-inset-top));max-width:calc(100vw - 28px);padding:8px 11px}
@@ -33,7 +33,6 @@
   #toast{bottom:calc(78px + var(--safe-b))}
 }
 @media (pointer:coarse){.keys{display:none}.touch-only{display:block}}
-@media (pointer:coarse),(max-width:1024px){#card .close{width:44px;height:44px}}
 @media (max-width:760px),(pointer:coarse){
   html{font-size:clamp(15px,3.9vw,18px)}
   .logo b{font-size:.86rem}.logo small{font-size:.72rem;letter-spacing:.14em}
@@ -47,8 +46,7 @@
   .c-stats b{font-size:1.25rem}.c-stats small{font-size:.72rem}
   .c-parts small{font-size:.72rem}.c-parts button{font-size:.86rem;min-height:44px;padding:6px 12px 6px 6px}.c-parts i{width:1.6rem;height:1.6rem;font-size:.75rem}
   .c-photo figcaption,.c-view,.c-unc,.c-src{font-size:.82rem}
-  #card{bottom:calc(100px + var(--safe-b));max-height:min(58dvh,calc(100dvh - 200px - var(--safe-b)));overscroll-behavior:contain}
-  #card .close{width:44px;height:44px}
+  #card{overscroll-behavior:contain}
   #nearby{min-height:44px}
   #nearby small{font-size:.7rem}#nearby b{font-size:.92rem;max-width:62vw}
   #toast{font-size:.9rem}
@@ -81,7 +79,7 @@
 /* Batch 6: responsive 3D chrome. Avoid horizontal actions/text clipping on phones. */
 body.physical-phone #card,html.phone-fit #card{box-sizing:border-box}
 @media(max-width:600px),(pointer:coarse){
-  #card{left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));width:auto!important;max-width:none!important;padding:16px!important}
+  #card{left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right))}
   #card h2{font-size:clamp(28px,8vw,38px);overflow-wrap:anywhere}
   .c-note,.card-facts,.c-src,.c-view,.c-unc{overflow-wrap:anywhere;word-break:normal}
   #tourPill{left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));max-width:none;overflow:hidden}
@@ -133,7 +131,6 @@ html.phone-fit #card{left:8px;right:auto;width:calc((100vw - 16px)/var(--fit))!i
 /* World chrome offsets relative to the consumer navigation shell. */
 @media(max-width:760px){
   body.touch.walking #rail{bottom:0}
-  body.touch #card{bottom:calc(86px + var(--safe-b));max-height:62dvh}
   body.touch #konaWorld>header{padding-bottom:0}
   body.touch #konaWorld>header nav{display:none}
   body.touch #konaWorld>header .logo{background:color-mix(in srgb,var(--kona-surface-strong) 82%,transparent);border-color:var(--kona-line);color:var(--kona-text)}
