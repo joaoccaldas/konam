@@ -24,6 +24,12 @@ test('launch CSS specificity debt cannot grow silently',()=>{
   }
 });
 
+test('lazy world mobile CSS contains no consumer entry or install ownership',()=>{
+  const hallMobile=read('web/styles/hall-mobile.css');
+  for(const selector of ['#intro','#konaQuest','#passportBtn','#passportCount','#installBtn','.entry-utilities','.quest-progress'])
+    assert.ok(!hallMobile.includes(selector),'hall-mobile.css retained consumer selector '+selector);
+});
+
 test('feature styling remains route-owned rather than returning to global system CSS',()=>{
   const system=read('web/styles/system.css');
   for(const selector of ['.garage-shell','.race-self-experience','.companion-hero','.admin-assets-grid'])
