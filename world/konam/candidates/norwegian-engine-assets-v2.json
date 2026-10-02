@@ -1,0 +1,149 @@
+{
+  "schema_version": 2,
+  "id": "norwegian-engine-assets-v2",
+  "room_id": "norwegian-engine",
+  "status": "candidate",
+  "authority": {
+    "runtime_proxy": "web/src/engine/room-installations.js#norwegian",
+    "production_generator": "blender/norwegian_engine_assets.py",
+    "note": "Runtime primitives are lightweight candidate proxies. Blender outputs are high-fidelity replacement sources, not a second runtime authority."
+  },
+  "assets": [
+    {
+      "id": "nor3-lane-architecture",
+      "type": "architecture-module",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/lane-architecture.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-protocol-wall",
+      "type": "architecture-module",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/protocol-wall.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-trainer",
+      "type": "equipment",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/direct-drive-trainer.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-run-deck",
+      "type": "equipment",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/run-deck.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-protocol-table",
+      "type": "furniture",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/protocol-table.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-analyser",
+      "type": "equipment",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/analyser.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-vial-rack",
+      "type": "prop",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/vial-rack.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-towel-rail",
+      "type": "accessory",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/towel-rail.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-bottle-set",
+      "type": "accessory",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/bottle-set.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-environment-bay",
+      "type": "architecture",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/environment-bay.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-fan",
+      "type": "equipment",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/fan.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "generic-equipment-study"
+    },
+    {
+      "id": "nor3-podium-vault",
+      "type": "art",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/podium-vault.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "fictional-original-artistic-object"
+    },
+    {
+      "id": "nor3-fjord-relief",
+      "type": "art",
+      "reusable": true,
+      "runtime_representation": "procedural-proxy",
+      "production_source": "blender/norwegian_engine_assets.py",
+      "production_output": "assets/rooms/norwegian-engine/fjord-relief.glb",
+      "production_status": "generator-defined-not-runtime-loaded",
+      "truth_classification": "fictional-original-artistic-object"
+    }
+  ],
+  "rules": [
+    "Stable semantic asset IDs survive proxy-to-GLB promotion.",
+    "Do not render both proxy and production GLB for the same semantic asset.",
+    "Exact athlete equipment associations require sourced evidence before assignment.",
+    "Generated concept imagery is art direction only, never runtime evidence."
+  ]
+}
