@@ -1,0 +1,65 @@
+name: Release security gate
+
+on:
+  push:
+    branches:
+      - release/kona-beta-source-rc-20260930
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secrets:
+    name: Secret and privacy scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Scan source for secrets and private data
+        run: node tools/scan_private_data.mjs
+
+  web-dependencies:
+    name: Web dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Audit production dependency graph
+        run: npm audit --omit=dev --audit-level=high
+        working-directory: web
+
+  android-dependencies:
+    name: Android shell dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: app/native/package-lock.json
+      - run: npm ci --ignore-scripts
+        working-directory: app/native
+      - name: Audit production dependency graph
+        run: npm audit --omit=dev --audit-level=high
+        working-directory: app/native
