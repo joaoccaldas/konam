@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - launch/public-surface-certification-20261002
+      - feat/lionel-zwift-beast-cave
+    paths-ignore:
+      - 'docs/evidence/beast-cave/**'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: vercel-preview-${{ github.ref }}
@@ -54,6 +57,33 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel build --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+
+      - name: Capture Beast Cave real rendering evidence
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          python3 -m http.server 8765 --directory _site >/tmp/beast-cave-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          node web/beast-cave-evidence.mjs http://127.0.0.1:8765/review/beast-cave/
+          kill $SERVER_PID || true
+          trap - EXIT
+          test -f docs/evidence/beast-cave/desktop-01-overview.png
+          test -f docs/evidence/beast-cave/mobile-01-overview.png
+          node -e "const e=require('./docs/evidence/beast-cave/browser-errors.json'); if(e.length) { console.error(e); process.exit(1) }"
+
+      - name: Commit Beast Cave evidence to candidate branch
+        if: github.ref_name == 'feat/lionel-zwift-beast-cave'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/evidence/beast-cave
+          if git diff --cached --quiet; then
+            echo "Evidence unchanged"
+          else
+            git commit -m "evidence(beast-cave): real Chrome renders [skip ci]"
+            git push origin HEAD:"$GITHUB_REF_NAME"
+          fi
 
       - name: Deploy preview artifact
         id: deploy
