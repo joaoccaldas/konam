@@ -106,3 +106,7 @@ LOD and detail loading should be progressive:
 The machine experience consumes the global Kona.m brand authority.
 
 Engineering precision is paired with curiosity and play. The interface remains calm, editorial and human; the machine can become spectacular without turning the controls into a sci-fi dashboard.
+
+## Build authority
+
+Source files remain authoritative. Generated HTML and app bundles are synchronized only by the repository's deterministic build workflow and must certify against the resulting exact SHA.
