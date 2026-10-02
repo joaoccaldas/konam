@@ -6,6 +6,7 @@ GITHUB_REF_NAME=${GITHUB_REF_NAME:-$(git branch --show-current)}
 GITHUB_RUN_ID=${GITHUB_RUN_ID:-local}
 export GITHUB_SHA GITHUB_REF_NAME GITHUB_RUN_ID
 mkdir -p _site
+node web/build_nor3_review.mjs
 printf '{"sha":"%s","ref":"%s","run_id":"%s","built_at":"%s"}\n' "$GITHUB_SHA" "$GITHUB_REF_NAME" "$GITHUB_RUN_ID" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > _site/release.json
 cp ./*.html manifest.webmanifest sw.js robots.txt sitemap.xml llms.txt llms-full.txt _site/
 mkdir -p _site/app
