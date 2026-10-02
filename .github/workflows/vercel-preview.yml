@@ -1,0 +1,95 @@
+name: Vercel preview
+
+on:
+  push:
+    branches:
+      - launch/public-surface-certification-20261002
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vercel-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VERCEL_SCOPE: joao-caldas-projects
+      VERCEL_PROJECT: konam
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+
+      - name: Require Vercel token
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          test -n "$VERCEL_TOKEN" || { echo "::error::Missing repository secret VERCEL_TOKEN"; exit 1; }
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@59.23.1
+
+      - name: Link or create Vercel project
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel link --yes --project "$VERCEL_PROJECT" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+
+      - name: Pull preview settings
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=preview --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+
+      - name: Build exact preview artifact
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+
+      - name: Deploy preview artifact
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          URL="$(vercel deploy --prebuilt --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN")"
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "### Vercel preview" >> "$GITHUB_STEP_SUMMARY"
+          echo "$URL" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify deployed public surface
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          URL="${{ steps.deploy.outputs.url }}"
+          vercel curl / --deployment "$URL" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" >/tmp/root.html
+          vercel curl /about.html --deployment "$URL" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" >/tmp/about.html
+          grep -q "Kona.m" /tmp/root.html
+          grep -q "About this company" /tmp/about.html
+
+      - name: Deployment receipt
+        run: |
+          cat > vercel-preview-receipt.json <<JSON
+          {
+            "sha": "${GITHUB_SHA}",
+            "ref": "${GITHUB_REF_NAME}",
+            "url": "${{ steps.deploy.outputs.url }}",
+            "target": "preview"
+          }
+          JSON
+
+      - name: Upload deployment receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: vercel-preview-receipt
+          path: vercel-preview-receipt.json
+          if-no-files-found: error
+          retention-days: 7

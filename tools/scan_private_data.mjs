@@ -29,7 +29,7 @@ for(const file of files){
   lines.forEach((line,i)=>{
     // Deployment leak guards contain the same patterns by definition. Do not flag
     // that one scanner-definition line as if it were a leaked value.
-    const selfReferentialGuard = file==='.github/workflows/pages.yml' && /grep\s+-rIlE/.test(line);
+    const selfReferentialGuard = ['.github/workflows/pages.yml', '.github/workflows/publish-public-pages.yml'].includes(file) && /grep\s+-rIlE/.test(line);
     if(!selfReferentialGuard && secretPatterns.some(re=>re.test(line))) findings.push({file,line:i+1,kind:'secret/private-data'});
     if(!selfReferentialGuard && localPath.test(line)) findings.push({file,line:i+1,kind:'local-machine-path'});
   });

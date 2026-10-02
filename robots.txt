@@ -3,4 +3,4 @@ Allow: /
 
 User-agent: *
 Allow: /
-Sitemap: https://joaoccaldas.github.io/canyonmuseum/sitemap.xml
+Sitemap: https://joaoccaldas.github.io/konam/sitemap.xml

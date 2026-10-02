@@ -1,24 +1,38 @@
-# Kona.m · Caldas Studio
+# Kona.m
 
-> **Race the version of yourself.**  
-> Kona.m is a mobile-first triathlon race-week, identity, gear, story and challenge platform built on the Canyon Museum 3D production factory.
+> **Race the version of yourself.**
+
+Kona.m is a mobile-first triathlon companion for race identity, gear, race-week context, stories, challenges and optional immersive 3D exploration.
+
+## Product proposition
+
+Kona.m gives athletes one coherent place to:
+
+- build a Race Self
+- choose and understand their machine
+- prepare for race week
+- explore Kona through people, places, artifacts and stories
+- collect meaningful discoveries
+- enter richer 3D experiences only when they choose
+
+The surface stays simple. The world underneath can be deep.
 
 ## What this repository contains
 
-- Kona.m app shell: Now · Explore · Setup · Plan · Me
+- Kona.m app shell: Home · Discover · Garage · Plan · Me
 - local-first RaceIdentity and progression
-- optional Supabase magic-link backup
-- 3D museum / product inspection / Studio
-- product, athlete, event, challenge and commerce architecture
+- optional account backup/sync
+- 3D museum and product inspection
 - Android/PWA build paths
 - Blender and procedural asset tooling
 - deterministic release/security checks
+- provenance-aware content and asset records
 
-The historical Canyon Museum remains the strongest reference implementation and 3D factory, but the consumer product is now Kona.m.
+The historical Canyon Museum remains the provenance source and 3D factory. The consumer product is Kona.m.
 
 ## Start here
 
-Canonical current documentation:
+Current engineering/product documentation:
 
 1. [STATUS.md](STATUS.md)
 2. [Product](docs/PRODUCT.md)
@@ -27,9 +41,8 @@ Canonical current documentation:
 5. [Design system](docs/DESIGN_SYSTEM.md)
 6. [Security & privacy](docs/SECURITY_PRIVACY.md)
 7. [Operations](docs/OPERATIONS.md)
-8. [Roadmap](docs/ROADMAP.md)
-9. [Decisions](docs/DECISIONS.md)
-10. [Repository hygiene](docs/REPOSITORY_HYGIENE.md)
+8. [Decisions](docs/DECISIONS.md)
+9. [Repository hygiene](docs/REPOSITORY_HYGIENE.md)
 
 Historical audits and handovers are evidence, not current product truth.
 
@@ -42,11 +55,7 @@ npm ci --ignore-scripts --prefix web
 python3 -m http.server 8744
 ```
 
-Open:
-
-```
-http://127.0.0.1:8744/
-```
+Open `http://127.0.0.1:8744/`.
 
 ## Validation
 
@@ -64,15 +73,14 @@ The committed deterministic pages must match a rebuild.
 A release is not ready because code exists.
 
 Required evidence:
+
 - unit/contract checks
 - bike/product asset validation
 - deterministic build
 - release security gate
 - app release seal
 - real-browser/mobile evidence where applicable
-- post-deploy smoke at the exact merged SHA
-
-Android binaries are distributed through GitHub Actions/Release artifacts rather than committed into source control.
+- post-deploy smoke at the exact release SHA
 
 ## Architecture principle
 
@@ -81,17 +89,21 @@ Canonical entity
    ↓
 Reusable experience
    ↓
-Museum / Studio / RaceIdentity / Challenge / Story / Share / Commerce
+Museum / Studio / RaceIdentity / Challenge / Story / Share
 ```
 
 Do not create brand-specific, athlete-specific or event-specific production forks when data/configuration can express the variation.
+
+## Public-surface boundary
+
+Consumer UI, SEO, machine-readable discovery files and public-facing documentation contain product experience, provenance, privacy and factual capability only. Confidential company strategy is intentionally excluded.
 
 ## Privacy
 
 Kona.m is local-first and useful without an account.
 
-Do not commit private user data, personal correspondence, private CRM/contact data, health data, credentials, secret API keys or private race-history matches to this public repository.
+Do not commit private user data, personal correspondence, private contact data, health data, credentials, secret API keys or private race-history matches.
 
 ## License / rights
 
-Third-party brands, trademarks, public-source media and reference material retain their respective ownership and license requirements. See provenance/source records before commercial reuse.
+Third-party brands, trademarks, public-source media and reference material retain their respective ownership and license requirements. See provenance/source records before reuse.

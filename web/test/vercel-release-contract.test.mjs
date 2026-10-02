@@ -21,3 +21,17 @@ test('Vercel config does not introduce catch-all routing that can shadow static 
   assert.equal(Array.isArray(config.routes),false);
   assert.equal(Array.isArray(config.rewrites),false);
 });
+
+test('Vercel publishes only the staged allowlist',()=>{
+  assert.equal(config.installCommand,'cd web && npm ci --ignore-scripts');
+  assert.equal(config.buildCommand,'node tools/build_pages.mjs && bash tools/stage_site.sh');
+  assert.equal(config.outputDirectory,'_site');
+});
+
+test('About page runtime is present in the staged public bundle',()=>{
+  const stage=fs.readFileSync(new URL('../../tools/stage_site.sh',import.meta.url),'utf8');
+  assert.match(stage,/web\/styles\/about\.css/);
+  assert.match(stage,/web\/src\/about-story\.js/);
+  assert.match(stage,/test -f _site\/web\/src\/about-story\.js/);
+  assert.match(stage,/test -f _site\/web\/styles\/about\.css/);
+});
