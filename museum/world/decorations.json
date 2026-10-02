@@ -47,6 +47,14 @@
    "source": "web/src/engine/room-installations.js",
    "min_width": 8.6,
    "min_depth": 4.45
+  },
+  {
+   "id": "norwegian-engine",
+   "name": "NOR // 3 · The Norwegian Engine",
+   "builder": "norwegian",
+   "source": "web/src/engine/room-installations.js",
+   "min_width": 8.6,
+   "min_depth": 4.45
   }
  ]
 }
