@@ -88,12 +88,11 @@ export function createExplosionController(index,{
         state.value=state.target;
         return false;
       }
-      if(reduced){
-        state.value=state.target;
-      }else if(motion==='exponential'){
-        state.value+=(state.target-state.value)*(1-Math.exp(-dt*speed));
+      const rate=reduced?reducedSpeed:speed;
+      if(motion==='exponential'){
+        state.value+=(state.target-state.value)*(1-Math.exp(-dt*rate));
       }else{
-        state.value+=Math.sign(state.target-state.value)*Math.min(Math.abs(state.target-state.value),dt*(reduced?reducedSpeed:speed));
+        state.value+=Math.sign(state.target-state.value)*Math.min(Math.abs(state.target-state.value),dt*rate);
       }
       if(Math.abs(state.value-state.target)<1e-4)state.value=state.target;
       applyExplosion(index.explodables,state.value,{progressScale,staggerWindow,distanceScale,easing});
