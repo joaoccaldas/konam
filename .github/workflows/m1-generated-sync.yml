@@ -28,7 +28,9 @@ jobs:
         run: npm ci --ignore-scripts --prefix web
 
       - name: Rebuild canonical generated outputs
-        run: node tools/build_pages.mjs
+        run: |
+          node tools/build_pages.mjs
+          node tools/build_app.mjs
 
       - name: Commit generated deltas
         run: |
