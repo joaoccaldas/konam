@@ -52,7 +52,8 @@ test('restoring an empty field does not resurrect a legacy value',()=>{
 
 test('malformed progression restore is rejected before changing any device record',()=>{
   const s=memory();writeGameState({schema_version:1,profile:{name:'Before'},progression:{xp:7}},s);
-  const before=JSON.stringify(readGameState(s));
+  const before=readGameState(s);delete before.exported_at;
   assert.throws(()=>writeGameState({schema_version:1,profile:{name:'After'},progression_engine:{schema:'progression-v1',discoveries:[1]}},s),/Invalid progression/);
-  assert.equal(JSON.stringify(readGameState(s)),before);
+  const after=readGameState(s);delete after.exported_at;
+  assert.deepEqual(after,before);
 });
