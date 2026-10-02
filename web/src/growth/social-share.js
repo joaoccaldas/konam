@@ -52,7 +52,7 @@ export async function shareProgress(progress,{navigatorLike=globalThis.navigator
       const file=new FileCtor([blob],'kona-progress.png',{type:'image/png'});
       if(navigatorLike.canShare({files:[file]})){await navigatorLike.share({files:[file],title:`My ${PRODUCT_NAME} progress`,text,url});return{ok:true,method:'native-file',url};}
     }
-    if(typeof navigatorLike?.share==='function'){await navigatorLike.share({title:'My KONA progress',text,url});return{ok:true,method:'native',url};}
+    if(typeof navigatorLike?.share==='function'){await navigatorLike.share({title:`My ${PRODUCT_NAME} progress`,text,url});return{ok:true,method:'native',url};}
     if(typeof navigatorLike?.clipboard?.writeText==='function'){await navigatorLike.clipboard.writeText(text+' '+url);return{ok:true,method:'clipboard',url};}
   }catch(error){if(error?.name==='AbortError')return{ok:false,reason:'cancelled',url};return{ok:false,reason:'share-failed',url};}
   return{ok:false,reason:'unsupported',url};
