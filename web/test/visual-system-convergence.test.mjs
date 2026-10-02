@@ -13,6 +13,7 @@ const studioTpl=read('web/studio.template.html');
 const studioCss=read('web/styles/studio.css');
 const artifact=read('brand/artifacts.css');
 const typography=read('brand/typography.css');
+const admin=read('web/styles/admin-assets.css');
 
 test('canonical component geometry lives in brand tokens',()=>{
   for(const token of ['--brand-card-radius','--brand-sheet-radius','--brand-touch','--brand-mobile-gutter','--brand-surface-glass-strong']) assert.match(tokens,new RegExp(token));
@@ -60,4 +61,19 @@ test('active secondary surfaces have dedicated external style authorities',()=>{
     const src=read(rel);
     assert.match(src,/--brand-(?:bg|surface|ink|touch)/,rel+' does not consume brand semantics');
   }
+});
+
+
+test('newsletter and invite share one modal geometry contract',()=>{
+  assert.match(system,/\.kona-invite,\.kona-newsletter\{/);
+  assert.match(system,/--brand-sheet-radius/);
+  assert.match(system,/\.invite-close,\.newsletter-close/);
+  assert.doesNotMatch(system,/\.kona-newsletter\{[^}]*border-radius:24px/);
+});
+
+test('Merch Studio extends the admin visual system rather than creating another theme',()=>{
+  assert.match(admin,/\.merch-grid/);
+  assert.match(admin,/--brand-card-radius/);
+  assert.match(admin,/--artifact-shadow/);
+  assert.match(admin,/--brand-font-editorial/);
 });
