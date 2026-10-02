@@ -26,10 +26,8 @@ jobs:
       - name: Checkout hardened source
         uses: actions/checkout@v4
 
-      - name: Configure and enable GitHub Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Set up Node
         uses: actions/setup-node@v4
