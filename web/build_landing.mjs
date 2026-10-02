@@ -18,6 +18,7 @@ const corefile = path.join(root, 'app/kona-core.js');
 const raceselffile = path.join(root, 'app/race-self-stage.js');
 const collectiblefile = path.join(root, 'app/collectible-stage.js');
 const adminpreviewfile = path.join(root, 'app/admin-asset-preview.js');
+const nor3reviewfile = path.join(root, 'app/nor3-review.js');
 const worldshellfile = path.join(root, 'app/world-shell.html');
 const viewportfile = path.join(root, 'app/viewport.js');
 fs.copyFileSync(path.join(here,'src/runtime/viewport.js'), viewportfile);
@@ -58,6 +59,17 @@ await build({
   legalComments: 'none',
 });
 await build({
+  entryPoints: [path.join(here, 'src/room-review-norwegian.js')],
+  bundle: true,
+  format: 'iife',
+  minify: true,
+  outfile: nor3reviewfile,
+  target: 'es2020',
+  legalComments: 'none',
+});
+const nor3ReviewBundled = fs.readFileSync(nor3reviewfile, 'utf8').replace(/<\/script/gi, '<\\/script');
+fs.writeFileSync(nor3reviewfile, `/* NOR // 3 review bundle. Edit web/src/room-review-norwegian.js */\n${nor3ReviewBundled}`);
+await build({
   entryPoints: [path.join(here, 'src/landing.js')],
   bundle: true,
   format: 'iife',
@@ -82,4 +94,4 @@ fs.writeFileSync(worldshellfile, worldShell);
 const out = process.env.OUT_HTML || path.join(root, 'index.html');
 fs.writeFileSync(out, html);
 const pieces = data.pieces;
-console.log(`wrote ${path.relative(root, out)} + ${path.relative(root, worldshellfile)} + ${path.relative(root, viewportfile)} · ${pieces.length} pieces (${pieces.filter(p => p.glb).length} modelled) · shell ${(html.length / 1024).toFixed(0)} kB · core ${(coreBundled.length / 1024).toFixed(0)} kB · race-self ${(raceSelfBundled.length / 1024).toFixed(0)} kB · finds-stage ${(collectibleBundled.length / 1024).toFixed(0)} kB · admin-preview ${(adminPreviewBundled.length / 1024).toFixed(0)} kB · data ${(dataBytes / 1024).toFixed(0)} kB · hall ${(bundled.length / 1024).toFixed(0)} kB`);
+console.log(`wrote ${path.relative(root, out)} + ${path.relative(root, worldshellfile)} + ${path.relative(root, viewportfile)} · ${pieces.length} pieces (${pieces.filter(p => p.glb).length} modelled) · shell ${(html.length / 1024).toFixed(0)} kB · core ${(coreBundled.length / 1024).toFixed(0)} kB · race-self ${(raceSelfBundled.length / 1024).toFixed(0)} kB · finds-stage ${(collectibleBundled.length / 1024).toFixed(0)} kB · admin-preview ${(adminPreviewBundled.length / 1024).toFixed(0)} kB · nor3-review ${(nor3ReviewBundled.length / 1024).toFixed(0)} kB · data ${(dataBytes / 1024).toFixed(0)} kB · hall ${(bundled.length / 1024).toFixed(0)} kB`);

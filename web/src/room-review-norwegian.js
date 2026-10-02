@@ -50,7 +50,11 @@ addBox(.16,4.25,rd,bounds.x1,2.12,cz,backMat);
 for(let i=0;i<6;i++){const beam=addBox(rw-.5,.06,.08,cx,4.02,bounds.z0+.55+i*1.05,new THREE.MeshStandardMaterial({color:'#20292d',roughness:.48,metalness:.68}));beam.castShadow=false}
 const obstacles=[];
 const specimen=new THREE.Vector3(.55,Y,cz);
-const L={id:'norwegian',group:room,floorMat,motes:[]};\nconst put=(mesh,x,y,z)=>{mesh.position.set(x,y,z);room.add(mesh);return mesh};\nconst box=(w,h,d,x,y,z,mat)=>put(new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat),x,y,z);\nconst r={id:'norwegian',z0:Math.max(bounds.z0,bounds.z1),z1:Math.min(bounds.z0,bounds.z1)};\nbuildNorwegianReview({r,rg:room,put,box,seed:401,lite,cx,cz,Y,rw,rd,specimen,obstacles,L,bounds});
+const L={id:'norwegian',group:room,floorMat,motes:[]};
+const put=(mesh,x,y,z)=>{mesh.position.set(x,y,z);room.add(mesh);return mesh};
+const box=(w,h,d,x,y,z,mat)=>put(new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat),x,y,z);
+const r={id:'norwegian',z0:Math.max(bounds.z0,bounds.z1),z1:Math.min(bounds.z0,bounds.z1)};
+buildNorwegianReview({r,rg:room,put,box,seed:401,lite,cx,cz,Y,rw,rd,specimen,obstacles,L,bounds});
 for(const o of room.children){if(o.isMesh){o.castShadow=!lite;o.receiveShadow=true}}
 const ambient=new THREE.HemisphereLight('#b9dfe8','#25170f',lite?1.25:1.0);scene.add(ambient);
 const key=new THREE.DirectionalLight('#c8e8ef',lite?1.45:1.8);key.position.set(-3,6,-4);key.castShadow=!lite;scene.add(key);
