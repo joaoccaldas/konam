@@ -231,7 +231,8 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(request!==studioRequest)return;
     title.textContent='Merch Studio';eyebrow.textContent=`${PRODUCT_NAME} · ADMIN`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('me');
-    const {renderAdminMerch}=await import('./admin-merch.js');
+    const href=new URL('web/src/ui/admin-merch.js',location.href).href;
+    const {renderAdminMerch}=await import(href);
     if(request!==studioRequest)return;
     await renderAdminMerch(body);
   }
