@@ -29,7 +29,8 @@ export async function fetchPublic(value:string,redirects=0):Promise<string>{
  const merged=new Uint8Array(bytes);let offset=0;for(const c of chunks){merged.set(c,offset);offset+=c.length;}return new TextDecoder().decode(merged);
 }
 const arr=(value:any)=>value==null?[]:Array.isArray(value)?value:[value];
-const text=(value:any)=>String(value?.['#text']??value??'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#(?:39|x27);/gi,"'").replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim().slice(0,240);
+const cleanText=(value:any,limit=240)=>String(value?.['#text']??value??'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#(?:39|x27);/gi,"'").replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim().slice(0,limit);
+const text=(value:any)=>cleanText(value,240);
 const secureLink=(value:any)=>{try{return publicURL(String(value)).href;}catch{return '';}};
 export function parseFeed(xml:string,url:string,kind:string,now=Date.now()){
  if(/<!\s*(DOCTYPE|ENTITY)/i.test(xml)||xml.length>2_000_000)throw new Error('Unsupported feed XML.');
@@ -43,8 +44,9 @@ export function parseFeed(xml:string,url:string,kind:string,now=Date.now()){
   const link=secureLink(isAtom?arr(item.link).find((x:any)=>!x['@rel']||x['@rel']==='alternate')?.['@href']:item.link);
   const published=Date.parse(text(item.published||item.pubDate||item.updated));
   const title=text(item.title),video=text(item['yt:videoId']);
+  const excerpt=cleanText(item.summary||item.description||item['content:encoded']||item.content,360);
   if(!link||!title||!Number.isFinite(published)||published>now+3600000)return null;
-  return {id:link,source_id:sourceId,title,url:link,published_at:new Date(published).toISOString(),kind:source.kind,...(videoChannel&&/^[\w-]{11}$/.test(video)?{thumbnail:'https://i.ytimg.com/vi/'+video+'/hqdefault.jpg'}:{})};
+  return {id:link,source_id:sourceId,title,url:link,published_at:new Date(published).toISOString(),kind:source.kind,...(excerpt&&excerpt!==title?{excerpt}:{}),...(videoChannel&&/^[\w-]{11}$/.test(video)?{thumbnail:'https://i.ytimg.com/vi/'+video+'/hqdefault.jpg'}:{})};
  }).filter(Boolean);
  if(!items.length)throw new Error('No dated stories found in this feed.');
  return {source,items};

@@ -10,6 +10,7 @@ import { renderDiscoverSurface } from './discover.js';
 import { renderPlanSurface } from './plan.js';
 import { renderFeed, renderTravel } from './companion.js';
 import { renderAdminAssets } from './admin-assets.js';
+import { renderAdminMerch } from './admin-merch.js';
 import { currentUser, isAdminUser } from '../cloud/supabase-lite.js';
 import { readStorage, writeStorage } from '../engine/storage.js';
 import { initReturnJourney } from './return-journey.js';
@@ -162,6 +163,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openMuseum:()=>{ close(); enter?.(); },
       isAdmin:admin,
       openAssets:adminAssets,
+      openMerch:adminMerch,
       openFeed:feed,
       openTravel:travel,
     });
@@ -224,6 +226,15 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     await renderAdminAssets(body);
   }
 
+  async function adminMerch(){
+    dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
+    await featureStyle('admin','web/styles/admin-assets.css');
+    if(request!==studioRequest)return;
+    title.textContent='Merch Studio';eyebrow.textContent=`${PRODUCT_NAME} · ADMIN`;
+    panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('me');
+    await renderAdminMerch(body);
+  }
+
   function walkTo(id){
     close();
     const go=window.__museumGo;
@@ -258,5 +269,5 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     }
   };
   syncUserMenu(profile?.get?.()); profile?.subscribe?.(syncUserMenu);
-  return { now, raceSelf, garage, plan, me, explore, collection, feed, travel, adminAssets, tour:replayTour, close, accessReady };
+  return { now, raceSelf, garage, plan, me, explore, collection, feed, travel, adminAssets, adminMerch, tour:replayTour, close, accessReady };
 }

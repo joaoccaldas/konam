@@ -407,7 +407,7 @@ body.return-moment-open{overflow:hidden}
 
 .photo-credit{font:12px/1.6 var(--brand-font-ui);color:var(--brand-ink);padding:8px 0}.photo-credit a{color:inherit;text-decoration:underline}
 
-.kona-invite{width:min(560px,calc(100% - 32px));border:1px solid var(--brand-line);border-radius:24px;background:var(--brand-bg);color:var(--brand-ink);padding:32px;box-shadow:0 24px 100px #0005}.kona-invite::backdrop{background:#080b0eb0;backdrop-filter:blur(8px)}.kona-invite>small{font:700 11px var(--brand-font-ui);letter-spacing:.12em}.kona-invite h2{font:400 clamp(42px,8vw,64px)/1 var(--brand-font-editorial);margin:22px 0 16px}.kona-invite>p{line-height:1.6}.invite-close{float:right;border:1px solid var(--brand-line);background:var(--brand-surface);color:var(--brand-ink);width:44px;height:44px;border-radius:50%;font-size:24px}.invite-actions{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}.invite-actions>*{min-height:48px}.invite-whatsapp{border-color:var(--brand-ink)}.invite-link{display:grid;gap:8px;font:600 12px var(--brand-font-ui)}.invite-link input{width:100%;box-sizing:border-box;padding:14px;border:1px solid var(--brand-line);border-radius:12px;background:var(--brand-surface);color:var(--brand-ink);font-size:14px}.kona-invite :focus-visible{outline:2px solid var(--brand-ink);outline-offset:4px}
+.kona-invite,.kona-newsletter{width:min(560px,calc(100% - 32px));border:1px solid var(--brand-line);border-radius:var(--brand-sheet-radius);background:var(--brand-bg);color:var(--brand-ink);padding:32px;box-shadow:0 24px 100px #0005}.kona-invite::backdrop,.kona-newsletter::backdrop{background:#080b0eb0;backdrop-filter:blur(8px)}.kona-invite>small,.kona-newsletter>small{font:700 11px var(--brand-font-ui);letter-spacing:.12em}.kona-invite h2,.kona-newsletter h2{font:400 clamp(42px,8vw,64px)/1 var(--brand-font-editorial);margin:22px 0 16px}.kona-invite>p,.kona-newsletter>p{line-height:1.6}.invite-close,.newsletter-close{float:right;border:1px solid var(--brand-line);background:var(--brand-surface);color:var(--brand-ink);width:var(--brand-touch);height:var(--brand-touch);border-radius:50%;font-size:24px}.invite-actions{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}.invite-actions>*{min-height:48px}.invite-whatsapp{border-color:var(--brand-ink)}.invite-link{display:grid;gap:8px;font:600 12px var(--brand-font-ui)}.invite-link input{width:100%;box-sizing:border-box;padding:14px;border:1px solid var(--brand-line);border-radius:12px;background:var(--brand-surface);color:var(--brand-ink);font-size:14px}.kona-invite :focus-visible,.kona-newsletter :focus-visible{outline:2px solid var(--brand-ink);outline-offset:4px}
 
 .kona-tour .tour-instruction{margin-top:10px;color:var(--brand-ink);font-weight:650}.kona-tour-actions{flex-wrap:wrap}.kona-tour{max-height:calc(100dvh - 32px);overflow:auto}
 @media(orientation:landscape) and (max-height:520px){.kona-tour{width:300px;padding:14px}.kona-tour h3{font-size:24px}.kona-tour p{font-size:12px}.kona-tour-actions{margin-top:10px;gap:6px}}
@@ -427,3 +427,12 @@ body.return-moment-open{overflow:hidden}
 
 /* Release touch-target floor for contextual text links surfaced in account/progression/garage states. */
 .kona-note a,#konaAccount a,.garage-level-note a{min-height:48px;display:inline-flex;align-items:center}
+
+
+/* Newsletter-specific form content; modal geometry is shared with .kona-invite above. */
+.kona-newsletter form{display:grid;gap:12px;margin:24px 0}
+.kona-newsletter label{display:grid;gap:7px;font:650 12px/1.4 var(--brand-font-ui)}
+.kona-newsletter input{width:100%;min-height:var(--brand-touch);box-sizing:border-box;padding:12px 14px;border:1px solid var(--brand-line);border-radius:var(--brand-control-radius);background:var(--brand-surface);color:var(--brand-ink);font:400 16px/1.4 var(--brand-font-ui)}
+.kona-newsletter .kona-primary{min-height:var(--brand-touch)}
+.newsletter-honeypot{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+@media(max-width:520px){.kona-newsletter{padding:24px 20px}.kona-newsletter h2{font-size:44px}}

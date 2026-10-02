@@ -1,4 +1,5 @@
 import { openInviteDialog } from './invite.js';
+import { openNewsletterDialog } from './newsletter.js';
 // ui/avatar-home.js — canonical User Studio surface.
 // Both the persistent user menu and the Me tab enter this same game-style studio.
 // Avatar building is a projection over engine/avatar.js; mobile and desktop share this exact UI.
@@ -34,7 +35,7 @@ function readImage(file){
   });
 }
 
-export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,openCollection,openTour,openAssets,openFeed,openTravel,isAdmin=false,isCurrent=()=>true}={}){
+export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,openCollection,openTour,openAssets,openMerch,openFeed,openTravel,isAdmin=false,isCurrent=()=>true}={}){
   const snapshot=readGameState();
   const identity=snapshot.race_identity||{};
   const summary=collectionSummary(snapshot);
@@ -64,10 +65,12 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
         menuItem('collection','◇','Collection',summary.total+' things found')+
         menuItem('progress','☆','Progress','Badges, milestones & history')+
         menuItem('share','↗','Share '+PRODUCT_NAME,'Progress card, WhatsApp & more')+
+        menuItem('newsletter','✉','The useful email','Race-week signals, rabbit holes & the Intern')+
         menuItem('tour','?','Quick tour','Replay the 30-second '+PRODUCT_NAME+' intro')+
         menuItem('feed','≋','The Feed','News, YouTube & your RSS sources')+
         menuItem('travel','⌁','Travel to Kona','Island guide, arrivals & local stops')+
         (isAdmin?menuItem('assets','▦','Asset Library','Bikes, gear, rooms, art & world assets'):'')+
+        (isAdmin?menuItem('merch','▤','Merch Studio','Generate & review concept visuals'):'')+
         '<p class="studio-menu-note">Your history lives here.<br>The world stays out there.</p>'+
       '</nav>'+
       '<nav class="race-self-controls" aria-label="Your athlete"><small class="studio-menu-label">YOUR ATHLETE</small>'+
@@ -266,9 +269,11 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
   root.querySelector('[data-race-self-action="collection"]')?.addEventListener('click',()=>openCollection?.());
   root.querySelector('[data-race-self-action="progress"]')?.addEventListener('click',showProgress);
   root.querySelector('[data-race-self-action="share"]')?.addEventListener('click',showShare);
+  root.querySelector('[data-race-self-action="newsletter"]')?.addEventListener('click',openNewsletterDialog);
   root.querySelector('[data-race-self-action="feed"]')?.addEventListener('click',()=>openFeed?.());
   root.querySelector('[data-race-self-action="travel"]')?.addEventListener('click',()=>openTravel?.());
   root.querySelector('[data-race-self-action="assets"]')?.addEventListener('click',()=>openAssets?.());
+  root.querySelector('[data-race-self-action="merch"]')?.addEventListener('click',()=>openMerch?.());
   root.querySelector('[data-race-self-action="settings"]')?.addEventListener('click',()=>settings?.open?.());
   return ()=>{disposed=true;stageApi?.dispose?.();script?.remove();document.removeEventListener('keydown',handleKey);};
 }

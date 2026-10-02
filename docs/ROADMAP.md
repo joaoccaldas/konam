@@ -97,6 +97,28 @@ No new global visual language. Fix only evidence-backed inconsistencies.
 - no partner/sponsor claims before agreement;
 - commercial content visibly disclosed.
 
+### G9 — owned communication + community
+- create a real role-based Kona.m mailbox on the production domain, with SPF/DKIM/DMARC before newsletter sends;
+- add explicit-consent newsletter signup and unsubscribe/suppression handling;
+- refine the existing branded invite flow ("invite your dudes & dudettes") around meaningful post-value moments;
+- standardize native social sharing and share-media derivatives without contact-book harvesting or share-tap rewards.
+
+### G10 — Feed + Intern content reliability
+- expand the existing YouTube/RSS adapters through a curated source registry;
+- normalize, deduplicate and cache source items;
+- preserve source attribution and canonical links;
+- keep factual extraction separate from the Intern's variable voice;
+- add stale, malformed-feed and summary-failure states.
+
+### G11 — merch concept factory
+- generate brand-consistent merch concepts and print-ready candidates from approved assets;
+- retain rights/provenance records;
+- keep generated concepts internal until reviewed;
+- compare print-on-demand/order-and-ship providers before integrating one;
+- require a physical sample and full test order before public sale.
+
+Detailed implementation contract: `docs/COMMUNITY_CONTENT_COMMERCE_ROADMAP.md`.
+
 ## Post-launch sequence
 
 1. pt-BR production localization;
@@ -106,7 +128,12 @@ No new global visual language. Fix only evidence-backed inconsistencies.
 5. renderer lifecycle convergence;
 6. CSS ownership cleanup;
 7. external integration adapters;
-8. additional brand/event activation templates.
+8. additional brand/event activation templates;
+9. newsletter assembly automation;
+10. server-authoritative activated-referral rewards;
+11. Intern content-engine quality gates;
+12. Merch Studio + one provider-neutral print-on-demand adapter;
+13. optional scheduled social-export workflows after manual share/export is proven.
 
 ## Do not do before launch
 

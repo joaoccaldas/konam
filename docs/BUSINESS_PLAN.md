@@ -194,7 +194,18 @@ Distribution:
 - deep link back to Build yours;
 - optional convenience links where appropriate.
 
+Owned/community layer:
+- a role-based Kona.m email address on the production domain;
+- explicit-consent newsletter signup;
+- "invite your dudes & dudettes" using the existing privacy-safe invitation architecture;
+- reusable 1:1, 4:5 and 9:16 social derivatives;
+- The Feed as a curated YouTube/RSS surface with attributable Intern-written summaries.
+
 Optimize **share → completed RaceIdentity**, not raw share count.
+Optimize **newsletter → useful return**, not list size.
+A future referral reward triggers only after a referred user completes a valid RaceIdentity, never from a share tap or raw link open.
+
+Detailed implementation and quality gates are defined in `docs/COMMUNITY_CONTENT_COMMERCE_ROADMAP.md`.
 
 ## Commercial model
 
@@ -212,10 +223,12 @@ These are offers Kona.m can credibly demonstrate or sell, but they are **not cur
 ### After one repeatable client delivery
 - reusable brand/event activation packages;
 - recurring content/hosting service;
-- white-label experience engine.
+- white-label experience engine;
+- automated branded media/merch concept production as an internal production capability.
 
 ### After consumer retention proof
-- premium consumer features.
+- premium consumer features;
+- a small merch capsule only after physical samples, rights checks, unit economics and one end-to-end fulfillment test pass.
 
 ### After consent + scale
 - aggregate Owned / Dream / Try demand insight with privacy thresholds.
@@ -302,6 +315,12 @@ The most valuable near-term KPI is not MAU by itself. It is whether the public K
 `SOURCE → CANONICAL ENTITY → 3D ASSET → ROOM / ARTIFACT → STORY → SHARE MEDIA → COMMERCE ADAPTER`
 
 Brands buy reusable production capability and distribution surfaces, not one-off decorative renders.
+
+A parallel merch production path can reuse the same evidence-backed assets:
+
+`APPROVED BRAND/ARTIFACT → MERCH BRIEF → GENERATED CONCEPTS → BRAND/RIGHTS GATE → PRINT FILE → PHYSICAL SAMPLE → PROVIDER LISTING → ORDER → PRINT → SHIP`
+
+The initial model is print-on-demand/order-and-ship rather than owned inventory. Provider-specific SKUs, webhooks and shipping logic belong behind a `MerchProviderAdapter`, not in consumer UI code.
 
 ## Evidence and provenance
 
