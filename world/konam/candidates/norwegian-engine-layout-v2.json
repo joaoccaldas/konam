@@ -1,0 +1,86 @@
+{
+  "schema_version": 2,
+  "id": "norwegian-engine-layout-v2",
+  "room_id": "norwegian-engine",
+  "status": "candidate",
+  "units": "meters",
+  "coordinate_system": "host room-local; +x east, +z north, y vertical",
+  "zones": [
+    {
+      "id": "three-rails",
+      "lanes": [
+        {
+          "id": "lane-01",
+          "z": "cz-rd*0.28",
+          "specimen_slot": 0,
+          "items": [
+            "nor3-trainer",
+            "nor3-run-deck",
+            "nor3-towel-rail",
+            "nor3-bottle-set"
+          ]
+        },
+        {
+          "id": "lane-02",
+          "z": "cz",
+          "specimen_slot": 1,
+          "items": [
+            "nor3-trainer",
+            "nor3-run-deck",
+            "nor3-towel-rail",
+            "nor3-bottle-set"
+          ]
+        },
+        {
+          "id": "lane-03",
+          "z": "cz+rd*0.28",
+          "specimen_slot": 2,
+          "items": [
+            "nor3-trainer",
+            "nor3-run-deck",
+            "nor3-towel-rail",
+            "nor3-bottle-set"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-table",
+      "assets": [
+        "nor3-protocol-table",
+        "nor3-analyser",
+        "nor3-vial-rack"
+      ]
+    },
+    {
+      "id": "environment-bay",
+      "assets": [
+        "nor3-environment-bay"
+      ]
+    },
+    {
+      "id": "heat-cool",
+      "assets": [
+        "nor3-fan"
+      ]
+    },
+    {
+      "id": "podium-vault",
+      "assets": [
+        "nor3-podium-vault"
+      ]
+    },
+    {
+      "id": "fjord-relief",
+      "assets": [
+        "nor3-fjord-relief"
+      ]
+    },
+    {
+      "id": "kona-line",
+      "asset": "procedural-host"
+    }
+  ],
+  "placement_authority": "web/src/engine/room-installations.js#norwegian",
+  "note": "Coordinates are derived from host room bounds at runtime. This manifest owns semantic placement intent, not mesh construction."
+}
