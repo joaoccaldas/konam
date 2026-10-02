@@ -183,9 +183,27 @@ function buildShell(group, lite) {
   const floor = box(group, 'BEAST_FLOOR', [width, .18, depth], [0, -.09, 0], floorM);
   floor.userData.floor = true;
 
-  const wallM = mat(C.concrete, .94, .02);
-  const rockM = mat(C.basalt2, 1, 0);
-  const ceilingM = mat('#171614', .93, .02);
+  const makeGrain = (base, fleck, repeatX=5, repeatY=4) => {
+    const t = canvasTexture(512,512,(g,w,h)=>{
+      g.fillStyle=base; g.fillRect(0,0,w,h);
+      for(let i=0;i<2200;i++){
+        const a=Math.abs(Math.sin(i*12.9898)*43758.5453)%1;
+        const b=Math.abs(Math.sin((i+19)*78.233)*19341.731)%1;
+        g.fillStyle=`rgba(${fleck},${.025+a*.075})`;
+        const s=.35+b*1.3; g.fillRect(a*w,b*h,s,s);
+      }
+      g.strokeStyle='rgba(255,255,255,.028)';
+      for(let y=64;y<h;y+=96){g.beginPath();g.moveTo(0,y);g.lineTo(w,y+6);g.stroke();}
+    });
+    t.wrapS=t.wrapT=THREE.RepeatWrapping; t.repeat.set(repeatX,repeatY); return t;
+  };
+  const concreteMap=makeGrain('#3b3734','230,220,205',7,5);
+  const basaltMap=makeGrain('#1b1a18','190,175,155',5,4);
+  const floorMap=makeGrain('#111111','220,220,220',10,8);
+  floorM.map=floorMap; floorM.needsUpdate=true;
+  const wallM = new THREE.MeshStandardMaterial({map:concreteMap,color:'#5a544f',roughness:.91,metalness:.01,envMapIntensity:.35});
+  const rockM = new THREE.MeshStandardMaterial({map:basaltMap,color:'#26221f',roughness:.98,metalness:0,envMapIntensity:.2});
+  const ceilingM = new THREE.MeshStandardMaterial({color:'#181615',roughness:.90,metalness:.03,envMapIntensity:.22});
 
   // South / north.
   box(group, 'BEAST_WALL_N', [width, B.h, .32], [0, B.h / 2, B.z0 + .16], wallM);
@@ -224,11 +242,20 @@ function buildShell(group, lite) {
     group.add(strip);
   }
 
-  // Main ambient treatment.
-  group.add(new THREE.HemisphereLight('#b9c0c8', '#100c09', lite ? .55 : .68));
-  const warm = new THREE.DirectionalLight('#ffe0bd', lite ? .65 : .95);
-  warm.position.set(-4, 6, 8);
+  // Main ambient treatment: warm practicals + screen spill + controlled shadow,
+  // rather than a uniform grey museum fill.
+  group.add(new THREE.HemisphereLight('#b9c0c8', '#100c09', lite ? .38 : .46));
+  const warm = new THREE.DirectionalLight('#ffd4ad', lite ? .52 : .68);
+  warm.position.set(-5, 7, 8);
   group.add(warm);
+  const screenGlow=new THREE.PointLight('#6fa8ff',lite ? 0 : 14,11,1.65);
+  screenGlow.position.set(1.5,2.5,-7.8); group.add(screenGlow);
+  const trainerWarm=new THREE.SpotLight('#ffb066',lite ? 0 : 22,13,Math.PI*.24,.55,1.5);
+  trainerWarm.position.set(-3.8,5.0,1.4); trainerWarm.target.position.set(-2.4,.8,-2.0); group.add(trainerWarm,trainerWarm.target);
+  const gearWarm=new THREE.SpotLight('#ffd4b0',lite ? 0 : 15,12,Math.PI*.23,.62,1.4);
+  gearWarm.position.set(9.8,5.0,3.6); gearWarm.target.position.set(10.0,1.5,8.1); group.add(gearWarm,gearWarm.target);
+  const horizonWarm=new THREE.PointLight('#ff8f57',lite ? 0 : 8,9,2.0);
+  horizonWarm.position.set(-7.4,2.3,8.4); group.add(horizonWarm);
 
   return { floorM, wallM, rockM, ceilingM };
 }
@@ -325,9 +352,13 @@ function buildTrainer(group, obstacles, pickables, lite) {
   trainer.name = 'SMART_TRAINER_PROXY';
   trainer.position.set(-2.5, .25, -2.0);
   group.add(trainer);
-  box(trainer, 'TRAINER_BASE', [1.45, .12, .50], [0, 0, .90], metal);
-  cylinder(trainer, 'TRAINER_FLYWHEEL', .48, .22, [0, .35, .92], dark, [Math.PI / 2, 0, 0], 40);
-  box(trainer, 'TRAINER_ACCENT', [.03, .26, .72], [.13, .35, .92], orange);
+  box(trainer, 'TRAINER_BASE', [1.55, .10, .30], [0, 0, .92], metal);
+  box(trainer, 'TRAINER_LEG_L', [.13,.09,.92], [-.64,-.01,.92], metal, [0,.55,0]);
+  box(trainer, 'TRAINER_LEG_R', [.13,.09,.92], [.64,-.01,.92], metal, [0,-.55,0]);
+  cylinder(trainer, 'TRAINER_FLYWHEEL', .48, .24, [0, .38, .92], dark, [Math.PI / 2, 0, 0], 48);
+  cylinder(trainer, 'TRAINER_HUB', .13, .42, [0,.48,.92], metal, [Math.PI/2,0,0],24);
+  for(let i=0;i<7;i++) cylinder(trainer,'TRAINER_COG',.11+i*.013,.018,[0,.48,.77-i*.018],metal,[Math.PI/2,0,0],24);
+  box(trainer, 'TRAINER_ACCENT', [.035, .30, .78], [.13, .38, .92], orange);
 
   // Aerobar towel.
   box(group, 'TRAINER_TOWEL', [.50, .018, .88], [-1.25, 1.52, -2.0], towel, [0, .05, .10]);
@@ -340,6 +371,10 @@ function buildTrainer(group, obstacles, pickables, lite) {
 
   // Low desk.
   box(group, 'TRAINING_DESK_TOP', [2.5, .10, .68], [1.4, 1.16, -3.35], mat('#262421', .70, .18));
+  const tablet=box(group,'TRAINING_TABLET',[.78,.48,.045],[1.4,1.55,-3.35],mat('#0d0f12',.18,.25),[-.18,0,0]);
+  const tabletFace=new THREE.Mesh(new THREE.PlaneGeometry(.68,.38),new THREE.MeshBasicMaterial({color:'#294d75',toneMapped:false}));
+  tabletFace.position.set(1.4,1.55,-3.323);tabletFace.rotation.x=-.18;group.add(tabletFace);
+  addPickable(pickables,tablet,'zwift-console','Training tablet');
   box(group, 'TRAINING_DESK_L', [.09, 1.15, .62], [.32, .58, -3.35], metal);
   box(group, 'TRAINING_DESK_R', [.09, 1.15, .62], [2.48, .58, -3.35], metal);
 
