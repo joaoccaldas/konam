@@ -35,12 +35,12 @@ test('global controller explodes and assembles the same nodes',()=>{
   assert.ok(fork.position.distanceTo(base)<1e-9);
 });
 
-test('reduced motion resolves directly to target',()=>{
+test('reduced motion uses the configured fast rate without forking explode math',()=>{
   const {root}=fixture();
-  const c=createExplosionController(indexMachine(root));
+  const c=createExplosionController(indexMachine(root),{speed:1,reducedSpeed:10});
   c.setExploded(true);
   c.update(1/60,{reduced:true});
-  assert.equal(c.value,1);
+  assert.ok(c.value>0.1 && c.value<1);
 });
 
 test('part lookup climbs from mesh to nearest semantic part',()=>{
