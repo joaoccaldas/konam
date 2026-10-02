@@ -9,7 +9,7 @@ const read=p=>fs.readFileSync(path.join(ROOT,p),'utf8');
 test('Beast Cave stays isolated from production navigation until explicitly approved',()=>{
   const rooms=JSON.parse(read('world/konam/rooms-v1.json'));
   assert.equal(rooms.rooms.length,28,'canonical 28-room registry must not change');
-  assert.equal(rooms.rooms.some(r=>/beast-cave|lionel/i.test(r.slug+' '+r.name)),false,'prototype must not be promoted into canonical rooms');
+  assert.equal(rooms.rooms.some(r=>/beast-cave|lionel/i.test(r.slug+' '+r.name)),false,'candidate must not be wired into canonical rooms before approval');
 
   const hall=read('web/src/hall.js');
   const entry=read('web/src/entry.js');
@@ -17,9 +17,9 @@ test('Beast Cave stays isolated from production navigation until explicitly appr
   assert.equal(/beast-cave|buildBeastCave/i.test(entry),false,'entry.js must not wire Beast Cave');
 });
 
-test('Beast Cave prototype contract is large, explorable and explicitly unwired',()=>{
-  const d=JSON.parse(read('world/konam/prototypes/athlete-lionel-sanders-beast-cave-v1.json'));
-  assert.equal(d.status,'prototype-unwired');
+test('Beast Cave production-candidate contract is large, explorable and explicitly unwired',()=>{
+  const d=JSON.parse(read('world/konam/candidates/athlete-lionel-sanders-beast-cave-v1.json'));
+  assert.equal(d.status,'production-candidate-unwired');
   assert.equal(d.public_navigation,false);
   assert.ok(d.dimensions_m.width>=28);
   assert.ok(d.dimensions_m.depth>=22);
@@ -34,7 +34,7 @@ test('Beast Cave source uses deferred heavy asset hook and exposes disposal',()=
   const src=read('web/src/rooms/beast-cave.js');
   assert.match(src,/attachBeastCaveBike/);
   assert.match(src,/disposeBeastCave/);
-  assert.match(src,/prototypeOnly = true/);
+  assert.match(src,/productionCandidate = true/);
   assert.match(src,/publicNavigation = false/);
   assert.match(src,/buildBeastCaveStoryWing/);
 });
