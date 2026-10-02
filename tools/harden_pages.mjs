@@ -114,8 +114,9 @@ for (const p of PAGES) {
   if (!['index.html','about.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
     html = html.replace(/<body([^>]*)>/i, match => match + GLOBAL_USER_STUDIO);
   }
-  html=html.replace(/<script src="app\/standalone-access.js"><\/script>/g,'');
+  html=html.replace(/<script src="app\/standalone-access.js"><\/script>\n?/g,'');
   if(/^Speedmax_.*Museum\.html$/.test(p.file))html=html.replace(/<\/head>/i,'<script src="app/standalone-access.js"></script>\n</head>');
+  html=html.replace(/\n{3,}(?=<!--design-system:start-->)/g,'\n\n');
   fs.writeFileSync(f, html);
 }
 
