@@ -1,4 +1,5 @@
 // growth/social-share.js — privacy-safe sharing for Progress and User Studio.
+import { PRODUCT_NAME } from '../product-meta.js';
 const cleanNumber=v=>Math.max(0,Number(v)||0);
 export function safeAppUrl(locationLike=globalThis.location){
   const origin=String(locationLike?.origin||'');
@@ -19,7 +20,7 @@ export function progressShareModel(progress={}){
 }
 export function progressShareText(progress={}){
   const p=progressShareModel(progress);
-  return `KONA · Level ${p.level} ${p.levelName} · ${p.xp} XP · ${p.discoveries} discoveries. Apparently wandering is a training plan.`;
+  return `${PRODUCT_NAME} · Level ${p.level} ${p.levelName} · ${p.xp} XP · ${p.discoveries} discoveries. Apparently wandering is a training plan.`;
 }
 export function whatsappProgressUrl(progress,locationLike=globalThis.location){
   const url=safeAppUrl(locationLike);if(!url)return null;
@@ -35,7 +36,7 @@ export async function progressCardBlob(progress,{documentLike=globalThis.documen
   const bg=token('--brand-bg','#f4efe7',documentLike),ink=token('--brand-ink','#12181d',documentLike),action=token('--brand-action','#e8471c',documentLike),accent=token('--brand-discovery','#138a8f',documentLike),muted=token('--brand-muted','#5f6a72',documentLike);
   g.fillStyle=bg;g.fillRect(0,0,c.width,c.height);
   g.fillStyle=action;g.fillRect(72,72,150,12);
-  g.fillStyle=ink;g.font='700 34px Manrope, system-ui, sans-serif';g.fillText('KONA · PROGRESS',72,150);
+  g.fillStyle=ink;g.font='700 34px Manrope, system-ui, sans-serif';g.fillText(PRODUCT_NAME.toUpperCase()+' · PROGRESS',72,150);
   g.font='400 126px "Instrument Serif", Georgia, serif';g.fillText('Level '+p.level,72,330);
   g.font='400 76px "Instrument Serif", Georgia, serif';g.fillText(p.levelName,72,420);
   const metrics=[['XP',p.xp],['KONA CREDITS',p.credits],['DISCOVERIES',p.discoveries],['BADGES',p.badges]];
@@ -49,7 +50,7 @@ export async function shareProgress(progress,{navigatorLike=globalThis.navigator
   try{
     if(blob&&FileCtor&&typeof navigatorLike?.canShare==='function'&&typeof navigatorLike?.share==='function'){
       const file=new FileCtor([blob],'kona-progress.png',{type:'image/png'});
-      if(navigatorLike.canShare({files:[file]})){await navigatorLike.share({files:[file],title:'My KONA progress',text,url});return{ok:true,method:'native-file',url};}
+      if(navigatorLike.canShare({files:[file]})){await navigatorLike.share({files:[file],title:`My ${PRODUCT_NAME} progress`,text,url});return{ok:true,method:'native-file',url};}
     }
     if(typeof navigatorLike?.share==='function'){await navigatorLike.share({title:'My KONA progress',text,url});return{ok:true,method:'native',url};}
     if(typeof navigatorLike?.clipboard?.writeText==='function'){await navigatorLike.clipboard.writeText(text+' '+url);return{ok:true,method:'clipboard',url};}
