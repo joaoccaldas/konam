@@ -91,6 +91,8 @@ export function createExplosionController(index,{
       const rate=reduced?reducedSpeed:speed;
       if(motion==='exponential'){
         state.value+=(state.target-state.value)*(1-Math.exp(-dt*rate));
+      }else if(motion==='lerp'){
+        state.value+=(state.target-state.value)*Math.min(1,dt*rate);
       }else{
         state.value+=Math.sign(state.target-state.value)*Math.min(Math.abs(state.target-state.value),dt*rate);
       }
