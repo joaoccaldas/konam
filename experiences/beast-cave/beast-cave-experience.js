@@ -120,6 +120,12 @@ function openStory(id,target){
  yaw=Math.atan2(-dir.x,-dir.z);pitch=Math.asin(dir.y);look();
 }
 document.getElementById('closeStory').onclick=()=>document.body.classList.remove('has-sheet');
+function focusHotspot(id){
+  const h=hotspots.find(x=>x.id===id);
+  if(!h)return false;
+  openStory(id,h.look);
+  return true;
+}
 
 addEventListener('keydown',e=>{keys.add(e.key.toLowerCase()); if(e.key==='Escape')document.body.classList.remove('has-sheet')});
 addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
@@ -179,4 +185,4 @@ addEventListener('resize',()=>{
  renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
 });
 
-window.__BEAST_CAVE_EXPERIENCE={scene,camera,built,hotspots,enterRoom,openStory,renderer};
+window.__BEAST_CAVE_EXPERIENCE={scene,camera,built,hotspots,enterRoom,openStory,focusHotspot,renderer};
