@@ -22,7 +22,10 @@ test('Android nested bundle ships the sealed public release without native sourc
   const index = fs.readFileSync(path.join(www, 'index.html'), 'utf8');
   assert.match(index, /window\.__NATIVE=\{"versionCode":42,"versionName":"1\.42script"\}/);
   assert.equal(fs.existsSync(path.join(www, 'app/native')), false);
-  assert.deepEqual(fs.readdirSync(path.join(www, 'web/src')), ['about-story.js']);
+  assert.deepEqual(fs.readdirSync(path.join(www, 'web/src')), ['about-story.js','cloud','growth','promo.js','ui']);
+  assert.deepEqual(fs.readdirSync(path.join(www,'web/src/cloud')),['supabase-lite.js']);
+  assert.deepEqual(fs.readdirSync(path.join(www,'web/src/growth')),['newsletter.js']);
+  assert.deepEqual(fs.readdirSync(path.join(www,'web/src/ui')),['admin-merch.js','newsletter.js']);
   assert.equal(fs.existsSync(path.join(www, 'assets/reference/canyon')), false);
   assert.equal(fs.existsSync(path.join(www, 'tools')), false);
   assert.equal(fs.existsSync(path.join(www, '.git')), false);
