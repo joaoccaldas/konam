@@ -23,7 +23,8 @@ test('Vercel config does not introduce catch-all routing that can shadow static 
 });
 
 test('Vercel publishes only the staged allowlist',()=>{
-  assert.equal(config.buildCommand,'bash tools/stage_site.sh');
+  assert.equal(config.installCommand,'cd web && npm ci --ignore-scripts');
+  assert.equal(config.buildCommand,'node tools/build_pages.mjs && bash tools/stage_site.sh');
   assert.equal(config.outputDirectory,'_site');
 });
 
