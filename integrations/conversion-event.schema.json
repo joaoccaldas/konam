@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caldas.studio/schemas/conversion-event-v1.json",
+  "title": "Caldas Studio Conversion Event V1",
+  "type": "object",
+  "required": ["schema_version","event_type","offer_id","occurred_at","privacy"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "event_type": {
+      "enum": [
+        "offer.impression",
+        "offer.opened",
+        "offer.outbound_click",
+        "conversion.reported"
+      ]
+    },
+    "offer_id": { "type": "string" },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "context": {
+      "type": "object",
+      "properties": {
+        "event_id": { "type": ["string","null"] },
+        "product_id": { "type": ["string","null"] },
+        "place_id": { "type": ["string","null"] },
+        "story_id": { "type": ["string","null"] },
+        "surface": { "type": ["string","null"] }
+      },
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object",
+      "required": ["user_identifier","transmission"],
+      "properties": {
+        "user_identifier": {
+          "enum": ["none","provider-generated","consented-account"]
+        },
+        "transmission": {
+          "enum": ["local-only","provider-redirect","server-authorized"]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,5 @@
+{
+ "product": "canyon-cfr-2027",
+ "liveries": ["dye", "tide", "night"],
+ "note": "Build tools/render_entry_art.mjs reads the product catalogue and WYLD registry; runtime uses these same IDs for the lightweight hero."
+}

@@ -1,0 +1,21 @@
+{
+  "name": "speedmax-museum-native",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Android shell for KONA (Capacitor). Bundles the app and optional museum experience for offline, full-frame-rate use.",
+  "type": "module",
+  "scripts": {
+    "build:web": "node scripts/build-www.mjs",
+    "sync": "npm run build:web && cap sync android",
+    "icons": "capacitor-assets generate --android --iconBackgroundColor '#12181d' --iconBackgroundColorDark '#12181d' --splashBackgroundColor '#12181d' --splashBackgroundColorDark '#12181d'",
+    "apk": "npm run sync && cd android && ./gradlew assembleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/core": "8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "8.5.2"
+  }
+}

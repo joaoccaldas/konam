@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joaoccaldas.github.io/canyonmuseum/schemas/v1/collection.schema.json",
+  "title": "Collection",
+  "type": "object",
+  "required": ["id", "name", "match"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "match": { "type": "string", "description": "Discovery id prefix that counts toward this collection." },
+    "count": { "type": "integer", "minimum": 1 }
+  }
+}

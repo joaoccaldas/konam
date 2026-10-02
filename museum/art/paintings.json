@@ -1,0 +1,222 @@
+{
+ "schema_version": 1,
+ "note": "Original paintings commissioned for the museum. Each record points at its raw generation record in museum/sources/.",
+ "paintings": [
+  {
+   "id": "queen-k-first-light",
+   "title": "Queen K, first light",
+   "text": "Oil study of the highway at dawn: the lava is still black, the sky has already turned. One rider, very small, already in the tuck.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "queen-k-first-light.jpg",
+   "width": 1024,
+   "height": 688,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "63eb2972-697f-4d14-9c33-1ecbb9afb744",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original museum-quality oil painting on canvas: an empty two-lane highway crossing black lava fields on the Big Island of Hawaii at dawn, a single time-trial cyclist far away as a small dark silhouette in an aero tuck, heat shimmer, pink and gold sky over a volcano, thick impasto brushwork. No text, no letters, no logos, no brand marks.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "crosswind",
+   "title": "Crosswind",
+   "text": "The wind decides the line here. Grass flattened one way, the rider leaning the other.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "crosswind.jpg",
+   "width": 1024,
+   "height": 688,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "df5d8535-d351-4c08-b4a8-6598f9f9617e",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original expressive oil painting: fierce crosswinds on a coastal lava highway, dry golden fountain grass bent flat, a blurred abstract cyclist leaning into the wind, turquoise ocean on the horizon, energetic diagonal brushstrokes. No text, no letters, no logos, no brand marks.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "kohala-turn",
+   "title": "Kohala, the turn",
+   "text": "Green hills and the road folding back on itself: halfway, and the wind is about to change sides.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "kohala-turn.jpg",
+   "width": 896,
+   "height": 1120,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "ecfede8c-d613-48be-a3ba-6313640a604c",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original gouache painting: green rolling hills of North Kohala, Hawaii, under drifting trade-wind clouds, a winding road turning back on itself, flat graphic shapes, soft pastel palette, mid-century travel-poster feeling but painterly. No text, no letters, no logos.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "race-morning-bay",
+   "title": "Race morning, the bay",
+   "text": "From above, a start line is just colour on water: thousands of caps, one pier.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "race-morning-bay.jpg",
+   "width": 1024,
+   "height": 688,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "0147dd91-ef6e-4f75-b587-f3f6bcca8008",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original painting of a mass open-water swim start in a tropical bay at sunrise seen from above, thousands of tiny swim caps rendered as dots of bright colour on deep blue water, white splashes, a pier on one side, dotted pointillist technique, luminous. No text, no letters, no logos, no identifiable people.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "streamlines",
+   "title": "Streamlines",
+   "text": "Smoke in a wind tunnel does not argue. It shows you where the air wants to go.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "streamlines.jpg",
+   "width": 896,
+   "height": 1120,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "f51cb8a7-2b3e-432a-b62a-838c28d13ec3",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original minimalist ink painting on warm paper: white smoke streamlines flowing smoothly around an abstract teardrop airfoil shape in a wind tunnel, black sumi ink, lots of empty space, calm and precise. No text, no letters, no logos, no signature.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "moving-air",
+   "title": "Silhouette in moving air",
+   "text": "A time-trial bike in a few strokes, and the air it pushes aside in a few more.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "moving-air.jpg",
+   "width": 1024,
+   "height": 688,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "471e8c82-9c1a-4815-aeee-ff7d724b36ca",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original Japanese-inspired brush painting: the side silhouette of a generic time-trial bicycle with disc wheels drawn in a few confident black brushstrokes, surrounded by flowing air currents in pale indigo washes, on textured rice paper. No text, no letters, no logos, no brand marks, no seal stamps.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "night-boards",
+   "title": "Night boards",
+   "text": "An empty velodrome after hours: the banking holds the light, one rider holds the line.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "night-boards.jpg",
+   "width": 1024,
+   "height": 688,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "f15ce17a-c908-47a5-92ba-c3f7f240a505",
+    "created": "2026-09-29T22:39:28Z",
+    "prompt": "Original oil painting: an empty indoor wooden velodrome at night, steep banked boards glowing under a few lamps, a single track cyclist as a motion blur on the banking, deep shadows, cinematic warm and cool light. No text, no letters, no logos, no advertising boards.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "midnight-seawall",
+   "title": "Midnight on the seawall",
+   "text": "The finish at midnight: lanterns, wet asphalt, and a crowd that stayed.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "midnight-seawall.jpg",
+   "width": 896,
+   "height": 1120,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "922b02a5-731e-4832-b764-b3944c1fbecc",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original impressionist oil painting: a seaside town street at midnight during a long-distance race, a lit finish arch glowing warm, paper lanterns, palm trees, a crowd rendered as loose blurred strokes, reflections on wet asphalt. No text, no letters, no logos, no readable signs.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "lava-meets-sea",
+   "title": "Where the lava meets the sea",
+   "text": "Two elements, no border: orange, black and the steam between them.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "lava-meets-sea.jpg",
+   "width": 1024,
+   "height": 688,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "c2edce03-b792-4d34-a37f-d87e52b2687b",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original abstract expressionist colour-field painting: molten orange lava meeting black ocean water, rising white steam, large bold fields of colour, thick scraped paint, dramatic contrast. No text, no letters, no logos, no signature.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "mirage",
+   "title": "Mirage",
+   "text": "Heat off the lava until the road stops being a road. A runner keeps going anyway.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "mirage.jpg",
+   "width": 1024,
+   "height": 688,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "59d648fb-a5eb-4d29-9a9f-b202312d573a",
+    "created": "2026-09-29T22:39:28Z",
+    "prompt": "Original surreal oil painting: a desert road through black lava dissolving into a white-hot heat mirage, the horizon melting into light, a lone runner as a tiny figure, bleached palette with a single cobalt sky band. No text, no letters, no logos.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "builders-bench",
+   "title": "The builder's bench",
+   "text": "Tubes, lugs, a torch and files: every bike in the museum started on a bench like this.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "builders-bench.jpg",
+   "width": 896,
+   "height": 1120,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "a47edcf0-ee2d-4ee9-8d9d-ab8f92f8b26f",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original chiaroscuro still-life oil painting: a frame builder's workbench with steel bicycle tubes, brass lugs, a brazing torch and hand files, lit by one window, deep Dutch-master shadows. No text, no letters, no logos, no brand marks.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  },
+  {
+   "id": "twill",
+   "title": "Twill",
+   "text": "Carbon weave as ornament: black and gold, over and under, bent into a wave.",
+   "medium": "Digital painting (AI-generated)",
+   "file": "twill.jpg",
+   "width": 1024,
+   "height": 1024,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "job_id": "26ab9655-be2d-4c3c-9ea7-c8a144368d49",
+    "created": "2026-09-29T22:39:27Z",
+    "prompt": "Original geometric abstract painting inspired by woven carbon fibre: interlaced black and gold bands forming a shimmering twill pattern that bends like a wave, gold leaf accents, precise hard-edge style. No text, no letters, no logos.",
+    "source_record": "museum/sources/higgsfield/paintings-20260929.json"
+   }
+  }
+ ]
+}

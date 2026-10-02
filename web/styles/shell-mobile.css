@@ -1,0 +1,47 @@
+/* MOBILE layout — KONA shell, every page.
+   Edit phone shell here (bottom nav, panel, touch offsets).
+   Desktop shell and shared type: system.css
+   Hall chrome on a phone: hall-mobile.css */
+@media(max-width:899px){
+  .kona-bottom-nav{display:grid}
+  body.kona-panel-open{overflow:hidden}
+  body.kona-panel-open>#intro{visibility:hidden}
+  body.touch #intro{padding-bottom:calc(102px + env(safe-area-inset-bottom))}
+}
+@media(max-width:380px){.kona-place-grid{grid-template-columns:1fr}.kona-section{padding:14px}}
+
+/* The 2D app is the canonical surface, not a modal. Close appears only when returning to a loaded world makes sense. */
+body:not(.museum-open) .kona-panel-head>button{display:none!important}
+body.museum-open .kona-panel-head>button{display:grid}
+
+/* Batch 6: the consumer shell must fit physical phones even when the browser reports desktop width. */
+.kona-panel,.kona-bottom-nav{box-sizing:border-box;max-width:min(100dvw,var(--vvw,100dvw))}
+.kona-panel *,.kona-bottom-nav *{box-sizing:border-box}
+@media(max-width:899px){
+  .kona-panel{inset:0;width:min(100dvw,var(--vvw,100dvw));max-width:min(100dvw,var(--vvw,100dvw));min-height:min(100dvh,var(--vvh,100dvh));padding-left:max(var(--brand-mobile-gutter),env(safe-area-inset-left));padding-right:max(var(--brand-mobile-gutter),env(safe-area-inset-right))}
+  .kona-panel-head,.kona-panel-body{width:100%;max-width:100%;min-width:0}
+  .kona-panel-head h2{font-size:clamp(36px,11vw,58px);overflow-wrap:anywhere}
+  .kona-hero-card{min-height:200px;padding:20px}
+  .kona-hero-card h3{font-size:clamp(34px,10vw,52px);overflow-wrap:anywhere}
+  .kona-list article,.kona-timeline article{min-width:0}
+  .kona-list b,.kona-list span,.kona-timeline b,.kona-timeline span,.kona-place-grid b,.kona-place-grid span{overflow-wrap:anywhere}
+  .kona-bottom-nav{left:0;right:auto;width:min(100dvw,var(--vvw,100dvw));padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+}
+html.phone-fit #intro.kona-entry,
+html.phone-fit .kona-panel,
+html.phone-fit .kona-bottom-nav{
+  zoom:var(--fit);
+  left:0;right:auto;
+  width:calc(100vw / var(--fit));
+  max-width:calc(100vw / var(--fit));
+}
+html.phone-fit #intro.kona-entry,
+html.phone-fit .kona-panel{height:calc(100dvh / var(--fit));max-height:calc(100dvh / var(--fit))}
+html.phone-fit #appSheet>div{zoom:var(--fit);width:min(420px,calc((100vw - 24px)/var(--fit)))}
+
+/* RC1 touch invariant: all primary phone interactions in Home/Garage are at least 48px. */
+.kona-list a,.kona-list button,.race-card-actions button,.race-picker button,.race-picker input,
+.kona-bottom-nav button,.quest-choice,.btn,.hub-tile,.hub-settings{min-height:48px}
+.kona-list a,.kona-list button{display:inline-flex;align-items:center;justify-content:center;padding:0 12px;border-radius:12px}
+.race-card-actions button{padding-inline:12px}
+#entryInstall,#installBtn{min-height:48px;padding:0 16px;border-radius:999px}

@@ -1,0 +1,7 @@
+{
+  "source_repository": "joaoccaldas/canyonmuseum",
+  "source_sha": "856b98f0d9392c48ef7a6ff0fedaa39d459ef14c",
+  "target_repository": "joaoccaldas/konam",
+  "strategy": "exact-tree snapshot excluding workflows; workflows replayed separately",
+  "history_policy": "source repository remains immutable historical history; target records exact source SHA"
+}

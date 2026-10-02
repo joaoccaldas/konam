@@ -1,0 +1,83 @@
+{
+  "id": "./",
+  "name": "KONA",
+  "short_name": "KONA",
+  "description": "Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#f4efe7",
+  "theme_color": "#12181d",
+  "categories": [
+    "sports",
+    "education",
+    "entertainment"
+  ],
+  "icons": [
+    {
+      "src": "assets/pwa/icon-v3-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/pwa/icon-v3-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/pwa/icon-v3-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/pwa/icon-v3.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Home",
+      "short_name": "Home",
+      "url": "./?view=home",
+      "icons": [
+        {
+          "src": "assets/pwa/icon-v3-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Discover",
+      "short_name": "Discover",
+      "url": "./?view=discover",
+      "icons": [
+        {
+          "src": "assets/pwa/icon-v3-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Garage",
+      "short_name": "Garage",
+      "url": "./?view=garage",
+      "icons": [
+        {
+          "src": "assets/pwa/icon-v3-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

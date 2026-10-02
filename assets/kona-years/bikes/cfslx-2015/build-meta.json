@@ -1,0 +1,21 @@
+{
+  "id": "cfslx-2015",
+  "name": "Speedmax CF SLX",
+  "size": "M",
+  "published_mm": {
+    "size": "M",
+    "stack": 489,
+    "reach": 438,
+    "sta": 80.5,
+    "hta": 73,
+    "chainstay": 420,
+    "wheelbase": 1014,
+    "head_tube": 83,
+    "seat_tube": 552,
+    "bb_drop": 72
+  },
+  "derived_fork_offset_mm": 33.2,
+  "geometry_source": "Canyon Speedmax CFR Disc Di2 geometry pdf, pid 2921, size M",
+  "tube_depths": "silhouette study, not a photo trace",
+  "brakes": "rim"
+}

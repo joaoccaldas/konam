@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "source_branch": "assets/kona-environment-pack-20260930",
+  "source_commit": "88fa0c9c",
+  "items": [
+    {
+      "id": "dt-swiss-arc1100-db80-front",
+      "category": "wheel",
+      "brand": "DT Swiss",
+      "model": "ARC 1100 DICUT DB 80 front",
+      "asset_path": "assets/equipment-engineering/batch-02/dt-swiss-arc1100-db80-front.glb",
+      "representation": "official-spec-driven",
+      "readiness": "candidate",
+      "states": [
+        "assembled",
+        "exploded"
+      ],
+      "semantic_parts": [
+        "rim",
+        "hub",
+        "spokes",
+        "centerlock rotor",
+        "thru axle"
+      ],
+      "fitment": {
+        "rim_diameter": "700C / 29in",
+        "rim_height_mm": 80,
+        "inner_width_mm": 20,
+        "outer_width_mm": 32,
+        "axle_mm": "12x100",
+        "brake": "Center Lock disc"
+      },
+      "setup_slot": "wheel",
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "race_setup",
+        "bike_configurator",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "source_records": [
+        "https://www.dtswiss.com/en/support/product-support?matnr=WARC110AIDXCA12557"
+      ],
+      "blockers": [
+        "asset branch release gate not yet green",
+        "per-asset close-up visual QA required"
+      ],
+      "bytes": 269116
+    },
+    {
+      "id": "dt-swiss-arc1100-db80-rear",
+      "category": "wheel",
+      "brand": "DT Swiss",
+      "model": "ARC 1100 DICUT DB 80 rear",
+      "asset_path": "assets/equipment-engineering/batch-02/dt-swiss-arc1100-db80-rear.glb",
+      "representation": "official-spec-driven",
+      "readiness": "candidate",
+      "states": [
+        "assembled",
+        "exploded"
+      ],
+      "semantic_parts": [
+        "rim",
+        "hub",
+        "spokes",
+        "centerlock rotor",
+        "thru axle",
+        "freehub body"
+      ],
+      "fitment": {
+        "rim_diameter": "700C / 29in",
+        "rim_height_mm": 80,
+        "inner_width_mm": 20,
+        "outer_width_mm": 32,
+        "axle_mm": "12x142",
+        "brake": "Center Lock disc"
+      },
+      "setup_slot": "wheel",
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "race_setup",
+        "bike_configurator",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "source_records": [
+        "https://www.dtswiss.com/en/support/product-support?matnr=WARC110NIDJCA12558"
+      ],
+      "blockers": [
+        "asset branch release gate not yet green",
+        "per-asset close-up visual QA required"
+      ],
+      "bytes": 280548
+    },
+    {
+      "id": "dt-swiss-arc1100-disc-rear",
+      "category": "wheel",
+      "brand": "DT Swiss",
+      "model": "ARC 1100 DICUT Disc rear",
+      "asset_path": "assets/equipment-engineering/batch-02/dt-swiss-arc1100-disc-rear.glb",
+      "representation": "official-spec-driven",
+      "readiness": "candidate",
+      "states": [
+        "assembled",
+        "exploded"
+      ],
+      "semantic_parts": [
+        "disc shell",
+        "hub",
+        "centerlock rotor",
+        "thru axle",
+        "freehub body"
+      ],
+      "fitment": {
+        "rim_diameter": "700C / 29in",
+        "inner_width_mm": 20,
+        "outer_width_mm": 27,
+        "axle_mm": "12x142",
+        "brake": "Center Lock disc"
+      },
+      "setup_slot": "wheel",
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "race_setup",
+        "bike_configurator",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "source_records": [
+        "https://www.dtswiss.com/en/wheels/wheels-road/aero/arc-1100-dicut-disc"
+      ],
+      "blockers": [
+        "asset branch release gate not yet green",
+        "per-asset close-up visual QA required"
+      ],
+      "bytes": 149832
+    },
+    {
+      "id": "shimano-fc-r9200-54-40-170",
+      "category": "crankset",
+      "brand": "Shimano",
+      "model": "Dura-Ace FC-R9200 54-40T 170 mm",
+      "asset_path": "assets/equipment-engineering/batch-02/shimano-fc-r9200-54-40-170.glb",
+      "representation": "official-spec-driven",
+      "readiness": "candidate",
+      "states": [
+        "assembled",
+        "exploded"
+      ],
+      "semantic_parts": [
+        "left crank arm",
+        "axle",
+        "right crank/spider",
+        "54T outer ring",
+        "40T inner ring",
+        "fixing bolts"
+      ],
+      "fitment": {
+        "rear_speeds": 12,
+        "chainline_mm": 44.5,
+        "pcd_mm": 110,
+        "q_factor_mm": 148,
+        "crank_length_mm": 170
+      },
+      "setup_slot": null,
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "bike_configurator",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "source_records": [
+        "https://productinfo.shimano.com/pdfs/product/archive/2025-2026_Specifications_v035_en.pdf",
+        "https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/ev/ev/EV-FC-R9200-P-4810.pdf"
+      ],
+      "blockers": [
+        "asset branch release gate not yet green",
+        "current batch-wide QA framing too wide for visual validation"
+      ],
+      "bytes": 130136
+    },
+    {
+      "id": "shimano-cs-r9200-11-30",
+      "category": "cassette",
+      "brand": "Shimano",
+      "model": "Dura-Ace CS-R9200 11-30T",
+      "asset_path": "assets/equipment-engineering/batch-02/shimano-cs-r9200-11-30.glb",
+      "representation": "official-spec-driven",
+      "readiness": "candidate",
+      "states": [
+        "assembled",
+        "exploded"
+      ],
+      "semantic_parts": [
+        "lockring",
+        "11T",
+        "12T",
+        "13T",
+        "14T",
+        "15T",
+        "16T",
+        "17/19T unit",
+        "21/24/27/30T unit",
+        "spider carriers"
+      ],
+      "fitment": {
+        "rear_speeds": 12,
+        "type_name": "HYPERGLIDE+",
+        "combination": "11-30T",
+        "weight_g": 223
+      },
+      "setup_slot": null,
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "bike_configurator",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "source_records": [
+        "https://productinfo.shimano.com/pdfs/product/archive/2025-2026_Specifications_v035_en.pdf",
+        "https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/ev/ev/EV-CS-R9200-4808.pdf"
+      ],
+      "blockers": [
+        "asset branch release gate not yet green",
+        "current batch-wide QA framing too wide for visual validation"
+      ],
+      "bytes": 160092
+    },
+    {
+      "id": "profile-design-43asc-400",
+      "category": "aerobar_extensions",
+      "brand": "Profile Design",
+      "model": "43 ASC Carbon Extensions 400 mm",
+      "asset_path": "assets/equipment-engineering/batch-02/profile-design-43asc-400.glb",
+      "representation": "official-spec-driven",
+      "readiness": "candidate",
+      "states": [
+        "assembled",
+        "exploded"
+      ],
+      "semantic_parts": [
+        "left extension",
+        "right extension",
+        "22.2 mm clamp zones"
+      ],
+      "fitment": {
+        "extension_length_mm": 400,
+        "min_length_from_front_clamp_mm": 290,
+        "angle_deg": 43,
+        "rise_mm": 107,
+        "offset_total_mm": 16,
+        "outer_diameter_mm": 22.2,
+        "inner_diameter_mm": 18.8
+      },
+      "setup_slot": null,
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "bike_configurator",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "source_records": [
+        "https://profile-design.com/products/43-asc-carbon-extensions"
+      ],
+      "blockers": [
+        "asset branch release gate not yet green",
+        "current batch-wide QA framing too wide for visual validation"
+      ],
+      "bytes": 32360
+    }
+  ]
+}

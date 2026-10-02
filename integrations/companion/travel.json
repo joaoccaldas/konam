@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-01",
+  "links": [
+    {
+      "id": "flights",
+      "category": "flights",
+      "name": "KOA arrivals & departures",
+      "publisher": "FlightAware",
+      "url": "https://www.flightaware.com/live/airport/PHKO",
+      "description": "Open the current airport flight board. Confirm changes with your airline.",
+      "mode": "external-live"
+    },
+    {
+      "id": "airlines",
+      "category": "flights",
+      "name": "Find your airline",
+      "publisher": "Hawaiʻi Department of Transportation",
+      "url": "https://airports.hawaii.gov/koa/flights/airlines/",
+      "description": "Airline contacts from Kona airport’s official directory.",
+      "mode": "official-guide"
+    },
+    {
+      "id": "closures",
+      "category": "roads",
+      "name": "Hawaiʻi Island road closures",
+      "publisher": "Hawaiʻi Department of Transportation",
+      "url": "https://hidot.hawaii.gov/highways/roadwork/hawaii/",
+      "description": "Planned roadworks and lane closures. Check the dates on the official notice.",
+      "mode": "official-notices"
+    },
+    {
+      "id": "traffic",
+      "category": "roads",
+      "name": "Traffic around Kailua-Kona",
+      "publisher": "Google Maps",
+      "url": "https://www.google.com/maps/@?api=1&map_action=map&center=19.6400%2C-155.9969&zoom=12&basemap=roadmap&layer=traffic",
+      "description": "Open the traffic layer before you leave. Conditions are provided by Google Maps.",
+      "mode": "external-live"
+    },
+    {
+      "id": "airport-guide",
+      "category": "arrival",
+      "name": "From runway to race week",
+      "publisher": "Kona airport",
+      "url": "https://airports.hawaii.gov/koa/getting-to-from/",
+      "description": "Ground transport information from Ellison Onizuka Kona International Airport.",
+      "mode": "official-guide"
+    },
+    {
+      "id": "race-guide",
+      "category": "arrival",
+      "name": "Race-week essentials",
+      "publisher": "IRONMAN",
+      "url": "https://www.ironman.com/races/im-world-championship-kona",
+      "description": "Use the organizer’s current athlete guide for race access, schedules and road restrictions.",
+      "mode": "official-guide"
+    }
+  ],
+  "places": [
+    {
+      "id": "place:kailua-pier",
+      "name": "Kailua Pier",
+      "type": "landmark",
+      "categories": [
+        "race-critical",
+        "swim",
+        "history"
+      ],
+      "address": "75-5660 Palani Rd, Kailua-Kona, HI 96740",
+      "website": "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona",
+      "source": {
+        "url": "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona",
+        "verified_at": "2026-09-30"
+      },
+      "notes": [
+        "orientation",
+        "swim-start context",
+        "race history"
+      ],
+      "commercial": false
+    },
+    {
+      "id": "place:bike-works-kona",
+      "name": "Bike Works Kona",
+      "type": "local_business",
+      "categories": [
+        "bike-service",
+        "race-critical",
+        "gear"
+      ],
+      "address": "75-5660 Kopiko St, Kailua-Kona, HI 96740",
+      "website": "https://www.bikeworkskona.com/",
+      "source": {
+        "url": "https://www.bikeworkskona.com/race-services/",
+        "verified_at": "2026-09-30",
+        "note": "Official site states World Championship race service must be scheduled at least 7 days before the event."
+      },
+      "notes": [
+        "bike assembly",
+        "tune-up",
+        "race service",
+        "packing/shipping"
+      ],
+      "commercial": false
+    },
+    {
+      "id": "place:kona-boys-beach-shack",
+      "name": "Kona Boys Beach Shack",
+      "type": "local_business",
+      "categories": [
+        "ocean",
+        "recovery",
+        "explore"
+      ],
+      "address": "75-5660 Palani Rd, Kailua-Kona, HI 96740",
+      "website": "https://www.konaboys.com/",
+      "source": {
+        "url": "https://www.konaboys.com/",
+        "verified_at": "2026-09-30"
+      },
+      "notes": [
+        "easy ocean activity",
+        "supporter/family activity",
+        "local story"
+      ],
+      "commercial": false
+    },
+    {
+      "id": "place:island-lava-java",
+      "name": "Island Lava Java",
+      "type": "local_business",
+      "categories": [
+        "food",
+        "coffee",
+        "race-week-social"
+      ],
+      "address": "75-5801 Aliʻi Drive Building 1, Kailua-Kona, HI 96740",
+      "website": "https://islandlavajava.com/",
+      "source": {
+        "url": "https://islandlavajava.com/",
+        "verified_at": "2026-09-30"
+      },
+      "notes": [
+        "breakfast",
+        "coffee",
+        "meet-up"
+      ],
+      "commercial": false
+    }
+  ]
+}

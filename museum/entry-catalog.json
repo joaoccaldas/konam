@@ -1,0 +1,316 @@
+{
+ "schema_version": 1,
+ "bikes": [
+  {
+   "id": "canyon-cfr-2027",
+   "label": "Speedmax CFR AXS",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/canyon-cfr-2027.webp"
+  },
+  {
+   "id": "canyon-slx-2027",
+   "label": "Speedmax CF SLX 8 Di2",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/canyon-slx-2027.webp"
+  },
+  {
+   "id": "canyon-speedmax-three-2005",
+   "label": "Speedmax Three",
+   "brand": "Canyon",
+   "year": 2005,
+   "image": "assets/entry/catalog/canyon-speedmax-three-2005.webp"
+  },
+  {
+   "id": "canyon-speedmax-2007",
+   "label": "SpeedMax 3.0",
+   "brand": "Canyon",
+   "year": 2008,
+   "image": "assets/entry/catalog/canyon-speedmax-2007.webp"
+  },
+  {
+   "id": "canyon-speedmax-al-2011",
+   "label": "Speedmax AL 9.0",
+   "brand": "Canyon",
+   "year": 2013,
+   "image": "assets/entry/catalog/canyon-speedmax-al-2011.webp"
+  },
+  {
+   "id": "canyon-speedmax-cf-2011",
+   "label": "Speedmax CF 9.0 Pro",
+   "brand": "Canyon",
+   "year": 2012,
+   "image": "assets/entry/catalog/canyon-speedmax-cf-2011.webp"
+  },
+  {
+   "id": "canyon-kona-cfslx-2015",
+   "label": "Speedmax CF SLX",
+   "brand": "Canyon",
+   "year": 2015,
+   "image": "assets/entry/catalog/canyon-kona-cfslx-2015.webp"
+  },
+  {
+   "id": "canyon-kona-cfr-2019",
+   "label": "Speedmax CFR Disc",
+   "brand": "Canyon",
+   "year": 2019,
+   "image": "assets/entry/catalog/canyon-kona-cfr-2019.webp"
+  },
+  {
+   "id": "atlas-merckx-hour-1972",
+   "label": "Eddy Merckx Hour bike",
+   "brand": "Colnago",
+   "year": 1972,
+   "image": "assets/entry/catalog/atlas-merckx-hour-1972.webp"
+  },
+  {
+   "id": "atlas-obree-riverside",
+   "label": "Graeme Obree's bikes",
+   "brand": "Obree",
+   "year": 1993,
+   "image": "assets/entry/catalog/atlas-obree-riverside.webp"
+  },
+  {
+   "id": "atlas-lotus-108-1992",
+   "label": "Lotus Type 108",
+   "brand": "Lotus",
+   "year": 1992,
+   "image": "assets/entry/catalog/atlas-lotus-108-1992.webp"
+  },
+  {
+   "id": "atlas-zipp-2001",
+   "label": "Zipp 2001",
+   "brand": "Zipp",
+   "year": null,
+   "image": "assets/entry/catalog/atlas-zipp-2001.webp"
+  },
+  {
+   "id": "atlas-stevens-tri",
+   "label": "Stevens triathlon bike",
+   "brand": "Stevens",
+   "year": null,
+   "image": "assets/entry/catalog/atlas-stevens-tri.webp"
+  },
+  {
+   "id": "atlas-alu-tri-2005",
+   "label": "Aluminium triathlon bike",
+   "brand": "Unbranded",
+   "year": 2005,
+   "image": "assets/entry/catalog/atlas-alu-tri-2005.webp"
+  },
+  {
+   "id": "atlas-type-funny-1980s",
+   "label": "Funny bike",
+   "brand": "Type study",
+   "year": 1985,
+   "image": "assets/entry/catalog/atlas-type-funny-1980s.webp"
+  },
+  {
+   "id": "atlas-type-pursuit",
+   "label": "Track pursuit bike",
+   "brand": "Type study",
+   "year": 2000,
+   "image": "assets/entry/catalog/atlas-type-pursuit.webp"
+  },
+  {
+   "id": "atlas-type-disc-superbike",
+   "label": "Disc-brake triathlon superbike",
+   "brand": "Type study",
+   "year": 2024,
+   "image": "assets/entry/catalog/atlas-type-disc-superbike.webp"
+  },
+  {
+   "id": "atlas-type-aerobar-1989",
+   "label": "Road bike with clip-on aero bars",
+   "brand": "Type study",
+   "year": 1989,
+   "image": "assets/entry/catalog/atlas-type-aerobar-1989.webp"
+  },
+  {
+   "id": "atlas-type-lowpro-650c",
+   "label": "Low-profile triathlon bike, 650c",
+   "brand": "Type study",
+   "year": 1994,
+   "image": "assets/entry/catalog/atlas-type-lowpro-650c.webp"
+  },
+  {
+   "id": "atlas-type-hour-track",
+   "label": "Modern Hour bike",
+   "brand": "Type study",
+   "year": 2019,
+   "image": "assets/entry/catalog/atlas-type-hour-track.webp"
+  },
+  {
+   "id": "atlas-type-draft-legal",
+   "label": "Draft-legal triathlon bike",
+   "brand": "Type study",
+   "year": 2021,
+   "image": "assets/entry/catalog/atlas-type-draft-legal.webp"
+  },
+  {
+   "id": "atlas-studio-kona-2030",
+   "label": "Kona concept 2030",
+   "brand": "Studio",
+   "year": 2030,
+   "image": "assets/entry/catalog/atlas-studio-kona-2030.webp"
+  },
+  {
+   "id": "atlas-studio-small-650c",
+   "label": "Small-frame triathlon bike, 650c",
+   "brand": "Studio",
+   "year": 2024,
+   "image": "assets/entry/catalog/atlas-studio-small-650c.webp"
+  },
+  {
+   "id": "atlas-studio-xl-tri",
+   "label": "XL triathlon bike",
+   "brand": "Studio",
+   "year": 2024,
+   "image": "assets/entry/catalog/atlas-studio-xl-tri.webp"
+  },
+  {
+   "id": "atlas-studio-alloy-entry",
+   "label": "Entry alloy triathlon bike",
+   "brand": "Studio",
+   "year": 2022,
+   "image": "assets/entry/catalog/atlas-studio-alloy-entry.webp"
+  },
+  {
+   "id": "atlas-studio-sprint-track",
+   "label": "Track sprint bike",
+   "brand": "Studio",
+   "year": 2023,
+   "image": "assets/entry/catalog/atlas-studio-sprint-track.webp"
+  },
+  {
+   "id": "atlas-studio-beam-2020s",
+   "label": "Beam triathlon concept",
+   "brand": "Studio",
+   "year": 2025,
+   "image": "assets/entry/catalog/atlas-studio-beam-2020s.webp"
+  },
+  {
+   "id": "atlas-studio-wing-road",
+   "label": "Wing frame, road triathlon",
+   "brand": "Studio",
+   "year": 2026,
+   "image": "assets/entry/catalog/atlas-studio-wing-road.webp"
+  },
+  {
+   "id": "atlas-studio-gravel-aero",
+   "label": "Aero gravel bike",
+   "brand": "Studio",
+   "year": 2025,
+   "image": "assets/entry/catalog/atlas-studio-gravel-aero.webp"
+  },
+  {
+   "id": "edition-film-aero-glam",
+   "label": "Alien Glam",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-film-aero-glam.webp"
+  },
+  {
+   "id": "edition-film-couture",
+   "label": "Blush Couture",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-film-couture.webp"
+  },
+  {
+   "id": "edition-film-tiffany-tide",
+   "label": "Tiffany Tide",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-film-tiffany-tide.webp"
+  },
+  {
+   "id": "edition-film-hex",
+   "label": "Witching Hour",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-film-hex.webp"
+  },
+  {
+   "id": "edition-film-stay-weird",
+   "label": "Stay Weird",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-film-stay-weird.webp"
+  },
+  {
+   "id": "edition-film-lake-house",
+   "label": "Lake Fog",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-film-lake-house.webp"
+  },
+  {
+   "id": "edition-film-sanctuary",
+   "label": "Stained Glass",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-film-sanctuary.webp"
+  },
+  {
+   "id": "edition-galleries-bio",
+   "label": "Bio room CFR",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-galleries-bio.webp"
+  },
+  {
+   "id": "edition-galleries-horror",
+   "label": "Horror room CFR",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-galleries-horror.webp"
+  },
+  {
+   "id": "edition-galleries-alien",
+   "label": "Alien room CFR",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-galleries-alien.webp"
+  },
+  {
+   "id": "edition-galleries-zombie",
+   "label": "Zombie room CFR",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-galleries-zombie.webp"
+  },
+  {
+   "id": "edition-lava-night-lava-night",
+   "label": "Lava Night",
+   "brand": "Canyon",
+   "year": 2027,
+   "image": "assets/entry/catalog/edition-lava-night-lava-night.webp"
+  },
+  {
+   "id": "mystery-1",
+   "secret": true
+  },
+  {
+   "id": "mystery-2",
+   "secret": true
+  },
+  {
+   "id": "mystery-3",
+   "secret": true
+  },
+  {
+   "id": "mystery-4",
+   "secret": true
+  },
+  {
+   "id": "mystery-5",
+   "secret": true
+  },
+  {
+   "id": "mystery-6",
+   "secret": true
+  }
+ ]
+}

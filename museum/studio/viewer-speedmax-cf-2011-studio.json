@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "key": "speedmax-cf-2011",
+    "name": "9.0 Pro · MY2011",
+    "family": "Speedmax CF",
+    "year": "2011",
+    "era": "2009–2012",
+    "size": "S",
+    "weight": 7.7,
+    "price": null,
+    "claim": "Canyon's first carbon Speedmax: a seat tube that wraps the rear wheel, a deep carbon down tube and a 7.7 kg race build on Zipp.",
+    "pageTitle": "Canyon Museum — Speedmax CF 9.0 Pro (2011)",
+    "exhibit": "06",
+    "gear": "54 / 42",
+    "gearSub": "Dura-Ace 12–23",
+    "rims": "404 / 808",
+    "chainring": 54,
+    "cog": 12,
+    "tyreFront": "CONTINENTAL GRAND PRIX · 23-622",
+    "tyreRear": "CONTINENTAL GRAND PRIX · 23-622"
+  },
+  "hero": {
+    "eyebrow": "Canyon collection · Exhibit 06 · 2009–2012",
+    "title": "Speedmax CF",
+    "titleSpan": "9.0 Pro · MY2011",
+    "sub": "A reference-calibrated heritage study.",
+    "lede": "Canyon's first carbon Speedmax: a seat tube that wraps the rear wheel, a deep carbon down tube and a 7.7 kg race build on Zipp."
+  },
+  "geometry": {
+    "sizes": [
+      "S"
+    ],
+    "rows": [
+      [
+        "Head angle",
+        "72.5°"
+      ],
+      [
+        "Seat angle",
+        "75° (78° position)"
+      ],
+      [
+        "Chainstay",
+        "380–395 mm (sliding)"
+      ],
+      [
+        "Wheelbase",
+        "970–985 mm (S) · 988 mm measured"
+      ],
+      [
+        "Stack / reach",
+        "506 / 409 mm (S)"
+      ]
+    ]
+  },
+  "geometryNote": "Scale comes from circle fits to both tyres in Canyon's archived side photo. Every tube is a traced centreline with its side-view depth measured from the photo; widths across the bike are inferred. Parts are rebuilt from the archived specification.",
+  "presets": {
+    "race_black": {
+      "name": "Race Black",
+      "sub": "Team (white / carbon black) · as photographed",
+      "frame": "#050506",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#d9d9d9",
+      "cockpit": "carbon",
+      "rimText": "#d9d9d9"
+    },
+    "team_white": {
+      "name": "Team White",
+      "sub": "Archived Canyon colourway",
+      "frame": "#e4e4e4",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#0a0a0a",
+      "cockpit": "carbon",
+      "rimText": "#0a0a0a"
+    },
+    "pro_white_red": {
+      "name": "Pro White / red",
+      "sub": "Archived Canyon colourway",
+      "frame": "#eeeeee",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#c8102e",
+      "cockpit": "carbon",
+      "rimText": "#c8102e"
+    }
+  },
+  "defaultCfg": {
+    "preset": "race_black",
+    "frame": "#050506",
+    "finish": "gloss",
+    "irid": 0,
+    "decal": "#d9d9d9",
+    "cockpit": "carbon",
+    "rimText": "#d9d9d9"
+  },
+  "parts": {
+    "frame": {
+      "name": "Frame",
+      "group": "frame",
+      "spec": "Canyon New F10 Technology TT, carbon",
+      "note": "Archived frame specification, 2011."
+    },
+    "fork": {
+      "name": "Fork",
+      "group": "frame",
+      "spec": "Canyon Aero Fork CF",
+      "note": "Archived fork specification, 2011."
+    },
+    "crankset": {
+      "name": "Crankset",
+      "group": "drivetrain",
+      "spec": "Zipp VumaChrono 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "chainrings": {
+      "name": "Chainrings",
+      "group": "drivetrain",
+      "spec": "Zipp VumaChrono 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "crank_arm_ds": {
+      "name": "Drive-side crank",
+      "group": "drivetrain",
+      "spec": "Zipp VumaChrono 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "crank_arm_nds": {
+      "name": "Non-drive crank",
+      "group": "drivetrain",
+      "spec": "Zipp VumaChrono 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "spindle": {
+      "name": "Bottom-bracket spindle",
+      "group": "drivetrain",
+      "spec": "Zipp VumaChrono 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "cassette": {
+      "name": "Cassette",
+      "group": "drivetrain",
+      "spec": "SRAM OG 1090 11-26",
+      "note": "Archived cassette specification, 2011."
+    },
+    "chain": {
+      "name": "Chain",
+      "group": "drivetrain",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    },
+    "rear_derailleur": {
+      "name": "Rear derailleur",
+      "group": "drivetrain",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    },
+    "front_derailleur": {
+      "name": "Front derailleur",
+      "group": "drivetrain",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    },
+    "brake_front": {
+      "name": "Front brake",
+      "group": "brakes",
+      "spec": "SRAM Red",
+      "note": "Archived brakes specification, 2011."
+    },
+    "brake_rear": {
+      "name": "Rear brake",
+      "group": "brakes",
+      "spec": "SRAM Red",
+      "note": "Archived brakes specification, 2011."
+    },
+    "brake_levers": {
+      "name": "Brake levers",
+      "group": "cockpit",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    },
+    "wheel_front": {
+      "name": "Front wheel",
+      "group": "wheels",
+      "spec": "Zipp 404 / 808 Tubular",
+      "note": "Archived wheels specification, 2011."
+    },
+    "wheel_rear": {
+      "name": "Rear wheel",
+      "group": "wheels",
+      "spec": "Zipp 404 / 808 Tubular",
+      "note": "Archived wheels specification, 2011."
+    },
+    "saddle": {
+      "name": "Saddle",
+      "group": "contact",
+      "spec": "Selle Italia SLR T1",
+      "note": "Archived saddle specification, 2011."
+    },
+    "seatpost": {
+      "name": "Seatpost",
+      "group": "contact",
+      "spec": "Canyon Aero Post CF",
+      "note": "Archived seatpost specification, 2011."
+    },
+    "stem": {
+      "name": "Stem",
+      "group": "cockpit",
+      "spec": "Syntace F109 stem · Zipp VukaBull",
+      "note": "Archived cockpit specification, 2011."
+    },
+    "base_bar": {
+      "name": "Base bar",
+      "group": "cockpit",
+      "spec": "Syntace F109 stem · Zipp VukaBull",
+      "note": "Archived cockpit specification, 2011."
+    },
+    "extensions": {
+      "name": "Clip-on extensions",
+      "group": "cockpit",
+      "spec": "Syntace F109 stem · Zipp VukaBull",
+      "note": "Archived cockpit specification, 2011."
+    },
+    "cables": {
+      "name": "Cable housings",
+      "group": "cockpit",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    }
+  },
+  "partsReplace": true,
+  "tour": [
+    {
+      "view": "side",
+      "title": "A silhouette from the archive",
+      "text": "Shown at Eurobike 2008 with the aluminium AL, the Speedmax CF brought Canyon's triathlon bike into carbon: Aero-Shape frame, aerodynamic fork, super-aero seat tube and an adjustable aero seatpost. It was replaced by the all-new Speedmax CF, previewed as Concept Speedmax at Eurobike 2011."
+    },
+    {
+      "view": "cockpit",
+      "title": "Cockpit of its era",
+      "text": "Clip-on extensions, cable housings and the cockpit hardware documented for this build. Side profiles are traced from the archived photograph; depths remain interpreted."
+    },
+    {
+      "view": "drivetrain",
+      "title": "The drivetrain, as listed",
+      "text": "54 / 42 rings with a Dura-Ace 12–23 cassette. Switch to Ride to see cadence drive the wheels through the listed ratio."
+    },
+    {
+      "view": "nds",
+      "title": "The other side of the story",
+      "text": "Brakes, hubs and frame details follow the archived specification. Where the photo is silent, shapes are inferred and marked as such."
+    },
+    {
+      "view": "hero",
+      "title": "Exhibit 06 · Speedmax CF 9.0 Pro · MY2011",
+      "text": "A photo-calibrated reconstruction. Orbit freely, repaint it in the Customizer, or light it in the Aero lab. Sources and uncertainties are listed in Specs."
+    }
+  ],
+  "unavailableOptions": [
+    "aerofuel",
+    "frontBottle",
+    "rearBottles",
+    "shield",
+    "rearDisc"
+  ],
+  "discOption": false,
+  "dimsOverlay": false
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joaoccaldas.github.io/canyonmuseum/schemas/race-card-v1.schema.json",
+  "title": "KONA Race Card V1",
+  "type": "object",
+  "required": ["id","series_id","name","year","distance","brand","status","source"],
+  "properties": {
+    "id": {"type":"string","pattern":"^race:"},
+    "series_id": {"type":"string","pattern":"^race-series:"},
+    "slug": {"type":"string"},
+    "edition_id": {"type":"string"},
+    "name": {"type":"string","minLength":1},
+    "year": {"type":"integer","minimum":2016},
+    "date": {"type":["string","null"],"format":"date"},
+    "distance": {"enum":["140.6","70.3"]},
+    "brand": {"enum":["IRONMAN","IRONMAN 70.3"]},
+    "status": {"enum":["past","scheduled","scheduled_or_completed","cancelled"]},
+    "location": {
+      "type":["object","null"],
+      "properties":{"city":{"type":["string","null"]},"region":{"type":["string","null"]},"country":{"type":["string","null"]}},
+      "additionalProperties":false
+    },
+    "source": {
+      "type":"object",
+      "required":["kind"],
+      "properties":{
+        "kind":{"type":"string"},
+        "parent_uuid":{"type":["string","null"]},
+        "reconstructed":{"type":"boolean"},
+        "upstream":{"type":"string"},
+        "upstream_sha":{"type":"string"},
+        "note":{"type":["string","null"]}
+      },
+      "additionalProperties":true
+    }
+  },
+  "additionalProperties":true
+}

@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "key": "speedmax-2007",
+    "name": "3.0 · MY2007",
+    "family": "SpeedMax",
+    "year": "2007",
+    "era": "2006–2008",
+    "size": "53",
+    "weight": 9.5,
+    "price": null,
+    "claim": "The New MR3 frame: straighter, deeper 7005 tubes, a Super Aero seat tube and carbon rear stays, raced by Canyon's pros in black.",
+    "pageTitle": "Canyon Museum — SpeedMax 3.0 (2007)",
+    "exhibit": "04",
+    "gear": "53 / 39",
+    "gearSub": "Dura-Ace 12–23",
+    "rims": "Disc",
+    "chainring": 53,
+    "cog": 12,
+    "tyreFront": "CONTINENTAL GRAND PRIX · 23-622",
+    "tyreRear": "CARBOTEC DISC · rear"
+  },
+  "hero": {
+    "eyebrow": "Canyon collection · Exhibit 04 · 2006–2008",
+    "title": "SpeedMax",
+    "titleSpan": "3.0 · MY2007",
+    "sub": "A reference-calibrated heritage study.",
+    "lede": "The New MR3 frame: straighter, deeper 7005 tubes, a Super Aero seat tube and carbon rear stays, raced by Canyon's pros in black."
+  },
+  "geometry": {
+    "sizes": [
+      "53"
+    ],
+    "rows": [
+      [
+        "Head angle",
+        "73° (size 53)"
+      ],
+      [
+        "Seat angle",
+        "75°"
+      ],
+      [
+        "Top tube",
+        "540 mm (53)"
+      ],
+      [
+        "Chainstay",
+        "410 mm published · 405 mm measured"
+      ],
+      [
+        "Wheelbase",
+        "989 mm (53) · 987 mm measured"
+      ]
+    ]
+  },
+  "geometryNote": "Scale comes from circle fits to both tyres in Canyon's archived side photo. Every tube is a traced centreline with its side-view depth measured from the photo; widths across the bike are inferred. Parts are rebuilt from the archived specification.",
+  "presets": {
+    "race_black": {
+      "name": "Race Black",
+      "sub": "Race Black · as photographed",
+      "frame": "#050506",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#d9d9d9",
+      "cockpit": "carbon",
+      "rimText": "#d9d9d9"
+    },
+    "team_white": {
+      "name": "Team White",
+      "sub": "Archived Canyon colourway",
+      "frame": "#e4e4e4",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#0a0a0a",
+      "cockpit": "carbon",
+      "rimText": "#0a0a0a"
+    },
+    "pro_white_red": {
+      "name": "Pro White / red",
+      "sub": "Archived Canyon colourway",
+      "frame": "#eeeeee",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#c8102e",
+      "cockpit": "carbon",
+      "rimText": "#c8102e"
+    }
+  },
+  "defaultCfg": {
+    "preset": "race_black",
+    "frame": "#050506",
+    "finish": "gloss",
+    "irid": 0,
+    "decal": "#d9d9d9",
+    "cockpit": "carbon",
+    "rimText": "#d9d9d9"
+  },
+  "parts": {
+    "frame": {
+      "name": "Frame",
+      "group": "frame",
+      "spec": "New MR3, 7005 Ultralight Aluminium, SuperAero shape, Opti-Size tubeset",
+      "note": "Archived frame specification, 2007."
+    },
+    "fork": {
+      "name": "Fork",
+      "group": "frame",
+      "spec": "Smolik Motivation",
+      "note": "Archived fork specification, 2007."
+    },
+    "crankset": {
+      "name": "Crankset",
+      "group": "drivetrain",
+      "spec": "FSA Team Issue MegaExo TT 54/42",
+      "note": "Archived crankset specification, 2007."
+    },
+    "chainrings": {
+      "name": "Chainrings",
+      "group": "drivetrain",
+      "spec": "FSA Team Issue MegaExo TT 54/42",
+      "note": "Archived crankset specification, 2007."
+    },
+    "crank_arm_ds": {
+      "name": "Drive-side crank",
+      "group": "drivetrain",
+      "spec": "FSA Team Issue MegaExo TT 54/42",
+      "note": "Archived crankset specification, 2007."
+    },
+    "crank_arm_nds": {
+      "name": "Non-drive crank",
+      "group": "drivetrain",
+      "spec": "FSA Team Issue MegaExo TT 54/42",
+      "note": "Archived crankset specification, 2007."
+    },
+    "spindle": {
+      "name": "Bottom-bracket spindle",
+      "group": "drivetrain",
+      "spec": "FSA Team Issue MegaExo TT 54/42",
+      "note": "Archived crankset specification, 2007."
+    },
+    "cassette": {
+      "name": "Cassette",
+      "group": "drivetrain",
+      "spec": "Shimano Dura-Ace 11-23",
+      "note": "Archived cassette specification, 2007."
+    },
+    "chain": {
+      "name": "Chain",
+      "group": "drivetrain",
+      "spec": "Shimano Dura-Ace, bar-end shifters",
+      "note": "Archived drivetrain specification, 2007."
+    },
+    "rear_derailleur": {
+      "name": "Rear derailleur",
+      "group": "drivetrain",
+      "spec": "Shimano Dura-Ace, bar-end shifters",
+      "note": "Archived drivetrain specification, 2007."
+    },
+    "front_derailleur": {
+      "name": "Front derailleur",
+      "group": "drivetrain",
+      "spec": "Shimano Dura-Ace, bar-end shifters",
+      "note": "Archived drivetrain specification, 2007."
+    },
+    "brake_front": {
+      "name": "Front brake",
+      "group": "brakes",
+      "spec": "Shimano Dura-Ace",
+      "note": "Archived brakes specification, 2007."
+    },
+    "brake_rear": {
+      "name": "Rear brake",
+      "group": "brakes",
+      "spec": "Shimano Dura-Ace",
+      "note": "Archived brakes specification, 2007."
+    },
+    "brake_levers": {
+      "name": "Brake levers",
+      "group": "cockpit",
+      "spec": "Syntace SpaceControl",
+      "note": "Archived brake levers specification, 2007."
+    },
+    "wheel_front": {
+      "name": "Front wheel",
+      "group": "wheels",
+      "spec": "Mavic Cosmic Elite front · Carbotec disc rear (Citec hub)",
+      "note": "Archived wheels specification, 2007."
+    },
+    "wheel_rear": {
+      "name": "Rear wheel",
+      "group": "wheels",
+      "spec": "Mavic Cosmic Elite front · Carbotec disc rear (Citec hub)",
+      "note": "Archived wheels specification, 2007."
+    },
+    "saddle": {
+      "name": "Saddle",
+      "group": "contact",
+      "spec": "Selle Italia SLR T1",
+      "note": "Archived saddle specification, 2007."
+    },
+    "seatpost": {
+      "name": "Seatpost",
+      "group": "contact",
+      "spec": "Iridium Carbon Aero",
+      "note": "Archived seatpost specification, 2007."
+    },
+    "stem": {
+      "name": "Stem",
+      "group": "cockpit",
+      "spec": "Syntace F99 stem · Stratos 200 bar · SLS aerobar",
+      "note": "Archived cockpit specification, 2007."
+    },
+    "base_bar": {
+      "name": "Base bar",
+      "group": "cockpit",
+      "spec": "Syntace F99 stem · Stratos 200 bar · SLS aerobar",
+      "note": "Archived cockpit specification, 2007."
+    },
+    "extensions": {
+      "name": "Clip-on extensions",
+      "group": "cockpit",
+      "spec": "Syntace F99 stem · Stratos 200 bar · SLS aerobar",
+      "note": "Archived cockpit specification, 2007."
+    },
+    "cables": {
+      "name": "Cable housings",
+      "group": "cockpit",
+      "spec": "Shimano Dura-Ace, bar-end shifters",
+      "note": "Archived drivetrain specification, 2007."
+    }
+  },
+  "partsReplace": true,
+  "tour": [
+    {
+      "view": "side",
+      "title": "A silhouette from the archive",
+      "text": "For 2006-2007 Canyon rebuilt the SpeedMax around the New MR3 frame while keeping the proven triathlon geometry. In 2007 team UNIBET's time-trial riders used a separate SpeedMax TT Pro with its own TT geometry; no photograph of that bike survives in the archive."
+    },
+    {
+      "view": "cockpit",
+      "title": "Cockpit of its era",
+      "text": "Clip-on extensions, cable housings and the cockpit hardware documented for this build. Side profiles are traced from the archived photograph; depths remain interpreted."
+    },
+    {
+      "view": "drivetrain",
+      "title": "The drivetrain, as listed",
+      "text": "53 / 39 rings with a Dura-Ace 12–23 cassette. Switch to Ride to see cadence drive the wheels through the listed ratio."
+    },
+    {
+      "view": "nds",
+      "title": "The other side of the story",
+      "text": "Brakes, hubs and frame details follow the archived specification. Where the photo is silent, shapes are inferred and marked as such."
+    },
+    {
+      "view": "hero",
+      "title": "Exhibit 04 · SpeedMax 3.0 · MY2007",
+      "text": "A photo-calibrated reconstruction. Orbit freely, repaint it in the Customizer, or light it in the Aero lab. Sources and uncertainties are listed in Specs."
+    }
+  ],
+  "unavailableOptions": [
+    "aerofuel",
+    "frontBottle",
+    "rearBottles",
+    "shield",
+    "rearDisc"
+  ],
+  "discOption": false,
+  "dimsOverlay": false
+}

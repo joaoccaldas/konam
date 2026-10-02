@@ -1,0 +1,224 @@
+{
+ "source": "Higgsfield MCP \u00b7 show_generation_by_ids",
+ "project": "Canyon Museum \u2014 Kona Light wing",
+ "project_id": "3cdaf07a-599a-4edc-9774-a736ee33bef8",
+ "retrieved": "2026-09-29",
+ "items": [
+  {
+   "id": "63eb2972-697f-4d14-9c33-1ecbb9afb744",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original museum-quality oil painting on canvas: an empty two-lane highway crossing black lava fields on the Big Island of Hawaii at dawn, a single time-trial cyclist far away as a small dark silhouette in an aero tuck, heat shimmer, pink and gold sky over a volcano, thick impasto brushwork. No text, no letters, no logos, no brand marks.",
+    "aspect_ratio": "3:2",
+    "width": 1024,
+    "height": 688,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_63eb2972-697f-4d14-9c33-1ecbb9afb744.png"
+   },
+   "createdAt": 1790721567.769525
+  },
+  {
+   "id": "df5d8535-d351-4c08-b4a8-6598f9f9617e",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original expressive oil painting: fierce crosswinds on a coastal lava highway, dry golden fountain grass bent flat, a blurred abstract cyclist leaning into the wind, turquoise ocean on the horizon, energetic diagonal brushstrokes. No text, no letters, no logos, no brand marks.",
+    "aspect_ratio": "3:2",
+    "width": 1024,
+    "height": 688,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_df5d8535-d351-4c08-b4a8-6598f9f9617e.png"
+   },
+   "createdAt": 1790721567.61379
+  },
+  {
+   "id": "ecfede8c-d613-48be-a3ba-6313640a604c",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original gouache painting: green rolling hills of North Kohala, Hawaii, under drifting trade-wind clouds, a winding road turning back on itself, flat graphic shapes, soft pastel palette, mid-century travel-poster feeling but painterly. No text, no letters, no logos.",
+    "aspect_ratio": "4:5",
+    "width": 896,
+    "height": 1120,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_ecfede8c-d613-48be-a3ba-6313640a604c.png"
+   },
+   "createdAt": 1790721567.480494
+  },
+  {
+   "id": "0147dd91-ef6e-4f75-b587-f3f6bcca8008",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original painting of a mass open-water swim start in a tropical bay at sunrise seen from above, thousands of tiny swim caps rendered as dots of bright colour on deep blue water, white splashes, a pier on one side, dotted pointillist technique, luminous. No text, no letters, no logos, no identifiable people.",
+    "aspect_ratio": "3:2",
+    "width": 1024,
+    "height": 688,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_0147dd91-ef6e-4f75-b587-f3f6bcca8008.png"
+   },
+   "createdAt": 1790721567.923153
+  },
+  {
+   "id": "f51cb8a7-2b3e-432a-b62a-838c28d13ec3",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original minimalist ink painting on warm paper: white smoke streamlines flowing smoothly around an abstract teardrop airfoil shape in a wind tunnel, black sumi ink, lots of empty space, calm and precise. No text, no letters, no logos, no signature.",
+    "aspect_ratio": "4:5",
+    "width": 896,
+    "height": 1120,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_f51cb8a7-2b3e-432a-b62a-838c28d13ec3.png"
+   },
+   "createdAt": 1790721567.63967
+  },
+  {
+   "id": "471e8c82-9c1a-4815-aeee-ff7d724b36ca",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original Japanese-inspired brush painting: the side silhouette of a generic time-trial bicycle with disc wheels drawn in a few confident black brushstrokes, surrounded by flowing air currents in pale indigo washes, on textured rice paper. No text, no letters, no logos, no brand marks, no seal stamps.",
+    "aspect_ratio": "3:2",
+    "width": 1024,
+    "height": 688,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_471e8c82-9c1a-4815-aeee-ff7d724b36ca.png"
+   },
+   "createdAt": 1790721567.478689
+  },
+  {
+   "id": "f15ce17a-c908-47a5-92ba-c3f7f240a505",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original oil painting: an empty indoor wooden velodrome at night, steep banked boards glowing under a few lamps, a single track cyclist as a motion blur on the banking, deep shadows, cinematic warm and cool light. No text, no letters, no logos, no advertising boards.",
+    "aspect_ratio": "3:2",
+    "width": 1024,
+    "height": 688,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223928_f15ce17a-c908-47a5-92ba-c3f7f240a505.png"
+   },
+   "createdAt": 1790721568.919301
+  },
+  {
+   "id": "922b02a5-731e-4832-b764-b3944c1fbecc",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original impressionist oil painting: a seaside town street at midnight during a long-distance race, a lit finish arch glowing warm, paper lanterns, palm trees, a crowd rendered as loose blurred strokes, reflections on wet asphalt. No text, no letters, no logos, no readable signs.",
+    "aspect_ratio": "4:5",
+    "width": 896,
+    "height": 1120,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_922b02a5-731e-4832-b764-b3944c1fbecc.png"
+   },
+   "createdAt": 1790721567.682609
+  },
+  {
+   "id": "c2edce03-b792-4d34-a37f-d87e52b2687b",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original abstract expressionist colour-field painting: molten orange lava meeting black ocean water, rising white steam, large bold fields of colour, thick scraped paint, dramatic contrast. No text, no letters, no logos, no signature.",
+    "aspect_ratio": "3:2",
+    "width": 1024,
+    "height": 688,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_c2edce03-b792-4d34-a37f-d87e52b2687b.png"
+   },
+   "createdAt": 1790721567.884156
+  },
+  {
+   "id": "59d648fb-a5eb-4d29-9a9f-b202312d573a",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original surreal oil painting: a desert road through black lava dissolving into a white-hot heat mirage, the horizon melting into light, a lone runner as a tiny figure, bleached palette with a single cobalt sky band. No text, no letters, no logos.",
+    "aspect_ratio": "3:2",
+    "width": 1024,
+    "height": 688,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223928_59d648fb-a5eb-4d29-9a9f-b202312d573a.png"
+   },
+   "createdAt": 1790721568.735635
+  },
+  {
+   "id": "a47edcf0-ee2d-4ee9-8d9d-ab8f92f8b26f",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original chiaroscuro still-life oil painting: a frame builder's workbench with steel bicycle tubes, brass lugs, a brazing torch and hand files, lit by one window, deep Dutch-master shadows. No text, no letters, no logos, no brand marks.",
+    "aspect_ratio": "4:5",
+    "width": 896,
+    "height": 1120,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_a47edcf0-ee2d-4ee9-8d9d-ab8f92f8b26f.png"
+   },
+   "createdAt": 1790721567.861469
+  },
+  {
+   "id": "26ab9655-be2d-4c3c-9ea7-c8a144368d49",
+   "type": "image",
+   "status": "completed",
+   "model": "gpt_image_2_5",
+   "params": {
+    "prompt": "Original geometric abstract painting inspired by woven carbon fibre: interlaced black and gold bands forming a shimmering twill pattern that bends like a wave, gold leaf accents, precise hard-edge style. No text, no letters, no logos.",
+    "aspect_ratio": "1:1",
+    "width": 1024,
+    "height": 1024,
+    "quality": "low",
+    "resolution": "1k"
+   },
+   "results": {
+    "rawUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223927_26ab9655-be2d-4c3c-9ea7-c8a144368d49.png"
+   },
+   "createdAt": 1790721567.313158
+  }
+ ]
+}

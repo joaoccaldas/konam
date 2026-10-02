@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "key": "speedmax-cf-2011",
+    "exhibit": "04",
+    "era": "2009–2012",
+    "family": "Speedmax CF",
+    "name": "9.0 Pro · MY2011",
+    "years": "MY2011",
+    "size": "S",
+    "finishName": "Team (white / carbon black)",
+    "pageTitle": "Canyon Museum — Speedmax CF 9.0 Pro (2011)",
+    "lede": "Canyon's first carbon Speedmax: a seat tube that wraps the rear wheel, a deep carbon down tube and a 7.7 kg race build on Zipp.",
+    "story": "Shown at Eurobike 2008 with the aluminium AL, the Speedmax CF brought Canyon's triathlon bike into carbon: Aero-Shape frame, aerodynamic fork, super-aero seat tube and an adjustable aero seatpost. It was replaced by the all-new Speedmax CF, previewed as Concept Speedmax at Eurobike 2011.",
+    "stats": [
+      {
+        "value": "7.70 kg",
+        "label": "Canyon weight"
+      },
+      {
+        "value": "53 × 39",
+        "label": "Chainrings"
+      },
+      {
+        "value": "404 / 808",
+        "label": "Zipp depths"
+      }
+    ],
+    "spec": [
+      [
+        "Frame",
+        "Canyon New F10 Technology TT, carbon"
+      ],
+      [
+        "Fork",
+        "Canyon Aero Fork CF"
+      ],
+      [
+        "Headset",
+        "Tange IS-22 SCT"
+      ],
+      [
+        "Groupset",
+        "SRAM Red rear / Force front · SL 1090 R2C Aero shifters · TT Carbon levers"
+      ],
+      [
+        "Brakes",
+        "SRAM Red"
+      ],
+      [
+        "Wheels",
+        "Zipp 404 / 808 Tubular"
+      ],
+      [
+        "Tyres",
+        "Continental Competition 22-622 tubular"
+      ],
+      [
+        "Crankset",
+        "Zipp VumaChrono 53/39"
+      ],
+      [
+        "Cassette",
+        "SRAM OG 1090 11-26"
+      ],
+      [
+        "Cockpit",
+        "Syntace F109 stem · Zipp VukaBull"
+      ],
+      [
+        "Seatpost",
+        "Canyon Aero Post CF"
+      ],
+      [
+        "Saddle",
+        "Selle Italia SLR T1"
+      ]
+    ],
+    "geometry": [
+      [
+        "Head angle",
+        "72.5°"
+      ],
+      [
+        "Seat angle",
+        "75° (78° position)"
+      ],
+      [
+        "Chainstay",
+        "380–395 mm (sliding)"
+      ],
+      [
+        "Wheelbase",
+        "970–985 mm (S) · 988 mm measured"
+      ],
+      [
+        "Stack / reach",
+        "506 / 409 mm (S)"
+      ]
+    ],
+    "method": "Scale comes from circle fits to both tyres in Canyon's archived side photo. Every tube is a traced centreline with its side-view depth measured from the photo; widths across the bike are inferred. Parts are rebuilt from the archived specification.",
+    "uncertainties": [
+      "Scale 2.500 mm per pixel from tyre fits; measured wheelbase 990 mm.",
+      "Single 740 px side photograph: 2.48 mm per pixel; front tyre images 2.4% larger than the rear.",
+      "BB junction is hidden behind the VumaChrono crank disc; its depth is inferred.",
+      "Seat tube edges were measured row by row because white rim lettering merges with the white paint.",
+      "Zipp rim graphics are not modelled.",
+      "Lateral tube widths, stay spread and fork crown width are inferred; the photo fixes side-view shapes only.",
+      "Components are simplified external forms rebuilt from the published specification; hidden mechanisms are not modelled.",
+      "Graphics use DIN Condensed Bold in place of Canyon's lettering; positions and sizes traced from the photo.",
+      "Cable routing is traced where visible; hidden runs are not modelled."
+    ],
+    "sources": [
+      {
+        "label": "Canyon specification page (archived)",
+        "url": "https://web.archive.org/web/20101023160932/http://www.canyon.com:80/_en/triathlonbikes/bike.html?b=2131"
+      },
+      {
+        "label": "Canyon studio photograph",
+        "url": "https://web.archive.org/web/20101031010716/http://canyon.com/flash_2009/bike/images/bikes/speedmax-cf-9-pro/team/bike.jpg"
+      },
+      {
+        "label": "Series launch copy (archived 2008-12-01)",
+        "url": "https://web.archive.org/web/20081201050518/http://www.canyon.com:80/_en/triathlonbikes/series/speedmax_cf.html"
+      }
+    ]
+  },
+  "presets": [
+    {
+      "name": "Explore · Race Black",
+      "colors": {
+        "paint_frame": "#050506",
+        "paint_accent": "#050506",
+        "decal_light": "#d9d9d9",
+        "decal_dark": "#d9d9d9"
+      }
+    },
+    {
+      "name": "Explore · Team White",
+      "colors": {
+        "paint_frame": "#e4e4e4",
+        "paint_accent": "#050506",
+        "decal_dark": "#0a0a0a",
+        "decal_light": "#0a0a0a"
+      }
+    },
+    {
+      "name": "Explore · Pro White / red",
+      "colors": {
+        "paint_frame": "#eeeeee",
+        "paint_accent": "#c8102e",
+        "decal_dark": "#c8102e",
+        "decal_light": "#c8102e"
+      }
+    },
+    {
+      "name": "Explore · Stealth",
+      "colors": {
+        "paint_frame": "#1b1d20",
+        "paint_accent": "#0d0e10",
+        "decal_dark": "#34373c",
+        "decal_light": "#34373c"
+      }
+    }
+  ],
+  "partLabels": {
+    "base_bar": "Base bar",
+    "extensions": "Clip-on extensions",
+    "cables": "Cable housings"
+  }
+}

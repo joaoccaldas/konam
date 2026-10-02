@@ -1,0 +1,13 @@
+web/node_modules
+assets/*_raw.glb
+*.blend
+*.blend1
+.playwright-cli/
+.DS_Store
+__pycache__/
+*.pyc
+
+output/
+artifacts/artworld-visual/
+
+_site/

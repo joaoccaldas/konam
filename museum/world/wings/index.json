@@ -1,0 +1,1 @@
+{ "schema_version": 1, "note": "Wings built by web/src/engine/wing.js, in this order. Each file describes the corridor, doors, rooms and what hangs or stands in them; bikes join a room through their `room` field in museum/atlas/bikes.json.", "wings": ["against-the-clock.json", "kona-light.json"] }

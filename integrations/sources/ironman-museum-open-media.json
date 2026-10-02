@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "collection_id": "ironman-museum-open-media",
+  "purpose": "Candidate open/public media for the IRONMAN Museum concept. Runtime inclusion requires per-file license verification and attribution metadata.",
+  "items": [
+    {
+      "id": "kona-2010-practice-swim-dvids329118",
+      "title": "Iron Man Triathlon World Championship Preparation",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Iron_Man_Triathlon_World_Championship_Preparation_DVIDS329118.jpg",
+      "event_year": 2010,
+      "location": "Kailua-Kona, Hawaiʻi",
+      "creator": "Master Sgt. Cohen Young",
+      "license_status": "public-domain-us-federal",
+      "runtime_status": "candidate",
+      "use_cases": ["history", "race-week", "swim", "preparation"],
+      "notes": "Wikimedia Commons identifies the work as a U.S. federal government work and public domain in the United States."
+    },
+    {
+      "id": "kona-2010-race-action-dvids328618",
+      "title": "Iron Man World Triathlon Championships",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Iron_Man_World_Triathlon_Championships_DVIDS328618.jpg",
+      "event_year": 2010,
+      "location": "Kailua-Kona, Hawaiʻi",
+      "creator": "Master Sgt. Cohen Young",
+      "license_status": "public-domain-us-federal",
+      "runtime_status": "candidate",
+      "use_cases": ["history", "race-action"],
+      "notes": "Wikimedia Commons identifies the work as a U.S. federal government work and public domain in the United States."
+    },
+    {
+      "id": "commons-ironman-gallery",
+      "title": "Wikimedia Commons Ironman gallery",
+      "source_url": "https://commons.wikimedia.org/wiki/Ironman",
+      "event_year": null,
+      "location": null,
+      "creator": null,
+      "license_status": "mixed-review-per-file",
+      "runtime_status": "discovery-only",
+      "use_cases": ["source-discovery"],
+      "notes": "Gallery contains mixed media/licenses. Never treat gallery-level availability as permission for an individual image."
+    }
+  ],
+  "policy": {
+    "download_requires": [
+      "individual source page verified",
+      "license status recorded",
+      "creator/attribution recorded",
+      "derivative requirements recorded when applicable"
+    ],
+    "brand_marks": "Open/public image licensing does not imply trademark endorsement or permission to imply affiliation."
+  }
+}

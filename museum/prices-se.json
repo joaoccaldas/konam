@@ -1,0 +1,74 @@
+{
+  "market": "Sweden",
+  "currency": "SEK",
+  "checkedAt": "2026-09-28T12:38:04.400669+00:00",
+  "tax": "Canyon displays VAT included; shipping excluded. Verify selected variant and current price at Canyon.",
+  "items": {
+    "cassette": {
+      "name": "SRAM Red XG-1290 12-speed Cassette | 10-33",
+      "price": 4999.0,
+      "currency": "SEK",
+      "match": "family",
+      "note": "Select 10\u201333 variant; family listing price.",
+      "url": "https://www.canyon.com/en-se/gear/bike-parts/drivetrain/cassettes/sram-red-xg-1290-12-speed-cassette/9102271.html",
+      "availability": "InStock",
+      "checkedAt": "2026-09-28T12:38:04.400669+00:00",
+      "snapshotSha256": "645a9c87c44644f1e4b3936fc75e01a54d00ba420aa4cfeb144d361f958847ee"
+    },
+    "chain": {
+      "name": "SRAM Red E1 12/13s Chain 126 Links",
+      "price": 799.0,
+      "currency": "SEK",
+      "match": "family",
+      "note": "126-link replacement; shorten to required length. Listed coming soon Jan\u2013Feb 2027 when researched.",
+      "url": "https://www.canyon.com/en-se/gear/bike-parts/drivetrain/chains/sram-red-e1-12%2F13s-chain-126-links/10016642.html",
+      "availability": "OutOfStock",
+      "checkedAt": "2026-09-28T12:38:04.400669+00:00",
+      "snapshotSha256": "b280abc65407005d3fedb5c494fa0749109e70eda608e40b6b822480c8cc03ca"
+    },
+    "arm_pads": {
+      "name": "Canyon x Ergon Arm Pads for Aeroshield | S/M",
+      "price": 569.0,
+      "currency": "SEK",
+      "match": "family",
+      "note": "Choose S/M or L/XL. Standard AeroShield pads, not Pro.",
+      "url": "https://www.canyon.com/en-se/gear/bike-parts/aero-bars-and-tri-extensions/canyon-x-ergon-arm-pads-for-aeroshield/9102531.html",
+      "availability": "InStock",
+      "checkedAt": "2026-09-28T12:38:04.400669+00:00",
+      "snapshotSha256": "14f31fb2c68eb3fe280fbff35f1e8db8c5f0609ed8871b15b81e0c63d2ef6c80"
+    },
+    "bottom_bracket": {
+      "name": "SRAM DUB Pressfit 86.5 Bottom Bracket",
+      "price": 459.0,
+      "currency": "SEK",
+      "match": "exact",
+      "note": "Standard PF86.5, not Wide.",
+      "url": "https://www.canyon.com/en-se/gear/bike-parts/drivetrain/bottom-brackets/sram-dub-pressfit-86.5-bottom-bracket/10013814.html",
+      "availability": "InStock",
+      "checkedAt": "2026-09-28T12:38:04.400669+00:00",
+      "snapshotSha256": "6c59b26c40239bd952a71497cb7a918f88c572d311813f02ddcf5781d12d2273"
+    },
+    "udh_hanger": {
+      "name": "SRAM UDH Derailleur Hanger",
+      "price": 179.0,
+      "currency": "SEK",
+      "match": "exact",
+      "note": "UDH replacement; confirm complete hardware with Canyon.",
+      "url": "https://www.canyon.com/en-se/sram-udh-derailleur-hanger/10006305.html",
+      "availability": "InStock",
+      "checkedAt": "2026-09-28T12:38:04.400669+00:00",
+      "snapshotSha256": "59c6cea2cff56d4fac4d6b6f41202253bc74cb5597c43400995c85390f6091d2"
+    },
+    "aeroshield_pro_upgrade": {
+      "name": "Canyon Aeroshield Pro Monocoque Handlebar Extension | > 395 | 215 mm",
+      "price": 11399.0,
+      "currency": "SEK",
+      "match": "upgrade",
+      "note": "Optional Pro upgrade; not the price of the stock AeroShield.",
+      "url": "https://www.canyon.com/en-se/gear/bike-parts/aero-bars-and-tri-extensions/canyon-aeroshield-pro-monocoque-handlebar-extension/9102533.html",
+      "availability": "OutOfStock",
+      "checkedAt": "2026-09-28T12:38:04.400669+00:00",
+      "snapshotSha256": "2b98df672334a2336e18102e15b79bb3e8d7852c971e00fc336a40b83db0ad61"
+    }
+  }
+}

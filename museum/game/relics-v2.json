@@ -1,0 +1,166 @@
+{
+  "schema": "relic-registry-v2",
+  "note": "Original game symbols only. Do not imitate sacred or culturally restricted Native Hawaiian objects.",
+  "relics": [
+    {
+      "id": "relic:kona:lava-shard",
+      "name": "Lava Shard",
+      "rarity": "common",
+      "collection": "collection:kona-elements",
+      "place": "shore",
+      "commercial": false
+    },
+    {
+      "id": "relic:kona:salt-crystal",
+      "name": "Pacific Salt Crystal",
+      "rarity": "common",
+      "collection": "collection:kona-elements",
+      "place": "shore",
+      "commercial": false
+    },
+    {
+      "id": "relic:kona:plumeria",
+      "name": "Plumeria",
+      "rarity": "common",
+      "collection": "collection:kona-elements",
+      "place": "shore",
+      "commercial": false
+    },
+    {
+      "id": "relic:kona:cowrie",
+      "name": "Cowrie Shell",
+      "rarity": "uncommon",
+      "collection": "collection:kona-elements",
+      "place": "shore",
+      "commercial": false
+    },
+    {
+      "id": "relic:kona:trade-wind",
+      "name": "Trade-Wind Ribbon",
+      "rarity": "rare",
+      "collection": "collection:kona-elements",
+      "place": "queen-k",
+      "commercial": false
+    },
+    {
+      "id": "relic:aero:smoke-wand",
+      "name": "Smoke Wand",
+      "rarity": "rare",
+      "collection": "collection:aero-revolution",
+      "place": "engineering",
+      "commercial": false
+    },
+    {
+      "id": "relic:aero:golden-spoke",
+      "name": "Golden Spoke",
+      "rarity": "epic",
+      "collection": "collection:aero-revolution",
+      "place": "engineering",
+      "commercial": false
+    },
+    {
+      "id": "relic:aero:carbon-tile",
+      "name": "Carbon Weave Tile",
+      "rarity": "rare",
+      "collection": "collection:aero-revolution",
+      "place": "engineering",
+      "commercial": false
+    },
+    {
+      "id": "relic:aero:pressure-dot",
+      "name": "Pressure Dot",
+      "rarity": "uncommon",
+      "collection": "collection:aero-revolution",
+      "place": "engineering",
+      "commercial": false
+    },
+    {
+      "id": "relic:aero:hourglass",
+      "name": "Aero Hourglass",
+      "rarity": "legendary",
+      "collection": "collection:aero-revolution",
+      "place": "engineering",
+      "commercial": false
+    },
+    {
+      "id": "relic:race:timing-chip",
+      "name": "Timing Chip",
+      "rarity": "uncommon",
+      "collection": "collection:race-day",
+      "place": "transition",
+      "commercial": false
+    },
+    {
+      "id": "relic:race:transition-band",
+      "name": "Transition Band",
+      "rarity": "common",
+      "collection": "collection:race-day",
+      "place": "transition",
+      "commercial": false
+    },
+    {
+      "id": "relic:race:course-pin",
+      "name": "Course Pin",
+      "rarity": "common",
+      "collection": "collection:race-day",
+      "place": "plan",
+      "commercial": false
+    },
+    {
+      "id": "relic:race:bottle-token",
+      "name": "Bottle Token",
+      "rarity": "uncommon",
+      "collection": "collection:race-day",
+      "place": "aid-station",
+      "commercial": false
+    },
+    {
+      "id": "relic:race:finish-clock",
+      "name": "Finish Clock",
+      "rarity": "legendary",
+      "collection": "collection:race-day",
+      "place": "finish",
+      "commercial": false
+    },
+    {
+      "id": "relic:engineering:torx",
+      "name": "Tiny Torx",
+      "rarity": "common",
+      "collection": "collection:hidden-engineering",
+      "place": "garage",
+      "commercial": false
+    },
+    {
+      "id": "relic:engineering:ceramic-bearing",
+      "name": "Ceramic Bearing",
+      "rarity": "rare",
+      "collection": "collection:hidden-engineering",
+      "place": "garage",
+      "commercial": false
+    },
+    {
+      "id": "relic:engineering:valve-extender",
+      "name": "Valve Extender",
+      "rarity": "uncommon",
+      "collection": "collection:hidden-engineering",
+      "place": "garage",
+      "commercial": false
+    },
+    {
+      "id": "relic:engineering:wind-arrow",
+      "name": "Wind Arrow",
+      "rarity": "epic",
+      "collection": "collection:hidden-engineering",
+      "place": "hall",
+      "commercial": false
+    },
+    {
+      "id": "relic:engineering:prototype-tag",
+      "name": "Prototype Tag",
+      "rarity": "mythic",
+      "collection": "collection:hidden-engineering",
+      "place": "secret",
+      "commercial": false
+    }
+  ]
+}

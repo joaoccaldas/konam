@@ -1,0 +1,63 @@
+/* KONA canonical semantic tokens. No component selectors belong here. */
+:root{
+  /* named brand palette from the approved visual system */
+  --brand-sand:#f4efe7;
+  --brand-mist:#e6e9ed;
+  --brand-ocean:#00a7c7;
+  --brand-sunrise:#ff6a00;
+  --brand-ember:#ff833d;
+  --brand-lava:#080b0e;
+  --brand-basalt:#282f36;
+  --brand-hibiscus:#ff2d6d;
+  --brand-lilac:#a876fa;
+  --brand-lime:#c7f300;
+
+  /* semantic surface roles */
+  --brand-bg:var(--brand-sand);
+  --brand-surface:#fbf9f5;
+  --brand-ink:#12181d;
+  --brand-muted:#5f6a72;
+  --brand-faint:#8e979d;
+  --brand-line:rgba(18,24,29,.12);
+  --brand-accent:var(--brand-sunrise);
+  --brand-accent-2:var(--brand-ocean);
+  --brand-action:var(--brand-sunrise);
+  --brand-discovery:var(--brand-ocean);
+  --brand-personality:var(--brand-hibiscus);
+  --brand-progress:var(--brand-lime);
+  --brand-on-accent:var(--brand-lava);
+  --brand-on-action:var(--brand-lava);
+  --brand-success:#2bbf88;
+
+  /* one typography authority */
+  --brand-font-ui:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --brand-font-editorial:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --brand-font-data:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --brand-font-hand:'Caveat','Segoe Print','Bradley Hand',cursive;
+
+  /* 8-point spacing rhythm */
+  --brand-space-0:4px;
+  --brand-space-1:8px;
+  --brand-space-2:12px;
+  --brand-space-3:16px;
+  --brand-space-4:24px;
+  --brand-space-5:32px;
+  --brand-space-6:48px;
+  --brand-space-7:64px;
+
+  --brand-control-radius:12px;
+  --brand-card-radius:20px;
+  --brand-sheet-radius:24px;
+  --brand-panel-max:760px;
+  --brand-content-max:1180px;
+  --brand-touch:48px;
+  --brand-mobile-gutter:20px;
+  --brand-desktop-gutter:32px;
+  --brand-surface-glass:color-mix(in srgb,var(--brand-surface) 94%,transparent);
+  --brand-surface-glass-strong:color-mix(in srgb,var(--brand-surface) 98%,transparent);
+  --brand-pill-radius:999px;
+  --artifact-edge:0px;
+  --artifact-soft:10px;
+  --artifact-shadow:0 20px 55px -38px rgba(18,24,29,.36);
+}
+@media(max-width:340px){:root{--brand-mobile-gutter:16px}}

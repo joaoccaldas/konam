@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "purpose": "Immutable pre-migration comparison anchor for Kona.m planning work.",
+  "source_repo": "joaoccaldas/canyonmuseum",
+  "source_branch": "main",
+  "source_sha": "b16391dbffee5a351ec82a06dac42d52b4c31286",
+  "captured_at": "2026-10-02",
+  "runtime_contract": {
+    "consumer_brand": "KONA",
+    "canonical_routes": [
+      "home",
+      "discover",
+      "garage",
+      "plan",
+      "me"
+    ],
+    "repository_visibility": "public",
+    "deployment_model": "guarded GitHub Pages on main; Vercel config also present but not canonical",
+    "local_first": true,
+    "account_optional": true,
+    "native_app_id": "com.caldasstudio.speedmaxmuseum",
+    "native_app_name": "KONA"
+  },
+  "code_metrics": {
+    "web/src/landing.js": {
+      "sha": "473bf532fc298b5922bc3d6afd627a5c040bc060",
+      "chars": 147564,
+      "lines": 1950
+    },
+    "web/src/ui/kona-shell.js": {
+      "sha": "8df32974ba3c0386508198a0962f6718b31e8408",
+      "chars": 13413,
+      "lines": 247
+    },
+    "web/package.json": {
+      "sha": "8e536998619aae61e2226e111cf96c16b12e714a",
+      "chars": 1111,
+      "lines": 38
+    },
+    "app/native/package.json": {
+      "sha": "86d0dd8074e107d121948f88c7bbef522848c5ca",
+      "chars": 801,
+      "lines": 22
+    },
+    "manifest.webmanifest": {
+      "sha": "3243737cc16b749d3a7b05563bc9c76ad4112d2a",
+      "chars": 1786,
+      "lines": 84
+    },
+    ".github/workflows/checks.yml": {
+      "sha": "4bcb284b96855bb729edc34c5d3562c30656c7a3",
+      "chars": 2398,
+      "lines": 54
+    },
+    ".github/workflows/release-security.yml": {
+      "sha": "b368b636b1761192db6adec90ae09d544fd6ccb5",
+      "chars": 1817,
+      "lines": 66
+    },
+    ".github/workflows/integration-contract.yml": {
+      "sha": "a40de4c196f81b42677994a1df89f5e4e93e3936",
+      "chars": 2165,
+      "lines": 64
+    },
+    ".github/workflows/ui-interaction-audit.yml": {
+      "sha": "6222cca74813d519f951a0cccb6d4c7403a64645",
+      "chars": 2109,
+      "lines": 59
+    },
+    ".github/workflows/visual-evidence-v2.yml": {
+      "sha": "0f1651f5eb4e20b3f51811f8b23241b4d0f31f69",
+      "chars": 1758,
+      "lines": 56
+    },
+    "tools/repo-hygiene.mjs": {
+      "sha": "85988ee401fb3442b3fe6790532cc5d1bb74f644",
+      "chars": 3317,
+      "lines": 57
+    },
+    "tools/scan_private_data.mjs": {
+      "sha": "c34582d06cf4cff235fc69def8353f6b51f4aac1",
+      "chars": 2279,
+      "lines": 42
+    }
+  },
+  "known_quality_findings": {
+    "landing_js": {
+      "chars": 147564,
+      "lines": 1950,
+      "innerHTML_occurrences": 37,
+      "localStorage_occurrences": 5,
+      "eval_occurrences": 0,
+      "document_write_occurrences": 0,
+      "risk": "large mixed-responsibility runtime module; architecture already plans decomposition"
+    },
+    "kona_shell_js": {
+      "chars": 13413,
+      "lines": 247,
+      "innerHTML_occurrences": 2,
+      "eval_occurrences": 0,
+      "risk": "small relative to landing; innerHTML is bounded static shell markup but should remain within sanitization contract"
+    },
+    "dependency_surfaces": {
+      "web_runtime": [
+        "@gltf-transform/cli",
+        "esbuild",
+        "meshoptimizer",
+        "three"
+      ],
+      "web_dev": [
+        "puppeteer-core"
+      ],
+      "native_runtime": [
+        "@capacitor/android",
+        "@capacitor/core"
+      ],
+      "native_dev": [
+        "@capacitor/assets",
+        "@capacitor/cli"
+      ]
+    }
+  },
+  "safety_controls_present": [
+    "private-data/secret scan",
+    "web production dependency audit at high severity",
+    "Android production dependency audit at high severity",
+    "repository hygiene guard",
+    "brand authority guard",
+    "published asset staging contract",
+    "integration contract",
+    "P0 browser journey",
+    "UI interaction evidence",
+    "Visual Evidence V2",
+    "deterministic generated-output drift check"
+  ],
+  "pre_migration_rules": [
+    "Every Kona.m planning/refactor PR must declare before and after states.",
+    "Runtime-touching changes must list affected user flows and rollback.",
+    "Dependency changes must be explicit and must not be bundled into content-only PRs.",
+    "State/storage key changes require a compatibility/migration path.",
+    "Generated artifacts may change only through their owner builders.",
+    "No migration PR may silently change canonical routes, persistence, auth, deployment or security controls.",
+    "Android appId changes require a dedicated native identity decision before first stable public distribution."
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "source_branch": "assets/kona-environment-pack-20260930",
+  "source_commit": "d168a47d",
+  "items": [
+    {
+      "id": "cervelo-p5-disc-mk2-size54",
+      "type": "bike",
+      "brand": "Cervelo",
+      "model": "P5 Disc MK2",
+      "asset_path": "assets/kona-heritage/bikes/cervelo-p5-disc-mk2-size54.glb",
+      "representation": "manufacturer-geometry",
+      "readiness": "candidate",
+      "setup_slot": "bike",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [
+        "https://www.cervelo.com/en-US/support/P5%20DISC%20MK2"
+      ],
+      "blockers": [
+        "asset branch Museum checks failing",
+        "visual/silhouette QA still required"
+      ]
+    },
+    {
+      "id": "specialized-shiv-disc-size-m",
+      "type": "bike",
+      "brand": "Specialized",
+      "model": "S-Works Shiv Disc",
+      "asset_path": "assets/kona-heritage/bikes/specialized-shiv-disc-size-m.glb",
+      "representation": "manufacturer-geometry",
+      "readiness": "candidate",
+      "setup_slot": "bike",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [
+        "https://www.specialized.com/se/sv/s-works-shiv-disc-module/p/175306"
+      ],
+      "blockers": [
+        "asset branch Museum checks failing",
+        "visual/silhouette QA still required"
+      ]
+    },
+    {
+      "id": "felt-ia-2015-size54",
+      "type": "bike",
+      "brand": "Felt",
+      "model": "IA 2015",
+      "asset_path": "assets/kona-heritage/bikes/felt-ia-2015-size54.glb",
+      "representation": "manufacturer-geometry",
+      "readiness": "candidate",
+      "setup_slot": "bike",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [
+        "https://www.feltbicycles.com/documents/archive/2015_FELT_Catalog.pdf"
+      ],
+      "blockers": [
+        "asset branch Museum checks failing",
+        "visual/silhouette QA still required"
+      ]
+    },
+    {
+      "id": "scott-plasma-rc-provisional",
+      "type": "bike",
+      "brand": "Scott",
+      "model": "Plasma RC",
+      "asset_path": "assets/kona-heritage/bikes/scott-plasma-rc-provisional.glb",
+      "representation": "provisional-geometry",
+      "readiness": "blocked",
+      "setup_slot": "bike",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [
+        "https://www.scott-sports.com/us/en/product/scott-plasma-rc-ultimate-bike"
+      ],
+      "blockers": [
+        "numeric geometry source incomplete",
+        "not public-ready",
+        "asset branch Museum checks failing"
+      ]
+    },
+    {
+      "id": "bmc-speedmachine-01-size-m",
+      "type": "bike",
+      "brand": "BMC",
+      "model": "Speedmachine 01",
+      "asset_path": "assets/kona-heritage/bikes/bmc-speedmachine-01-size-m.glb",
+      "representation": "manufacturer-geometry",
+      "readiness": "candidate",
+      "setup_slot": "bike",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [
+        "https://us.bmc-switzerland.com/products/speedmachine-01-four-bikes-bmc-26a-000005"
+      ],
+      "blockers": [
+        "asset branch Museum checks failing",
+        "visual/silhouette QA still required"
+      ]
+    },
+    {
+      "id": "orbea-ordu-current-sm",
+      "type": "bike",
+      "brand": "Orbea",
+      "model": "Ordu",
+      "asset_path": "assets/kona-heritage/bikes/orbea-ordu-current-sm.glb",
+      "representation": "manufacturer-geometry",
+      "readiness": "candidate",
+      "setup_slot": "bike",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [
+        "https://www.orbea.com/us-en/bicycles/ordu-m10iltd/pdf"
+      ],
+      "blockers": [
+        "partial frame geometry",
+        "visual/silhouette QA still required",
+        "asset branch Museum checks failing"
+      ]
+    },
+    {
+      "id": "nike-alphafly-3-study",
+      "type": "shoe",
+      "brand": "Nike",
+      "model": "Alphafly 3",
+      "asset_path": "assets/kona-heritage/shoes/nike-alphafly-3-study.glb",
+      "representation": "official-spec-informed",
+      "readiness": "candidate",
+      "setup_slot": "shoe",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [
+        "https://www.nike.com/se/en/t/alphafly-3-mens-road-racing-shoes-KnKE5jwD/FD8311-402"
+      ],
+      "blockers": [
+        "prototype-not-cad-exact",
+        "asset branch Museum checks failing"
+      ]
+    },
+    {
+      "id": "nike-vaporfly-4-current",
+      "type": "shoe",
+      "brand": "Nike",
+      "model": "Vaporfly 4",
+      "asset_path": "assets/kona-heritage/shoes/nike-vaporfly-4-current.glb",
+      "representation": "official-spec-informed",
+      "readiness": "candidate",
+      "setup_slot": "shoe",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [
+        "https://www.nike.com/se/en/t/vaporfly-4-road-racing-shoes-DeKC4kdI/II7203-100"
+      ],
+      "blockers": [
+        "prototype-not-cad-exact",
+        "asset branch Museum checks failing"
+      ]
+    },
+    {
+      "id": "nike-vaporfly-4pct-study",
+      "type": "shoe",
+      "brand": "Nike",
+      "model": "Zoom Vaporfly 4%",
+      "asset_path": "assets/kona-heritage/shoes/nike-vaporfly-4pct-study.glb",
+      "representation": "historical-study",
+      "readiness": "blocked",
+      "setup_slot": "shoe",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [],
+      "blockers": [
+        "official archive source missing",
+        "asset branch Museum checks failing"
+      ]
+    },
+    {
+      "id": "nike-vaporfly-next-study",
+      "type": "shoe",
+      "brand": "Nike",
+      "model": "Vaporfly NEXT%",
+      "asset_path": "assets/kona-heritage/shoes/nike-vaporfly-next-study.glb",
+      "representation": "historical-study",
+      "readiness": "blocked",
+      "setup_slot": "shoe",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [],
+      "blockers": [
+        "official archive source missing",
+        "asset branch Museum checks failing"
+      ]
+    },
+    {
+      "id": "nike-alphafly-next-study",
+      "type": "shoe",
+      "brand": "Nike",
+      "model": "Alphafly NEXT%",
+      "asset_path": "assets/kona-heritage/shoes/nike-alphafly-next-study.glb",
+      "representation": "historical-study",
+      "readiness": "blocked",
+      "setup_slot": "shoe",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share"
+      ],
+      "source_records": [],
+      "blockers": [
+        "official archive source missing",
+        "asset branch Museum checks failing"
+      ]
+    }
+  ]
+}

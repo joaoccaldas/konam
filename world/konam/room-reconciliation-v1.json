@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "warning": "Pre-migration planning classification only. It does not rewire production geometry.",
+  "states": [
+    "READY_EXISTING",
+    "EXISTS_RENAME",
+    "EXISTS_RECOMPOSE",
+    "EXISTS_NEEDS_QA",
+    "VIRTUAL_CONFIG_ONLY",
+    "ACTUALLY_NEEDS_BUILDING"
+  ],
+  "summary": {
+    "EXISTS_RECOMPOSE": 9,
+    "EXISTS_RENAME": 2,
+    "READY_EXISTING": 2,
+    "EXISTS_NEEDS_QA": 3,
+    "VIRTUAL_CONFIG_ONLY": 5,
+    "ACTUALLY_NEEDS_BUILDING": 7
+  },
+  "rooms": [
+    {
+      "room_id": "room-001",
+      "name": "The Queen K",
+      "state": "EXISTS_RECOMPOSE",
+      "legacy_sources": [
+        "hall",
+        "atlas-kona-light-queen-k"
+      ],
+      "rationale": "Strong current Queen K/hall material; recombine into Kona-first course room."
+    },
+    {
+      "room_id": "room-002",
+      "name": "The Bay",
+      "state": "EXISTS_RECOMPOSE",
+      "legacy_sources": [
+        "atlas-kona-light-bay",
+        "bay-kona"
+      ],
+      "rationale": "Bay art/place material exists; needs one canonical swim-room composition."
+    },
+    {
+      "room_id": "room-003",
+      "name": "The Pier",
+      "state": "EXISTS_RENAME",
+      "legacy_sources": [
+        "pier"
+      ],
+      "rationale": "Kona by Year/pier exists and maps directly with renamed purpose."
+    },
+    {
+      "room_id": "room-004",
+      "name": "Aliʻi",
+      "state": "EXISTS_RECOMPOSE",
+      "legacy_sources": [
+        "atlas-kona-light-after-dark"
+      ],
+      "rationale": "Finish/night material exists; needs run-course/finish composition."
+    },
+    {
+      "room_id": "room-005",
+      "name": "Champions",
+      "state": "EXISTS_RENAME",
+      "legacy_sources": [
+        "kona"
+      ],
+      "rationale": "Kona Champions exists; expand beyond Canyon-only presentation over time."
+    },
+    {
+      "room_id": "room-006",
+      "name": "Against the Clock",
+      "state": "READY_EXISTING",
+      "legacy_sources": [
+        "wing-against-the-clock"
+      ],
+      "rationale": "Existing data-driven wing with Hour, Monocoque, Long Course and Types."
+    },
+    {
+      "room_id": "room-007",
+      "name": "Canyon Museum",
+      "state": "READY_EXISTING",
+      "legacy_sources": [
+        "hall",
+        "Canyon_Collection.html"
+      ],
+      "rationale": "Strongest evidence-backed brand museum; retain as a museum inside Kona.m."
+    },
+    {
+      "room_id": "room-008",
+      "name": "The Aero Lab",
+      "state": "EXISTS_RECOMPOSE",
+      "legacy_sources": [
+        "atlas-kona-light-tunnel",
+        "atlas-kona-light-clipon"
+      ],
+      "rationale": "Workshop/tunnel and clip-on engineering material exist."
+    },
+    {
+      "room_id": "room-009",
+      "name": "The Kit Room",
+      "state": "EXISTS_NEEDS_QA",
+      "legacy_sources": [
+        "nike-running",
+        "asset/next-100-3d-v1"
+      ],
+      "rationale": "Current shoe proof plus large unwired equipment candidate inventory."
+    },
+    {
+      "room_id": "room-010",
+      "name": "Transition",
+      "state": "VIRTUAL_CONFIG_ONLY",
+      "legacy_sources": [],
+      "rationale": "Can launch as a lightweight authored room using existing generic gear/story assets; no dedicated current room."
+    },
+    {
+      "room_id": "room-011",
+      "name": "Race Week",
+      "state": "VIRTUAL_CONFIG_ONLY",
+      "legacy_sources": [
+        "museum/events/kona-2026.json",
+        "companion"
+      ],
+      "rationale": "Event/feed data exists; dedicated spatial room is optional for launch."
+    },
+    {
+      "room_id": "room-012",
+      "name": "Island Stories",
+      "state": "EXISTS_RECOMPOSE",
+      "legacy_sources": [
+        "museum/kona/island-guide.json",
+        "bay-kona",
+        "wing-kona-light"
+      ],
+      "rationale": "Place, island guide and art material exist."
+    },
+    {
+      "room_id": "room-013",
+      "name": "The Archive",
+      "state": "EXISTS_RECOMPOSE",
+      "legacy_sources": [
+        "refs",
+        "museum/catalog.json",
+        "docs/reference-canyon"
+      ],
+      "rationale": "Strong provenance/history material exists; needs visitor-facing archive composition."
+    },
+    {
+      "room_id": "room-014",
+      "name": "Lost & Found",
+      "state": "EXISTS_RECOMPOSE",
+      "legacy_sources": [
+        "secret",
+        "sanctuary"
+      ],
+      "rationale": "Secret/art-world material exists; can become the deliberate oddities room."
+    },
+    {
+      "room_id": "room-015",
+      "name": "The Wind Room",
+      "state": "ACTUALLY_NEEDS_BUILDING",
+      "legacy_sources": [],
+      "rationale": "New progressive room; can reuse Queen K environmental shaders/assets."
+    },
+    {
+      "room_id": "room-016",
+      "name": "Heat",
+      "state": "ACTUALLY_NEEDS_BUILDING",
+      "legacy_sources": [],
+      "rationale": "New progressive environmental room."
+    },
+    {
+      "room_id": "room-017",
+      "name": "Fuel",
+      "state": "ACTUALLY_NEEDS_BUILDING",
+      "legacy_sources": [],
+      "rationale": "New nutrition/fueling room; likely content-first before rich 3D."
+    },
+    {
+      "room_id": "room-018",
+      "name": "Swim Lab",
+      "state": "ACTUALLY_NEEDS_BUILDING",
+      "legacy_sources": [
+        "asset/next-100-3d-v1"
+      ],
+      "rationale": "Some gear candidates exist; room composition does not."
+    },
+    {
+      "room_id": "room-019",
+      "name": "Run Lab",
+      "state": "EXISTS_NEEDS_QA",
+      "legacy_sources": [
+        "nike-running",
+        "asset/next-100-3d-v1"
+      ],
+      "rationale": "Shoe proof and many shoe studies exist; room needs canonicalization."
+    },
+    {
+      "room_id": "room-020",
+      "name": "Age Group",
+      "state": "ACTUALLY_NEEDS_BUILDING",
+      "legacy_sources": [],
+      "rationale": "People/story room requires editorial design and rights-aware sourcing."
+    },
+    {
+      "room_id": "room-021",
+      "name": "Women of Kona",
+      "state": "ACTUALLY_NEEDS_BUILDING",
+      "legacy_sources": [],
+      "rationale": "Historical/editorial room requires sourced athlete history and rights review."
+    },
+    {
+      "room_id": "room-022",
+      "name": "The Volunteers",
+      "state": "ACTUALLY_NEEDS_BUILDING",
+      "legacy_sources": [],
+      "rationale": "People/story room requires sourced content."
+    },
+    {
+      "room_id": "room-023",
+      "name": "Before Saturday",
+      "state": "VIRTUAL_CONFIG_ONLY",
+      "legacy_sources": [
+        "museum/events/kona-2026.json",
+        "companion"
+      ],
+      "rationale": "Can initially exist as a timed event layer without bespoke geometry."
+    },
+    {
+      "room_id": "room-024",
+      "name": "The Makers",
+      "state": "EXISTS_RECOMPOSE",
+      "legacy_sources": [
+        "atlas-kona-light-tunnel",
+        "docs/MUSEUM_WORKFLOW.md"
+      ],
+      "rationale": "Engineering and build-pipeline material can seed this room."
+    },
+    {
+      "room_id": "room-025",
+      "name": "Prototype Vault",
+      "state": "EXISTS_NEEDS_QA",
+      "legacy_sources": [
+        "asset/next-100-3d-v1",
+        "atlas-studio-*"
+      ],
+      "rationale": "Existing studio concepts and candidate studies can populate after QA."
+    },
+    {
+      "room_id": "room-026",
+      "name": "Athlete Rooms",
+      "state": "VIRTUAL_CONFIG_ONLY",
+      "legacy_sources": [],
+      "rationale": "Platform slot; actual athlete rooms only appear after sourced/authorized activation."
+    },
+    {
+      "room_id": "room-027",
+      "name": "Makers' Row",
+      "state": "VIRTUAL_CONFIG_ONLY",
+      "legacy_sources": [
+        "brandroom"
+      ],
+      "rationale": "Commercial/brand platform slot. Existing brand-room architecture is the proof."
+    },
+    {
+      "room_id": "room-028",
+      "name": "Elsewhere",
+      "state": "EXISTS_RECOMPOSE",
+      "legacy_sources": [
+        "bay-st-george",
+        "bay-nice",
+        "bay-las-vegas"
+      ],
+      "rationale": "Destination bays already exist and should become portals into future worlds."
+    }
+  ]
+}

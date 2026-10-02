@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "id": "canyon-speedmax-three-my2005",
+  "brand": "Canyon",
+  "model": "Speedmax Three",
+  "model_year": 2005,
+  "launch_year": 2004,
+  "generation": "2002\u20132005",
+  "size": "53 (photo-identified)",
+  "finish": "Race Black Metallic",
+  "status": "reference-study",
+  "coordinate_system": {
+    "unit": "metre",
+    "forward": "+X",
+    "up": "+Z",
+    "drive_side": "-Y"
+  },
+  "reconstruction_adapter": "heritage-speedmax-three-2005-photo-v1",
+  "pipeline": {
+    "adapter_module": "blender/heritage_build.py",
+    "profile": "blender/heritage/speedmax-three-2005/profile.json",
+    "out_dir": "assets/heritage/speedmax-three-2005"
+  },
+  "references": [
+    {
+      "path": "assets/reference/heritage/photos/g2_speedmax_three_2005.jpg",
+      "url": "https://web.archive.org/web/20050104010948/http://www.canyon.de:80/img/bikes/26_img_flash.jpg",
+      "role": "Canyon studio side photograph; sole shape source",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "assets/reference/heritage/pages/spec_three_equip_2004.html",
+      "url": "https://web.archive.org/web/20041230030216/http://www.canyon.de:80/triathlonbikes/ausstattung.html?b=26",
+      "role": "Canyon specification page (archived)",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "assets/reference/heritage/pages/20041230025739_http___www.canyon.de_80_triathlonbikes_geometrie.html_b_26.html",
+      "url": "https://web.archive.org/web/20041230025739/http://www.canyon.de:80/triathlonbikes/geometrie.html?b=26",
+      "role": "Geometry table (archived 2004-12-30)",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "assets/reference/heritage/pages/20021020115040_http___www.canyon.de_80_en_triat_info_2002.html.html",
+      "url": "https://web.archive.org/web/20021020115040/http://www.canyon.de:80/en/triat_info_2002.html",
+      "role": "Identical 2002 triathlon geometry table",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "uncertainties": [
+    "Scale 2.500 mm per pixel from tyre fits; measured wheelbase 990 mm.",
+    "Single 626 px photograph: 3.36 mm per pixel, the lowest-resolution source in the museum.",
+    "Tyre width is not published ('Continental GP3000'); 23-622 is inferred and sets the scale.",
+    "Chainstay measures 398 mm against Canyon's published 410 mm; the BB was confirmed by a chainring circle fit, so the conflict is recorded, not adjusted.",
+    "The 2002-2005 geometry table is identical across years; that the frame shape was unchanged before 2004 is not confirmed by a photo.",
+    "Lateral tube widths, stay spread and fork crown width are inferred; the photo fixes side-view shapes only.",
+    "Components are simplified external forms rebuilt from the published specification; hidden mechanisms are not modelled.",
+    "Graphics use DIN Condensed Bold in place of Canyon's lettering; positions and sizes traced from the photo.",
+    "Cable routing is traced where visible; hidden runs are not modelled."
+  ],
+  "deliverables": {
+    "bike": "assets/heritage/speedmax-three-2005/speedmax_three_2005_master.blend",
+    "scene": "assets/heritage/speedmax-three-2005/speedmax_museum.blend",
+    "glb": "assets/heritage/speedmax-three-2005/speedmax_web.glb",
+    "viewer": "Speedmax_Three_2005_Museum.html"
+  },
+  "validation": {
+    "geometry": "assets/heritage/speedmax-three-2005/checks/geometry-checks.json",
+    "silhouette": "assets/heritage/speedmax-three-2005/checks/silhouette-report.json",
+    "renders": [
+      "hero",
+      "side",
+      "cockpit",
+      "drivetrain",
+      "rear"
+    ]
+  },
+  "viewer_profile": "museum/viewer-speedmax-three-2005.json"
+}

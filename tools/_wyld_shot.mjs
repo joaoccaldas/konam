@@ -1,0 +1,21 @@
+import puppeteer from 'puppeteer-core';
+const OUT = process.argv[2];
+const b = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] });
+const p = await b.newPage(); await p.setViewport({ width: 1440, height: 900 });
+const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
+const loaded = new Promise(r => p.on('console', m => { if (/Load completed/.test(m.text())) r(); }));
+await p.goto('http://127.0.0.1:8791/', { waitUntil: 'load' }); await loaded; await new Promise(r => setTimeout(r, 2000));
+await p.evaluate(() => window.__kona.openBikeMuseum());
+await new Promise(r => setTimeout(r, 5000));
+await p.evaluate(() => { document.querySelector('[data-pane-tab="custom"],[data-tab="custom"]')?.click(); document.querySelector('.canyon-swatch[data-skin="wyld"]').click(); });
+await new Promise(r => setTimeout(r, 1500));
+await p.screenshot({ path: OUT + '/wyld_1.png' });
+const set = (id, v) => p.evaluate((id, v) => { const e = document.querySelector(id); e.value = v; e.oninput(); }, id, v);
+await set('#wyldDark', 0.6); await new Promise(r => setTimeout(r, 600)); await p.screenshot({ path: OUT + '/wyld_dark.png' });
+await set('#wyldDark', 0); await set('#wyldSheer', 0.55); await new Promise(r => setTimeout(r, 600)); await p.screenshot({ path: OUT + '/wyld_sheer.png' });
+await set('#wyldSheer', 0); await set('#wyldAlpha', 0.45); await new Promise(r => setTimeout(r, 600)); await p.screenshot({ path: OUT + '/wyld_transparent.png' });
+// follows to another bike
+await set('#wyldAlpha', 0); await p.evaluate(() => window.__kona.pierMuseumStudio.selectBike(0)); await new Promise(r => setTimeout(r, 4000));
+await p.screenshot({ path: OUT + '/wyld_1982.png' });
+console.log('errors', errs.length, errs.slice(0, 3).join(' | '));
+await b.close();

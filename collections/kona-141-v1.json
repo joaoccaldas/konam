@@ -1,0 +1,2856 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "collection": {
+    "id": "kona-141",
+    "name": "The Founding 141",
+    "closed": true,
+    "meaning": "140.6 miles → 14 founding rooms, 140 room collectibles, plus The Point Six.",
+    "count": 141,
+    "founding_room_count": 14,
+    "items_per_founding_room": 10,
+    "anchor_item_ids": [
+      "k141-010",
+      "k141-020",
+      "k141-024",
+      "k141-039",
+      "k141-050",
+      "k141-060",
+      "k141-070",
+      "k141-080",
+      "k141-090",
+      "k141-100",
+      "k141-110",
+      "k141-120",
+      "k141-130",
+      "k141-138"
+    ]
+  },
+  "items": [
+    {
+      "id": "k141-001",
+      "number": 1,
+      "name": "Queen Kaʻahumanu Highway",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "The race-course spine",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-002",
+      "number": 2,
+      "name": "Black Lava",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "Landscape and Kona identity",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-003",
+      "number": 3,
+      "name": "The Crosswind",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "The invisible race opponent",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-004",
+      "number": 4,
+      "name": "The Mirage",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "Heat and distance made visible",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-005",
+      "number": 5,
+      "name": "Kawaihae Turn",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "Course geography",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-006",
+      "number": 6,
+      "name": "Hawi Turnaround",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "Iconic turnaround milestone",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-007",
+      "number": 7,
+      "name": "Aero Bottle",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "Long-course adaptation",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-008",
+      "number": 8,
+      "name": "Disc Wheel",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "Speed technology",
+      "acquisition": {
+        "method": "question",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-009",
+      "number": 9,
+      "name": "The Lava Marker",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "World/story token",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-010",
+      "number": 10,
+      "name": "Headwind",
+      "room_id": "room-001",
+      "room_slug": "queen-k",
+      "collection": "kona-141",
+      "why": "A force treated as an artifact",
+      "acquisition": {
+        "method": "riddle",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-011",
+      "number": 11,
+      "name": "Kailua Bay",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "Where the day begins",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-012",
+      "number": 12,
+      "name": "Start Buoy",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "Simple race icon",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-013",
+      "number": 13,
+      "name": "Swim Cap",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "Universal race artifact",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-014",
+      "number": 14,
+      "name": "Goggles",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "Essential swim gear",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-015",
+      "number": 15,
+      "name": "Timing Mat: Swim Out",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "Bridge from water to race",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-016",
+      "number": 16,
+      "name": "Body Marking Pen",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "Pre-race ritual",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-017",
+      "number": 17,
+      "name": "Coffee Boat",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "Morning swim culture",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-018",
+      "number": 18,
+      "name": "The First Stroke",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "The race begins before the clock matters",
+      "acquisition": {
+        "method": "visit",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-019",
+      "number": 19,
+      "name": "Salt",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "Tiny but unavoidable",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-020",
+      "number": 20,
+      "name": "3.8",
+      "room_id": "room-002",
+      "room_slug": "the-bay",
+      "collection": "kona-141",
+      "why": "The swim distance encoded as an object",
+      "acquisition": {
+        "method": "riddle",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-021",
+      "number": 21,
+      "name": "Kailua Pier",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Race-week center",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-022",
+      "number": 22,
+      "name": "Bike Rack",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Transition identity",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-023",
+      "number": 23,
+      "name": "Race Number",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Athlete identity",
+      "acquisition": {
+        "method": "onboarding",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-024",
+      "number": 24,
+      "name": "Timing Chip",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Small object, enormous consequence",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-025",
+      "number": 25,
+      "name": "Transition Bag",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Iron-distance ritual",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-026",
+      "number": 26,
+      "name": "Pump Queue",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Race-morning reality",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-027",
+      "number": 27,
+      "name": "Helmet on Bars",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Transition ritual",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-028",
+      "number": 28,
+      "name": "Bare Feet",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Swim-to-bike threshold",
+      "acquisition": {
+        "method": "riddle",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-029",
+      "number": 29,
+      "name": "Old Course Map",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Historical layer",
+      "acquisition": {
+        "method": "archive",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-030",
+      "number": 30,
+      "name": "The Empty Pier",
+      "room_id": "room-003",
+      "room_slug": "the-pier",
+      "collection": "kona-141",
+      "why": "Before everybody arrives",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-031",
+      "number": 31,
+      "name": "Aliʻi Drive",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "The final corridor",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-032",
+      "number": 32,
+      "name": "Running Shoe",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "Marathon icon",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-033",
+      "number": 33,
+      "name": "Aid Station Cup",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "Humble race essential",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-034",
+      "number": 34,
+      "name": "Sponge",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "Heat management",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-035",
+      "number": 35,
+      "name": "Glow Stick",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "Late-race artifact",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "launch"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-036",
+      "number": 36,
+      "name": "Finish Carpet",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "Emotional endpoint",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-037",
+      "number": 37,
+      "name": "Finish Arch",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "Race symbol",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-038",
+      "number": 38,
+      "name": "The Last Mile",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "Story of finishing",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-039",
+      "number": 39,
+      "name": "Midnight",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "Kona's temporal boundary",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-040",
+      "number": 40,
+      "name": "The Bell",
+      "room_id": "room-004",
+      "room_slug": "alii",
+      "collection": "kona-141",
+      "why": "Final-moments token",
+      "acquisition": {
+        "method": "riddle",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-041",
+      "number": 41,
+      "name": "Champion's Wreath",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "Victory symbol",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-042",
+      "number": 42,
+      "name": "Winning Bike: Early Era",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "Equipment-history anchor",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-043",
+      "number": 43,
+      "name": "Winning Bike: Aero Era",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "Evolution of speed",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-044",
+      "number": 44,
+      "name": "Winning Bike: Integrated Era",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "Modern evolution",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-045",
+      "number": 45,
+      "name": "Champion's Shoes",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "Run connection",
+      "acquisition": {
+        "method": "question",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-046",
+      "number": 46,
+      "name": "Champion's Bib",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "Athlete artifact",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-047",
+      "number": 47,
+      "name": "Course Record Card",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "Historical data object",
+      "acquisition": {
+        "method": "quiz",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-048",
+      "number": 48,
+      "name": "First-Time Champion",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "Story archetype",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-049",
+      "number": 49,
+      "name": "Comeback",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "Narrative collectible",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-050",
+      "number": 50,
+      "name": "The Empty Podium",
+      "room_id": "room-005",
+      "room_slug": "champions",
+      "collection": "kona-141",
+      "why": "A reminder that victory is uncertain",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-051",
+      "number": 51,
+      "name": "Merckx Hour Bike",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "Baseline simplicity",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "atlas-merckx-hour-1972",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-052",
+      "number": 52,
+      "name": "Obree Study",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "Radical thinking",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "atlas-obree-riverside",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-053",
+      "number": 53,
+      "name": "Lotus 108 Study",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "Monocoque history",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "atlas-lotus-108-1992",
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-054",
+      "number": 54,
+      "name": "Zipp 2001 Study",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "Non-traditional design",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "atlas-zipp-2001",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-055",
+      "number": 55,
+      "name": "Funny Bike",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "TT evolution",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "atlas-type-funny-1980s",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-056",
+      "number": 56,
+      "name": "Pursuit Bike",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "Track influence",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "atlas-type-pursuit",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-057",
+      "number": 57,
+      "name": "650c Low Profile",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "Triathlon history",
+      "acquisition": {
+        "method": "question",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "atlas-type-lowpro-650c",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-058",
+      "number": 58,
+      "name": "Clip-On Aerobar",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "Transformational invention",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "atlas-type-aerobar-1989",
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-059",
+      "number": 59,
+      "name": "Disc-Brake Superbike",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "Modern endpoint",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "atlas-type-disc-superbike",
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-060",
+      "number": 60,
+      "name": "60 Minutes",
+      "room_id": "room-006",
+      "room_slug": "against-the-clock",
+      "collection": "kona-141",
+      "why": "The room's conceptual token",
+      "acquisition": {
+        "method": "riddle",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-061",
+      "number": 61,
+      "name": "Speedmax Three",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Early Speedmax lineage",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "canyon-speedmax-three-2005",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-062",
+      "number": 62,
+      "name": "SpeedMax 3.0",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Aero-era evolution",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "canyon-speedmax-2007",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-063",
+      "number": 63,
+      "name": "Speedmax AL",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Aluminium era",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "canyon-speedmax-al-2011",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-064",
+      "number": 64,
+      "name": "Speedmax CF",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Carbon transition",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "canyon-speedmax-cf-2011",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-065",
+      "number": 65,
+      "name": "Speedmax CF SLX 2015 Study",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Kona-era evolution",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "canyon-kona-cfslx-2015",
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-066",
+      "number": 66,
+      "name": "Speedmax CFR Disc 2019 Study",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Integrated era",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "canyon-kona-cfr-2019",
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-067",
+      "number": 67,
+      "name": "Speedmax CF SLX 8 Di2",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Modern platform",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "canyon-slx-2027",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-068",
+      "number": 68,
+      "name": "Speedmax CFR AXS",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Current flagship represented in repo",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "canyon-cfr-2027",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-069",
+      "number": 69,
+      "name": "Exploded Speedmax",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Engineering interaction",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-070",
+      "number": 70,
+      "name": "The Missing Generation",
+      "room_id": "room-007",
+      "room_slug": "canyon-museum",
+      "collection": "kona-141",
+      "why": "Archive mystery",
+      "acquisition": {
+        "method": "riddle",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-071",
+      "number": 71,
+      "name": "Aerobar",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "Rider-position revolution",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-072",
+      "number": 72,
+      "name": "Base Bar",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "Cockpit anatomy",
+      "acquisition": {
+        "method": "inspect",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-073",
+      "number": 73,
+      "name": "Aero Extension",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "Fit and speed",
+      "acquisition": {
+        "method": "inspect",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-074",
+      "number": 74,
+      "name": "Deep Front Wheel",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "Aero trade-off",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-075",
+      "number": 75,
+      "name": "Rear Disc",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "Classic TT object",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-076",
+      "number": 76,
+      "name": "Aero Helmet",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "Human aerodynamics",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-077",
+      "number": 77,
+      "name": "Bento Box",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "Aero meets fueling",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-078",
+      "number": 78,
+      "name": "Integrated Hydration",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "Modern tri platform",
+      "acquisition": {
+        "method": "inspect",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-079",
+      "number": 79,
+      "name": "Wind-Tunnel Smoke Line",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "Makes invisible air visible",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-080",
+      "number": 80,
+      "name": "CdA",
+      "room_id": "room-008",
+      "room_slug": "aero-lab",
+      "collection": "kona-141",
+      "why": "A number turned into an artifact",
+      "acquisition": {
+        "method": "question",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-081",
+      "number": 81,
+      "name": "Race-Day Shoe",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Run identity",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-082",
+      "number": 82,
+      "name": "Carbon-Plated Shoe",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Modern run technology",
+      "acquisition": {
+        "method": "question",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-083",
+      "number": 83,
+      "name": "Aero Helmet",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Bike kit",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-084",
+      "number": 84,
+      "name": "Road Helmet",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Useful contrast",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-085",
+      "number": 85,
+      "name": "Trisuit",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Iconic triathlon garment",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-086",
+      "number": 86,
+      "name": "Race Belt",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Tiny essential",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-087",
+      "number": 87,
+      "name": "Sunglasses",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Gear and culture",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-088",
+      "number": 88,
+      "name": "Wetsuit",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Swim equipment",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-089",
+      "number": 89,
+      "name": "Watch",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Measurement obsession",
+      "acquisition": {
+        "method": "onboarding",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-090",
+      "number": 90,
+      "name": "The Spare Sock",
+      "room_id": "room-009",
+      "room_slug": "kit-room",
+      "collection": "kona-141",
+      "why": "Memorable absurdity",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-091",
+      "number": 91,
+      "name": "T1 Bag",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Transition system",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-092",
+      "number": 92,
+      "name": "T2 Bag",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Same race, different problem",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-093",
+      "number": 93,
+      "name": "Elastic Laces",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Tiny optimization",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-094",
+      "number": 94,
+      "name": "Helmet Buckle",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Rules and ritual",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-095",
+      "number": 95,
+      "name": "Bike Shoes on Pedals",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Transition craft",
+      "acquisition": {
+        "method": "inspect",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-096",
+      "number": 96,
+      "name": "Towel",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Age-group reality",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-097",
+      "number": 97,
+      "name": "Sunscreen",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Kona practicality",
+      "acquisition": {
+        "method": "question",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-098",
+      "number": 98,
+      "name": "Number Belt",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Race-transition object",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-099",
+      "number": 99,
+      "name": "Lost Bottle",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Something always disappears",
+      "acquisition": {
+        "method": "event",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-100",
+      "number": 100,
+      "name": "Four Minutes",
+      "room_id": "room-010",
+      "room_slug": "transition",
+      "collection": "kona-141",
+      "why": "Transition-mastery token",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-101",
+      "number": 101,
+      "name": "Athlete Wristband",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Race-week identity",
+      "acquisition": {
+        "method": "onboarding",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-102",
+      "number": 102,
+      "name": "Check-In Envelope",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Pre-race ritual",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-103",
+      "number": 103,
+      "name": "Expo Tote",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Event culture",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-104",
+      "number": 104,
+      "name": "Sticker Sheet",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Bike and bag logistics",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-105",
+      "number": 105,
+      "name": "Course Briefing Card",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Useful official context",
+      "acquisition": {
+        "method": "source",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-106",
+      "number": 106,
+      "name": "Morning Swim Token",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Kona ritual",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-107",
+      "number": 107,
+      "name": "Underwear Run Card",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Race-week folklore",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-108",
+      "number": 108,
+      "name": "Bike Check-In Tag",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Pre-race threshold",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-109",
+      "number": 109,
+      "name": "Race-Morning Alarm",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Terrifyingly useful",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-110",
+      "number": 110,
+      "name": "Nothing New on Race Day",
+      "room_id": "room-011",
+      "room_slug": "race-week",
+      "collection": "kona-141",
+      "why": "Enduring race principle",
+      "acquisition": {
+        "method": "question",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-111",
+      "number": 111,
+      "name": "Basalt",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "Geological identity",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-112",
+      "number": 112,
+      "name": "Pacific Horizon",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "Sense of place",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-113",
+      "number": 113,
+      "name": "Palm Shadow",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "Visual Kona",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-114",
+      "number": 114,
+      "name": "Coffee",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "Island economy and culture",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-115",
+      "number": 115,
+      "name": "Volcano Card",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "Island geology",
+      "acquisition": {
+        "method": "story",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-116",
+      "number": 116,
+      "name": "Kohala",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "Geography beyond the finish line",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-117",
+      "number": 117,
+      "name": "Ocean Wind",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "Environment across rooms",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-118",
+      "number": 118,
+      "name": "Sunset",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "Race-week rhythm",
+      "acquisition": {
+        "method": "timed",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-119",
+      "number": 119,
+      "name": "Island Map",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "Navigation and context",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-120",
+      "number": 120,
+      "name": "Respect the Island",
+      "room_id": "room-012",
+      "room_slug": "island-stories",
+      "collection": "kona-141",
+      "why": "The behavioral principle of the room",
+      "acquisition": {
+        "method": "story",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-121",
+      "number": 121,
+      "name": "1978",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Origin-year token",
+      "acquisition": {
+        "method": "question",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-122",
+      "number": 122,
+      "name": "Old Race Map",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Course evolution",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-123",
+      "number": 123,
+      "name": "Paper Results Sheet",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Pre-digital racing",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-124",
+      "number": 124,
+      "name": "Finisher Medal: Early Era",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Material history",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-125",
+      "number": 125,
+      "name": "Finisher Medal: Modern Era",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Evolution",
+      "acquisition": {
+        "method": "explore",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-126",
+      "number": 126,
+      "name": "Old Bike Catalogue",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Product history",
+      "acquisition": {
+        "method": "inspect",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-127",
+      "number": 127,
+      "name": "Magazine Cover",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Media history",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-128",
+      "number": 128,
+      "name": "Timing Chip Evolution",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Technology history",
+      "acquisition": {
+        "method": "challenge",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-129",
+      "number": 129,
+      "name": "Race Photo Contact Sheet",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Memory and media",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-130",
+      "number": 130,
+      "name": "The Source",
+      "room_id": "room-013",
+      "room_slug": "archive",
+      "collection": "kona-141",
+      "why": "Provenance itself",
+      "acquisition": {
+        "method": "source",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-131",
+      "number": 131,
+      "name": "Witchcraft",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "Existing secret-collection lineage",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "edition-artworld-witchcraft",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-132",
+      "number": 132,
+      "name": "Stitched",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "Existing art-world lineage",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "edition-artworld-stitched",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-133",
+      "number": 133,
+      "name": "Moonlit",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "Existing art-world lineage",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "edition-artworld-moonlit",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-134",
+      "number": 134,
+      "name": "Carnival",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "Existing art-world lineage",
+      "acquisition": {
+        "method": "hidden",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "existing-candidate",
+      "existing_ref": "edition-artworld-carnival",
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-135",
+      "number": 135,
+      "name": "The Intern's Badge",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "Kona.m mythology",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-136",
+      "number": 136,
+      "name": "A Completely Normal Rock",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "It probably is not",
+      "acquisition": {
+        "method": "inspect",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "common",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-137",
+      "number": 137,
+      "name": "Wrong Shoe",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "Deliberately misplaced",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-138",
+      "number": 138,
+      "name": "Key With No Door",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "Foreshadows future rooms",
+      "acquisition": {
+        "method": "rare",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "rare",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-139",
+      "number": 139,
+      "name": "Door With No Key",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "Foreshadows progression",
+      "acquisition": {
+        "method": "quest",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "uncommon",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-140",
+      "number": 140,
+      "name": "???",
+      "room_id": "room-014",
+      "room_slug": "lost-found",
+      "collection": "kona-141",
+      "why": "Identity remains hidden until discovered",
+      "acquisition": {
+        "method": "secret",
+        "status": "designed",
+        "launch_phase": "scheduled"
+      },
+      "representation": "asset-or-card",
+      "existing_ref": null,
+      "rarity": "rare",
+      "tradable": true,
+      "purchasable": false,
+      "provenance_required": true
+    },
+    {
+      "id": "k141-141",
+      "number": 141,
+      "name": "The Point Six",
+      "room_id": null,
+      "room_slug": null,
+      "collection": "kona-141",
+      "why": "The final meta collectible. 14 founding rooms × 10 objects = 140; the collection resolves the 140.6 origin through the final 0.6.",
+      "acquisition": {
+        "method": "meta",
+        "status": "designed",
+        "launch_phase": "post-mastery",
+        "requirements": [
+          "complete-one-quest-in-each-founding-room",
+          "own-14-anchor-items",
+          "answer-final-question:0.6"
+        ]
+      },
+      "representation": "card/story",
+      "existing_ref": null,
+      "rarity": "mythic",
+      "tradable": false,
+      "purchasable": false,
+      "provenance_required": false
+    }
+  ]
+}

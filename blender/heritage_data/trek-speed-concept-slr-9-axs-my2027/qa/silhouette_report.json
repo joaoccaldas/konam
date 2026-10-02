@@ -1,0 +1,21 @@
+{
+  "iou": 0.96411,
+  "boundary_median_mm": 1.54,
+  "boundary_p95_mm": 3.079,
+  "boundary_max_mm": 22.418,
+  "boundary_max_photo_px": [
+    2972,
+    1172
+  ],
+  "photo_not_in_mesh_mm2": 87.7,
+  "mesh_not_in_photo_mm2": 6388.6,
+  "mesh_x_mm": [
+    -427.7,
+    609.7
+  ],
+  "bb_x_mm": 0.0,
+  "raster_step_px": 4,
+  "scope": "Full frameset silhouette (photo alpha vs remeshed frame+fork). Smoothed by the 1.2 mm voxel remesh. Not a caliper measurement.",
+  "main_frame_present": true,
+  "pass": true
+}

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-30",
+  "revenue_rule": "commission only after programme approval and qualifying attributed transaction",
+  "programmes": [
+    {
+      "provider": "Zwift",
+      "programme_id": "zwift-affiliate",
+      "certainty": "published-commission-programme-open",
+      "commission": "5% basket value excluding tax on most hardware/accessories",
+      "cookie_days": null,
+      "markets": [
+        "US",
+        "UK",
+        "EU"
+      ],
+      "network": "Impact",
+      "source": "https://www.zwift.com/eu/partner-with-zwift",
+      "priority_product_ids": [
+        "zwift-ride-kickr-core-2",
+        "zwift-ride-v2-smart-frame",
+        "wahoo-kickr-core-2-zwift",
+        "zwift-cog-click-upgrade",
+        "zwift-ride-tablet-holder"
+      ]
+    },
+    {
+      "provider": "Nike",
+      "programme_id": "nike-eu-affiliate",
+      "certainty": "published-commission-programme-open",
+      "commission": "up to 11% on valid sales",
+      "cookie_days": 30,
+      "markets": [
+        "SE",
+        "EU"
+      ],
+      "network": "Nike affiliate / CJ-linked application",
+      "source": "https://www.nike.com/se/en/help/a/nike-affiliate-programme",
+      "priority_product_ids": [
+        "nike-alphafly-3-study",
+        "nike-vaporfly-4-current"
+      ]
+    },
+    {
+      "provider": "Specialized",
+      "programme_id": "specialized-affiliate",
+      "certainty": "published-commission-programme-open",
+      "commission": "3%-12% on bikes and equipment",
+      "cookie_days": 30,
+      "markets": [
+        "market-dependent"
+      ],
+      "network": "Rakuten",
+      "source": "https://www.specialized.com/ph/en/specialized-affiliate-program",
+      "priority_product_ids": [
+        "specialized-shiv-disc-size-m",
+        "specialized-sworks-tt5-m"
+      ]
+    },
+    {
+      "provider": "Canyon",
+      "programme_id": "canyon-affiliate",
+      "certainty": "published-commission-programme-open",
+      "commission": "2% base on bikes; higher opportunities possible",
+      "cookie_days": 30,
+      "markets": [
+        "programme page verified for US; market-specific acceptance required"
+      ],
+      "network": "Canyon affiliate programme",
+      "source": "https://www.canyon.com/en-us/affiliate-program/",
+      "priority_product_ids": [
+        "canyon-cfr-2027",
+        "canyon-slx-2027"
+      ]
+    },
+    {
+      "provider": "Viator",
+      "programme_id": "viator-affiliate",
+      "certainty": "published-commission-programme-open",
+      "commission": "8% on completed experience bookings",
+      "cookie_days": 30,
+      "markets": [
+        "global"
+      ],
+      "network": "Viator Partner Program",
+      "source": "https://partnerresources.viator.com/",
+      "priority_product_ids": []
+    },
+    {
+      "provider": "Booking.com",
+      "programme_id": "booking-affiliate",
+      "certainty": "programme-open-rate-contract-dependent",
+      "commission": "commission on qualified bookings; rate depends on agreement",
+      "cookie_days": null,
+      "markets": [
+        "region-dependent"
+      ],
+      "network": "official affiliate networks / CJ",
+      "source": "https://bookitbutton.booking.com/affiliate-program/v2/index.en-gb.html",
+      "priority_product_ids": []
+    },
+    {
+      "provider": "Garmin",
+      "programme_id": "garmin-affiliate",
+      "certainty": "programme-open-rate-not-public-universal",
+      "commission": "programme-specific",
+      "cookie_days": null,
+      "markets": [
+        "market-dependent"
+      ],
+      "network": "Garmin affiliate programmes",
+      "source": "https://www.garmin.com/en-CA/ambassadors-and-affiliates/",
+      "priority_product_ids": [
+        "garmin-edge1050"
+      ]
+    },
+    {
+      "provider": "Wahoo",
+      "programme_id": "wahoo-affiliate",
+      "certainty": "closed-to-new-applications",
+      "commission": "not modelled",
+      "cookie_days": null,
+      "markets": [
+        "EU page checked"
+      ],
+      "network": "Wahoo",
+      "source": "https://eu.wahoofitness.com/affiliates",
+      "priority_product_ids": []
+    }
+  ]
+}

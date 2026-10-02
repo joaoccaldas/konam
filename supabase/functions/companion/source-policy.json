@@ -1,0 +1,27 @@
+{
+  "allowed_hosts": [
+    "bigislandnow.com",
+    "slowtwitch.com",
+    "triathlonmagazine.ca",
+    "www.slowtwitch.com",
+    "www.youtube.com",
+    "hidot.hawaii.gov",
+    "www.hawaiicounty.gov",
+    "www.220triathlon.com",
+    "www.triathlon.org",
+    "triathlon.org",
+    "www.triathlete.com",
+    "www.tri247.com",
+    "tri247.com"
+  ],
+  "publishers": [
+    "Slowtwitch",
+    "Triathlon Magazine",
+    "Big Island Now",
+    "Hawai\u02bbi DOT",
+    "TRI247",
+    "Triathlete",
+    "220 Triathlon",
+    "World Triathlon"
+  ]
+}

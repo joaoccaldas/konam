@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "entity_id": "canyon-cfr-2027",
+      "source_type": "manufacturer-support",
+      "url": "https://www.canyon.com/en-us/customer-service/road/speedmax/speedmax-cfr/",
+      "status": "current",
+      "topics": [
+        "cockpit",
+        "brakes",
+        "trainer",
+        "chain",
+        "tyres",
+        "manual",
+        "service",
+        "spares"
+      ]
+    },
+    {
+      "entity_id": "canyon-slx-2027",
+      "source_type": "manufacturer-support",
+      "url": "https://www.canyon.com/en-us/customer-service/road/speedmax/speedmax-cf-slx/",
+      "status": "current",
+      "topics": [
+        "maintenance",
+        "manual",
+        "service",
+        "spares"
+      ]
+    },
+    {
+      "entity_id": "cervelo-p5-disc-mk2-size54",
+      "source_type": "manufacturer-manual-index",
+      "url": "https://www.cervelo.com/en-US/support/product-manuals",
+      "status": "current",
+      "topics": [
+        "service-reference",
+        "cockpit-compatibility",
+        "thru-axle",
+        "storage"
+      ]
+    },
+    {
+      "entity_id": "trek-speed-concept",
+      "source_type": "manufacturer-service",
+      "url": "https://www.trekbikes.com/us/en_US/bikes/road-bikes/triathlon-bikes/speed-concept/f/F231/speed-concept-slr-7-axs/56332/5347588/",
+      "status": "current",
+      "topics": [
+        "service-manual",
+        "parts",
+        "torque",
+        "accessories"
+      ]
+    },
+    {
+      "entity_id": "dt-swiss-arc1100-db80-front",
+      "source_type": "manufacturer-support",
+      "url": "https://www.dtswiss.com/en/support",
+      "status": "current",
+      "topics": [
+        "manuals",
+        "how-to",
+        "spares",
+        "service",
+        "dealer"
+      ]
+    },
+    {
+      "entity_id": "dt-swiss-arc1100-db80-rear",
+      "source_type": "manufacturer-support",
+      "url": "https://www.dtswiss.com/en/support",
+      "status": "current",
+      "topics": [
+        "manuals",
+        "how-to",
+        "spares",
+        "service",
+        "dealer"
+      ]
+    },
+    {
+      "entity_id": "dt-swiss-arc1100-disc-rear",
+      "source_type": "manufacturer-support",
+      "url": "https://www.dtswiss.com/en/support",
+      "status": "current",
+      "topics": [
+        "manuals",
+        "how-to",
+        "spares",
+        "service",
+        "dealer"
+      ]
+    },
+    {
+      "entity_id": "shimano-fc-r9200-54-40-170",
+      "source_type": "manufacturer-support",
+      "url": "https://bike.shimano.com/products.html",
+      "status": "current",
+      "topics": [
+        "manuals",
+        "technical-documents",
+        "compatibility",
+        "service"
+      ]
+    },
+    {
+      "entity_id": "shimano-cs-r9200-11-30",
+      "source_type": "manufacturer-support",
+      "url": "https://bike.shimano.com/products.html",
+      "status": "current",
+      "topics": [
+        "manuals",
+        "technical-documents",
+        "compatibility",
+        "service"
+      ]
+    }
+  ]
+}

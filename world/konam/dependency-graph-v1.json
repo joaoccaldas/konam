@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "principle": "Migration preserves behavior first. New product capabilities layer on stable IDs and one state authority.",
+  "nodes": [
+    {
+      "id": "repo-baseline",
+      "kind": "migration",
+      "depends_on": []
+    },
+    {
+      "id": "stable-domain-ids",
+      "kind": "data",
+      "depends_on": [
+        "repo-baseline"
+      ]
+    },
+    {
+      "id": "world-registry",
+      "kind": "data",
+      "depends_on": [
+        "stable-domain-ids"
+      ]
+    },
+    {
+      "id": "founding-141",
+      "kind": "data",
+      "depends_on": [
+        "stable-domain-ids",
+        "world-registry"
+      ]
+    },
+    {
+      "id": "reconciliation",
+      "kind": "evidence",
+      "depends_on": [
+        "founding-141",
+        "world-registry"
+      ]
+    },
+    {
+      "id": "canonical-state-adapter",
+      "kind": "runtime",
+      "depends_on": [
+        "repo-baseline",
+        "stable-domain-ids"
+      ]
+    },
+    {
+      "id": "quest-ledger",
+      "kind": "runtime",
+      "depends_on": [
+        "canonical-state-adapter",
+        "founding-141"
+      ]
+    },
+    {
+      "id": "quest-engine",
+      "kind": "runtime",
+      "depends_on": [
+        "quest-ledger"
+      ]
+    },
+    {
+      "id": "room-entitlements",
+      "kind": "runtime",
+      "depends_on": [
+        "canonical-state-adapter",
+        "quest-engine",
+        "world-registry"
+      ]
+    },
+    {
+      "id": "pre-onboarding",
+      "kind": "flow",
+      "depends_on": [
+        "canonical-state-adapter"
+      ]
+    },
+    {
+      "id": "rewarded-personalization",
+      "kind": "flow",
+      "depends_on": [
+        "canonical-state-adapter",
+        "founding-141"
+      ]
+    },
+    {
+      "id": "race-catalog",
+      "kind": "data",
+      "depends_on": [
+        "stable-domain-ids"
+      ]
+    },
+    {
+      "id": "race-personalization",
+      "kind": "flow",
+      "depends_on": [
+        "race-catalog",
+        "rewarded-personalization"
+      ]
+    },
+    {
+      "id": "collection-ui",
+      "kind": "flow",
+      "depends_on": [
+        "canonical-state-adapter",
+        "founding-141"
+      ]
+    },
+    {
+      "id": "share-renderer",
+      "kind": "platform",
+      "depends_on": [
+        "stable-domain-ids",
+        "founding-141"
+      ]
+    },
+    {
+      "id": "scheduled-content",
+      "kind": "platform",
+      "depends_on": [
+        "world-registry",
+        "founding-141",
+        "quest-engine"
+      ]
+    },
+    {
+      "id": "kona-now",
+      "kind": "flow",
+      "depends_on": [
+        "canonical-state-adapter"
+      ]
+    },
+    {
+      "id": "external-integrations",
+      "kind": "platform",
+      "depends_on": [
+        "canonical-state-adapter",
+        "quest-engine"
+      ]
+    },
+    {
+      "id": "strava-adapter",
+      "kind": "integration",
+      "depends_on": [
+        "external-integrations"
+      ]
+    },
+    {
+      "id": "trading",
+      "kind": "future",
+      "depends_on": [
+        "canonical-state-adapter",
+        "founding-141",
+        "server-authority"
+      ]
+    },
+    {
+      "id": "server-authority",
+      "kind": "future",
+      "depends_on": [
+        "canonical-state-adapter"
+      ]
+    },
+    {
+      "id": "partner-rooms",
+      "kind": "commercial",
+      "depends_on": [
+        "world-registry",
+        "room-entitlements",
+        "disclosure-contract"
+      ]
+    },
+    {
+      "id": "disclosure-contract",
+      "kind": "commercial",
+      "depends_on": [
+        "stable-domain-ids"
+      ]
+    },
+    {
+      "id": "migration-m0",
+      "kind": "migration",
+      "depends_on": [
+        "repo-baseline",
+        "reconciliation"
+      ]
+    },
+    {
+      "id": "migration-m1-name",
+      "kind": "migration",
+      "depends_on": [
+        "migration-m0",
+        "canonical-state-adapter"
+      ]
+    },
+    {
+      "id": "launch-runtime",
+      "kind": "release",
+      "depends_on": [
+        "migration-m1-name",
+        "collection-ui",
+        "quest-engine",
+        "room-entitlements",
+        "pre-onboarding",
+        "share-renderer"
+      ]
+    }
+  ],
+  "invariants": [
+    "No runtime capability may depend on a display name.",
+    "Quest rewards reference stable collectible IDs.",
+    "Room unlocks reference stable room/quest/entitlement IDs.",
+    "External integrations emit normalized events; they do not mutate collection state directly.",
+    "Trading cannot become authoritative without server-side ownership/transaction authority.",
+    "Partner activation depends on disclosure metadata and cannot alter safety/utility ranking."
+  ]
+}

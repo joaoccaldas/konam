@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "principles": [
+    "Founding rooms are open from launch; their contents release progressively.",
+    "Progressive rooms unlock through multiple dimensions rather than XP alone.",
+    "Commercial status never changes progression difficulty or utility ranking.",
+    "Essential race, safety and compatibility information is never gated."
+  ],
+  "founding": {
+    "room_ids": [
+      "room-001",
+      "room-002",
+      "room-003",
+      "room-004",
+      "room-005",
+      "room-006",
+      "room-007",
+      "room-008",
+      "room-009",
+      "room-010",
+      "room-011",
+      "room-012",
+      "room-013",
+      "room-014"
+    ],
+    "availability": "open",
+    "collectibles_per_room": 10
+  },
+  "progressive": [
+    {
+      "room_id": "room-015",
+      "unlock": {
+        "all": [
+          "finds>=20",
+          "quest:q-found-001"
+        ]
+      }
+    },
+    {
+      "room_id": "room-016",
+      "unlock": {
+        "all": [
+          "finds>=25",
+          "challenge:first-heat"
+        ]
+      }
+    },
+    {
+      "room_id": "room-017",
+      "unlock": {
+        "all": [
+          "room_collection:room-009>=6"
+        ]
+      }
+    },
+    {
+      "room_id": "room-018",
+      "unlock": {
+        "all": [
+          "room_collection:room-002>=8"
+        ]
+      }
+    },
+    {
+      "room_id": "room-019",
+      "unlock": {
+        "all": [
+          "room_collection:room-004>=8"
+        ]
+      }
+    },
+    {
+      "room_id": "room-020",
+      "unlock": {
+        "all": [
+          "finds>=50"
+        ]
+      }
+    },
+    {
+      "room_id": "room-021",
+      "unlock": {
+        "all": [
+          "quest:women-history"
+        ]
+      }
+    },
+    {
+      "room_id": "room-022",
+      "unlock": {
+        "all": [
+          "quest:race-week-service"
+        ]
+      }
+    },
+    {
+      "room_id": "room-023",
+      "unlock": {
+        "all": [
+          "time_window:race-week"
+        ]
+      }
+    },
+    {
+      "room_id": "room-024",
+      "unlock": {
+        "all": [
+          "mastery:room-008",
+          "mastery:room-013"
+        ]
+      }
+    },
+    {
+      "room_id": "room-025",
+      "unlock": {
+        "all": [
+          "finds>=75"
+        ]
+      }
+    },
+    {
+      "room_id": "room-026",
+      "unlock": {
+        "all": [
+          "entitlement:athlete-room"
+        ]
+      }
+    },
+    {
+      "room_id": "room-027",
+      "unlock": {
+        "all": [
+          "entitlement:partner-room"
+        ]
+      }
+    },
+    {
+      "room_id": "room-028",
+      "unlock": {
+        "all": [
+          "mastery:kona-world"
+        ]
+      }
+    }
+  ],
+  "release_curve": {
+    "launch": {
+      "catalog_visible": 141,
+      "target_obtainable": [
+        28,
+        35
+      ]
+    },
+    "oct-3-5": {
+      "additional_target": 20
+    },
+    "oct-6-9": {
+      "additional_target": [
+        25,
+        35
+      ]
+    },
+    "race-day": {
+      "mode": "timed quests + race-day variants"
+    },
+    "post_kona": {
+      "mode": "weekly world releases; remaining founding mysteries become solvable"
+    }
+  }
+}

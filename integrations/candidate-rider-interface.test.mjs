@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import {listRiderInterfaceCandidates,getRiderInterfaceCandidate,canPromoteRiderInterface,riderInterfaceMeta} from "./candidate-rider-interface.mjs";
+assert.equal(riderInterfaceMeta().count,6);
+assert.equal(riderInterfaceMeta().source_commit,"f68dbdc2");
+assert.equal(listRiderInterfaceCandidates({type:"helmet"}).length,3);
+assert.equal(listRiderInterfaceCandidates({readiness:"blocked"}).length,1);
+assert.equal(listRiderInterfaceCandidates({reuseTarget:"commerce"}).length,6);
+assert.equal(getRiderInterfaceCandidate("garmin-edge1050").bytes,115872);
+assert.equal(getRiderInterfaceCandidate("shimano-pd-r9100").type,"pedal");
+assert.equal(getRiderInterfaceCandidate("poc-procen-air-m").readiness,"blocked");
+for(const item of listRiderInterfaceCandidates()) assert.equal(canPromoteRiderInterface(item),false);
+console.log("Rider-interface candidate intake PASS");

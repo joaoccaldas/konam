@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "title": "WYLD Room",
+  "bike": {
+    "key": "cfr",
+    "name": "Speedmax CFR AXS",
+    "year": "MY2027",
+    "glb": "assets/museum/speedmax_web.glb",
+    "viewer": "Speedmax_Museum.html",
+    "stats": [
+      [
+        "9.1 kg",
+        "size M"
+      ],
+      [
+        "50 / 37",
+        "10–33 · 12 sp"
+      ],
+      [
+        "85 / 85",
+        "mm rims"
+      ]
+    ]
+  },
+  "palette": {
+    "pink": "#ff3d8e",
+    "blush": "#ff8fbf",
+    "lilac": "#e9cde8",
+    "mint": "#8fe7dc",
+    "aqua": "#5fd8d3"
+  },
+  "view": {
+    "file": "File:Aerial view of Kamakahonu pier & beach.JPG",
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Aerial_view_of_Kamakahonu_pier_%26_beach.JPG/3840px-Aerial_view_of_Kamakahonu_pier_%26_beach.JPG",
+    "srcSmall": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Aerial_view_of_Kamakahonu_pier_%26_beach.JPG/1920px-Aerial_view_of_Kamakahonu_pier_%26_beach.JPG",
+    "w": 3840,
+    "h": 2160,
+    "page": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Kamakahonu_pier_%26_beach.JPG",
+    "author": "Kyle Hawton",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "caption": "Kailua Pier, Kamakahonu Beach and Ahu‘ena Heiau from above — the Ironman swim start and finish",
+    "changes": "colour-graded and curved to fit the window",
+    "focus": 0.5,
+    "focusY": 2.9,
+    "arc": 0.5
+  },
+  "variants": [
+    {
+      "id": "dye",
+      "name": "WYLD Dye",
+      "sub": "Hand-dyed pink × aqua",
+      "decal": "#141416",
+      "wyld": {
+        "darkness": 0,
+        "sheer": 0,
+        "angle": 32,
+        "scale": 1.5,
+        "flow": 1
+      },
+      "text": "The original: fuchsia running through blush and lilac into a cool aqua, laid down in soft diagonal waves like the jersey it was sampled from."
+    },
+    {
+      "id": "tide",
+      "name": "WYLD Tide",
+      "sub": "Tighter bands, rolling in",
+      "decal": "#ffffff",
+      "wyld": {
+        "darkness": 0,
+        "sheer": 0,
+        "angle": 96,
+        "scale": 2.7,
+        "flow": 1.5
+      },
+      "text": "The same dyes stood upright and pulled tight, so the colour breaks over the frame like sets rolling into Kailua Bay."
+    },
+    {
+      "id": "sheer",
+      "name": "WYLD Sheer",
+      "sub": "Candy tint over bare carbon",
+      "decal": "#ff3d8e",
+      "wyld": {
+        "darkness": 0,
+        "sheer": 0.75,
+        "angle": 20,
+        "scale": 1.2,
+        "flow": 0.8
+      },
+      "text": "A translucent clear coat: the dye tints the carbon instead of covering it, so the weave glows through pink and aqua."
+    },
+    {
+      "id": "night",
+      "name": "WYLD Night",
+      "sub": "Same hues, after dark",
+      "decal": "#8fe7dc",
+      "wyld": {
+        "darkness": 0.62,
+        "sheer": 0,
+        "angle": 140,
+        "scale": 1.9,
+        "flow": 1.2
+      },
+      "text": "The dye at dusk on the Queen K: every hue kept, the value dropped, with aqua lettering that catches the last light."
+    }
+  ]
+}

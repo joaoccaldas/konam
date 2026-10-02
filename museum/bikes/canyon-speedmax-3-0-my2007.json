@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "canyon-speedmax-3-0-my2007",
+  "brand": "Canyon",
+  "model": "SpeedMax 3.0",
+  "model_year": 2007,
+  "launch_year": 2006,
+  "generation": "2006\u20132008",
+  "size": "53 (photo-identified)",
+  "finish": "Race Black",
+  "status": "reference-study",
+  "coordinate_system": {
+    "unit": "metre",
+    "forward": "+X",
+    "up": "+Z",
+    "drive_side": "-Y"
+  },
+  "reconstruction_adapter": "heritage-speedmax-2007-photo-v1",
+  "pipeline": {
+    "adapter_module": "blender/heritage_build.py",
+    "profile": "blender/heritage/speedmax-2007/profile.json",
+    "out_dir": "assets/heritage/speedmax-2007"
+  },
+  "references": [
+    {
+      "path": "assets/reference/heritage/photos/g2_speedmax9_wallpaper.jpg",
+      "url": "https://web.archive.org/web/20061207042845/http://www.canyon.com:80/flash/bike/images/speedmax-9/r-black/wallpaper.jpg",
+      "role": "Canyon studio side photograph; sole shape source",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "assets/reference/heritage/pages/spec_sm30_equip_2007.html",
+      "url": "https://web.archive.org/web/20070221004213/http://www.canyon.com:80/_en/triathlonbikes/equipment.html?b=26",
+      "role": "Canyon specification page (archived)",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "assets/reference/heritage/pages/spec_sm30_geo_2007.html",
+      "url": "https://web.archive.org/web/20070221004203/http://www.canyon.com:80/_en/triathlonbikes/geometry.html?b=26",
+      "role": "Geometry table (archived 2007-02-21)",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "uncertainties": [
+    "Scale 2.500 mm per pixel from tyre fits; measured wheelbase 990 mm.",
+    "The photographed disc reads CITEC; the specification lists a Carbotec disc on a Citec hub. Both are recorded.",
+    "Stays cross the grey disc wheel in the photo; their edges were read by eye from 1:1 crops.",
+    "Head tube partly hidden by cable housings; its depth was set from the registered photo difference.",
+    "Lateral tube widths, stay spread and fork crown width are inferred; the photo fixes side-view shapes only.",
+    "Components are simplified external forms rebuilt from the published specification; hidden mechanisms are not modelled.",
+    "Graphics use DIN Condensed Bold in place of Canyon's lettering; positions and sizes traced from the photo.",
+    "Cable routing is traced where visible; hidden runs are not modelled."
+  ],
+  "deliverables": {
+    "bike": "assets/heritage/speedmax-2007/speedmax_2007_master.blend",
+    "scene": "assets/heritage/speedmax-2007/speedmax_museum.blend",
+    "glb": "assets/heritage/speedmax-2007/speedmax_web.glb",
+    "viewer": "Speedmax_2007_Museum.html"
+  },
+  "validation": {
+    "geometry": "assets/heritage/speedmax-2007/checks/geometry-checks.json",
+    "silhouette": "assets/heritage/speedmax-2007/checks/silhouette-report.json",
+    "renders": [
+      "hero",
+      "side",
+      "cockpit",
+      "drivetrain",
+      "rear"
+    ]
+  },
+  "viewer_profile": "museum/viewer-speedmax-2007.json"
+}

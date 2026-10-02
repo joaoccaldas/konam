@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caldas.studio/schemas/event-source-registry-v1.json",
+  "title": "Caldas Studio Event Source Registry V1",
+  "type": "object",
+  "required": ["schema_version", "event_id", "event_year", "authority", "freshness_policy", "sources"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "event_id": { "type": "string", "minLength": 1 },
+    "event_year": { "type": "integer", "minimum": 2000 },
+    "authority": { "type": "string", "minLength": 1 },
+    "freshness_policy": {
+      "type": "object",
+      "required": ["operational_requires_event_year", "prior_year_policy"],
+      "properties": {
+        "operational_requires_event_year": { "type": "boolean" },
+        "prior_year_policy": { "enum": ["reference-only", "allow-current"] }
+      },
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "url", "source_type", "status", "valid_for_year", "categories"],
+        "properties": {
+          "id": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "source_type": { "enum": ["registration", "event_page", "athlete_guide", "course_map", "schedule", "expo", "rules", "spectator", "results", "other"] },
+          "status": { "enum": ["current", "reference-only", "superseded", "unverified"] },
+          "valid_for_year": { "type": "integer" },
+          "categories": { "type": "array", "items": { "type": "string" } },
+          "verified_at": { "type": ["string", "null"], "format": "date" },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "current_facts": { "type": "object", "additionalProperties": true },
+    "reference_facts": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

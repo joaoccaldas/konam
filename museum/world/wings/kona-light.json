@@ -1,0 +1,26 @@
+{
+ "id": "kona-light",
+ "order": 2,
+ "name": "Kona Light",
+ "sub": "Paintings, sculpture and the bikes between",
+ "floor": "upper",
+ "y": 6.6,
+ "height": 4.4,
+ "corridor": { "x0": 10.8, "x1": 16.4, "z0": 51.2, "z1": 75.2, "style": "gallery", "map_color": "#d8c7a8" },
+ "sides": { "east": { "x0": 16.4, "x1": 25.0 }, "west": { "x0": 2.2, "x1": 10.8 } },
+ "doors": { "south": { "x0": 11.8, "x1": 15.4, "depth": 0 } },
+ "features": {},
+ "rooms": [
+  { "id": "queen-k", "name": "The Queen K", "sub": "Lava, wind and one road", "side": "east", "z0": 51.8, "z1": 59.2, "tint": "#e8471c", "wall": "#1c1d20", "ink": "#f4efe7",
+    "paintings": ["queen-k-first-light", "crosswind", "mirage", "kohala-turn"], "sculptures": ["the-tuck"] },
+  { "id": "clipon", "name": "Clip-ons", "sub": "How the rider got low", "side": "east", "z0": 59.6, "z1": 67.0, "tint": "#1d4fd6", "wall": "#e9e2d6", "ink": "#12181d" },
+  { "id": "velodrome", "name": "Velodrome", "sub": "Indoors, against the clock", "side": "east", "z0": 67.4, "z1": 74.8, "tint": "#c8161d", "wall": "#2a2018", "ink": "#f6eadb",
+    "paintings": ["night-boards"] },
+  { "id": "bay", "name": "The Bay", "sub": "Where the day begins", "side": "west", "z0": 51.8, "z1": 59.2, "tint": "#138a8f", "wall": "#0f3b44", "ink": "#e8f6f4",
+    "paintings": ["race-morning-bay", "lava-meets-sea"], "sculptures": ["sea-glass-wave"] },
+  { "id": "after-dark", "name": "After dark", "sub": "The finish at midnight", "side": "west", "z0": 59.6, "z1": 67.0, "tint": "#f3b64f", "wall": "#141820", "ink": "#f6eadb",
+    "paintings": ["midnight-seawall", "twill"], "sculptures": ["basalt-airfoil"] },
+  { "id": "tunnel", "name": "Workshop & tunnel", "sub": "Tubes, air and patience", "side": "west", "z0": 67.4, "z1": 74.8, "tint": "#8e979d", "wall": "#e4ddd0", "ink": "#12181d",
+    "paintings": ["builders-bench", "streamlines", "moving-air"] }
+ ]
+}

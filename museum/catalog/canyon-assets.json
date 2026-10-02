@@ -1,0 +1,14 @@
+{
+ "schema_version": 1,
+ "note": "Canyon models used by the museum and the studio (built by blender/heritage and the museum pipeline).",
+ "glb": {
+  "speedmax-three-2005": "assets/heritage/speedmax-three-2005/speedmax_web.glb",
+  "speedmax-2007": "assets/heritage/speedmax-2007/speedmax_web.glb",
+  "speedmax-al-2011": "assets/heritage/speedmax-al-2011/speedmax_web.glb",
+  "speedmax-cf-2011": "assets/heritage/speedmax-cf-2011/speedmax_web.glb",
+  "cfr": "assets/museum/speedmax_web.glb",
+  "slx": "assets/museum-slx/speedmax_web.glb",
+  "cfr-2019": "assets/kona-years/bikes/cfr-2019/speedmax_web.glb",
+  "cfslx-2015": "assets/kona-years/bikes/cfslx-2015/speedmax_web.glb"
+ }
+}

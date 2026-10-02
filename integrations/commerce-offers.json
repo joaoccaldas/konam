@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-30",
+  "offers": [
+    {
+      "schema_version": 1,
+      "id": "shimano-cs-r9200-official-dealer",
+      "offer_type": "product",
+      "provider": {"id": "shimano", "name": "Shimano", "program": null},
+      "status": "active",
+      "destination": {
+        "url": "https://bike.shimano.com/dealer-locator.html",
+        "affiliate": false,
+        "tracking_method": "none"
+      },
+      "related_entity_ids": ["shimano-cs-r9200-11-30"],
+      "event_ids": [],
+      "markets": ["global-dealer-locator"],
+      "disclosure": {"required": false, "label": "Official Shimano dealer locator"},
+      "source_records": ["https://bike.shimano.com/dealer-locator.html"]
+    }
+  ]
+}

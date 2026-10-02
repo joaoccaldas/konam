@@ -1,0 +1,358 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "principle": "14 founding rooms are accessible from launch; 14 progressive rooms exist canonically but manifest through conditions.",
+  "rooms": [
+    {
+      "id": "room-001",
+      "slug": "queen-k",
+      "name": "The Queen K",
+      "group": "foundation",
+      "theme": "kona-course",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "hall",
+        "atlas-kona-light-queen-k"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-002",
+      "slug": "the-bay",
+      "name": "The Bay",
+      "group": "foundation",
+      "theme": "swim-place",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "atlas-kona-light-bay",
+        "bay-kona"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-003",
+      "slug": "the-pier",
+      "name": "The Pier",
+      "group": "foundation",
+      "theme": "transition-history",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "pier"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-004",
+      "slug": "alii",
+      "name": "Aliʻi",
+      "group": "foundation",
+      "theme": "run-finish",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "atlas-kona-light-after-dark"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-005",
+      "slug": "champions",
+      "name": "Champions",
+      "group": "foundation",
+      "theme": "athletes-machines",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "kona"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-006",
+      "slug": "against-the-clock",
+      "name": "Against the Clock",
+      "group": "foundation",
+      "theme": "speed-history",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "wing-against-the-clock",
+        "hour",
+        "mono",
+        "tri",
+        "types"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-007",
+      "slug": "canyon-museum",
+      "name": "Canyon Museum",
+      "group": "foundation",
+      "theme": "brand-history",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "hall",
+        "Canyon_Collection.html"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-008",
+      "slug": "aero-lab",
+      "name": "The Aero Lab",
+      "group": "foundation",
+      "theme": "engineering",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "atlas-kona-light-tunnel",
+        "atlas-kona-light-clipon"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-009",
+      "slug": "kit-room",
+      "name": "The Kit Room",
+      "group": "foundation",
+      "theme": "equipment",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "nike-running",
+        "asset/next-100-3d-v1"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-010",
+      "slug": "transition",
+      "name": "Transition",
+      "group": "foundation",
+      "theme": "race-craft",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-011",
+      "slug": "race-week",
+      "name": "Race Week",
+      "group": "foundation",
+      "theme": "event",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "museum/events/kona-2026.json",
+        "KONA Now"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-012",
+      "slug": "island-stories",
+      "name": "Island Stories",
+      "group": "foundation",
+      "theme": "place-culture",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "museum/kona/island-guide.json",
+        "bay-kona"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-013",
+      "slug": "archive",
+      "name": "The Archive",
+      "group": "foundation",
+      "theme": "history-provenance",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "refs",
+        "museum/catalog.json"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-014",
+      "slug": "lost-found",
+      "name": "Lost & Found",
+      "group": "foundation",
+      "theme": "secret-oddities",
+      "launch_visible": true,
+      "unlock_rule": "open",
+      "legacy_sources": [
+        "secret",
+        "sanctuary"
+      ],
+      "founding_slots": 10
+    },
+    {
+      "id": "room-015",
+      "slug": "wind-room",
+      "name": "The Wind Room",
+      "group": "progressive",
+      "theme": "environment",
+      "launch_visible": false,
+      "unlock_rule": "finds>=20 && quest:queen-k-headwind",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-016",
+      "slug": "heat",
+      "name": "Heat",
+      "group": "progressive",
+      "theme": "environment",
+      "launch_visible": false,
+      "unlock_rule": "finds>=25 && challenge:first-heat",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-017",
+      "slug": "fuel",
+      "name": "Fuel",
+      "group": "progressive",
+      "theme": "nutrition",
+      "launch_visible": false,
+      "unlock_rule": "collection:kit-room>=6",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-018",
+      "slug": "swim-lab",
+      "name": "Swim Lab",
+      "group": "progressive",
+      "theme": "engineering",
+      "launch_visible": false,
+      "unlock_rule": "collection:the-bay>=8",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-019",
+      "slug": "run-lab",
+      "name": "Run Lab",
+      "group": "progressive",
+      "theme": "engineering",
+      "launch_visible": false,
+      "unlock_rule": "collection:alii>=8",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-020",
+      "slug": "age-group",
+      "name": "Age Group",
+      "group": "progressive",
+      "theme": "people",
+      "launch_visible": false,
+      "unlock_rule": "finds>=50",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-021",
+      "slug": "women-of-kona",
+      "name": "Women of Kona",
+      "group": "progressive",
+      "theme": "history",
+      "launch_visible": false,
+      "unlock_rule": "quest:women-history",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-022",
+      "slug": "volunteers",
+      "name": "The Volunteers",
+      "group": "progressive",
+      "theme": "people",
+      "launch_visible": false,
+      "unlock_rule": "quest:race-week-service",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-023",
+      "slug": "before-saturday",
+      "name": "Before Saturday",
+      "group": "progressive",
+      "theme": "event",
+      "launch_visible": false,
+      "unlock_rule": "time:race-week",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-024",
+      "slug": "makers",
+      "name": "The Makers",
+      "group": "progressive",
+      "theme": "engineering",
+      "launch_visible": false,
+      "unlock_rule": "mastery:aero+archive",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-025",
+      "slug": "prototype-vault",
+      "name": "Prototype Vault",
+      "group": "progressive",
+      "theme": "future-machines",
+      "launch_visible": false,
+      "unlock_rule": "finds>=75",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-026",
+      "slug": "athlete-rooms",
+      "name": "Athlete Rooms",
+      "group": "progressive",
+      "theme": "athlete-activation",
+      "launch_visible": false,
+      "unlock_rule": "entitlement:athlete-room",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-027",
+      "slug": "makers-row",
+      "name": "Makers' Row",
+      "group": "progressive",
+      "theme": "brand-partner",
+      "launch_visible": false,
+      "unlock_rule": "entitlement:partner-room",
+      "legacy_sources": [],
+      "founding_slots": 0
+    },
+    {
+      "id": "room-028",
+      "slug": "elsewhere",
+      "name": "Elsewhere",
+      "group": "progressive",
+      "theme": "destinations",
+      "launch_visible": false,
+      "unlock_rule": "mastery:kona-world",
+      "legacy_sources": [
+        "bay-st-george",
+        "bay-nice",
+        "bay-las-vegas"
+      ],
+      "founding_slots": 0
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "event_id": "kona-2026",
+  "event_year": 2026,
+  "authority": "IRONMAN",
+  "freshness_policy": {
+    "operational_requires_event_year": true,
+    "prior_year_policy": "reference-only"
+  },
+  "sources": [
+    {
+      "id": "ironman-kona-2026-registration",
+      "url": "https://regwcusa.ironman.com/event/2026-ironman-world-championship-kona",
+      "source_type": "registration",
+      "status": "current",
+      "valid_for_year": 2026,
+      "categories": ["event-identity", "date", "venue"],
+      "verified_at": "2026-09-30",
+      "notes": "Official registration source confirms 2026 World Championship in Kailua-Kona on October 10 and identifies Kailua Pier as the venue."
+    },
+    {
+      "id": "ironman-kona-2026-expo",
+      "url": "https://expo.ironman.com/ironman-world-championship-kona-expo",
+      "source_type": "expo",
+      "status": "current",
+      "valid_for_year": 2026,
+      "categories": ["race-week", "expo", "venue", "schedule"],
+      "verified_at": "2026-09-30",
+      "notes": "Official expo source confirms Hale Hālāwai Park, Aliʻi Drive and expo hours for October 6–9, 2026."
+    },
+    {
+      "id": "ironman-kona-2025-athlete-guide",
+      "url": "https://www.ironman.com/sites/default/files/2025-09/2025%20IMWC%20Kona%20Athlete%20Guide%209.18.25%20REV1_1.pdf",
+      "source_type": "athlete_guide",
+      "status": "reference-only",
+      "valid_for_year": 2025,
+      "categories": ["course-reference", "transition-reference", "safety-reference", "race-week-reference"],
+      "verified_at": "2026-09-30",
+      "notes": "Useful for historical/course-structure reference only. Do not present its operational timings, wave details, rules or aid-station information as current 2026 facts."
+    },
+    {
+      "id": "ironman-kona-2025-bike-map",
+      "url": "https://www.ironman.com/sites/default/files/2025-03/IMWC%20Kona%202025%20Bike%20Map%20V1.pdf",
+      "source_type": "course_map",
+      "status": "reference-only",
+      "valid_for_year": 2025,
+      "categories": ["bike-course-reference", "geography-reference"],
+      "verified_at": "2026-09-30",
+      "notes": "Reference-only until an official 2026 course map is published or verified."
+    }
+  ],
+  "current_facts": {
+    "event": {
+      "name": "IRONMAN World Championship",
+      "date": "2026-10-10",
+      "location": "Kailua-Kona, Hawaiʻi",
+      "venue": "Kailua Pier",
+      "source_id": "ironman-kona-2026-registration"
+    },
+    "race_week": [
+      {
+        "id": "kona-2026-expo-oct-06",
+        "kind": "expo",
+        "date": "2026-10-06",
+        "start": "12:00",
+        "end": "19:00",
+        "venue": "Hale Hālāwai Park, Aliʻi Drive",
+        "source_id": "ironman-kona-2026-expo"
+      },
+      {
+        "id": "kona-2026-expo-oct-07",
+        "kind": "expo",
+        "date": "2026-10-07",
+        "start": "10:00",
+        "end": "16:00",
+        "venue": "Hale Hālāwai Park, Aliʻi Drive",
+        "source_id": "ironman-kona-2026-expo"
+      },
+      {
+        "id": "kona-2026-expo-oct-08",
+        "kind": "expo",
+        "date": "2026-10-08",
+        "start": "10:00",
+        "end": "16:00",
+        "venue": "Hale Hālāwai Park, Aliʻi Drive",
+        "source_id": "ironman-kona-2026-expo"
+      },
+      {
+        "id": "kona-2026-expo-oct-09",
+        "kind": "expo",
+        "date": "2026-10-09",
+        "start": "10:00",
+        "end": "14:00",
+        "venue": "Hale Hālāwai Park, Aliʻi Drive",
+        "source_id": "ironman-kona-2026-expo"
+      }
+    ]
+  },
+  "reference_facts": {
+    "2025_course_reference": {
+      "swim_distance_km": 3.8,
+      "bike_distance_km": 180.2,
+      "run_distance_km": 42.2,
+      "bike_total_elevation_gain_m": 1772,
+      "status": "reference-only",
+      "notes": "Distances/elevation are sourced from official 2025 materials and are not promoted as 2026 operational facts until a 2026 guide/map is verified."
+    }
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "key": "speedmax-al-2011",
+    "name": "9.0 · MY2011",
+    "family": "Speedmax AL",
+    "year": "2011",
+    "era": "2009–2013",
+    "size": "M",
+    "weight": 8.8,
+    "price": null,
+    "claim": "The aluminium Speedmax: Canyon's aero-era geometry and carbon fork on a 7005 alloy frame, at a fraction of the carbon bike's price.",
+    "pageTitle": "Canyon Museum — Speedmax AL 9.0 (2011)",
+    "exhibit": "05",
+    "gear": "52 / 36",
+    "gearSub": "Ultegra 12–25",
+    "rims": "Aero alu",
+    "chainring": 52,
+    "cog": 12,
+    "tyreFront": "CONTINENTAL GRAND PRIX · 23-622",
+    "tyreRear": "CONTINENTAL GRAND PRIX · 23-622"
+  },
+  "hero": {
+    "eyebrow": "Canyon collection · Exhibit 05 · 2009–2013",
+    "title": "Speedmax AL",
+    "titleSpan": "9.0 · MY2011",
+    "sub": "A reference-calibrated heritage study.",
+    "lede": "The aluminium Speedmax: Canyon's aero-era geometry and carbon fork on a 7005 alloy frame, at a fraction of the carbon bike's price."
+  },
+  "geometry": {
+    "sizes": [
+      "M"
+    ],
+    "rows": [
+      [
+        "Head angle",
+        "72.5°"
+      ],
+      [
+        "Seat angle",
+        "75° (78° position)"
+      ],
+      [
+        "Chainstay",
+        "380–395 mm (sliding) · 383 mm measured"
+      ],
+      [
+        "Wheelbase",
+        "995–1010 mm (M) · 980–995 mm (S) · 992 mm measured"
+      ],
+      [
+        "Stack / reach",
+        "518 / 430 mm (M)"
+      ]
+    ]
+  },
+  "geometryNote": "Scale comes from circle fits to both tyres in Canyon's archived side photo. Every tube is a traced centreline with its side-view depth measured from the photo; widths across the bike are inferred. Parts are rebuilt from the archived specification.",
+  "presets": {
+    "race_black": {
+      "name": "Race Black",
+      "sub": "Team (white / black) · as photographed",
+      "frame": "#050506",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#d9d9d9",
+      "cockpit": "carbon",
+      "rimText": "#d9d9d9"
+    },
+    "team_white": {
+      "name": "Team White",
+      "sub": "Archived Canyon colourway",
+      "frame": "#e4e4e4",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#0a0a0a",
+      "cockpit": "carbon",
+      "rimText": "#0a0a0a"
+    },
+    "pro_white_red": {
+      "name": "Pro White / red",
+      "sub": "Archived Canyon colourway",
+      "frame": "#eeeeee",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#c8102e",
+      "cockpit": "carbon",
+      "rimText": "#c8102e"
+    }
+  },
+  "defaultCfg": {
+    "preset": "race_black",
+    "frame": "#050506",
+    "finish": "gloss",
+    "irid": 0,
+    "decal": "#d9d9d9",
+    "cockpit": "carbon",
+    "rimText": "#d9d9d9"
+  },
+  "parts": {
+    "frame": {
+      "name": "Frame",
+      "group": "frame",
+      "spec": "Canyon New F8 Technology · 7005 Ultralight Aluminium, AeroShape, multi-butted",
+      "note": "Archived frame specification, 2011."
+    },
+    "fork": {
+      "name": "Fork",
+      "group": "frame",
+      "spec": "Canyon Aero Fork CF",
+      "note": "Archived fork specification, 2011."
+    },
+    "crankset": {
+      "name": "Crankset",
+      "group": "drivetrain",
+      "spec": "FSA Vision TriMax Carbon 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "chainrings": {
+      "name": "Chainrings",
+      "group": "drivetrain",
+      "spec": "FSA Vision TriMax Carbon 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "crank_arm_ds": {
+      "name": "Drive-side crank",
+      "group": "drivetrain",
+      "spec": "FSA Vision TriMax Carbon 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "crank_arm_nds": {
+      "name": "Non-drive crank",
+      "group": "drivetrain",
+      "spec": "FSA Vision TriMax Carbon 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "spindle": {
+      "name": "Bottom-bracket spindle",
+      "group": "drivetrain",
+      "spec": "FSA Vision TriMax Carbon 53/39",
+      "note": "Archived crankset specification, 2011."
+    },
+    "cassette": {
+      "name": "Cassette",
+      "group": "drivetrain",
+      "spec": "SRAM PG 1050 11-26",
+      "note": "Archived cassette specification, 2011."
+    },
+    "chain": {
+      "name": "Chain",
+      "group": "drivetrain",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    },
+    "rear_derailleur": {
+      "name": "Rear derailleur",
+      "group": "drivetrain",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    },
+    "front_derailleur": {
+      "name": "Front derailleur",
+      "group": "drivetrain",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    },
+    "brake_front": {
+      "name": "Front brake",
+      "group": "brakes",
+      "spec": "SRAM Force",
+      "note": "Archived brakes specification, 2011."
+    },
+    "brake_rear": {
+      "name": "Rear brake",
+      "group": "brakes",
+      "spec": "SRAM Force",
+      "note": "Archived brakes specification, 2011."
+    },
+    "brake_levers": {
+      "name": "Brake levers",
+      "group": "cockpit",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    },
+    "wheel_front": {
+      "name": "Front wheel",
+      "group": "wheels",
+      "spec": "Mavic Cosmic Elite",
+      "note": "Archived wheels specification, 2011."
+    },
+    "wheel_rear": {
+      "name": "Rear wheel",
+      "group": "wheels",
+      "spec": "Mavic Cosmic Elite",
+      "note": "Archived wheels specification, 2011."
+    },
+    "saddle": {
+      "name": "Saddle",
+      "group": "contact",
+      "spec": "Selle Italia SL Kit Carbonio",
+      "note": "Archived saddle specification, 2011."
+    },
+    "seatpost": {
+      "name": "Seatpost",
+      "group": "contact",
+      "spec": "Canyon Aero Post CF",
+      "note": "Archived seatpost specification, 2011."
+    },
+    "stem": {
+      "name": "Stem",
+      "group": "cockpit",
+      "spec": "Profile Aris stem · Profile T2 base bar / T2 Wing",
+      "note": "Archived cockpit specification, 2011."
+    },
+    "base_bar": {
+      "name": "Base bar",
+      "group": "cockpit",
+      "spec": "Profile Aris stem · Profile T2 base bar / T2 Wing",
+      "note": "Archived cockpit specification, 2011."
+    },
+    "extensions": {
+      "name": "Clip-on extensions",
+      "group": "cockpit",
+      "spec": "Profile Aris stem · Profile T2 base bar / T2 Wing",
+      "note": "Archived cockpit specification, 2011."
+    },
+    "cables": {
+      "name": "Cable housings",
+      "group": "cockpit",
+      "spec": "Simplified external form rebuilt from the archived specification.",
+      "note": "Shape interpreted from the archive photograph."
+    }
+  },
+  "partsReplace": true,
+  "tour": [
+    {
+      "view": "side",
+      "title": "A silhouette from the archive",
+      "text": "Launched alongside the first carbon Speedmax at Eurobike 2008, the Speedmax AL carried the same adjustable-seat-angle geometry (75° or 78°) and sliding dropouts (380-395 mm chainstays) in 7005 aluminium with an AeroShape tubeset. It stayed in the range until MY2013."
+    },
+    {
+      "view": "cockpit",
+      "title": "Cockpit of its era",
+      "text": "Clip-on extensions, cable housings and the cockpit hardware documented for this build. Side profiles are traced from the archived photograph; depths remain interpreted."
+    },
+    {
+      "view": "drivetrain",
+      "title": "The drivetrain, as listed",
+      "text": "52 / 36 rings with a Ultegra 12–25 cassette. Switch to Ride to see cadence drive the wheels through the listed ratio."
+    },
+    {
+      "view": "nds",
+      "title": "The other side of the story",
+      "text": "Brakes, hubs and frame details follow the archived specification. Where the photo is silent, shapes are inferred and marked as such."
+    },
+    {
+      "view": "hero",
+      "title": "Exhibit 05 · Speedmax AL 9.0 · MY2011",
+      "text": "A photo-calibrated reconstruction. Orbit freely, repaint it in the Customizer, or light it in the Aero lab. Sources and uncertainties are listed in Specs."
+    }
+  ],
+  "unavailableOptions": [
+    "aerofuel",
+    "frontBottle",
+    "rearBottles",
+    "shield",
+    "rearDisc"
+  ],
+  "discOption": false,
+  "dimsOverlay": false
+}

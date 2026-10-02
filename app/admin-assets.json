@@ -1,0 +1,3490 @@
+{
+ "schema_version": 2,
+ "generated_by": "tools/build_admin_assets.mjs",
+ "count": 104,
+ "rooms": [
+  {
+   "id": "hall",
+   "name": "The Queen K Hall",
+   "floor": "ground",
+   "floor_name": "Ground floor",
+   "kind": "timeline"
+  },
+  {
+   "id": "sanctuary",
+   "name": "The Sanctuary",
+   "floor": "ground",
+   "floor_name": "Ground floor",
+   "kind": "chapel"
+  },
+  {
+   "id": "hween",
+   "name": "Lava Night",
+   "floor": "ground",
+   "floor_name": "Ground floor",
+   "kind": "themed"
+  },
+  {
+   "id": "kona",
+   "name": "Kona Champions",
+   "floor": "ground",
+   "floor_name": "Ground floor",
+   "kind": "trophy"
+  },
+  {
+   "id": "pier",
+   "name": "Kona by Year",
+   "floor": "ground",
+   "floor_name": "Ground floor",
+   "kind": "timeline"
+  },
+  {
+   "id": "secret",
+   "name": "The Secret Collection",
+   "floor": "ground",
+   "floor_name": "Ground floor",
+   "kind": "hidden"
+  },
+  {
+   "id": "stair",
+   "name": "The Glass Stair",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "passage"
+  },
+  {
+   "id": "nave",
+   "name": "The Gallery Nave",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "passage"
+  },
+  {
+   "id": "bay-st-george",
+   "name": "St. George",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "art"
+  },
+  {
+   "id": "bay-las-vegas",
+   "name": "Las Vegas",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "art"
+  },
+  {
+   "id": "bay-nice",
+   "name": "Nice",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "art"
+  },
+  {
+   "id": "bay-kona",
+   "name": "Kona",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "art"
+  },
+  {
+   "id": "room-bio",
+   "name": "Bio",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "themed"
+  },
+  {
+   "id": "room-horror",
+   "name": "Horror",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "themed"
+  },
+  {
+   "id": "room-alien",
+   "name": "Alien",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "themed"
+  },
+  {
+   "id": "room-zombie",
+   "name": "Zombie",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "themed"
+  },
+  {
+   "id": "hour",
+   "name": "The Hour",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "mono",
+   "name": "Monocoque",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "tri",
+   "name": "Long course",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "types",
+   "name": "Types",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "paint",
+   "name": "Paint shop",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "refs",
+   "name": "References",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "queen-k",
+   "name": "The Queen K",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "clipon",
+   "name": "Clip-ons",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "velodrome",
+   "name": "Velodrome",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "bay",
+   "name": "The Bay",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "after-dark",
+   "name": "After dark",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "tunnel",
+   "name": "Workshop & tunnel",
+   "floor": "upper",
+   "floor_name": "Upper floor",
+   "kind": "wing-room"
+  },
+  {
+   "id": "nike-running",
+   "name": "Nike Running Lab",
+   "floor": "ground",
+   "floor_name": "Ground floor",
+   "kind": "brand"
+  },
+  {
+   "id": "atlas-against-the-clock-hour",
+   "name": "The Hour · Against the Clock",
+   "floor": "unassigned",
+   "floor_name": "Unassigned",
+   "kind": "room"
+  },
+  {
+   "id": "atlas-against-the-clock-mono",
+   "name": "Monocoque · Against the Clock",
+   "floor": "unassigned",
+   "floor_name": "Unassigned",
+   "kind": "room"
+  },
+  {
+   "id": "atlas-against-the-clock-tri",
+   "name": "Long course · Against the Clock",
+   "floor": "unassigned",
+   "floor_name": "Unassigned",
+   "kind": "room"
+  },
+  {
+   "id": "atlas-against-the-clock-types",
+   "name": "Types · Against the Clock",
+   "floor": "unassigned",
+   "floor_name": "Unassigned",
+   "kind": "room"
+  },
+  {
+   "id": "atlas-kona-light-clipon",
+   "name": "Clip-ons · Kona Light",
+   "floor": "unassigned",
+   "floor_name": "Unassigned",
+   "kind": "room"
+  },
+  {
+   "id": "atlas-kona-light-velodrome",
+   "name": "Velodrome · Kona Light",
+   "floor": "unassigned",
+   "floor_name": "Unassigned",
+   "kind": "room"
+  }
+ ],
+ "assets": [
+  {
+   "id": "canyon-cfr-2027",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Speedmax CFR AXS",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Published weight 9.1 kg (size M)."
+    },
+    {
+     "cls": "P",
+     "text": "Price from 125,000 SEK (Canyon Sweden)."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    },
+    {
+     "id": "pier",
+     "name": "Kona by Year",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    }
+   ]
+  },
+  {
+   "id": "canyon-slx-2027",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Speedmax CF SLX 8 Di2",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum-slx/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Published weight 9.56 kg (size M)."
+    },
+    {
+     "cls": "P",
+     "text": "Price from 91,199 SEK (Canyon Sweden)."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    }
+   ]
+  },
+  {
+   "id": "canyon-speedmax-three-2005",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Speedmax Three",
+   "family": "Speedmax",
+   "year": 2005,
+   "category": "triathlon",
+   "material": "7005 aluminium · carbon fork",
+   "glb": "assets/heritage/speedmax-three-2005/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Dedicated 28-inch triathlon geometry, Carbotec disc as standard, 8.75 kg."
+    },
+    {
+     "cls": "P",
+     "text": "Frame: 7005 aluminium · carbon fork."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    }
+   ]
+  },
+  {
+   "id": "canyon-speedmax-2007",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "SpeedMax 3.0",
+   "family": "Speedmax",
+   "year": 2008,
+   "category": "triathlon",
+   "material": "7005 aluminium · carbon stays",
+   "glb": "assets/heritage/speedmax-2007/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "New MR3 frame with a Super Aero seat tube; Dura-Ace, disc and Syntace cockpit."
+    },
+    {
+     "cls": "P",
+     "text": "Frame: 7005 aluminium · carbon stays."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    }
+   ]
+  },
+  {
+   "id": "canyon-speedmax-al-2011",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Speedmax AL 9.0",
+   "family": "Speedmax",
+   "year": 2013,
+   "category": "triathlon",
+   "material": "7005 aluminium · carbon fork",
+   "glb": "assets/heritage/speedmax-al-2011/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Aero-era geometry with 75°/78° seat positions and sliding dropouts."
+    },
+    {
+     "cls": "P",
+     "text": "Frame: 7005 aluminium · carbon fork."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    }
+   ]
+  },
+  {
+   "id": "canyon-speedmax-cf-2011",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Speedmax CF 9.0 Pro",
+   "family": "Speedmax",
+   "year": 2012,
+   "category": "triathlon",
+   "material": "Carbon",
+   "glb": "assets/heritage/speedmax-cf-2011/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Canyon's first carbon Speedmax; 7.70 kg on Zipp 404/808."
+    },
+    {
+     "cls": "P",
+     "text": "Frame: Carbon."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    }
+   ]
+  },
+  {
+   "id": "canyon-kona-cfslx-2015",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Speedmax CF SLX",
+   "family": "Speedmax",
+   "year": 2015,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/kona-years/bikes/cfslx-2015/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Geometry from Canyon Speedmax CFR Disc Di2 geometry pdf, pid 2921, size M."
+    },
+    {
+     "cls": "I",
+     "text": "Tube depths: silhouette study, not a photo trace."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "kona",
+     "name": "Kona Champions",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "trophy"
+    }
+   ]
+  },
+  {
+   "id": "canyon-kona-cfr-2019",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Speedmax CFR Disc",
+   "family": "Speedmax",
+   "year": 2019,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/kona-years/bikes/cfr-2019/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Geometry from Canyon Speedmax CFR Disc Di2 geometry pdf, pid 2921, size M."
+    },
+    {
+     "cls": "I",
+     "text": "Tube depths: silhouette study, not a photo trace."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "kona",
+     "name": "Kona Champions",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "trophy"
+    }
+   ]
+  },
+  {
+   "id": "atlas-merckx-hour-1972",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Colnago",
+   "name": "Eddy Merckx Hour bike",
+   "family": "diamond",
+   "year": 1972,
+   "category": "track",
+   "material": "",
+   "glb": "assets/atlas/merckx-hour-1972/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Eddy Merckx set the Hour record in Mexico City on 25 October 1972."
+    },
+    {
+     "cls": "F",
+     "text": "The display board beside the bike reads 49.431 km."
+    },
+    {
+     "cls": "F",
+     "text": "Orange lugged steel frame, round tubes, drop bars in white tape, 32-spoke box rims, no brakes."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-hour",
+     "name": "The Hour · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-obree-riverside",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Obree",
+   "name": "Graeme Obree's bikes",
+   "family": "diamond",
+   "year": 1993,
+   "category": "track",
+   "material": "",
+   "glb": "assets/atlas/obree-riverside/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Graeme Obree set the Hour record in Hamar, Norway, on 17 July 1993, on a bike he built himself."
+    },
+    {
+     "cls": "F",
+     "text": "The Riverside Museum display shows white round-tube frames lettered G. OBREE, on tri-spoke wheels."
+    },
+    {
+     "cls": "I",
+     "text": "This model follows the displayed frames, not a specific record machine; narrow bars stand for his tucked position."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-hour",
+     "name": "The Hour · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-lotus-108-1992",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Lotus",
+   "name": "Lotus Type 108",
+   "family": "monocoque",
+   "year": 1992,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/lotus-108-1992/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Chris Boardman won the 4,000 m individual pursuit at the Barcelona Olympics in 1992 on this design."
+    },
+    {
+     "cls": "F",
+     "text": "A single carbon wing, a monoblade fork and a single rear stay; rear disc, front tri-spoke, bullhorn bar with extensions."
+    },
+    {
+     "cls": "I",
+     "text": "Wing outline and stay depth scaled from the photograph."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-mono",
+     "name": "Monocoque · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-zipp-2001",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Zipp",
+   "name": "Zipp 2001",
+   "family": "beam",
+   "year": "1990s",
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/zipp-2001/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "F",
+     "text": "The reference shows two Zipp 2001 frames, one black and one red: a carbon beam from the head tube over the rear wheel, no seat tube."
+    },
+    {
+     "cls": "I",
+     "text": "Year given as the early 1990s; wheels, bars and drivetrain are a study, not the frames' original build."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-mono",
+     "name": "Monocoque · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-stevens-tri",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Stevens",
+   "name": "Stevens triathlon bike",
+   "family": "superbike",
+   "year": "",
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/stevens-tri/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "F",
+     "text": "Photographed racked at a triathlon: white and red frame with black, deep spoked carbon wheels, aero bars and extensions, a bottle in the frame."
+    },
+    {
+     "cls": "I",
+     "text": "Year not recorded on the photograph; tube depths are a silhouette study."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-tri",
+     "name": "Long course · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-alu-tri-2005",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Unbranded",
+   "name": "Aluminium triathlon bike",
+   "family": "diamond",
+   "year": 2005,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/alu-tri-2005/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "F",
+     "text": "Black aluminium frame with round oversized tubes, clip-on aero bars, tri-spoke wheels with tan-wall tyres (photographed December 2005)."
+    },
+    {
+     "cls": "I",
+     "text": "Maker not identified from the photograph; shown as a type of its time."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-tri",
+     "name": "Long course · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-funny-1980s",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Type study",
+   "name": "Funny bike",
+   "family": "funny",
+   "year": 1985,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/type-funny-1980s/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Low-profile 'funny bikes' with a smaller front wheel were used in time trials and on the track in the 1980s."
+    },
+    {
+     "cls": "I",
+     "text": "No maker is modelled. 24-inch front wheel, 700c rear disc, sloping top tube, bullhorn bar."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-types",
+     "name": "Types · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-pursuit",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Type study",
+   "name": "Track pursuit bike",
+   "family": "pursuit",
+   "year": 2000,
+   "category": "track",
+   "material": "",
+   "glb": "assets/atlas/type-pursuit/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Seat tube curved round the rear wheel, fixed gear with a solid chainring, discs front and rear, no brakes."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-types",
+     "name": "Types · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-disc-superbike",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Type study",
+   "name": "Disc-brake triathlon superbike",
+   "family": "superbike",
+   "year": 2024,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/type-disc-superbike/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Deep truncated-airfoil tubes, dropped stays, integrated nose, storage on the top tube, a bottle between the arms and two behind the saddle, rear disc."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-types",
+     "name": "Types · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-aerobar-1989",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Type study",
+   "name": "Road bike with clip-on aero bars",
+   "family": "diamond",
+   "year": 1989,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/type-aerobar-1989/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Clip-on aero bars, first used by triathletes, reached Grand Tour time trials at the end of the 1980s."
+    },
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Steel road frame, drop bars with clip-on extensions, 32-spoke wheels."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-kona-light-clipon",
+     "name": "Clip-ons · Kona Light",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-lowpro-650c",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Type study",
+   "name": "Low-profile triathlon bike, 650c",
+   "family": "funny",
+   "year": 1994,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/type-lowpro-650c/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Many 1990s triathlon frames used smaller 650c wheels to bring the rider lower and forward."
+    },
+    {
+     "cls": "I",
+     "text": "No maker is modelled. 650c wheels front and rear, 80° seat angle, aero tubes, rear disc."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-kona-light-clipon",
+     "name": "Clip-ons · Kona Light",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-hour-track",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Type study",
+   "name": "Modern Hour bike",
+   "family": "pursuit",
+   "year": 2019,
+   "category": "track",
+   "material": "",
+   "glb": "assets/atlas/type-hour-track/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Truncated-airfoil tubes, seat tube curved round the rear wheel, discs front and rear, narrow extensions, fixed gear, no brakes."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-kona-light-velodrome",
+     "name": "Velodrome · Kona Light",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-draft-legal",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Type study",
+   "name": "Draft-legal triathlon bike",
+   "family": "superbike",
+   "year": 2021,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/type-draft-legal/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "In draft-legal triathlon, riders use road bikes; clip-on bars must not reach past the brake levers."
+    },
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Aero road frame, drop bars with short clip-ons, deep spoked wheels."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "atlas-kona-light-velodrome",
+     "name": "Velodrome · Kona Light",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "atlas-studio-kona-2030",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Studio",
+   "name": "Kona concept 2030",
+   "family": "superbike",
+   "year": 2030,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/studio-kona-2030/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design, not a product. Deeper kamm sections, very steep seat angle, integrated storage, discs front and rear."
+    }
+   ],
+   "stats": [],
+   "locations": []
+  },
+  {
+   "id": "atlas-studio-small-650c",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Studio",
+   "name": "Small-frame triathlon bike, 650c",
+   "family": "funny",
+   "year": 2024,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/studio-small-650c/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. 650c wheels, short reach, low stack, steep seat angle."
+    }
+   ],
+   "stats": [],
+   "locations": []
+  },
+  {
+   "id": "atlas-studio-xl-tri",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Studio",
+   "name": "XL triathlon bike",
+   "family": "superbike",
+   "year": 2024,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/studio-xl-tri/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. Stack and reach for a rider around 1.95 m."
+    }
+   ],
+   "stats": [],
+   "locations": []
+  },
+  {
+   "id": "atlas-studio-alloy-entry",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Studio",
+   "name": "Entry alloy triathlon bike",
+   "family": "diamond",
+   "year": 2022,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/studio-alloy-entry/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. Round alloy tubes, clip-on bars, box-section spoked wheels."
+    }
+   ],
+   "stats": [],
+   "locations": []
+  },
+  {
+   "id": "atlas-studio-sprint-track",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Studio",
+   "name": "Track sprint bike",
+   "family": "pursuit",
+   "year": 2023,
+   "category": "track",
+   "material": "",
+   "glb": "assets/atlas/studio-sprint-track/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. Short wheelbase, drop bars, disc rear and tri-spoke front."
+    }
+   ],
+   "stats": [],
+   "locations": []
+  },
+  {
+   "id": "atlas-studio-beam-2020s",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Studio",
+   "name": "Beam triathlon concept",
+   "family": "beam",
+   "year": 2025,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/studio-beam-2020s/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design inspired by 1990s beam frames. No seat tube; the saddle rides on a cantilevered beam."
+    }
+   ],
+   "stats": [],
+   "locations": []
+  },
+  {
+   "id": "atlas-studio-wing-road",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Studio",
+   "name": "Wing frame, road triathlon",
+   "family": "monocoque",
+   "year": 2026,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/studio-wing-road/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design using the monocoque wing architecture with a spoked front wheel and aero bars."
+    }
+   ],
+   "stats": [],
+   "locations": []
+  },
+  {
+   "id": "atlas-studio-gravel-aero",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Studio",
+   "name": "Aero gravel bike",
+   "family": "superbike",
+   "year": 2025,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/studio-gravel-aero/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. Aero road frame with short clip-ons and deep spoked wheels."
+    }
+   ],
+   "stats": [],
+   "locations": []
+  },
+  {
+   "id": "edition-film-aero-glam",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Alien Glam",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Aero Glam · The Alien livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "chapel"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-couture",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Blush Couture",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Couture · The Supermodel livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "chapel"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-tiffany-tide",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Tiffany Tide",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Offshore · The Surfer livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "chapel"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-hex",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Witching Hour",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Hex · The Witch livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "chapel"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-stay-weird",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Stay Weird",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Stay Weird · The Weirdo livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "chapel"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-lake-house",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Lake Fog",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the The Lake House · The Final Girl livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "chapel"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-sanctuary",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Stained Glass",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Sanctuary · The Doll livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "chapel"
+    }
+   ]
+  },
+  {
+   "id": "edition-galleries-bio",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Bio room CFR",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Bio livery, as shown in the Bio room. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "room-bio",
+     "name": "Bio",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "edition-galleries-horror",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Horror room CFR",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Horror livery, as shown in the Horror room. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "room-horror",
+     "name": "Horror",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "edition-galleries-alien",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Alien room CFR",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Alien livery, as shown in the Alien room. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "room-alien",
+     "name": "Alien",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "edition-galleries-zombie",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Zombie room CFR",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Zombie livery, as shown in the Zombie room. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "room-zombie",
+     "name": "Zombie",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "edition-lava-night-lava-night",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Lava Night",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Lava Night livery, as shown in Lava Night. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "hween",
+     "name": "Lava Night",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-witchcraft",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Witchcraft",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Witchcraft livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "hidden"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-stitched",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Stitched",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Stitched livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "hidden"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-pagan",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Pagan",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Pagan livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "hidden"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-moonlit",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Moonlit",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Moonlit livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "hidden"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-carnival",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Carnival",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Carnival livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "hidden"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-ritual-forest",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Canyon",
+   "name": "Ritual Forest",
+   "family": "Speedmax",
+   "year": 2027,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/museum/speedmax_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Ritual Forest livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "hidden"
+    }
+   ]
+  },
+  {
+   "id": "nike-alphafly-3-study",
+   "kind": "product",
+   "type": "shoe",
+   "brand": "Nike",
+   "name": "Alphafly 3",
+   "year": "2024",
+   "category": "Road-racing super shoe",
+   "material": "",
+   "glb": "assets/kona-heritage/shoes/nike-alphafly-3-study.glb",
+   "image": "",
+   "facts": [
+    {
+     "text": "ZoomX foam over a full-length carbon Flyplate, two forefoot Air Zoom units under an Atomknit upper. ~218 g in a reference size, 8 mm drop."
+    }
+   ],
+   "stats": [
+    [
+     "~218 g",
+     "reference size"
+    ],
+    [
+     "8 mm",
+     "drop"
+    ],
+    [
+     "ZoomX",
+     "foam"
+    ],
+    [
+     "Flyplate",
+     "carbon"
+    ]
+   ],
+   "locations": [
+    {
+     "id": "nike-running",
+     "name": "Nike Running Lab",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "brand"
+    }
+   ]
+  },
+  {
+   "id": "painting:queen-k-first-light",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Queen K, first light",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/queen-k-first-light.jpg",
+   "facts": [
+    {
+     "text": "Oil study of the highway at dawn: the lava is still black, the sky has already turned. One rider, very small, already in the tuck."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "queen-k",
+     "name": "The Queen K",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:crosswind",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Crosswind",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/crosswind.jpg",
+   "facts": [
+    {
+     "text": "The wind decides the line here. Grass flattened one way, the rider leaning the other."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "queen-k",
+     "name": "The Queen K",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:kohala-turn",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Kohala, the turn",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/kohala-turn.jpg",
+   "facts": [
+    {
+     "text": "Green hills and the road folding back on itself: halfway, and the wind is about to change sides."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "queen-k",
+     "name": "The Queen K",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:race-morning-bay",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Race morning, the bay",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/race-morning-bay.jpg",
+   "facts": [
+    {
+     "text": "From above, a start line is just colour on water: thousands of caps, one pier."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "bay",
+     "name": "The Bay",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:streamlines",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Streamlines",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/streamlines.jpg",
+   "facts": [
+    {
+     "text": "Smoke in a wind tunnel does not argue. It shows you where the air wants to go."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "tunnel",
+     "name": "Workshop & tunnel",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:moving-air",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Silhouette in moving air",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/moving-air.jpg",
+   "facts": [
+    {
+     "text": "A time-trial bike in a few strokes, and the air it pushes aside in a few more."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "tunnel",
+     "name": "Workshop & tunnel",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:night-boards",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Night boards",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/night-boards.jpg",
+   "facts": [
+    {
+     "text": "An empty velodrome after hours: the banking holds the light, one rider holds the line."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "velodrome",
+     "name": "Velodrome",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:midnight-seawall",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Midnight on the seawall",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/midnight-seawall.jpg",
+   "facts": [
+    {
+     "text": "The finish at midnight: lanterns, wet asphalt, and a crowd that stayed."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "after-dark",
+     "name": "After dark",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:lava-meets-sea",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Where the lava meets the sea",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/lava-meets-sea.jpg",
+   "facts": [
+    {
+     "text": "Two elements, no border: orange, black and the steam between them."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "bay",
+     "name": "The Bay",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:mirage",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Mirage",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/mirage.jpg",
+   "facts": [
+    {
+     "text": "Heat off the lava until the road stops being a road. A runner keeps going anyway."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "queen-k",
+     "name": "The Queen K",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:builders-bench",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "The builder's bench",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/builders-bench.jpg",
+   "facts": [
+    {
+     "text": "Tubes, lugs, a torch and files: every bike in the museum started on a bench like this."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "tunnel",
+     "name": "Workshop & tunnel",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "painting:twill",
+   "kind": "art",
+   "type": "painting",
+   "brand": "KONA Studio",
+   "name": "Twill",
+   "year": "2026",
+   "category": "Digital painting (AI-generated)",
+   "material": "Digital painting (AI-generated)",
+   "glb": "",
+   "image": "assets/art/paintings/twill.jpg",
+   "facts": [
+    {
+     "text": "Carbon weave as ornament: black and gold, over and under, bent into a wave."
+    }
+   ],
+   "stats": [],
+   "locations": [
+    {
+     "id": "after-dark",
+     "name": "After dark",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "sculpture:the-tuck",
+   "kind": "art",
+   "type": "sculpture",
+   "brand": "KONA Studio",
+   "name": "The Tuck",
+   "year": "2026",
+   "category": "Sculpture",
+   "material": "Bronze (generated model)",
+   "glb": "assets/art/sculptures/the-tuck.glb",
+   "image": "",
+   "facts": [
+    {
+     "text": "Rider and machine as one shape: the position every bike in this building was drawn around."
+    }
+   ],
+   "stats": [
+    [
+     "0.95 m",
+     "height"
+    ],
+    [
+     "19859",
+     "triangles"
+    ]
+   ],
+   "locations": [
+    {
+     "id": "queen-k",
+     "name": "The Queen K",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "sculpture:basalt-airfoil",
+   "kind": "art",
+   "type": "sculpture",
+   "brand": "KONA Studio",
+   "name": "Basalt airfoil",
+   "year": "2026",
+   "category": "Sculpture",
+   "material": "Basalt with a lava vein (generated model)",
+   "glb": "assets/art/sculptures/basalt-airfoil.glb",
+   "image": "",
+   "facts": [
+    {
+     "text": "The shape of the wind, cut from the ground the Queen K is built on."
+    }
+   ],
+   "stats": [
+    [
+     "1.45 m",
+     "height"
+    ],
+    [
+     "15371",
+     "triangles"
+    ]
+   ],
+   "locations": [
+    {
+     "id": "after-dark",
+     "name": "After dark",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "sculpture:sea-glass-wave",
+   "kind": "art",
+   "type": "sculpture",
+   "brand": "KONA Studio",
+   "name": "Sea-glass wave",
+   "year": "2026",
+   "category": "Sculpture",
+   "material": "Sea glass and marble (generated model)",
+   "glb": "assets/art/sculptures/sea-glass-wave.glb",
+   "image": "",
+   "facts": [
+    {
+     "text": "The swim before the ride: the bay's colour, caught at the top of a wave."
+    }
+   ],
+   "stats": [
+    [
+     "1.05 m",
+     "height"
+    ],
+    [
+     "18487",
+     "triangles"
+    ]
+   ],
+   "locations": [
+    {
+     "id": "bay",
+     "name": "The Bay",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "decor:kona-palm",
+   "kind": "decoration",
+   "type": "decoration",
+   "brand": "KONA World",
+   "name": "Basalt-potted Kona palm",
+   "year": "",
+   "category": "Room decoration",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "palm",
+     "builder"
+    ],
+    [
+     "2",
+     "placements"
+    ]
+   ],
+   "locations": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    },
+    {
+     "id": "kona",
+     "name": "Kona Champions",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "trophy"
+    }
+   ],
+   "preview": {
+    "kind": "decoration",
+    "floor": "#173827",
+    "accent": "#7d5f43",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "decor:race-marker",
+   "kind": "decoration",
+   "type": "decoration",
+   "brand": "KONA World",
+   "name": "Swim / bike / run sculpture",
+   "year": "",
+   "category": "Room decoration",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "race-marker",
+     "builder"
+    ],
+    [
+     "1",
+     "placements"
+    ]
+   ],
+   "locations": [
+    {
+     "id": "nike-running",
+     "name": "Nike Running Lab",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "brand"
+    }
+   ],
+   "preview": {
+    "kind": "decoration",
+    "floor": "#111820",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "installation:bio",
+   "kind": "installation",
+   "type": "installation",
+   "brand": "KONA World",
+   "name": "Bioluminescent garden",
+   "year": "",
+   "category": "Room installation",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "bio",
+     "builder"
+    ],
+    [
+     "8.6 m",
+     "min width"
+    ],
+    [
+     "4.45 m",
+     "min depth"
+    ]
+   ],
+   "locations": [],
+   "preview": {
+    "kind": "installation",
+    "floor": "#10281a",
+    "accent": "#3dba55",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "installation:horror",
+   "kind": "installation",
+   "type": "installation",
+   "brand": "KONA World",
+   "name": "The suspended light",
+   "year": "",
+   "category": "Room installation",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "horror",
+     "builder"
+    ],
+    [
+     "8.6 m",
+     "min width"
+    ],
+    [
+     "4.45 m",
+     "min depth"
+    ]
+   ],
+   "locations": [],
+   "preview": {
+    "kind": "installation",
+    "floor": "#10080c",
+    "accent": "#ff2a3c",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "installation:alien",
+   "kind": "installation",
+   "type": "installation",
+   "brand": "KONA World",
+   "name": "Orbital scanning bay",
+   "year": "",
+   "category": "Room installation",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "alien",
+     "builder"
+    ],
+    [
+     "8.6 m",
+     "min width"
+    ],
+    [
+     "4.45 m",
+     "min depth"
+    ]
+   ],
+   "locations": [],
+   "preview": {
+    "kind": "installation",
+    "floor": "#070b12",
+    "accent": "#3dffe0",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "installation:zombie",
+   "kind": "installation",
+   "type": "installation",
+   "brand": "KONA World",
+   "name": "The overgrown yard",
+   "year": "",
+   "category": "Room installation",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "zombie",
+     "builder"
+    ],
+    [
+     "8.6 m",
+     "min width"
+    ],
+    [
+     "4.45 m",
+     "min depth"
+    ]
+   ],
+   "locations": [],
+   "preview": {
+    "kind": "installation",
+    "floor": "#16180c",
+    "accent": "#d2e06a",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "room:hall",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "The Queen K Hall",
+   "year": "",
+   "category": "timeline",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Every Speedmax generation, 1999–2027"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    }
+   ]
+  },
+  {
+   "id": "room:sanctuary",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "The Sanctuary",
+   "year": "",
+   "category": "chapel",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Eight Bike Porn films, eight bikes"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "chapel"
+    }
+   ]
+  },
+  {
+   "id": "room:hween",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Lava Night",
+   "year": "",
+   "category": "themed",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The Halloween room"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "hween",
+     "name": "Lava Night",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "room:kona",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Kona Champions",
+   "year": "",
+   "category": "trophy",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The machines under the titles"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "kona",
+     "name": "Kona Champions",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "trophy"
+    }
+   ]
+  },
+  {
+   "id": "room:pier",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Kona by Year",
+   "year": "",
+   "category": "timeline",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The pier, 2014–2025, and the finish"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "pier",
+     "name": "Kona by Year",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "timeline"
+    }
+   ]
+  },
+  {
+   "id": "room:secret",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "The Secret Collection",
+   "year": "",
+   "category": "hidden",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Found, not signposted"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "hidden"
+    }
+   ]
+  },
+  {
+   "id": "room:stair",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "The Glass Stair",
+   "year": "",
+   "category": "passage",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Up to the galleries"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "stair",
+     "name": "The Glass Stair",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "passage"
+    }
+   ]
+  },
+  {
+   "id": "room:nave",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "The Gallery Nave",
+   "year": "",
+   "category": "passage",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Four themed floors, four themed rooms"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "nave",
+     "name": "The Gallery Nave",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "passage"
+    }
+   ]
+  },
+  {
+   "id": "room:bay-st-george",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "St. George",
+   "year": "",
+   "category": "art",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Red rock"
+    },
+    {
+     "text": "One canyon silhouette from the aisle. Up here the floor is the rock itself: terracotta, with a warm seam."
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#8a3b28",
+    "accent": "#e7b089",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "bay-st-george",
+     "name": "St. George",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "art"
+    }
+   ]
+  },
+  {
+   "id": "room:bay-las-vegas",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Las Vegas",
+   "year": "",
+   "category": "art",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Neon"
+    },
+    {
+     "text": "A dark floor that keeps the light. The sculpture in the hall is the same study, seen from the Queen K."
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#14151c",
+    "accent": "#ff3d8e",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "bay-las-vegas",
+     "name": "Las Vegas",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "art"
+    }
+   ]
+  },
+  {
+   "id": "room:bay-nice",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Nice",
+   "year": "",
+   "category": "art",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Sea glass"
+    },
+    {
+     "text": "Pale glass underfoot, the colour of the bay on a still morning."
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#d7f3f2",
+    "accent": "#7ec8c4",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "bay-nice",
+     "name": "Nice",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "art"
+    }
+   ]
+  },
+  {
+   "id": "room:bay-kona",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Kona",
+   "year": "",
+   "category": "art",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Obsidian"
+    },
+    {
+     "text": "Basalt, and a line of heat. The same coast as the hall, one storey closer to the weather."
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#1a1c20",
+    "accent": "#ff592c",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "bay-kona",
+     "name": "Kona",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "art"
+    }
+   ]
+  },
+  {
+   "id": "room:room-bio",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Bio",
+   "year": "",
+   "category": "themed",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The growth"
+    },
+    {
+     "text": "A Speedmax taken by the room. Vines have the frame, pods sit on the floor, and the walls are the same green as the growth."
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#10281a",
+    "accent": "#3dba55",
+    "fog": "#123024"
+   },
+   "locations": [
+    {
+     "id": "room-bio",
+     "name": "Bio",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "room:room-horror",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Horror",
+   "year": "",
+   "category": "themed",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The passage"
+    },
+    {
+     "text": "One bulb over a Speedmax at the end of the passage. The corridor is narrower than the room. If the eyes blink, you were looking."
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#10080c",
+    "accent": "#ff2a3c",
+    "fog": "#1a0a10"
+   },
+   "locations": [
+    {
+     "id": "room-horror",
+     "name": "Horror",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "room:room-alien",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Alien",
+   "year": "",
+   "category": "themed",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The bay"
+    },
+    {
+     "text": "Four rings over a Speedmax, and a scan that does not care what it passes through. Cold light, no weather."
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#070b12",
+    "accent": "#3dffe0",
+    "fog": "#0c2430"
+   },
+   "locations": [
+    {
+     "id": "room-alien",
+     "name": "Alien",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "room:room-zombie",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Zombie",
+   "year": "",
+   "category": "themed",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The yard"
+    },
+    {
+     "text": "They keep to the walls. A Speedmax is still on the block in the middle of the yard. The air is the colour of a bruise that has started to heal."
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#16180c",
+    "accent": "#d2e06a",
+    "fog": "#2a2c18"
+   },
+   "locations": [
+    {
+     "id": "room-zombie",
+     "name": "Zombie",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "themed"
+    }
+   ]
+  },
+  {
+   "id": "room:hour",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "The Hour",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "One rider, sixty minutes"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "hour",
+     "name": "The Hour",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:mono",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Monocoque",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "One piece, no tubes"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "mono",
+     "name": "Monocoque",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:tri",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Long course",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Triathlon machines"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "tri",
+     "name": "Long course",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:types",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Types",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "No maker named"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "types",
+     "name": "Types",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:paint",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Paint shop",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Every livery in the wing"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "paint",
+     "name": "Paint shop",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:refs",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "References",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The photographs behind the models"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "refs",
+     "name": "References",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:queen-k",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "The Queen K",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Lava, wind and one road"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "queen-k",
+     "name": "The Queen K",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:clipon",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Clip-ons",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "How the rider got low"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "clipon",
+     "name": "Clip-ons",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:velodrome",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Velodrome",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Indoors, against the clock"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "velodrome",
+     "name": "Velodrome",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:bay",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "The Bay",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Where the day begins"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "bay",
+     "name": "The Bay",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:after-dark",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "After dark",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The finish at midnight"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "after-dark",
+     "name": "After dark",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:tunnel",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Workshop & tunnel",
+   "year": "",
+   "category": "wing-room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "Tubes, air and patience"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "tunnel",
+     "name": "Workshop & tunnel",
+     "floor": "upper",
+     "floor_name": "Upper floor",
+     "kind": "wing-room"
+    }
+   ]
+  },
+  {
+   "id": "room:nike-running",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Nike Running Lab",
+   "year": "",
+   "category": "brand",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "marble",
+    "accent": "#ff3d00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "nike-running",
+     "name": "Nike Running Lab",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "brand"
+    }
+   ]
+  },
+  {
+   "id": "room:atlas-against-the-clock-hour",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "The Hour · Against the Clock",
+   "year": "",
+   "category": "room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-hour",
+     "name": "The Hour · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "room:atlas-against-the-clock-mono",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Monocoque · Against the Clock",
+   "year": "",
+   "category": "room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-mono",
+     "name": "Monocoque · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "room:atlas-against-the-clock-tri",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Long course · Against the Clock",
+   "year": "",
+   "category": "room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-tri",
+     "name": "Long course · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "room:atlas-against-the-clock-types",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Types · Against the Clock",
+   "year": "",
+   "category": "room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "atlas-against-the-clock-types",
+     "name": "Types · Against the Clock",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "room:atlas-kona-light-clipon",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Clip-ons · Kona Light",
+   "year": "",
+   "category": "room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "atlas-kona-light-clipon",
+     "name": "Clip-ons · Kona Light",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  },
+  {
+   "id": "room:atlas-kona-light-velodrome",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Velodrome · Kona Light",
+   "year": "",
+   "category": "room",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "atlas-kona-light-velodrome",
+     "name": "Velodrome · Kona Light",
+     "floor": "unassigned",
+     "floor_name": "Unassigned",
+     "kind": "room"
+    }
+   ]
+  }
+ ]
+}

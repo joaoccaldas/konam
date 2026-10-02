@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Canyon Museum">
+  <defs>
+    <linearGradient id="rim" x1="70" y1="70" x2="442" y2="442" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5fd8d3"/>
+      <stop offset=".48" stop-color="#f4efe7"/>
+      <stop offset="1" stop-color="#ff3d8e"/>
+    </linearGradient>
+    <linearGradient id="slash" x1="160" y1="360" x2="352" y2="150" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e8471c"/>
+      <stop offset=".58" stop-color="#ff6840"/>
+      <stop offset="1" stop-color="#f3b64f"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="#12181d"/>
+  <path d="M390 159c-34-49-82-74-139-74-97 0-176 76-176 171s79 171 176 171c57 0 107-27 140-73"
+        fill="none" stroke="url(#rim)" stroke-width="42" stroke-linecap="round"/>
+  <path d="M182 367 337 142" stroke="#000" stroke-opacity=".28" stroke-width="48" stroke-linecap="round" filter="url(#soft)"/>
+  <path d="M182 367 337 142" stroke="url(#slash)" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="365" cy="353" r="19" fill="#ff3d8e"/>
+  <circle cx="365" cy="353" r="7" fill="#f4efe7"/>
+</svg>

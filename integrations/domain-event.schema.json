@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caldas.studio/schemas/domain-event-v1.json",
+  "title": "Caldas Studio Domain Event V1",
+  "type": "object",
+  "required": ["schema_version", "event_id", "event_type", "occurred_at", "subject"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "event_id": { "type": "string", "minLength": 1 },
+    "event_type": {
+      "enum": [
+        "product.inspected",
+        "product.customized",
+        "product.added_to_setup",
+        "setup.saved",
+        "setup.shared",
+        "collection.item_discovered",
+        "experience.completed"
+      ]
+    },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "subject": {
+      "type": "object",
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "event_id": { "type": ["string", "null"] },
+        "world_id": { "type": ["string", "null"] },
+        "experience_id": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "privacy": {
+      "type": "object",
+      "required": ["transmission"],
+      "properties": {
+        "transmission": { "enum": ["local-only", "explicit-opt-in", "server-authorized"] }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

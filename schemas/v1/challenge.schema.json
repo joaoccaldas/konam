@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joaoccaldas.github.io/canyonmuseum/schemas/v1/challenge.schema.json",
+  "title": "Challenge",
+  "type": "object",
+  "required": ["id", "name", "kind"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^challenge:" },
+    "name": { "type": "string" },
+    "kind": { "enum": ["moment", "session", "multi-session", "race-week", "deep", "social", "brand"] },
+    "labeled_commercial": { "type": "boolean" },
+    "reward": { "$ref": "reward.schema.json" }
+  }
+}

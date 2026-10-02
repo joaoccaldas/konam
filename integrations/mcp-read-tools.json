@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "name": "caldas-studio-read",
+  "description": "Read-only integration surface for public Caldas Studio triathlon objects.",
+  "transport": "adapter-neutral",
+  "write_enabled": false,
+  "tools": [
+    {
+      "name": "list_products",
+      "description": "List public products, optionally filtered by type and/or brand.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "brand": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_product",
+      "description": "Get one public product by stable ID.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_events",
+      "description": "List public events.",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_event",
+      "description": "Get one public event by stable ID.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_event_places",
+      "description": "List sourced public places related to an event, optionally filtered by category.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "event_id"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_place",
+      "description": "Get one public place by stable ID.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_event_sources",
+      "description": "List official sources for an event, optionally returning only current-year sources.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "event_id"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "current_only": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_event_schedule",
+      "description": "Get current verified race-week schedule items for an event.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "event_id"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_product_experience",
+      "description": "Get the public product plus provenance, maintenance, vendor options, stable part references and graph context.",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  ],
+  "security": {
+    "authentication_required": false,
+    "reason": "V0 exposes only already-public, read-only catalog content.",
+    "remote_writes": false,
+    "private_user_state": false,
+    "arbitrary_file_access": false,
+    "network_fetch": false
+  }
+}

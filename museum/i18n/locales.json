@@ -1,0 +1,27 @@
+{
+ "schema_version": 1,
+ "default": "en",
+ "planned_public_routes": false,
+ "locales": [
+  {
+   "id": "en",
+   "label": "English",
+   "bcp47": "en",
+   "status": "current",
+   "route": "/"
+  },
+  {
+   "id": "pt-BR",
+   "label": "Português (Brasil)",
+   "bcp47": "pt-BR",
+   "status": "next",
+   "route": null
+  }
+ ],
+ "policy": [
+  "Entity ids never change across locales.",
+  "Do not publish hreflang for a locale until a real translated canonical page exists.",
+  "Navigation, Passport, Studio and Kona visitor content are translated before long-tail archive pages.",
+  "Source titles and proper nouns are preserved; translations do not invent facts."
+ ]
+}

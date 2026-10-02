@@ -1,0 +1,167 @@
+{
+ "schema_version": 1,
+ "source": "Bike Porn films (wyld-store/bike-porn), copy and colours as used in the Sanctuary since 29 Sep 2026",
+ "note": "Each film is also a studio theme: its five stops drive the WYLD dye (engine/skins.js skinFromFilm).",
+ "films": [
+  {
+   "id": "aero-glam",
+   "film": "Aero Glam",
+   "tagline": "They came for the watts. They stayed for the looks.",
+   "persona": "The Alien",
+   "place": "Crop circle · 3 a.m.",
+   "name": "Alien Glam",
+   "sub": "Toxic lime into black with a violet pearl, neon wheels and a full disc",
+   "stops": [
+    "#050805",
+    "#1fbf3f",
+    "#8be04e",
+    "#d9ff3f",
+    "#7b4fd6"
+   ],
+   "angle": 40,
+   "scale": 1.8,
+   "flow": 1.1,
+   "darkness": 0.45
+  },
+  {
+   "id": "couture",
+   "film": "Couture",
+   "tagline": "Blonde. Bored. Twelve seconds faster than you.",
+   "persona": "The Supermodel",
+   "place": "Runway · front row",
+   "name": "Blush Couture",
+   "sub": "Blush, pearl and champagne gold, like a gown in motion",
+   "stops": [
+    "#f2a7c3",
+    "#fff1f6",
+    "#e3b76a",
+    "#ff8fbf",
+    "#f6dcae"
+   ],
+   "angle": 70,
+   "scale": 1.2,
+   "flow": 0.7,
+   "darkness": 0
+  },
+  {
+   "id": "tiffany-tide",
+   "film": "Offshore",
+   "tagline": "One wave. One bike. No brakes.",
+   "persona": "The Surfer",
+   "place": "Golden hour · offshore wind",
+   "name": "Tiffany Tide",
+   "sub": "Tiffany, sky and cobalt, like a wave breaking",
+   "stops": [
+    "#2f4fd6",
+    "#6ec6ff",
+    "#f4fbfb",
+    "#8fe7dc",
+    "#55d8d3"
+   ],
+   "angle": -24,
+   "scale": 1.3,
+   "flow": 1.2,
+   "darkness": 0
+  },
+  {
+   "id": "hex",
+   "film": "Hex",
+   "tagline": "Double, double, carbon trouble.",
+   "persona": "The Witch",
+   "place": "Moonlit woods · full moon",
+   "name": "Witching Hour",
+   "sub": "Midnight grape and potion green with a spell-bound pearl",
+   "stops": [
+    "#0c0714",
+    "#3a1f6b",
+    "#7b4fd6",
+    "#b6ff5a",
+    "#1a0f2a"
+   ],
+   "angle": 55,
+   "scale": 1.5,
+   "flow": 1.3,
+   "darkness": 0.45
+  },
+  {
+   "id": "stay-weird",
+   "film": "Stay Weird",
+   "tagline": "Rules are for other bikes.",
+   "persona": "The Weirdo",
+   "place": "Sticker dream",
+   "name": "Stay Weird",
+   "sub": "Lilac and butter checkers from the Upcoming drop",
+   "stops": [
+    "#a98bef",
+    "#f6df86",
+    "#1e1826",
+    "#a98bef",
+    "#f6df86"
+   ],
+   "angle": 0,
+   "scale": 2.4,
+   "flow": 0.15,
+   "darkness": 0
+  },
+  {
+   "id": "lake-house",
+   "film": "The Lake House",
+   "tagline": "Whatever you do, don’t ride down to the dock.",
+   "persona": "The Final Girl",
+   "place": "Haunted cabin · by the lake",
+   "name": "Lake Fog",
+   "sub": "Black water, cold teal and a drifting mist",
+   "stops": [
+    "#03090c",
+    "#0f3a44",
+    "#5b8c8f",
+    "#dfeae6",
+    "#14242a"
+   ],
+   "angle": -15,
+   "scale": 1.4,
+   "flow": 1.6,
+   "darkness": 0.45
+  },
+  {
+   "id": "sunny-side",
+   "film": "Sunny Side",
+   "tagline": "She’s lovely. She’s Swedish. She’s already inside.",
+   "persona": "The Babysitter",
+   "place": "Midsummer meadow · too bright",
+   "name": "WYLD Dye",
+   "sub": "The signature pink and aqua jersey dye, sweet as a lullaby",
+   "stops": [
+    "#ff3d8e",
+    "#ff8fbf",
+    "#e9cde8",
+    "#8fe7dc",
+    "#5fd8d3"
+   ],
+   "angle": 32,
+   "scale": 1.5,
+   "flow": 1,
+   "darkness": 0
+  },
+  {
+   "id": "sanctuary",
+   "film": "Sanctuary",
+   "tagline": "She has been waiting in the front pew.",
+   "persona": "The Doll",
+   "place": "Old chapel · midnight mass",
+   "name": "Stained Glass",
+   "sub": "A cathedral window in carbon: ruby, cobalt, gold and leaded black",
+   "stops": [
+    "#b3122e",
+    "#1d4fd6",
+    "#f2c14e",
+    "#2f9e5a",
+    "#6f4cd9"
+   ],
+   "angle": 18,
+   "scale": 2.1,
+   "flow": 0.4,
+   "darkness": 0
+  }
+ ]
+}

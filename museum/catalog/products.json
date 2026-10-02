@@ -1,0 +1,2629 @@
+{
+ "schema_version": 1,
+ "generated_by": "tools/build_catalog.mjs",
+ "count": 47,
+ "in_museum": 39,
+ "studio_only": 8,
+ "brands": [
+  "Canyon",
+  "Colnago",
+  "Obree",
+  "Lotus",
+  "Zipp",
+  "Stevens",
+  "Unbranded",
+  "Type study",
+  "Studio"
+ ],
+ "products": [
+  {
+   "id": "canyon-cfr-2027",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Speedmax CFR AXS",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "canyon-model",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "deepStudio": "Speedmax_Museum.html",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Published weight 9.1 kg (size M)."
+    },
+    {
+     "cls": "P",
+     "text": "Price from 125,000 SEK (Canyon Sweden)."
+    }
+   ],
+   "skins": [
+    {
+     "id": "hall-cfr",
+     "name": "Showroom",
+     "kind": "archive",
+     "frame": "#eceaf0",
+     "group": "hall"
+    }
+   ],
+   "sources": [
+    {
+     "label": "Canyon product page",
+     "url": "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cfr/speedmax-cfr-axs/4524.html"
+    },
+    {
+     "label": "Viewer profile",
+     "file": "museum/viewer-cfr.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall"
+    },
+    {
+     "id": "pier",
+     "name": "Kona by Year"
+    }
+   ]
+  },
+  {
+   "id": "canyon-slx-2027",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Speedmax CF SLX 8 Di2",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "canyon-model",
+   "glb": "assets/museum-slx/speedmax_web.glb",
+   "museum": true,
+   "deepStudio": "Speedmax_SLX_Museum.html",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Published weight 9.56 kg (size M)."
+    },
+    {
+     "cls": "P",
+     "text": "Price from 91,199 SEK (Canyon Sweden)."
+    }
+   ],
+   "skins": [
+    {
+     "id": "hall-slx",
+     "name": "Showroom",
+     "kind": "archive",
+     "frame": "#cdc8dd",
+     "group": "hall"
+    }
+   ],
+   "sources": [
+    {
+     "label": "Canyon product page",
+     "url": "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cf-slx/speedmax-cf-slx-8-di2/4520.html"
+    },
+    {
+     "label": "Viewer profile",
+     "file": "museum/viewer-slx.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall"
+    }
+   ]
+  },
+  {
+   "id": "canyon-speedmax-three-2005",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Speedmax Three",
+   "year": 2005,
+   "years": "2002–2005",
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "canyon-archive",
+   "glb": "assets/heritage/speedmax-three-2005/speedmax_web.glb",
+   "museum": true,
+   "deepStudio": "Speedmax_Three_2005_Museum.html",
+   "material": "7005 aluminium · carbon fork",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Dedicated 28-inch triathlon geometry, Carbotec disc as standard, 8.75 kg."
+    },
+    {
+     "cls": "P",
+     "text": "Frame: 7005 aluminium · carbon fork."
+    }
+   ],
+   "skins": [
+    {
+     "id": "hall-speedmax-three-2005",
+     "name": "Documented finish",
+     "kind": "archive",
+     "frame": "#14161a",
+     "group": "hall"
+    }
+   ],
+   "sources": [
+    {
+     "label": "Museum catalogue",
+     "file": "museum/catalog.json"
+    },
+    {
+     "label": "Evidence manifest",
+     "file": "museum/bikes/canyon-speedmax-three-my2005.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall"
+    }
+   ]
+  },
+  {
+   "id": "canyon-speedmax-2007",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "SpeedMax 3.0",
+   "year": 2008,
+   "years": "2006–2008",
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "canyon-archive",
+   "glb": "assets/heritage/speedmax-2007/speedmax_web.glb",
+   "museum": true,
+   "deepStudio": "Speedmax_2007_Museum.html",
+   "material": "7005 aluminium · carbon stays",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "New MR3 frame with a Super Aero seat tube; Dura-Ace, disc and Syntace cockpit."
+    },
+    {
+     "cls": "P",
+     "text": "Frame: 7005 aluminium · carbon stays."
+    }
+   ],
+   "skins": [
+    {
+     "id": "hall-speedmax-2007",
+     "name": "Documented finish",
+     "kind": "archive",
+     "frame": "#8a1f1f",
+     "group": "hall"
+    }
+   ],
+   "sources": [
+    {
+     "label": "Museum catalogue",
+     "file": "museum/catalog.json"
+    },
+    {
+     "label": "Evidence manifest",
+     "file": "museum/bikes/canyon-speedmax-3-0-my2007.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall"
+    }
+   ]
+  },
+  {
+   "id": "canyon-speedmax-al-2011",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Speedmax AL 9.0",
+   "year": 2013,
+   "years": "2009–2013",
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "canyon-archive",
+   "glb": "assets/heritage/speedmax-al-2011/speedmax_web.glb",
+   "museum": true,
+   "deepStudio": "Speedmax_AL_2011_Museum.html",
+   "material": "7005 aluminium · carbon fork",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Aero-era geometry with 75°/78° seat positions and sliding dropouts."
+    },
+    {
+     "cls": "P",
+     "text": "Frame: 7005 aluminium · carbon fork."
+    }
+   ],
+   "skins": [
+    {
+     "id": "hall-speedmax-al-2011",
+     "name": "Documented finish",
+     "kind": "archive",
+     "frame": "#d8d8dc",
+     "group": "hall"
+    }
+   ],
+   "sources": [
+    {
+     "label": "Museum catalogue",
+     "file": "museum/catalog.json"
+    },
+    {
+     "label": "Evidence manifest",
+     "file": "museum/bikes/canyon-speedmax-al-9-my2011.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall"
+    }
+   ]
+  },
+  {
+   "id": "canyon-speedmax-cf-2011",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Speedmax CF 9.0 Pro",
+   "year": 2012,
+   "years": "2009–2012",
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "canyon-archive",
+   "glb": "assets/heritage/speedmax-cf-2011/speedmax_web.glb",
+   "museum": true,
+   "deepStudio": "Speedmax_CF_2011_Museum.html",
+   "material": "Carbon",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Canyon's first carbon Speedmax; 7.70 kg on Zipp 404/808."
+    },
+    {
+     "cls": "P",
+     "text": "Frame: Carbon."
+    }
+   ],
+   "skins": [
+    {
+     "id": "hall-speedmax-cf-2011",
+     "name": "Documented finish",
+     "kind": "archive",
+     "frame": "#101014",
+     "group": "hall"
+    }
+   ],
+   "sources": [
+    {
+     "label": "Museum catalogue",
+     "file": "museum/catalog.json"
+    },
+    {
+     "label": "Evidence manifest",
+     "file": "museum/bikes/canyon-speedmax-cf-9-pro-my2011.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "hall",
+     "name": "The Queen K Hall"
+    }
+   ]
+  },
+  {
+   "id": "canyon-kona-cfslx-2015",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Speedmax CF SLX",
+   "year": 2015,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "geometry-study",
+   "glb": "assets/kona-years/bikes/cfslx-2015/speedmax_web.glb",
+   "museum": true,
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Geometry from Canyon Speedmax CFR Disc Di2 geometry pdf, pid 2921, size M."
+    },
+    {
+     "cls": "I",
+     "text": "Tube depths: silhouette study, not a photo trace."
+    }
+   ],
+   "skins": [],
+   "sources": [
+    {
+     "label": "Build record",
+     "file": "assets/kona-years/bikes/cfslx-2015/build-meta.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "kona",
+     "name": "Kona Champions"
+    }
+   ]
+  },
+  {
+   "id": "canyon-kona-cfr-2019",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Speedmax CFR Disc",
+   "year": 2019,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "geometry-study",
+   "glb": "assets/kona-years/bikes/cfr-2019/speedmax_web.glb",
+   "museum": true,
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Geometry from Canyon Speedmax CFR Disc Di2 geometry pdf, pid 2921, size M."
+    },
+    {
+     "cls": "I",
+     "text": "Tube depths: silhouette study, not a photo trace."
+    }
+   ],
+   "skins": [],
+   "sources": [
+    {
+     "label": "Build record",
+     "file": "assets/kona-years/bikes/cfr-2019/build-meta.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "kona",
+     "name": "Kona Champions"
+    }
+   ]
+  },
+  {
+   "id": "atlas-merckx-hour-1972",
+   "brand": "Colnago",
+   "family": "diamond",
+   "name": "Eddy Merckx Hour bike",
+   "year": 1972,
+   "era": null,
+   "type": "bike",
+   "category": "track",
+   "origin": "photo-rebuild",
+   "glb": "assets/atlas/merckx-hour-1972/bike.glb",
+   "museum": true,
+   "text": "Round steel tubes, a fixed gear and nothing else. Every later machine in this wing is an argument with this one.",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Eddy Merckx set the Hour record in Mexico City on 25 October 1972."
+    },
+    {
+     "cls": "F",
+     "text": "The display board beside the bike reads 49.431 km."
+    },
+    {
+     "cls": "F",
+     "text": "Orange lugged steel frame, round tubes, drop bars in white tape, 32-spoke box rims, no brakes."
+    },
+    {
+     "cls": "I",
+     "text": "Frame angles and lengths scaled from the photograph."
+    }
+   ],
+   "skins": [
+    {
+     "id": "as-displayed",
+     "name": "As displayed",
+     "kind": "photo",
+     "frame": "#ea6f12",
+     "accent": "#ea6f12",
+     "rim": "#b9bcc0",
+     "tape": "#f2f0ea",
+     "saddle": "#1a1a1a"
+    },
+    {
+     "id": "studio-chrome",
+     "name": "Chrome",
+     "kind": "studio",
+     "frame": "#c8ccd0",
+     "accent": "#c8ccd0",
+     "rim": "#b9bcc0",
+     "tape": "#1a1a1a"
+    },
+    {
+     "id": "studio-basalt",
+     "name": "Basalt",
+     "kind": "studio",
+     "frame": "#1c1d20",
+     "accent": "#e8471c",
+     "rim": "#b9bcc0",
+     "tape": "#1a1a1a"
+    }
+   ],
+   "ref": {
+    "file": "EddyMerckxHourRecordBike.jpg",
+    "title": "File:EddyMerckxHourRecordBike.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:EddyMerckxHourRecordBike.jpg",
+    "license": "CC BY-SA 3.0",
+    "artist": "David Edgar",
+    "caption": "On display at Eddy Merckx metro station, Brussels"
+   },
+   "atlasKey": "merckx-hour-1972",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    },
+    {
+     "label": "Photo: David Edgar (CC BY-SA 3.0)",
+     "url": "https://commons.wikimedia.org/wiki/File:EddyMerckxHourRecordBike.jpg"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-against-the-clock-hour",
+     "name": "The Hour · Against the Clock"
+    }
+   ]
+  },
+  {
+   "id": "atlas-obree-riverside",
+   "brand": "Obree",
+   "family": "diamond",
+   "name": "Graeme Obree's bikes",
+   "year": 1993,
+   "era": null,
+   "type": "bike",
+   "category": "track",
+   "origin": "photo-rebuild",
+   "glb": "assets/atlas/obree-riverside/bike.glb",
+   "museum": true,
+   "text": "Built at home, raced against the world. The tuck came first; the bike was made to hold it.",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Graeme Obree set the Hour record in Hamar, Norway, on 17 July 1993, on a bike he built himself."
+    },
+    {
+     "cls": "F",
+     "text": "The Riverside Museum display shows white round-tube frames lettered G. OBREE, on tri-spoke wheels."
+    },
+    {
+     "cls": "I",
+     "text": "This model follows the displayed frames, not a specific record machine; narrow bars stand for his tucked position."
+    }
+   ],
+   "skins": [
+    {
+     "id": "as-displayed",
+     "name": "As displayed",
+     "kind": "photo",
+     "frame": "#efece4",
+     "accent": "#efece4",
+     "rim": "#b08a4a",
+     "disc": "#16171b",
+     "saddle": "#1a1a1a",
+     "tape": "#1a1a1a"
+    },
+    {
+     "id": "studio-saltire",
+     "name": "Saltire",
+     "kind": "studio",
+     "frame": "#1f4fa3",
+     "accent": "#f2f0ea",
+     "rim": "#b08a4a",
+     "disc": "#16171b"
+    },
+    {
+     "id": "studio-lava",
+     "name": "Lava",
+     "kind": "studio",
+     "frame": "#c8401a",
+     "accent": "#1c1d20",
+     "rim": "#b08a4a",
+     "disc": "#16171b"
+    }
+   ],
+   "ref": {
+    "file": "Graeme_Obree_display_at_the_Riverside_Museum.jpg",
+    "title": "File:Graeme Obree display at the Riverside Museum.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Graeme_Obree_display_at_the_Riverside_Museum.jpg",
+    "license": "CC BY 2.0",
+    "artist": "Ed Webster",
+    "caption": "Riverside Museum, Glasgow"
+   },
+   "atlasKey": "obree-riverside",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    },
+    {
+     "label": "Photo: Ed Webster (CC BY 2.0)",
+     "url": "https://commons.wikimedia.org/wiki/File:Graeme_Obree_display_at_the_Riverside_Museum.jpg"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-against-the-clock-hour",
+     "name": "The Hour · Against the Clock"
+    }
+   ]
+  },
+  {
+   "id": "atlas-lotus-108-1992",
+   "brand": "Lotus",
+   "family": "monocoque",
+   "name": "Lotus Type 108",
+   "year": 1992,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "photo-rebuild",
+   "glb": "assets/atlas/lotus-108-1992/bike.glb",
+   "museum": true,
+   "text": "No tubes at all: one wing, one blade at each end. It made every frame beside it look like scaffolding.",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Chris Boardman won the 4,000 m individual pursuit at the Barcelona Olympics in 1992 on this design."
+    },
+    {
+     "cls": "F",
+     "text": "A single carbon wing, a monoblade fork and a single rear stay; rear disc, front tri-spoke, bullhorn bar with extensions."
+    },
+    {
+     "cls": "I",
+     "text": "Wing outline and stay depth scaled from the photograph."
+    }
+   ],
+   "skins": [
+    {
+     "id": "as-displayed",
+     "name": "As displayed",
+     "kind": "photo",
+     "frame": "#141416",
+     "accent": "#141416",
+     "rim": "#b08a4a",
+     "disc": "#141416",
+     "saddle": "#1a1a1a"
+    },
+    {
+     "id": "studio-gold",
+     "name": "Pursuit gold",
+     "kind": "studio",
+     "frame": "#141416",
+     "accent": "#c9a13b",
+     "rim": "#b08a4a",
+     "disc": "#c9a13b"
+    },
+    {
+     "id": "studio-reef",
+     "name": "Reef",
+     "kind": "studio",
+     "frame": "#138a8f",
+     "accent": "#12181d",
+     "rim": "#b08a4a",
+     "disc": "#12181d"
+    }
+   ],
+   "ref": {
+    "file": "Lotus_108__24281585325_.jpg",
+    "title": "File:Lotus 108 (24281585325).jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Lotus_108_(24281585325).jpg",
+    "license": "CC BY 2.0",
+    "artist": "Paul Hudson",
+    "caption": "Design Museum, London"
+   },
+   "atlasKey": "lotus-108-1992",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    },
+    {
+     "label": "Photo: Paul Hudson (CC BY 2.0)",
+     "url": "https://commons.wikimedia.org/wiki/File:Lotus_108_(24281585325).jpg"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-against-the-clock-mono",
+     "name": "Monocoque · Against the Clock"
+    }
+   ]
+  },
+  {
+   "id": "atlas-zipp-2001",
+   "brand": "Zipp",
+   "family": "beam",
+   "name": "Zipp 2001",
+   "year": null,
+   "era": "1990s",
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "photo-rebuild",
+   "glb": "assets/atlas/zipp-2001/bike.glb",
+   "museum": true,
+   "text": "Take away the seat tube and hang the rider off a beam. The rules later insisted on two triangles; this is why.",
+   "facts": [
+    {
+     "cls": "F",
+     "text": "The reference shows two Zipp 2001 frames, one black and one red: a carbon beam from the head tube over the rear wheel, no seat tube."
+    },
+    {
+     "cls": "I",
+     "text": "Year given as the early 1990s; wheels, bars and drivetrain are a study, not the frames' original build."
+    }
+   ],
+   "skins": [
+    {
+     "id": "photo-black",
+     "name": "Black 2001",
+     "kind": "photo",
+     "frame": "#141416",
+     "accent": "#141416",
+     "disc": "#16171b"
+    },
+    {
+     "id": "photo-red",
+     "name": "Red 2001",
+     "kind": "photo",
+     "frame": "#c8161d",
+     "accent": "#141416",
+     "disc": "#16171b"
+    },
+    {
+     "id": "studio-sand",
+     "name": "Sand",
+     "kind": "studio",
+     "frame": "#e9dcc4",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    }
+   ],
+   "ref": {
+    "file": "Zipp_frames.jpg",
+    "title": "File:Zipp frames.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Zipp_frames.jpg",
+    "license": "Public domain",
+    "artist": "Nfreeman2",
+    "caption": "Left to right: black 2001, red 2001"
+   },
+   "atlasKey": "zipp-2001",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    },
+    {
+     "label": "Photo: Nfreeman2 (Public domain)",
+     "url": "https://commons.wikimedia.org/wiki/File:Zipp_frames.jpg"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-against-the-clock-mono",
+     "name": "Monocoque · Against the Clock"
+    }
+   ]
+  },
+  {
+   "id": "atlas-stevens-tri",
+   "brand": "Stevens",
+   "family": "superbike",
+   "name": "Stevens triathlon bike",
+   "year": null,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "photo-rebuild",
+   "glb": "assets/atlas/stevens-tri/bike.glb",
+   "museum": true,
+   "text": "The triathlon superbike as most age-groupers met it: deep tubes, deep wheels, everything pointed forward.",
+   "facts": [
+    {
+     "cls": "F",
+     "text": "Photographed racked at a triathlon: white and red frame with black, deep spoked carbon wheels, aero bars and extensions, a bottle in the frame."
+    },
+    {
+     "cls": "I",
+     "text": "Year not recorded on the photograph; tube depths are a silhouette study."
+    }
+   ],
+   "skins": [
+    {
+     "id": "as-photographed",
+     "name": "As photographed",
+     "kind": "photo",
+     "frame": "#f1f1ef",
+     "accent": "#c8102e",
+     "rim": "#141416",
+     "saddle": "#141414"
+    },
+    {
+     "id": "studio-ironside",
+     "name": "Ironside",
+     "kind": "studio",
+     "frame": "#1c1d20",
+     "accent": "#f3b64f",
+     "rim": "#141416"
+    },
+    {
+     "id": "studio-queen-k",
+     "name": "Queen K",
+     "kind": "studio",
+     "frame": "#e8471c",
+     "accent": "#1c1d20",
+     "rim": "#141416"
+    }
+   ],
+   "ref": {
+    "file": "Stevens_triathlon_bicycle.jpg",
+    "title": "File:Stevens triathlon bicycle.JPG",
+    "page": "https://commons.wikimedia.org/wiki/File:Stevens_triathlon_bicycle.JPG",
+    "license": "CC BY-SA 3.0",
+    "artist": "Ximeg",
+    "caption": "Racked at a triathlon in Gera"
+   },
+   "atlasKey": "stevens-tri",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    },
+    {
+     "label": "Photo: Ximeg (CC BY-SA 3.0)",
+     "url": "https://commons.wikimedia.org/wiki/File:Stevens_triathlon_bicycle.JPG"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-against-the-clock-tri",
+     "name": "Long course · Against the Clock"
+    }
+   ]
+  },
+  {
+   "id": "atlas-alu-tri-2005",
+   "brand": "Unbranded",
+   "family": "diamond",
+   "name": "Aluminium triathlon bike",
+   "year": 2005,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "photo-rebuild",
+   "glb": "assets/atlas/alu-tri-2005/bike.glb",
+   "museum": true,
+   "text": "A road frame made fast with bolt-on parts: clip-ons and tri-spokes. How most triathletes went aero in the 2000s.",
+   "facts": [
+    {
+     "cls": "F",
+     "text": "Black aluminium frame with round oversized tubes, clip-on aero bars, tri-spoke wheels with tan-wall tyres (photographed December 2005)."
+    },
+    {
+     "cls": "I",
+     "text": "Maker not identified from the photograph; shown as a type of its time."
+    }
+   ],
+   "skins": [
+    {
+     "id": "as-photographed",
+     "name": "As photographed",
+     "kind": "photo",
+     "frame": "#1a1a1c",
+     "accent": "#1a1a1c",
+     "rim": "#16171b",
+     "disc": "#16171b",
+     "saddle": "#141414"
+    },
+    {
+     "id": "studio-silver",
+     "name": "Raw aluminium",
+     "kind": "studio",
+     "frame": "#aeb2b6",
+     "accent": "#aeb2b6",
+     "disc": "#16171b"
+    },
+    {
+     "id": "studio-sun",
+     "name": "Sun",
+     "kind": "studio",
+     "frame": "#f3b64f",
+     "accent": "#12181d",
+     "disc": "#16171b"
+    }
+   ],
+   "ref": {
+    "file": "Triathlonrad.jpg",
+    "title": "File:Triathlonrad.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Triathlonrad.jpg",
+    "license": "CC BY-SA 3.0",
+    "artist": "GS (de.wikipedia)",
+    "caption": "Triathlonrad, December 2005"
+   },
+   "atlasKey": "alu-tri-2005",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    },
+    {
+     "label": "Photo: GS (de.wikipedia) (CC BY-SA 3.0)",
+     "url": "https://commons.wikimedia.org/wiki/File:Triathlonrad.jpg"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-against-the-clock-tri",
+     "name": "Long course · Against the Clock"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-funny-1980s",
+   "brand": "Type study",
+   "family": "funny",
+   "name": "Funny bike",
+   "year": 1985,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "type-study",
+   "glb": "assets/atlas/type-funny-1980s/bike.glb",
+   "museum": true,
+   "text": "Drop the front of the bike and the rider drops with it. A smaller front wheel was the first aero position you could buy.",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Low-profile 'funny bikes' with a smaller front wheel were used in time trials and on the track in the 1980s."
+    },
+    {
+     "cls": "I",
+     "text": "No maker is modelled. 24-inch front wheel, 700c rear disc, sloping top tube, bullhorn bar."
+    }
+   ],
+   "skins": [
+    {
+     "id": "study-pearl",
+     "name": "Pearl",
+     "kind": "studio",
+     "frame": "#efe9df",
+     "accent": "#12181d",
+     "disc": "#12181d",
+     "tape": "#12181d"
+    },
+    {
+     "id": "study-coral",
+     "name": "Coral",
+     "kind": "studio",
+     "frame": "#ff6f59",
+     "accent": "#12181d",
+     "disc": "#f2f0ea",
+     "tape": "#f2f0ea"
+    },
+    {
+     "id": "study-cobalt",
+     "name": "Cobalt",
+     "kind": "studio",
+     "frame": "#1d4fd6",
+     "accent": "#f2f0ea",
+     "disc": "#f2f0ea",
+     "tape": "#f2f0ea"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "type-funny-1980s",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-against-the-clock-types",
+     "name": "Types · Against the Clock"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-pursuit",
+   "brand": "Type study",
+   "family": "pursuit",
+   "name": "Track pursuit bike",
+   "year": 2000,
+   "era": null,
+   "type": "bike",
+   "category": "track",
+   "origin": "type-study",
+   "glb": "assets/atlas/type-pursuit/bike.glb",
+   "museum": true,
+   "text": "Four kilometres on a velodrome, alone. Everything that does not push or steer has been taken off.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Seat tube curved round the rear wheel, fixed gear with a solid chainring, discs front and rear, no brakes."
+    }
+   ],
+   "skins": [
+    {
+     "id": "study-velodrome",
+     "name": "Velodrome",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#f3b64f",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-rainbow",
+     "name": "Arc",
+     "kind": "studio",
+     "frame": "#f2f0ea",
+     "accent": "#1d4fd6",
+     "disc": "#f2f0ea"
+    },
+    {
+     "id": "study-ember",
+     "name": "Ember",
+     "kind": "studio",
+     "frame": "#9a3b17",
+     "accent": "#e0a458",
+     "disc": "#12181d"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "type-pursuit",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-against-the-clock-types",
+     "name": "Types · Against the Clock"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-disc-superbike",
+   "brand": "Type study",
+   "family": "superbike",
+   "name": "Disc-brake triathlon superbike",
+   "year": 2024,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "type-study",
+   "glb": "assets/atlas/type-disc-superbike/bike.glb",
+   "museum": true,
+   "text": "The long-course bike carries its own race: food on the top tube, a bottle between the arms, two more behind the saddle.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Deep truncated-airfoil tubes, dropped stays, integrated nose, storage on the top tube, a bottle between the arms and two behind the saddle, rear disc."
+    }
+   ],
+   "skins": [
+    {
+     "id": "study-kona-sand",
+     "name": "Kona sand",
+     "kind": "studio",
+     "frame": "#e9dcc4",
+     "accent": "#b4541f",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-reef",
+     "name": "Reef",
+     "kind": "studio",
+     "frame": "#138a8f",
+     "accent": "#d5ecea",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-night",
+     "name": "Night",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#ff592c",
+     "disc": "#12181d"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "type-disc-superbike",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-against-the-clock-types",
+     "name": "Types · Against the Clock"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-aerobar-1989",
+   "brand": "Type study",
+   "family": "diamond",
+   "name": "Road bike with clip-on aero bars",
+   "year": 1989,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "type-study",
+   "glb": "assets/atlas/type-aerobar-1989/bike.glb",
+   "museum": true,
+   "text": "The cheapest watts ever sold: bolt two tubes to a road bar and fold the rider in half.",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Clip-on aero bars, first used by triathletes, reached Grand Tour time trials at the end of the 1980s."
+    },
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Steel road frame, drop bars with clip-on extensions, 32-spoke wheels."
+    }
+   ],
+   "skins": [
+    {
+     "id": "study-team-blue",
+     "name": "Team blue",
+     "kind": "studio",
+     "frame": "#1d4fd6",
+     "accent": "#f2f0ea",
+     "tape": "#f2f0ea",
+     "rim": "#b9bcc0"
+    },
+    {
+     "id": "study-yellow",
+     "name": "Maillot",
+     "kind": "studio",
+     "frame": "#f2c14e",
+     "accent": "#12181d",
+     "tape": "#12181d",
+     "rim": "#b9bcc0"
+    },
+    {
+     "id": "study-steel",
+     "name": "Bare steel",
+     "kind": "studio",
+     "frame": "#8e9399",
+     "accent": "#8e9399",
+     "tape": "#12181d",
+     "rim": "#b9bcc0"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "type-aerobar-1989",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-kona-light-clipon",
+     "name": "Clip-ons · Kona Light"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-lowpro-650c",
+   "brand": "Type study",
+   "family": "funny",
+   "name": "Low-profile triathlon bike, 650c",
+   "year": 1994,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "type-study",
+   "glb": "assets/atlas/type-lowpro-650c/bike.glb",
+   "museum": true,
+   "text": "Small wheels, steep seat, the rider pitched forward over the bars: the triathlon bike stops pretending to be a road bike.",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "Many 1990s triathlon frames used smaller 650c wheels to bring the rider lower and forward."
+    },
+    {
+     "cls": "I",
+     "text": "No maker is modelled. 650c wheels front and rear, 80° seat angle, aero tubes, rear disc."
+    }
+   ],
+   "skins": [
+    {
+     "id": "study-neon",
+     "name": "Neon",
+     "kind": "studio",
+     "frame": "#d9ff3f",
+     "accent": "#ff3d8e",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-splatter",
+     "name": "Surf",
+     "kind": "studio",
+     "frame": "#5fd8d3",
+     "accent": "#1d4fd6",
+     "disc": "#f2f0ea"
+    },
+    {
+     "id": "study-graphite",
+     "name": "Graphite",
+     "kind": "studio",
+     "frame": "#2c353c",
+     "accent": "#e8471c",
+     "disc": "#12181d"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "type-lowpro-650c",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-kona-light-clipon",
+     "name": "Clip-ons · Kona Light"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-hour-track",
+   "brand": "Type study",
+   "family": "pursuit",
+   "name": "Modern Hour bike",
+   "year": 2019,
+   "era": null,
+   "type": "bike",
+   "category": "track",
+   "origin": "type-study",
+   "glb": "assets/atlas/type-hour-track/bike.glb",
+   "museum": true,
+   "text": "Everything the pursuit bike learned, stretched over sixty minutes: narrower, lower, and built around the rider's shoulders.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Truncated-airfoil tubes, seat tube curved round the rear wheel, discs front and rear, narrow extensions, fixed gear, no brakes."
+    }
+   ],
+   "skins": [
+    {
+     "id": "study-record",
+     "name": "Record",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#c8161d",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-rainbow-bands",
+     "name": "Arc",
+     "kind": "studio",
+     "frame": "#f2f0ea",
+     "accent": "#1d4fd6",
+     "disc": "#f2f0ea"
+    },
+    {
+     "id": "study-copper",
+     "name": "Copper",
+     "kind": "studio",
+     "frame": "#b4541f",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "type-hour-track",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-kona-light-velodrome",
+     "name": "Velodrome · Kona Light"
+    }
+   ]
+  },
+  {
+   "id": "atlas-type-draft-legal",
+   "brand": "Type study",
+   "family": "superbike",
+   "name": "Draft-legal triathlon bike",
+   "year": 2021,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "type-study",
+   "glb": "assets/atlas/type-draft-legal/bike.glb",
+   "museum": true,
+   "text": "The fastest bike that is still allowed to ride in a bunch: a road bike with its elbows tucked in.",
+   "facts": [
+    {
+     "cls": "P",
+     "text": "In draft-legal triathlon, riders use road bikes; clip-on bars must not reach past the brake levers."
+    },
+    {
+     "cls": "I",
+     "text": "No maker is modelled. Aero road frame, drop bars with short clip-ons, deep spoked wheels."
+    }
+   ],
+   "skins": [
+    {
+     "id": "study-reef",
+     "name": "Reef",
+     "kind": "studio",
+     "frame": "#138a8f",
+     "accent": "#f2f0ea",
+     "tape": "#f2f0ea",
+     "rim": "#141416"
+    },
+    {
+     "id": "study-lava",
+     "name": "Lava",
+     "kind": "studio",
+     "frame": "#e8471c",
+     "accent": "#12181d",
+     "tape": "#12181d",
+     "rim": "#141416"
+    },
+    {
+     "id": "study-pearl",
+     "name": "Pearl",
+     "kind": "studio",
+     "frame": "#efe9df",
+     "accent": "#c9a13b",
+     "tape": "#12181d",
+     "rim": "#141416"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "type-draft-legal",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "atlas-kona-light-velodrome",
+     "name": "Velodrome · Kona Light"
+    }
+   ]
+  },
+  {
+   "id": "atlas-studio-kona-2030",
+   "brand": "Studio",
+   "family": "superbike",
+   "name": "Kona concept 2030",
+   "year": 2030,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "studio-design",
+   "glb": "assets/atlas/studio-kona-2030/bike.glb",
+   "museum": false,
+   "text": "What the long-course bike might become when the rules stop moving: deeper, narrower, everything inside.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design, not a product. Deeper kamm sections, very steep seat angle, integrated storage, discs front and rear."
+    }
+   ],
+   "skins": [
+    {
+     "id": "prism",
+     "name": "Prism",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#5fd8d3"
+    },
+    {
+     "id": "sunrise",
+     "name": "Sunrise",
+     "kind": "studio",
+     "frame": "#ff6f59",
+     "accent": "#f3b64f"
+    },
+    {
+     "id": "pearl",
+     "name": "Pearl",
+     "kind": "studio",
+     "frame": "#efe9df",
+     "accent": "#138a8f"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "studio-kona-2030",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": []
+  },
+  {
+   "id": "atlas-studio-small-650c",
+   "brand": "Studio",
+   "family": "funny",
+   "name": "Small-frame triathlon bike, 650c",
+   "year": 2024,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "studio-design",
+   "glb": "assets/atlas/studio-small-650c/bike.glb",
+   "museum": false,
+   "text": "For shorter riders: 650c wheels keep the handling and the position right on a small frame.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. 650c wheels, short reach, low stack, steep seat angle."
+    }
+   ],
+   "skins": [
+    {
+     "id": "coral",
+     "name": "Coral",
+     "kind": "studio",
+     "frame": "#ff6f59",
+     "accent": "#12181d"
+    },
+    {
+     "id": "lilac",
+     "name": "Lilac",
+     "kind": "studio",
+     "frame": "#a98bef",
+     "accent": "#f6df86"
+    },
+    {
+     "id": "ink",
+     "name": "Ink",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#ff3d8e"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "studio-small-650c",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": []
+  },
+  {
+   "id": "atlas-studio-xl-tri",
+   "brand": "Studio",
+   "family": "superbike",
+   "name": "XL triathlon bike",
+   "year": 2024,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "studio-design",
+   "glb": "assets/atlas/studio-xl-tri/bike.glb",
+   "museum": false,
+   "text": "For tall riders: long stack, long reach, the same aero lines scaled up.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. Stack and reach for a rider around 1.95 m."
+    }
+   ],
+   "skins": [
+    {
+     "id": "basalt",
+     "name": "Basalt",
+     "kind": "studio",
+     "frame": "#1c1d20",
+     "accent": "#e8471c"
+    },
+    {
+     "id": "sand",
+     "name": "Sand",
+     "kind": "studio",
+     "frame": "#e9dcc4",
+     "accent": "#12181d"
+    },
+    {
+     "id": "sea",
+     "name": "Sea",
+     "kind": "studio",
+     "frame": "#0f5458",
+     "accent": "#5fd8d3"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "studio-xl-tri",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": []
+  },
+  {
+   "id": "atlas-studio-alloy-entry",
+   "brand": "Studio",
+   "family": "diamond",
+   "name": "Entry alloy triathlon bike",
+   "year": 2022,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "studio-design",
+   "glb": "assets/atlas/studio-alloy-entry/bike.glb",
+   "museum": false,
+   "text": "The bike most first-timers start on: an alloy frame, clip-ons and good wheels.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. Round alloy tubes, clip-on bars, box-section spoked wheels."
+    }
+   ],
+   "skins": [
+    {
+     "id": "race-red",
+     "name": "Race red",
+     "kind": "studio",
+     "frame": "#c8161d",
+     "accent": "#12181d",
+     "rim": "#16171b"
+    },
+    {
+     "id": "silver",
+     "name": "Silver",
+     "kind": "studio",
+     "frame": "#aeb2b6",
+     "accent": "#12181d",
+     "rim": "#16171b"
+    },
+    {
+     "id": "mint",
+     "name": "Mint",
+     "kind": "studio",
+     "frame": "#8fe7dc",
+     "accent": "#12181d",
+     "rim": "#16171b"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "studio-alloy-entry",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": []
+  },
+  {
+   "id": "atlas-studio-sprint-track",
+   "brand": "Studio",
+   "family": "pursuit",
+   "name": "Track sprint bike",
+   "year": 2023,
+   "era": null,
+   "type": "bike",
+   "category": "track",
+   "origin": "studio-design",
+   "glb": "assets/atlas/studio-sprint-track/bike.glb",
+   "museum": false,
+   "text": "The opposite of the Hour: short, stiff and built for 200 metres.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. Short wheelbase, drop bars, disc rear and tri-spoke front."
+    }
+   ],
+   "skins": [
+    {
+     "id": "gold",
+     "name": "Gold",
+     "kind": "studio",
+     "frame": "#c9a13b",
+     "accent": "#12181d",
+     "disc": "#12181d",
+     "tape": "#12181d"
+    },
+    {
+     "id": "white",
+     "name": "White",
+     "kind": "studio",
+     "frame": "#f2f0ea",
+     "accent": "#c8161d",
+     "disc": "#f2f0ea",
+     "tape": "#12181d"
+    },
+    {
+     "id": "black",
+     "name": "Black",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#c9a13b",
+     "disc": "#12181d",
+     "tape": "#c9a13b"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "studio-sprint-track",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": []
+  },
+  {
+   "id": "atlas-studio-beam-2020s",
+   "brand": "Studio",
+   "family": "beam",
+   "name": "Beam triathlon concept",
+   "year": 2025,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "studio-design",
+   "glb": "assets/atlas/studio-beam-2020s/bike.glb",
+   "museum": false,
+   "text": "The beam bike returns where the rules allow it: triathlon, not the UCI.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design inspired by 1990s beam frames. No seat tube; the saddle rides on a cantilevered beam."
+    }
+   ],
+   "skins": [
+    {
+     "id": "volt",
+     "name": "Volt",
+     "kind": "studio",
+     "frame": "#d9ff3f",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    },
+    {
+     "id": "cobalt",
+     "name": "Cobalt",
+     "kind": "studio",
+     "frame": "#1d4fd6",
+     "accent": "#f2f0ea",
+     "disc": "#12181d"
+    },
+    {
+     "id": "graphite",
+     "name": "Graphite",
+     "kind": "studio",
+     "frame": "#2c353c",
+     "accent": "#ff592c",
+     "disc": "#12181d"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "studio-beam-2020s",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": []
+  },
+  {
+   "id": "atlas-studio-wing-road",
+   "brand": "Studio",
+   "family": "monocoque",
+   "name": "Wing frame, road triathlon",
+   "year": 2026,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "studio-design",
+   "glb": "assets/atlas/studio-wing-road/bike.glb",
+   "museum": false,
+   "text": "The monocoque wing on a road-going triathlon bike: bottles, brakes and all.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design using the monocoque wing architecture with a spoked front wheel and aero bars."
+    }
+   ],
+   "skins": [
+    {
+     "id": "lava",
+     "name": "Lava",
+     "kind": "studio",
+     "frame": "#1c1d20",
+     "accent": "#ff592c",
+     "disc": "#12181d"
+    },
+    {
+     "id": "reef",
+     "name": "Reef",
+     "kind": "studio",
+     "frame": "#138a8f",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    },
+    {
+     "id": "blush",
+     "name": "Blush",
+     "kind": "studio",
+     "frame": "#f2a7c3",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "studio-wing-road",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": []
+  },
+  {
+   "id": "atlas-studio-gravel-aero",
+   "brand": "Studio",
+   "family": "superbike",
+   "name": "Aero gravel bike",
+   "year": 2025,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "studio-design",
+   "glb": "assets/atlas/studio-gravel-aero/bike.glb",
+   "museum": false,
+   "text": "Drop bars, deep tubes, wider tyres: time-trial ideas on a dirt road.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A studio design. Aero road frame with short clip-ons and deep spoked wheels."
+    }
+   ],
+   "skins": [
+    {
+     "id": "olive",
+     "name": "Olive",
+     "kind": "studio",
+     "frame": "#5a5834",
+     "accent": "#e0a458",
+     "tape": "#e0a458"
+    },
+    {
+     "id": "clay",
+     "name": "Clay",
+     "kind": "studio",
+     "frame": "#b4541f",
+     "accent": "#12181d",
+     "tape": "#12181d"
+    },
+    {
+     "id": "fog",
+     "name": "Fog",
+     "kind": "studio",
+     "frame": "#dfeae6",
+     "accent": "#0f3a44",
+     "tape": "#0f3a44"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "studio-gravel-aero",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": []
+  },
+  {
+   "id": "edition-film-aero-glam",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Alien Glam",
+   "sub": "Aero Glam · The Alien",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "film",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "They came for the watts. They stayed for the looks.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Aero Glam · The Alien livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "film-aero-glam",
+     "name": "Alien Glam",
+     "kind": "dye",
+     "dye": {
+      "stops": [
+       "#050805",
+       "#1fbf3f",
+       "#8be04e",
+       "#d9ff3f",
+       "#7b4fd6"
+      ],
+      "angle": 40,
+      "scale": 1.8,
+      "flow": 1.1,
+      "darkness": 0.45
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/themes/films.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-couture",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Blush Couture",
+   "sub": "Couture · The Supermodel",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "film",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Blonde. Bored. Twelve seconds faster than you.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Couture · The Supermodel livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "film-couture",
+     "name": "Blush Couture",
+     "kind": "dye",
+     "dye": {
+      "stops": [
+       "#f2a7c3",
+       "#fff1f6",
+       "#e3b76a",
+       "#ff8fbf",
+       "#f6dcae"
+      ],
+      "angle": 70,
+      "scale": 1.2,
+      "flow": 0.7,
+      "darkness": 0
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/themes/films.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-tiffany-tide",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Tiffany Tide",
+   "sub": "Offshore · The Surfer",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "film",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "One wave. One bike. No brakes.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Offshore · The Surfer livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "film-tiffany-tide",
+     "name": "Tiffany Tide",
+     "kind": "dye",
+     "dye": {
+      "stops": [
+       "#2f4fd6",
+       "#6ec6ff",
+       "#f4fbfb",
+       "#8fe7dc",
+       "#55d8d3"
+      ],
+      "angle": -24,
+      "scale": 1.3,
+      "flow": 1.2,
+      "darkness": 0
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/themes/films.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-hex",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Witching Hour",
+   "sub": "Hex · The Witch",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "film",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Double, double, carbon trouble.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Hex · The Witch livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "film-hex",
+     "name": "Witching Hour",
+     "kind": "dye",
+     "dye": {
+      "stops": [
+       "#0c0714",
+       "#3a1f6b",
+       "#7b4fd6",
+       "#b6ff5a",
+       "#1a0f2a"
+      ],
+      "angle": 55,
+      "scale": 1.5,
+      "flow": 1.3,
+      "darkness": 0.45
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/themes/films.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-stay-weird",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Stay Weird",
+   "sub": "Stay Weird · The Weirdo",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "film",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Rules are for other bikes.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Stay Weird · The Weirdo livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "film-stay-weird",
+     "name": "Stay Weird",
+     "kind": "dye",
+     "dye": {
+      "stops": [
+       "#a98bef",
+       "#f6df86",
+       "#1e1826",
+       "#a98bef",
+       "#f6df86"
+      ],
+      "angle": 0,
+      "scale": 2.4,
+      "flow": 0.15,
+      "darkness": 0
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/themes/films.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-lake-house",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Lake Fog",
+   "sub": "The Lake House · The Final Girl",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "film",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Whatever you do, don’t ride down to the dock.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the The Lake House · The Final Girl livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "film-lake-house",
+     "name": "Lake Fog",
+     "kind": "dye",
+     "dye": {
+      "stops": [
+       "#03090c",
+       "#0f3a44",
+       "#5b8c8f",
+       "#dfeae6",
+       "#14242a"
+      ],
+      "angle": -15,
+      "scale": 1.4,
+      "flow": 1.6,
+      "darkness": 0.45
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/themes/films.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary"
+    }
+   ]
+  },
+  {
+   "id": "edition-film-sanctuary",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Stained Glass",
+   "sub": "Sanctuary · The Doll",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "film",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "She has been waiting in the front pew.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Sanctuary · The Doll livery, as shown in the Sanctuary. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "film-sanctuary",
+     "name": "Stained Glass",
+     "kind": "dye",
+     "dye": {
+      "stops": [
+       "#b3122e",
+       "#1d4fd6",
+       "#f2c14e",
+       "#2f9e5a",
+       "#6f4cd9"
+      ],
+      "angle": 18,
+      "scale": 2.1,
+      "flow": 0.4,
+      "darkness": 0
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/themes/films.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "sanctuary",
+     "name": "The Sanctuary"
+    }
+   ]
+  },
+  {
+   "id": "edition-galleries-bio",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Bio room CFR",
+   "sub": "Bio",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "galleries",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Bio livery, as shown in the Bio room. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "theme-bio",
+     "name": "Bio",
+     "kind": "theme",
+     "frame": "#1f6b3a",
+     "glow": {
+      "color": "#1f6b3a",
+      "intensity": 0.28
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "room-bio",
+     "name": "Bio"
+    }
+   ]
+  },
+  {
+   "id": "edition-galleries-horror",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Horror room CFR",
+   "sub": "Horror",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "galleries",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Horror livery, as shown in the Horror room. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "theme-horror",
+     "name": "Horror",
+     "kind": "theme",
+     "frame": "#1a0a0e",
+     "glow": {
+      "color": "#1a0a0e",
+      "intensity": 0.28
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "room-horror",
+     "name": "Horror"
+    }
+   ]
+  },
+  {
+   "id": "edition-galleries-alien",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Alien room CFR",
+   "sub": "Alien",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "galleries",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Alien livery, as shown in the Alien room. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "theme-alien",
+     "name": "Alien",
+     "kind": "theme",
+     "frame": "#0c3d3a",
+     "glow": {
+      "color": "#0c3d3a",
+      "intensity": 0.28
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "room-alien",
+     "name": "Alien"
+    }
+   ]
+  },
+  {
+   "id": "edition-galleries-zombie",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Zombie room CFR",
+   "sub": "Zombie",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "galleries",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Zombie livery, as shown in the Zombie room. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "theme-zombie",
+     "name": "Zombie",
+     "kind": "theme",
+     "frame": "#5a5834",
+     "glow": {
+      "color": "#5a5834",
+      "intensity": 0.28
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "room-zombie",
+     "name": "Zombie"
+    }
+   ]
+  },
+  {
+   "id": "edition-lava-night-lava-night",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Lava Night",
+   "sub": "Lava Night",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "lava-night",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Lava Night livery, as shown in Lava Night. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "lava-night",
+     "name": "Lava Night",
+     "kind": "theme",
+     "frame": "#141116",
+     "finish": {
+      "roughness": 0.32,
+      "metalness": 0.25,
+      "clearcoat": 1
+     },
+     "decals": {
+      "color": "#ff7a1a",
+      "glow": "#ff4d00",
+      "intensity": 1.6
+     }
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "hween",
+     "name": "Lava Night"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-witchcraft",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Witchcraft",
+   "sub": "Witchcraft",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "artworld",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Black-violet lacquer with a quiet ritual glow.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Witchcraft livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "art-witchcraft",
+     "name": "Witchcraft",
+     "kind": "theme",
+     "frame": "#130d1a",
+     "accent": "#8e59c4",
+     "note": "Black-violet lacquer with a quiet ritual glow."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-stitched",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Stitched",
+   "sub": "Stitched",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "artworld",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Bone-toned shell, dark seams and polished metal.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Stitched livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "art-stitched",
+     "name": "Stitched",
+     "kind": "theme",
+     "frame": "#d7cdbc",
+     "accent": "#8e2635",
+     "note": "Bone-toned shell, dark seams and polished metal."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-pagan",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Pagan",
+   "sub": "Pagan",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "artworld",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Dark bronze and runic gold, restrained rather than costume-like.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Pagan livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "art-pagan",
+     "name": "Pagan",
+     "kind": "theme",
+     "frame": "#211b14",
+     "accent": "#a5823a",
+     "note": "Dark bronze and runic gold, restrained rather than costume-like."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-moonlit",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Moonlit",
+   "sub": "Moonlit",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "artworld",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Midnight carbon that changes under cold highlights.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Moonlit livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "art-moonlit",
+     "name": "Moonlit",
+     "kind": "theme",
+     "frame": "#0a1627",
+     "accent": "#8ca5d0",
+     "note": "Midnight carbon that changes under cold highlights."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-carnival",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Carnival",
+   "sub": "Carnival",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "artworld",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Oxblood lacquer with pale graphic fragments.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Carnival livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "art-carnival",
+     "name": "Carnival",
+     "kind": "theme",
+     "frame": "#4b111d",
+     "accent": "#e2c5a4",
+     "note": "Oxblood lacquer with pale graphic fragments."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection"
+    }
+   ]
+  },
+  {
+   "id": "edition-artworld-ritual-forest",
+   "brand": "Canyon",
+   "family": "Speedmax",
+   "name": "Ritual Forest",
+   "sub": "Ritual Forest",
+   "year": 2027,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "museum-edition",
+   "edition": "artworld",
+   "base": "canyon-cfr-2027",
+   "glb": "assets/museum/speedmax_web.glb",
+   "museum": true,
+   "text": "Black-green carbon with mossy reflections and bronze details.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A Speedmax CFR in the Ritual Forest livery, as shown in the Secret Collection. The frame is the CFR model; only the paint is the edition's."
+    }
+   ],
+   "skins": [
+    {
+     "id": "art-ritual-forest",
+     "name": "Ritual Forest",
+     "kind": "theme",
+     "frame": "#0d1c15",
+     "accent": "#62805f",
+     "note": "Black-green carbon with mossy reflections and bronze details."
+    }
+   ],
+   "sources": [
+    {
+     "label": "Livery",
+     "file": "museum/skins/museum.json"
+    }
+   ],
+   "where": [
+    {
+     "id": "secret",
+     "name": "The Secret Collection"
+    }
+   ]
+  }
+ ]
+}

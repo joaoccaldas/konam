@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!--harden:start-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org; connect-src 'self' data: blob: https://api.weather.gov https://mtvpnoqwjpoqaiocrklq.supabase.co https://upload.wikimedia.org https://thumb.wikimedia.org; media-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://joaoccaldas.github.io/canyonmuseum/Studio.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="KONA">
+<meta property="og:title" content="Studio · Speedmax Museum — build, paint and share a time-trial bike"><meta property="og:description" content="Every bike in the Speedmax Museum and more, in 3D: paint it, give it a film theme, set the scene, dream it in motion and share it. Canyon generations, named machines and studio designs.">
+<meta property="og:url" content="https://joaoccaldas.github.io/canyonmuseum/Studio.html"><meta property="og:image" content="https://joaoccaldas.github.io/canyonmuseum/assets/share/museum.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Studio · Speedmax Museum — build, paint and share a time-trial bike"><meta name="twitter:description" content="Every bike in the Speedmax Museum and more, in 3D: paint it, give it a film theme, set the scene, dream it in motion and share it. Canyon generations, named machines and studio designs."><meta name="twitter:image" content="https://joaoccaldas.github.io/canyonmuseum/assets/share/museum.jpg">
+<link rel="alternate" type="text/plain" href="https://joaoccaldas.github.io/canyonmuseum/llms.txt" title="LLM summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Studio · Speedmax Museum — build, paint and share a time-trial bike","description":"Every bike in the Speedmax Museum and more, in 3D: paint it, give it a film theme, set the scene, dream it in motion and share it. Canyon generations, named machines and studio designs.","url":"https://joaoccaldas.github.io/canyonmuseum/Studio.html","image":"https://joaoccaldas.github.io/canyonmuseum/assets/share/museum.jpg","inLanguage":"en","isAccessibleForFree":true,"publisher":{"@type":"Person","name":"João Caldas","url":"https://joaoccaldas.github.io/ai/"},"about":[{"@type":"Thing","name":"Canyon Speedmax"},{"@type":"SportsEvent","name":"IRONMAN World Championship","location":"Kailua-Kona, Hawaii"}],"disambiguatingDescription":"An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners."}</script>
+<!--harden:end-->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KONA Studio · Build, paint and race your bike</title>
+<meta name="description" content="Every bike in the Speedmax Museum and more, in 3D: paint it, give it a film theme, set the scene, dream it in motion and share it. Canyon generations, named machines and studio designs.">
+<meta name="theme-color" content="#12181d">
+<link rel="icon" href="assets/pwa/icon-v3.svg" type="image/svg+xml">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/pwa/apple-touch-icon-v3.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="brand/tokens.css">
+<link rel="stylesheet" href="brand/themes.css">
+<link rel="stylesheet" href="brand/artifacts.css">
+<link rel="stylesheet" href="web/styles/system.css">
+<link rel="stylesheet" href="web/styles/studio.css">
+<!--design-system:start--><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300..800&display=swap"><link rel="stylesheet" href="brand/typography.css"><link rel="stylesheet" href="web/styles/components.css"><!--design-system:end-->
+</head>
+<body>
+<canvas id="stage" aria-label="3D studio: drag to turn the bike, pinch or scroll to zoom"></canvas>
+<div class="letter t"></div><div class="letter b"></div>
+<header class="bar">
+  <a class="pill keep" href="index.html?view=me" aria-label="Back to User Studio">← <span class="brand">USER STUDIO</span></a>
+  <span class="pill event" id="eventPill" hidden></span>
+  <span class="grow"></span>
+  <button class="pill" id="shareBtn" aria-label="Share this bike">Share</button>
+  <button class="pill me" id="meBtn" aria-label="Profile and settings"><i aria-hidden="true"></i><span>Sign in</span></button>
+</header>
+<div class="hero" id="hero"><small id="heroEyebrow"></small><h1 id="heroTitle">Studio</h1><p id="heroSub"></p></div>
+<div id="loading" hidden><i></i><span>Loading the bike…</span></div>
+<div class="fab">
+  <button id="dreamBtn" aria-pressed="false" aria-label="Dream mode: the bike in motion" title="Dream">✦</button>
+  <button id="favBtn" aria-pressed="false" aria-label="Save to favourites" title="Favourite">♡</button>
+  <button id="dockBtn" aria-label="Show or hide the panel" title="Panel">≡</button>
+</div>
+<div id="dreamTitle"><small id="dreamEyebrow"></small><h2 id="dreamName"></h2><p id="dreamLine"></p></div>
+<section class="dock" id="dock" aria-label="Studio panel">
+  <div class="grab" aria-hidden="true"></div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="bikes" aria-selected="true">Bikes</button>
+    <button role="tab" data-tab="setup">Setup</button>
+    <button role="tab" data-tab="paint">Paint</button>
+    <button role="tab" data-tab="themes">Themes</button>
+    <button role="tab" data-tab="scene">Scene</button>
+    <button role="tab" data-tab="info">About</button>
+  </nav>
+  <div class="panel" id="panel" role="tabpanel"></div>
+  <aside id="card" aria-live="polite" hidden><button class="close" id="cardClose">×</button><button class="card-share" id="cardShare">↗</button>
+    <div class="c-years" id="cYears"></div><h2 id="cName"></h2><div class="c-mat" id="cMat"></div><p class="c-note" id="cNote"></p>
+    <div class="c-stats" id="cStats"></div><div class="c-actions" id="cActions"></div><div id="cMedia"></div></aside>
+</section>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app/museum-data.js"></script>
+<script src="app/studio-catalog.js"></script>
+<script src="app/studio.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caldas.studio/schemas/equipment-interface-v1.json",
+  "title": "Equipment Interface V1",
+  "type": "object",
+  "required": ["schema_version","entity_id","interfaces"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "entity_id": { "type": "string", "minLength": 1 },
+    "interfaces": {
+      "type": "object",
+      "properties": {
+        "wheel_front": {
+          "type": "object",
+          "properties": {
+            "wheel_standard": { "type": ["string","null"] },
+            "axle": { "type": ["string","null"] },
+            "brake": { "type": ["string","null"] }
+          },
+          "additionalProperties": true
+        },
+        "wheel_rear": {
+          "type": "object",
+          "properties": {
+            "wheel_standard": { "type": ["string","null"] },
+            "axle": { "type": ["string","null"] },
+            "brake": { "type": ["string","null"] },
+            "freehub": { "type": ["string","null"] }
+          },
+          "additionalProperties": true
+        },
+        "drivetrain": {
+          "type": "object",
+          "properties": {
+            "rear_speeds": { "type": ["integer","null"] },
+            "freehub": { "type": ["string","null"] }
+          },
+          "additionalProperties": true
+        },
+        "crank": {
+          "type": "object",
+          "properties": {
+            "rear_speeds": { "type": ["integer","null"] },
+            "chainline_mm": { "type": ["number","null"] }
+          },
+          "additionalProperties": true
+        },
+        "aerobar_extensions": {
+          "type": "object",
+          "properties": {
+            "clamp_outer_diameter_mm": { "type": ["number","null"] }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joaoccaldas.github.io/canyonmuseum/schemas/v1/collectible.schema.json",
+  "title": "Collectible",
+  "type": "object",
+  "required": ["id", "name", "rarity"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^find:" },
+    "name": { "type": "string" },
+    "rarity": { "enum": ["common", "uncommon", "rare", "epic", "legendary", "mythic"] },
+    "place": { "type": "string" },
+    "note": { "type": "string", "description": "Rarity is historical or positional. It is never rolled." }
+  }
+}

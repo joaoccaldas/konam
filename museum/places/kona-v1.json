@@ -1,0 +1,144 @@
+{
+  "schema": "place-registry-v1",
+  "updated_at": "2026-09-30",
+  "ranking_policy": "Utility/relevance is independent of commercial status. Paid or affiliate relationships must be disclosed and must not change safety-critical ordering.",
+  "places": [
+    {
+      "id": "place:kailua-pier",
+      "name": "Kailua Pier",
+      "type": "landmark",
+      "categories": [
+        "race-critical",
+        "swim",
+        "history"
+      ],
+      "location": {
+        "city": "Kailua-Kona",
+        "region": "HI",
+        "country": "US",
+        "address": "75-5660 Palani Rd, Kailua-Kona, HI 96740"
+      },
+      "race_week_relevance": [
+        "orientation",
+        "swim-start context",
+        "race history"
+      ],
+      "website": "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona",
+      "source": {
+        "url": "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona",
+        "verified_at": "2026-09-30"
+      },
+      "partner": {
+        "status": "none"
+      },
+      "reward": {
+        "event": "PLACE_DISCOVERED",
+        "collection": "kona-places"
+      }
+    },
+    {
+      "id": "place:bike-works-kona",
+      "name": "Bike Works Kona",
+      "type": "local_business",
+      "categories": [
+        "bike-service",
+        "race-critical",
+        "gear"
+      ],
+      "location": {
+        "city": "Kailua-Kona",
+        "region": "HI",
+        "country": "US",
+        "address": "75-5660 Kopiko St, Kailua-Kona, HI 96740"
+      },
+      "race_week_relevance": [
+        "bike assembly",
+        "tune-up",
+        "race service",
+        "packing/shipping"
+      ],
+      "website": "https://www.bikeworkskona.com/",
+      "source": {
+        "url": "https://www.bikeworkskona.com/race-services/",
+        "verified_at": "2026-09-30",
+        "note": "Official site states World Championship race service must be scheduled at least 7 days before the event."
+      },
+      "partner": {
+        "status": "prospect",
+        "commercial": false
+      },
+      "reward": {
+        "event": "PLACE_DISCOVERED",
+        "collection": "kona-places"
+      }
+    },
+    {
+      "id": "place:kona-boys-beach-shack",
+      "name": "Kona Boys Beach Shack",
+      "type": "local_business",
+      "categories": [
+        "ocean",
+        "recovery",
+        "explore"
+      ],
+      "location": {
+        "city": "Kailua-Kona",
+        "region": "HI",
+        "country": "US",
+        "address": "75-5660 Palani Rd, Kailua-Kona, HI 96740"
+      },
+      "race_week_relevance": [
+        "easy ocean activity",
+        "supporter/family activity",
+        "local story"
+      ],
+      "website": "https://www.konaboys.com/",
+      "source": {
+        "url": "https://www.konaboys.com/",
+        "verified_at": "2026-09-30"
+      },
+      "partner": {
+        "status": "prospect",
+        "commercial": false
+      },
+      "reward": {
+        "event": "PLACE_DISCOVERED",
+        "collection": "kona-places"
+      }
+    },
+    {
+      "id": "place:island-lava-java",
+      "name": "Island Lava Java",
+      "type": "local_business",
+      "categories": [
+        "food",
+        "coffee",
+        "race-week-social"
+      ],
+      "location": {
+        "city": "Kailua-Kona",
+        "region": "HI",
+        "country": "US",
+        "address": "75-5801 Aliʻi Drive Building 1, Kailua-Kona, HI 96740"
+      },
+      "race_week_relevance": [
+        "breakfast",
+        "coffee",
+        "meet-up"
+      ],
+      "website": "https://islandlavajava.com/",
+      "source": {
+        "url": "https://islandlavajava.com/",
+        "verified_at": "2026-09-30"
+      },
+      "partner": {
+        "status": "prospect",
+        "commercial": false
+      },
+      "reward": {
+        "event": "PLACE_DISCOVERED",
+        "collection": "kona-places"
+      }
+    }
+  ]
+}

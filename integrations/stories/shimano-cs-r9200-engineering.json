@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "id": "shimano-cs-r9200-engineering",
+  "story_type": "product",
+  "title": "Inside a 12-speed Dura-Ace cassette",
+  "summary": "Reusable engineering story for the Shimano CS-R9200 11–30 candidate asset.",
+  "public": false,
+  "event_ids": [],
+  "entity_refs": [
+    {"id": "shimano-cs-r9200-11-30", "kind": "product", "role": "subject"}
+  ],
+  "beats": [
+    {
+      "id": "assembled",
+      "kind": "inspect",
+      "title": "The assembled cassette",
+      "body": "Start with the complete 11–30T twelve-speed cassette as one product object.",
+      "entity_refs": ["shimano-cs-r9200-11-30"],
+      "scene_ref": null,
+      "interaction": "assembled",
+      "source_records": ["https://productinfo.shimano.com/pdfs/product/archive/2025-2026_Specifications_v035_en.pdf"]
+    },
+    {
+      "id": "explode",
+      "kind": "reveal",
+      "title": "Explode the stack",
+      "body": "Separate the lockring, individual small sprockets, grouped larger sprockets and carriers using the semantic part hierarchy.",
+      "entity_refs": ["shimano-cs-r9200-11-30"],
+      "scene_ref": null,
+      "interaction": "explode",
+      "source_records": ["https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/ev/ev/EV-CS-R9200-4808.pdf"]
+    },
+    {
+      "id": "ratios",
+      "kind": "explain",
+      "title": "Read the progression",
+      "body": "The documented 11–30T sequence is 11-12-13-14-15-16-17-19-21-24-27-30.",
+      "entity_refs": ["shimano-cs-r9200-11-30"],
+      "scene_ref": null,
+      "interaction": "highlight-parts",
+      "source_records": ["https://productinfo.shimano.com/pdfs/product/archive/2025-2026_Specifications_v035_en.pdf"]
+    },
+    {
+      "id": "service",
+      "kind": "cta",
+      "title": "Service and parts",
+      "body": "Open current Shimano technical documentation or find an official dealer. Installation and torque guidance remains manufacturer-authoritative.",
+      "entity_refs": ["shimano-cs-r9200-11-30"],
+      "scene_ref": null,
+      "interaction": "maintenance-vendor",
+      "source_records": ["https://bike.shimano.com/dealer-locator.html"]
+    }
+  ],
+  "sponsorship": null,
+  "source_records": [
+    "https://productinfo.shimano.com/pdfs/product/archive/2025-2026_Specifications_v035_en.pdf",
+    "https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/ev/ev/EV-CS-R9200-4808.pdf"
+  ]
+}

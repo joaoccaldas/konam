@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "title": "Trek Triathlon & Time-Trial Collection",
+  "note": "Oldest first. Dates are manufacturer model years seen in Trek's own catalogs (official catalog archive) and archived trekbikes.com pages. 'not-modelled' cards state why.",
+  "entries": [
+    {
+      "id": "trek-tri-series-1986",
+      "name": "Tri Series 500 / 700",
+      "years": "MY1986",
+      "material": "Reynolds 531 steel, lugged",
+      "feature": "Trek's first line sold as triathlon bikes: road geometry, drop bars.",
+      "status": "not-modelled",
+      "reason": "Lineage question for the owner: a road frame sold under a 'Tri Series' name, not a triathlon-specific frame. Photos are catalog scans on a dark background; no geometry table found yet.",
+      "sources": [
+        "assets/reference/heritage/catalogs/1986_Trek_Catalog.pdf (pp. 5, 6, 8)",
+        "assets/reference/heritage/catalogs/1986_Trek_Brochure.pdf (pp. 10, 12)"
+      ],
+      "thumbnail": null
+    },
+    {
+      "id": "trek-race-triathlon-1987-1999",
+      "name": "Race / Triathlon category (no tri-specific frame)",
+      "years": "MY1987–1999",
+      "material": "Steel, bonded aluminium, carbon (road frames)",
+      "feature": "Catalogs label road bikes 'Race/Triathlon'; Mike Pigg and Karen Smyers raced Trek road frames (2300, 5500, Y-Foil).",
+      "status": "not-modelled",
+      "reason": "No triathlon-specific frame in these catalogs; recorded as a gap, not a generation.",
+      "sources": [
+        "assets/reference/heritage/catalogs/1987_Trek_Catalog.pdf",
+        "assets/reference/heritage/catalogs/1993_Trek_Catalog.pdf (p. 8)",
+        "assets/reference/heritage/catalogs/1996_Trek_Spec_Catalog.pdf (p. 44)",
+        "assets/reference/heritage/catalogs/1999_Trek_Catalog.pdf (p. 17)"
+      ],
+      "thumbnail": null
+    },
+    {
+      "id": "trek-hilo",
+      "name": "Hilo 1000 / 2000",
+      "years": "MY2000–2002",
+      "material": "Alpha SLR aluminium, 650c",
+      "feature": "Trek's first triathlon-specific frame: aero down tube, steep seat tube, 650c wheels. Karen Smyers' bike.",
+      "status": "research",
+      "reason": "Buildable at lower confidence: best photo is a ~1,100 px catalog scan with the front tyre clipped by the page edge. Geometry in the 2000 and 2002 spec manuals.",
+      "sources": [
+        "assets/reference/heritage/catalogs/2000_Trek_Catalog.pdf (p. 26)",
+        "assets/reference/heritage/catalogs/2001_Trek_Catalog.pdf (p. 8)",
+        "assets/reference/heritage/catalogs/2002_Trek_Spec_Catalog.pdf (pp. 97-99)"
+      ],
+      "thumbnail": null
+    },
+    {
+      "id": "trek-oclv-time-trial",
+      "name": "USPS Team Time Trial / Equinox 11",
+      "years": "MY2001–2006",
+      "material": "OCLV HC carbon",
+      "feature": "Lance Armstrong's time-trial frame, sold as a frameset (2001), complete bike (2003) and as the Equinox 11 (2004-2006, identical geometry).",
+      "status": "research",
+      "reason": "Buildable: 784 px web photos (2004, 2006) and a ~1,100 px catalog scan (2003); geometry in the 2004 and 2005 spec manuals.",
+      "sources": [
+        "assets/reference/heritage/catalogs/2001_Trek_Catalog.pdf (p. 2)",
+        "assets/reference/heritage/catalogs/2003_Trek_Catalog.pdf (p. 2)",
+        "assets/reference/heritage/catalogs/2004_Trek_Spec_Catalog.pdf (pp. 54, 79)"
+      ],
+      "thumbnail": "assets/reference/heritage/web/20040503011014_bikes_2004_road_large_teamtimetrial.jpg"
+    },
+    {
+      "id": "trek-equinox-9-my2004",
+      "name": "Equinox 9 / 7 (Alpha SL)",
+      "years": "MY2004",
+      "material": "Alpha SL aluminium, 700c (54-60) / 650c (50-52)",
+      "feature": "First Equinox: large aero down tube, 76° seat tube, bullhorn + clip-ons, bar-end shifters.",
+      "status": "reference-study-draft",
+      "reason": "Pilot 3D build in progress. Photographed frame differs from the published size-58 table at the rear (see viewer).",
+      "sources": [
+        "assets/reference/heritage/web/20030922065745_bikes_2004_road_large_equinox9.jpg",
+        "assets/reference/heritage/catalogs/2004_Trek_Spec_Catalog.pdf (pp. 80-81)"
+      ],
+      "thumbnail": "assets/reference/heritage/web/20030922065745_bikes_2004_road_large_equinox9.jpg",
+      "viewer": "bikes/trek-equinox-9-my2004/"
+    },
+    {
+      "id": "trek-equinox-zr9000",
+      "name": "Equinox 9 / 7 (ZR9000)",
+      "years": "MY2005 (2006 frame not yet confirmed)",
+      "material": "ZR9000 aluminium",
+      "feature": "New frame with new geometry (400 mm chainstays, taller seat tubes).",
+      "status": "research",
+      "reason": "Buildable: 784 px web photos (2005); geometry in the 2005 spec manual.",
+      "sources": [
+        "assets/reference/heritage/web/20041126103232_bikes_2005_road_large_equinox9.jpg",
+        "assets/reference/heritage/catalogs/2005_Spec_Catalog.pdf (pp. 211-212)"
+      ],
+      "thumbnail": "assets/reference/heritage/web/20041126103232_bikes_2005_road_large_equinox9.jpg"
+    },
+    {
+      "id": "trek-ttx",
+      "name": "TTX / Equinox TTX",
+      "years": "MY2006–2010",
+      "material": "OCLV carbon",
+      "feature": "Consumer version of the TTX time-trial bike (Discovery Channel); sold as Equinox TTX 9.0-9.9 SSL.",
+      "status": "research",
+      "reason": "Buildable: 784 px web photos (2006, 2007). Geometry must still be taken from archived 2007-2008 product pages.",
+      "sources": [
+        "assets/reference/heritage/web/20051124012544_bikes_large_ttx_titaniteblack.jpg",
+        "assets/reference/heritage/web/20061023030934_bikes_my07_large_equinoxttx99_speedyellow.jpg"
+      ],
+      "thumbnail": "assets/reference/heritage/web/20051124012544_bikes_large_ttx_titaniteblack.jpg"
+    },
+    {
+      "id": "trek-equinox-aero-alu-2007",
+      "name": "Equinox 9 (aero aluminium)",
+      "years": "MY2007 (to be confirmed)",
+      "material": "Aluminium",
+      "feature": "Visibly different aluminium frame in the 2007 photo; start year and geometry not yet confirmed.",
+      "status": "research",
+      "reason": "Needs geometry and start year before it can be placed.",
+      "sources": [
+        "assets/reference/heritage/web/20061023030452_bikes_my07_large_equinox9_titanite.jpg"
+      ],
+      "thumbnail": "assets/reference/heritage/web/20061023030452_bikes_my07_large_equinox9_titanite.jpg"
+    },
+    {
+      "id": "trek-speed-concept-1",
+      "name": "Speed Concept (first generation)",
+      "years": "MY2010– (2010 thumbnails archived)",
+      "material": "OCLV carbon",
+      "feature": "Kammtail tube shapes; 2,000 px archived images exist.",
+      "status": "research",
+      "reason": "Outside the five oldest; recorded for completeness.",
+      "sources": [
+        "assets/reference/heritage/web/20120612185138_bikes_2011_xl_speedconcept99_blackgray.jpg"
+      ],
+      "thumbnail": "assets/reference/heritage/web/20110208151249_bikes_2011_large_speedconcept99_blackgray.jpg"
+    }
+  ]
+}

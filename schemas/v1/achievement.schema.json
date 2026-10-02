@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joaoccaldas.github.io/canyonmuseum/schemas/v1/achievement.schema.json",
+  "title": "Achievement",
+  "type": "object",
+  "required": ["id", "name"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^badge:" },
+    "name": { "type": "string" },
+    "hint": { "type": "string" }
+  }
+}

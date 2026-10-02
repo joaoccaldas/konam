@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "generation": "trek-equinox-alpha-sl",
+  "model_year": 2004,
+  "source": {
+    "document": "assets/reference/heritage/catalogs/2004_Trek_Spec_Catalog.pdf",
+    "title": "2004 Trek Specifications Manual - U.S.",
+    "pdf_pages": {
+      "equinox_9": 80,
+      "equinox_7": 81
+    },
+    "printed_pages": {
+      "equinox_9": 78,
+      "equinox_7": 79
+    },
+    "transcription": "PyMuPDF text layer of the manufacturer PDF (not OCR); values copied verbatim."
+  },
+  "geometry": {
+    "units": "mm and degrees",
+    "sizes": [
+      "50",
+      "52",
+      "54",
+      "56",
+      "58",
+      "60"
+    ],
+    "head_tube_angle": [
+      72.5,
+      72.5,
+      73.0,
+      73.0,
+      73.0,
+      73.0
+    ],
+    "fork_offset": [
+      35.0,
+      35.0,
+      40.0,
+      40.0,
+      40.0,
+      40.0
+    ],
+    "trail": [
+      61,
+      61,
+      61,
+      61,
+      61,
+      61
+    ],
+    "seat_tube_angle": [
+      76.0,
+      76.0,
+      76.0,
+      76.0,
+      76.0,
+      76.0
+    ],
+    "effective_top_tube": [
+      502,
+      525,
+      545,
+      555,
+      577,
+      600
+    ],
+    "seat_tube": [
+      526,
+      546,
+      576,
+      600,
+      625,
+      650
+    ],
+    "standover": [
+      710,
+      729,
+      758,
+      782,
+      806,
+      830
+    ],
+    "wheelbase": [
+      932,
+      957,
+      998,
+      1009,
+      1031,
+      1057
+    ],
+    "bb_height": [
+      268,
+      268,
+      266,
+      266,
+      266,
+      266
+    ],
+    "chainstay": [
+      380,
+      380,
+      410,
+      410,
+      410,
+      410
+    ],
+    "head_tube": [
+      90,
+      110,
+      85,
+      110,
+      135,
+      160
+    ]
+  },
+  "wheel_by_size": {
+    "50": "650c",
+    "52": "650c",
+    "54": "700c",
+    "56": "700c",
+    "58": "700c",
+    "60": "700c"
+  },
+  "wheel_note": "Published: '50, 52cm use 650 wheels, 54-60cm use 700c wheels (shown)'.",
+  "fit": {
+    "sizes": [
+      "50",
+      "52",
+      "54",
+      "56",
+      "58",
+      "60"
+    ],
+    "stem_length": [
+      70,
+      80,
+      90,
+      100,
+      110,
+      120
+    ],
+    "stem_angle": [
+      7,
+      7,
+      7,
+      7,
+      7,
+      7
+    ],
+    "headset_spacers": [
+      40,
+      40,
+      40,
+      40,
+      40,
+      40
+    ],
+    "crank_length": [
+      170,
+      170,
+      170,
+      175,
+      175,
+      175
+    ],
+    "seatpost_length": [
+      250,
+      250,
+      250,
+      250,
+      250,
+      250
+    ],
+    "handlebar_width": [
+      420,
+      420,
+      420,
+      420,
+      420,
+      420
+    ],
+    "steerer_length_raw": "196.1|216.1 191.1 216.1 241.1 266.1"
+  },
+  "trims": {
+    "equinox_9": {
+      "product_code": "1497000*14.113",
+      "frame": {
+        "main_tubes": "Alpha SL aluminum",
+        "stays": "Alpha SL aluminum"
+      },
+      "color": "Pearl White/Baja Blue • Silver/Black/Silver decal • Carbon weave fork",
+      "fork": "Bontrager Aero, 345/ 370 mm axle-crown length",
+      "headset": "Cane Creek BL, 22.2/30.2/26.4, 30.1 mm stack height",
+      "handlebar": "Bontrager Race, bullhorn w/Profile Aerolite clipons, 26.0 mm clamp diameter",
+      "stem": "Bontrager Race, 40.0 mm steerer clamp height",
+      "shift_levers": "Shimano Dura-Ace, bar-cons",
+      "brake_levers": "Dia-Compe BL-188",
+      "grips": "Bontrager Gel",
+      "front_derailleur": "Shimano 105, Down pull, Braze-on type w/34.9mm clamp attachment",
+      "rear_derailleur": "Shimano Ultegra",
+      "crankset": "Shimano Ultegra 53/39, 130 mm bolt hole circle",
+      "bottom_bracket": "Shimano 105, 68 x 109.5 (shell x axle, mm), Shimano splined axle",
+      "chain": "Shimano HG-73, 9 speed, 108 links",
+      "cassette": "Shimano HG70 12-23, 9spd",
+      "front_wheel": "Bontrager Race Aero, 16°, 575mm E.R.D., 281 mm radial spokes, Velox 16mm rim strip",
+      "rear_wheel": "Bontrager Race Aero, 16°, 575 mm E.R.D., 288/288 mm 1x rear spokes, Velox 16mm rim strip",
+      "spokes": "DT New Aero, internal alloy nipples",
+      "front_tire": "Bontrager Race X Lite, folding, 700 x 23c",
+      "rear_tire": "Bontrager Race X Lite, folding, 700 x 23c",
+      "seatpost": "Bontrager Race X Lite, 27.2 mm outer diameter",
+      "saddle": "SSM  Azoto Triathlon, CrMo rails, leather cover",
+      "seatpost_binder": "Alloy w/integral bolt, 35.0 mm inner diameter",
+      "brakes": "Shimano 105",
+      "pedals": "-not supplied-",
+      "additionals": "2 water bottle mounts, rack mounts, shim to adapt 1 1/8” stem to 1” steerer",
+      "gearing_front": [
+        39,
+        53
+      ],
+      "cassette_cogs": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        21,
+        23
+      ],
+      "cassette_cogs_basis": "Gear chart on the same page lists rows 12,13,14,15,16,17,19,21,23 against 39/53."
+    },
+    "equinox_7": {
+      "product_code": "1496000*14.103",
+      "frame": {
+        "main_tubes": "Alpha SL aluminum",
+        "stays": "Alpha SL aluminum"
+      },
+      "color": "Metallic Charcoal/Titanite Black • White/Black/Silver decal • Carbon weave fork",
+      "fork": "Bontrager Aero, 369 mm axle-crown length",
+      "crankset": "Bontrager Race 53/39, 130 mm bolt hole circle",
+      "front_derailleur": "Shimano Tiagra",
+      "rear_derailleur": "Shimano 105",
+      "cassette": "Shimano HG50 12-25, 9spd",
+      "front_wheel": "Bontrager Select Road, 20°, 593mm E.R.D.",
+      "rear_wheel": "Bontrager Select Road, 24°, 603 mm E.R.D.",
+      "brakes": "Alloy dual pivot, cartridge pads"
+    }
+  },
+  "discrepancies": [
+    {
+      "field": "fork axle-crown length (Equinox 9)",
+      "values": [
+        "345/ 370 mm (Equinox 9 page)",
+        "369 mm (Equinox 7 page, same frame)"
+      ],
+      "used": "370 mm for 700c sizes; 345 mm is taken to be the 650c fork. Not independently confirmed.",
+      "why": "Both pages describe the same Alpha SL frame; the two-value entry on the Equinox 9 page matches the 650c/700c wheel split."
+    }
+  ]
+}

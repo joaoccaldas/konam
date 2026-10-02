@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "slowtwitch",
+      "name": "Slowtwitch",
+      "kind": "news",
+      "website": "https://www.slowtwitch.com/",
+      "feed_url": "https://www.slowtwitch.com/feed/",
+      "feed_hosts": [
+        "www.slowtwitch.com",
+        "slowtwitch.com"
+      ],
+      "article_hosts": [
+        "www.slowtwitch.com",
+        "slowtwitch.com"
+      ],
+      "note": "Triathlon reporting and analysis",
+      "verified_at": "2026-10-01"
+    },
+    {
+      "id": "triathlon-magazine",
+      "name": "Triathlon Magazine",
+      "kind": "news",
+      "website": "https://triathlonmagazine.ca/",
+      "feed_url": "https://triathlonmagazine.ca/feed/",
+      "feed_hosts": [
+        "triathlonmagazine.ca"
+      ],
+      "article_hosts": [
+        "triathlonmagazine.ca"
+      ],
+      "note": "Triathlon reporting from Canada",
+      "verified_at": "2026-10-01"
+    },
+    {
+      "id": "big-island-now",
+      "name": "Big Island Now",
+      "kind": "kona",
+      "website": "https://bigislandnow.com/",
+      "feed_url": "https://bigislandnow.com/feed/",
+      "feed_hosts": [
+        "bigislandnow.com"
+      ],
+      "article_hosts": [
+        "bigislandnow.com"
+      ],
+      "note": "Hawai\u02bbi Island news, including Kona",
+      "verified_at": "2026-10-01"
+    },
+    {
+      "id": "lionel-sanders",
+      "name": "Lionel Sanders",
+      "kind": "video",
+      "website": "https://www.youtube.com/@Lionel.Sanders",
+      "channel_id": "UC-gct8TB_8l5HsQHBBr8hyQ",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "feed_hosts": [
+        "www.youtube.com"
+      ],
+      "article_hosts": [
+        "www.youtube.com"
+      ],
+      "note": "Official athlete channel",
+      "verified_at": "2026-10-01"
+    },
+    {
+      "id": "lucy-charles-barclay",
+      "name": "Lucy Charles-Barclay",
+      "kind": "video",
+      "website": "https://www.youtube.com/@LucyCharlesBarclay",
+      "channel_id": "UC6PP69DCmBwMCPf9RSSTNTg",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "feed_hosts": [
+        "www.youtube.com"
+      ],
+      "article_hosts": [
+        "www.youtube.com"
+      ],
+      "note": "Team Charles-Barclay \u00b7 Lucy & Reece",
+      "verified_at": "2026-10-01"
+    },
+    {
+      "id": "paula-findlay",
+      "name": "Paula Findlay \u00b7 TTL",
+      "kind": "video",
+      "website": "https://www.youtube.com/@ThatTriathlonLife",
+      "channel_id": "UC8Wjskc9fSkYLporjscGIBQ",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "feed_hosts": [
+        "www.youtube.com"
+      ],
+      "article_hosts": [
+        "www.youtube.com"
+      ],
+      "note": "That Triathlon Life \u00b7 Paula Findlay & Eric Lagerstrom",
+      "verified_at": "2026-10-01"
+    },
+    {
+      "id": "sam-laidlow",
+      "name": "Sam Laidlow",
+      "kind": "video",
+      "website": "https://www.youtube.com/channel/UCP6EsU9T2RykT1quNR5moeg",
+      "channel_id": "UCP6EsU9T2RykT1quNR5moeg",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "feed_hosts": [
+        "www.youtube.com"
+      ],
+      "article_hosts": [
+        "www.youtube.com"
+      ],
+      "note": "Official athlete channel",
+      "identity_source": "https://samlaidlow.com/",
+      "verified_at": "2026-10-01"
+    },
+    {
+      "id": "sam-long",
+      "name": "Sam Long",
+      "kind": "video",
+      "website": "https://www.youtube.com/channel/UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "channel_id": "UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "feed_hosts": [
+        "www.youtube.com"
+      ],
+      "article_hosts": [
+        "www.youtube.com"
+      ],
+      "note": "Official athlete channel",
+      "identity_source": "https://www.samgolong.com/",
+      "verified_at": "2026-10-01"
+    },
+    {
+      "id": "jan-frodeno",
+      "name": "Jan Frodeno",
+      "kind": "video",
+      "website": "https://www.youtube.com/channel/UCaxiAhuGz2SvnIYml4B5qMA",
+      "channel_id": "UCaxiAhuGz2SvnIYml4B5qMA",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "feed_hosts": [
+        "www.youtube.com"
+      ],
+      "article_hosts": [
+        "www.youtube.com"
+      ],
+      "note": "Frodeno Going Mental \u00b7 official podcast",
+      "identity_source": "https://www.frodeno.com/",
+      "verified_at": "2026-10-01"
+    }
+  ]
+}

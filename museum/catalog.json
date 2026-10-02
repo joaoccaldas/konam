@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "title": "Canyon Triathlon Museum",
+  "entries": [
+    {
+      "id": "canyon-speedmax-cfr-axs-my2027-m",
+      "manifest": "bikes/canyon-speedmax-cfr-axs-my2027-m.json",
+      "status": "reference-study",
+      "viewerProfile": "museum/viewer-cfr.json",
+      "thumbnail": "assets/reference/paintings/cfr-2027.jpg",
+      "viewer": "Speedmax_Museum.html",
+      "series": "CFR",
+      "comparison": {
+        "groupset": "SRAM Red AXS",
+        "gear": "50 / 37",
+        "cassette": "10–33",
+        "wheels": "DT Swiss ARC 1100 · 85 / 85 mm",
+        "post": "Splitter Plate Pro",
+        "saddle": "Fizik Aeris LD R1"
+      }
+    },
+    {
+      "id": "canyon-speedmax-slx-8-di2-my2027-m",
+      "manifest": "bikes/canyon-speedmax-slx-8-di2-my2027-m.json",
+      "status": "reference-study",
+      "viewerProfile": "museum/viewer-slx.json",
+      "thumbnail": "assets/reference/paintings/slx-2027.jpg",
+      "viewer": "Speedmax_SLX_Museum.html",
+      "series": "CF SLX",
+      "comparison": {
+        "groupset": "Shimano Ultegra Di2 + 4iiii",
+        "gear": "52 / 36",
+        "cassette": "11–30",
+        "wheels": "DT Swiss ARC 1600 · 65 / 85 mm",
+        "post": "SP102 Standard",
+        "saddle": "Fizik Aeris LD R5"
+      }
+    },
+    {
+      "id": "canyon-speedmax-cfr-di2-my2027",
+      "key": "cfr-di2",
+      "name": "Speedmax CFR Di2",
+      "series": "CFR",
+      "status": "not-modelled",
+      "viewer": null,
+      "thumbnail": null,
+      "viewerProfile": null,
+      "priceSEK": 125000,
+      "weightKg": 9.3,
+      "comparison": {
+        "groupset": "Shimano Dura-Ace Di2",
+        "gear": "52 / 36",
+        "cassette": "11–34",
+        "wheels": "DT Swiss ARC 1100 · 85 / 85 mm",
+        "post": "Splitter Plate Pro",
+        "saddle": "Fizik Aeris LD R1"
+      }
+    },
+    {
+      "id": "canyon-speedmax-cf-slx-8-axs-my2027",
+      "key": "cfslx-axs",
+      "name": "Speedmax CF SLX 8 AXS",
+      "series": "CF SLX",
+      "status": "not-modelled",
+      "viewer": null,
+      "thumbnail": null,
+      "viewerProfile": null,
+      "priceSEK": 91199,
+      "weightKg": 9.02,
+      "comparison": {
+        "groupset": "SRAM Force AXS",
+        "gear": "48 / 35",
+        "cassette": "10–33",
+        "wheels": "DT Swiss ARC 1600 · 65 / 85 mm",
+        "post": "SP102 Standard",
+        "saddle": "Fizik Aeris LD R5"
+      }
+    },
+    {
+      "id": "canyon-speedmax-cf-slx-7-di2-my2027",
+      "key": "cfslx-7di2",
+      "name": "Speedmax CF SLX 7 Di2",
+      "series": "CF SLX",
+      "status": "not-modelled",
+      "viewer": null,
+      "thumbnail": null,
+      "viewerProfile": null,
+      "priceSEK": 73999,
+      "weightKg": 9.12,
+      "comparison": {
+        "groupset": "Shimano 105 Di2",
+        "gear": "52 / 36",
+        "cassette": "11–34",
+        "wheels": "DT Swiss ARC 1600 · 65 / 85 mm",
+        "post": "SP102 Standard",
+        "saddle": "Fizik Aeris LD R5"
+      }
+    },
+    {
+      "id": "canyon-speedmax-cf-8-di2-race-my2027",
+      "key": "cf-8",
+      "name": "Speedmax CF 8 Di2 Race",
+      "series": "CF",
+      "status": "not-modelled",
+      "viewer": null,
+      "thumbnail": null,
+      "viewerProfile": null,
+      "priceSEK": 68399,
+      "weightKg": 9.12,
+      "comparison": {
+        "groupset": "Shimano Ultegra Di2",
+        "gear": "52 / 36",
+        "cassette": "11–34",
+        "wheels": "DT Swiss ARC 1600 Spline",
+        "post": "Standard",
+        "saddle": "Fizik Aeris LD R5"
+      }
+    },
+    {
+      "id": "canyon-speedmax-cf-7-di2-race-my2027",
+      "key": "cf-7",
+      "name": "Speedmax CF 7 Di2 Race",
+      "series": "CF",
+      "status": "not-modelled",
+      "viewer": null,
+      "thumbnail": null,
+      "viewerProfile": null,
+      "priceSEK": 56999,
+      "weightKg": 9.12,
+      "comparison": {
+        "groupset": "Shimano 105 Di2",
+        "gear": "52 / 36",
+        "cassette": "11–34",
+        "wheels": "DT Swiss ARC 1600 Spline",
+        "post": "Standard",
+        "saddle": "Fizik Aeris LD R5"
+      }
+    },
+    {
+      "id": "canyon-speedmax-cfr-tt-new-my2027",
+      "key": "cfr-tt-new",
+      "name": "Speedmax CFR TT",
+      "series": "CFR",
+      "status": "not-modelled",
+      "viewer": null,
+      "thumbnail": null,
+      "viewerProfile": null,
+      "priceSEK": 136699,
+      "weightKg": 8.7,
+      "comparison": {
+        "groupset": "Shimano Dura-Ace Di2",
+        "gear": "52 / 36",
+        "cassette": "11–34",
+        "wheels": "DT Swiss ARC 1100 · 85 / 85 mm",
+        "post": "TT Post",
+        "saddle": "Fizik Aeris TT"
+      }
+    },
+    {
+      "id": "canyon-speedmax-cfr-tt-my2027",
+      "key": "cfr-tt",
+      "name": "Speedmax CFR TT (Pro Black)",
+      "series": "CFR",
+      "status": "not-modelled",
+      "viewer": null,
+      "thumbnail": null,
+      "viewerProfile": null,
+      "priceSEK": 102499,
+      "weightKg": 8.7,
+      "comparison": {
+        "groupset": "Shimano Dura-Ace Di2",
+        "gear": "52 / 36",
+        "cassette": "11–34",
+        "wheels": "DT Swiss ARC 1100 · 85 / 85 mm",
+        "post": "TT Post",
+        "saddle": "Fizik Aeris TT"
+      }
+    },
+    {
+      "id": "speedmax-three-2005",
+      "manifest": "bikes/canyon-speedmax-three-2005.json",
+      "status": "reference-study",
+      "viewerProfile": "museum/viewer-speedmax-three-2005.json",
+      "viewer": "Speedmax_Three_2005_Museum.html",
+      "series": "Heritage",
+      "thumbnail": "assets/reference/paintings/speedmax-three-2005.jpg",
+      "era": "2002–2005",
+      "comparison": {
+        "groupset": "—",
+        "gear": "—",
+        "cassette": "—",
+        "wheels": "—",
+        "post": "—",
+        "saddle": "—"
+      },
+      "name": "Speedmax Three",
+      "modelYear": "2002"
+    },
+    {
+      "id": "speedmax-2007",
+      "manifest": "bikes/canyon-speedmax-2007.json",
+      "status": "reference-study",
+      "viewerProfile": "museum/viewer-speedmax-2007.json",
+      "viewer": "Speedmax_2007_Museum.html",
+      "series": "Heritage",
+      "thumbnail": "assets/reference/paintings/speedmax-2007.jpg",
+      "era": "2006–2008",
+      "comparison": {
+        "groupset": "—",
+        "gear": "—",
+        "cassette": "—",
+        "wheels": "—",
+        "post": "—",
+        "saddle": "—"
+      },
+      "name": "SpeedMax 3.0",
+      "modelYear": "2006"
+    },
+    {
+      "id": "speedmax-al-2011",
+      "manifest": "bikes/canyon-speedmax-al-2011.json",
+      "status": "reference-study",
+      "viewerProfile": "museum/viewer-speedmax-al-2011.json",
+      "viewer": "Speedmax_AL_2011_Museum.html",
+      "series": "Heritage",
+      "thumbnail": "assets/reference/paintings/speedmax-al-2011.jpg",
+      "era": "2009–2013",
+      "comparison": {
+        "groupset": "—",
+        "gear": "—",
+        "cassette": "—",
+        "wheels": "—",
+        "post": "—",
+        "saddle": "—"
+      },
+      "name": "Speedmax AL 9.0",
+      "modelYear": "2009"
+    },
+    {
+      "id": "speedmax-cf-2011",
+      "manifest": "bikes/canyon-speedmax-cf-2011.json",
+      "status": "reference-study",
+      "viewerProfile": "museum/viewer-speedmax-cf-2011.json",
+      "viewer": "Speedmax_CF_2011_Museum.html",
+      "series": "Heritage",
+      "thumbnail": "assets/reference/paintings/speedmax-cf-2011.jpg",
+      "era": "2009–2012",
+      "comparison": {
+        "groupset": "—",
+        "gear": "—",
+        "cassette": "—",
+        "wheels": "—",
+        "post": "—",
+        "saddle": "—"
+      },
+      "name": "Speedmax CF 9.0 Pro",
+      "modelYear": "2009"
+    }
+  ],
+  "policy": "Each generation requires reviewed manufacturer references, its own geometry adapter and validation; no invented historical models.",
+  "heritage": [
+    {
+      "years": "1999–2001",
+      "name": "Speedmax 1000 / 2000 / 3000",
+      "material": "7005 aluminium",
+      "status": "not-modelled",
+      "note": "Sold by Rad Sport Arnold (Canyon) with a 75° \"Triathlon 2000\" geometry; TRIATHLET reviewed the Speedmax 2000 in 9/99.",
+      "why": "No archived photograph larger than a 150 px thumbnail survives.",
+      "source": "https://web.archive.org/web/20001026102235/http://www.canyon.de:80/trifeatures.html"
+    },
+    {
+      "years": "2002–2005",
+      "name": "Speedmax Three",
+      "material": "7005 aluminium · carbon fork",
+      "status": "reference-study",
+      "key": "speedmax-three-2005",
+      "viewer": "Speedmax_Three_2005_Museum.html",
+      "thumbnail": "assets/heritage/speedmax-three-2005/thumb.jpg",
+      "manifest": "bikes/canyon-speedmax-three-my2005.json",
+      "note": "Dedicated 28-inch triathlon geometry, Carbotec disc as standard, 8.75 kg."
+    },
+    {
+      "years": "2006–2008",
+      "name": "SpeedMax 3.0",
+      "material": "7005 aluminium · carbon stays",
+      "status": "reference-study",
+      "key": "speedmax-2007",
+      "viewer": "Speedmax_2007_Museum.html",
+      "thumbnail": "assets/heritage/speedmax-2007/thumb.jpg",
+      "manifest": "bikes/canyon-speedmax-3-0-my2007.json",
+      "note": "New MR3 frame with a Super Aero seat tube; Dura-Ace, disc and Syntace cockpit."
+    },
+    {
+      "years": "2007",
+      "name": "SpeedMax TT Pro 9.0",
+      "material": "Aluminium · carbon fork",
+      "status": "not-modelled",
+      "note": "Time-trial geometry for team UNIBET (Víctor Hugo Peña, Gustav Erik Larsson).",
+      "why": "No photograph of the bike survives in the archive.",
+      "source": "https://web.archive.org/web/20071026002802/http://www.canyon.com:80/_en/triathlonbikes/index.html?b=135"
+    },
+    {
+      "years": "2009–2013",
+      "name": "Speedmax AL 9.0",
+      "material": "7005 aluminium · carbon fork",
+      "status": "reference-study",
+      "key": "speedmax-al-2011",
+      "viewer": "Speedmax_AL_2011_Museum.html",
+      "thumbnail": "assets/heritage/speedmax-al-2011/thumb.jpg",
+      "manifest": "bikes/canyon-speedmax-al-9-my2011.json",
+      "note": "Aero-era geometry with 75°/78° seat positions and sliding dropouts."
+    },
+    {
+      "years": "2009–2012",
+      "name": "Speedmax CF 9.0 Pro",
+      "material": "Carbon",
+      "status": "reference-study",
+      "key": "speedmax-cf-2011",
+      "viewer": "Speedmax_CF_2011_Museum.html",
+      "thumbnail": "assets/heritage/speedmax-cf-2011/thumb.jpg",
+      "manifest": "bikes/canyon-speedmax-cf-9-pro-my2011.json",
+      "note": "Canyon's first carbon Speedmax; 7.70 kg on Zipp 404/808."
+    },
+    {
+      "years": "2012–2015",
+      "name": "Speedmax CF (Concept Speedmax)",
+      "material": "Carbon · Trident tubes",
+      "status": "not-modelled",
+      "note": "Previewed at Eurobike 2011; red dot \"best of the best\" award.",
+      "why": "Only 470 px archived photographs found so far.",
+      "source": "https://web.archive.org/web/20121015130728/http://www.canyon.com:80/_en/triathlonbikes/series/speedmax-cf-tria.html"
+    }
+  ]
+}

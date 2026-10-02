@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "namespace": "caldas-studio",
+  "object_types": [
+    "product",
+    "world",
+    "event",
+    "collection",
+    "race_setup",
+    "place",
+    "experience"
+  ],
+  "product_types": [
+    "bike",
+    "shoe",
+    "helmet",
+    "wheel",
+    "trisuit",
+    "artifact",
+    "artwork",
+    "crankset",
+    "cassette",
+    "aerobar_extensions",
+    "hydration",
+    "saddle",
+    "groupset",
+    "bike_computer",
+    "pedal",
+    "smart_trainer",
+    "smart_frame",
+    "trainer_accessory",
+    "accessory"
+  ],
+  "capabilities": [
+    "inspect",
+    "rotate",
+    "explode",
+    "customize",
+    "collect",
+    "equip",
+    "compare",
+    "share",
+    "purchase_link",
+    "visit"
+  ],
+  "read_surfaces": [
+    "list_products",
+    "get_product",
+    "list_events",
+    "get_event",
+    "list_event_places",
+    "get_collection",
+    "resolve_share_state"
+  ],
+  "remote_write_default": "disabled",
+  "privacy": {
+    "account_required": false,
+    "analytics_default": "off",
+    "background_location": false,
+    "local_state_export": "explicit-only"
+  },
+  "mcp": {
+    "resources": [
+      "caldas://products/{id}",
+      "caldas://events/{id}",
+      "caldas://worlds/{id}",
+      "caldas://collections/{id}",
+      "caldas://places/{id}"
+    ],
+    "read_tools": [
+      "list_products",
+      "get_product",
+      "list_event_places",
+      "get_event",
+      "get_collection",
+      "resolve_share_state"
+    ],
+    "future_write_tools": [
+      "save_race_setup",
+      "publish_collection",
+      "create_partner_product",
+      "create_merch_order"
+    ]
+  }
+}

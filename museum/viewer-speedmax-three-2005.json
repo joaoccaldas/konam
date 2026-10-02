@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "key": "speedmax-three-2005",
+    "exhibit": "01",
+    "era": "2002–2005",
+    "family": "Speedmax",
+    "name": "Three · MY2005",
+    "years": "MY2005",
+    "size": "53",
+    "finishName": "Race Black Metallic",
+    "pageTitle": "Canyon Museum — Speedmax Three (2005)",
+    "lede": "Canyon's pure triathlon machine of the mid-2000s: a black 7005 aluminium frame, full-carbon fork and a Carbotec disc as standard.",
+    "story": "The Speedmax name dates back to 1999 (Speedmax 1000/2000/3000, sold by Rad Sport Arnold). By 2002 Canyon published a dedicated 28-inch triathlon geometry, the same table this Speedmax One/Two/Three range used until 2005. Triathlon Magazin gave the Three 23 of 25 points.",
+    "stats": [
+      {
+        "value": "8.75 kg",
+        "label": "Canyon weight"
+      },
+      {
+        "value": "54 × 42",
+        "label": "Chainrings"
+      },
+      {
+        "value": "Disc",
+        "label": "Carbotec rear"
+      }
+    ],
+    "spec": [
+      [
+        "Frame",
+        "New F5 Super Aero, 7005 Ultralight Aluminium"
+      ],
+      [
+        "Fork",
+        "Smolik Motivation full carbon"
+      ],
+      [
+        "Headset",
+        "Tange Integrated"
+      ],
+      [
+        "Drivetrain",
+        "Shimano Dura-Ace, bar-end shifters"
+      ],
+      [
+        "Brake levers",
+        "Syntace SpaceControl"
+      ],
+      [
+        "Brakes",
+        "Shimano Dura-Ace"
+      ],
+      [
+        "Wheels",
+        "Citec 3000 front · Carbotec disc rear (Citec hubs)"
+      ],
+      [
+        "Cassette",
+        "Shimano Dura-Ace 12-23"
+      ],
+      [
+        "Tyres",
+        "Continental GP3000"
+      ],
+      [
+        "Crankset",
+        "FSA CK-805TT Carbon Pro Team Issue 54/42"
+      ],
+      [
+        "Cockpit",
+        "Syntace F99 stem · Stratos 400 bar · C2 clip-on"
+      ],
+      [
+        "Saddle",
+        "Selle San Marco Aspide"
+      ],
+      [
+        "Seatpost",
+        "Iridium Carbon"
+      ],
+      [
+        "Colour",
+        "Race Black Metallic"
+      ]
+    ],
+    "geometry": [
+      [
+        "Head angle",
+        "73° (size 53)"
+      ],
+      [
+        "Seat angle",
+        "75°"
+      ],
+      [
+        "Top tube",
+        "540 mm (53)"
+      ],
+      [
+        "Chainstay",
+        "410 mm published · 398 mm measured"
+      ],
+      [
+        "Wheelbase",
+        "989 mm (53)"
+      ]
+    ],
+    "method": "Scale comes from circle fits to both tyres in Canyon's archived side photo. Every tube is a traced centreline with its side-view depth measured from the photo; widths across the bike are inferred. Parts are rebuilt from the archived specification.",
+    "uncertainties": [
+      "Scale 2.500 mm per pixel from tyre fits; measured wheelbase 990 mm.",
+      "Single 626 px photograph: 3.36 mm per pixel, the lowest-resolution source in the museum.",
+      "Tyre width is not published ('Continental GP3000'); 23-622 is inferred and sets the scale.",
+      "Chainstay measures 398 mm against Canyon's published 410 mm; the BB was confirmed by a chainring circle fit, so the conflict is recorded, not adjusted.",
+      "The 2002-2005 geometry table is identical across years; that the frame shape was unchanged before 2004 is not confirmed by a photo.",
+      "Lateral tube widths, stay spread and fork crown width are inferred; the photo fixes side-view shapes only.",
+      "Components are simplified external forms rebuilt from the published specification; hidden mechanisms are not modelled.",
+      "Graphics use DIN Condensed Bold in place of Canyon's lettering; positions and sizes traced from the photo.",
+      "Cable routing is traced where visible; hidden runs are not modelled."
+    ],
+    "sources": [
+      {
+        "label": "Canyon specification page (archived)",
+        "url": "https://web.archive.org/web/20041230030216/http://www.canyon.de:80/triathlonbikes/ausstattung.html?b=26"
+      },
+      {
+        "label": "Canyon studio photograph",
+        "url": "https://web.archive.org/web/20050104010948/http://www.canyon.de:80/img/bikes/26_img_flash.jpg"
+      },
+      {
+        "label": "Geometry table (archived 2004-12-30)",
+        "url": "https://web.archive.org/web/20041230025739/http://www.canyon.de:80/triathlonbikes/geometrie.html?b=26"
+      },
+      {
+        "label": "Identical 2002 triathlon geometry table",
+        "url": "https://web.archive.org/web/20021020115040/http://www.canyon.de:80/en/triat_info_2002.html"
+      }
+    ]
+  },
+  "presets": [
+    {
+      "name": "Explore · Race Black",
+      "colors": {
+        "paint_frame": "#050506",
+        "paint_accent": "#050506",
+        "decal_light": "#d9d9d9",
+        "decal_dark": "#d9d9d9"
+      }
+    },
+    {
+      "name": "Explore · Team White",
+      "colors": {
+        "paint_frame": "#e4e4e4",
+        "paint_accent": "#050506",
+        "decal_dark": "#0a0a0a",
+        "decal_light": "#0a0a0a"
+      }
+    },
+    {
+      "name": "Explore · Pro White / red",
+      "colors": {
+        "paint_frame": "#eeeeee",
+        "paint_accent": "#c8102e",
+        "decal_dark": "#c8102e",
+        "decal_light": "#c8102e"
+      }
+    },
+    {
+      "name": "Explore · Stealth",
+      "colors": {
+        "paint_frame": "#1b1d20",
+        "paint_accent": "#0d0e10",
+        "decal_dark": "#34373c",
+        "decal_light": "#34373c"
+      }
+    }
+  ],
+  "partLabels": {
+    "base_bar": "Base bar",
+    "extensions": "Clip-on extensions",
+    "cables": "Cable housings"
+  }
+}

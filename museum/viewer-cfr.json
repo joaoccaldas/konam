@@ -1,0 +1,622 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "id": "canyon-speedmax-cfr-axs-my2027-m",
+    "key": "cfr",
+    "name": "Speedmax CFR AXS",
+    "year": "2027",
+    "size": "M",
+    "weight": 9.1,
+    "price": "from 125,000 SEK",
+    "chainring": 50,
+    "cog": 14,
+    "source": "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cfr/speedmax-cfr-axs/4524.html",
+    "specs": {
+      "id": "canyon-speedmax-cfr-axs-my2027-m",
+      "key": "cfr",
+      "name": "Speedmax CFR AXS",
+      "year": 2027,
+      "size": "M",
+      "weightKg": 9.1,
+      "priceSEK": 125000.0,
+      "source": "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cfr/speedmax-cfr-axs/4524.html",
+      "checkedAt": "2026-09-28T12:35:57.539610+00:00",
+      "snapshotSha256": "a254023a45f9b9e0236ea702c10bc7f9e0833a1e2e672345794dfa58231c2caa",
+      "components": [
+        {
+          "group": "Frame",
+          "type": "Frame",
+          "name": "Canyon Speedmax CFR",
+          "features": {
+            "Axle dimension": "12x142 mm",
+            "Tyre clearance": "28 mm",
+            "Material": "Carbon (CFR)",
+            "Weight": "1360 g"
+          }
+        },
+        {
+          "group": "Frame",
+          "type": "Fork",
+          "name": "Canyon Speedmax Gabel",
+          "features": {
+            "Axle dimension": "12x100 mm",
+            "Fork steer tube diameter": "1 1/8\"",
+            "Tyre clearance": "28 mm",
+            "Material": "Carbon (CF)",
+            "Weight": "654 g"
+          }
+        },
+        {
+          "group": "Frame",
+          "type": "Seatpost Clamp",
+          "name": "Canyon  Seatpost Headparts",
+          "features": {}
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Battery",
+          "name": "SRAM Powerpack",
+          "features": {}
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Rear Derailleur",
+          "name": "SRAM Red AXS Rear Derailleur",
+          "features": {
+            "Weight": "264 g"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Front Derailleur",
+          "name": "SRAM Red",
+          "features": {
+            "Weight": "147 g"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Shift Lever",
+          "name": "AXS Wireless Blips",
+          "features": {
+            "Weight": "520 g"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Cassette",
+          "name": "SRAM Red",
+          "features": {
+            "Number of sprockets": "12",
+            "Range": "10-33"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Crank",
+          "name": "SRAM Red AXS Power Meter",
+          "features": {
+            "Number of chainrings": "2"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Bottom bracket",
+          "name": "SRAM DUB Pressfit",
+          "features": {
+            "Bottom bracket standard": "PF 86,5",
+            "Weight": "67 g"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Chain",
+          "name": "SRAM Red",
+          "features": {}
+        },
+        {
+          "group": "Brakes",
+          "type": "Shift-/ Brake Lever",
+          "name": "SRAM Red Aero Bremse",
+          "features": {
+            "Number of pistons": "2",
+            "Weight": "264 g"
+          }
+        },
+        {
+          "group": "Brakes",
+          "type": "Shift-/ Brake Lever",
+          "name": "SRAM Red Aero Bremse",
+          "features": {
+            "Number of pistons": "2",
+            "Weight": "268 g"
+          }
+        },
+        {
+          "group": "Brakes",
+          "type": "Brake Rotor",
+          "name": "SRAM Paceline X",
+          "features": {
+            "Size": "140 mm",
+            "Weight": "110 g"
+          }
+        },
+        {
+          "group": "Brakes",
+          "type": "Brake Rotor",
+          "name": "SRAM Paceline X",
+          "features": {
+            "Size": "160 mm",
+            "Weight": "129 g"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Front Wheel",
+          "name": "DT Swiss ARC 1100",
+          "features": {
+            "Axle dimension": "12x100 mm",
+            "Rotor mount": "Center Lock",
+            "Rim height": "85 mm",
+            "Inner width": "22 mm",
+            "Rim material": "Carbon",
+            "Weight": "786 g"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Rear Wheel",
+          "name": "DT SWISS ARC 1100 CSX",
+          "features": {
+            "Axle dimension": "12x142 mm",
+            "Rotor mount": "Center Lock",
+            "Free hub": "SRAM XDR"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Tyre",
+          "name": "Continental GP5000 TT TR",
+          "features": {
+            "Width": "28 mm",
+            "Weight": "245 g"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Tyre",
+          "name": "Continental Aero 111",
+          "features": {
+            "Width": "26 mm",
+            "Weight": "246 g"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Thru Axle",
+          "name": "DT Swiss Through Axle with Lever",
+          "features": {
+            "Axle dimension": "12x100 mm"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Thru Axle",
+          "name": "DT Swiss trough axle",
+          "features": {}
+        },
+        {
+          "group": "Cockpit",
+          "type": "Cockpit",
+          "name": "Canyon Cockpit CP0054",
+          "features": {
+            "Material": "Carbon (CF)"
+          }
+        },
+        {
+          "group": "Cockpit",
+          "type": "Aero Bar",
+          "name": "Canyon Aeroshield",
+          "features": {}
+        },
+        {
+          "group": "Seat",
+          "type": "Saddle",
+          "name": "Fizik Transiro Aeris LD R1",
+          "features": {
+            "Gender": "Unisex",
+            "Weight": "187 g"
+          }
+        },
+        {
+          "group": "Seat",
+          "type": "Seatpost",
+          "name": "Splitter Plate Pro",
+          "features": {
+            "Material": "Carbon (CF)",
+            "Weight": "210 g"
+          }
+        },
+        {
+          "group": "Accessories",
+          "type": "Pedals",
+          "name": "None included",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Organza Bag",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Assembly Paste",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Banderole Cathegory1",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "R133/R134 Toolbag",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Speedmax Quickstartguide",
+          "features": {}
+        }
+      ],
+      "geometryBySize": {
+        "S": {
+          "Body Height": {
+            "value": "\u2264 178",
+            "unit": "cm"
+          },
+          "Seat Height": {
+            "value": "640 - 740",
+            "unit": "mm"
+          },
+          "Seat Tube Length": {
+            "value": 480,
+            "unit": "mm"
+          },
+          "Top Tube Length": {
+            "value": 516,
+            "unit": "mm"
+          },
+          "Head Tube Length": {
+            "value": 62,
+            "unit": "mm"
+          },
+          "Head Tube Angle": {
+            "value": 73,
+            "unit": "\u00b0"
+          },
+          "Seat Tube Angle": {
+            "value": 81,
+            "unit": "\u00b0"
+          },
+          "Chainstay Length": {
+            "value": 420,
+            "unit": "mm"
+          },
+          "Wheel Base": {
+            "value": 989,
+            "unit": "mm"
+          },
+          "Stack": {
+            "value": 470,
+            "unit": "mm"
+          },
+          "Reach": {
+            "value": 419,
+            "unit": "mm"
+          },
+          "Stand-over Height": {
+            "value": 759,
+            "unit": "mm"
+          },
+          "Bottom Bracket Offset": {
+            "value": 75,
+            "unit": "mm"
+          },
+          "Crank Length": {
+            "value": 165,
+            "unit": "mm"
+          },
+          "Chainring size": {
+            "value": "50/37",
+            "unit": ""
+          },
+          "Maximum Seat Post Insertion Depth": {
+            "value": 145,
+            "unit": "mm"
+          },
+          "Minimum Seat Post Insertion Depth": {
+            "value": 65,
+            "unit": "mm"
+          },
+          "Wheel Size": {
+            "value": 28,
+            "unit": "\""
+          },
+          "Disc Size": {
+            "value": "160 / 140",
+            "unit": "mm"
+          },
+          "Rim height": {
+            "value": 85,
+            "unit": "mm"
+          }
+        },
+        "L": {
+          "Body Height": {
+            "value": "180 - 196",
+            "unit": "cm"
+          },
+          "Seat Height": {
+            "value": "745 - 875",
+            "unit": "mm"
+          },
+          "Seat Tube Length": {
+            "value": 550,
+            "unit": "mm"
+          },
+          "Top Tube Length": {
+            "value": 565,
+            "unit": "mm"
+          },
+          "Head Tube Length": {
+            "value": 105,
+            "unit": "mm"
+          },
+          "Head Tube Angle": {
+            "value": 73,
+            "unit": "\u00b0"
+          },
+          "Seat Tube Angle": {
+            "value": 81,
+            "unit": "\u00b0"
+          },
+          "Chainstay Length": {
+            "value": 420,
+            "unit": "mm"
+          },
+          "Wheel Base": {
+            "value": 1046,
+            "unit": "mm",
+            "sourceValue": 1.046,
+            "normalization": "Canyon locale thousands separator: 1.013 means 1013 mm, verified against geometry table."
+          },
+          "Stack": {
+            "value": 511,
+            "unit": "mm"
+          },
+          "Reach": {
+            "value": 463,
+            "unit": "mm"
+          },
+          "Stand-over Height": {
+            "value": 814,
+            "unit": "mm"
+          },
+          "Bottom Bracket Offset": {
+            "value": 75,
+            "unit": "mm"
+          },
+          "Crank Length": {
+            "value": 165,
+            "unit": "mm"
+          },
+          "Chainring size": {
+            "value": "50/37",
+            "unit": ""
+          },
+          "Maximum Seat Post Insertion Depth": {
+            "value": 195,
+            "unit": "mm"
+          },
+          "Minimum Seat Post Insertion Depth": {
+            "value": 65,
+            "unit": "mm"
+          },
+          "Wheel Size": {
+            "value": 28,
+            "unit": "\""
+          },
+          "Disc Size": {
+            "value": "160 / 140",
+            "unit": "mm"
+          },
+          "Rim height": {
+            "value": 85,
+            "unit": "mm"
+          }
+        },
+        "M": {
+          "Body Height": {
+            "value": "168 - 186",
+            "unit": "cm"
+          },
+          "Seat Height": {
+            "value": "708 - 838",
+            "unit": "mm"
+          },
+          "Seat Tube Length": {
+            "value": 513,
+            "unit": "mm"
+          },
+          "Top Tube Length": {
+            "value": 537,
+            "unit": "mm"
+          },
+          "Head Tube Length": {
+            "value": 73,
+            "unit": "mm"
+          },
+          "Head Tube Angle": {
+            "value": 73,
+            "unit": "\u00b0"
+          },
+          "Seat Tube Angle": {
+            "value": 81,
+            "unit": "\u00b0"
+          },
+          "Chainstay Length": {
+            "value": 420,
+            "unit": "mm"
+          },
+          "Wheel Base": {
+            "value": 1013,
+            "unit": "mm",
+            "sourceValue": 1.013,
+            "normalization": "Canyon locale thousands separator: 1.013 means 1013 mm, verified against geometry table."
+          },
+          "Stack": {
+            "value": 481,
+            "unit": "mm"
+          },
+          "Reach": {
+            "value": 440,
+            "unit": "mm"
+          },
+          "Stand-over Height": {
+            "value": 780,
+            "unit": "mm"
+          },
+          "Bottom Bracket Offset": {
+            "value": 75,
+            "unit": "mm"
+          },
+          "Crank Length": {
+            "value": 165,
+            "unit": "mm"
+          },
+          "Chainring size": {
+            "value": "50/37",
+            "unit": ""
+          },
+          "Maximum Seat Post Insertion Depth": {
+            "value": 195,
+            "unit": "mm"
+          },
+          "Minimum Seat Post Insertion Depth": {
+            "value": 65,
+            "unit": "mm"
+          },
+          "Wheel Size": {
+            "value": 28,
+            "unit": "\""
+          },
+          "Disc Size": {
+            "value": "160 / 140",
+            "unit": "mm"
+          },
+          "Rim height": {
+            "value": 85,
+            "unit": "mm"
+          }
+        },
+        "XL": {
+          "Body Height": {
+            "value": "\u2265 189",
+            "unit": "cm"
+          },
+          "Seat Height": {
+            "value": "780 - 910",
+            "unit": "mm"
+          },
+          "Seat Tube Length": {
+            "value": 585,
+            "unit": "mm"
+          },
+          "Top Tube Length": {
+            "value": 593,
+            "unit": "mm"
+          },
+          "Head Tube Length": {
+            "value": 137,
+            "unit": "mm"
+          },
+          "Head Tube Angle": {
+            "value": 73,
+            "unit": "\u00b0"
+          },
+          "Seat Tube Angle": {
+            "value": 81,
+            "unit": "\u00b0"
+          },
+          "Chainstay Length": {
+            "value": 420,
+            "unit": "mm"
+          },
+          "Wheel Base": {
+            "value": 1078,
+            "unit": "mm",
+            "sourceValue": 1.078,
+            "normalization": "Canyon locale thousands separator: 1.013 means 1013 mm, verified against geometry table."
+          },
+          "Stack": {
+            "value": 542,
+            "unit": "mm"
+          },
+          "Reach": {
+            "value": 486,
+            "unit": "mm"
+          },
+          "Stand-over Height": {
+            "value": 846,
+            "unit": "mm"
+          },
+          "Bottom Bracket Offset": {
+            "value": 75,
+            "unit": "mm"
+          },
+          "Crank Length": {
+            "value": 165,
+            "unit": "mm"
+          },
+          "Chainring size": {
+            "value": "50/37",
+            "unit": ""
+          },
+          "Maximum Seat Post Insertion Depth": {
+            "value": 195,
+            "unit": "mm"
+          },
+          "Minimum Seat Post Insertion Depth": {
+            "value": 65,
+            "unit": "mm"
+          },
+          "Wheel Size": {
+            "value": 28,
+            "unit": "\""
+          },
+          "Disc Size": {
+            "value": "160 / 160",
+            "unit": "mm"
+          },
+          "Rim height": {
+            "value": 85,
+            "unit": "mm"
+          }
+        }
+      },
+      "discrepancies": [
+        "Marketing mentions 30 mm tyre clearance, while frame and fork component rows say 28 mm. Confirm with Canyon."
+      ]
+    }
+  },
+  "parts": {},
+  "defaultCfg": {},
+  "unavailableOptions": [],
+  "compatiblePriceParts": null
+}

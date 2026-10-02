@@ -1,0 +1,48 @@
+{
+ "source": "Higgsfield MCP \u00b7 generate_3d + jobs_wait",
+ "project_id": "3cdaf07a-599a-4edc-9774-a736ee33bef8",
+ "retrieved": "2026-09-29",
+ "optimised_with": "gltf-transform optimize --compress meshopt --texture-compress webp --texture-size 1024",
+ "items": [
+  {
+   "id": "a2dacf4f-89fe-4069-916e-defdaa977df2",
+   "model": "meshy_v6_text_to_3d",
+   "status": "completed",
+   "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223939_a2dacf4f-89fe-4069-916e-defdaa977df2.glb",
+   "params": {
+    "prompt": "Abstract polished bronze sculpture of a cyclist merged with a bicycle in a low aerodynamic time-trial tuck, smooth flowing elongated forms like a teardrop, no face details, mounted on a simple square black stone base",
+    "mode": "full",
+    "target_polycount": 20000,
+    "enable_pbr": true,
+    "symmetry_mode": "off"
+   },
+   "cost_credits": 25
+  },
+  {
+   "id": "737dc0a6-955c-46eb-be68-e9c630651c6c",
+   "model": "meshy_v6_text_to_3d",
+   "status": "completed",
+   "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223943_737dc0a6-955c-46eb-be68-e9c630651c6c.glb",
+   "params": {
+    "prompt": "Modern sculpture of a smooth teardrop airfoil carved from glossy black volcanic basalt with a thin glowing orange vein running through it, standing upright on a small plinth",
+    "mode": "full",
+    "target_polycount": 15000,
+    "enable_pbr": true
+   },
+   "cost_credits": 25
+  },
+  {
+   "id": "4d04d4d4-a277-4fd7-bf49-8263897c1a05",
+   "model": "meshy_v6_text_to_3d",
+   "status": "completed",
+   "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/hf_20260929_223944_4d04d4d4-a277-4fd7-bf49-8263897c1a05.glb",
+   "params": {
+    "prompt": "Stylized sculpture of a breaking ocean wave in polished turquoise sea glass and white marble foam, abstract and elegant, on a round driftwood base",
+    "mode": "full",
+    "target_polycount": 18000,
+    "enable_pbr": true
+   },
+   "cost_credits": 25
+  }
+ ]
+}

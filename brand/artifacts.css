@@ -1,0 +1,15 @@
+/* KONA semantic artifact grammar. Shape communicates content type. */
+.artifact{position:relative;color:var(--brand-ink)}
+.artifact--hero{border:0;border-radius:var(--artifact-edge);overflow:hidden;background:var(--brand-surface);box-shadow:var(--artifact-shadow)}
+.artifact--photo{border:0;border-radius:var(--artifact-edge);overflow:hidden;background:var(--brand-surface);box-shadow:var(--artifact-shadow)}
+.artifact--label{border-top:1px solid var(--brand-line);border-right:0;border-bottom:1px solid var(--brand-line);border-left:0;border-radius:0;background:transparent;box-shadow:none}
+.artifact--spec{border:1px solid var(--brand-line);border-radius:2px;background:var(--brand-surface);font-variant-numeric:tabular-nums}
+.artifact--bib{border:1px solid var(--brand-ink);border-radius:2px;background:var(--brand-surface);box-shadow:3px 3px 0 color-mix(in srgb,var(--brand-ink) 14%,transparent)}
+.artifact--map{border:0;border-radius:0;background:linear-gradient(var(--brand-line) 1px,transparent 1px),linear-gradient(90deg,var(--brand-line) 1px,transparent 1px),var(--brand-surface);background-size:24px 24px}
+.artifact--sticker{display:inline-flex;border:1px solid color-mix(in srgb,var(--brand-accent) 55%,var(--brand-ink));border-radius:9px;background:var(--brand-accent);color:var(--brand-on-accent);box-shadow:2px 3px 0 color-mix(in srgb,var(--brand-ink) 24%,transparent);transform:rotate(-1.4deg)}
+.artifact--film{border:10px solid var(--brand-ink);border-radius:2px;background:var(--brand-surface);box-shadow:var(--artifact-shadow)}
+.artifact--note{border:0;border-radius:0;background:color-mix(in srgb,var(--brand-surface) 92%,var(--brand-accent) 8%);box-shadow:1px 2px 0 color-mix(in srgb,var(--brand-ink) 10%,transparent);transform:rotate(.35deg)}
+html[data-theme="random"] .artifact[data-random-accent]::after{content:"";position:absolute;width:28px;height:8px;right:12px;top:10px;background:var(--brand-accent-2);opacity:.85;transform:rotate(6deg);pointer-events:none}
+html[data-theme="random"] .artifact--sticker{transform:rotate(-2.2deg)}
+html[data-theme="random"] .artifact--note{transform:rotate(.8deg)}
+@media(prefers-reduced-motion:reduce){.artifact--sticker,.artifact--note{transform:none}}

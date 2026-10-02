@@ -1,0 +1,27 @@
+/* Canonical KONA controls and responsive layout primitives. Feature styles may position these, not reinvent them. */
+.ui-page{width:min(100%,var(--brand-content-max));margin-inline:auto;padding-inline:max(var(--brand-mobile-gutter),env(safe-area-inset-left),env(safe-area-inset-right))}
+.ui-section{display:grid;gap:var(--brand-space-3);padding-block:var(--brand-space-4)}
+.ui-stack{display:grid;gap:var(--brand-space-3)}
+.ui-cluster{display:flex;flex-wrap:wrap;align-items:center;gap:var(--brand-space-2)}
+.ui-grid{display:grid;grid-template-columns:1fr;gap:var(--brand-space-3)}
+.btn,.btn-primary,.btn-secondary,.btn-text,.btn-icon{
+  min-height:var(--brand-touch);border:0;border-radius:var(--brand-pill-radius);font:700 13px/1 var(--brand-font-ui);
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;text-decoration:none;transition:transform .16s ease,border-color .16s ease,background .16s ease
+}
+.btn-primary{padding-inline:20px;background:var(--brand-action);color:var(--brand-on-action)}
+.btn-secondary{padding-inline:20px;background:transparent;color:var(--brand-ink);border:1px solid var(--brand-line)}
+.btn-text{padding-inline:0;border-radius:0;background:transparent;color:var(--brand-ink);justify-content:flex-start}
+.btn-icon{width:var(--brand-touch);padding:0;border-radius:50%;background:var(--brand-surface);color:var(--brand-ink);border:1px solid var(--brand-line)}
+.btn:is(:hover,:focus-visible),.btn-primary:is(:hover,:focus-visible),.btn-secondary:is(:hover,:focus-visible),.btn-text:is(:hover,:focus-visible),.btn-icon:is(:hover,:focus-visible){transform:translateY(-1px)}
+.btn:disabled,.btn-primary:disabled,.btn-secondary:disabled,.btn-icon:disabled{opacity:.48;cursor:default;transform:none}
+.ui-field{display:grid;gap:6px}
+.ui-field>span{font:700 10px/1.2 var(--brand-font-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--brand-muted)}
+.ui-input,.ui-select{
+  width:100%;min-height:var(--brand-touch);padding:0 14px;border:1px solid var(--brand-line);border-radius:var(--brand-control-radius);
+  background:var(--brand-surface);color:var(--brand-ink);font:600 13px/1 var(--brand-font-ui)
+}
+.ui-sheet{background:var(--brand-surface);color:var(--brand-ink);border:1px solid var(--brand-line);border-radius:var(--brand-sheet-radius);box-shadow:var(--artifact-shadow)}
+.ui-divider{height:1px;background:var(--brand-line);border:0;margin:0}
+@media(min-width:720px){.ui-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1100px){.ui-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ui-page{padding-inline:var(--brand-desktop-gutter)}}
+@media(prefers-reduced-motion:reduce){.btn,.btn-primary,.btn-secondary,.btn-text,.btn-icon{transition:none}}

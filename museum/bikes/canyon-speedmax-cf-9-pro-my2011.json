@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "id": "canyon-speedmax-cf-9-pro-my2011",
+  "brand": "Canyon",
+  "model": "Speedmax CF 9.0 Pro",
+  "model_year": 2011,
+  "launch_year": 2010,
+  "generation": "2009\u20132012",
+  "size": "S (photo-identified)",
+  "finish": "Team (white / carbon black)",
+  "status": "reference-study",
+  "coordinate_system": {
+    "unit": "metre",
+    "forward": "+X",
+    "up": "+Z",
+    "drive_side": "-Y"
+  },
+  "reconstruction_adapter": "heritage-speedmax-cf-2011-photo-v1",
+  "pipeline": {
+    "adapter_module": "blender/heritage_build.py",
+    "profile": "blender/heritage/speedmax-cf-2011/profile.json",
+    "out_dir": "assets/heritage/speedmax-cf-2011"
+  },
+  "references": [
+    {
+      "path": "assets/reference/heritage/photos/g5_cf9pro_team.jpg",
+      "url": "https://web.archive.org/web/20101031010716/http://canyon.com/flash_2009/bike/images/bikes/speedmax-cf-9-pro/team/bike.jpg",
+      "role": "Canyon studio side photograph; sole shape source",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "assets/reference/heritage/pages/spec_bike_2131.html",
+      "url": "https://web.archive.org/web/20101023160932/http://www.canyon.com:80/_en/triathlonbikes/bike.html?b=2131",
+      "role": "Canyon specification page (archived)",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "path": "assets/reference/heritage/pages/20081201050518_http___www.canyon.com_80__en_triathlonbikes_series_speedmax_cf.html.html",
+      "url": "https://web.archive.org/web/20081201050518/http://www.canyon.com:80/_en/triathlonbikes/series/speedmax_cf.html",
+      "role": "Series launch copy (archived 2008-12-01)",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "uncertainties": [
+    "Scale 2.500 mm per pixel from tyre fits; measured wheelbase 990 mm.",
+    "Single 740 px side photograph: 2.48 mm per pixel; front tyre images 2.4% larger than the rear.",
+    "BB junction is hidden behind the VumaChrono crank disc; its depth is inferred.",
+    "Seat tube edges were measured row by row because white rim lettering merges with the white paint.",
+    "Zipp rim graphics are not modelled.",
+    "Lateral tube widths, stay spread and fork crown width are inferred; the photo fixes side-view shapes only.",
+    "Components are simplified external forms rebuilt from the published specification; hidden mechanisms are not modelled.",
+    "Graphics use DIN Condensed Bold in place of Canyon's lettering; positions and sizes traced from the photo.",
+    "Cable routing is traced where visible; hidden runs are not modelled."
+  ],
+  "deliverables": {
+    "bike": "assets/heritage/speedmax-cf-2011/speedmax_cf_2011_master.blend",
+    "scene": "assets/heritage/speedmax-cf-2011/speedmax_museum.blend",
+    "glb": "assets/heritage/speedmax-cf-2011/speedmax_web.glb",
+    "viewer": "Speedmax_CF_2011_Museum.html"
+  },
+  "validation": {
+    "geometry": "assets/heritage/speedmax-cf-2011/checks/geometry-checks.json",
+    "silhouette": "assets/heritage/speedmax-cf-2011/checks/silhouette-report.json",
+    "renders": [
+      "hero",
+      "side",
+      "cockpit",
+      "drivetrain",
+      "rear"
+    ]
+  },
+  "viewer_profile": "museum/viewer-speedmax-cf-2011.json"
+}
