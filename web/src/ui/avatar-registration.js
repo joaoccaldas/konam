@@ -18,13 +18,16 @@ export function renderAvatarRegistration(host,{profile,onContinue,onBack}={}){
   let style=normaliseAvatarStyle(profile?.get?.().avatarStyle);
   let gender=style.presentation||profile?.get?.().gender||'prefer-not';
   const paint=()=>{
+    const active=document.activeElement;
+    const attr=['data-reg-gender','data-reg-archetype','data-reg-trisuit','data-reg-overlay','data-reg-remove'].find(k=>active?.hasAttribute(k));
+    const value=attr?active.getAttribute(attr):null;
     const tri=avatarItem(style,'trisuit');
     host.innerHTML='<section class="registration-avatar">'+
       '<div class="registration-avatar-copy"><p class="eyebrow">1 · MEET YOUR RACE SELF</p><h2>Who are we sending into the lava?</h2><p class="kona-note">Pick a character, decide how your Race Self presents, then make the trisuit dangerously yours. Nothing here locks you in.</p></div>'+
       '<div class="registration-avatar-preview">'+preview(style)+'<p class="t-hand">Progress looks good on you.</p></div>'+
-      '<section class="registration-choice"><small>HOW SHOULD YOUR RACE SELF PRESENT?</small><div class="registration-choice-grid gender">'+[['male','Male'],['female','Female'],['prefer-not','Prefer not to answer']].map(([id,label])=>'<button type="button" class="quest-choice '+(gender===id?'on':'')+'" data-reg-gender="'+id+'"><b>'+label+'</b><span>'+(id==='prefer-not'?'No explanation required.':'This does not limit hair, kit, colors or style.')+'</span></button>').join('')+'</div></section>'+
-      '<section class="registration-choice"><small>CHARACTER</small><div class="registration-choice-grid">'+AVATAR_ARCHETYPES.map(a=>'<button type="button" class="quest-choice '+(style.archetype===a.id?'on':'')+'" data-reg-archetype="'+esc(a.id)+'"><b>'+esc(a.label)+'</b><span>'+esc(a.note)+'</span></button>').join('')+'</div></section>'+
-      '<section class="registration-choice"><small>TRISUIT LAYOUT</small><div class="registration-choice-grid trisuits">'+AVATAR_ITEMS.trisuit.map(item=>{const gate=avatarItemAccess('trisuit',item.id);return '<button type="button" class="quest-choice '+(tri.id===item.id?'on':'')+(gate.unlocked?'':' locked')+'" data-reg-trisuit="'+esc(item.id)+'"'+(gate.unlocked?'':' disabled aria-label="'+esc(item.label)+' · unlocks at Level '+gate.requiredLevel+'"')+'><i style="--kit:'+esc(item.color)+';--kit-accent:'+esc(item.accent)+'"></i><b>'+esc(item.label)+(gate.unlocked?'':' · LVL '+gate.requiredLevel)+'</b></button>';}).join('')+'</div></section>'+
+      '<section class="registration-choice"><small>HOW SHOULD YOUR RACE SELF PRESENT?</small><div class="registration-choice-grid gender">'+[['male','Male'],['female','Female'],['prefer-not','Prefer not to answer']].map(([id,label])=>'<button type="button" class="quest-choice '+(gender===id?'on':'')+'" aria-pressed="'+(gender===id)+'" data-reg-gender="'+id+'"><b>'+label+'</b><span>'+(id==='prefer-not'?'No explanation required.':'This does not limit hair, kit, colors or style.')+'</span></button>').join('')+'</div></section>'+
+      '<section class="registration-choice"><small>CHARACTER</small><div class="registration-choice-grid">'+AVATAR_ARCHETYPES.map(a=>'<button type="button" class="quest-choice '+(style.archetype===a.id?'on':'')+'" aria-pressed="'+(style.archetype===a.id)+'" data-reg-archetype="'+esc(a.id)+'"><b>'+esc(a.label)+'</b><span>'+esc(a.note)+'</span></button>').join('')+'</div></section>'+
+      '<section class="registration-choice"><small>TRISUIT LAYOUT</small><div class="registration-choice-grid trisuits">'+AVATAR_ITEMS.trisuit.map(item=>{const gate=avatarItemAccess('trisuit',item.id);return '<button type="button" class="quest-choice '+(tri.id===item.id?'on':'')+(gate.unlocked?'':' locked')+'" aria-pressed="'+(tri.id===item.id)+'" data-reg-trisuit="'+esc(item.id)+'"'+(gate.unlocked?'':' disabled aria-label="'+esc(item.label)+' · unlocks at Level '+gate.requiredLevel+'"')+'><i style="--kit:'+esc(item.color)+';--kit-accent:'+esc(item.accent)+'"></i><b>'+esc(item.label)+(gate.unlocked?'':' · LVL '+gate.requiredLevel)+'</b></button>';}).join('')+'</div></section>'+
       '<section class="registration-custom"><label class="ui-field"><span>Base color</span><input type="color" value="'+esc(tri.color)+'" data-reg-color></label><label class="ui-field"><span>Accent color</span><input type="color" value="'+esc(tri.accentColor)+'" data-reg-accent></label>'+
       '<label class="btn-secondary registration-upload"><span>'+(tri.overlay?'Replace trisuit image':'Add image to trisuit')+'</span><input type="file" accept="image/png,image/jpeg,image/webp" data-reg-overlay></label>'+(tri.overlay?'<button type="button" class="btn-text" data-reg-remove>Remove image</button>':'')+'</section>'+
       '<p class="kona-note" data-reg-note>'+(tri.overlay?'Your image is stored locally with your Race Self.':'PNG, JPEG or WebP. Maximum 500 KB. It stays on this device unless you choose cloud backup.')+'</p>'+
@@ -40,6 +43,7 @@ export function renderAvatarRegistration(host,{profile,onContinue,onBack}={}){
     host.querySelector('[data-reg-remove]')?.addEventListener('click',()=>commit(patchAvatarItem(style,'trisuit',{overlay:null})));
     host.querySelector('[data-reg-back]')?.addEventListener('click',()=>onBack?.());
     host.querySelector('[data-reg-continue]')?.addEventListener('click',()=>onContinue?.());
+    if(attr)host.querySelector('['+attr+'="'+value+'"]')?.focus({preventScroll:true});
   };
   paint();
 }

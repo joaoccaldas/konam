@@ -19,6 +19,7 @@ await build({
   target: 'es2020',
   legalComments: 'none',
 });
+await build({entryPoints:[path.join(here,'src/standalone-access.js')],bundle:true,format:'iife',minify:true,outfile:path.join(root,'app/standalone-access.js'),target:'es2020',legalComments:'none'});
 const bundled = fs.readFileSync(outfile, 'utf8').replace(/<\/script/gi, '<\\/script');
 fs.writeFileSync(outfile, `/* Studio app. Edit web/src/studio/main.js. Catalogs: app/museum-data.js then app/studio-catalog.js */\n${bundled}`);
 const html = fs.readFileSync(path.join(here, 'studio.template.html'), 'utf8');

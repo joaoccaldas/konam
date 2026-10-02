@@ -1,5 +1,7 @@
+import { openInviteDialog } from './invite.js';
 // ui/home.js: calm daily/personal Home. No Three.js or world runtime.
 // Home is the shell's navigation surface. Race Self is entered explicitly.
+import { photoCredit } from './photo-credit.js';
 import { mountCountdown } from './countdown.js';
 import { readGameState } from '../engine/game-state.js';
 import { collectionSummary } from '../engine/items.js';
@@ -55,10 +57,12 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
     '<section class="home-postcard artifact artifact--photo">'+
       '<div class="home-postcard-photo" aria-hidden="true"><img src="assets/kona-years/queen-k.jpg" alt="" loading="lazy" decoding="async"></div>'+
       '<div class="home-postcard-copy"><small>KAILUA-KONA · HAWAIʻI</small><h3>Not just a race.</h3><p>Roads, lava, people, machines and strange little details worth finding.</p><button type="button" class="kona-link-btn" data-home-discover>Discover something →</button></div>'+
-    '</section>'+
+    '</section>'+photoCredit()+
+    '<section class="home-invite kona-section artifact artifact--label"><small>KONA.M · BRING YOUR PEOPLE</small><h3>A good detour deserves company.</h3><p>Invite a friend to build their athlete and explore Kona. No account needed.</p><button type="button" class="kona-primary" data-invite-friends>Invite friends ↗</button></section>'+
     (nudgesEnabled?'<section class="home-nudge artifact artifact--label"><div><small>'+PRODUCT_NAME+' NUDGE · +5 XP</small><h3>'+esc(nudge)+'</h3><p>No urgency. No streak panic. Just a small reason to look around.</p></div><button type="button" class="kona-link-btn" data-home-nudge>Read it. Apparently this counts.</button></section>':'')+
     '<section class="home-horizon artifact artifact--label"><div class="home-horizon-head"><div><small>OVER THE HORIZON</small><h3>There is always something else.</h3></div><span class="t-data">'+(admin?'ADMIN · ALL LEVELS':'LVL '+esc(progression.level))+'</span></div><div class="home-horizon-grid">'+horizonHtml+'</div><p class="t-hand">Curiosity is a training plan too.</p></section>';
 
+  root.querySelector('[data-invite-friends]')?.addEventListener('click',openInviteDialog);
   const disposeCount=mountCountdown(root.querySelector('.home-today'),event);
   root.querySelector('[data-home-finds]')?.addEventListener('click',()=>openCollection?.());
   root.querySelector('[data-first-find]')?.addEventListener('click',e=>{

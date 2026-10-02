@@ -5,6 +5,8 @@
 An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.
 
 ## Pages
+- [Privacy & data · Kona.m](https://joaoccaldas.github.io/konam/privacy.html): Device storage, optional cloud backup and public account availability.
+- [Photo credits · Kona.m](https://joaoccaldas.github.io/konam/credits.html): Source, author, licenses and adaptations for Kona.m photography.
 - [Kona.m · Race the version of yourself](https://joaoccaldas.github.io/konam/): Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.
 - [Canyon Triathlon Collection · every Speedmax generation, compared](https://joaoccaldas.github.io/konam/Canyon_Collection.html): Every Canyon Speedmax generation on record, 1999–2027: interactive 3D exhibits, side-by-side specifications, an aero calculator and a sourced archive of the bikes that were never modelled.
 - [Studio · Speedmax Museum — build, paint and share a time-trial bike](https://joaoccaldas.github.io/konam/Studio.html): Every bike in the Speedmax Museum and more, in 3D: paint it, give it a film theme, set the scene, dream it in motion and share it. Canyon generations, named machines and studio designs.
@@ -24,4 +26,4 @@ An independent, unofficial fan and research project. Not affiliated with, endors
 - Photographs are openly licensed (Wikimedia Commons, CC BY / CC BY-SA); authors and licences are shown beside every image.
 
 ## Privacy
-No accounts, no analytics, no cookies, no tracking by default. The Passport and settings stay in the visitor's own browser (localStorage). An optional email sign-in can back that data up only when the visitor asks.
+No accounts, no analytics, no cookies, no tracking by default. The Passport and settings stay in the visitor's own browser (localStorage). Public email sign-in is currently unavailable. Existing signed-in users may explicitly back up, restore or delete their cloud backup. See privacy.html for the beta data notice and remaining account launch requirements.

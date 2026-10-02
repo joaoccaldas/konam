@@ -16,7 +16,9 @@ test('every published page carries security, privacy and SEO metadata', () => {
     assert.match(h, /name="referrer" content="strict-origin-when-cross-origin"/, f);
     assert.match(h, /rel="canonical" href="https:\/\/(?:konam\.vercel\.app|joaoccaldas\.github\.io\/konam)\//, f);
     assert.match(h, /<meta name="description" content="[^"]{60,}"/, f);
-    assert.match(h, /property="og:image" content="https:\/\/[^"]+\.jpg"/, f);
+    assert.match(h, /property="og:image" content="https:\/\/[^"]+\.(?:jpg|png)"/, f);
+    const image=h.match(/property="og:image" content="([^"]+)"/)[1];
+    assert.ok(fs.existsSync(path.join(root,new URL(image).pathname.replace(/^\/konam\//,''))),f+' social image exists');
     const ld = h.match(/<script type="application\/ld\+json">([^<]+)<\/script>/);
     assert.ok(ld, f); const o = JSON.parse(ld[1]); assert.equal(o['@context'], 'https://schema.org'); assert.match(o.disambiguatingDescription, /Not affiliated/);
     assert.doesNotMatch(h, /\/Users\/[a-z]+|@gmail\.com/, f);

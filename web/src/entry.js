@@ -1,3 +1,4 @@
+import { openInviteDialog } from './ui/invite.js';
 // Kona.m entry. HTML is already on screen. This file does not import Three.js.
 // The museum runtime loads only after the visitor chooses to explore.
 import { mountCountdown } from './ui/countdown.js';
@@ -182,11 +183,12 @@ function paintQuest(step) {
     return;
   }
   if(step==='save'){
-    host.innerHTML = `<p class="eyebrow">Sign in or create your account</p><form id="saveForm"><input name="email" type="email" required placeholder="you@example.com" aria-label="Email address" autocomplete="email"><button class="btn-primary" type="submit">Send sign-in link</button></form><button class="btn-text" type="button" id="continueLocal">Continue without account</button><button class="btn-text" type="button" id="backFromSave">Back</button><p class="kona-note" role="status" id="saveNote">New here? Your first link creates your account. No password needed. You can also continue without an account.</p>`;
+    host.innerHTML = `<p class="eyebrow">Sign in or create your account</p><form id="saveForm"><input name="email" type="email" disabled required placeholder="you@example.com" aria-label="Email address" autocomplete="email"><button class="btn-primary" type="submit" disabled>Public email sign-in unavailable</button></form><button class="btn-text" type="button" id="continueLocal">Continue without account</button><button class="btn-text" type="button" id="backFromSave">Back</button><p class="kona-note" role="status" id="saveNote">Public email sign-in is unavailable while production email delivery is being configured. Use Kona.m without an account; progress stays on this device. <a href="privacy.html">Privacy & data</a></p>`;
     host.querySelector('#continueLocal')?.addEventListener('click',()=>enterApp('home'));
     host.querySelector('#backFromSave')?.addEventListener('click',()=>{setEntryMode('landing');host.hidden=true;document.getElementById('entrySignIn')?.focus();});
     host.querySelector('#saveForm')?.addEventListener('submit', async event => {
       event.preventDefault();
+      if(event.currentTarget.querySelector('input').disabled)return;
       const email = new FormData(event.currentTarget).get('email');
       const note = host.querySelector('#saveNote'),button=event.currentTarget.querySelector('button[type=submit]');
       button.disabled=true;button.textContent='Sending…';
@@ -250,3 +252,5 @@ else if (q.get('room') || q.get('map')) openMuseum();
 else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());
 else if (returningVisit && ['home','garage','collection','discover','plan','me','feed','travel'].includes(q.get('view'))) enterApp(q.get('view'));
+
+document.getElementById('entryInvite')?.addEventListener('click',openInviteDialog);

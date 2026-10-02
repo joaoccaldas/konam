@@ -22,9 +22,12 @@ export function initSettings({ profile, QUALITY, AVATARS, activeQuality, onQuali
 
   const sheet = el('div', { id: 'settings', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'settingsTitle', hidden: true });
   document.body.append(sheet);
-  let reloadNeeded = false;
+  let reloadNeeded = false, returnFocus = null;
+  const focusable = () => [...sheet.querySelectorAll('button,input,select,a[href],[tabindex="0"]')].filter(n=>!n.disabled&&n.getClientRects().length);
 
   function draw() {
+    const oldFocus = document.activeElement;
+    const oldIndex = focusable().indexOf(oldFocus);
     const p = profile.get();
     const quality = Object.entries(QUALITY).map(([id, q]) => el('label', { class: 'set-opt' },
       el('input', { type: 'radio', name: 'quality', value: id, checked: p.quality === id, onchange: () => { profile.set({ quality: id }); reloadNeeded = onQuality(id) || reloadNeeded; draw(); } }),
@@ -41,7 +44,7 @@ export function initSettings({ profile, QUALITY, AVATARS, activeQuality, onQuali
         el('label', { class: 'set-field' }, el('span', {}, 'Name'),
           el('input', { type: 'text', value: p.name, maxlength: 40, placeholder: `What should ${PRODUCT_NAME} call you?`, autocomplete: 'nickname', onchange: e => { profile.set({ name: e.target.value }); draw(); } })),
         el('div', { class: 'set-avas' }, avatars),
-        el('p', { class: 'set-note' }, 'Stored on this device only. No account needed, nothing is sent anywhere.')),
+        el('p', { class: 'set-note' }, 'Stored on this device by default. Cloud backup sends your profile only when you choose Back up. Fonts, public news and weather contact their providers.')),
       el('section', {}, el('h4', {}, 'Appearance'),
         el('div', { class: 'set-row' }, el('span', {}, 'Theme'), seg('Appearance', p.appearance, [['auto','Auto'],['light','Light'],['dark','Dark'],['random','Random']], v => { profile.set({ appearance:v }); applyBrandMode(v); })),
         el('div', { class: 'set-row' }, el('span', {}, 'Graphics quality'), el('div', { class: 'set-opts' }, quality)),
@@ -56,18 +59,29 @@ export function initSettings({ profile, QUALITY, AVATARS, activeQuality, onQuali
         el('p', { class: 'set-note' }, 'For now these are in-app nudges only. Opening one can earn a small, one-time XP reward. No push permission is requested yet.')),
       el('section', {}, el('h4', {}, 'Account & sync'),
         sync?.available
-          ? el('div', { class: 'set-row' }, el('span', {}, p.sync ? `Signed in as ${p.sync.email}` : `Sign in to sync your ${PRODUCT_NAME} progress across devices.`), el('button', { type: 'button', class: 'btn ghost', onclick: () => sync.start() }, 'Open account'))
-          : el('p', { class: 'set-note' }, 'Sign in from Me to sync progress. Your profile stays local-first on this device.')),
+          ? el('div', { class: 'set-row' }, el('span', {}, p.sync ? `Signed in as ${p.sync.email}` : `Cloud backup for existing accounts. Public email sign-in is unavailable.`), el('button', { type: 'button', class: 'btn ghost', onclick: () => sync.start() }, 'Open account'))
+          : el('p', { class: 'set-note' }, 'Public email sign-in is unavailable. Your profile stays on this device.')),
       el('section', {}, el('h4', {}, 'Privacy & data'),
+        el('p', {class:'set-note'}, 'Device deletion does not remove your cloud backup or account. Manage a saved backup from Progress. ', el('a',{href:'privacy.html'},'Privacy & data notice'), ' · ', el('a',{href:'credits.html'},'Photo credits')),
         el('div', { class: 'set-row' },
-          el('button', { type: 'button', class: 'btn ghost', onclick: () => { const b = new Blob([exportAppState()], { type: 'application/json' }); const u=URL.createObjectURL(b); const a = el('a', { href: u, download: 'kona-app-local-data.json' }); document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),0); } }, 'Export everything'),
-          el('button', { type: 'button', class: 'btn ghost danger', onclick: () => { const s=appStateSummary(); if (confirm(`Delete all ${s.records} app records from this device? This includes profile, passport, finds, setup and local preferences.`)) { eraseAppState(); location.reload(); } } }, 'Delete everything'))),
+          el('button', { type: 'button', class: 'btn ghost', onclick: () => { const b = new Blob([exportAppState()], { type: 'application/json' }); const u=URL.createObjectURL(b); const a = el('a', { href: u, download: 'kona-app-local-data.json' }); document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),0); } }, 'Export device data'),
+          el('button', { type: 'button', class: 'btn ghost danger', onclick: () => { const s=appStateSummary(); if (confirm(`Delete all ${s.records} app records from this device? This includes profile, passport, finds, setup and local preferences.`)) { eraseAppState(); location.reload(); } } }, 'Delete device data'))),
       el('p', { class: 'set-foot' }, PRODUCT_NAME+' · local-first beta. No account required, no analytics. Export and delete cover all app-owned browser data.')));
+    if(oldIndex>=0) focusable()[oldIndex]?.focus({preventScroll:true});
   }
-  function open() { draw(); sheet.hidden = false; document.body.classList.add('settings-open'); sheet.querySelector('input,button')?.focus({ preventScroll: true }); }
-  function close() { sheet.hidden = true; document.body.classList.remove('settings-open'); }
+  function open() { returnFocus=document.activeElement; draw(); sheet.hidden = false; document.body.classList.add('settings-open'); sheet.querySelector('input,button')?.focus({ preventScroll: true }); }
+  function close() { sheet.hidden = true; document.body.classList.remove('settings-open'); if(returnFocus?.isConnected)returnFocus.focus({preventScroll:true}); }
   sheet.addEventListener('click', e => { if (e.target === sheet) close(); });
-  addEventListener('keydown', e => { if (e.key === 'Escape' && !sheet.hidden) close(); });
+  addEventListener('keydown', e => {
+    if(sheet.hidden)return;
+    if(e.key==='Escape'){e.preventDefault();close();return;}
+    if(e.key==='Tab'){
+      const nodes=focusable(),first=nodes[0],last=nodes.at(-1);
+      if(!first){e.preventDefault();return;}
+      if(!sheet.contains(document.activeElement)||(e.shiftKey&&document.activeElement===first)||(!e.shiftKey&&document.activeElement===last)){e.preventDefault();(e.shiftKey?last:first).focus();}
+    }
+  });
+  document.addEventListener('focusin', e=>{if(!sheet.hidden&&!sheet.contains(e.target))focusable()[0]?.focus({preventScroll:true});});
   chip?.addEventListener('click', open);
   document.getElementById('introProfile')?.addEventListener('click', open);
   return { open, close };

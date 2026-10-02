@@ -3,7 +3,7 @@
 // Uses only the public project URL + publishable key. Authorization is enforced by Postgres RLS.
 // No service-role/secret key belongs in browser code.
 import {readStorage,writeStorage,removeStorage} from '../engine/storage.js';
-import { readGameState, writeGameState, GAME_STATE_SCHEMA_VERSION } from '../engine/game-state.js';
+import { readGameState, writeGameState, validateGameState, GAME_STATE_SCHEMA_VERSION } from '../engine/game-state.js';
 
 export const PUBLIC_SUPABASE_URL = 'https://mtvpnoqwjpoqaiocrklq.supabase.co';
 export const PUBLIC_SUPABASE_KEY = 'sb_publishable_lVueu3GqNcPe4Z9KsChvJw_VfmnVi5u';
@@ -109,7 +109,7 @@ export async function signOut() {
 export async function backupGameState() {
   const user = await currentUser();
   if (!user?.id) throw new Error('Sign in first');
-  const state = readGameState();
+  const state = validateGameState(readGameState());
   const res = await fetch(URL + '/rest/v1/user_app_state?on_conflict=user_id', {
     method:'POST',
     headers:{ ...(await authHeaders()), Prefer:'resolution=merge-duplicates,return=representation' },
@@ -129,6 +129,15 @@ export async function restoreGameState() {
   if (Number(row.schema_version) !== GAME_STATE_SCHEMA_VERSION) throw new Error('Cloud state uses a newer schema');
   writeGameState(row.state);
   return row;
+}
+
+// RLS remains authoritative; never accept a caller-provided user ID.
+export async function deleteCloudBackup() {
+  const user=await currentUser();
+  if(!user?.id)throw new Error('Sign in first');
+  return json(await fetch(URL+'/rest/v1/user_app_state?user_id=eq.'+encodeURIComponent(user.id),{
+    method:'DELETE',headers:{...(await authHeaders()),Prefer:'return=minimal'}
+  }));
 }
 
 export function cloudAvailable() { return !!URL && !!KEY; }

@@ -5,6 +5,8 @@ An independent, unofficial fan and research project. Not affiliated with, endors
 This file is generated from the same museum registries used by the public app. Stable ids in the JSON/data files are preferred over names for programmatic references.
 
 ## Public pages
+- Privacy & data · Kona.m: https://joaoccaldas.github.io/konam/privacy.html
+- Photo credits · Kona.m: https://joaoccaldas.github.io/konam/credits.html
 - Kona.m · Race the version of yourself: https://joaoccaldas.github.io/konam/
 - Canyon Triathlon Collection · every Speedmax generation, compared: https://joaoccaldas.github.io/konam/Canyon_Collection.html
 - Studio · Speedmax Museum — build, paint and share a time-trial bike: https://joaoccaldas.github.io/konam/Studio.html

@@ -1,3 +1,4 @@
+import { openInviteDialog } from './invite.js';
 // ui/avatar-home.js — canonical User Studio surface.
 // Both the persistent user menu and the Me tab enter this same game-style studio.
 // Avatar building is a projection over engine/avatar.js; mobile and desktop share this exact UI.
@@ -12,7 +13,7 @@ import {
 import { renderRacePicker } from './race-cards.js';
 import { renderProgressSurface } from './me.js';
 import { avatarItemAccess } from '../engine/access.js';
-import { shareProgress, whatsappProgressUrl, safeAppUrl, progressShareText } from '../growth/social-share.js';
+import { shareProgress, whatsappProgressUrl, safeAppUrl, progressShareText, progressCardBlob } from '../growth/social-share.js';
 import { PRODUCT_NAME } from '../product-meta.js';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -239,11 +240,13 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
       '<p class="kona-source-note">'+esc(progressShareText(progress))+'</p>'+
       '<div class="share-studio-actions"><button type="button" class="kona-primary" data-share-progress>Share to apps…</button>'+
       (wa?'<a class="btn-secondary" data-share-whatsapp href="'+esc(wa)+'" target="_blank" rel="noopener noreferrer">WhatsApp</a>':'')+
-      '<button type="button" class="btn-secondary" data-share-copy>Copy clean link</button></div>'+
+      '<button type="button" class="btn-secondary" data-share-copy>Copy clean link</button><button type="button" class="btn-secondary" data-share-download>Save social card</button><button type="button" class="kona-primary" data-share-invite>Invite friends ↗</button></div>'+
       '<p class="kona-source-note" data-share-status>On phones, the system share sheet can offer Instagram, WhatsApp, Messages and any compatible app. No email, account ID or private local state is included.</p>'+
     '</section>';
     if(drawer.hidden)openDrawer();
     const status=drawerBody.querySelector('[data-share-status]');
+    drawerBody.querySelector('[data-share-invite]').onclick=openInviteDialog;
+    drawerBody.querySelector('[data-share-download]').onclick=async()=>{const blob=await progressCardBlob(progress);if(!blob){status.textContent='Image export is unavailable here. Copy the clean link instead.';return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='konam-progress.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Social card saved. Add it to a story or post in your social app.';};
     drawerBody.querySelector('[data-share-progress]')?.addEventListener('click',async e=>{
       const button=e.currentTarget;button.disabled=true;const result=await shareProgress(progress);
       status.textContent=result.ok?(result.method==='clipboard'?'Share sheet unavailable. '+PRODUCT_NAME+' link copied.':'Share sheet opened safely.'):(result.reason==='cancelled'?'Not shared. Nothing left '+PRODUCT_NAME+'.':'Sharing is unavailable here. Use WhatsApp or copy the link.');
