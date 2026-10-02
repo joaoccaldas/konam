@@ -22,7 +22,7 @@ function avatarPreview(styleInput){
   '</div>';
 }
 
-export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage,openDiscover,openPlan,openCollection,admin=false}={}){
+export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage,openDiscover,openPlan,openCollection,openWorld,admin=false}={}){
   const snapshot=readGameState();
   const identity=snapshot.race_identity||{};
   const collection=collectionSummary(snapshot);
@@ -41,6 +41,7 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
   const horizonHtml=horizon.map(item=>'<article class="home-horizon-card '+(item.unlocked?'is-revealed':'is-locked')+'"><div class="home-horizon-silhouette"><span>'+esc(item.silhouette)+'</span></div><small>'+(item.unlocked?'MILESTONE REACHED':'LEVEL '+item.level)+'</small><h4>'+esc(item.unlocked?item.reveal:item.tease)+'</h4><p>Reward preview. Availability is shown in Progress.</p></article>').join('');
 
   root.innerHTML=
+    '<section class="home-world-hero artifact artifact--photo"><div class="home-world-hero-media"><img src="assets/share/museum.jpg" alt="Kona.m 3D world preview" loading="eager" decoding="async"></div><div class="home-world-hero-copy"><small>KONA.M · 3D WORLD</small><h3>Walk into it.</h3><p>Explore the museum, rooms, bikes and hidden details in the real 3D world.</p><button type="button" class="kona-primary" data-home-world>Enter the 3D world <span>→</span></button></div></section>'+
     '<section class="kona-hero-card artifact artifact--hero home-today">'+
       '<small>'+esc(event.name||PRODUCT_NAME+' · TODAY')+'</small>'+
       '<h3 data-countdown-value>'+esc(headline)+'</h3><p>'+esc(note)+'</p>'+
@@ -62,6 +63,7 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
     (nudgesEnabled?'<section class="home-nudge artifact artifact--label"><div><small>'+PRODUCT_NAME+' NUDGE · +5 XP</small><h3>'+esc(nudge)+'</h3><p>No urgency. No streak panic. Just a small reason to look around.</p></div><button type="button" class="kona-link-btn" data-home-nudge>Read it. Apparently this counts.</button></section>':'')+
     '<section class="home-horizon artifact artifact--label"><div class="home-horizon-head"><div><small>OVER THE HORIZON</small><h3>There is always something else.</h3></div><span class="t-data">'+(admin?'ADMIN · ALL LEVELS':'LVL '+esc(progression.level))+'</span></div><div class="home-horizon-grid">'+horizonHtml+'</div><p class="t-hand">Curiosity is a training plan too.</p></section>';
 
+  root.querySelector('[data-home-world]')?.addEventListener('click',()=>openWorld?.());
   root.querySelector('[data-invite-friends]')?.addEventListener('click',openInviteDialog);
   const disposeCount=mountCountdown(root.querySelector('.home-today'),event);
   root.querySelector('[data-home-finds]')?.addEventListener('click',()=>openCollection?.());
