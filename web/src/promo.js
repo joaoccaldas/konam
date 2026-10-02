@@ -100,3 +100,102 @@ if(tourButtons.length>1 && !matchMedia('(prefers-reduced-motion:reduce)').matche
   let i=0;
   tourTimer=setInterval(()=>{i=(i+1)%tourButtons.length;setTour(tourButtons[i]);},9000);
 }
+
+
+// Field Guide V2 rail -------------------------------------------------------
+const rail=qs('[data-field-rail]');
+const railToggle=qs('[data-rail-toggle]');
+const railState=qs('[data-rail-state]');
+const railProgress=qs('[data-rail-progress]');
+const hero=qs('.promo-hero');
+
+const setRailOpen=open=>{
+  if(!rail||!railToggle)return;
+  rail.classList.toggle('is-open',open);
+  railToggle.setAttribute('aria-expanded',String(open));
+  if(railState) railState.textContent=open?'OPEN / QUESTIONABLE DRAG':'CLOSED / AERODYNAMIC';
+};
+railToggle?.addEventListener('click',()=>setRailOpen(!rail?.classList.contains('is-open')));
+qsa('[data-rail-link]').forEach(link=>link.addEventListener('click',()=>{if(innerWidth<900)setRailOpen(false);}));
+
+if(hero && rail){
+  const heroObserver=new IntersectionObserver(entries=>{
+    const visible=entries[0]?.isIntersecting;
+    rail.classList.toggle('is-ready',!visible);
+    if(visible)setRailOpen(false);
+  },{threshold:.14});
+  heroObserver.observe(hero);
+}
+
+const railSections=qsa('[data-rail-link]').map(a=>({a,id:a.getAttribute('href')?.slice(1)})).filter(x=>x.id);
+const updateRailTelemetry=()=>{
+  const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+  const pct=Math.min(100,Math.max(0,Math.round(scrollY/max*100)));
+  if(railProgress)railProgress.textContent=String(pct).padStart(2,'0')+'%';
+  let active=null;
+  for(const x of railSections){
+    const el=document.getElementById(x.id);
+    if(el && el.getBoundingClientRect().top<=innerHeight*.42)active=x;
+  }
+  railSections.forEach(x=>x.a.classList.toggle('is-active',x===active));
+};
+addEventListener('scroll',updateRailTelemetry,{passive:true}); updateRailTelemetry();
+
+// The Founding 141. Count is canonical; identities stay obscured here.
+const vault=qs('[data-reward-vault]');
+const vaultMessage=qs('[data-vault-message]');
+if(vault){
+  const frag=document.createDocumentFragment();
+  for(let i=1;i<=141;i++){
+    const cell=document.createElement('button');
+    cell.type='button';
+    cell.className='reward-cell';
+    cell.dataset.n=String(i).padStart(3,'0');
+    cell.setAttribute('aria-label',`Founding collectible ${i}, hidden`);
+    cell.style.setProperty('--ghost',String(.16+((i*17)%23)/100));
+    cell.style.setProperty('--rot',(((i*29)%72)-36)+'deg');
+    cell.style.setProperty('--scale',String(.55+((i*13)%35)/100));
+    cell.addEventListener('click',()=>{
+      qsa('.reward-cell.is-poked',vault).forEach(x=>x.classList.remove('is-poked'));
+      cell.classList.add('is-poked');
+      if(vaultMessage){
+        const notes=[
+          'Nice try. Find it in the world.',
+          'REDACTED by the Department of Not Ruining Things.',
+          'The Intern knows what this is. Allegedly.',
+          'Spoiler prevention system functioning beautifully.',
+          'Item '+String(i).padStart(3,'0')+' remains none of your business. For now.'
+        ];
+        const p=vaultMessage.querySelector('p');
+        const s=vaultMessage.querySelector('span');
+        if(p)p.textContent=notes[i%notes.length];
+        if(s)s.textContent='141 exist. The mystery is part of the product.';
+      }
+      setTimeout(()=>cell.classList.remove('is-poked'),750);
+    });
+    frag.appendChild(cell);
+  }
+  vault.appendChild(frag);
+}
+
+// Real-app feature reel -----------------------------------------------------
+const shots=qsa('[data-feature-shot]');
+const featureButtons=qsa('[data-feature-button]');
+const featureCounter=qs('[data-feature-counter]');
+let featureIndex=0,featureTimer=null;
+const setFeature=i=>{
+  if(!shots.length)return;
+  featureIndex=(i+shots.length)%shots.length;
+  shots.forEach((x,n)=>x.classList.toggle('is-active',n===featureIndex));
+  featureButtons.forEach((x,n)=>x.classList.toggle('is-active',n===featureIndex));
+  if(featureCounter)featureCounter.textContent=String(featureIndex+1).padStart(2,'0')+' / '+String(shots.length).padStart(2,'0');
+};
+const startFeatureTimer=()=>{
+  if(featureTimer||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  featureTimer=setInterval(()=>setFeature(featureIndex+1),6500);
+};
+featureButtons.forEach((b,i)=>b.addEventListener('click',()=>{
+  if(featureTimer){clearInterval(featureTimer);featureTimer=null;}
+  setFeature(i); startFeatureTimer();
+}));
+setFeature(0); startFeatureTimer();
