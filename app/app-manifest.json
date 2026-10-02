@@ -1,5 +1,5 @@
 {
- "version": "1bf90c9ca7b7",
+ "version": "a636f2a5df4c",
  "core": [
   "index.html",
   "about.html",
@@ -36,7 +36,7 @@
   "about.html": "dL2G7YHRAdN8lcTViPmngln17prqm1+oz9J4xnj1vcM=",
   "credits.html": "oKwMWdw6p5K/d9xLgcuZWryResUAIp8/uqUOomRfX48=",
   "privacy.html": "owpVVfx6vIhly8iqwgymVQ0knoGQ0b2I/BSfcJWcfBU=",
-  "web/src/about-story.js": "+s2kJZpXUscQK8eWF5plCcLZL4QWC65hPzF4PIUTUqU=",
+  "web/src/about-story.js": "oJnWc5OyQtt8XqxBJqV56PV7jNWRbxjAHBUn2rYARX0=",
   "web/styles/about.css": "UZa75UNi+qUbnHBFFraZKoofO+L3UCQLiiDOBgjfCXg=",
   "app/viewport.js": "s84yeQXxX9xSWnlj+1xuK84iotaJzl1NKMWjShrB2F0=",
   "app/kona-core.js": "SmMz2qjV1YpuIloQcqQIa0wdgkzO11qQtiIZWc/Ju1U=",
@@ -89,7 +89,7 @@
   "Speedmax_SLX_Museum.html": "rGvgxOZEeGZ4LC1GOWm2r4kFfmX/nKmWgBPWjvPOeJ0=",
   "Speedmax_Three_2005_Museum.html": "5TqrTGBOJ1BGZx35D9FF51IRfduiKVpxJzK1c52tCZo=",
   "Studio.html": "nGOVpzOSJoj5dbiLz54tKcM4gvDgaqPTOXqn08eEQcI=",
-  "promo.html": "oAn/9wA1P0kepR0jZadJtYYYRq5v4KISfWLXI/VbxPk=",
+  "promo.html": "/7Ag91J3pZOF65Nxl+Db+J+HTUGrkyaRLrwAfHLJTpE=",
   "assets/art/paintings/builders-bench.jpg": "AYYSF1BMlgQJodQ0jhQyrPoDM/VWMje/TnPEjvBVAoA=",
   "assets/art/paintings/crosswind.jpg": "6to32GpQsK0TRot+06sdVSc6asouaIiOKRxxCxZ1dXg=",
   "assets/art/paintings/kohala-turn.jpg": "EG0TNXObOZ/Ur52EvO5RADs+fP2tp486ACrkGCx+ArM=",
