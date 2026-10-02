@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { buildBeastCave } from './beast-cave.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import { buildBeastCave, attachBeastCaveBike } from './beast-cave.js';
 
 const host=document.getElementById('stage');
 const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
@@ -34,6 +36,11 @@ controls.maxDistance=31;
 const pickables=[],obstacles=[];
 const lite=matchMedia('(pointer:coarse)').matches || innerWidth<700;
 const built=buildBeastCave({scene,lite,pickables,obstacles});
+let heroBikeReady=false;
+const loader=new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+attachBeastCaveBike(built,loader,'/assets/museum/speedmax_web.glb',{directDrive:true})
+  .catch(err=>console.warn('Beast Cave hero bike load failed',err))
+  .finally(()=>{heroBikeReady=true;});
 
 const PRESETS=Object.freeze({
   overview:{p:[-11.7,3.15,8.8],t:[-.8,1.25,-.8]},
@@ -113,7 +120,7 @@ function frame(){
   controls.update();
   renderer.render(scene,camera);
   frames++;
-  if(frames===3) window.__BEAST_CAVE_RENDER_READY=true;
+  if(frames>=3 && heroBikeReady) window.__BEAST_CAVE_RENDER_READY=true;
   requestAnimationFrame(frame);
 }
 frame();
