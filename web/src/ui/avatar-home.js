@@ -233,7 +233,7 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
   const showShare=()=>{
     const progress=gameProgress(readGameState());
     const wa=whatsappProgressUrl(progress);
-    drawerKicker.textContent='USER STUDIO · SHARE';drawerTitle.textContent='Share your KONA';
+    drawerKicker.textContent='USER STUDIO · SHARE';drawerTitle.textContent='Share your '+PRODUCT_NAME;
     drawerBody.innerHTML='<section class="kona-section artifact artifact--label share-studio">'+
       '<div class="kona-section-head"><h3>Give someone the rabbit hole.</h3><small>PRIVATE BY DEFAULT</small></div>'+
       '<p class="kona-source-note">'+esc(progressShareText(progress))+'</p>'+
@@ -246,13 +246,13 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
     const status=drawerBody.querySelector('[data-share-status]');
     drawerBody.querySelector('[data-share-progress]')?.addEventListener('click',async e=>{
       const button=e.currentTarget;button.disabled=true;const result=await shareProgress(progress);
-      status.textContent=result.ok?(result.method==='clipboard'?'Share sheet unavailable. KONA link copied.':'Share sheet opened safely.'):(result.reason==='cancelled'?'Not shared. Nothing left KONA.':'Sharing is unavailable here. Use WhatsApp or copy the link.');
+      status.textContent=result.ok?(result.method==='clipboard'?'Share sheet unavailable. '+PRODUCT_NAME+' link copied.':'Share sheet opened safely.'):(result.reason==='cancelled'?'Not shared. Nothing left '+PRODUCT_NAME+'.':'Sharing is unavailable here. Use WhatsApp or copy the link.');
       button.disabled=false;
     });
     drawerBody.querySelector('[data-share-copy]')?.addEventListener('click',async e=>{
       const url=safeAppUrl();if(!url)return;
       const button=e.currentTarget;
-      try{await navigator.clipboard.writeText(url);status.textContent='Clean KONA link copied.';button.textContent='Copied';}catch{status.textContent='Could not copy automatically. Use Share to apps… instead.';}
+      try{await navigator.clipboard.writeText(url);status.textContent='Clean '+PRODUCT_NAME+' link copied.';button.textContent='Copied';}catch{status.textContent='Could not copy automatically. Use Share to apps… instead.';}
     });
   };
 
