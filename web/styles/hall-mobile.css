@@ -21,13 +21,8 @@
   .logo b{font-size:12px;letter-spacing:.28em}.logo small{font-size:8.5px;line-height:1.25;letter-spacing:.18em}
   nav{gap:5px}
   nav a,nav button{padding:9px 11px;font-size:11.5px;min-height:40px}
-  #passportBtn{gap:5px}
-  #passportCount{min-width:30px;height:20px;padding:0 6px;font-size:9.5px}
   nav .wide{display:none}
   nav .long{display:none}
-  #installBtn{text-transform:capitalize}
-  #intro{align-items:flex-end;padding:0 22px calc(28px + var(--safe-b));
-    background:linear-gradient(0deg,rgba(244,239,231,.97) 0%,rgba(244,239,231,.9) 48%,rgba(244,239,231,.1) 78%,transparent 100%)}
   h1{font-size:clamp(44px,13vw,64px);margin:16px 0}
   .lede{font-size:14.5px}
   .cta{margin-top:22px}.btn{height:50px}
@@ -55,7 +50,6 @@
   .logo b{font-size:.86rem}.logo small{font-size:.72rem;letter-spacing:.14em}
   .logo{max-width:none;padding:9px 12px}
   nav a,nav button{font-size:.86rem;min-height:44px;padding:0 14px;display:inline-flex;align-items:center}
-  #passportCount{font-size:.72rem;height:1.45rem;min-width:2rem}
   .eyebrow{font-size:.75rem;letter-spacing:.22em}
   .lede{font-size:1rem;line-height:1.6}.touch-only.lede{font-size:.9rem!important}
   #loadstate{font-size:.78rem}
@@ -93,36 +87,12 @@
   #card h2{font-size:1.7rem}
   #joy{bottom:calc(70px + var(--safe-b))}
   h1{font-size:clamp(34px,7vh,48px)!important;margin:8px 0}
-  #intro .lede:not(.touch-only){display:none}
 }
 @media (max-width:520px){.set-opts{grid-template-columns:1fr}}
-
-/* P0 first journey: onboarding is a state, never appended below the hero. */
-#intro.quest-active{align-items:stretch;background:var(--kona-bg,#f4efe7);overflow:auto}
-#intro.quest-active .intro-inner{max-width:560px;margin:auto;padding:calc(72px + var(--safe-t)) 20px calc(32px + var(--safe-b))}
-#intro.quest-active .intro-inner > :not(#konaQuest){display:none!important}
-#intro.quest-active #konaQuest{display:block!important}
-#intro.quest-active .quest-choice{min-height:52px}
-#intro[hidden]{display:none!important}
-
-.quest-progress{display:flex;align-items:center;gap:12px;margin:0 0 28px;font:700 11px/1 var(--sans,system-ui);letter-spacing:.12em;color:var(--kona-muted,#5f6a72)}
-.quest-progress i{position:relative;display:block;height:2px;flex:1;background:var(--kona-line,rgba(18,24,29,.12));overflow:hidden}
-.quest-progress i::after{content:"";position:absolute;inset:0;right:auto;width:calc(var(--p) * 20%);background:var(--kona-accent,#e85a22)}
 
 /* P0 responsive contract: normal CSS pixels, no browser-layout zoom compensation. */
 @media (max-width:760px),(pointer:coarse){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
-  #intro{width:100%;min-height:100dvh;box-sizing:border-box}
-  #intro .intro-inner{width:min(100%,560px);max-width:100%;box-sizing:border-box}
-  #intro .entry-media{position:absolute;inset:0;overflow:hidden}
-  #intro .entry-media img{width:100%;height:100%;object-fit:cover;object-position:center 42%}
-  #intro h1{font-size:clamp(42px,12vw,60px);line-height:.92;max-width:9ch;text-wrap:balance}
-  #intro .lede{max-width:30ch}
-  #intro .cta{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%}
-  #intro .cta .btn{width:100%;min-height:52px}
-  .entry-utilities{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-  #konaQuest{width:100%;max-width:560px}
-  .quest-choice{width:100%;box-sizing:border-box}
 }
 
 /* Batch 6: responsive 3D chrome. Avoid horizontal actions/text clipping on phones. */
