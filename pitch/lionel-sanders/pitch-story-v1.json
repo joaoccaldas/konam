@@ -114,7 +114,8 @@
     "Use generated concept art only as transition material and clearly separate it from actual product footage.",
     "Final room footage must show free camera movement through a genuinely explorable 3D space.",
     "Keep KONA.m shell typography and minimal chrome.",
-    "Do not imply Zwift, Lionel Sanders, Canyon or IRONMAN approval or sponsorship."
+    "Do not imply Zwift, Lionel Sanders, Canyon or IRONMAN approval or sponsorship.",
+    "Include an optional final invitation card offering an in-person Kona walkthrough and collaborative 3D/content capture, without implying agreement or attendance."
   ],
   "evidence_notes": [
     {
@@ -137,5 +138,14 @@
       "source": "2017 IRONMAN World Championship result",
       "note": "Second place, 8:04:07 after leading much of the marathon."
     }
-  ]
+  ],
+  "in_person_invitation": {
+    "title": "If this is more interesting in person",
+    "copy": [
+      "I am happy to fly to Kona and show this properly face-to-face.",
+      "We could walk through the room together, change what is wrong, add what is missing, and decide whether any of it deserves to become something bigger.",
+      "And if it is fun, we can make something from Kona while we are there: a small 3D capture, an object, a room detail, a deliberately strange piece of content, or the beginning of the next space."
+    ],
+    "posture": "An open invitation, not an assumption of access, partnership, travel reimbursement or participation."
+  }
 }
