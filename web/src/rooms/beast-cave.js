@@ -713,29 +713,41 @@ export function buildBeastCave({
  * Optional authored-bike hook. Deliberately separate from buildBeastCave so the room
  * stays inspectable without pulling a GLB into startup. Call only after explicit 3D entry.
  */
-export async function attachBeastCaveBike(built, loader, glbPath) {
+export async function attachBeastCaveBike(built, loader, glbPath, { directDrive = true } = {}) {
   if (!built?.group || !loader || !glbPath) return null;
   const gltf = await loader.loadAsync(glbPath);
   const root = gltf.scene;
-  root.name = 'BEAST_AUTHORED_BIKE';
+  root.name = 'BEAST_AUTHORED_BIKE_MODEL';
   root.traverse(o => {
     if (o.isMesh) {
       o.castShadow = true;
       o.receiveShadow = true;
-      o.userData.beastCave = { hotspot: 'speedmax', label: 'Triathlon bike' };
+      o.userData.beastCave = { hotspot: 'speedmax', label: 'Canyon Speedmax CFR study' };
+    }
+    if (directDrive && /(^|[_\s-])(wheel[_\s-]?rear|rear[_\s-]?wheel|wheel_rear)([_\s-]|$)/i.test(o.name || '')) {
+      o.visible = false;
     }
   });
+
   const box3 = new THREE.Box3().setFromObject(root);
   const size = box3.getSize(new THREE.Vector3());
-  const scale = 2.2 / Math.max(size.x, size.y, size.z, .001);
+  const scale = 2.25 / Math.max(size.x, size.y, size.z, .001);
   root.scale.setScalar(scale);
+  root.updateMatrixWorld(true);
   const b2 = new THREE.Box3().setFromObject(root);
-  root.position.set(-2.5 - b2.getCenter(new THREE.Vector3()).x, .12 - b2.min.y, -2.0);
-  root.rotation.y = Math.PI / 2;
-  built.group.add(root);
+  const center = b2.getCenter(new THREE.Vector3());
+
+  const holder = new THREE.Group();
+  holder.name = 'BEAST_AUTHORED_BIKE';
+  holder.position.set(-2.5, 0, -2.0);
+  holder.rotation.y = Math.PI / 2;
+  root.position.set(-center.x, .12 - b2.min.y, -center.z);
+  holder.add(root);
+  built.group.add(holder);
+
   const proxy = built.group.getObjectByName('BEAST_BIKE_PROXY');
   if (proxy) proxy.visible = false;
-  return root;
+  return holder;
 }
 
 export function disposeBeastCave(built) {
