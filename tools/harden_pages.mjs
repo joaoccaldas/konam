@@ -38,6 +38,9 @@ const PAGES = [
   { file: 'Experiences.html', type: 'WebPage', image: 'assets/share/museum.jpg',
     title: 'Speedmax Nights & History Lane · Canyon Speedmax Museum',
     description: 'Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.', keepTitle: true },
+  { file: 'about.html', type: 'AboutPage', image: 'assets/share/museum.jpg',
+    title: 'About this company · Kona.m',
+    description: 'Why Kona.m exists, told three ways: short, scenic and unfiltered.', keepTitle: true },
 ];
 for (const f of fs.readdirSync(root).filter(f => /^Speedmax_.*_?Museum\.html$/.test(f))) {
   const html = fs.readFileSync(path.join(root, f), 'utf8');
@@ -66,7 +69,7 @@ function block(p) {
   const url = SITE + (p.file === 'index.html' ? '' : p.file), img = SITE + p.image;
   const ld = {
     '@context': 'https://schema.org', '@type': p.type, name: p.title, description: p.description, url, image: img, inLanguage: 'en',
-    isAccessibleForFree: true, publisher: { '@type': 'Organization', name: PRODUCT_NAME },
+    isAccessibleForFree: true, publisher: { '@type': 'Organization', name: NAME },
     about: [{ '@type': 'Thing', name: 'Canyon Speedmax' }, { '@type': 'SportsEvent', name: 'IRONMAN World Championship', location: 'Kailua-Kona, Hawaii' }],
     disambiguatingDescription: DISCLAIMER,
   };
@@ -101,7 +104,7 @@ for (const p of PAGES) {
     .map(href => `<link rel="stylesheet" href="${href}">`).join('');
   html = html.replace(/<\/head>/i, `<!--design-system:start-->${fonts}${missing}<!--design-system:end-->\n</head>`);
   html = html.replace(/<!--global-user-studio:start-->[\s\S]*?<!--global-user-studio:end-->\n?/g, '');
-  if (p.file !== 'index.html' && !html.includes('href="index.html?view=me"')) {
+  if (!['index.html','about.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
     html = html.replace(/<body([^>]*)>/i, match => match + GLOBAL_USER_STUDIO);
   }
   fs.writeFileSync(f, html);
