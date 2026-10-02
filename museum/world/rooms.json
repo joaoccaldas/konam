@@ -174,6 +174,20 @@
    }
   },
   {
+   "id": "beast",
+   "floor": "ground",
+   "name": "Lionel Sanders · Beast Cave",
+   "short": "Beast Cave",
+   "sub": "The work nobody sees",
+   "kind": "themed",
+   "exhibits": {
+    "products": [
+     "canyon-cfr-2027"
+    ]
+   },
+   "note": "Independent Kona.m athlete-room concept. No athlete or brand endorsement implied."
+  },
+  {
    "id": "pier",
    "floor": "ground",
    "name": "Kona by Year",
@@ -322,7 +336,7 @@
     "fog": "#1a0a10",
     "exposure": 0.78,
     "z0": 15.6,
-    "z1": 11.0,
+    "z1": 11,
     "decoration": "horror"
    }
   },
@@ -345,7 +359,7 @@
     "fog": "#0c2430",
     "exposure": 0.95,
     "z0": 20.6,
-    "z1": 16.0,
+    "z1": 16,
     "decoration": "alien"
    }
   },
@@ -368,7 +382,7 @@
     "fog": "#2a2c18",
     "exposure": 0.98,
     "z0": 26.4,
-    "z1": 21.0,
+    "z1": 21,
     "decoration": "zombie"
    }
   }
