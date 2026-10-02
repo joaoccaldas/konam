@@ -1,4 +1,5 @@
 import { mapBounds, mapFloors } from './world/map-model.js';
+import { PRODUCT_NAME } from './product-meta.js';
 // map.js — the museum map. Two floors drawn from the same rectangles the walls are built from,
 // a live "you are here" arrow, and every area one tap away (the walk there is the museum's own route).
 // Open with the Map button or M; Esc closes. The list under the plan is the same set of places for
@@ -11,7 +12,7 @@ export function initMap({ areas, pose, go, button, access=()=>({unlocked:true,re
   root.id = 'map'; root.hidden = true; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Museum map');
   const floorName=f=>({ground:'Ground floor',upper:'Upper floor',future:'Future levels'}[f]||f);
   root.innerHTML = `<div class="map-card">
-    <div class="map-head"><div><small>KONA · WORLD MAP</small><h3>Explore the museum</h3><p>Rooms now. Future levels next.</p></div>
+    <div class="map-head"><div><small>${PRODUCT_NAME} · WORLD MAP</small><h3>Explore the museum</h3><p>Rooms now. Future levels next.</p></div>
       <div class="map-tabs" role="tablist">${floors.map(f => `<button role="tab" data-floor="${f}">${floorName(f)}</button>`).join('')}</div>
       <button class="map-close" aria-label="Close map">×</button></div>
     <div class="map-legend"><span><i class="live"></i>Open now</span><span><i class="future"></i>Future level</span><span><i class="you"></i>You are here</span></div>
