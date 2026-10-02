@@ -10,7 +10,6 @@ import { renderDiscoverSurface } from './discover.js';
 import { renderPlanSurface } from './plan.js';
 import { renderFeed, renderTravel } from './companion.js';
 import { renderAdminAssets } from './admin-assets.js';
-import { renderAdminMerch } from './admin-merch.js';
 import { currentUser, isAdminUser } from '../cloud/supabase-lite.js';
 import { readStorage, writeStorage } from '../engine/storage.js';
 import { initReturnJourney } from './return-journey.js';
@@ -232,6 +231,8 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(request!==studioRequest)return;
     title.textContent='Merch Studio';eyebrow.textContent=`${PRODUCT_NAME} · ADMIN`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('me');
+    const {renderAdminMerch}=await import('./admin-merch.js');
+    if(request!==studioRequest)return;
     await renderAdminMerch(body);
   }
 
