@@ -111,5 +111,20 @@
       "rights"
     ],
     "public_wiring": false
+  },
+  "brand": {
+    "authority": "docs/BRAND_SYSTEM.md",
+    "tokens": "brand/tokens.css",
+    "ui": "global",
+    "typography": "global",
+    "tone": "Kona.m",
+    "theme_scope": [
+      "environment",
+      "story",
+      "props",
+      "materials",
+      "sound",
+      "local-lighting"
+    ]
   }
 }
