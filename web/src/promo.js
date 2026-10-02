@@ -62,13 +62,6 @@ if(coffee) coffee.textContent=hour<10?'CRITICAL':'ADEQUATE';
 if(training) training.textContent=hour<12?'PLANNED, APPARENTLY':hour<19?'STILL POSSIBLE':'TOMORROW IS ALSO A DAY';
 
 const stage=qs('[data-parallax-stage]');
-if(stage && matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches){
-  stage.addEventListener('pointermove',e=>{
-    const r=stage.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-    stage.style.transform='perspective(1000px) rotateY('+(x*4-2)+'deg) rotateX('+(-y*3)+'deg)';
-  });
-  stage.addEventListener('pointerleave',()=>stage.style.transform='perspective(1000px) rotateY(-2deg)');
-}
 
 const header=qs('[data-header]');
 let lastY=0;
