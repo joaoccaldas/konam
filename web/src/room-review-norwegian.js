@@ -31,7 +31,7 @@ const target=new THREE.Vector3(0,1.35,-1.4);
 let yaw=.02,pitch=-.05,distance=lite?11.2:10.2;
 function updateCamera(){
  const cp=Math.cos(pitch);
- camera.position.set(target.x+Math.sin(yaw)*cp*distance,target.y+Math.sin(pitch)*distance,target.z+Math.cos(yaw)*cp*distance);
+ camera.position.set(target.x+Math.sin(yaw)*cp*distance,target.y+Math.sin(pitch)*distance,target.z-Math.cos(yaw)*cp*distance);
  camera.lookAt(target);
 }
 updateCamera();
