@@ -28,7 +28,11 @@ const CSP_BASE = [
   "worker-src 'self' blob:",
   "object-src 'none'", "base-uri 'self'", "form-action 'none'",
 ];
-const cspFor=file=>CSP_BASE.map(x=>x.startsWith("script-src ")?(file==='index.html'?"script-src 'self' 'wasm-unsafe-eval'":x):x).join('; ');
+const cspFor=file=>CSP_BASE.map(x=>{
+  if(x.startsWith("script-src ")) return file==='index.html' ? "script-src 'self' 'wasm-unsafe-eval'" : x;
+  if(file==='promo.html' && x.startsWith("img-src ")) return x + " https://joaoccaldas.github.io";
+  return x;
+}).join('; ');
 
 const PAGES = [
   {file:'privacy.html',type:'WebPage',image:'assets/share/konam.png',title:'Privacy & data · Kona.m',description:'Device storage, optional cloud backup and public account availability.'},
