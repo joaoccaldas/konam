@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "room_id": "athlete-lionel-sanders-beast-cave-v1",
+  "experience_route": "experiences/beast-cave/",
+  "scene_builder": "web/src/rooms/beast-cave.js",
+  "story_builder": "web/src/rooms/beast-cave-story-wing.js",
+  "dimensions_m": {"width": 28, "depth": 22, "height": 5.6},
+  "status": "production-candidate-unwired",
+  "assets": [
+    {"id":"hero-bike-speedmax-cfr","zone":"trainer","implementation":"authored-glb","source":"assets/museum/speedmax_web.glb","quality":"A","interactive":true},
+    {"id":"smart-trainer","zone":"trainer","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave.js#SMART_TRAINER_PROXY","quality":"B-","interactive":true},
+    {"id":"training-desk-tablet","zone":"trainer","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave.js#TRAINING_TABLET","quality":"B","interactive":true},
+    {"id":"cooling-fans","zone":"heat","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave.js#COOLING_FAN","quality":"B","interactive":true},
+    {"id":"treadmill","zone":"run-lab","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave-story-wing.js#RUN_LAB_TREADMILL","quality":"B-","interactive":true},
+    {"id":"swim-erg-archive","zone":"archive","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave-story-wing.js#SWIM_ERG_ARCHIVE","quality":"B-","interactive":true},
+    {"id":"mirror-bank","zone":"archive","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave-story-wing.js#buildPainCaveArchive","quality":"B","interactive":false},
+    {"id":"helmet-study","zone":"gear","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave.js#HELMET_STUDY","quality":"B-","interactive":true},
+    {"id":"cycling-shoes","zone":"gear","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave.js#CYCLING_SHOE_STUDY","quality":"C+","interactive":false},
+    {"id":"medal-rail","zone":"gear","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave.js#MEDAL","quality":"B-","interactive":true},
+    {"id":"recovery-set","zone":"recovery","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave.js#RECOVERY_*","quality":"B","interactive":true},
+    {"id":"sculpture-gap","zone":"story","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave-story-wing.js#SCULPTURE_THE_GAP","quality":"A-","interactive":true},
+    {"id":"sculpture-repeat","zone":"story","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave-story-wing.js#SCULPTURE_REPEAT","quality":"A-","interactive":true},
+    {"id":"sculpture-silver-lining","zone":"story","implementation":"procedural-threejs","source":"web/src/rooms/beast-cave-story-wing.js#SCULPTURE_SILVER_LINING","quality":"B+","interactive":true},
+    {"id":"iterations-gallery","zone":"story","implementation":"canvas-texture-3d-plane","source":"web/src/rooms/beast-cave-story-wing.js#buildIterationsGallery","quality":"B-","interactive":true},
+    {"id":"training-screen","zone":"data-wall","implementation":"canvas-texture-3d-plane","source":"web/src/rooms/beast-cave.js#buildDataWall","quality":"B-","interactive":true},
+    {"id":"kona-horizon","zone":"kona-horizon","implementation":"canvas-texture-3d-plane","source":"web/src/rooms/beast-cave.js#buildKonaHorizon","quality":"B","interactive":true}
+  ]
+}
