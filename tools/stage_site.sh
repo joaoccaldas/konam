@@ -32,3 +32,4 @@ test -f _site/web/src/about-story.js && test -f _site/web/styles/about.css
 test -f _site/web/styles/shell-mobile.css && test -f _site/web/styles/components.css && test -f _site/web/styles/admin-assets.css && test -f _site/web/styles/studio.css && test -f _site/web/styles/experience.css && test -f _site/web/styles/collection.css && test -f _site/brand/tokens.css && test -f _site/brand/typography.css
 test -f _site/app/museum-data.js && test -f _site/app/hall.js && test -f _site/app/studio.js && test -f _site/app/studio-catalog.js
 node tools/validate-staged-site.mjs _site
+node tools/scan_public_surface.mjs _site
