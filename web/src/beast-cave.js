@@ -22,7 +22,7 @@ export function buildBeastCave(ctx) {
   const basalt = basaltTex.clone(); basalt.repeat.set(RW/2.4,RD/2.4); basalt.needsUpdate = true;
   const floorMat = new THREE.MeshStandardMaterial({ map: basalt, color:'#252223', roughness:.72, metalness:.04, envMapIntensity:.45 });
   const floor = new THREE.Mesh(new THREE.BoxGeometry(RW,.16,RD),floorMat);
-  floor.position.set(CX,-.08,CZ); floor.receiveShadow=true; floor.userData.floor=true; group.add(floor);
+  floor.position.set(CX,-.08,CZ); floor.receiveShadow=true; floor.userData.floor=true; group.add(floor); pickables.push(floor);
 
   const concrete = canvasTex(512,512,(g,w,h)=>{
     g.fillStyle='#312d2a';g.fillRect(0,0,w,h);
