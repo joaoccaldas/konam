@@ -38,6 +38,40 @@
     "state/storage keys never change across locales",
     "proper nouns and source titles are preserved unless an official localized name exists",
     "do not publish hreflang for a locale without a real canonical translated page",
-    "never silently machine-translate factual evidence into a public canonical source"
+    "never silently machine-translate factual evidence into a public canonical source",
+    "do not create country doorway pages or duplicate regional canonicals solely for ranking",
+    "regional SEO must be supported by genuine content or a real localized page"
+  ],
+  "target_markets": [
+    {
+      "id": "global",
+      "language": "en",
+      "status": "launch",
+      "strategy": "single global canonical"
+    },
+    {
+      "id": "BR",
+      "language": "pt-BR",
+      "status": "next",
+      "strategy": "real translated canonical before hreflang"
+    },
+    {
+      "id": "SE",
+      "language": "en",
+      "status": "launch",
+      "strategy": "global English canonical; Swedish localization only when product copy is translated"
+    },
+    {
+      "id": "AE",
+      "language": "en",
+      "status": "launch",
+      "strategy": "global English canonical; Dubai relevance through genuine triathlon content, not a doorway page"
+    },
+    {
+      "id": "EU",
+      "language": "en",
+      "status": "launch",
+      "strategy": "global English canonical; add locale variants only for real translated content"
+    }
   ]
 }

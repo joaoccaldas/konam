@@ -284,3 +284,13 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-bike-silhouette{width:100%;height:100%;display:grid;place-items:center;color:var(--brand-muted);}
 #intro.kona-entry .entry-bike-silhouette[hidden]{display:none;}
 #intro.kona-entry .entry-bike-silhouette svg{width:85%;height:auto;fill:none;stroke:currentColor;stroke-width:3;}
+
+.entry-story-note{margin:16px 0 0;font:500 13px/1.6 var(--brand-font-ui);color:var(--brand-mist)}.entry-story-note a,.onboarding-story a{color:inherit;text-decoration:underline;text-underline-offset:4px}.entry-story-note a:focus-visible,.onboarding-story a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+
+@media(max-width:520px){
+  #intro.kona-entry #buildSelf{min-width:160px}
+}
+
+#intro.kona-entry .entry-global-note{max-width:36rem;margin:14px 0 0;color:color-mix(in srgb,var(--brand-mist) 88%,transparent);font:550 11px/1.55 var(--brand-font-ui,var(--sans))}
+#intro.kona-entry .entry-global-note strong{color:var(--brand-mist)}
+#intro.kona-entry .entry-legal-note{max-width:38rem;margin:8px 0 0;color:color-mix(in srgb,var(--brand-mist) 62%,transparent);font:500 9px/1.45 var(--brand-font-ui,var(--sans))}

@@ -4,7 +4,7 @@ import { readGameState, gameProgress } from '../engine/game-state.js';
 import { ensureProgression, LEVELS, COLLECTIONS, COLLECTIBLES } from '../engine/progression.js';
 import { levelContent, rankingMetric } from '../engine/access.js';
 import { getPublicProduct } from '../engine/catalog.js';
-import { sendMagicLink, currentUser, signOut, backupGameState, restoreGameState, cloudAvailable } from '../cloud/supabase-lite.js';
+import { currentUser, signOut, backupGameState, restoreGameState, deleteCloudBackup, cloudAvailable } from '../cloud/supabase-lite.js';
 import { renderRaceBadges } from './race-cards.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -90,16 +90,16 @@ export async function renderProgressSurface(root,{settings,admin=false}={}) {
 
   const user=await currentUser().catch(()=>null);
   if(!user){
-    account.insertAdjacentHTML('beforeend','<form data-login><label class="kona-source-note" for="passportEmail">Email for a one-time sign-in link</label><input id="passportEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com" class="ui-input passport-email"><button class="kona-primary" type="submit">Send sign-in link</button></form>');
-    status.textContent='Play without an account, or sign in only for cross-device backup.';
-    account.querySelector('[data-login]')?.addEventListener('submit',async e=>{e.preventDefault();const form=e.currentTarget;const btn=form.querySelector('button');btn.disabled=true;try{await sendMagicLink(new FormData(form).get('email'));status.textContent='Check your email and open the sign-in link on this device.';form.hidden=true;}catch(err){status.textContent=err.message||'Could not send sign-in link.';btn.disabled=false;}});
+    status.textContent='Public email sign-in is unavailable until production email delivery is configured. Progress stays on this device.';
+    account.insertAdjacentHTML('beforeend','<p><a href="privacy.html">Privacy & data</a></p>');
     return;
   }
 
   status.textContent='Signed in as '+(user.email||'beta user')+'. Backup and restore are explicit.';
-  account.insertAdjacentHTML('beforeend','<div class="kona-list"><article><i>↑</i><div><b>Back up this device</b><span>Save progress, collection, setup and Garage.</span></div><button type="button" data-backup>Back up</button></article><article><i>↓</i><div><b>Restore from cloud</b><span>Replace this device with your latest backup.</span></div><button type="button" data-restore>Restore</button></article><article><i>↪</i><div><b>Sign out</b><span>Local progress stays on this device.</span></div><button type="button" data-signout>Sign out</button></article></div>');
+  account.insertAdjacentHTML('beforeend','<div class="kona-list"><article><i>↑</i><div><b>Back up this device</b><span>Save progress, collection, setup and Garage.</span></div><button type="button" data-backup>Back up</button></article><article><i>↓</i><div><b>Restore from cloud</b><span>Replace this device with your latest backup.</span></div><button type="button" data-restore>Restore</button></article><article><i>×</i><div><b>Delete cloud backup</b><span>Remove the saved game state. The account and device data remain.</span></div><button type="button" data-delete-backup>Delete backup</button></article><article><i>↪</i><div><b>Sign out</b><span>Local progress stays on this device.</span></div><button type="button" data-signout>Sign out</button></article></div>');
   account.querySelector('[data-backup]')?.addEventListener('click',async e=>{const button=e.currentTarget;button.disabled=true;try{await backupGameState();status.textContent='Cloud backup saved.';}catch(err){status.textContent=err.message;}finally{button.disabled=false;}});
-  account.querySelector('[data-restore]')?.addEventListener('click',async e=>{const button=e.currentTarget;button.disabled=true;try{await restoreGameState();status.textContent='Cloud state restored. Reloading…';location.reload();}catch(err){status.textContent=err.message;button.disabled=false;}});
+  account.querySelector('[data-delete-backup]')?.addEventListener('click',async e=>{if(!confirm('Delete your saved cloud game state? This does not delete your account or device data.'))return;const b=e.currentTarget;b.disabled=true;try{await deleteCloudBackup();status.textContent='Cloud backup deleted. Your account and device data remain.';}catch(err){status.textContent=err.message;}finally{b.disabled=false;}});
+  account.querySelector('[data-restore]')?.addEventListener('click',async e=>{if(!confirm('Replace this device with the latest cloud backup? Export device data in Settings first if you want to keep this version.'))return;const button=e.currentTarget;button.disabled=true;try{await restoreGameState();status.textContent='Cloud state restored. Reloading…';location.reload();}catch(err){status.textContent=err.message;button.disabled=false;}});
   account.querySelector('[data-signout]')?.addEventListener('click',async()=>{await signOut();await renderMeSurface(root,{settings});});
 }
 

@@ -39,8 +39,29 @@ export function readGameState(storage = globalThis.localStorage) {
   };
 }
 
-export function writeGameState(snapshot, storage = globalThis.localStorage) {
+export function validateGameState(snapshot) {
   if (!snapshot || snapshot.schema_version !== GAME_STATE_SCHEMA_VERSION) throw new Error('Unsupported game state');
+  if(JSON.stringify(snapshot).length>2_000_000)throw new Error('Game state is too large');
+  const record=v=>v&&typeof v==='object'&&!Array.isArray(v);
+  for(const name of ['profile','progression','finds','race_setup','progression_engine','race_identity','kona_self','entry_intent']){
+    if(snapshot[name]!=null&&!record(snapshot[name]))throw new Error('Invalid game state: '+name);
+  }
+  for(const name of ['garage','user_equipment','race_history']){
+    if(snapshot[name]!=null&&(!Array.isArray(snapshot[name])||snapshot[name].some(v=>!record(v))))throw new Error('Invalid game state: '+name);
+  }
+  const engine=snapshot.progression_engine;
+  if(engine){
+    if(engine.schema!=='progression-v1')throw new Error('Unsupported progression schema');
+    for(const name of ['discoveries','badges','unlocks','seen'])if(!Array.isArray(engine[name])||engine[name].some(x=>typeof x!=='string'||x.length>300))throw new Error('Invalid progression: '+name);
+    for(const name of ['ledger','history'])if(!Array.isArray(engine[name])||engine[name].some(x=>!record(x)))throw new Error('Invalid progression: '+name);
+    for(const name of ['xp','level','credits'])if(!Number.isFinite(engine[name])||engine[name]<0)throw new Error('Invalid progression: '+name);
+    if(engine.ledger.some(x=>!Number.isFinite(x.delta)))throw new Error('Invalid progression ledger');
+  }
+  return snapshot;
+}
+
+export function writeGameState(snapshot, storage = globalThis.localStorage) {
+  validateGameState(snapshot);
   // Serialize first, then restore the previous values if any write fails. A JSON
   // null is intentional: it prevents a deleted field resurrecting a legacy key.
   const fields = [

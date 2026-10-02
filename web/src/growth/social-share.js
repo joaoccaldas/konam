@@ -1,11 +1,12 @@
 // growth/social-share.js — privacy-safe sharing for Progress and User Studio.
-import { PRODUCT_NAME } from '../product-meta.js';
+import { PRODUCT_NAME, PRODUCT_META } from '../product-meta.js';
 const cleanNumber=v=>Math.max(0,Number(v)||0);
 export function safeAppUrl(locationLike=globalThis.location){
   const origin=String(locationLike?.origin||'');
   const pathname=String(locationLike?.pathname||'/');
   if(!/^https?:\/\//i.test(origin))return null;
   const url=new URL(origin+pathname);
+  if(origin===new URL(PRODUCT_META.canonical_site).origin&&pathname.startsWith(new URL(PRODUCT_META.canonical_site).pathname))return PRODUCT_META.canonical_site;
   return url.toString();
 }
 export function progressShareModel(progress={}){
@@ -41,7 +42,7 @@ export async function progressCardBlob(progress,{documentLike=globalThis.documen
   g.font='400 76px "Instrument Serif", Georgia, serif';g.fillText(p.levelName,72,420);
   const metrics=[['XP',p.xp],['KONA CREDITS',p.credits],['DISCOVERIES',p.discoveries],['BADGES',p.badges]];
   metrics.forEach(([label,value],i)=>{const y=570+i*145;g.fillStyle=i%2?accent:action;g.font='800 28px Manrope, system-ui, sans-serif';g.fillText(label,72,y);g.fillStyle=ink;g.font='400 66px "Instrument Serif", Georgia, serif';g.fillText(String(value),72,y+68);});
-  g.fillStyle=muted;g.font='500 28px Manrope, system-ui, sans-serif';g.fillText('Apparently wandering is a training plan.',72,1245);
+  g.fillStyle=muted;g.font='500 28px Manrope, system-ui, sans-serif';g.fillText('Apparently wandering is a training plan.',72,1220);g.font='600 24px Manrope, system-ui, sans-serif';g.fillText('joaoccaldas.github.io/konam',72,1290);
   return new Promise(resolve=>{if(typeof c.toBlob==='function')c.toBlob(resolve,'image/png');else resolve(null);});
 }
 export async function shareProgress(progress,{navigatorLike=globalThis.navigator,locationLike=globalThis.location,documentLike=globalThis.document,FileCtor=globalThis.File}={}){

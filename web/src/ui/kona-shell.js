@@ -66,9 +66,20 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     setTimeout(()=>{if(token===routeToken&&!panel.hidden)surpriseLayer.maybeShow(surface);},2200);
   };
   const setActive=id=>shell.querySelectorAll('[data-tab]').forEach(x=>(x.classList.toggle('on',x.dataset.tab===id),x.setAttribute('aria-current',x.dataset.tab===id?'page':'false')));
-  let tourNode=null,tourTarget=null;
+  let tourNode=null,tourTarget=null,tourFrame=0;
+  const positionTour=()=>{
+    if(!tourNode||!tourTarget)return;
+    const t=tourTarget.getBoundingClientRect(),c=tourNode.getBoundingClientRect(),v=window.visualViewport;
+    const vw=v?.width||innerWidth,vh=v?.height||innerHeight,pad=16,gap=16;
+    const candidates=[{x:t.left,y:t.top-c.height-gap},{x:t.left,y:t.bottom+gap},{x:t.right+gap,y:t.top},{x:t.left-c.width-gap,y:t.top}].map(p=>({x:Math.max(pad,Math.min(p.x,vw-c.width-pad)),y:Math.max(pad,Math.min(p.y,vh-c.height-pad))}));
+    const overlap=p=>Math.max(0,Math.min(p.x+c.width,t.right+8)-Math.max(p.x,t.left-8))*Math.max(0,Math.min(p.y+c.height,t.bottom+8)-Math.max(p.y,t.top-8));
+    const best=candidates.sort((a,b)=>overlap(a)-overlap(b))[0];
+    Object.assign(tourNode.style,{left:best.x+'px',top:best.y+'px',bottom:'auto',transform:'none'});
+  };
+  const scheduleTourPosition=()=>{cancelAnimationFrame(tourFrame);tourFrame=requestAnimationFrame(positionTour);};
+  addEventListener('resize',scheduleTourPosition);panel.addEventListener('scroll',scheduleTourPosition,{passive:true});window.visualViewport?.addEventListener('resize',scheduleTourPosition);
   const dismissTour=()=>{
-    tourTarget?.classList.remove('tour-target');tourTarget=null;
+    tourTarget?.classList.remove('tour-target');tourTarget=null;cancelAnimationFrame(tourFrame);
     tourNode?.remove();tourNode=null;
   };
   const tourSteps=[
@@ -81,15 +92,18 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(tourNode)return;
     if(!force){try{if(readStorage('onboarding')==='seen')return;}catch(_){}}
     try{writeStorage('onboarding','seen')}catch(_){}
-    const card=document.createElement('aside');card.className='kona-tour';card.setAttribute('role','dialog');card.setAttribute('aria-label',`${PRODUCT_NAME} quick tour`);
+    const card=document.createElement('aside');card.className='kona-tour';card.setAttribute('role','dialog');card.setAttribute('aria-label',`${PRODUCT_NAME} quick tour`);card.addEventListener('keydown',e=>{if(e.key==='Escape'){dismissTour();e.stopPropagation();}});
     document.body.append(card);tourNode=card;let index=0;
     const paint=()=>{
       tourTarget?.classList.remove('tour-target');
       const step=tourSteps[index];tourTarget=document.querySelector(step.target);
       if(!tourTarget&&index<tourSteps.length-1){index+=1;paint();return;}
-      tourTarget?.classList.add('tour-target');tourTarget?.scrollIntoView?.({block:'center',behavior:'smooth'});
-      card.innerHTML='<small>'+step.kicker+'</small><h3>'+step.title+'</h3><p>'+step.copy+'</p><div class="kona-tour-actions"><button type="button" class="btn-text" data-tour-skip>Skip</button><button type="button" class="btn-primary" data-tour-next>'+(index===tourSteps.length-1?'Go explore':'Next')+' <span>→</span></button></div>';
+      tourTarget?.classList.add('tour-target');tourTarget?.scrollIntoView?.({block:'center',behavior:'instant'});
+      card.innerHTML='<small>'+step.kicker+'</small><h3>'+step.title+'</h3><p>'+step.copy+'</p><p class="tour-instruction">Tap the highlighted button, or try it below.</p><div class="kona-tour-actions"><button type="button" class="btn-text" data-tour-skip>Skip</button><button type="button" class="btn-text" data-tour-open>Try it ↗</button><button type="button" class="btn-primary" data-tour-next>'+(index===tourSteps.length-1?'Go explore':'Next')+' <span>→</span></button></div>';
       card.querySelector('[data-tour-skip]').onclick=dismissTour;
+      card.querySelector('[data-tour-open]').onclick=()=>tourTarget?.click();
+      scheduleTourPosition();
+      card.querySelector('[data-tour-next]').focus({preventScroll:true});
       card.querySelector('[data-tour-next]').onclick=()=>{if(index===tourSteps.length-1)dismissTour();else{index+=1;paint();}};
     };
     paint();
@@ -119,6 +133,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openDiscover:explore,
       openPlan:plan,
       openCollection:collection,
+      openWorld:()=>{close();enter?.();},
       admin:accessContext.admin,
     });
     requestAnimationFrame(()=>requestAnimationFrame(()=>{if(request===studioRequest)startTour();}));

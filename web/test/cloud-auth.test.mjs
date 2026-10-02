@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {sendMagicLink,currentUser,consumeAuthCallback} from '../src/cloud/supabase-lite.js';
+import {sendMagicLink,currentUser,consumeAuthCallback,deleteCloudBackup} from '../src/cloud/supabase-lite.js';
 import {exportAppState} from '../src/engine/app-state.js';
 const makeStore=()=>{const data=new Map();return {getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,String(v)),removeItem:k=>data.delete(k),key:i=>[...data.keys()][i],get length(){return data.size}}};
 function context(t){
@@ -33,3 +33,10 @@ test('auth callback removes credentials from the address bar',t=>{
  const store=context(t);globalThis.location.hash='#access_token=test-only&refresh_token=test-refresh&expires_in=3600';let replaced;
  globalThis.history={replaceState:(_,__,url)=>{replaced=url}};assert.equal(consumeAuthCallback(),true);assert.equal(replaced,'/kona/Studio.html');assert.ok(store.getItem('kona.supabase.session.v1'));
 });
+
+test('cloud backup deletion uses the server-validated user and keeps device progress',async t=>{
+ const store=context(t);store.setItem('kona.supabase.session.v1',JSON.stringify({access_token:'test-only',expires_at:Date.now()/1000+3600}));store.setItem('kona.profile.v1','{"name":"Local"}');let deletes=0;
+ globalThis.fetch=async(url,options)=>{if(url.endsWith('/auth/v1/user'))return new Response('{"id":"validated-owner"}');assert.equal(options.method,'DELETE');assert.equal(new URL(url).searchParams.get('user_id'),'eq.validated-owner');assert.equal(options.headers.Authorization,'Bearer test-only');deletes++;return new Response(null,{status:204});};
+ await deleteCloudBackup();assert.equal(deletes,1);assert.equal(store.getItem('kona.profile.v1'),' {"name":"Local"}'.trim());
+});
+test('cloud backup deletion refuses an unauthenticated caller',async t=>{context(t);globalThis.fetch=async()=>{throw new Error('must not call network')};await assert.rejects(deleteCloudBackup(),/Sign in first/);});

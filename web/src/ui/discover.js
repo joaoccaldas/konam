@@ -1,3 +1,4 @@
+import { photoCredit } from './photo-credit.js';
 import previews from '../../../museum/entry-catalog.json' with {type:'json'};
 import { loadPublicCatalog } from '../engine/catalog.js';
 // ui/discover.js — lightweight editorial discovery. Loads public JSON only on intent.
@@ -24,6 +25,7 @@ export async function renderDiscoverSurface(root,{enter}={}){
   const data=await loadPublicCatalog();
   const products=(data.products||[]).filter(x=>x.public!==false).slice(0,4);
   const places=(data.places||[]).slice(0,3);
+  root.insertAdjacentHTML('beforeend',photoCredit());
   const feed=root.querySelector('[data-discover-feed]');
   if(!feed)return;
   const items=[

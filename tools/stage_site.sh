@@ -9,7 +9,7 @@ mkdir -p _site
 printf '{"sha":"%s","ref":"%s","run_id":"%s","built_at":"%s"}\n' "$GITHUB_SHA" "$GITHUB_REF_NAME" "$GITHUB_RUN_ID" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > _site/release.json
 cp ./*.html manifest.webmanifest sw.js robots.txt sitemap.xml llms.txt llms-full.txt _site/
 mkdir -p _site/app
-cp app/viewport.js app/kona-core.js app/world-shell.html app/race-self-stage.js app/collectible-stage.js app/entry-data.json app/admin-assets.json app/admin-asset-preview.js app/app-manifest.json app/android-version.json app/museum-data.js app/hall.js app/studio.js app/studio-catalog.js _site/app/
+cp app/viewport.js app/kona-core.js app/world-shell.html app/race-self-stage.js app/collectible-stage.js app/entry-data.json app/admin-assets.json app/admin-asset-preview.js app/app-manifest.json app/android-version.json app/museum-data.js app/hall.js app/studio.js app/standalone-access.js app/studio-catalog.js _site/app/
 mkdir -p _site/integrations/companion
 cp integrations/companion/feed.json integrations/companion/rss.xml integrations/companion/travel.json _site/integrations/companion/
 mkdir -p _site/integrations
@@ -32,3 +32,4 @@ test -f _site/web/src/about-story.js && test -f _site/web/styles/about.css
 test -f _site/web/styles/shell-mobile.css && test -f _site/web/styles/components.css && test -f _site/web/styles/admin-assets.css && test -f _site/web/styles/studio.css && test -f _site/web/styles/experience.css && test -f _site/web/styles/collection.css && test -f _site/brand/tokens.css && test -f _site/brand/typography.css
 test -f _site/app/museum-data.js && test -f _site/app/hall.js && test -f _site/app/studio.js && test -f _site/app/studio-catalog.js
 node tools/validate-staged-site.mjs _site
+node tools/scan_public_surface.mjs _site

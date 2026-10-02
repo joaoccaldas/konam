@@ -108,11 +108,13 @@ try{
  });
  await auth.goto(base,{waitUntil:'domcontentloaded'});
  await auth.click('#entrySignIn');await auth.waitForSelector('#saveForm');
- await auth.type('#saveForm input[name="email"]','beta@example.com');
- await auth.click('#saveForm button[type="submit"]');
- try{await auth.waitForFunction(()=>/Check your email/i.test(document.querySelector('#saveNote')?.textContent||''),{timeout:8000});}
- catch{throw new Error('Magic-link confirmation missing: '+authErrors.join(' | '));}
- assert.equal(otpSeen,true);await auth.close();
+ assert.equal(await auth.$eval('#saveForm input[name="email"]',e=>e.disabled),true,'public sign-in must be held until sender and privacy support are ready');
+ assert.equal(await auth.$eval('#saveForm button[type="submit"]',e=>e.disabled),true);
+ assert.match(await auth.$eval('#saveNote',e=>e.textContent),/unavailable/);
+ assert.equal(otpSeen,false,'held sign-in must not submit an email request');
+ await auth.click('#continueLocal');
+ await auth.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Home');
+ assert.deepEqual(authErrors,[]);await auth.close();
 
  const installPage=await browser.newPage();installPage.setDefaultTimeout(30000);
  await installPage.setUserAgent('Mozilla/5.0 (Linux; Android 16; SM-S938B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Mobile Safari/537.36');

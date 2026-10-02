@@ -14,16 +14,16 @@ const normalizeSite = value => {
 };
 const SITE = normalizeSite(process.env.PUBLIC_SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : productMeta.canonical_site));
 const NAME = productMeta.product_name || 'Kona.m';
-const DISCLAIMER = 'An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.';
+const DISCLAIMER = 'An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by World Triathlon Corporation, IRONMAN, Canyon Bicycles GmbH or any referenced athlete or brand. IRONMAN® is a registered trademark of World Triathlon Corporation. Canyon and Speedmax are trademarks of their owners.';
 
-// The only third parties the pages load (measured with a request log): Google Fonts and Wikimedia images.
+// Explicit image providers: Wikimedia and validated YouTube video thumbnails; no wildcard origins.
 const CSP_BASE = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",       // hall and studio load app/*.js; meshopt decoder is WebAssembly
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org",
-  "connect-src 'self' data: blob: https://api.weather.gov https://mtvpnoqwjpoqaiocrklq.supabase.co https://upload.wikimedia.org https://thumb.wikimedia.org",
+  "img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://i.ytimg.com",
+  "connect-src 'self' data: blob: https://api.weather.gov https://mtvpnoqwjpoqaiocrklq.supabase.co https://upload.wikimedia.org https://thumb.wikimedia.org https://i.ytimg.com",
   "media-src 'self' data: blob:",
   "worker-src 'self' blob:",
   "object-src 'none'", "base-uri 'self'", "form-action 'none'",
@@ -31,19 +31,21 @@ const CSP_BASE = [
 const cspFor=file=>CSP_BASE.map(x=>x.startsWith("script-src ")?(file==='index.html'?"script-src 'self' 'wasm-unsafe-eval'":x):x).join('; ');
 
 const PAGES = [
-  { file: 'index.html', type: 'SoftwareApplication', image: 'assets/share/museum.jpg',
-    title: 'Kona.m · Race the version of yourself',
-    description: 'Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.' },
+  {file:'privacy.html',type:'WebPage',image:'assets/share/konam.png',title:'Privacy & data · Kona.m',description:'Device storage, optional cloud backup and public account availability.'},
+  {file:'credits.html',type:'WebPage',image:'assets/share/konam.png',title:'Photo credits · Kona.m',description:'Source, author, licenses and adaptations for Kona.m photography.'},
+  { file: 'index.html', type: 'SoftwareApplication', image: 'assets/share/konam.png',
+    title: 'Kona.m · Kona triathlon 3D world, bikes & race week',
+    description: 'Explore Kona triathlon race week, IRONMAN World Championship history, 3D bikes, athlete identity, gear, places, stories and an immersive museum.' },
   { file: 'Canyon_Collection.html', type: 'CollectionPage', image: 'assets/share/collection.jpg',
     title: 'Canyon Triathlon Collection · every Speedmax generation, compared',
     description: 'Every Canyon Speedmax generation on record, 1999–2027: interactive 3D exhibits, side-by-side specifications, an aero calculator and a sourced archive of the bikes that were never modelled.' },
-  { file: 'Studio.html', type: 'WebApplication', image: 'assets/share/museum.jpg',
+  { file: 'Studio.html', type: 'WebApplication', image: 'assets/share/konam.png',
     title: 'Studio · Speedmax Museum — build, paint and share a time-trial bike',
     description: 'Every bike in the Speedmax Museum and more, in 3D: paint it, give it a film theme, set the scene, dream it in motion and share it. Canyon generations, named machines and studio designs.', keepTitle: true },
   { file: 'Experiences.html', type: 'WebPage', image: 'assets/share/museum.jpg',
     title: 'Speedmax Nights & History Lane · Canyon Speedmax Museum',
     description: 'Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.', keepTitle: true },
-  { file: 'about.html', type: 'AboutPage', image: 'assets/share/museum.jpg',
+  { file: 'about.html', type: 'AboutPage', image: 'assets/share/konam.png',
     title: 'About this company · Kona.m',
     description: 'Why Kona.m exists, told three ways: short, scenic and unfiltered.', keepTitle: true },
 ];
@@ -72,21 +74,66 @@ const GLOBAL_USER_STUDIO = '<!--global-user-studio:start--><a class="global-user
 
 function block(p) {
   const url = SITE + (p.file === 'index.html' ? '' : p.file), img = SITE + p.image;
-  const ld = {
-    '@context': 'https://schema.org', '@type': p.type, name: p.title, description: p.description, url, image: img, inLanguage: 'en',
-    isAccessibleForFree: true, publisher: { '@type': 'Organization', name: NAME },
-    about: [{ '@type': 'Thing', name: 'Canyon Speedmax' }, { '@type': 'SportsEvent', name: 'IRONMAN World Championship', location: 'Kailua-Kona, Hawaii' }],
+  const pageId = url + '#page';
+  const websiteId = SITE + '#website';
+  const orgId = SITE + '#organization';
+  const pageNode = {
+    '@id': pageId,
+    '@type': p.type,
+    name: p.title,
+    description: p.description,
+    url,
+    image: img,
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    isPartOf: { '@id': websiteId },
+    publisher: { '@id': orgId },
+    contentLocation: { '@type': 'Place', name: 'Kailua-Kona, Hawaiʻi', address: { '@type': 'PostalAddress', addressLocality: 'Kailua-Kona', addressRegion: 'HI', addressCountry: 'US' } },
+    about: [
+      { '@type': 'Thing', name: 'Triathlon' },
+      { '@type': 'SportsEvent', name: 'IRONMAN World Championship', location: { '@type': 'Place', name: 'Kailua-Kona, Hawaiʻi' } },
+      { '@type': 'Thing', name: 'Kona race week' },
+      { '@type': 'Thing', name: 'Triathlon bikes and equipment' }
+    ],
+    keywords: ['Kona triathlon','IRONMAN World Championship','triathlon','Kailua-Kona','race week','3D triathlon bikes','triathlon gear','triathlon history'],
     disambiguatingDescription: DISCLAIMER,
+  };
+  if (p.file === 'index.html') {
+    pageNode.applicationCategory = 'SportsApplication';
+    pageNode.operatingSystem = 'Web, Android';
+    pageNode.availableOnDevice = 'Mobile, tablet, desktop';
+  }
+  const ld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@id': websiteId,
+        '@type': 'WebSite',
+        name: NAME,
+        alternateName: 'Kona.m triathlon world',
+        url: SITE,
+        inLanguage: 'en',
+        publisher: { '@id': orgId }
+      },
+      {
+        '@id': orgId,
+        '@type': 'Organization',
+        name: NAME,
+        url: SITE,
+        logo: { '@type': 'ImageObject', url: SITE + 'assets/pwa/icon-v3-512.png', width: 512, height: 512 }
+      },
+      pageNode
+    ]
   };
   return `<!--harden:start-->
 <meta http-equiv="Content-Security-Policy" content="${cspFor(p.file)}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <link rel="canonical" href="${url}">
-<meta property="og:type" content="website"><meta property="og:site_name" content="${NAME}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="${NAME}"><meta property="og:locale" content="en_US">
 <meta property="og:title" content="${esc(p.title)}"><meta property="og:description" content="${esc(p.description)}">
-<meta property="og:url" content="${url}"><meta property="og:image" content="${img}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(p.title)}"><meta name="twitter:description" content="${esc(p.description)}"><meta name="twitter:image" content="${img}">
+<meta property="og:url" content="${url}"><meta property="og:image" content="${img}"><meta property="og:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself. Explore, build and discover.':esc(p.title)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(p.title)}"><meta name="twitter:description" content="${esc(p.description)}"><meta name="twitter:image" content="${img}"><meta name="twitter:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself. Explore, build and discover.':esc(p.title)}">
 <link rel="alternate" type="text/plain" href="${SITE}llms.txt" title="LLM summary">
 <script type="application/ld+json">${jsonld(ld)}</script>
 <!--harden:end-->`;
@@ -112,6 +159,9 @@ for (const p of PAGES) {
   if (!['index.html','about.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
     html = html.replace(/<body([^>]*)>/i, match => match + GLOBAL_USER_STUDIO);
   }
+  html=html.replace(/<script src="app\/standalone-access.js"><\/script>\n?/g,'');
+  if(/^Speedmax_.*Museum\.html$/.test(p.file))html=html.replace(/<\/head>/i,'<script src="app/standalone-access.js"></script>\n</head>');
+  html=html.replace(/\n{3,}(?=<!--design-system:start-->)/g,'\n\n');
   fs.writeFileSync(f, html);
 }
 
@@ -133,7 +183,7 @@ Sitemap: ${SITE}sitemap.xml
 `);
 fs.writeFileSync(path.join(root, 'llms.txt'), `# ${NAME}
 
-> ${PAGES[0].description}
+> ${PAGES.find(p=>p.file==='index.html').description}
 
 ${DISCLAIMER}
 
@@ -147,7 +197,7 @@ ${BRANDS.length ? `- Brand-room studies: ${BRANDS.join('; ')}.` : ''}
 - Photographs are openly licensed (Wikimedia Commons, CC BY / CC BY-SA); authors and licences are shown beside every image.
 
 ## Privacy
-No accounts, no analytics, no cookies, no tracking by default. The Passport and settings stay in the visitor's own browser (localStorage). An optional email sign-in can back that data up only when the visitor asks.
+No accounts, no analytics, no cookies, no tracking by default. The Passport and settings stay in the visitor's own browser (localStorage). Public email sign-in is currently unavailable. Existing signed-in users may explicitly back up, restore or delete their cloud backup. See privacy.html for the beta data notice and remaining account launch requirements.
 `);
 const roomsMd = fs.existsSync(path.join(root, 'docs/ROOMS.md')) ? fs.readFileSync(path.join(root, 'docs/ROOMS.md'), 'utf8') : '';
 const islandGuide = fs.existsSync(path.join(root, 'museum/kona/island-guide.json')) ? JSON.parse(fs.readFileSync(path.join(root, 'museum/kona/island-guide.json'), 'utf8')) : null;

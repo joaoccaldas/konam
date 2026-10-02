@@ -43,7 +43,15 @@ try{
    if(request.url().includes('/auth/v1/otp')){const headers={'access-control-allow-origin':new URL(base).origin,'access-control-allow-methods':'POST, OPTIONS','access-control-allow-headers':'apikey, content-type'};if(request.method()==='OPTIONS')return request.respond({status:204,headers,body:''});requests++;request.respond({status,contentType:'application/json',headers,body:JSON.stringify(status===200?{}:{message:status===429?'Too many requests':'Unavailable'})});}
    else request.continue();
   });
-  await progress(page);await page.waitForSelector('[data-login]');await page.type('#passportEmail','tester@example.test');await page.click('[data-login] button');
+  await progress(page);
+  const login=await page.$('[data-login]');
+  if(!login){
+    assert.equal(requests,0);
+    assert.match(await page.$eval('#konaAccount',e=>e.innerText),/email sign-in|unavailable|without an account/i);
+    assert.deepEqual(errors,[]);
+    report.push({journey:'public email sign-in intentionally unavailable',http:status,status:'PASS'});await context.close();continue;
+  }
+  await page.type('#passportEmail','tester@example.test');await page.click('[data-login] button');
   await page.waitForFunction(()=>/Check your email|wait|Unavailable/.test(document.querySelector('#konaAccount [data-status]').textContent));
   assert.equal(requests,1);assert.deepEqual(errors,[]);
   if(status===200)assert.equal(await page.$eval('[data-login]',e=>e.hidden),true);

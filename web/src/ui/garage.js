@@ -1,5 +1,6 @@
 // ui/garage.js — 2D Garage projection over canonical UserEquipment.
 // Studio is optional configuration depth, not the ownership database.
+import { photoCredit } from './photo-credit.js';
 import { readGarage, groupGarage } from '../engine/garage.js';
 import { readGameState } from '../engine/game-state.js';
 import { getPublicProduct } from '../engine/catalog.js';
@@ -41,11 +42,12 @@ export async function renderGarageSurface(root,{admin=false}={}) {
     '<div class="garage-setup-media" aria-hidden="true"><img src="assets/kona-years/kailua-bay.jpg" alt="" loading="lazy" decoding="async"></div>'+
     '<div class="garage-setup-overlay"></div>'+
     '<svg class="garage-bike-mark" viewBox="0 0 180 92" aria-hidden="true"><circle cx="38" cy="66" r="23"/><circle cx="142" cy="66" r="23"/><path d="M38 66 72 31l28 35H64l36-35 42 35M72 31h38m-10 0 14-14m-10 0h24"/></svg>'+
-    '<div class="garage-setup-copy"><small>YOUR RACE SETUP</small><h3></h3><p class="garage-setup-meta"></p><p class="garage-setup-goal"></p>'+(bikeUnlocked?'<a class="kona-primary" href="'+setup.href+'">'+(setup.bike?'Configure':'Choose your first bike')+' <span>→</span></a>':'<button class="kona-primary" type="button" disabled>Bike ownership unlocks at Level 2</button><p class="garage-level-note">Browse anything now. Answer the intro questions or explore KONA to level up.</p>')+'</div>';
+    '<div class="garage-setup-copy"><small>YOUR RACE SETUP</small><h3></h3><p class="garage-setup-meta"></p><p class="garage-setup-goal"></p>'+(bikeUnlocked?'<a class="kona-primary" href="'+setup.href+'">'+(setup.bike?'Configure':'Choose your first bike')+' <span>→</span></a>':'<button class="kona-primary" type="button" disabled>Bike ownership unlocks at Level 2</button><p class="garage-level-note">Collect the first Find on Home for +50 XP and your first bike. <a href="index.html?view=home">Go to your first Find →</a></p>')+'</div>';
   hero.querySelector('h3').textContent=setup.title;
   hero.querySelector('.garage-setup-meta').textContent=setup.meta;
   hero.querySelector('.garage-setup-goal').textContent=setup.goal;
   root.append(hero);
+  const credits=node('div','');credits.innerHTML=photoCredit();root.append(credits);
 
   const relationshipSection=node('section','kona-section artifact artifact--label');
   const relationHead=node('div','kona-section-head');relationHead.append(node('h3','','Your equipment'),node('small','','Mine · Dreaming · Try'));

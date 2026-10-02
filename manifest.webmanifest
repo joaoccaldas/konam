@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Kona.m",
   "short_name": "Kona.m",
-  "description": "Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.",
+  "description": "Explore Kona triathlon race week, IRONMAN World Championship history, 3D bikes, gear, stories and an immersive triathlon museum.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
