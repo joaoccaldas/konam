@@ -47,9 +47,17 @@ jobs:
         run: |
           node web/visual-evidence-v2.mjs http://127.0.0.1:8754/ visual-evidence-v2
           node tools/score-visual-evidence.mjs visual-evidence-v2
+      - name: Certify Field Guide production surface
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          AUDIT_VIEWPORT: ${{ matrix.viewport }}
+        run: |
+          node web/promo-production-smoke.mjs http://127.0.0.1:8754/ promo-evidence
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: visual-evidence-v2-${{ matrix.viewport }}-${{ github.event.pull_request.head.sha || github.sha }}
-          path: visual-evidence-v2/
+          path: |
+            visual-evidence-v2/
+            promo-evidence/
           retention-days: 14
