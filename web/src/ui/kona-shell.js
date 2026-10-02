@@ -34,7 +34,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   shell.innerHTML=
     '<button type="button" class="kona-user-menu" data-user-studio aria-label="Open User Studio" title="User Studio"><i></i><span>Studio</span></button>'+
     '<div id="konaPanel" class="kona-panel" hidden>'+
-      '<div class="kona-panel-head"><div><small id="konaPanelEyebrow">KONA · BETA</small><h2 id="konaPanelTitle">Now</h2></div><button id="konaPanelClose" type="button" aria-label="Close">×</button></div>'+
+      '<div class="kona-panel-head"><div><small id="konaPanelEyebrow">Kona.m · BETA</small><h2 id="konaPanelTitle">Now</h2></div><button id="konaPanelClose" type="button" aria-label="Close">×</button></div>'+
       '<div id="konaPanelBody" class="kona-panel-body"></div>'+
     '</div>'+
     '<nav class="kona-bottom-nav" aria-label="Main navigation">'+
@@ -80,7 +80,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(tourNode)return;
     if(!force){try{if(readStorage('onboarding')==='seen')return;}catch(_){}}
     try{writeStorage('onboarding','seen')}catch(_){}
-    const card=document.createElement('aside');card.className='kona-tour';card.setAttribute('role','dialog');card.setAttribute('aria-label','KONA quick tour');
+    const card=document.createElement('aside');card.className='kona-tour';card.setAttribute('role','dialog');card.setAttribute('aria-label','Kona.m quick tour');
     document.body.append(card);tourNode=card;let index=0;
     const paint=()=>{
       tourTarget?.classList.remove('tour-target');
@@ -108,7 +108,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('home','web/styles/home.css');
     if(request!==studioRequest)return;
-    title.textContent='Home'; eyebrow.textContent='KONA · TODAY';
+    title.textContent='Home'; eyebrow.textContent='Kona.m · TODAY';
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('home');
     disposeStudio=renderHomeSurface(body,{
       event:facts().event,
@@ -131,7 +131,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('race-self','web/styles/race-self.css');
     if(request!==studioRequest)return;
-    title.textContent='User Studio'; eyebrow.textContent='KONA · YOUR ATHLETE';
+    title.textContent='User Studio'; eyebrow.textContent='Kona.m · YOUR ATHLETE';
     panel.hidden=false;document.body.classList.add('kona-panel-open','race-self-open');setActive('me');
     const admin=isAdminUser(await currentUser().catch(()=>null));
     if(request!==studioRequest)return;
@@ -157,7 +157,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('companion','web/styles/companion.css');
     if(request!==studioRequest)return;
-    title.textContent=view==='feed'?'The Feed':'Travel to Kona';eyebrow.textContent='KONA · EXPLORE MORE';
+    title.textContent=view==='feed'?'The Feed':'Travel to Kona';eyebrow.textContent='Kona.m · EXPLORE MORE';
     panel.hidden=false;panel.classList.add('companion-panel');panel.scrollTop=0;
     document.body.classList.add('kona-panel-open');setActive('discover');
     disposeStudio=(view==='feed'?renderFeed:renderTravel)(body,{back:raceSelf});
@@ -168,7 +168,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('',null);
     if(request!==studioRequest)return;
-    title.textContent='Collection'; eyebrow.textContent='KONA · CARDS & ITEMS';
+    title.textContent='Collection'; eyebrow.textContent='Kona.m · CARDS & ITEMS';
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('');
     disposeStudio=await renderCollectionSurface(body,{admin:accessContext.admin,onBack:raceSelf});
   }
@@ -178,7 +178,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('garage','web/styles/garage.css');
     if(request!==studioRequest)return;
-    title.textContent='Garage'; eyebrow.textContent='KONA · YOUR EQUIPMENT';
+    title.textContent='Garage'; eyebrow.textContent='Kona.m · YOUR EQUIPMENT';
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('garage');
     await renderGarageSurface(body,{admin:accessContext.admin});
     scheduleSurprise('garage');
@@ -188,7 +188,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('',null);
     if(request!==studioRequest)return;
-    title.textContent='Plan'; eyebrow.textContent='KONA · SOURCE-GROUNDED';
+    title.textContent='Plan'; eyebrow.textContent='Kona.m · SOURCE-GROUNDED';
     const readyData = entryDataReady ? await entryDataReady.catch(()=>null) : null;
     if(request!==studioRequest)return;
     disposeStudio=renderPlanSurface(body,{data:readyData || window.__ENTRY_DATA || { event:facts().event }});
@@ -203,7 +203,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('admin','web/styles/admin-assets.css');
     if(request!==studioRequest)return;
-    title.textContent='Asset Portfolio';eyebrow.textContent='KONA · ADMIN';
+    title.textContent='Asset Portfolio';eyebrow.textContent='Kona.m · ADMIN';
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('me');
     await renderAdminAssets(body);
   }
@@ -218,7 +218,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('',null);
     if(request!==studioRequest)return;
-    title.textContent='Discover'; eyebrow.textContent='KONA · INTERESTING THINGS';
+    title.textContent='Discover'; eyebrow.textContent='Kona.m · INTERESTING THINGS';
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('discover');
     await renderDiscoverSurface(body,{enter:()=>{close();enter?.();}});
     scheduleSurprise('discover');
