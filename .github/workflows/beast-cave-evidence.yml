@@ -1,0 +1,77 @@
+name: Beast Cave real-render evidence
+
+on:
+  push:
+    branches:
+      - feat/lionel-zwift-beast-cave
+    paths-ignore:
+      - 'docs/evidence/beast-cave/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: beast-cave-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact candidate SHA
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install browser build dependencies
+        run: cd web && npm ci --ignore-scripts
+
+      - name: Build exact Beast Cave review bundle
+        run: |
+          node tools/build_beast_cave_review.mjs
+          bash tools/stage_site.sh
+
+      - name: Capture exact Chrome/WebGL views
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          python3 -m http.server 8765 --directory _site >/tmp/beast-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          node web/beast-cave-evidence.mjs http://127.0.0.1:8765/review/beast-cave/
+          kill $SERVER_PID || true
+          trap - EXIT
+
+      - name: Require clean browser evidence
+        run: |
+          test -f docs/evidence/beast-cave/desktop-01-overview.png
+          test -f docs/evidence/beast-cave/desktop-10-inspect-card.png
+          test -f docs/evidence/beast-cave/mobile-01-overview.png
+          node -e "const a=require('./docs/evidence/beast-cave/browser-errors.json'); const b=require('./docs/evidence/beast-cave/mobile-browser-errors.json'); if(a.length||b.length){console.error({desktop:a,mobile:b});process.exit(1)}"
+
+      - name: Commit immutable evidence to candidate branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/evidence/beast-cave
+          if git diff --cached --quiet; then
+            echo "Evidence unchanged"
+          else
+            git commit -m "evidence(beast-cave): exact Chrome renders [skip ci]"
+            git push origin HEAD:"$GITHUB_REF_NAME"
+          fi
+
+      - name: Upload evidence artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: beast-cave-real-render-evidence
+          path: docs/evidence/beast-cave/
+          if-no-files-found: error
+          retention-days: 14
