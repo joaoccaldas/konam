@@ -1,11 +1,11 @@
-# KONA — full machine-readable guide
+# Kona.m — full machine-readable guide
 
 An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.
 
 This file is generated from the same museum registries used by the public app. Stable ids in the JSON/data files are preferred over names for programmatic references.
 
 ## Public pages
-- KONA · Race the version of yourself: https://joaoccaldas.github.io/canyonmuseum/
+- Kona.m · Race the version of yourself: https://joaoccaldas.github.io/canyonmuseum/
 - Canyon Triathlon Collection · every Speedmax generation, compared: https://joaoccaldas.github.io/canyonmuseum/Canyon_Collection.html
 - Studio · Speedmax Museum — build, paint and share a time-trial bike: https://joaoccaldas.github.io/canyonmuseum/Studio.html
 - Speedmax Nights & History Lane · Canyon Speedmax Museum: https://joaoccaldas.github.io/canyonmuseum/Experiences.html
