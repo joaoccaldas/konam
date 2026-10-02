@@ -1,6 +1,9 @@
 name: Vercel preview
 
 on:
+  push:
+    branches:
+      - launch/public-surface-certification-20261002
   workflow_dispatch:
 
 permissions:
