@@ -300,7 +300,47 @@
     "exposure": 0.92,
     "z0": 10.6,
     "z1": 6.15,
-    "decoration": "bio"
+    "decoration": "bio",
+    "surface": {
+     "floor": {
+      "kind": "root",
+      "base": "$floor",
+      "vein": "$vein",
+      "repeat_divisor": [
+       2.4,
+       2.4
+      ]
+     },
+     "wall": {
+      "kind": "root",
+      "base": "#0f2417",
+      "vein": "#2f8a45",
+      "repeat": [
+       2,
+       1
+      ],
+      "detail": 0.55
+     },
+     "roughness": 0.5,
+     "metalness": 0,
+     "floor_emissive_map": true,
+     "ceiling": {
+      "kind": "solid"
+     },
+     "ink": "#e9ffe8"
+    },
+    "staging": {
+     "stand_dx": -2.55,
+     "stand_dz": 0,
+     "specimen_dx": 0.55,
+     "specimen_dz": 0,
+     "specimen_yaw": 1.5707963267948966
+    },
+    "lamp": {
+     "color": "#fff4e4",
+     "intensity": 11,
+     "lite_intensity": 7
+    }
    }
   },
   {
@@ -322,8 +362,48 @@
     "fog": "#1a0a10",
     "exposure": 0.78,
     "z0": 15.6,
-    "z1": 11.0,
-    "decoration": "horror"
+    "z1": 11,
+    "decoration": "horror",
+    "surface": {
+     "floor": {
+      "kind": "crack",
+      "base": "#1b1114",
+      "vein": "#050203",
+      "repeat_divisor": [
+       2.2,
+       2.2
+      ],
+      "detail": 4
+     },
+     "wall": {
+      "kind": "plaster",
+      "base": "#2a1a1c",
+      "vein": "#0b0304",
+      "repeat": [
+       2,
+       1
+      ]
+     },
+     "roughness": 0.16,
+     "metalness": 0.35,
+     "floor_emissive_map": false,
+     "ceiling": {
+      "kind": "solid"
+     },
+     "ink": "#ffd0d4"
+    },
+    "staging": {
+     "stand_dx": 0,
+     "stand_dz": 1.7,
+     "specimen_dx": 0,
+     "specimen_dz": -1.05,
+     "specimen_yaw": 0
+    },
+    "lamp": {
+     "color": "#ffd0b0",
+     "intensity": 2.5,
+     "lite_intensity": 7
+    }
    }
   },
   {
@@ -345,8 +425,47 @@
     "fog": "#0c2430",
     "exposure": 0.95,
     "z0": 20.6,
-    "z1": 16.0,
-    "decoration": "alien"
+    "z1": 16,
+    "decoration": "alien",
+    "surface": {
+     "floor": {
+      "kind": "hex",
+      "base": "#07141c",
+      "vein": "#3dffe0",
+      "repeat_divisor": [
+       1.6,
+       1.6
+      ]
+     },
+     "wall": {
+      "kind": "panel",
+      "base": "#0a1a22",
+      "vein": "#3dffe0",
+      "repeat": [
+       2,
+       1
+      ]
+     },
+     "roughness": 0.28,
+     "metalness": 0.45,
+     "floor_emissive_map": true,
+     "ceiling": {
+      "kind": "solid"
+     },
+     "ink": "#e9ffe8"
+    },
+    "staging": {
+     "stand_dx": -2.55,
+     "stand_dz": 0,
+     "specimen_dx": 0.55,
+     "specimen_dz": 0,
+     "specimen_yaw": 1.5707963267948966
+    },
+    "lamp": {
+     "color": "#fff4e4",
+     "intensity": 11,
+     "lite_intensity": 7
+    }
    }
   },
   {
@@ -368,8 +487,51 @@
     "fog": "#2a2c18",
     "exposure": 0.98,
     "z0": 26.4,
-    "z1": 21.0,
-    "decoration": "zombie"
+    "z1": 21,
+    "decoration": "zombie",
+    "surface": {
+     "floor": {
+      "kind": "crack",
+      "base": "#3a3a26",
+      "vein": "#15160c",
+      "repeat_divisor": [
+       2.6,
+       2.6
+      ],
+      "detail": 3,
+      "accent": "#5a6a2a"
+     },
+     "wall": {
+      "kind": "crack",
+      "base": "#34342a",
+      "vein": "#1c1c14",
+      "repeat": [
+       2,
+       1
+      ],
+      "detail": 2
+     },
+     "roughness": 0.92,
+     "metalness": 0,
+     "floor_emissive_map": false,
+     "ceiling": {
+      "kind": "sky",
+      "color": "#1d1a22"
+     },
+     "ink": "#f3f0c8"
+    },
+    "staging": {
+     "stand_dx": -2.55,
+     "stand_dz": 0,
+     "specimen_dx": 0.55,
+     "specimen_dz": 0,
+     "specimen_yaw": 1.5707963267948966
+    },
+    "lamp": {
+     "color": "#fff4e4",
+     "intensity": 11,
+     "lite_intensity": 7
+    }
    }
   }
  ]
