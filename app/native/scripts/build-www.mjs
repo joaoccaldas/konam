@@ -34,6 +34,7 @@ rmSync(join(www, 'web', 'src', 'room-review-norwegian.js'), { force: true });
 rmSync(join(www, 'web', 'src', 'review'), { recursive: true, force: true });
 rmSync(join(www, 'web', 'src', 'roomkit.js'), { force: true });
 rmSync(join(www, 'web', 'styles', 'room-review.css'), { force: true });
+rmSync(join(www, 'app', 'nor3-review.js'), { force: true });
 
 const versionCode = Number.parseInt(process.env.SPEEDMAX_VERSION_CODE || '0', 10) || 0;
 const versionName = (process.env.SPEEDMAX_VERSION_NAME || 'dev').replace(/[^\w.-]/g, '').slice(0, 20);
