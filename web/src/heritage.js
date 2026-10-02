@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { createMachineInspection } from './engine/machine-inspection.js';
 
 const PROFILE = window.__BIKE_PROFILE;
 const B = PROFILE.bike;
@@ -69,7 +70,8 @@ addEventListener('resize', resize); resize();
 
 // ------------------------------------------------------------------ model
 const bike = new THREE.Group(); scene.add(bike);
-const parts = {}, meshesOf = {}, explodables = [];
+const parts = {}, meshesOf = {};
+let inspection = null;
 const b64 = s => { const bin = atob(s), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; };
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 $('#loader i').style.width = '30%';
@@ -77,16 +79,22 @@ let centre = new THREE.Vector3(0, .55, 0);
 loader.parse(b64(window.__SPEEDMAX_GLB).buffer, '', gltf => {
   const root = gltf.scene; bike.add(root);
   root.traverse(o => {
-    const ud = o.userData || {};
-    if (ud.part) parts[ud.part] = o;
-    if (ud.explode) explodables.push({ node: o, base: o.position.clone(), vec: new THREE.Vector3(ud.explode[0], ud.explode[2], -ud.explode[1]) });
     if (o.isMesh) {
       o.castShadow = true; o.receiveShadow = true;
-      let p = o; while (p && !(p.userData && p.userData.part)) p = p.parent;
-      if (p) (meshesOf[p.userData.part] ||= []).push(o);
       o.userData.baseMat = o.material;
     }
   });
+  inspection = createMachineInspection(root, {
+    motion: 'lerp',
+    speed: 7,
+    reducedSpeed: 7,
+    progressScale: 1,
+    staggerWindow: 0,
+    distanceScale: 1,
+    easing: ease,
+  });
+  Object.assign(parts, inspection.parts);
+  Object.assign(meshesOf, inspection.meshesByPart);
   const box = new THREE.Box3().setFromObject(root); centre = box.getCenter(new THREE.Vector3());
   plinth.position.x = floor.position.x = centre.x;
   buildPartList();
@@ -172,8 +180,12 @@ renderer.setAnimationLoop(() => {
     camera.position.lerpVectors(flight.p0, flight.p1, s); controls.target.lerpVectors(flight.t0v, flight.t1, s);
     if (k >= 1) flight = null;
   }
-  e += (eT - e) * (reduced ? 1 : Math.min(1, dt * 7));
-  for (const x of explodables) x.node.position.copy(x.base).addScaledVector(x.vec, ease(Math.min(1, e)));
+  if (inspection) {
+    inspection.target = eT;
+    if (reduced) inspection.setProgress(eT, { immediate: true });
+    else inspection.update(dt);
+    e = inspection.value;
+  }
   if (spin && !flight) bike.rotation.y += dt * .25;
   controls.update(); renderer.render(scene, camera);
 });

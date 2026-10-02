@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:konam:machine-assembly:v1",
+  "title": "Kona.m Machine Assembly Manifest v1",
+  "description": "Mechanical truth graph for globally inspectable/explodable machines. Rendering consumes this graph; rooms never redefine it.",
+  "type": "object",
+  "required": ["schema_version","id","asset_id","coordinate_system","parts"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string","pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "asset_id": {"type": "string"},
+    "coordinate_system": {
+      "type": "object",
+      "required": ["unit","up","forward"],
+      "properties": {
+        "unit": {"const": "meters"},
+        "up": {"type": "string"},
+        "forward": {"type": "string"},
+        "drive_side": {"type": ["string","null"]}
+      }
+    },
+    "root_part": {"type": ["string","null"]},
+    "parts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id","name","system","parent_id","nodes","truth_classification"],
+        "properties": {
+          "id": {"type": "string","pattern": "^[a-z0-9_]+$"},
+          "name": {"type": "string"},
+          "system": {"type": "string"},
+          "parent_id": {"type": ["string","null"]},
+          "nodes": {"type": "array","minItems": 1,"items": {"type": "string"}},
+          "truth_classification": {
+            "enum": [
+              "verified-fact",
+              "documented-historical-reference",
+              "independent-reconstruction",
+              "generic-equipment-study",
+              "editorial-interpretation"
+            ]
+          },
+          "explode": {
+            "type": ["object","null"],
+            "properties": {
+              "vector": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": {"type": "number"}
+              },
+              "order": {"type": ["number","null"]},
+              "distance_scale": {"type": ["number","null"]},
+              "strategy": {"enum": ["authored-vector","axis","radial","hierarchy"]}
+            }
+          },
+          "interfaces": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["kind","target_part"],
+              "properties": {
+                "kind": {"type": "string"},
+                "target_part": {"type": "string"},
+                "fastener_part_ids": {"type": "array","items": {"type": "string"}}
+              }
+            }
+          },
+          "service": {
+            "type": "object",
+            "properties": {
+              "removal_order": {"type": ["number","null"]},
+              "tool": {"type": ["string","null"]},
+              "torque_nm": {"type": ["number","null"]},
+              "note": {"type": ["string","null"]}
+            }
+          },
+          "source_refs": {"type": "array","items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

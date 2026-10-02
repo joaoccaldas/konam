@@ -5,12 +5,12 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import { createMachineInspection } from '../engine/machine-inspection.js';
 
 export const coarse = matchMedia('(pointer: coarse)').matches;
 export const lite = coarse || innerWidth < 760 || (navigator.hardwareConcurrency || 8) <= 4;
 export const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 export const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-const B2T = v => new THREE.Vector3(v[0], v[2], -v[1]);
 
 export function canvasTex(w, h, draw, repeat) {
   const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
@@ -103,18 +103,21 @@ export async function loadSpeedmax(url, { livery, shadows = !lite } = {}) {
   const box = new THREE.Box3().setFromObject(bike), c = box.getCenter(new THREE.Vector3());
   bike.position.set(-c.x, -box.min.y, -c.z);
   const holder = new THREE.Group(); holder.add(bike);
-  const nodes = {}, explodables = [];
-  bike.traverse(o => { const ud = o.userData || {}; if (ud.part && !nodes[ud.part]) nodes[ud.part] = o; if (ud.explode) explodables.push({ node: o, base: o.position.clone(), vec: B2T(ud.explode) }); });
-  [...explodables].sort((a, b) => a.vec.length() - b.vec.length()).forEach((x, i, a) => x.delay = i / a.length);
-  const S = { holder, nodes, ex: 0, exT: 0, size: box.getSize(new THREE.Vector3()) };
-  S.setExploded = on => { S.exT = on ? 1 : 0; };
-  S.update = dt => {
-    if (Math.abs(S.ex - S.exT) < .0005) return;
-    S.ex += Math.sign(S.exT - S.ex) * Math.min(Math.abs(S.exT - S.ex), dt * (reduce ? 10 : 1.1));
-    for (const x of explodables) { const u = clamp(S.ex * 1.35 - x.delay * .35, 0, 1), e = u * u * (3 - 2 * u); x.node.position.copy(x.base).addScaledVector(x.vec, e * 1.15); }
-  };
-  S.partOf = obj => { for (let o = obj; o; o = o.parent) if (o.userData?.part) return o.userData.part; return null; };
-  S.meshes = []; bike.traverse(o => { if (o.isMesh) S.meshes.push(o); });
+  const inspection = createMachineInspection(bike, {
+    motion: 'step',
+    speed: 1.1,
+    reducedSpeed: 10,
+    distanceScale: 1.15,
+  });
+  const S = { holder, nodes: inspection.parts, size: box.getSize(new THREE.Vector3()), inspection };
+  Object.defineProperties(S, {
+    ex: { get: () => inspection.value, set: v => { inspection.value = v; } },
+    exT: { get: () => inspection.target, set: v => { inspection.target = v; } },
+  });
+  S.setExploded = on => inspection.setExploded(on);
+  S.update = dt => inspection.update(dt, { reduced: reduce });
+  S.partOf = obj => inspection.partOf(obj);
+  S.meshes = inspection.meshes;
   return S;
 }
 

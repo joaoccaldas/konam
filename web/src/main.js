@@ -18,6 +18,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import * as TX from './tex.js';
 import { BIKE, PROFILE, GEOMETRY, PARTS, GROUPS, PRESETS, SWATCHES, DECALS, VIEWS } from './data.js';
 import { coarse, desktopViewPhone } from './detect.js';
+import { createMachineInspection, blenderVectorToThree } from './engine/machine-inspection.js';
 
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
@@ -25,7 +26,7 @@ const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 // coarse comes from detect.js: pointer:coarse, narrow viewport, or a phone in
 // "Desktop view" reporting a ~980 px layout on a small physical screen.
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const B2T = (v) => new THREE.Vector3(v[0], v[2], -v[1]);           // Blender (Z-up) -> three (Y-up)
+const B2T = blenderVectorToThree;                                  // one global Blender (Z-up) -> three (Y-up) adapter
 const R_WHEEL = .3395, R_RING = .0127/(2*Math.sin(Math.PI/(BIKE.chainring||50))), R_COG = .0127/(2*Math.sin(Math.PI/(BIKE.cog||14)));
 
 // ------------------------------------------------------------------ state
@@ -171,7 +172,8 @@ const GLB = b64(window.__SPEEDMAX_GLB);
 const bike = new THREE.Group(); scene.add(bike);
 const parts = {};            // part id -> node
 const meshesOf = {};         // part id -> meshes (nearest part ancestor)
-const explodables = [];      // {node, base, vec, delay}
+const explodables = [];      // compatibility alias; global inspection owns the canonical list
+let inspection = null;
 let wheelF, wheelR, crankset, chainNode, chain = null, discMesh = null, zippMesh=null;
 
 function progress(p, label) { $('#loadbar i').style.width = (p * 100).toFixed(0) + '%'; if (label) $('#loadlabel').textContent = label; }
@@ -182,26 +184,28 @@ loader.parse(GLB.buffer, '', gltf => {
   const root = gltf.scene;
   bike.add(root);
   root.traverse(o => {
-    const ud = o.userData || {};
-    if (ud.part) parts[ud.part] = o;
-    if (ud.explode) {
-      const v = ud.explode;
-      explodables.push({ node: o, base: o.position.clone(), vec: new THREE.Vector3(v[0], v[2], -v[1]), delay: 0 });
-    }
     if (o.isMesh) {
       o.castShadow = true; o.receiveShadow = true;
       const mats = Array.isArray(o.material) ? o.material : [o.material];
       const mapped = mats.map(m => mapMaterial(m, o));
       o.material = Array.isArray(o.material) ? mapped : mapped[0];
       o.userData.baseMat = o.material;
-      let p = o;
-      while (p && !(p.userData && p.userData.part)) p = p.parent;
-      if (p) (meshesOf[p.userData.part] ||= []).push(o);
     }
   });
-  // stagger explosion by distance
-  const sorted = [...explodables].sort((a, b) => a.vec.length() - b.vec.length());
-  sorted.forEach((x, i) => x.delay = i / sorted.length);
+  inspection = createMachineInspection(root, {
+    motion: 'exponential',
+    speed: 3.2,
+    reducedSpeed: 3.2,
+    distanceScale: 1,
+    easing: ease,
+  });
+  Object.assign(parts, inspection.parts);
+  Object.assign(meshesOf, inspection.meshesByPart);
+  explodables.push(...inspection.explodables);
+  Object.defineProperties(S, {
+    e: { configurable: true, get: () => inspection.value, set: v => { inspection.value = v; } },
+    eT: { configurable: true, get: () => inspection.target, set: v => { inspection.target = v; } },
+  });
   wheelF = parts.wheel_front; wheelR = parts.wheel_rear; crankset = parts.crankset; chainNode = parts.chain;
   buildChain();
   buildDisc();
@@ -780,13 +784,8 @@ let last = performance.now(), fpsAcc = 0, fpsN = 0, autoTuned = false, t0 = perf
 const tmp = new THREE.Vector3();
 function tick(now) {
   const dt = Math.min(.05, (now - last) / 1000); last = now;
-  // explode
-  S.e += (S.eT - S.e) * (1 - Math.exp(-dt * 3.2));
-  if (Math.abs(S.eT - S.e) < 1e-4) S.e = S.eT;
-  for (const x of explodables) {
-    const p = ease(clamp((S.e * 1.35 - x.delay * .35)));
-    x.node.position.copy(x.base).addScaledVector(x.vec, p);
-  }
+  // global mechanical inspection owns exploded-state math
+  inspection?.update(dt, { reduced });
   // ride
   if (S.ride) {
     const wc = S.cadence / 60 * Math.PI * 2;              // crank rad/s
