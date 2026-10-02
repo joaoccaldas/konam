@@ -222,6 +222,81 @@ These are offers Kona.m can credibly demonstrate or sell, but they are **not cur
 
 No sponsor, partner, affiliate or official-status claim appears publicly before it is true and evidenced.
 
+## Commercial planning economics
+
+These figures are **planning ranges, not market quotes or revenue promises**. They are retained because they are useful for deciding where founder time should go. Any external proposal is scoped independently.
+
+### Offer ladder
+
+| Offer | Indicative planning range | Scope |
+|---|---:|---|
+| Immersive concept sprint | €2.5k–€5k | Private branded room/object/story prototype, bounded revision |
+| Brand activation pilot | €7.5k–€15k | Room + 1–3 canonical objects + story + share assets + hosted demo |
+| Race-week activation package | €15k–€30k | Activation + challenge/event content + derivatives + light operations |
+| Content / hosting retainer | €1.5k–€4k / month | Updates, hosting, asset/content refresh, reporting |
+| White-label event/product world | €25k–€75k+ | Branded deployment, integration, larger content/3D scope |
+| 3D asset / engineering study | €1.5k–€8k each | Procedural/measured study depending on fidelity, evidence and rights complexity |
+
+Commercial priority is not to sell every line above. It is to prove one repeatable paid offer with controlled delivery cost.
+
+### Affiliate economics
+
+Affiliate is option value, not the launch business case.
+
+Illustrative blended scenarios:
+
+| Case | MAU | Commerce click rate | Purchase CVR | Blended order | Commission | Approx. monthly revenue |
+|---|---:|---:|---:|---:|---:|---:|
+| Early | 2,000 | 4% | 1.5% | €700 | 4% | €34 |
+| Growing | 10,000 | 6% | 2.0% | €900 | 5% | €540 |
+| Scaled niche | 50,000 | 7% | 2.5% | €1,000 | 5% | €4,375 |
+
+Actual programme rates, attribution windows and conversion vary materially. Verify every programme before forecasting or publishing expected income.
+
+### Consumer premium
+
+Premium waits for retention.
+
+| Example | Assumption | Approx. gross monthly revenue |
+|---|---|---:|
+| Small loyal beta | 2,000 MAU × 2% paid × €4.99 | €200 |
+| Validated niche | 10,000 MAU × 3% paid × €5.99 | €1,797 |
+| Scaled enthusiast base | 50,000 MAU × 4% paid × €6.99 | €13,980 |
+
+A single €10k B2B pilot can equal months of early subscription revenue. That is why consumer premium should not distort launch scope.
+
+### 12-month planning scenarios
+
+| Scenario | B2B pilots / activations | Retainers / white-label | Affiliate + local | Approx. 12-mo revenue |
+|---|---:|---:|---:|---:|
+| Conservative | 2 × €5k | 1 retainer × 3 mo × €1.5k | €2k | €16.5k |
+| Base | 5 × €7.5k | 2 retainers × 6 mo × €2k | €12k | €73.5k |
+| Upside | 8 × €12k | 3 retainers × 12 mo × €3k + 1 × €30k white-label | €32k | €266k |
+
+Interpretation:
+- **Conservative:** proves willingness to pay.
+- **Base:** credible founder-led niche studio/platform.
+- **Upside:** requires repeatable selling and delivery, not simply a better product.
+
+These are scenario mechanics, not probability-weighted forecasts.
+
+### Cost model
+
+| Cost bucket | Early planning range | Notes |
+|---|---:|---|
+| Hosting/CDN/domain | €20–€200 / month | Keep infrastructure simple until load proves otherwise |
+| Backend | €0–€150 / month | Likely modest while local-first state dominates |
+| Asset generation / AI tooling | €100–€1,000 / month | Depends on production cadence and existing subscriptions |
+| Monitoring / email / analytics | €0–€200 / month | Prefer minimal privacy-safe stack |
+| Contract design/3D/QA | €0 self-built; €2k–€15k+ / month outsourced | Largest controllable cost |
+| Rights/licensing | case-specific | Never assume zero for commercial expansion |
+
+### Financial conclusion
+
+The business should optimize first for **paid B2B proof**, not consumer scale.
+
+The most valuable near-term KPI is not MAU by itself. It is whether the public Kona.m experience creates qualified commercial conversations and converts at least one into a scoped paid pilot without destabilizing the consumer product.
+
 ## B2B factory
 
 `SOURCE → CANONICAL ENTITY → 3D ASSET → ROOM / ARTIFACT → STORY → SHARE MEDIA → COMMERCE ADAPTER`
