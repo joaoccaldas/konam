@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "status": "pitch-candidate-unwired",
+  "audience": "Kristian Blummenfelt, Gustav Iden and Casper Stornes",
+  "title": "Three lanes. One system.",
+  "subtitle": "Kona.m × the Norwegian trio — independent concept, not an announced partnership",
+  "tone": [
+    "minimal",
+    "warm",
+    "curious",
+    "human",
+    "systems-minded",
+    "slightly weird",
+    "never hero-worship",
+    "never corporate-sponsor-deck"
+  ],
+  "core_idea": "The pitch should feel like walking into a shared training system where three individual athletes remain distinct.",
+  "about_me": {
+    "public": {
+      "title": "Why I made Kona.m",
+      "copy": [
+        "It started with getting pulled back toward triathlon.",
+        "Then I wanted to understand the bike. That became data. The data became 3D. The bike needed a room. The room somehow became a world.",
+        "Kona.m is where I put things I care about in the same place: triathlon, learning, AI, design, systems, stories and the joy of making something I did not know how to make.",
+        "A big part of it is simply learning to finish enough of an idea to let other people in."
+      ],
+      "visual_arc": "training → spreadsheet/data → AI → bike → room → museum → island/world"
+    },
+    "norwegian": {
+      "title": "The version I wanted you three to see",
+      "copy": [
+        "What pulled me toward this story was not the idea of three identical athletes. It was the opposite.",
+        "Three people can train inside the same system, measure many of the same things, argue with the same numbers, and still have to become themselves.",
+        "That connects with why I built Kona.m. I keep trying to understand things by taking them apart, measuring them, building them again, and then discovering that the interesting part was never the tool. It was what the tool let me learn.",
+        "So I did not want to build a podium room. I wanted to build the room behind the podium: three lanes, shared protocols, imperfect notes, heat, cold, repetition, adaptation and enough uncertainty that the next experiment still matters.",
+        "The room is about a system without pretending the people inside it are interchangeable."
+      ],
+      "guardrail": "This is the creator's interpretation of a public high-performance culture and a personal response to it. Do not attribute private beliefs, motives, relationships or training practices to any athlete without a cited source."
+    }
+  },
+  "storyboard": [
+    {
+      "beat": 1,
+      "duration_s": 4,
+      "title": "Black",
+      "visual": "Almost-black screen. Small KONA.m mark. Ventilation and distant trainer sound.",
+      "copy": "I built you three a room."
+    },
+    {
+      "beat": 2,
+      "duration_s": 7,
+      "title": "Three rails",
+      "visual": "Camera enters low across wet stone. Three parallel training lanes appear gradually, never as identical copies.",
+      "copy": "Three lanes. One system."
+    },
+    {
+      "beat": 3,
+      "duration_s": 8,
+      "title": "Measure",
+      "visual": "Protocol table: handled paper, analyzer, vial rack, marks from repeated use. No sterile sci-fi holograms.",
+      "copy": "Measure what matters. Then question it."
+    },
+    {
+      "beat": 4,
+      "duration_s": 8,
+      "title": "Environment",
+      "visual": "Low-iron glass bay, fans, heat source, condensation and cold reflected light.",
+      "copy": "The environment is part of the experiment."
+    },
+    {
+      "beat": 5,
+      "duration_s": 9,
+      "title": "Individuals",
+      "visual": "Move lane to lane. Same room grammar, different objects and traces of use. Athlete-specific bikes remain empty until verified.",
+      "copy": "Same tools do not make the same athlete."
+    },
+    {
+      "beat": 6,
+      "duration_s": 8,
+      "title": "Fjord",
+      "visual": "Original layered fjord relief emerges from wet stone and smoked timber.",
+      "copy": "Precision can still have a landscape."
+    },
+    {
+      "beat": 7,
+      "duration_s": 8,
+      "title": "Vault",
+      "visual": "Abstract metal discs and blades. They evoke achievement without copying medals or trophies.",
+      "copy": "The result is visible. The system behind it usually isn't."
+    },
+    {
+      "beat": 8,
+      "duration_s": 9,
+      "title": "About",
+      "visual": "Brief creator sequence: training → data → AI → 3D → room → world.",
+      "copy": "I did not start by trying to build a company. I started by trying to understand something."
+    },
+    {
+      "beat": 9,
+      "duration_s": 11,
+      "title": "The version for you",
+      "visual": "Return to the three lanes. Handled notes, changed protocols, three distinct stations, one warm Kona line.",
+      "copy": "I like systems. But the interesting part is what happens when three people refuse to become the same output."
+    },
+    {
+      "beat": 10,
+      "duration_s": 7,
+      "title": "Open ending",
+      "visual": "Camera settles behind the three empty bike slots toward the thin orange Kona line.",
+      "copy": "What did I get wrong? What belongs in your room?"
+    }
+  ],
+  "capture_requirements": [
+    "Final pitch uses renders captured from the actual NOR // 3 branch.",
+    "Generated imagery may be reference/transition material only and must not be presented as implemented UI or geometry.",
+    "Show genuine free-camera movement through the explorable room.",
+    "Preserve KONA.m typography and shared interaction grammar.",
+    "Do not imply athlete, federation, equipment-brand or IRONMAN approval, sponsorship or collaboration."
+  ],
+  "evidence_notes": [
+    {
+      "topic": "athlete-specific claims",
+      "status": "not yet sourced in this branch",
+      "rule": "Add documented public-source evidence before attaching a quote, exact protocol, bike, accessory or personal claim to an athlete."
+    }
+  ]
+}
