@@ -15,21 +15,24 @@ cp integrations/companion/feed.json integrations/companion/rss.xml integrations/
 mkdir -p _site/integrations
 cp integrations/public-catalog.json integrations/ironman-races-2016-2026.json _site/integrations/
 mkdir -p _site/web/styles _site/web/src _site/brand
-cp web/styles/hall-web.css web/styles/hall-mobile.css web/styles/studio.css web/styles/experience.css web/styles/collection.css web/styles/entry.css web/styles/system.css web/styles/components.css web/styles/admin-assets.css web/styles/shell-mobile.css web/styles/race-self.css web/styles/companion.css web/styles/home.css web/styles/garage.css web/styles/about.css _site/web/styles/
-cp web/src/about-story.js _site/web/src/
+cp web/styles/hall-web.css web/styles/hall-mobile.css web/styles/studio.css web/styles/experience.css web/styles/collection.css web/styles/entry.css web/styles/system.css web/styles/components.css web/styles/admin-assets.css web/styles/shell-mobile.css web/styles/race-self.css web/styles/companion.css web/styles/home.css web/styles/garage.css web/styles/about.css web/styles/promo.css _site/web/styles/
+cp web/src/about-story.js web/src/promo.js _site/web/src/
 cp brand/tokens.css brand/themes.css brand/artifacts.css brand/typography.css _site/brand/
 if [ -d downloads ]; then rsync -a downloads/ _site/downloads/; fi
 rsync -a assets/ _site/assets/ --exclude reference/
 mkdir -p _site/assets/reference && rsync -a assets/reference/paintings/ _site/assets/reference/paintings/
 mkdir -p _site/docs && cp docs/FIT_RESEARCH_AND_ROADMAP.md _site/docs/
+mkdir -p _site/docs/audit-20260929
+cp docs/audit-20260929/room-horror.png docs/audit-20260929/room-alien.png docs/audit-20260929/room-zombie.png _site/docs/audit-20260929/
 test -f _site/release.json
 node -e "const r=require('./_site/release.json'); if(r.sha!==process.env.GITHUB_SHA) process.exit(1)"
 test -f _site/index.html && test -f _site/manifest.webmanifest && test -f _site/sw.js
 test -f _site/app/viewport.js && test -f _site/app/kona-core.js && test -f _site/app/world-shell.html && test -f _site/app/race-self-stage.js && test -f _site/app/collectible-stage.js && test -f _site/app/entry-data.json && test -f _site/app/admin-assets.json && test -f _site/app/admin-asset-preview.js
 test -f _site/integrations/companion/feed.json && test -f _site/integrations/companion/travel.json && test -f _site/web/styles/companion.css
 test -f _site/integrations/public-catalog.json && test -f _site/integrations/ironman-races-2016-2026.json
-test -f _site/web/src/about-story.js && test -f _site/web/styles/about.css
+test -f _site/web/src/about-story.js && test -f _site/web/src/promo.js && test -f _site/web/styles/about.css && test -f _site/web/styles/promo.css
 test -f _site/web/styles/shell-mobile.css && test -f _site/web/styles/components.css && test -f _site/web/styles/admin-assets.css && test -f _site/web/styles/studio.css && test -f _site/web/styles/experience.css && test -f _site/web/styles/collection.css && test -f _site/brand/tokens.css && test -f _site/brand/typography.css
 test -f _site/app/museum-data.js && test -f _site/app/hall.js && test -f _site/app/studio.js && test -f _site/app/studio-catalog.js
+test -f _site/docs/audit-20260929/room-horror.png && test -f _site/docs/audit-20260929/room-alien.png && test -f _site/docs/audit-20260929/room-zombie.png
 node tools/validate-staged-site.mjs _site
 node tools/scan_public_surface.mjs _site
