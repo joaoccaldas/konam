@@ -1,0 +1,49 @@
+name: Kona.m pre-migration comparison
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    name: Before / after product and technical contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate Kona.m world model
+        run: node tools/validate_konam_world.mjs
+
+      - name: Run Kona.m world contract test
+        run: node --test web/test/konam-world-contract.test.mjs
+
+      - name: Compare before and after state
+        env:
+          KONAM_BASE_SHA: ${{ github.event.pull_request.base.sha || 'b16391dbffee5a351ec82a06dac42d52b4c31286' }}
+        run: node tools/compare_konam_state.mjs
+
+      - name: Existing repository hygiene
+        run: node tools/repo-hygiene.mjs
+
+      - name: Existing secret/private-data scan
+        run: node tools/scan_private_data.mjs
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: konam-before-after-${{ github.event.pull_request.head.sha || github.sha }}
+          path: konam-comparison-evidence/
+          if-no-files-found: warn
+          retention-days: 30
