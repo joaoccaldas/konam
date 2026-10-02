@@ -1,0 +1,98 @@
+name: Product Intake Proof V0
+
+on:
+  push:
+    branches: [feat/product-intake-proof-v0-20260930]
+    paths-ignore:
+      - 'sw.js'
+      - 'app/app-manifest.json'
+      - 'index.html'
+      - 'Studio.html'
+      - 'Experiences.html'
+      - 'Canyon_Collection.html'
+      - 'Speedmax_*_Museum.html'
+      - 'web/dist/**'
+      - 'docs/ROOMS.md'
+      - 'llms.txt'
+      - 'llms-full.txt'
+      - 'robots.txt'
+      - 'sitemap.xml'
+
+permissions:
+  contents: write
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/product-intake-proof-v0-20260930
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Setup domain must remain unchanged
+        run: git diff --exit-code 869b5535f07c258b0778396b4f1e1862ebbd7d86 -- web/src/studio/race-setup.js
+      - run: node tools/build_pages.mjs
+      - run: node tools/build_app.mjs
+      - run: npm test
+        working-directory: web
+      - run: node tools/validate-bikes.mjs
+      - name: Candidate GLB contract
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const d=JSON.parse(fs.readFileSync('museum/test/product-intake-v0.json','utf8'));
+          for(const p of d.products){
+            const b=fs.readFileSync(p.asset_path);
+            if(b.toString('ascii',0,4)!=='glTF') throw new Error('bad GLB '+p.id);
+            if(b.readUInt32LE(8)!==b.length) throw new Error('GLB length mismatch '+p.id);
+            if(b.length!==p.metrics.glb_bytes) throw new Error('byte metric drift '+p.id);
+            if(b.length>1000000) throw new Error('candidate exceeds V0 mobile proof budget '+p.id);
+            console.log(p.id,b.length,'bytes');
+          }
+          NODE
+      - name: Build test-only intake rooms
+        run: node web/build_product_intake_proof.mjs
+      - name: Pre-browser HTTP smoke
+        run: |
+          python3 -m http.server 8754 --bind 127.0.0.1 >/tmp/canyon-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..20}; do
+            curl -fsS http://127.0.0.1:8754/Product_Intake_Proof.html >/tmp/proof.html && break
+            sleep .25
+          done
+          grep -q "BOOT_HTML" /tmp/proof.html
+          grep -q "__intakeProofDiagnostics" /tmp/proof.html
+          curl -fsSI http://127.0.0.1:8754/assets/kona-heritage/bikes/cervelo-p5-disc-mk2-size54.glb | grep -q "200 OK"
+          curl -fsSI http://127.0.0.1:8754/assets/kona-heritage/shoes/nike-alphafly-3-study.glb | grep -q "200 OK"
+          echo "proof page + inline bundle markers + both GLBs: HTTP 200"
+      - name: Mobile/browser intake audit
+        run: |
+          python3 -m http.server 8754 --bind 127.0.0.1 >/tmp/canyon-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8754/Product_Intake_Proof.html >/dev/null && break; sleep .25; done
+          CHROME_PATH="$(which google-chrome || which google-chrome-stable || which chromium)" node web/product-intake-audit.mjs http://127.0.0.1:8754/ proof-artifacts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-intake-proof-v0
+          path: proof-artifacts/
+          if-no-files-found: warn
+      - name: Remove test-only built page
+        run: rm -f Product_Intake_Proof.html
+      - name: Commit deterministic release outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add museum/catalog/products.json docs/ROOMS.md ./*.html web/dist/*.html sw.js app/app-manifest.json robots.txt sitemap.xml llms.txt llms-full.txt
+          if git diff --cached --quiet; then echo "outputs current"; exit 0; fi
+          git commit -m "build(app): seal Product Intake Proof V0 branch"
+          git push origin HEAD:feat/product-intake-proof-v0-20260930
