@@ -12,6 +12,7 @@
 
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { buildBeastCaveStoryWing } from './beast-cave-story-wing.js';
 
 export const BEAST_CAVE_BOUNDS = Object.freeze({
   x0: -14, x1: 14,
@@ -681,6 +682,7 @@ export function buildBeastCave({
   buildRecovery(group, obstacles, pickables);
   buildKonaHorizon(group, pickables);
   buildRoomLabels(group);
+  buildBeastCaveStoryWing({group,lite,pickables,obstacles});
   mergeRepeatedFloorProps(group);
 
   const B = BEAST_CAVE_BOUNDS;
