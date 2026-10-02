@@ -51,13 +51,35 @@ function panelTexture({kicker='',title='',sub='',style='editorial',year=''}) {
       const gr=g.createLinearGradient(0,0,w,h);gr.addColorStop(0,'rgba(255,255,255,.04)');gr.addColorStop(1,'rgba(0,0,0,.35)');g.fillStyle=gr;g.fillRect(0,0,w,h);
     }
 
-    // Abstract athlete/race silhouette, intentionally not a portrait reproduction.
-    g.save();g.translate(w*.5,h*.46);
-    g.fillStyle=style==='manga' ? '#202020' : style==='sketch' ? '#5a5148' : '#090909';
-    g.beginPath();g.ellipse(0,-185,72,88,0,0,Math.PI*2);g.fill();
-    g.fillRect(-70,-100,140,260);
-    g.beginPath();g.moveTo(-65,140);g.lineTo(-150,360);g.lineTo(-55,360);g.lineTo(0,160);g.closePath();g.fill();
-    g.beginPath();g.moveTo(65,140);g.lineTo(150,360);g.lineTo(55,360);g.lineTo(0,160);g.closePath();g.fill();
+    // Original race study, not a portrait reproduction.
+    g.save(); g.translate(w*.52,h*.49);
+    const ink=style==='manga'?'#151515':style==='sketch'?'#504840':'#080808';
+    g.strokeStyle=ink; g.fillStyle=ink; g.lineCap='round'; g.lineJoin='round';
+    if(style==='blueprint'){
+      g.lineWidth=8;
+      const wx1=-250,wx2=230,wy=130,r=115;
+      g.beginPath();g.arc(wx1,wy,r,0,Math.PI*2);g.arc(wx2,wy,r,0,Math.PI*2);g.stroke();
+      g.beginPath();g.moveTo(wx1,wy);g.lineTo(-45,wy-40);g.lineTo(115,wy);g.lineTo(-35,-40);g.lineTo(wx1,wy);g.moveTo(-45,wy-40);g.lineTo(-35,-40);g.lineTo(150,-55);g.lineTo(230,wy);g.stroke();
+      g.lineWidth=16;g.beginPath();g.moveTo(-25,-95);g.lineTo(95,-80);g.lineTo(165,-30);g.stroke();
+      g.beginPath();g.arc(-40,-155,42,0,Math.PI*2);g.fill();
+      g.lineWidth=13;g.beginPath();g.moveTo(-10,-115);g.lineTo(80,-15);g.moveTo(5,-85);g.lineTo(-80,-25);g.stroke();
+    } else {
+      if(style==='manga'){
+        g.strokeStyle='rgba(25,25,25,.45)';g.lineWidth=5;
+        for(let i=0;i<18;i++){g.beginPath();g.moveTo(-420+i*18,-260+i*8);g.lineTo(340-i*7,270-i*10);g.stroke();}
+        g.strokeStyle=ink;
+      }
+      // runner: angled torso, bent arms and split stride
+      g.beginPath();g.arc(-35,-190,52,0,Math.PI*2);g.fill();
+      g.beginPath();g.moveTo(-85,-125);g.lineTo(45,-140);g.lineTo(95,35);g.lineTo(-30,85);g.lineTo(-115,-20);g.closePath();g.fill();
+      g.lineWidth=32;
+      g.beginPath();g.moveTo(-55,-80);g.lineTo(-180,5);g.lineTo(-110,100);g.stroke();
+      g.beginPath();g.moveTo(20,-85);g.lineTo(150,-20);g.lineTo(95,80);g.stroke();
+      g.lineWidth=42;
+      g.beginPath();g.moveTo(-5,70);g.lineTo(-150,235);g.lineTo(-255,300);g.stroke();
+      g.beginPath();g.moveTo(55,58);g.lineTo(175,205);g.lineTo(275,230);g.stroke();
+      g.fillStyle=style==='editorial'?LAVA:ink;g.fillRect(-10,-25,58,45);
+    }
     g.restore();
 
     g.fillStyle=LAVA;g.fillRect(70,68,84,9);
