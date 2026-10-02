@@ -16,7 +16,9 @@ mkdir -p _site/integrations
 cp integrations/public-catalog.json integrations/ironman-races-2016-2026.json _site/integrations/
 mkdir -p _site/web/styles _site/web/src _site/brand
 cp web/styles/hall-web.css web/styles/hall-mobile.css web/styles/studio.css web/styles/experience.css web/styles/collection.css web/styles/entry.css web/styles/system.css web/styles/components.css web/styles/admin-assets.css web/styles/shell-mobile.css web/styles/race-self.css web/styles/companion.css web/styles/home.css web/styles/garage.css web/styles/about.css web/styles/promo.css web/styles/room-review.css _site/web/styles/
-cp web/src/about-story.js web/src/promo.js web/src/room-review-norwegian.js web/src/roomkit.js _site/web/src/\nmkdir -p _site/web/src/review\ncp web/src/review/norwegian-installation.snapshot.js _site/web/src/review/
+cp web/src/about-story.js web/src/promo.js web/src/room-review-norwegian.js web/src/roomkit.js _site/web/src/
+mkdir -p _site/web/src/review
+cp web/src/review/norwegian-installation.snapshot.js _site/web/src/review/
 cp brand/tokens.css brand/themes.css brand/artifacts.css brand/typography.css _site/brand/
 if [ -d downloads ]; then rsync -a downloads/ _site/downloads/; fi
 rsync -a assets/ _site/assets/ --exclude reference/
