@@ -1,24 +1,31 @@
-# KONA Business & Product Plan V9
+# Kona.m Business & Product Plan V10
 
 Public-safe canonical strategy. No private CRM, contact, health, correspondence or user-level data belongs here.
 
 ## Proposition
 
-**KONA — Race the version of yourself.**
+**Kona.m — Race the version of yourself.**
 
-A mobile-first triathlon race-week, identity, gear, story, discovery and challenge platform. The Canyon Museum is a flagship collection inside the platform, not the parent brand.
+Kona.m is a mobile-first triathlon race-week, identity, gear, story, discovery and challenge platform. Canyon Museum is a flagship historical/product collection inside Kona.m, not the parent brand.
+
+The product principle is:
+
+> **Simple surface. Deep world underneath.**
+
+The product must remain useful before account creation, before 3D, before integrations, and before any commercial relationship exists.
 
 ## Problem
 
 Triathletes and aspirational endurance users fragment their experience across:
-- training/activity platforms
-- race/event sites
-- shops and product reviews
-- YouTube/social content
-- packing/checklists
-- race-week local information
+- training/activity platforms;
+- race/event sites;
+- shops and product reviews;
+- YouTube/social content;
+- packing/checklists;
+- race-week local information;
+- personal equipment/race memories.
 
-KONA does not replace those mature systems. It connects identity, equipment, race context, stories, place and progression into one consumer experience.
+Kona.m does not replace mature systems such as Strava, TrainingPeaks, IRONMAN timing/event infrastructure or Zwift. It connects identity, equipment, race context, stories, place and progression into one consumer experience.
 
 ## Differentiation
 
@@ -27,14 +34,16 @@ RaceIdentity
  + canonical equipment graph
  + confirmed race history
  + race-week local graph
- + immersive 3D
- + collectibles/challenges
+ + optional immersive 3D
+ + collectibles / challenges
  + shareable personal story
 ```
 
+3D is a differentiator and production capability, not a front-door dependency.
+
 ## Core consumer loop
 
-`FAST ENTRY → BUILD IDENTITY → REWARD → HOME → DISCOVER → COLLECT/MASTER → SHARE → FRIEND BUILDS → RETURN`
+`FAST ENTRY → BUILD IDENTITY → REWARD → HOME → DISCOVER → COLLECT / MASTER → SHARE → RETURN`
 
 Registration is optional until the user has value worth preserving.
 
@@ -43,28 +52,54 @@ Registration is optional until the user has value worth preserving.
 **WARI — Weekly Active Race Identities.**
 
 Supporting metrics:
-- landing → Build
-- Build → RaceIdentity complete
-- reveal → Enter KONA
-- reveal → share
-- share open → Build yours
-- referral → RaceIdentity complete
-- RaceIdentity → optional registration
-- week-1 return
-- Discover → first collection event
-- challenge completion
-- Garage completion
+- landing → Build;
+- Build → RaceIdentity complete;
+- reveal → Home;
+- reveal → share;
+- share open → Build yours;
+- RaceIdentity → optional account backup;
+- week-1 return;
+- Discover → first collection event;
+- challenge completion;
+- Garage completion.
+
+Do not optimize raw shares, clicks, installs or affiliate taps as vanity metrics.
 
 ## Product architecture
 
 Global shell:
-Home · Discover · Garage · Plan · Me
+**Home · Discover · Garage · Plan · Me**
 
-World:
-3D museum/rooms loaded only after explicit intent.
+Internal route IDs remain stable even if later consumer labels evolve.
+
+3D world:
+loaded only after explicit user intent.
 
 Canonical domains:
 Product · UserEquipment · RaceIdentity · Athlete · Event · RaceHistory · Place · Challenge · Progression · Collectible · AffiliateProgram.
+
+Do not add a new top-level destination, ownership database, profile schema or progression system for launch.
+
+## Founding world
+
+Kona.m launches from a stable world contract:
+- 28 canonical rooms;
+- 14 founding rooms visible from launch;
+- 14 progressive/future rooms;
+- closed Founding 141 collection;
+- stable room/collectible IDs independent from display names.
+
+**141 does not mean 141 bespoke launch GLBs.**
+
+A collectible may be:
+- an existing 3D object;
+- a lightweight prop;
+- a story/evidence card;
+- a room/environment state;
+- a sourced image/artifact;
+- a future high-fidelity model where justified.
+
+The product should create meaning before polygon count.
 
 ## Game model
 
@@ -74,82 +109,174 @@ Four loops:
 3. Master
 4. Become
 
-Reward meaningful firsts, collection completion, challenge mastery and verified referral outcomes.
+Reward:
+- meaningful firsts;
+- collection completion;
+- challenge mastery;
+- verified outcomes.
 
 Never reward:
-- affiliate clicks
-- share-button taps
-- spam invitations
-- paid randomness
+- affiliate clicks;
+- share-button taps;
+- spam invitations;
+- optional personal disclosure;
+- paid randomness.
 
 Never lock:
-- safety information
-- compatibility information
-- essential race information
+- safety information;
+- compatibility information;
+- essential race information.
+
+Commercial status never changes safety/utility ranking or progression rarity.
+
+## Launch language strategy
+
+### Launch
+**English** is the only language required for the initial public launch.
+
+The repository currently contains an internationalization policy and pt-BR locale definition, but the runtime is not yet comprehensively locale-driven. Claiming bilingual launch before extraction and QA would be misleading and would increase last-mile regression risk.
+
+### Next
+**Brazilian Portuguese (pt-BR)** is the first expansion language.
+
+It becomes production-ready only after:
+- primary shell/onboarding/Discover/Garage/Plan/Me copy is locale-driven;
+- translated public entry surface exists;
+- metadata is translated;
+- reciprocal hreflang is valid;
+- fallback behavior is tested;
+- human language QA is completed.
+
+### Later languages
+Add only after user/commercial demand is evidenced. Do not add partially translated locales for appearance.
+
+Entity IDs, product IDs, room IDs and state keys never change by locale.
+
+## Visual system
+
+Keep the current evidence-backed visual direction:
+- sand / lava / ocean / sunrise semantic palette;
+- Instrument Serif for editorial meaning;
+- Manrope for functional UI;
+- monospace for data/evidence;
+- handwritten accent only for sparse human moments;
+- image/3D-led hero moments;
+- negative space;
+- artifact grammar rather than generic rounded-card SaaS UI.
+
+Launch rule:
+
+> **No new global visual language before launch.**
+
+Park for later:
+- full cinematic onboarding sequences;
+- neon/sci-fi dashboards as global UI;
+- partner pavilion aesthetics presented as current product;
+- broad CSS cleanup without cross-device visual evidence.
+
+The five golden surfaces remain:
+1. Landing
+2. Home
+3. Discover
+4. Artifact
+5. Garage
+
+They should be recognizably related with the logo removed.
 
 ## Growth
 
-Primary acquisition object: a RaceIdentity/share card worth posting.
+Primary acquisition object:
+a RaceIdentity/share card worth posting because it represents the person, not because the product begs for distribution.
 
 Distribution:
-- native Web Share API
-- WhatsApp convenience link
-- social-ready 9:16 and 1:1 share media
-- deep link back to Build yours
-- bilingual EN / pt-BR landing and metadata
+- native Web Share API;
+- shareable visual media;
+- deep link back to Build yours;
+- optional convenience links where appropriate.
 
 Optimize **share → completed RaceIdentity**, not raw share count.
 
-## Monetization
+## Commercial model
 
-### Immediate
-- approved affiliate commerce
-- paid immersive brand/product prototypes
-- athlete/event activations
-- sponsor rooms
-- content/hosting retainers
+Commercial capability is separated from commercial proof.
 
-### After repeatability
-- white-label experience engine
-- recurring brand/event service
+### Launch-ready commercial offers
+These are offers Kona.m can credibly demonstrate or sell, but they are **not current partnerships unless an agreement exists**:
+- immersive product/brand prototype;
+- branded collection/exhibition concept;
+- athlete/event activation prototype;
+- content/3D production package;
+- hosting/maintenance retainer;
+- approved affiliate commerce where programme approval exists.
 
-### After retention
-- consumer premium features
+### After one repeatable client delivery
+- reusable brand/event activation packages;
+- recurring content/hosting service;
+- white-label experience engine.
+
+### After consumer retention proof
+- premium consumer features.
 
 ### After consent + scale
-- aggregate Owned / Dream / Try demand insight with privacy thresholds
+- aggregate Owned / Dream / Try demand insight with privacy thresholds.
 
-Commercial status never changes safety/utility ranking.
+No sponsor, partner, affiliate or official-status claim appears publicly before it is true and evidenced.
 
 ## B2B factory
 
-`SOURCE → CANONICAL ENTITY → 3D ASSET → ROOM → STORY → SHARE MEDIA → COMMERCE ADAPTER`
+`SOURCE → CANONICAL ENTITY → 3D ASSET → ROOM / ARTIFACT → STORY → SHARE MEDIA → COMMERCE ADAPTER`
 
-Brands buy reusable production speed and distribution, not a one-off render.
+Brands buy reusable production capability and distribution surfaces, not one-off decorative renders.
 
-## Internationalization / discovery
+## Evidence and provenance
 
-English and Brazilian Portuguese are first-class launch languages.
+Every factual/branded public asset should carry enough metadata to answer:
+- what is it;
+- where did the fact come from;
+- what is measured/published;
+- what is inferred;
+- what is an original geometry study;
+- what rights/provenance constraints apply.
 
-Requirements:
-- crawlable localized HTML
-- reciprocal hreflang
-- localized metadata
-- SoftwareApplication/Product/Place/Event structured data where truthful
-- sitemap
-- concise llms.txt
-- detailed llms-full.txt
-- pt-BR LLM guide
-- no keyword stuffing or invented claims
+Do not publish:
+- CFD claims without CFD evidence;
+- sub-millimeter fidelity claims without measurement evidence;
+- certified compatibility without certification;
+- official partnership without agreement;
+- culturally sacred/restricted material as game decoration without qualified review.
 
 ## Privacy
 
-- useful without account
-- local-first
-- explicit cloud backup
-- explicit confirmation before public race-result candidates become profile truth
-- connected integrations require consent and revoke
-- aggregate commercial insight contains no row-level identity
+- useful without an account;
+- local-first;
+- optional explicit cloud backup;
+- explicit confirmation before public race-result candidates become profile truth;
+- connected integrations require consent and revoke;
+- aggregate commercial insight contains no row-level identity;
+- export/delete remain explicit product capabilities.
+
+## Scalability rules
+
+Kona.m scales through canonical contracts, not bespoke forks.
+
+A new brand, athlete, event, room or collection should preferentially be expressed as data/config/content over:
+- Product;
+- Room;
+- Artifact;
+- Story;
+- Event;
+- Challenge;
+- Entitlement;
+- Share;
+- Commerce adapters.
+
+A new feature is suspect if it requires:
+- a second navigation shell;
+- a second persistence authority;
+- a brand-specific renderer;
+- copied CSS primitives;
+- a new progression economy;
+- a direct write bypassing canonical state.
 
 ## Release strategy
 
@@ -158,34 +285,73 @@ A feature is not ready because code exists.
 READY =
 implementation + automated tests + runtime/visual evidence + no P0/P1 blocker + exact build state.
 
-Mobile-facing releases additionally require physical-device evidence.
+Mobile-facing releases additionally require honest physical-device status. Headless/browser viewport evidence is not physical-device certification.
 
-## Current priority gates
+## Current launch blockers
 
-1. P0 mobile entry/onboarding/install live proof
-2. semantic design tokens and brand convergence
-3. full EN/pt-BR shell/content migration
-4. Discover + universal Artifact UI
-5. real Garage + Passport/Me
-6. Progression V2 runtime
-7. social share-card/referral attribution
-8. Identity Assist source adapters/integrations
-9. approved affiliate activation + B2B packages
-10. production certification
+Only these should displace launch work:
+1. broken first-use understanding or guest flow;
+2. state loss/migration failure;
+3. broken install/PWA behavior;
+4. security/privacy failure;
+5. deterministic build/generated-output failure;
+6. inaccessible/unreachable primary controls;
+7. serious mobile rendering/overflow issue;
+8. false public commercial/capability claim;
+9. deployment ambiguity or inability to rollback.
 
-## What not to build now
+## Launch-strengthening, non-blocking work
 
-- another top-level navigation destination
-- another profile/progression schema
-- another standalone Kona consumer app
-- ordinary rooms without a business/product reason
-- social feed clone
-- training analytics clone
+Do only when it does not jeopardize blockers:
+- clearer product identity;
+- source/provenance completeness;
+- lightweight collection/story content;
+- share-card quality;
+- asset/room reconciliation;
+- migration/refactor contracts;
+- performance budgets.
+
+## Explicitly post-launch
+
+- full pt-BR production translation;
+- Strava runtime integration;
+- trading;
+- multiplayer;
+- WebXR;
+- broad dependency/framework migration;
+- wholesale CSS rewrite;
+- wholesale `landing.js` rewrite;
+- all 141 items as high-fidelity 3D;
+- all 28 rooms fully built;
+- premium subscription;
+- speculative marketplace mechanics.
 
 ## Definition of public beta
 
-A new user on a real phone can understand KONA, create and persist a RaceIdentity, optionally install/save, reach Home, Discover without forced 3D, earn legitimate progression, share safely, return to continuity, and encounter no P0/P1 blocker.
+A new user on a real phone can:
+1. understand Kona.m;
+2. continue without an account;
+3. create/persist a RaceIdentity;
+4. optionally install/save;
+5. reach Home;
+6. Discover without forced 3D;
+7. collect/earn legitimate progress;
+8. safely share something useful;
+9. return to continuity;
+10. encounter no P0/P1 blocker.
 
 ## Definition of production
 
 Public beta plus normalized valuable persistence, migration/backup/export/delete proof, observability, accessibility evidence, performance budgets, security/privacy review, device matrix, signed native distribution if offered, and rollback/incident proof.
+
+## Decision rule until launch
+
+A change enters the launch branch only when at least one is true:
+- it removes a launch blocker;
+- it materially strengthens trust/safety;
+- it materially improves first-session clarity;
+- it reduces migration/scale ambiguity without runtime risk;
+- it improves measurable mobile reliability/performance;
+- it removes a false or unsupported public claim.
+
+Everything else waits.
