@@ -1,11 +1,11 @@
-# KONA Repository Status
+# Kona.m Repository Status
 
 Generated working status baseline for the current hardening program.
 
 ## Canonical production truth
 
 - Default branch: `main`
-- Current production product: KONA, built on the Canyon Museum factory
+- Current production product: Kona.m, built on the Canyon Museum factory
 - Canonical consumer proposition: **Race the version of yourself**
 - Runtime state remains local-first; account sync is optional
 - The museum/3D world is an Explore destination, not the required landing experience
