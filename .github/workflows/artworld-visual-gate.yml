@@ -1,0 +1,89 @@
+name: Art-world visual gate
+
+on:
+  push:
+    branches:
+      - feature/immersive-artworld-secret-room-20260928
+      - codex/takeover-world-protocol-20260929
+      - codex/flow-polish-20260929
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  visual-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install museum dependencies
+        working-directory: web
+        run: npm ci
+
+      - name: Restore canonical Blender GLB
+        run: |
+          base64 -d assets/artworld/artworld_assets.glb.gz.b64 | gunzip -c > assets/artworld/artworld_assets.glb
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('assets/artworld/artworld_assets.glb')
+          b = p.read_bytes()
+          assert b[:4] == b'glTF', 'invalid GLB magic'
+          assert int.from_bytes(b[8:12], 'little') == len(b), 'GLB length mismatch'
+          print(f'validated {p}: {len(b)} bytes')
+          PY
+          rm -f assets/artworld/artworld_assets.obj
+
+      - name: Rebuild canonical museum landing
+        run: node web/build_landing.mjs
+
+      - name: Run complete unit suite
+        working-directory: web
+        run: npm test
+
+      - name: Start local museum server
+        run: |
+          nohup python3 -m http.server 8744 --bind 127.0.0.1 > /tmp/canyonmuseum-http.log 2>&1 &
+          echo $! > /tmp/canyonmuseum-http.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:8744/index.html >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/canyonmuseum-http.log
+          exit 1
+
+      - name: Sync generated runtime artifacts to the feature branch
+        continue-on-error: true
+        run: |
+          if git diff --quiet -- index.html assets/artworld; then
+            echo "runtime artifacts already match the canonical build"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A index.html assets/artworld
+            git commit -m "build: sync art-world GLB and landing bundle"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
+
+      - name: Capture desktop and Samsung visual gate
+        run: node web/artworld-visual-smoke.mjs
+
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: artworld-visual-gate
+          path: artifacts/artworld-visual
+          if-no-files-found: warn
+          retention-days: 14
