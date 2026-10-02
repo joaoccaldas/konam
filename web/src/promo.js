@@ -199,3 +199,62 @@ featureButtons.forEach((b,i)=>b.addEventListener('click',()=>{
   setFeature(i); startFeatureTimer();
 }));
 setFeature(0); startFeatureTimer();
+
+
+// Final Field Guide: tutorial theatre + slightly unreasonable rail ----------
+qsa('#fieldRailNav [data-rail-link]').forEach((a,i)=>a.style.setProperty('--i',String(i)));
+const railMessages=[
+  'OPEN / QUESTIONABLE DRAG',
+  'OPEN / INTERN ESCAPED',
+  'OPEN / TOO MANY TABS',
+  'OPEN / THIS SEEMED SENSIBLE',
+  'OPEN / AERO REVIEW PENDING'
+];
+let railMessageIndex=0;
+railToggle?.addEventListener('click',()=>{
+  rail?.classList.add('is-kicking');
+  setTimeout(()=>rail?.classList.remove('is-kicking'),460);
+  if(rail?.classList.contains('is-open') && railState){
+    railState.textContent=railMessages[railMessageIndex%railMessages.length];
+    railMessageIndex+=1;
+  }
+});
+
+const guideButtons=qsa('[data-guide-step]');
+const guideScreen=qs('[data-guide-screen]');
+const guideImage=qs('[data-guide-image]');
+const guideOpen=qs('[data-guide-open]');
+const guidePath=qs('[data-guide-path]');
+const guideKicker=qs('[data-guide-kicker]');
+const guideTitle=qs('[data-guide-title]');
+const guideCopy=qs('[data-guide-copy]');
+let guideTimer=null;
+let guideIndex=0;
+const setGuideStep=(btn)=>{
+  if(!btn||!guideImage)return;
+  guideButtons.forEach(x=>x.classList.toggle('is-active',x===btn));
+  guideIndex=Math.max(0,guideButtons.indexOf(btn));
+  guideScreen?.classList.add('is-changing');
+  const apply=()=>{
+    guideImage.src=btn.dataset.guideSrc||guideImage.src;
+    guideImage.alt=(btn.dataset.guideTitleLabel||'Kona.m captured interface')+' — real project capture';
+    if(guideOpen)guideOpen.href=btn.dataset.guideHref||'#';
+    if(guidePath)guidePath.textContent=btn.dataset.guidePathLabel||'konam';
+    if(guideKicker)guideKicker.textContent=btn.dataset.guideKickerLabel||'REAL CAPTURE';
+    if(guideTitle)guideTitle.textContent=btn.dataset.guideTitleLabel||'Kona.m';
+    if(guideCopy)guideCopy.textContent=btn.dataset.guideCopyLabel||'';
+    guideScreen?.classList.remove('is-changing');
+  };
+  setTimeout(apply,matchMedia('(prefers-reduced-motion:reduce)').matches?0:170);
+};
+guideButtons.forEach(btn=>btn.addEventListener('click',()=>{
+  setGuideStep(btn);
+  if(guideTimer){clearInterval(guideTimer);guideTimer=null;}
+}));
+if(guideButtons.length>1&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  guideTimer=setInterval(()=>{
+    guideIndex=(guideIndex+1)%guideButtons.length;
+    setGuideStep(guideButtons[guideIndex]);
+  },6800);
+  qs('[data-guide-theatre]')?.addEventListener('pointerenter',()=>{if(guideTimer){clearInterval(guideTimer);guideTimer=null;}},{once:true});
+}
