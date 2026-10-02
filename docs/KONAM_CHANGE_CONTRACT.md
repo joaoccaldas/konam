@@ -93,4 +93,4 @@ Required on one exact head SHA:
 
 ## Result
 
-Pending exact-head CI.
+Deterministic generated outputs were rebuilt and committed by the temporary M1 sync workflow. The temporary sync workflow was then removed so the final candidate can be certified from an owner-authored exact head. Final exact-head CI remains required.
