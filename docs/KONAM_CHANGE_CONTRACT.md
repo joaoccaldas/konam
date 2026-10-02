@@ -36,6 +36,7 @@
 - `web/src/ui/kona-shell.js`: shell identity.
 - `web/src/app-shell.js`: update UI identity only; download origin preserved.
 - `manifest.webmanifest`: PWA display name.
+- `app/native/capacitor.config.json` + Android string resources: native display name only; legacy Android package ID intentionally preserved.
 - `tools/harden_pages.mjs`: generated title/name identity.
 - README / STATUS / launch truth documentation.
 - deterministic generated outputs produced by canonical builders.
@@ -45,7 +46,7 @@
 - no route ID rename;
 - no storage namespace rename;
 - no user-state migration;
-- no Android appId change;
+- no Android appId change (display name changes to Kona.m only);
 - no Supabase migration;
 - no hosting switch;
 - no Three.js/renderer refactor;
