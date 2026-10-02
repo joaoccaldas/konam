@@ -1,0 +1,105 @@
+name: Sync deterministic generated outputs
+# Release invariant: generated tree commits must run the full certification matrix.
+
+on:
+  push:
+    branches:
+      - 'rebrand/**'
+      - 'product/**'
+      - 'refactor/**'
+      - 'design/**'
+    paths-ignore:
+      - 'sw.js'
+      - 'app/app-manifest.json'
+      - 'app/entry-data.json'
+      - '*.html'
+      - 'web/dist/**'
+      - 'docs/ROOMS.md'
+      - 'llms.txt'
+      - 'llms-full.txt'
+      - 'robots.txt'
+      - 'sitemap.xml'
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Existing branch to validate and synchronize
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: generated-sync-${{ inputs.target_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  build-test-visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Validate target ref
+        env:
+          TARGET: ${{ inputs.target_ref || github.ref_name }}
+        run: |
+          case "$TARGET" in
+            main|master|refs/*|*..*|*~*|*^*|*:*|*\\*) echo "unsafe target ref"; exit 1 ;;
+          esac
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref || github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install
+        run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Build canonical pages
+        run: node tools/build_pages.mjs
+      - name: Seal PWA release
+        run: node tools/build_app.mjs
+      - name: Unit + asset contracts
+        run: |
+          (cd web && npm test)
+          node tools/validate-bikes.mjs
+          node tools/validate_integration_contract.mjs
+          node tools/scan_private_data.mjs
+          node tools/repo-hygiene.mjs
+          node tools/brand-hygiene.mjs
+      - name: Mobile visual matrix
+        run: |
+          python3 -m http.server 8754 --bind 127.0.0.1 >/tmp/kona-release-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..30}; do curl -fsS http://127.0.0.1:8754/ >/dev/null && break; sleep .25; done
+          CHROME_PATH="$(which google-chrome || which google-chrome-stable || which chromium)" node web/kona-release-visual.mjs http://127.0.0.1:8754/ release-visual
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: generated-sync-${{ github.run_id }}
+          path: release-visual/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Commit deterministic outputs
+        env:
+          TARGET: ${{ inputs.target_ref || github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json integrations/triathlon-graph.json docs/ROOMS.md ./*.html web/dist/*.html sw.js app/app-manifest.json app/entry-data.json app/admin-assets.json app/admin-asset-preview.js app/viewport.js app/kona-core.js app/world-shell.html app/race-self-stage.js app/collectible-stage.js app/museum-data.js app/hall.js app/studio.js app/studio-catalog.js robots.txt sitemap.xml llms.txt llms-full.txt
+          if git diff --cached --quiet; then echo "outputs current"; exit 0; fi
+          git commit -m "build: sync deterministic outputs"
+          git push origin HEAD:"$TARGET"
+      - name: Certify generated SHA
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET: ${{ inputs.target_ref || github.ref_name }}
+        run: |
+          for workflow in release-security.yml checks.yml integration-contract.yml app-seal.yml visual-evidence-v2.yml ui-interaction-audit.yml; do
+            echo "dispatching $workflow on $TARGET"
+            gh workflow run "$workflow" --ref "$TARGET"
+          done
