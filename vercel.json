@@ -33,7 +33,7 @@
       ]
     }
   ],
-  "buildCommand": "node tools/build_pages.mjs && bash tools/stage_site.sh",
+  "buildCommand": "node tools/build_pages.mjs && node tools/build_beast_cave_review.mjs && bash tools/stage_site.sh",
   "outputDirectory": "_site",
   "installCommand": "cd web && npm ci --ignore-scripts"
 }
