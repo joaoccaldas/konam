@@ -6,8 +6,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
+const productMeta = JSON.parse(fs.readFileSync(path.join(root,'config/product-meta.json'),'utf8'));
 const SITE = 'https://joaoccaldas.github.io/canyonmuseum/';
-const NAME = 'KONA';
+const NAME = productMeta.product_name || 'Kona.m';
 const DISCLAIMER = 'An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.';
 
 // The only third parties the pages load (measured with a request log): Google Fonts and Wikimedia images.
@@ -26,7 +27,7 @@ const cspFor=file=>CSP_BASE.map(x=>x.startsWith("script-src ")?(file==='index.ht
 
 const PAGES = [
   { file: 'index.html', type: 'SoftwareApplication', image: 'assets/share/museum.jpg',
-    title: 'KONA · Race the version of yourself',
+    title: 'Kona.m · Race the version of yourself',
     description: 'Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.' },
   { file: 'Canyon_Collection.html', type: 'CollectionPage', image: 'assets/share/collection.jpg',
     title: 'Canyon Triathlon Collection · every Speedmax generation, compared',

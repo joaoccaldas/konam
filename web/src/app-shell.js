@@ -1,3 +1,4 @@
+import { PRODUCT_NAME } from './product-meta.js';
 import { initInstall } from './ui/install.js';
 // The museum as an installable app.
 //  - Web (Android Chrome, desktop, iOS Safari): a service worker (sw.js) keeps the museum offline and
@@ -32,7 +33,7 @@ async function nativeUpdateCheck() {
     if (!res.ok) return;
     const v = await res.json();
     if ((v.versionCode | 0) > mine && typeof v.apk === 'string' && !/^[a-z]+:/i.test(v.apk))   // only a path on our own site
-      pill(`KONA ${v.versionName} is available`, 'Download', SITE + v.apk);
+      pill(`${PRODUCT_NAME} ${v.versionName} is available`, 'Download', SITE + v.apk);
   } catch (_) { /* offline: try next launch */ }
 }
 
@@ -47,7 +48,7 @@ export function initAppShell() {
   let wantReload = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => { if (wantReload) { wantReload = false; location.reload(); } });
   navigator.serviceWorker.register('sw.js', { scope: './', updateViaCache: 'none' }).then(reg => {
-    const offer = w => pill('KONA update verified and ready', 'Reload', () => { wantReload = true; w.postMessage('skip-waiting'); });
+    const offer = w => pill(`${PRODUCT_NAME} update verified and ready`, 'Reload', () => { wantReload = true; w.postMessage('skip-waiting'); });
     const activateOrOffer = w => {
       const inWorld = document.body.classList.contains('museum-open') || document.body.classList.contains('walking');
       if (!inWorld) { wantReload = true; w.postMessage('skip-waiting'); }

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "product_name": "Kona.m",
+  "repo_slug": "konam",
+  "product_tagline": "Race the version of yourself.",
+  "product_principle": "Simple surface. Deep world underneath.",
+  "legacy_consumer_name": "KONA",
+  "founding_collection": "The Founding 141",
+  "historical_collection": "Canyon Museum",
+  "canonical_routes": {
+    "home": "home",
+    "explore": "discover",
+    "gear": "garage",
+    "race": "plan",
+    "you": "me"
+  },
+  "current_origin_status": "M1_PENDING_CANONICAL_DEPLOYMENT_DECISION",
+  "old_public_origin": "https://joaoccaldas.github.io/canyonmuseum/",
+  "third_party_default_disclosure": "Independent study. Not affiliated with, endorsed by, or sponsored by the referenced brand or athlete unless explicitly stated otherwise.",
+  "storage_namespace": "kona.*",
+  "legacy_storage_namespace": "speedmax.*"
+}

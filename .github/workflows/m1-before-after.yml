@@ -1,0 +1,50 @@
+name: Kona.m M1 before-after
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'migration/m1-')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Before / after contract
+        env:
+          KONAM_BASE_SHA: ${{ github.event.pull_request.base.sha || '38f05063b7e13323123664dec1666f9414175148' }}
+        run: node tools/compare_konam_state.mjs
+
+      - name: Launch truth tests
+        run: node --test web/test/launch-truth.test.mjs
+
+      - name: World contract
+        run: node tools/validate_konam_world.mjs
+
+      - name: Repository hygiene
+        run: node tools/repo-hygiene.mjs
+
+      - name: Secret/private-data scan
+        run: node tools/scan_private_data.mjs
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: konam-m1-before-after-${{ github.event.pull_request.head.sha || github.sha }}
+          path: konam-comparison-evidence/
+          if-no-files-found: warn
+          retention-days: 30

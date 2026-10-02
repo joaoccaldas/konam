@@ -1,11 +1,11 @@
-# KONA · Caldas Studio
+# Kona.m · Caldas Studio
 
 > **Race the version of yourself.**  
-> KONA is a mobile-first triathlon race-week, identity, gear, story and challenge platform built on the Canyon Museum 3D production factory.
+> Kona.m is a mobile-first triathlon race-week, identity, gear, story and challenge platform built on the Canyon Museum 3D production factory.
 
 ## What this repository contains
 
-- KONA app shell: Now · Explore · Setup · Plan · Me
+- Kona.m app shell: Now · Explore · Setup · Plan · Me
 - local-first RaceIdentity and progression
 - optional Supabase magic-link backup
 - 3D museum / product inspection / Studio
@@ -14,7 +14,7 @@
 - Blender and procedural asset tooling
 - deterministic release/security checks
 
-The historical Canyon Museum remains the strongest reference implementation and 3D factory, but the consumer product is now KONA.
+The historical Canyon Museum remains the strongest reference implementation and 3D factory, but the consumer product is now Kona.m.
 
 ## Start here
 
@@ -36,8 +36,8 @@ Historical audits and handovers are evidence, not current product truth.
 ## Local run
 
 ```bash
-git clone https://github.com/joaoccaldas/canyonmuseum.git
-cd canyonmuseum
+git clone https://github.com/joaoccaldas/konam.git
+cd konam
 npm ci --ignore-scripts --prefix web
 python3 -m http.server 8744
 ```
@@ -88,7 +88,7 @@ Do not create brand-specific, athlete-specific or event-specific production fork
 
 ## Privacy
 
-KONA is local-first and useful without an account.
+Kona.m is local-first and useful without an account.
 
 Do not commit private user data, personal correspondence, private CRM/contact data, health data, credentials, secret API keys or private race-history matches to this public repository.
 

@@ -1,7 +1,7 @@
 {
-  "name": "web",
+  "name": "konam-web",
   "version": "1.0.0",
-  "description": "Canyon Museum interactive 3D web runtime",
+  "description": "Kona.m interactive triathlon world and 3D web runtime",
   "main": "index.js",
   "scripts": {
     "test": "node --test test/*.test.mjs",
