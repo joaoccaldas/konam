@@ -116,7 +116,7 @@ function buildSculptures(group,pickables){
   addPickable(pickables,repeat,'sculpture-repeat','Repeat');
 
   // "Silver lining": a fractured dark sphere with one bright ring.
-  const silver=new THREE.Group();silver.name='SCULPTURE_SILVER_LINING';silver.position.set(6.9,1.35,7.0);group.add(silver);
+  const silver=new THREE.Group();silver.name='SCULPTURE_SILVER_LINING';silver.position.set(-10.2,1.35,6.7);group.add(silver);
   const halves=[];
   for(const sx of [-1,1]){const s=new THREE.Mesh(new THREE.SphereGeometry(.68,24,16,0,Math.PI*2,0,Math.PI),black);s.scale.x=.82;s.position.x=sx*.18;halves.push(s);silver.add(s);}
   const halo=new THREE.Mesh(new THREE.TorusGeometry(.88,.035,10,48),orange);halo.rotation.x=Math.PI/2;silver.add(halo);
@@ -152,6 +152,48 @@ function buildHumour(group,pickables){
   p.position.set(12.9,2.15,7.1);p.rotation.y=-Math.PI/2;group.add(p);addPickable(pickables,p,'humour-board','Today\'s plan');
 }
 
+
+function buildPainCaveArchive(group,obstacles,pickables){
+  const steel=m('#2a2b2c',.34,.72),dark=m('#121212',.68,.15),pad=m('#3d3935',.92),mirror=m('#8d969e',.08,.92);
+
+  // Mirror bank: a documented habit from Sanders' earlier pain-cave setup for front/side form checks.
+  for(let i=0;i<3;i++){
+    const pane=new THREE.Mesh(new THREE.PlaneGeometry(1.75,2.45),new THREE.MeshPhysicalMaterial({color:'#9aa4aa',metalness:.92,roughness:.08,envMapIntensity:1.6,clearcoat:1,clearcoatRoughness:.08}));
+    pane.position.set(13.80,2.25,-7.8+i*2.05); pane.rotation.y=-Math.PI/2; group.add(pane);
+  }
+
+  // VASA-style swim erg study: bench, mast, flywheel and paired cable handles.
+  const erg=new THREE.Group();erg.name='SWIM_ERG_ARCHIVE';erg.position.set(9.4,0,-8.0);erg.rotation.y=-.08;group.add(erg);
+  const bench=new THREE.Mesh(new THREE.BoxGeometry(2.7,.22,.62),pad);bench.position.set(0,.72,0);erg.add(bench);
+  const rail=new THREE.Mesh(new THREE.BoxGeometry(3.05,.10,.14),steel);rail.position.set(-.05,.47,0);erg.add(rail);
+  const mast=new THREE.Mesh(new THREE.BoxGeometry(.16,1.85,.16),steel);mast.position.set(1.28,1.36,0);mast.rotation.z=-.08;erg.add(mast);
+  const fly=new THREE.Mesh(new THREE.CylinderGeometry(.48,.48,.20,40),dark);fly.position.set(1.15,1.95,0);fly.rotation.x=Math.PI/2;erg.add(fly);
+  for(const side of [-1,1]){
+    const cable=new THREE.Mesh(new THREE.CylinderGeometry(.012,.012,1.55,8),steel);
+    cable.position.set(.35,1.64,side*.34); cable.rotation.z=Math.PI*.42;erg.add(cable);
+    const grip=new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,.24,12),dark);
+    grip.position.set(-.28,1.11,side*.48); grip.rotation.z=Math.PI/2;erg.add(grip);
+  }
+  addPickable(pickables,erg,'swim-erg','Swim-erg archive');
+  obstacle(obstacles,9.4,-8.0,1.8);
+
+  const tag=makeArchiveTag();
+  tag.position.set(12.5,3.6,-8.95);tag.rotation.y=-Math.PI/2;group.add(tag);
+}
+
+function makeArchiveTag(){
+  const t=tex(900,520,(g,w,h)=>{
+    g.fillStyle='#151515';g.fillRect(0,0,w,h);
+    g.fillStyle=LAVA;g.fillRect(55,55,65,7);
+    g.fillStyle='#eee5d9';g.font='700 44px Arial';g.fillText('PAIN CAVE ARCHIVE',55,130);
+    g.fillStyle='#a9a097';g.font='500 25px Arial';g.fillText('DOCUMENTED SETUP · 2019',55,176);
+    g.fillStyle='#d8cfc3';g.font='italic 30px Georgia';
+    g.fillText('Bike. Run. Swim. Mirrors. Data.',55,280);
+    g.fillText('The room was always a laboratory.',55,330);
+  });
+  return new THREE.Mesh(new THREE.PlaneGeometry(2.25,1.30),new THREE.MeshBasicMaterial({map:t,toneMapped:false}));
+}
+
 export function buildBeastCaveStoryWing({group,lite=false,pickables=[],obstacles=[]}={}){
   if(!group) throw new Error('buildBeastCaveStoryWing requires group');
   buildTreadmill(group,obstacles,pickables);
@@ -159,10 +201,11 @@ export function buildBeastCaveStoryWing({group,lite=false,pickables=[],obstacles
   buildSculptures(group,pickables);
   buildNotesWall(group,pickables);
   buildHumour(group,pickables);
+  buildPainCaveArchive(group,obstacles,pickables);
 
   return {
     id:'beast-cave-story-wing',
-    zones:['run-lab','iterations-gallery','sculpture-gap','sculpture-repeat','sculpture-silver','notes-wall','humour-board'],
+    zones:['run-lab','swim-erg','pain-cave-archive','iterations-gallery','sculpture-gap','sculpture-repeat','sculpture-silver','notes-wall','humour-board'],
     lite
   };
 }
