@@ -19,6 +19,8 @@ This file is generated from the same museum registries used by the public app. S
 - Canyon Museum — Speedmax CF SLX 8 Di2 (2027): https://joaoccaldas.github.io/konam/Speedmax_SLX_Museum.html
 - Canyon Museum — Speedmax Three (2005): https://joaoccaldas.github.io/konam/Speedmax_Three_2005_Museum.html
 
+- Kona.m Field Guide · how to play, worlds, bikes & experiments: https://joaoccaldas.github.io/konam/promo.html
+
 ## Evidence model
 P = published source. F = visible/read from a reference photograph. I = inferred for the model. G = generated artwork. Generated or inferred material is not presented as published fact.
 
