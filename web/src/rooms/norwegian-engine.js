@@ -89,10 +89,11 @@ function protocol(g,pickables,obstacles){
 }
 
 function altitude(g,pickables,obstacles,lite){
+  const bay=new THREE.Group();bay.name='ALTITUDE_GLASSHOUSE';g.add(bay);
   const steel=mat('#465158',.28,.78),glass=phys({color:'#9ecbd4',roughness:.1,transmission:lite?.35:.68,transparent:true,opacity:lite?.28:.42,ior:1.46,thickness:.06});
-  for(const x of [7,12.2])for(const z of [-8.2,-2])box(g,'ALT_POST',[.1,5.15,.1],[x,2.575,z],steel);
-  box(g,'ALT_BACK',[5.2,5.15,.06],[9.6,2.575,-8.2],glass);box(g,'ALT_SIDE',[.06,5.15,6.2],[12.2,2.575,-5.1],glass);box(g,'ALT_SIDE',[.06,5.15,6.2],[7,2.575,-5.1],glass);box(g,'ALT_TOP',[5.2,.06,6.2],[9.6,5.15,-5.1],glass);
-  const ctrl=box(g,'ALT_CONTROL',[.78,1.16,.22],[11.78,1.65,-7.7],mat('#182126',.38,.52));const sign=badge('ALTITUDE / ENVIRONMENT',3.5,.5,C.glacier);sign.position.set(9.6,4.65,-8.16);g.add(sign);
+  for(const x of [7,12.2])for(const z of [-8.2,-2])box(bay,'ALT_POST',[.1,5.15,.1],[x,2.575,z],steel);
+  box(bay,'ALT_BACK',[5.2,5.15,.06],[9.6,2.575,-8.2],glass);box(bay,'ALT_SIDE',[.06,5.15,6.2],[12.2,2.575,-5.1],glass);box(bay,'ALT_SIDE',[.06,5.15,6.2],[7,2.575,-5.1],glass);box(bay,'ALT_TOP',[5.2,.06,6.2],[9.6,5.15,-5.1],glass);
+  const ctrl=box(bay,'ALT_CONTROL',[.78,1.16,.22],[11.78,1.65,-7.7],mat('#182126',.38,.52));const sign=badge('ALTITUDE / ENVIRONMENT',3.5,.5,C.glacier);sign.position.set(9.6,4.65,-8.16);bay.add(sign);
   pick(pickables,ctrl,'altitude-bay','Altitude Glasshouse');obstacle(obstacles,9.6,-5.1,2.6);
 }
 
