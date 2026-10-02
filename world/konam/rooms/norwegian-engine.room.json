@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "id": "norwegian-engine",
+  "name": "NOR // 3 · The Norwegian Engine",
+  "classification": {
+    "type": "athlete-room",
+    "status": "candidate",
+    "public": false
+  },
+  "implementation": {
+    "kind": "installation",
+    "builder": "norwegian",
+    "source": "web/src/engine/room-installations.js"
+  },
+  "story": {
+    "concept": "Three lanes. One system. Measure. Adapt. Repeat.",
+    "editorial_status": "original-copy",
+    "pitch": "pitch/norwegian-trio/pitch-story-v1.json"
+  },
+  "spatial": {
+    "units": "meters",
+    "coordinate_system": "host room-local; +x east, +z north, y vertical",
+    "layout": "world/konam/candidates/norwegian-engine-room-layout-v1.json",
+    "zones": [
+      "three-rails",
+      "protocol-table",
+      "environment-bay",
+      "heat-cool",
+      "podium-vault",
+      "fjord-relief",
+      "kona-line"
+    ],
+    "specimen_slots": [
+      "lane-01",
+      "lane-02",
+      "lane-03"
+    ]
+  },
+  "assets": {
+    "manifest": "world/konam/candidates/norwegian-engine-assets-v1.json",
+    "placements": "world/konam/candidates/norwegian-engine-room-layout-v1.json",
+    "bike_pipeline": "museum/bike.schema.json"
+  },
+  "subjects": [
+    {
+      "subject_id": "kristian-blummenfelt",
+      "display_name": "Kristian Blummenfelt",
+      "subject_type": "athlete",
+      "room_role": "lane-01",
+      "claim_status": "unverified",
+      "likeness_status": "not-used",
+      "image_rights_status": "not-used",
+      "brand_association_status": "unverified",
+      "public_release_status": "rights-review",
+      "equipment_claims": []
+    },
+    {
+      "subject_id": "gustav-iden",
+      "display_name": "Gustav Iden",
+      "subject_type": "athlete",
+      "room_role": "lane-02",
+      "claim_status": "unverified",
+      "likeness_status": "not-used",
+      "image_rights_status": "not-used",
+      "brand_association_status": "unverified",
+      "public_release_status": "rights-review",
+      "equipment_claims": []
+    },
+    {
+      "subject_id": "casper-stornes",
+      "display_name": "Casper Stornes",
+      "subject_type": "athlete",
+      "room_role": "lane-03",
+      "claim_status": "unverified",
+      "likeness_status": "not-used",
+      "image_rights_status": "not-used",
+      "brand_association_status": "unverified",
+      "public_release_status": "rights-review",
+      "equipment_claims": []
+    }
+  ],
+  "interactions": {
+    "authority": "KONA.m host pickables/cards/dialogs",
+    "room_specific": [
+      "lane-story",
+      "protocol-table",
+      "environment-bay",
+      "vault",
+      "fjord-relief"
+    ]
+  },
+  "performance": {
+    "mobile": {
+      "target_fps": 30,
+      "max_room_draw_calls": 95,
+      "max_room_triangles": 180000,
+      "max_texture_edge": 1024,
+      "max_dpr": 1.5,
+      "particle_density": 34,
+      "transmission": "reduced",
+      "shadow_policy": "host-budget",
+      "lod_policy": "LOD1/micro-props-optional"
+    },
+    "tablet": {
+      "target_fps": 45,
+      "max_room_draw_calls": 128,
+      "max_room_triangles": 279000,
+      "max_texture_edge": 2048,
+      "max_dpr": 1.75,
+      "particle_density": 54,
+      "transmission": "medium",
+      "shadow_policy": "host-budget",
+      "lod_policy": "LOD0/LOD1"
+    },
+    "desktop": {
+      "target_fps": 60,
+      "max_room_draw_calls": 180,
+      "max_room_triangles": 450000,
+      "max_texture_edge": 2048,
+      "max_dpr": 2,
+      "particle_density": 78,
+      "transmission": "full",
+      "shadow_policy": "host-budget",
+      "lod_policy": "LOD0"
+    }
+  },
+  "provenance": {
+    "concept": "independent KONA.m editorial concept",
+    "generated_imagery": "reference-only-not-runtime-evidence"
+  },
+  "rights": {
+    "endorsement": false,
+    "partnership": false,
+    "equipment_claims_require_sources": true,
+    "brand_marks_require_review": true
+  },
+  "release": {
+    "evidence_path": "evidence/rooms/norwegian-engine/",
+    "required_gates": [
+      "schema",
+      "architecture",
+      "assets",
+      "desktop-visual",
+      "mobile-portrait",
+      "mobile-landscape",
+      "interaction",
+      "performance",
+      "truth",
+      "rights"
+    ],
+    "public_wiring": false
+  }
+}
