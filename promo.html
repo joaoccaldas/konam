@@ -40,6 +40,7 @@
   </a>
   <nav class="promo-nav" aria-label="Field guide navigation">
     <a href="#play">Play</a>
+    <a href="#intern">Manual</a>
     <a href="#world">World</a>
     <a href="#story">Story</a>
     <a href="#lab">Lab</a>
@@ -156,6 +157,87 @@
         <p>Rooms, equipment, stories and experiments open over time. Not everything should be available immediately.</p>
         <small>PROGRESSION</small>
       </article>
+    </div>
+  </section>
+
+  <section class="promo-section promo-intern" id="intern">
+    <div class="promo-section-heading">
+      <div><p class="t-label">01.5 / THE INTERN'S MANUAL</p><h2 class="t-title">Apparently I also<br><em>write the instructions.</em></h2></div>
+      <p>Kona.m is built, documented, promoted, maintained and occasionally repaired by one suspiciously busy intern who is also meant to be training.</p>
+    </div>
+
+    <div class="intern-board">
+      <aside class="intern-id">
+        <div class="face" aria-hidden="true">i</div>
+        <p class="t-label">EMPLOYEE 001 / PROBABLY</p>
+        <h3>The Intern</h3>
+        <p>Engineering, 3D, product, support, copywriting, quality assurance, maintenance, coffee procurement and an increasingly theoretical training plan.</p>
+        <div class="intern-jobs" aria-label="Intern responsibilities">
+          <span>CODE</span><span>BUILD</span><span>TEST</span><span>WRITE</span><span>FIX</span><span>COFFEE</span><span>TRAIN?</span>
+        </div>
+        <div class="intern-status">
+          <div><span>SITE</span><b>ONLINE</b></div>
+          <div><span>COFFEE</span><b data-coffee-status>ADEQUATE</b></div>
+          <div><span>TRAINING</span><b data-training-status>SHOULD HAPPEN</b></div>
+          <div><span>CONFIDENCE</span><b>UNREASONABLY HIGH</b></div>
+        </div>
+      </aside>
+
+      <div class="intern-manual">
+        <article class="intern-card">
+          <header><small>START HERE / 90 SECONDS</small><span>INTERN NOTE #001</span></header>
+          <h3>First time in Kona.m?</h3>
+          <p>You do not need to understand everything. Pick an identity, choose a machine, then follow whichever thing looks interesting. The app is intentionally more playground than spreadsheet.</p>
+          <div class="intern-tutorial-flow">
+            <div><small>STEP 01</small><b>Build yourself</b><i>→ User Studio</i></div>
+            <div><small>STEP 02</small><b>Pick a bike</b><i>→ Garage</i></div>
+            <div><small>STEP 03</small><b>Go somewhere</b><i>→ Discover</i></div>
+            <div><small>STEP 04</small><b>Touch things</b><i>→ Seriously</i></div>
+          </div>
+          <p class="intern-note">If you are already clicking random things, excellent. Tutorial complete.</p>
+          <div class="intern-actions"><a href="./">Start Kona.m →</a><button type="button" data-onboarding-start>Help me choose a path</button></div>
+        </article>
+
+        <article class="intern-card" data-onboarding-card hidden>
+          <header><small>UNOFFICIAL ONBOARDING WIZARD</small><span>NO ACCOUNT REQUIRED</span></header>
+          <h3 data-onboarding-title>What brought you here?</h3>
+          <p data-onboarding-copy>There are no wrong answers. There are several questionable ones.</p>
+          <div class="intern-actions intern-choice-actions" data-onboarding-choices>
+            <button type="button" data-path="race">I have a race</button>
+            <button type="button" data-path="dream">I am dreaming of Kona</button>
+            <button type="button" data-path="bikes">Show me bikes</button>
+            <button type="button" data-path="wander">I have no idea</button>
+          </div>
+          <div class="intern-onboarding-result" data-onboarding-result hidden></div>
+        </article>
+
+        <article class="intern-card">
+          <header><small>THE FIRST FIVE MINUTES</small><span>INTERN NOTE #004</span></header>
+          <h3>Things worth trying before judging us.</h3>
+          <p>“Us” is doing substantial work in that sentence.</p>
+          <div class="intern-tutorial-flow">
+            <div><small>00:30</small><b>Change your athlete</b><i>Identity first</i></div>
+            <div><small>01:30</small><b>Open the Garage</b><i>Spin something expensive</i></div>
+            <div><small>03:00</small><b>Find a world</b><i>Kona is a good start</i></div>
+            <div><small>05:00</small><b>Collect one thing</b><i>Congratulations, attachment</i></div>
+          </div>
+        </article>
+
+        <article class="intern-card">
+          <header><small>I'M LOST</small><span>SUPPORT DEPARTMENT</span></header>
+          <h3>Good. Here is the emergency procedure.</h3>
+          <p><strong>Home</strong> tells you what matters now. <strong>Discover</strong> is where stories and places live. <strong>Garage</strong> is equipment. <strong>Plan</strong> is where the serious athlete briefly appears. <strong>Me</strong> remembers what you have done.</p>
+          <p class="intern-note">Worst case: go Home. This is also my debugging strategy.</p>
+          <div class="intern-actions"><a href="./">Return to Home →</a><a href="#faq">Open FAQ</a></div>
+        </article>
+
+        <article class="intern-card">
+          <header><small>HOW TO APPROACH THIS APP</small><span>INTERN PHILOSOPHY</span></header>
+          <h3>Curiosity beats completion.</h3>
+          <p>You are not expected to consume everything. Follow a bike. Read one weird story. Enter a room. Leave. Come back later. The world should feel slightly larger than the amount of time you have.</p>
+          <p class="intern-note">Also please report broken buttons. I apparently made those too.</p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -421,6 +503,7 @@
       <div><p class="t-label">09 / FAQ</p><h2 class="t-title">Reasonable questions.<br><em>Mostly.</em></h2></div>
     </div>
     <div class="promo-faq-list">
+      <p class="intern-note" style="margin:0 0 28px">Support hours: whenever the intern notices the problem.</p>
       <details open><summary>Is Kona.m a game?</summary><div><p>Partly. It borrows progression, discovery, identity and collectibles from games, but it also behaves like a museum, training companion, travel guide and experiment platform.</p></div></details>
       <details><summary>Is it a training app?</summary><div><p>Training is one layer, not the whole product. The broader idea is to connect the practical side of endurance sport with the emotional, historical and playful sides.</p></div></details>
       <details><summary>Why Kona?</summary><div><p>Kona is both a real place and a powerful symbol inside long-course triathlon. For this project it became the anchor point for equipment, race-week memory, aspiration and exploration.</p></div></details>
@@ -429,7 +512,9 @@
       <details><summary>Where does AI fit?</summary><div><p>Across generation, agents, personalization, knowledge, analysis and future world behavior. The project treats AI as a capability layer rather than a decorative chatbot.</p></div></details>
       <details><summary>Is this affiliated with IRONMAN, Canyon or the brands shown?</summary><div><p>No. Kona.m is an independent, unofficial fan and research project. Trademarks and product names belong to their respective owners.</p></div></details>
       <details><summary>Who built it?</summary><div><p>Kona.m is an independent project built by João Caldas as a place to combine software, AI, endurance sport, spatial interfaces and a lot of curiosity.</p></div></details>
-      <details><summary>Is it finished?</summary><div><p>Enough to exist. Not enough to stop changing. That balance is intentional.</p></div></details>
+      <details><summary>Is it finished?</summary><div><p>Enough to exist. Not enough to stop changing. That balance is intentional. The intern calls this “production.”</p></div></details>
+      <details><summary>I clicked something and nothing happened. What now?</summary><div><p>First, try once more with conviction. If it still does nothing, that is a bug rather than a philosophical feature. Return Home, continue exploring, and treat the broken button as a tiny contribution to quality assurance.</p></div></details>
+      <details><summary>Who handles support?</summary><div><p>The same intern who handles engineering, design, maintenance, copy, coffee and an occasionally neglected training schedule. Expectations should therefore be ambitious but elastic.</p></div></details>
     </div>
   </section>
 
