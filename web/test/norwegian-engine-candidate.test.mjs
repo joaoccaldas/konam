@@ -65,3 +65,15 @@ test('NOR // 3 reusable assets and lane map are explicit but remain candidate-on
   const rooms=read('museum/world/rooms.json');
   assert.doesNotMatch(rooms,/norwegian-engine-room-layout|norwegian-engine-assets/);
 });
+
+
+test('NOR // 3 defines explicit mobile/tablet/desktop 3D budgets',()=>{
+ const a=json('world/konam/candidates/norwegian-engine-assets-v1.json');
+ for(const tier of ['mobile','tablet','desktop']){
+   assert.ok(a.runtime_budget[tier].target_fps>=30);
+   assert.ok(a.runtime_budget[tier].max_room_triangles>0);
+   assert.ok(a.runtime_budget[tier].max_room_draw_calls>0);
+ }
+ assert.ok(a.assets.some(x=>x.id==='nor3-lane-architecture'&&x.reusable));
+ assert.ok(a.assets.some(x=>x.id==='nor3-protocol-wall'&&x.reusable));
+});
