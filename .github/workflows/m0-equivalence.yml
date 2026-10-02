@@ -1,0 +1,56 @@
+name: Kona.m M0 equivalence
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  equivalence:
+    name: Exact source-tree equivalence
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SOURCE_SHA: 856b98f0d9392c48ef7a6ff0fedaa39d459ef14c
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Fetch frozen Canyon Museum source
+        run: |
+          set -euo pipefail
+          git remote add canyon https://github.com/joaoccaldas/canyonmuseum.git
+          git fetch --no-tags canyon "$SOURCE_SHA"
+          test "$(git rev-parse FETCH_HEAD)" = "$SOURCE_SHA"
+
+      - name: Prove source tree equivalence
+        run: |
+          set -euo pipefail
+          # Target-only migration evidence and the two migration-harness workflow
+          # files are the only allowed M0 tree deltas.
+          git diff --exit-code "$SOURCE_SHA" HEAD -- .             ':(exclude)docs/migration/M0_SOURCE.json'             ':(exclude).github/workflows/konam-pre-migration.yml'             ':(exclude).github/workflows/m0-equivalence.yml'
+
+      - name: Verify dependency manifests are byte-identical
+        run: |
+          set -euo pipefail
+          for f in web/package.json web/package-lock.json app/native/package.json app/native/package-lock.json; do
+            test "$(git show "$SOURCE_SHA:$f" | git hash-object --stdin)" = "$(git hash-object "$f")"
+          done
+
+      - name: Validate world model
+        run: node tools/validate_konam_world.mjs
+
+      - name: World contract
+        run: node --test web/test/konam-world-contract.test.mjs
+
+      - name: Repository hygiene
+        run: node tools/repo-hygiene.mjs
+
+      - name: Secret/private-data scan
+        run: node tools/scan_private_data.mjs

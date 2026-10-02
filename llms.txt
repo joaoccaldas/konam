@@ -1,0 +1,26 @@
+# KONA
+
+> Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.
+
+An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.
+
+## Pages
+- [KONA · Race the version of yourself](https://joaoccaldas.github.io/canyonmuseum/): Build your race identity, prepare for race week, explore triathlon machines, people, places and stories, and enter the immersive 3D world when you choose.
+- [Canyon Triathlon Collection · every Speedmax generation, compared](https://joaoccaldas.github.io/canyonmuseum/Canyon_Collection.html): Every Canyon Speedmax generation on record, 1999–2027: interactive 3D exhibits, side-by-side specifications, an aero calculator and a sourced archive of the bikes that were never modelled.
+- [Studio · Speedmax Museum — build, paint and share a time-trial bike](https://joaoccaldas.github.io/canyonmuseum/Studio.html): Every bike in the Speedmax Museum and more, in 3D: paint it, give it a film theme, set the scene, dream it in motion and share it. Canyon generations, named machines and studio designs.
+- [Speedmax Nights & History Lane · Canyon Speedmax Museum](https://joaoccaldas.github.io/canyonmuseum/Experiences.html): Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.
+- [Canyon Museum — SpeedMax 3.0 (2007)](https://joaoccaldas.github.io/canyonmuseum/Speedmax_2007_Museum.html): 3.0 · MY2007 (2007) — an unofficial, fully procedural Blender model you can explode, ride, inspect and repaint in the browser.
+- [Canyon Museum — Speedmax AL 9.0 (2011)](https://joaoccaldas.github.io/canyonmuseum/Speedmax_AL_2011_Museum.html): 9.0 · MY2011 (2011) — an unofficial, fully procedural Blender model you can explode, ride, inspect and repaint in the browser.
+- [Canyon Museum — Speedmax CF 9.0 Pro (2011)](https://joaoccaldas.github.io/canyonmuseum/Speedmax_CF_2011_Museum.html): 9.0 Pro · MY2011 (2011) — an unofficial, fully procedural Blender model you can explode, ride, inspect and repaint in the browser.
+- [Canyon Museum — Speedmax CFR AXS (2027)](https://joaoccaldas.github.io/canyonmuseum/Speedmax_Museum.html): Speedmax CFR AXS (2027) — an unofficial, fully procedural Blender model you can explode, ride, inspect and repaint in the browser.
+- [Canyon Museum — Speedmax CF SLX 8 Di2 (2027)](https://joaoccaldas.github.io/canyonmuseum/Speedmax_SLX_Museum.html): Speedmax CF SLX 8 Di2 (2027) — an unofficial, fully procedural Blender model you can explode, ride, inspect and repaint in the browser.
+- [Canyon Museum — Speedmax Three (2005)](https://joaoccaldas.github.io/canyonmuseum/Speedmax_Three_2005_Museum.html): Three · MY2005 (2005) — an unofficial, fully procedural Blender model you can explode, ride, inspect and repaint in the browser.
+
+## Facts and sources
+- Bikes are unofficial procedural Blender reconstructions calibrated against published photographs and geometry; each exhibit lists its sources and known uncertainties.
+- Kona titles on a Speedmax (from museum/kona_champions.json): 2015 Jan Frodeno (Speedmax CF SLX); 2016 Jan Frodeno (Speedmax CF SLX); 2017 Patrick Lange (Speedmax CF SLX); 2018 Patrick Lange (Speedmax CF SLX); 2019 Jan Frodeno (Speedmax CF SLX Disc); 2024 Patrick Lange (Speedmax CFR).
+- Brand-room studies: Nike Alphafly 3 in Nike Running Lab (Independent reconstructed study from the public specification. Not affiliated with or endorsed by Nike.).
+- Photographs are openly licensed (Wikimedia Commons, CC BY / CC BY-SA); authors and licences are shown beside every image.
+
+## Privacy
+No accounts, no analytics, no cookies, no tracking by default. The Passport and settings stay in the visitor's own browser (localStorage). An optional email sign-in can back that data up only when the visitor asks.

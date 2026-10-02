@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caldas.studio/schemas/candidate-product-intake-v1.json",
+  "title": "Candidate Product Intake V1",
+  "type": "object",
+  "required": ["schema_version","source_branch","source_commit","items"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "source_branch": { "type": "string" },
+    "source_commit": { "type": "string", "minLength": 7 },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id","type","brand","asset_path","representation","readiness","source_records"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "enum": ["bike","shoe","helmet","wheel","trisuit"] },
+          "brand": { "type": "string" },
+          "model": { "type": "string" },
+          "asset_path": { "type": "string" },
+          "representation": {
+            "enum": ["manufacturer-geometry","official-spec-informed","provisional-geometry","historical-study"]
+          },
+          "readiness": {
+            "enum": ["candidate","blocked","internal-only","public-ready"]
+          },
+          "setup_slot": { "enum": ["bike","shoe","helmet","wheel","trisuit"] },
+          "capabilities": { "type": "array", "items": { "type": "string" } },
+          "source_records": { "type": "array", "items": { "type": "string" } },
+          "blockers": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

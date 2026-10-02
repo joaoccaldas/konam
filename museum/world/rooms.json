@@ -1,0 +1,376 @@
+{
+ "schema_version": 1,
+ "note": "Every area of the museum, named once. Hand-built rooms are listed here with what they hold; the data-built wings (museum/world/wings) describe themselves. The map, the rail, the registry (docs/ROOMS.md) and the studio's 'where to see it' all read these names. `exhibits` name catalogue products (museum/catalog/products.json) or edition groups.",
+ "floors": [
+  {
+   "id": "ground",
+   "name": "Ground floor"
+  },
+  {
+   "id": "upper",
+   "name": "Upper floor"
+  }
+ ],
+ "areas": [
+  {
+   "id": "hall",
+   "floor": "ground",
+   "name": "The Queen K Hall",
+   "short": "Main hall",
+   "sub": "Every Speedmax generation, 1999–2027",
+   "kind": "timeline",
+   "exhibits": {
+    "products": [
+     "canyon-speedmax-three-2005",
+     "canyon-speedmax-2007",
+     "canyon-speedmax-al-2011",
+     "canyon-speedmax-cf-2011",
+     "canyon-cfr-2027",
+     "canyon-slx-2027"
+    ],
+    "remembered": 3
+   },
+   "decorations": [
+    {
+     "prop": "kona-palm",
+     "x": 6.1,
+     "z": 0.35,
+     "height": 2.2,
+     "seed": 1
+    },
+    {
+     "prop": "kona-palm",
+     "x": 6.1,
+     "z": -11.8,
+     "height": 2.45,
+     "seed": 2
+    },
+    {
+     "prop": "kona-palm",
+     "x": 6.1,
+     "z": -22.6,
+     "height": 2.7,
+     "seed": 3
+    },
+    {
+     "prop": "kona-palm",
+     "x": 6.1,
+     "z": -33.6,
+     "height": 2.2,
+     "seed": 4
+    },
+    {
+     "prop": "kona-palm",
+     "x": -6.1,
+     "z": -3.9,
+     "height": 2.45,
+     "seed": 5
+    },
+    {
+     "prop": "kona-palm",
+     "x": -6.1,
+     "z": -37.4,
+     "height": 2.7,
+     "seed": 6
+    },
+    {
+     "prop": "kona-palm",
+     "x": -6.1,
+     "z": -44.6,
+     "height": 2.2,
+     "seed": 7
+    },
+    {
+     "prop": "kona-palm",
+     "x": -6.1,
+     "z": -14.4,
+     "height": 2.45,
+     "seed": 8
+    },
+    {
+     "prop": "kona-palm",
+     "x": -6.1,
+     "z": -20.1,
+     "height": 2.7,
+     "seed": 9
+    },
+    {
+     "prop": "kona-palm",
+     "x": -6.1,
+     "z": -26.4,
+     "height": 2.2,
+     "seed": 10
+    },
+    {
+     "prop": "kona-palm",
+     "x": -6.1,
+     "z": -32,
+     "height": 2.45,
+     "seed": 11
+    }
+   ]
+  },
+  {
+   "id": "sanctuary",
+   "floor": "ground",
+   "name": "The Sanctuary",
+   "short": "Sanctuary",
+   "sub": "Eight Bike Porn films, eight bikes",
+   "kind": "chapel",
+   "exhibits": {
+    "editions": "film"
+   }
+  },
+  {
+   "id": "hween",
+   "floor": "ground",
+   "name": "Lava Night",
+   "short": "Lava Night",
+   "sub": "The Halloween room",
+   "kind": "themed",
+   "exhibits": {
+    "editions": "lava-night"
+   }
+  },
+  {
+   "id": "kona",
+   "floor": "ground",
+   "name": "Kona Champions",
+   "short": "Champions",
+   "sub": "The machines under the titles",
+   "kind": "trophy",
+   "exhibits": {
+    "products": [
+     "canyon-kona-cfslx-2015",
+     "canyon-kona-cfr-2019"
+    ]
+   },
+   "decorations": [
+    {
+     "prop": "kona-palm",
+     "x": -18.4,
+     "z": -9.7,
+     "height": 2.4,
+     "seed": 11
+    },
+    {
+     "prop": "kona-palm",
+     "x": -18.4,
+     "z": -24.7,
+     "height": 2.4,
+     "seed": 12
+    }
+   ]
+  },
+  {
+   "id": "wyld",
+   "floor": "ground",
+   "name": "The WYLD Room",
+   "short": "WYLD",
+   "sub": "Four hand-dyed liveries",
+   "kind": "themed",
+   "exhibits": {
+    "editions": "wyld"
+   }
+  },
+  {
+   "id": "pier",
+   "floor": "ground",
+   "name": "Kona by Year",
+   "short": "The pier",
+   "sub": "The pier, 2014–2025, and the finish",
+   "kind": "timeline",
+   "exhibits": {
+    "products": [
+     "canyon-cfr-2027"
+    ]
+   }
+  },
+  {
+   "id": "secret",
+   "floor": "ground",
+   "name": "The Secret Collection",
+   "short": "Secret room",
+   "sub": "Found, not signposted",
+   "kind": "hidden",
+   "hidden": true,
+   "exhibits": {
+    "editions": "artworld"
+   }
+  },
+  {
+   "id": "stair",
+   "floor": "upper",
+   "name": "The Glass Stair",
+   "short": "Stair",
+   "sub": "Up to the galleries",
+   "kind": "passage",
+   "exhibits": {}
+  },
+  {
+   "id": "nave",
+   "floor": "upper",
+   "name": "The Gallery Nave",
+   "short": "Galleries",
+   "sub": "Four themed floors, four themed rooms",
+   "kind": "passage",
+   "exhibits": {}
+  },
+  {
+   "id": "bay-st-george",
+   "floor": "upper",
+   "name": "St. George",
+   "short": "St. George",
+   "sub": "Red rock",
+   "kind": "art",
+   "exhibits": {},
+   "text": "One canyon silhouette from the aisle. Up here the floor is the rock itself: terracotta, with a warm seam.",
+   "presentation": {
+    "kind": "bay",
+    "floor": "#8a3b28",
+    "vein": "#e7b089",
+    "z": 9
+   }
+  },
+  {
+   "id": "bay-las-vegas",
+   "floor": "upper",
+   "name": "Las Vegas",
+   "short": "Las Vegas",
+   "sub": "Neon",
+   "kind": "art",
+   "exhibits": {},
+   "text": "A dark floor that keeps the light. The sculpture in the hall is the same study, seen from the Queen K.",
+   "presentation": {
+    "kind": "bay",
+    "floor": "#14151c",
+    "vein": "#ff3d8e",
+    "z": 13.6
+   }
+  },
+  {
+   "id": "bay-nice",
+   "floor": "upper",
+   "name": "Nice",
+   "short": "Nice",
+   "sub": "Sea glass",
+   "kind": "art",
+   "exhibits": {},
+   "text": "Pale glass underfoot, the colour of the bay on a still morning.",
+   "presentation": {
+    "kind": "bay",
+    "floor": "#d7f3f2",
+    "vein": "#7ec8c4",
+    "z": 18.2
+   }
+  },
+  {
+   "id": "bay-kona",
+   "floor": "upper",
+   "name": "Kona",
+   "short": "Kona",
+   "sub": "Obsidian",
+   "kind": "art",
+   "exhibits": {},
+   "text": "Basalt, and a line of heat. The same coast as the hall, one storey closer to the weather.",
+   "presentation": {
+    "kind": "bay",
+    "floor": "#1a1c20",
+    "vein": "#ff592c",
+    "z": 22.8
+   }
+  },
+  {
+   "id": "room-bio",
+   "floor": "upper",
+   "name": "Bio",
+   "short": "Bio",
+   "sub": "The growth",
+   "kind": "themed",
+   "exhibits": {
+    "editions": "galleries",
+    "edition": "theme-bio"
+   },
+   "text": "A Speedmax taken by the room. Vines have the frame, pods sit on the floor, and the walls are the same green as the growth.",
+   "presentation": {
+    "kind": "room",
+    "floor": "#10281a",
+    "vein": "#3dba55",
+    "fog": "#123024",
+    "exposure": 0.92,
+    "z0": 10.6,
+    "z1": 6.15,
+    "decoration": "bio"
+   }
+  },
+  {
+   "id": "room-horror",
+   "floor": "upper",
+   "name": "Horror",
+   "short": "Horror",
+   "sub": "The passage",
+   "kind": "themed",
+   "exhibits": {
+    "editions": "galleries",
+    "edition": "theme-horror"
+   },
+   "text": "One bulb over a Speedmax at the end of the passage. The corridor is narrower than the room. If the eyes blink, you were looking.",
+   "presentation": {
+    "kind": "room",
+    "floor": "#10080c",
+    "vein": "#ff2a3c",
+    "fog": "#1a0a10",
+    "exposure": 0.78,
+    "z0": 15.6,
+    "z1": 11.0,
+    "decoration": "horror"
+   }
+  },
+  {
+   "id": "room-alien",
+   "floor": "upper",
+   "name": "Alien",
+   "short": "Alien",
+   "sub": "The bay",
+   "kind": "themed",
+   "exhibits": {
+    "editions": "galleries",
+    "edition": "theme-alien"
+   },
+   "text": "Four rings over a Speedmax, and a scan that does not care what it passes through. Cold light, no weather.",
+   "presentation": {
+    "kind": "room",
+    "floor": "#070b12",
+    "vein": "#3dffe0",
+    "fog": "#0c2430",
+    "exposure": 0.95,
+    "z0": 20.6,
+    "z1": 16.0,
+    "decoration": "alien"
+   }
+  },
+  {
+   "id": "room-zombie",
+   "floor": "upper",
+   "name": "Zombie",
+   "short": "Zombie",
+   "sub": "The yard",
+   "kind": "themed",
+   "exhibits": {
+    "editions": "galleries",
+    "edition": "theme-zombie"
+   },
+   "text": "They keep to the walls. A Speedmax is still on the block in the middle of the yard. The air is the colour of a bruise that has started to heal.",
+   "presentation": {
+    "kind": "room",
+    "floor": "#16180c",
+    "vein": "#d2e06a",
+    "fog": "#2a2c18",
+    "exposure": 0.98,
+    "z0": 26.4,
+    "z1": 21.0,
+    "decoration": "zombie"
+   }
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caldas.studio/schemas/commerce-offer-v1.json",
+  "title": "Caldas Studio Commerce Offer V1",
+  "type": "object",
+  "required": ["schema_version","id","offer_type","provider","status","destination","disclosure"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+    "offer_type": { "enum": ["product","accommodation","rental_car","attraction","restaurant","local_retail","expo_vendor","merch","other"] },
+    "provider": {
+      "type": "object",
+      "required": ["id","name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "program": { "type": ["string","null"] }
+      },
+      "additionalProperties": false
+    },
+    "status": { "enum": ["active","pending-approval","inactive","expired"] },
+    "destination": {
+      "type": "object",
+      "required": ["url","affiliate","tracking_method"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "affiliate": { "type": "boolean" },
+        "tracking_method": { "enum": ["none","provider-link","subid","server-attribution"] }
+      },
+      "additionalProperties": false
+    },
+    "related_entity_ids": { "type": "array", "items": { "type": "string" } },
+    "event_ids": { "type": "array", "items": { "type": "string" } },
+    "disclosure": {
+      "type": "object",
+      "required": ["required","label"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "label": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,473 @@
+{
+ "schema_version": 1,
+ "title": "Kona by Year",
+ "note": "The best-placed Canyon Speedmax at every Ironman World Championship held in Kailua-Kona, 2014–2025. Places are overall finishing places in that day's pro race. Canvases are painted derivatives (tools/paint_canvases.py) of the credited Wikimedia Commons photographs and carry the same licences.",
+ "canvases": [
+  {
+   "id": "y2015",
+   "local": "t2015.jpg",
+   "crop": [
+    0,
+    0,
+    1,
+    0.889
+   ],
+   "kind": "athlete",
+   "source": {
+    "file": "File:Jan Frodeno 2015 Ironman European Championship Frankfurt.jpeg",
+    "page": "https://commons.wikimedia.org/wiki/File:Jan_Frodeno_2015_Ironman_European_Championship_Frankfurt.jpeg",
+    "author": "Jürgen Matern",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Frankfurt, July 2015 — three months before the Kona title",
+   "aspect": 0.75
+  },
+  {
+   "id": "y2016",
+   "local": "t2016.jpg",
+   "crop": [
+    0.34,
+    0,
+    0.93,
+    1
+   ],
+   "kind": "athlete",
+   "source": {
+    "file": "File:Jan Frodeno Roth.JPG",
+    "page": "https://commons.wikimedia.org/wiki/File:Jan_Frodeno_Roth.JPG",
+    "author": "Voyager1500",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Roth, July 2016 — the summer of the 7:35:39 world best",
+   "aspect": 0.7861
+  },
+  {
+   "id": "y2017",
+   "local": "t2017.jpg",
+   "crop": [
+    0.14,
+    0,
+    0.84,
+    1
+   ],
+   "kind": "athlete",
+   "source": {
+    "file": "File:2018-07-05 PK Ironman Germany 2018 Patrick Lange – IRONMAN World Champion 2017-0874.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:2018-07-05_PK_Ironman_Germany_2018_Patrick_Lange_%E2%80%93_IRONMAN_World_Champion_2017-0874.jpg",
+    "author": "Olaf Kosinsky",
+    "license": "CC BY-SA 3.0 de",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+   },
+   "caption": "As reigning world champion, Frankfurt 2018",
+   "aspect": 0.7637
+  },
+  {
+   "id": "y2018",
+   "local": "t2018.jpg",
+   "crop": [
+    0,
+    0,
+    1,
+    0.889
+   ],
+   "kind": "athlete",
+   "source": {
+    "file": "File:Patrick Lange 2018 Ironman European Championship Frankfurt 2.jpeg",
+    "page": "https://commons.wikimedia.org/wiki/File:Patrick_Lange_2018_Ironman_European_Championship_Frankfurt_2.jpeg",
+    "author": "Jürgen Matern",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Frankfurt, July 2018",
+   "aspect": 0.751
+  },
+  {
+   "id": "y2019",
+   "local": "t2019.jpg",
+   "crop": [
+    0,
+    0,
+    1,
+    0.889
+   ],
+   "kind": "athlete",
+   "source": {
+    "file": "File:Jan Frodeno 2019 Ironman European Championship Frankfurt.jpeg",
+    "page": "https://commons.wikimedia.org/wiki/File:Jan_Frodeno_2019_Ironman_European_Championship_Frankfurt.jpeg",
+    "author": "Jürgen Matern",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Frankfurt, June 2019",
+   "aspect": 0.751
+  },
+  {
+   "id": "queen-k",
+   "local": "g0.jpg",
+   "crop": null,
+   "kind": "scene",
+   "source": {
+    "file": "File:Iron man Kona Hawaii bike course Big island Hawaii (32405173528).jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Iron_man_Kona_Hawaii_bike_course_Big_island_Hawaii_(32405173528).jpg",
+    "author": "dronepicr",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+   },
+   "caption": "The Queen K — the Ironman bike course north of Kailua-Kona",
+   "aspect": 1.5015
+  },
+  {
+   "id": "kailua-bay",
+   "local": "g3.jpg",
+   "crop": null,
+   "kind": "scene",
+   "source": {
+    "file": "File:Iron man swim start Kailua Bay Kona Big island Hawaii (46226569742).jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Iron_man_swim_start_Kailua_Bay_Kona_Big_island_Hawaii_(46226569742).jpg",
+    "author": "dronepicr",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+   },
+   "caption": "Kailua Bay — the swim start",
+   "aspect": 1.517
+  },
+  {
+   "id": "philipp-2022",
+   "local": "philipp-nice.jpg",
+   "crop": [
+    0,
+    0,
+    1,
+    0.92
+   ],
+   "kind": "athlete",
+   "source": {
+    "file": "File:Laura Philipp Nice.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Laura_Philipp_Nice.jpg",
+    "author": "Feline1605",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Laura Philipp in Canyon colours, Nice 2024",
+   "aspect": 0.752
+  },
+  {
+   "id": "philipp-2023",
+   "local": "philipp-2024.jpg",
+   "crop": [
+    0,
+    0.05,
+    1,
+    0.939
+   ],
+   "kind": "athlete",
+   "source": {
+    "file": "File:Laura Philipp 2024.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Laura_Philipp_2024.jpg",
+    "author": "Dacoucou",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Laura Philipp, Nice 2024 — the year after her Kona podium",
+   "aspect": 0.75
+  },
+  {
+   "id": "lange-2024",
+   "local": "lange-2025.jpg",
+   "crop": null,
+   "kind": "athlete",
+   "source": {
+    "file": "File:Patrick Lange 2025 Ironman European Championship Frankfurt 1.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Patrick_Lange_2025_Ironman_European_Championship_Frankfurt_1.jpg",
+    "author": "Jürgen Matern",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Patrick Lange in Frankfurt, 2025 — eight months after his third Kona title",
+   "aspect": 0.75
+  },
+  {
+   "id": "matthews-2025",
+   "local": "matthews-2024.jpg",
+   "crop": [
+    0,
+    0.04,
+    1,
+    0.929
+   ],
+   "kind": "athlete",
+   "source": {
+    "file": "File:Kat Matthews 2024.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Kat_Matthews_2024.jpg",
+    "author": "Dacoucou",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Kat Matthews, Nice 2024",
+   "aspect": 0.75
+  },
+  {
+   "id": "cfslx-2015",
+   "local": "cfslx.jpg",
+   "crop": [
+    0.03,
+    0.08,
+    0.97,
+    0.97
+   ],
+   "kind": "machine",
+   "source": {
+    "file": "File:CANYON-speedmax-cf-slx-9-ltd c1329.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:CANYON-speedmax-cf-slx-9-ltd_c1329.jpg",
+    "author": "Marion Lauenstein",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Speedmax CF SLX · 2015–2019",
+   "aspect": 1.4443
+  },
+  {
+   "id": "cfr-2019",
+   "local": "cfr-2020.jpg",
+   "crop": [
+    0.03,
+    0.08,
+    0.97,
+    0.97
+   ],
+   "kind": "machine",
+   "source": {
+    "file": "File:Speedmax-cfr-blue-2020.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Speedmax-cfr-blue-2020.jpg",
+    "author": "Peter Ehrit Werbefotografie GmbH",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Speedmax CFR Disc · 2019–2025",
+   "aspect": 1.4443
+  }
+ ],
+ "years": [
+  {
+   "year": 2014,
+   "status": "raced",
+   "race": "Men",
+   "athlete": "Nils Frommhold",
+   "country": "GER",
+   "place": 6,
+   "time": "8:22:29",
+   "splits": "51:14 · 4:34:11 · 2:52:45",
+   "bike": "Speedmax CF",
+   "generation": "cf-2011",
+   "canvas": "queen-k",
+   "headline": "A rookie, sixth",
+   "note": "The best Speedmax of the day was a Kona debut: sixth off the bike, eleventh at half-marathon, sixth again at the line, within two minutes of third. Jan Frodeno took third that year on a Specialized; his Canyon years began in 2015.",
+   "sources": [
+    "https://www.slowtwitch.com/news/kona-14-top-15-men-bike/",
+    "https://en.wikipedia.org/wiki/2014_Ironman_World_Championship"
+   ]
+  },
+  {
+   "year": 2015,
+   "status": "raced",
+   "race": "Men",
+   "athlete": "Jan Frodeno",
+   "country": "GER",
+   "place": 1,
+   "time": "8:14:40",
+   "splits": "50:50 · 4:27:27 · 2:52:21",
+   "bike": "Speedmax CF SLX",
+   "generation": "cfslx-2015",
+   "canvas": "y2015",
+   "headline": "The first Speedmax title",
+   "note": "His first Kona title, a year after finishing third on debut — the Olympic champion of 2008 became the first man to win both.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/2015_Ironman_World_Championship"
+   ]
+  },
+  {
+   "year": 2016,
+   "status": "raced",
+   "race": "Men",
+   "athlete": "Jan Frodeno",
+   "country": "GER",
+   "place": 1,
+   "time": "8:06:30",
+   "splits": "48:02 · 4:29:00 · 2:45:34",
+   "bike": "Speedmax CF SLX",
+   "generation": "cfslx-2015",
+   "canvas": "y2016",
+   "headline": "Back to back",
+   "note": "Back-to-back, pulling away from Sebastian Kienle on the run. That July in Roth he had set an iron-distance world best of 7:35:39.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/2016_Ironman_World_Championship"
+   ]
+  },
+  {
+   "year": 2017,
+   "status": "raced",
+   "race": "Men",
+   "athlete": "Patrick Lange",
+   "country": "GER",
+   "place": 1,
+   "time": "8:01:40",
+   "splits": "course record",
+   "bike": "Speedmax CF SLX",
+   "generation": "cfslx-2015",
+   "canvas": "y2017",
+   "headline": "A course record",
+   "note": "Came from behind on the marathon to break Craig Alexander's 8:03:56 course record.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Patrick_Lange",
+    "https://www.slowtwitch.com/Products/Bike_details_of_the_Top_15_Kona_male_Pros_6639.html"
+   ]
+  },
+  {
+   "year": 2018,
+   "status": "raced",
+   "race": "Men",
+   "athlete": "Patrick Lange",
+   "country": "GER",
+   "place": 1,
+   "time": "7:52:38",
+   "splits": "first finish under eight hours",
+   "bike": "Speedmax CF SLX",
+   "generation": "cfslx-2015",
+   "canvas": "y2018",
+   "headline": "Under eight hours",
+   "note": "The first sub-eight-hour Kona in history — and a proposal at the finish line.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/2018_Ironman_World_Championship"
+   ]
+  },
+  {
+   "year": 2019,
+   "status": "raced",
+   "race": "Men",
+   "athlete": "Jan Frodeno",
+   "country": "GER",
+   "place": 1,
+   "time": "7:51:13",
+   "splits": "course record by 1:26",
+   "bike": "Speedmax CF SLX Disc",
+   "generation": "cfr-2019",
+   "canvas": "y2019",
+   "headline": "Faster still",
+   "note": "A third title on the new disc-brake Speedmax, breaking the course record by a minute and 26 seconds.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/2019_Ironman_World_Championship"
+   ]
+  },
+  {
+   "year": 2020,
+   "status": "no-race",
+   "headline": "The bay stayed quiet",
+   "canvas": "kailua-bay",
+   "note": "No world championship: the 2020 race was cancelled during the COVID-19 pandemic.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Ironman_World_Championship"
+   ]
+  },
+  {
+   "year": 2021,
+   "status": "no-race",
+   "headline": "Raced in Utah",
+   "canvas": null,
+   "note": "The 2021 title was decided in St. George, Utah, in May 2022, not on the Big Island. Kona returned that October.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/2022_Ironman_World_Championship"
+   ]
+  },
+  {
+   "year": 2022,
+   "status": "raced",
+   "race": "Women",
+   "athlete": "Laura Philipp",
+   "country": "GER",
+   "place": 4,
+   "time": "8:50:31",
+   "bike": "Speedmax CFR",
+   "generation": "cfr-2019",
+   "canvas": "philipp-2022",
+   "headline": "Fourth, through a penalty",
+   "note": "Kona's first two-day championship. No Speedmax reached a podium; the best was Laura Philipp's fourth in the women's race, run down from a five-minute drafting penalty.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/2022_Ironman_World_Championship",
+    "https://www.triathlete.com/gallery/2023-hawaii-ironman-world-championship-bike-laura-philipps-speedmax-cfr-r085/"
+   ]
+  },
+  {
+   "year": 2023,
+   "status": "raced",
+   "race": "Women",
+   "athlete": "Laura Philipp",
+   "country": "GER",
+   "place": 3,
+   "time": "8:32:55",
+   "bike": "Speedmax CFR",
+   "generation": "cfr-2019",
+   "canvas": "philipp-2023",
+   "headline": "A Kona podium",
+   "note": "A women-only Kona. Philipp finished third behind Lucy Charles-Barclay and Anne Haug. The men raced in Nice, where Sam Laidlow won on a Speedmax CFR.",
+   "sources": [
+    "https://www.triathlete.com/culture/news/2023-women-ironman-world-championship-kona-results/",
+    "https://www.slowtwitch.com/news/top-15-womens-bikes-from-kona-2023/",
+    "https://www.triathlete.com/gallery/2023-ironman-world-championship-nice-bike-sam-laidlows-speedmax-cfr/"
+   ]
+  },
+  {
+   "year": 2024,
+   "status": "raced",
+   "race": "Men",
+   "athlete": "Patrick Lange",
+   "country": "GER",
+   "place": 1,
+   "time": "7:35:53",
+   "splits": "course record · 2:37:34 run",
+   "bike": "Speedmax CFR",
+   "generation": "cfr-2019",
+   "canvas": "lange-2024",
+   "headline": "The course record",
+   "note": "Lange's third title, in a new course record. Behind him, Sam Laidlow became the first man under four hours for the 180 km, 3:57:22 on a Speedmax CFR. In Nice, Laura Philipp won the women's title on one too.",
+   "sources": [
+    "https://media-centre.canyon.com/en-INT/242948-patrick-lange-brings-double-victory-for-canyon-speedmax-cfr-at-2024-triathlon-world-championships/",
+    "https://en.wikipedia.org/wiki/Patrick_Lange"
+   ]
+  },
+  {
+   "year": 2025,
+   "status": "raced",
+   "race": "Women",
+   "athlete": "Kat Matthews",
+   "country": "GBR",
+   "place": 2,
+   "time": null,
+   "gap": "+35 s",
+   "bike": "Speedmax CFR",
+   "generation": "cfr-2019",
+   "canvas": "matthews-2025",
+   "headline": "Two Speedmaxes on the podium",
+   "note": "Thirty-five seconds from the title, with a run course record of 2:47:23. Laura Philipp took third on another Speedmax CFR; Solveig Løvseth won on a Felt.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Kat_Matthews",
+    "https://slowtwitch.com/triathlon/kona-2025-the-bikes-of-the-fastest-pro-riders/"
+   ]
+  }
+ ],
+ "eras": [
+  {
+   "generation": "cfslx-2015",
+   "name": "Speedmax CF SLX · 2015–2019",
+   "text": "The rim-brake Speedmax that carried four Kona titles: integrated hydration, a hidden front brake and the Trident tube profiles.",
+   "canvas": "cfslx-2015"
+  },
+  {
+   "generation": "cfr-2019",
+   "name": "Speedmax CFR Disc · 2019–2025",
+   "text": "The disc-brake generation, raced to course records by Frodeno in 2019 and Lange in 2024.",
+   "canvas": "cfr-2019"
+  }
+ ]
+}

@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "source_branch": "assets/kona-environment-pack-20260930",
+  "source_commit": "f68dbdc2",
+  "source_ci": "Build rider interface asset batch 03: success",
+  "items": [
+    {
+      "id": "specialized-sworks-tt5-m",
+      "type": "helmet",
+      "brand": "Specialized",
+      "model": "S-Works TT 5",
+      "size": "M",
+      "asset_path": "assets/rider-interface/batch-03/specialized-sworks-tt5-m.glb",
+      "bytes": 536100,
+      "representation": "official-architecture-silhouette-study",
+      "readiness": "candidate",
+      "setup_slot": "helmet",
+      "capabilities": [
+        "inspect",
+        "explode",
+        "collect",
+        "equip",
+        "compare",
+        "share",
+        "visit"
+      ],
+      "source_records": [
+        "https://www.specialized.com/se/sv/s-works-tt-5/p/1000252641"
+      ],
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "race_setup",
+        "maintenance",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "blockers": [
+        "silhouette/reference overlay QA required before public promotion",
+        "full product-intake browser proof not yet run for helmet category"
+      ]
+    },
+    {
+      "id": "giro-aerohead-mips-ii-m",
+      "type": "helmet",
+      "brand": "Giro",
+      "model": "Aerohead Mips II",
+      "size": "M",
+      "asset_path": "assets/rider-interface/batch-03/giro-aerohead-mips-ii-m.glb",
+      "bytes": 703020,
+      "representation": "official-fit-weight-architecture-silhouette-study",
+      "readiness": "candidate",
+      "setup_slot": "helmet",
+      "capabilities": [
+        "inspect",
+        "explode",
+        "collect",
+        "equip",
+        "compare",
+        "share",
+        "visit"
+      ],
+      "fit": {
+        "head_cm_min": 55,
+        "head_cm_max": 59,
+        "weight_g": 450
+      },
+      "source_records": [
+        "https://www.giro.com/product/aerohead-mips-ii-helmet/100000000300000150.html"
+      ],
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "race_setup",
+        "maintenance",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "blockers": [
+        "silhouette/reference overlay QA required before public promotion",
+        "full product-intake browser proof not yet run for helmet category"
+      ]
+    },
+    {
+      "id": "poc-procen-air-m",
+      "type": "helmet",
+      "brand": "POC",
+      "model": "Procen Air",
+      "size": "M",
+      "asset_path": "assets/rider-interface/batch-03/poc-procen-air-m.glb",
+      "bytes": 430044,
+      "representation": "official-architecture-provisional-silhouette-study",
+      "readiness": "blocked",
+      "setup_slot": "helmet",
+      "capabilities": [
+        "inspect",
+        "explode",
+        "collect",
+        "equip",
+        "compare",
+        "share",
+        "visit"
+      ],
+      "source_records": [
+        "https://poc.com/de/pressroom/poc-release-procen-air-ef-pro-cycling-limited-edition"
+      ],
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "race_setup",
+        "maintenance",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "blockers": [
+        "provisional silhouette",
+        "stronger product-specific official geometry/fit evidence required",
+        "product-intake browser proof not run"
+      ]
+    },
+    {
+      "id": "ism-pn31",
+      "type": "saddle",
+      "brand": "ISM",
+      "model": "PN 3.1",
+      "asset_path": "assets/rider-interface/batch-03/ism-pn31.glb",
+      "bytes": 378932,
+      "representation": "official-dimensions",
+      "readiness": "candidate",
+      "setup_slot": null,
+      "capabilities": [
+        "inspect",
+        "explode",
+        "collect",
+        "compare",
+        "share",
+        "visit"
+      ],
+      "fit": {
+        "length_mm": 255,
+        "width_mm": 120,
+        "rails": "Chromoly"
+      },
+      "source_records": [
+        "https://ismseat.com/performance-narrow/pn-3-1/"
+      ],
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "bike_configurator",
+        "maintenance",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "blockers": [
+        "visual close-up QA required",
+        "bike saddle-interface compatibility contract not yet defined"
+      ]
+    },
+    {
+      "id": "garmin-edge1050",
+      "type": "bike_computer",
+      "brand": "Garmin",
+      "model": "Edge 1050",
+      "asset_path": "assets/rider-interface/batch-03/garmin-edge1050.glb",
+      "bytes": 115872,
+      "representation": "official-dimensions",
+      "readiness": "candidate",
+      "setup_slot": null,
+      "capabilities": [
+        "inspect",
+        "explode",
+        "collect",
+        "compare",
+        "share",
+        "visit"
+      ],
+      "fit": {
+        "dimensions_mm": [
+          60.2,
+          118.5,
+          16.3
+        ],
+        "weight_g": 161,
+        "mount": "quarter-turn",
+        "water_rating": "IPX7"
+      },
+      "source_records": [
+        "https://www.garmin.com/en-US/compare/?compareProduct=1196129"
+      ],
+      "reuse_targets": [
+        "museum",
+        "tech_room",
+        "engineering_story",
+        "compare",
+        "bike_configurator",
+        "maintenance",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "blockers": [
+        "visual close-up QA required",
+        "electronics/setup slot not yet part of RaceSetup V1"
+      ]
+    },
+    {
+      "id": "shimano-pd-r9100",
+      "type": "pedal",
+      "brand": "Shimano",
+      "model": "Dura-Ace PD-R9100",
+      "asset_path": "assets/rider-interface/batch-03/shimano-pd-r9100.glb",
+      "bytes": 222764,
+      "representation": "official-spec-driven",
+      "readiness": "candidate",
+      "setup_slot": null,
+      "capabilities": [
+        "inspect",
+        "explode",
+        "collect",
+        "compare",
+        "share",
+        "visit"
+      ],
+      "fit": {
+        "stack_height_mm": 14.8,
+        "pedal_center_mm": 52,
+        "pair_weight_g": 237,
+        "cleat": "SM-SH12"
+      },
+      "source_records": [
+        "https://productinfo.shimano.com/ja/product/PD-R9100"
+      ],
+      "reuse_targets": [
+        "museum",
+        "engineering_story",
+        "compare",
+        "bike_configurator",
+        "maintenance",
+        "mcp",
+        "commerce",
+        "partner_embed"
+      ],
+      "blockers": [
+        "visual close-up QA required",
+        "pedal/crank and shoe/cleat compatibility contracts not yet defined"
+      ]
+    }
+  ]
+}

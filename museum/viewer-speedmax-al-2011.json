@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "key": "speedmax-al-2011",
+    "exhibit": "03",
+    "era": "2009–2013",
+    "family": "Speedmax AL",
+    "name": "9.0 · MY2011",
+    "years": "MY2011",
+    "size": "M",
+    "finishName": "Team (white / black)",
+    "pageTitle": "Canyon Museum — Speedmax AL 9.0 (2011)",
+    "lede": "The aluminium Speedmax: Canyon's aero-era geometry and carbon fork on a 7005 alloy frame, at a fraction of the carbon bike's price.",
+    "story": "Launched alongside the first carbon Speedmax at Eurobike 2008, the Speedmax AL carried the same adjustable-seat-angle geometry (75° or 78°) and sliding dropouts (380-395 mm chainstays) in 7005 aluminium with an AeroShape tubeset. It stayed in the range until MY2013.",
+    "stats": [
+      {
+        "value": "8.90 kg",
+        "label": "Canyon weight"
+      },
+      {
+        "value": "53 × 39",
+        "label": "Chainrings"
+      },
+      {
+        "value": "23-622",
+        "label": "Tyres"
+      }
+    ],
+    "spec": [
+      [
+        "Frame",
+        "Canyon New F8 Technology · 7005 Ultralight Aluminium, AeroShape, multi-butted"
+      ],
+      [
+        "Fork",
+        "Canyon Aero Fork CF"
+      ],
+      [
+        "Groupset",
+        "SRAM Force · SL 1090 R2C Aero shifters · SRAM TT Carbon levers"
+      ],
+      [
+        "Brakes",
+        "SRAM Force"
+      ],
+      [
+        "Wheels",
+        "Mavic Cosmic Elite"
+      ],
+      [
+        "Tyres",
+        "Continental Grand Prix 4000 S 23-622"
+      ],
+      [
+        "Crankset",
+        "FSA Vision TriMax Carbon 53/39"
+      ],
+      [
+        "Cassette",
+        "SRAM PG 1050 11-26"
+      ],
+      [
+        "Cockpit",
+        "Profile Aris stem · Profile T2 base bar / T2 Wing"
+      ],
+      [
+        "Seatpost",
+        "Canyon Aero Post CF"
+      ],
+      [
+        "Saddle",
+        "Selle Italia SL Kit Carbonio"
+      ]
+    ],
+    "geometry": [
+      [
+        "Head angle",
+        "72.5°"
+      ],
+      [
+        "Seat angle",
+        "75° (78° position)"
+      ],
+      [
+        "Chainstay",
+        "380–395 mm (sliding) · 383 mm measured"
+      ],
+      [
+        "Wheelbase",
+        "995–1010 mm (M) · 980–995 mm (S) · 992 mm measured"
+      ],
+      [
+        "Stack / reach",
+        "518 / 430 mm (M)"
+      ]
+    ],
+    "method": "Scale comes from circle fits to both tyres in Canyon's archived side photo. Every tube is a traced centreline with its side-view depth measured from the photo; widths across the bike are inferred. Parts are rebuilt from the archived specification.",
+    "uncertainties": [
+      "Scale 2.500 mm per pixel from tyre fits; measured wheelbase 990 mm.",
+      "Single 740 px side photograph: 2.49 mm per pixel.",
+      "Front tyre images 1.7% larger than the rear (studio perspective); scale uses their average.",
+      "Frame size: wheelbase fits S (980-995 mm) and stack fits M; recorded as M with S not excluded.",
+      "Lateral tube widths, stay spread and fork crown width are inferred; the photo fixes side-view shapes only.",
+      "Components are simplified external forms rebuilt from the published specification; hidden mechanisms are not modelled.",
+      "Graphics use DIN Condensed Bold in place of Canyon's lettering; positions and sizes traced from the photo.",
+      "Cable routing is traced where visible; hidden runs are not modelled."
+    ],
+    "sources": [
+      {
+        "label": "Canyon specification page (archived)",
+        "url": "https://web.archive.org/web/20101023160922/http://www.canyon.com:80/_en/triathlonbikes/bike.html?b=2128"
+      },
+      {
+        "label": "Canyon studio photograph",
+        "url": "https://web.archive.org/web/20101030155050/http://canyon.com/flash_2009/bike/images/bikes/speedmax-al-9/team/bike.jpg"
+      },
+      {
+        "label": "Series launch copy (archived 2008-12-01)",
+        "url": "https://web.archive.org/web/20081201050505/http://www.canyon.com:80/_en/triathlonbikes/series/speedmax_al.html"
+      }
+    ]
+  },
+  "presets": [
+    {
+      "name": "Explore · Race Black",
+      "colors": {
+        "paint_frame": "#050506",
+        "paint_accent": "#050506",
+        "decal_light": "#d9d9d9",
+        "decal_dark": "#d9d9d9"
+      }
+    },
+    {
+      "name": "Explore · Team White",
+      "colors": {
+        "paint_frame": "#e4e4e4",
+        "paint_accent": "#050506",
+        "decal_dark": "#0a0a0a",
+        "decal_light": "#0a0a0a"
+      }
+    },
+    {
+      "name": "Explore · Pro White / red",
+      "colors": {
+        "paint_frame": "#eeeeee",
+        "paint_accent": "#c8102e",
+        "decal_dark": "#c8102e",
+        "decal_light": "#c8102e"
+      }
+    },
+    {
+      "name": "Explore · Stealth",
+      "colors": {
+        "paint_frame": "#1b1d20",
+        "paint_accent": "#0d0e10",
+        "decal_dark": "#34373c",
+        "decal_light": "#34373c"
+      }
+    }
+  ],
+  "partLabels": {
+    "base_bar": "Base bar",
+    "extensions": "Clip-on extensions",
+    "cables": "Cable housings"
+  }
+}

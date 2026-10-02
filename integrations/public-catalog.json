@@ -1,0 +1,1556 @@
+{
+  "schema_version": 1,
+  "generated_by": "tools/build_public_catalog.mjs",
+  "generated_from": [
+    "museum/catalog/products.json",
+    "museum/kona/island-guide.json"
+  ],
+  "privacy": {
+    "contains_user_state": false,
+    "contains_accounts": false,
+    "contains_tracking_ids": false,
+    "remote_writes": false
+  },
+  "counts": {
+    "products": 47,
+    "places": 9,
+    "events": 1
+  },
+  "products": [
+    {
+      "schema_version": 1,
+      "id": "canyon-cfr-2027",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Speedmax CFR AXS",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "published",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": "Speedmax_Museum.html",
+      "source_records": [
+        "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cfr/speedmax-cfr-axs/4524.html",
+        "museum/viewer-cfr.json"
+      ],
+      "locations": [
+        "hall",
+        "pier"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "canyon-slx-2027",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Speedmax CF SLX 8 Di2",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "published",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum-slx/speedmax_web.glb",
+      "canonical_url": "Speedmax_SLX_Museum.html",
+      "source_records": [
+        "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cf-slx/speedmax-cf-slx-8-di2/4520.html",
+        "museum/viewer-slx.json"
+      ],
+      "locations": [
+        "hall"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "canyon-speedmax-three-2005",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Speedmax Three",
+      "family": "Speedmax",
+      "year": 2005,
+      "public": true,
+      "representation": "published",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/heritage/speedmax-three-2005/speedmax_web.glb",
+      "canonical_url": "Speedmax_Three_2005_Museum.html",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-three-my2005.json"
+      ],
+      "locations": [
+        "hall"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "canyon-speedmax-2007",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "SpeedMax 3.0",
+      "family": "Speedmax",
+      "year": 2008,
+      "public": true,
+      "representation": "published",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/heritage/speedmax-2007/speedmax_web.glb",
+      "canonical_url": "Speedmax_2007_Museum.html",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-3-0-my2007.json"
+      ],
+      "locations": [
+        "hall"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "canyon-speedmax-al-2011",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Speedmax AL 9.0",
+      "family": "Speedmax",
+      "year": 2013,
+      "public": true,
+      "representation": "published",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/heritage/speedmax-al-2011/speedmax_web.glb",
+      "canonical_url": "Speedmax_AL_2011_Museum.html",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-al-9-my2011.json"
+      ],
+      "locations": [
+        "hall"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "canyon-speedmax-cf-2011",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Speedmax CF 9.0 Pro",
+      "family": "Speedmax",
+      "year": 2012,
+      "public": true,
+      "representation": "published",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/heritage/speedmax-cf-2011/speedmax_web.glb",
+      "canonical_url": "Speedmax_CF_2011_Museum.html",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-cf-9-pro-my2011.json"
+      ],
+      "locations": [
+        "hall"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "canyon-kona-cfslx-2015",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Speedmax CF SLX",
+      "family": "Speedmax",
+      "year": 2015,
+      "public": true,
+      "representation": "geometry-study",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/kona-years/bikes/cfslx-2015/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "assets/kona-years/bikes/cfslx-2015/build-meta.json"
+      ],
+      "locations": [
+        "kona"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "canyon-kona-cfr-2019",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Speedmax CFR Disc",
+      "family": "Speedmax",
+      "year": 2019,
+      "public": true,
+      "representation": "geometry-study",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/kona-years/bikes/cfr-2019/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "assets/kona-years/bikes/cfr-2019/build-meta.json"
+      ],
+      "locations": [
+        "kona"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-merckx-hour-1972",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Colnago",
+      "label": "Eddy Merckx Hour bike",
+      "family": "diamond",
+      "year": 1972,
+      "public": true,
+      "representation": "reference-calibrated",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/merckx-hour-1972/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:EddyMerckxHourRecordBike.jpg"
+      ],
+      "locations": [
+        "atlas-against-the-clock-hour"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-obree-riverside",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Obree",
+      "label": "Graeme Obree's bikes",
+      "family": "diamond",
+      "year": 1993,
+      "public": true,
+      "representation": "reference-calibrated",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/obree-riverside/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Graeme_Obree_display_at_the_Riverside_Museum.jpg"
+      ],
+      "locations": [
+        "atlas-against-the-clock-hour"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-lotus-108-1992",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Lotus",
+      "label": "Lotus Type 108",
+      "family": "monocoque",
+      "year": 1992,
+      "public": true,
+      "representation": "reference-calibrated",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/lotus-108-1992/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Lotus_108_(24281585325).jpg"
+      ],
+      "locations": [
+        "atlas-against-the-clock-mono"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-zipp-2001",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Zipp",
+      "label": "Zipp 2001",
+      "family": "beam",
+      "year": null,
+      "public": true,
+      "representation": "reference-calibrated",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/zipp-2001/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Zipp_frames.jpg"
+      ],
+      "locations": [
+        "atlas-against-the-clock-mono"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-stevens-tri",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Stevens",
+      "label": "Stevens triathlon bike",
+      "family": "superbike",
+      "year": null,
+      "public": true,
+      "representation": "reference-calibrated",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/stevens-tri/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Stevens_triathlon_bicycle.JPG"
+      ],
+      "locations": [
+        "atlas-against-the-clock-tri"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-alu-tri-2005",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Unbranded",
+      "label": "Aluminium triathlon bike",
+      "family": "diamond",
+      "year": 2005,
+      "public": true,
+      "representation": "reference-calibrated",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/alu-tri-2005/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Triathlonrad.jpg"
+      ],
+      "locations": [
+        "atlas-against-the-clock-tri"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-type-funny-1980s",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Type study",
+      "label": "Funny bike",
+      "family": "funny",
+      "year": 1985,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/type-funny-1980s/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": [
+        "atlas-against-the-clock-types"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-type-pursuit",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Type study",
+      "label": "Track pursuit bike",
+      "family": "pursuit",
+      "year": 2000,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/type-pursuit/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": [
+        "atlas-against-the-clock-types"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-type-disc-superbike",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Type study",
+      "label": "Disc-brake triathlon superbike",
+      "family": "superbike",
+      "year": 2024,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/type-disc-superbike/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": [
+        "atlas-against-the-clock-types"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-type-aerobar-1989",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Type study",
+      "label": "Road bike with clip-on aero bars",
+      "family": "diamond",
+      "year": 1989,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/type-aerobar-1989/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": [
+        "atlas-kona-light-clipon"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-type-lowpro-650c",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Type study",
+      "label": "Low-profile triathlon bike, 650c",
+      "family": "funny",
+      "year": 1994,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/type-lowpro-650c/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": [
+        "atlas-kona-light-clipon"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-type-hour-track",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Type study",
+      "label": "Modern Hour bike",
+      "family": "pursuit",
+      "year": 2019,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/type-hour-track/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": [
+        "atlas-kona-light-velodrome"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-type-draft-legal",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Type study",
+      "label": "Draft-legal triathlon bike",
+      "family": "superbike",
+      "year": 2021,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/atlas/type-draft-legal/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": [
+        "atlas-kona-light-velodrome"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-studio-kona-2030",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Studio",
+      "label": "Kona concept 2030",
+      "family": "superbike",
+      "year": 2030,
+      "public": true,
+      "representation": "concept",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip"
+      ],
+      "asset": "assets/atlas/studio-kona-2030/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": []
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-studio-small-650c",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Studio",
+      "label": "Small-frame triathlon bike, 650c",
+      "family": "funny",
+      "year": 2024,
+      "public": true,
+      "representation": "concept",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip"
+      ],
+      "asset": "assets/atlas/studio-small-650c/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": []
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-studio-xl-tri",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Studio",
+      "label": "XL triathlon bike",
+      "family": "superbike",
+      "year": 2024,
+      "public": true,
+      "representation": "concept",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip"
+      ],
+      "asset": "assets/atlas/studio-xl-tri/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": []
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-studio-alloy-entry",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Studio",
+      "label": "Entry alloy triathlon bike",
+      "family": "diamond",
+      "year": 2022,
+      "public": true,
+      "representation": "concept",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip"
+      ],
+      "asset": "assets/atlas/studio-alloy-entry/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": []
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-studio-sprint-track",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Studio",
+      "label": "Track sprint bike",
+      "family": "pursuit",
+      "year": 2023,
+      "public": true,
+      "representation": "concept",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip"
+      ],
+      "asset": "assets/atlas/studio-sprint-track/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": []
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-studio-beam-2020s",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Studio",
+      "label": "Beam triathlon concept",
+      "family": "beam",
+      "year": 2025,
+      "public": true,
+      "representation": "concept",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip"
+      ],
+      "asset": "assets/atlas/studio-beam-2020s/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": []
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-studio-wing-road",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Studio",
+      "label": "Wing frame, road triathlon",
+      "family": "monocoque",
+      "year": 2026,
+      "public": true,
+      "representation": "concept",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip"
+      ],
+      "asset": "assets/atlas/studio-wing-road/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": []
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-studio-gravel-aero",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Studio",
+      "label": "Aero gravel bike",
+      "family": "superbike",
+      "year": 2025,
+      "public": true,
+      "representation": "concept",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip"
+      ],
+      "asset": "assets/atlas/studio-gravel-aero/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": []
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-film-aero-glam",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Alien Glam",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "locations": [
+        "sanctuary"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-film-couture",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Blush Couture",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "locations": [
+        "sanctuary"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-film-tiffany-tide",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Tiffany Tide",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "locations": [
+        "sanctuary"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-film-hex",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Witching Hour",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "locations": [
+        "sanctuary"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-film-stay-weird",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Stay Weird",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "locations": [
+        "sanctuary"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-film-lake-house",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Lake Fog",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "locations": [
+        "sanctuary"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-film-sanctuary",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Stained Glass",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "locations": [
+        "sanctuary"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-galleries-bio",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Bio room CFR",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "room-bio"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-galleries-horror",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Horror room CFR",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "room-horror"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-galleries-alien",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Alien room CFR",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "room-alien"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-galleries-zombie",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Zombie room CFR",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "room-zombie"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-lava-night-lava-night",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Lava Night",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "hween"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-artworld-witchcraft",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Witchcraft",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "secret"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-artworld-stitched",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Stitched",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "secret"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-artworld-pagan",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Pagan",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "secret"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-artworld-moonlit",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Moonlit",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "secret"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-artworld-carnival",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Carnival",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "secret"
+      ]
+    },
+    {
+      "schema_version": 1,
+      "id": "edition-artworld-ritual-forest",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Canyon",
+      "label": "Ritual Forest",
+      "family": "Speedmax",
+      "year": 2027,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip",
+        "visit"
+      ],
+      "asset": "assets/museum/speedmax_web.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "locations": [
+        "secret"
+      ]
+    }
+  ],
+  "places": [
+    {
+      "schema_version": 1,
+      "id": "kailua-pier",
+      "object_type": "place",
+      "public": true,
+      "label": "Kailua Pier",
+      "region": "Kailua-Kona",
+      "categories": [
+        "race-week",
+        "history",
+        "walk"
+      ],
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona/historic-kailua-village-kailua-kona"
+      ],
+      "sensitivity": "normal"
+    },
+    {
+      "schema_version": 1,
+      "id": "kailua-bay",
+      "object_type": "place",
+      "public": true,
+      "label": "Kailua Bay",
+      "region": "Kailua-Kona",
+      "categories": [
+        "race-week",
+        "ocean",
+        "swim"
+      ],
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/things-to-do/beaches/kailua-bay"
+      ],
+      "sensitivity": "normal"
+    },
+    {
+      "schema_version": 1,
+      "id": "historic-kailua-village",
+      "object_type": "place",
+      "public": true,
+      "label": "Historic Kailua Village",
+      "region": "Kailua-Kona",
+      "categories": [
+        "history",
+        "walk",
+        "food"
+      ],
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona/historic-kailua-village-kailua-kona"
+      ],
+      "sensitivity": "normal"
+    },
+    {
+      "schema_version": 1,
+      "id": "puuhonua-o-honaunau",
+      "object_type": "place",
+      "public": true,
+      "label": "Puʻuhonua o Hōnaunau National Historical Park",
+      "region": "South Kona",
+      "categories": [
+        "history",
+        "culture",
+        "walk"
+      ],
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://www.nps.gov/puho/planyourvisit/index.htm"
+      ],
+      "sensitivity": "culturally-significant"
+    },
+    {
+      "schema_version": 1,
+      "id": "kaloko-honokohau",
+      "object_type": "place",
+      "public": true,
+      "label": "Kaloko-Honokōhau National Historical Park",
+      "region": "North Kona",
+      "categories": [
+        "history",
+        "culture",
+        "coast",
+        "walk"
+      ],
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://www.nps.gov/kaho/learn/historyculture/index.htm"
+      ],
+      "sensitivity": "culturally-significant"
+    },
+    {
+      "schema_version": 1,
+      "id": "kealakekua-bay",
+      "object_type": "place",
+      "public": true,
+      "label": "Kealakekua Bay",
+      "region": "South Kona",
+      "categories": [
+        "history",
+        "ocean",
+        "snorkel"
+      ],
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://www.gohawaii.com/kona"
+      ],
+      "sensitivity": "culturally-significant"
+    },
+    {
+      "schema_version": 1,
+      "id": "kona-coffee-country",
+      "object_type": "place",
+      "public": true,
+      "label": "Kona Coffee Country",
+      "region": "North & South Kona uplands",
+      "categories": [
+        "coffee",
+        "food",
+        "culture",
+        "scenic"
+      ],
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/things-to-do/land-activities/coffee-plantations"
+      ],
+      "sensitivity": "normal"
+    },
+    {
+      "schema_version": 1,
+      "id": "hawaii-volcanoes",
+      "object_type": "place",
+      "public": true,
+      "label": "Hawaiʻi Volcanoes National Park",
+      "region": "Kaʻū / Puna",
+      "categories": [
+        "volcano",
+        "landscape",
+        "hike",
+        "full-day"
+      ],
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://www.gohawaii.com/experiences/sightseeing/Volcanoes"
+      ],
+      "sensitivity": "natural-cultural"
+    },
+    {
+      "schema_version": 1,
+      "id": "puukohola-heiau",
+      "object_type": "place",
+      "public": true,
+      "label": "Puʻukoholā Heiau National Historic Site",
+      "region": "Kawaihae",
+      "categories": [
+        "history",
+        "culture",
+        "scenic"
+      ],
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://www.nps.gov/places/puukohola-heiau.htm"
+      ],
+      "sensitivity": "culturally-significant"
+    }
+  ],
+  "events": [
+    {
+      "schema_version": 1,
+      "id": "kona-2026",
+      "object_type": "event",
+      "public": true,
+      "label": "IRONMAN World Championship",
+      "date": "2026-10-10",
+      "location": "Kailua-Kona, Hawaiʻi",
+      "capabilities": [
+        "inspect",
+        "visit",
+        "share"
+      ],
+      "representation": "published",
+      "source_records": [
+        "https://regwcusa.ironman.com/event/2026-ironman-world-championship-kona"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joaoccaldas.github.io/canyonmuseum/schemas/v1/progression-event.schema.json",
+  "title": "ProgressionEvent",
+  "type": "object",
+  "required": ["type"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "maxLength": 80 },
+    "type": {
+      "enum": [
+        "FIRST_VISIT", "PRODUCT_VIEWED", "PRODUCT_EXPLODED", "ROOM_ENTERED", "ROOM_COMPLETED",
+        "FIND_DISCOVERED", "CHALLENGE_COMPLETED", "RACE_IDENTITY_CREATED", "SETUP_SHARED",
+        "EQUIPMENT_ADDED", "DREAM_EQUIPMENT_ADDED", "STRAVA_CONNECTED", "PASSPORT_CREATED", "CURRENCY_SPENT"
+      ]
+    },
+    "subject": { "type": "string" },
+    "discovery": { "type": "string" },
+    "relationship": { "enum": ["owned", "dream", "try"] },
+    "amount": { "type": "integer", "minimum": 0 },
+    "xp": { "type": "integer" },
+    "credits": { "type": "integer" }
+  }
+}

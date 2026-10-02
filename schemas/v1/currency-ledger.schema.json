@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joaoccaldas.github.io/canyonmuseum/schemas/v1/currency-ledger.schema.json",
+  "title": "CurrencyLedgerEntry",
+  "type": "object",
+  "required": ["id", "delta", "reason"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "description": "Same id as the progression event. One grant per id." },
+    "delta": { "type": "integer" },
+    "reason": { "type": "string" }
+  }
+}

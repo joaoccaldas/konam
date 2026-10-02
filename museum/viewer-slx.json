@@ -1,0 +1,806 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "id": "canyon-speedmax-slx-8-di2-my2027-m",
+    "key": "slx",
+    "name": "Speedmax CF SLX 8 Di2",
+    "year": "2027",
+    "size": "M",
+    "weight": 9.56,
+    "price": "from 91,199 SEK",
+    "chainring": 52,
+    "cog": 14,
+    "source": "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cf-slx/speedmax-cf-slx-8-di2/4520.html",
+    "specs": {
+      "id": "canyon-speedmax-slx-8-di2-my2027-m",
+      "key": "slx",
+      "name": "Speedmax CF SLX 8 Di2",
+      "year": 2027,
+      "size": "M",
+      "weightKg": 9.56,
+      "priceSEK": 91199.0,
+      "source": "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cf-slx/speedmax-cf-slx-8-di2/4520.html",
+      "checkedAt": "2026-09-28T12:36:03.751619+00:00",
+      "snapshotSha256": "3a0e920160749e31fde11da73de85260d15cccf0823d54f43bd4191abb6a83e5",
+      "components": [
+        {
+          "group": "Frame",
+          "type": "Frame",
+          "name": "Canyon Speedmax SLX",
+          "features": {
+            "Axle dimension": "12x142 mm",
+            "Tyre clearance": "28 mm",
+            "Material": "Carbon (CF)",
+            "Weight": "1484 g"
+          }
+        },
+        {
+          "group": "Frame",
+          "type": "Fork",
+          "name": "Canyon Speedmax Gabel",
+          "features": {
+            "Axle dimension": "12x100 mm",
+            "Fork steer tube diameter": "1 1/8\"",
+            "Tyre clearance": "28 mm",
+            "Material": "Carbon (CF)",
+            "Weight": "654 g"
+          }
+        },
+        {
+          "group": "Frame",
+          "type": "Seatpost Clamp",
+          "name": "Canyon  Seatpost Headparts",
+          "features": {}
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Battery",
+          "name": "Shimano BT-DN300 Di2 Battery",
+          "features": {}
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Rear Derailleur",
+          "name": "Shimano Ultegra Di2",
+          "features": {
+            "Cage length": "short",
+            "Weight": "260 g"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Front Derailleur",
+          "name": "Shimano Ultegra Di2 FD-R8150",
+          "features": {
+            "Weight": "111 g"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Shift Lever",
+          "name": "Shimano Dura-Ace Di2 R9160 Remote TT",
+          "features": {
+            "Weight": "19 g"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Cassette",
+          "name": "Shimano CS-R8101 11-30 12s",
+          "features": {
+            "Number of sprockets": "12",
+            "Range": "11-30"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Crank",
+          "name": "Shimano Ultegra FC-R8100",
+          "features": {
+            "Number of chainrings": "2"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Crank",
+          "name": "Shimano Ultegra R8100 4iiii Precision",
+          "features": {
+            "Number of chainrings": "2"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Bottom bracket",
+          "name": "Shimano Pressfit BB72",
+          "features": {
+            "Bottom bracket standard": "PF 86,5",
+            "Weight": "65 g"
+          }
+        },
+        {
+          "group": "Drivetrain",
+          "type": "Chain",
+          "name": "Shimano XT",
+          "features": {}
+        },
+        {
+          "group": "Brakes",
+          "type": "Shift-/ Brake Lever",
+          "name": "Shimano Dura-Ace",
+          "features": {
+            "Number of pistons": "2",
+            "Weight": "277 g"
+          }
+        },
+        {
+          "group": "Brakes",
+          "type": "Shift-/ Brake Lever",
+          "name": "Shimano Dura-Ace",
+          "features": {
+            "Number of pistons": "2",
+            "Weight": "278 g"
+          }
+        },
+        {
+          "group": "Brakes",
+          "type": "Brake Rotor",
+          "name": "Shimano Ultegra RT-CL800",
+          "features": {
+            "Size": "140 mm",
+            "Weight": "95 g"
+          }
+        },
+        {
+          "group": "Brakes",
+          "type": "Brake Rotor",
+          "name": "Shimano Ultegra RT-CL800",
+          "features": {
+            "Size": "160 mm",
+            "Weight": "112 g"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Front Wheel",
+          "name": "DT Swiss ARC 1600 Spline",
+          "features": {
+            "Axle dimension": "12x100 mm",
+            "Rotor mount": "Center Lock",
+            "Rim height": "65 mm",
+            "Inner width": "22 mm",
+            "Rim material": "Carbon",
+            "Weight": "812 g"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Rear Wheel",
+          "name": "DT Swiss ARC 1600 Spline",
+          "features": {
+            "Axle dimension": "12x142 mm",
+            "Rotor mount": "Center Lock",
+            "Rim height": "85 mm",
+            "Inner width": "22 mm",
+            "Rim material": "Carbon",
+            "Weight": "904 g"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Tyre",
+          "name": "Continental Grand Prix 5000 S TR, 28mm",
+          "features": {
+            "Width": "28 mm",
+            "Weight": "294 g"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Tyre",
+          "name": "Continental Aero 111",
+          "features": {
+            "Width": "26 mm",
+            "Weight": "246 g"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Thru Axle",
+          "name": "DT Swiss Through Axle",
+          "features": {
+            "Axle dimension": "12x100 mm"
+          }
+        },
+        {
+          "group": "Wheels",
+          "type": "Thru Axle",
+          "name": "DT Swiss trough axle",
+          "features": {}
+        },
+        {
+          "group": "Cockpit",
+          "type": "Cockpit",
+          "name": "Canyon Cockpit",
+          "features": {}
+        },
+        {
+          "group": "Cockpit",
+          "type": "Aero Bar",
+          "name": "Canyon Aeroshield",
+          "features": {}
+        },
+        {
+          "group": "Seat",
+          "type": "Saddle",
+          "name": "Fizik Transiro Aeris LD R5",
+          "features": {
+            "Gender": "Unisex",
+            "Weight": "223 g"
+          }
+        },
+        {
+          "group": "Seat",
+          "type": "Seatpost",
+          "name": "SP102 Standard Seatpost",
+          "features": {
+            "Material": "Carbon (CF)",
+            "Weight": "133 g"
+          }
+        },
+        {
+          "group": "Light",
+          "type": "Lights",
+          "name": "Reflector Set",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Pedals",
+          "name": "None included",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Organza Bag",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Assembly Paste",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Torque Wrench",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Banderole Cathegory1",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Smallbox",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "R133/R134 Toolbag",
+          "features": {}
+        },
+        {
+          "group": "Accessories",
+          "type": "Manuals and Accessories",
+          "name": "Canyon Speedmax Quickstartguide",
+          "features": {}
+        }
+      ],
+      "geometryBySize": {
+        "XL": {
+          "Body Height": {
+            "value": "\u2265 189",
+            "unit": "cm"
+          },
+          "Seat Height": {
+            "value": "780 - 910",
+            "unit": "mm"
+          },
+          "Seat Tube Length": {
+            "value": 585,
+            "unit": "mm"
+          },
+          "Top Tube Length": {
+            "value": 593,
+            "unit": "mm"
+          },
+          "Head Tube Length": {
+            "value": 137,
+            "unit": "mm"
+          },
+          "Head Tube Angle": {
+            "value": 73,
+            "unit": "\u00b0"
+          },
+          "Seat Tube Angle": {
+            "value": 81,
+            "unit": "\u00b0"
+          },
+          "Chainstay Length": {
+            "value": 420,
+            "unit": "mm"
+          },
+          "Wheel Base": {
+            "value": 1078,
+            "unit": "mm",
+            "sourceValue": 1.078,
+            "normalization": "Canyon locale thousands separator: 1.013 means 1013 mm, verified against geometry table."
+          },
+          "Stack": {
+            "value": 542,
+            "unit": "mm"
+          },
+          "Reach": {
+            "value": 486,
+            "unit": "mm"
+          },
+          "Stand-over Height": {
+            "value": 846,
+            "unit": "mm"
+          },
+          "Bottom Bracket Offset": {
+            "value": 72,
+            "unit": "mm"
+          },
+          "Crank Length": {
+            "value": 165,
+            "unit": "mm"
+          },
+          "Chainring size": {
+            "value": "52/36",
+            "unit": ""
+          },
+          "Maximum Seat Post Insertion Depth": {
+            "value": 195,
+            "unit": "mm"
+          },
+          "Minimum Seat Post Insertion Depth": {
+            "value": 65,
+            "unit": "mm"
+          },
+          "Wheel Size": {
+            "value": 28,
+            "unit": "\""
+          },
+          "Disc Size": {
+            "value": "160 / 160",
+            "unit": "mm"
+          },
+          "Rim height": {
+            "value": 85,
+            "unit": "mm"
+          }
+        },
+        "S": {
+          "Body Height": {
+            "value": "\u2264 178",
+            "unit": "cm"
+          },
+          "Seat Height": {
+            "value": "640 - 740",
+            "unit": "mm"
+          },
+          "Seat Tube Length": {
+            "value": 480,
+            "unit": "mm"
+          },
+          "Top Tube Length": {
+            "value": 516,
+            "unit": "mm"
+          },
+          "Head Tube Length": {
+            "value": 62,
+            "unit": "mm"
+          },
+          "Head Tube Angle": {
+            "value": 73,
+            "unit": "\u00b0"
+          },
+          "Seat Tube Angle": {
+            "value": 81,
+            "unit": "\u00b0"
+          },
+          "Chainstay Length": {
+            "value": 420,
+            "unit": "mm"
+          },
+          "Wheel Base": {
+            "value": 989,
+            "unit": "mm"
+          },
+          "Stack": {
+            "value": 470,
+            "unit": "mm"
+          },
+          "Reach": {
+            "value": 419,
+            "unit": "mm"
+          },
+          "Stand-over Height": {
+            "value": 759,
+            "unit": "mm"
+          },
+          "Bottom Bracket Offset": {
+            "value": 75,
+            "unit": "mm"
+          },
+          "Crank Length": {
+            "value": 165,
+            "unit": "mm"
+          },
+          "Chainring size": {
+            "value": "52/36",
+            "unit": ""
+          },
+          "Maximum Seat Post Insertion Depth": {
+            "value": 165,
+            "unit": "mm"
+          },
+          "Minimum Seat Post Insertion Depth": {
+            "value": 65,
+            "unit": "mm"
+          },
+          "Wheel Size": {
+            "value": 28,
+            "unit": "\""
+          },
+          "Disc Size": {
+            "value": "160 / 140",
+            "unit": "mm"
+          },
+          "Rim height": {
+            "value": 85,
+            "unit": "mm"
+          }
+        },
+        "M": {
+          "Body Height": {
+            "value": "168 - 186",
+            "unit": "cm"
+          },
+          "Seat Height": {
+            "value": "708 - 838",
+            "unit": "mm"
+          },
+          "Seat Tube Length": {
+            "value": 513,
+            "unit": "mm"
+          },
+          "Top Tube Length": {
+            "value": 537,
+            "unit": "mm"
+          },
+          "Head Tube Length": {
+            "value": 73,
+            "unit": "mm"
+          },
+          "Head Tube Angle": {
+            "value": 73,
+            "unit": "\u00b0"
+          },
+          "Seat Tube Angle": {
+            "value": 81,
+            "unit": "\u00b0"
+          },
+          "Chainstay Length": {
+            "value": 420,
+            "unit": "mm"
+          },
+          "Wheel Base": {
+            "value": 1013,
+            "unit": "mm",
+            "sourceValue": 1.013,
+            "normalization": "Canyon locale thousands separator: 1.013 means 1013 mm, verified against geometry table."
+          },
+          "Stack": {
+            "value": 481,
+            "unit": "mm"
+          },
+          "Reach": {
+            "value": 440,
+            "unit": "mm"
+          },
+          "Stand-over Height": {
+            "value": 780,
+            "unit": "mm"
+          },
+          "Bottom Bracket Offset": {
+            "value": 75,
+            "unit": "mm"
+          },
+          "Crank Length": {
+            "value": 165,
+            "unit": "mm"
+          },
+          "Chainring size": {
+            "value": "52/36",
+            "unit": ""
+          },
+          "Maximum Seat Post Insertion Depth": {
+            "value": 195,
+            "unit": "mm"
+          },
+          "Minimum Seat Post Insertion Depth": {
+            "value": 65,
+            "unit": "mm"
+          },
+          "Wheel Size": {
+            "value": 28,
+            "unit": "\""
+          },
+          "Disc Size": {
+            "value": "160 / 140",
+            "unit": "mm"
+          },
+          "Rim height": {
+            "value": 85,
+            "unit": "mm"
+          }
+        },
+        "L": {
+          "Body Height": {
+            "value": "180 - 196",
+            "unit": "cm"
+          },
+          "Seat Height": {
+            "value": "745 - 875",
+            "unit": "mm"
+          },
+          "Seat Tube Length": {
+            "value": 550,
+            "unit": "mm"
+          },
+          "Top Tube Length": {
+            "value": 565,
+            "unit": "mm"
+          },
+          "Head Tube Length": {
+            "value": 105,
+            "unit": "mm"
+          },
+          "Head Tube Angle": {
+            "value": 73,
+            "unit": "\u00b0"
+          },
+          "Seat Tube Angle": {
+            "value": 81,
+            "unit": "\u00b0"
+          },
+          "Chainstay Length": {
+            "value": 420,
+            "unit": "mm"
+          },
+          "Wheel Base": {
+            "value": 1046,
+            "unit": "mm",
+            "sourceValue": 1.046,
+            "normalization": "Canyon locale thousands separator: 1.013 means 1013 mm, verified against geometry table."
+          },
+          "Stack": {
+            "value": 511,
+            "unit": "mm"
+          },
+          "Reach": {
+            "value": 463,
+            "unit": "mm"
+          },
+          "Stand-over Height": {
+            "value": 814,
+            "unit": "mm"
+          },
+          "Bottom Bracket Offset": {
+            "value": 75,
+            "unit": "mm"
+          },
+          "Crank Length": {
+            "value": 165,
+            "unit": "mm"
+          },
+          "Chainring size": {
+            "value": "52/36",
+            "unit": ""
+          },
+          "Maximum Seat Post Insertion Depth": {
+            "value": 195,
+            "unit": "mm"
+          },
+          "Minimum Seat Post Insertion Depth": {
+            "value": 65,
+            "unit": "mm"
+          },
+          "Wheel Size": {
+            "value": 28,
+            "unit": "\""
+          },
+          "Disc Size": {
+            "value": "160 / 140",
+            "unit": "mm"
+          },
+          "Rim height": {
+            "value": 85,
+            "unit": "mm"
+          }
+        }
+      },
+      "discrepancies": [
+        "Marketing mentions 30 mm tyre clearance, while frame and fork component rows say 28 mm. Confirm with Canyon.",
+        "Front wheel component row is 65 mm; generic component-geometry row says 85 mm. Model follows the explicit 65/85 wheelset listing."
+      ]
+    }
+  },
+  "parts": {
+    "frame": {
+      "name": "Speedmax CF SLX frame",
+      "weight": 1484,
+      "spec": "CF SLX carbon \u00b7 12\u00d7142 \u00b7 UDH \u00b7 published component clearance 28 mm"
+    },
+    "seatpost": {
+      "name": "SP102 Standard seatpost",
+      "weight": 133,
+      "spec": "Carbon \u00b7 standard straight post; no Splitter Plate Pro"
+    },
+    "saddle": {
+      "name": "Fizik Transiro Aeris LD R5",
+      "weight": 223,
+      "spec": "Triathlon split nose \u00b7 steel rails"
+    },
+    "wheel_front": {
+      "name": "DT Swiss ARC 1600 Spline front",
+      "weight": 812,
+      "spec": "65 mm carbon \u00b7 22 mm internal \u00b7 12\u00d7100 \u00b7 Center Lock"
+    },
+    "wheel_rear": {
+      "name": "DT Swiss ARC 1600 Spline rear",
+      "weight": 904,
+      "spec": "85 mm carbon \u00b7 22 mm internal \u00b7 12\u00d7142 \u00b7 Shimano HG \u00b7 Center Lock"
+    },
+    "rim_front": {
+      "name": "ARC 1600 rim (front)",
+      "spec": "65 mm deep \u00b7 22 mm internal"
+    },
+    "rim_rear": {
+      "name": "ARC 1600 rim (rear)",
+      "spec": "85 mm deep \u00b7 22 mm internal"
+    },
+    "hub_front": {
+      "name": "DT Swiss Spline hub (front)",
+      "spec": "12\u00d7100 \u00b7 Center Lock \u00b7 hub model unconfirmed; geometry approximate"
+    },
+    "hub_rear": {
+      "name": "DT Swiss Spline hub (rear)",
+      "spec": "12\u00d7142 \u00b7 Shimano HG \u00b7 hub model unconfirmed; geometry approximate"
+    },
+    "tyre_rear": {
+      "name": "Continental GP5000 S TR",
+      "weight": 294,
+      "spec": "28 mm \u00b7 tubeless ready"
+    },
+    "cassette": {
+      "name": "Shimano CS-R8101",
+      "spec": "12-speed \u00b7 11\u201330 T",
+      "note": "11-12-13-14-15-16-17-19-21-24-27-30"
+    },
+    "chain": {
+      "name": "Shimano XT chain",
+      "spec": "12-speed \u00b7 conventional roller chain",
+      "note": "Animated on a 52\u00d714 route."
+    },
+    "crankset": {
+      "name": "Shimano Ultegra R8100 \u00b7 4iiii Precision",
+      "spec": "165 mm \u00b7 52/36 T \u00b7 left crank power meter"
+    },
+    "chainrings": {
+      "name": "Shimano Ultegra 52/36",
+      "spec": "Hollowglide-style outer ring \u00b7 four-arm mounting"
+    },
+    "powermeter_spider": {
+      "name": "Ultegra four-arm spider",
+      "spec": "Asymmetric four-arm design; power sensing on left crank",
+      "note": ""
+    },
+    "crank_arm_ds": {
+      "name": "Ultegra right crank",
+      "spec": "165 mm \u00b7 Hollowtech II alloy"
+    },
+    "crank_arm_nds": {
+      "name": "Ultegra 4iiii Precision left crank",
+      "spec": "165 mm \u00b7 inner-side power sensor"
+    },
+    "spindle": {
+      "name": "Hollowtech II spindle",
+      "spec": "24 mm"
+    },
+    "bottom_bracket": {
+      "name": "Shimano Pressfit BB72",
+      "weight": 65,
+      "spec": "PF86.5 \u00b7 24 mm spindle"
+    },
+    "front_derailleur": {
+      "name": "Shimano Ultegra FD-R8150",
+      "weight": 111,
+      "spec": "Di2 \u00b7 braze-on"
+    },
+    "rear_derailleur": {
+      "name": "Shimano Ultegra Di2 rear derailleur",
+      "weight": 260,
+      "spec": "12-speed \u00b7 short cage"
+    },
+    "axs_blips": {
+      "name": "Shimano Dura-Ace R9160 TT buttons",
+      "weight": 19,
+      "spec": "Wired Di2 extension switches",
+      "note": ""
+    },
+    "rotor_front": {
+      "name": "Shimano Ultegra RT-CL800 160",
+      "weight": 112,
+      "spec": "160 mm \u00b7 Center Lock \u00b7 Ice Technologies Freeza"
+    },
+    "rotor_rear": {
+      "name": "Shimano Ultegra RT-CL800 140",
+      "weight": 95,
+      "spec": "140 mm \u00b7 Center Lock \u00b7 Ice Technologies Freeza"
+    },
+    "brake_lever_left": {
+      "name": "Shimano Dura-Ace TT brake (L)",
+      "weight": 277,
+      "spec": "Hydraulic \u00b7 two piston"
+    },
+    "brake_lever_right": {
+      "name": "Shimano Dura-Ace TT brake (R)",
+      "weight": 278,
+      "spec": "Hydraulic \u00b7 two piston"
+    },
+    "caliper_front": {
+      "name": "Shimano Dura-Ace front caliper",
+      "spec": "Hydraulic \u00b7 flat mount"
+    },
+    "caliper_rear": {
+      "name": "Shimano Dura-Ace rear caliper",
+      "spec": "Hydraulic \u00b7 flat mount"
+    },
+    "di2_battery": {
+      "name": "Shimano BT-DN300 battery",
+      "group": "drivetrain",
+      "spec": "Internal Di2 battery \u00b7 hidden inside frame",
+      "note": "External dimensions approximate; shown in exploded view."
+    }
+  },
+  "defaultCfg": {
+    "frame": "#cdc8dd",
+    "decal": "#f1efef",
+    "finish": "satin",
+    "aerofuel": false,
+    "rearBottles": false
+  },
+  "unavailableOptions": [
+    "rearBottles"
+  ],
+  "compatiblePriceParts": [
+    "arm_pads",
+    "udh_hanger"
+  ],
+  "hero": {
+    "title": "Speedmax",
+    "titleSpan": "CF SLX 8 Di2",
+    "sub": "The CF SLX, explored in three dimensions.",
+    "lede": "Inspect the frame, customize your finish and explore the Shimano Di2 build. An independent reconstruction.",
+    "eyebrow": "Canyon collection \u00b7 CF SLX"
+  }
+}

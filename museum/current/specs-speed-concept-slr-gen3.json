@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "generation": "trek-speed-concept-slr-gen3",
+  "source": {
+    "page": "https://www.trekbikes.com/us/en_US/bikes/road-bikes/triathlon-bikes/speed-concept/f/F231/speed-concept-slr-9-axs/86500/5355351",
+    "retrieved": "2026-09-27",
+    "method": "Rendered page read in a browser; geometry from the Sizing table (cm, converted to mm here), components from the Specs definition list. Values copied verbatim."
+  },
+  "geometry": {
+    "units": "mm and degrees",
+    "sizes": ["S", "M", "L", "XL"],
+    "wheel": "700c",
+    "seat_tube": [499, 525, 549, 574],
+    "seat_tube_angle": [78.0, 78.0, 78.0, 78.0],
+    "head_tube": [65, 90, 115, 140],
+    "head_tube_angle": [72.2, 72.5, 72.5, 72.5],
+    "effective_top_tube": [495, 518, 541, 565],
+    "bb_drop": [80, 80, 80, 80],
+    "chainstay": [410, 410, 410, 410],
+    "fork_offset": [45, 45, 45, 45],
+    "trail": [61, 60, 60, 60],
+    "wheelbase": [967, 995, 1020, 1047],
+    "standover": [760, 785, 808, 831],
+    "reach": [390, 416, 426, 445],
+    "stack": [492, 517, 541, 565],
+    "saddle_rail_height_short_mast": [[559, 666], [580, 692], [604, 715], [628, 740]],
+    "saddle_rail_height_tall_mast": [[649, 756], [670, 782], [694, 805], [718, 830]]
+  },
+  "frame_facts": {
+    "frame": "800 Series OCLV Carbon, KVF (Kammtail Virtual Foil) tube shape, T47 BB, integrated Bento box, integrated downtube storage",
+    "fork": "SC full foil carbon, integrated brake & stem",
+    "frame_weight": "1522g - 56cm (frame-only, painted), 410g (fork-only, painted)",
+    "max_tire": "28mm rear, 25mm front",
+    "rotor_max": "160mm front & rear",
+    "axles": "100x12 front, 142x12 rear thru axle"
+  },
+  "trims": {
+    "slr_9_axs": {
+      "model_number": "5355351",
+      "product_code": "86500",
+      "color": "Matte Deep Smoke",
+      "price_usd": "14,499.99",
+      "weight": "M - 8.70 kg / 19.19 lbs (listed under the SLR 9 Di2 card on the same page; the AXS card lists no weight)",
+      "shifter": "SRAM AXS Wireless Blips, basebar and extension-mounted",
+      "front_derailleur": "SRAM RED AXS E1, braze-on",
+      "rear_derailleur": "SRAM RED AXS E1, 36T max cog",
+      "crank": "Size: S SRAM RED AXS E1, power meter, 48/35, DUB, 160mm length; Size: M, L, XL SRAM RED AXS E1, power meter, 48/35, DUB, 170mm length",
+      "bottom_bracket": "SRAM DUB, T47 threaded, internal bearing",
+      "cassette": "SRAM RED XG-1290 E1, 10-33, 12 speed",
+      "cassette_cogs": [10, 11, 12, 13, 14, 15, 17, 19, 21, 24, 28, 33],
+      "cassette_cogs_basis": "Standard SRAM XG-1290 10-33 sequence (SRAM published); Trek lists only the range.",
+      "chain": "SRAM RED E1, 12/13 speed",
+      "chainrings": [48, 35],
+      "wheel_front": "Bontrager Aeolus RSL 51, OCLV Carbon, Tubeless Ready, 51mm rim depth, 100x12mm thru axle",
+      "wheel_rear": "Bontrager Aeolus RSL 51, OCLV Carbon, Tubeless Ready, 51mm rim depth, Shimano 11/12 freehub, 142x12mm thru axle",
+      "skewers": "Bontrager Switch thru axle (rear: removable lever)",
+      "tire": "Bontrager R4 320, 700x25mm",
+      "saddle": "Bontrager Hilo Pro Carbon",
+      "seatpost": "Size: M, L, XL Speed Concept SLR, 11.5mm or -20mm offset, tall length",
+      "handlebar_parts": "Speed Concept 45mm Base Tower (S-XL); 30mm Base Tower (S, M); Cockpit Tower Topper Mid (M-XL)",
+      "handlebar_stem": "Speed Concept mid-rise bar/stem (integrated)",
+      "handlebar_tape": "Trek EcoTack",
+      "brake_rotor": "SRAM Paceline X, rounded, centerlock, 160mm",
+      "brake_lever": "SRAM RED Aero",
+      "cage_bottle": "Speed Concept Downtube Bottle Cage / Speed Concept Downtube Bottle"
+    }
+  }
+}

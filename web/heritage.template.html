@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>
+/* Same Desktop-view fit as the modern studio: phone layout, UI scaled up, canvas left alone. */
+(function fit() {
+  var html = document.documentElement;
+  function apply() {
+    var short = Math.min(screen.width, screen.height);
+    var touch = matchMedia('(pointer: coarse)').matches;
+    var landscape = innerWidth > innerHeight;
+    var ratio = innerWidth / (landscape ? Math.max(screen.width, screen.height) : short);
+    var on = touch && short < 600 && ratio > 1.3;
+    html.classList.toggle('phone-fit', on);
+    html.style.setProperty('--fit', on ? ratio.toFixed(3) : '1');
+  }
+  apply();
+  addEventListener('resize', apply);
+  addEventListener('orientationchange', function () { setTimeout(apply, 250); });
+})();
+</script>
+<meta name="theme-color" content="#10151b">
+<title>__TITLE__</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2310151b'/%3E%3Ccircle cx='18' cy='40' r='10' fill='none' stroke='%23fff' stroke-width='3'/%3E%3Ccircle cx='46' cy='40' r='10' fill='none' stroke='%23fff' stroke-width='3'/%3E%3Cpath d='M18 40l10-16h16l2 16M28 24l4 16' fill='none' stroke='%23bde9d9' stroke-width='3'/%3E%3C/svg%3E">
+<style>
+/* Heritage exhibit. WEB is the default. MOBILE: @media (max-width:820px) and html.phone-fit in this block.
+   Museum hall: web/styles/hall-web.css and hall-mobile.css. */
+:root{--bg:#10151b;--ink:#e8edf0;--muted:#94a2ad;--dim:#667580;--line:#cadce122;--glass:rgba(16,21,27,.74);--glass2:rgba(16,21,27,.92);--accent:#bde9d9;--warn:#f3c98b;--sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:"SF Mono",ui-monospace,Menlo,monospace;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}a{color:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.top{position:fixed;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:22px 26px;pointer-events:none;z-index:3}
+.top>*{pointer-events:auto}
+.back{font-size:11px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--muted);display:inline-flex;gap:8px;align-items:center;padding:9px 13px;border:1px solid var(--line);border-radius:999px;background:var(--glass);backdrop-filter:blur(14px)}
+.title .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.title h1{margin:8px 0 0;font-size:clamp(26px,3.4vw,46px);font-weight:500;letter-spacing:-.04em;line-height:1.02}
+.title h1 span{color:var(--muted)}
+.title p{margin:10px 0 0;max-width:430px;font-size:13px;line-height:1.65;color:var(--muted)}
+.panel{position:fixed;right:18px;top:18px;bottom:18px;width:340px;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:22px;background:var(--glass);backdrop-filter:blur(18px);z-index:4;overflow:hidden}
+.tabs{display:flex;gap:4px;padding:10px;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;padding:9px 6px;border:0;border-radius:11px;background:transparent;color:var(--muted);font-size:12px}
+.tabs button[aria-selected=true]{background:#ffffff12;color:var(--ink)}
+.pane{flex:1;overflow:auto;padding:18px 18px 22px;font-size:13px;line-height:1.6}
+.pane[hidden]{display:none}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:7px 14px;margin:0}
+.kv dt{color:var(--dim);font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding-top:2px}
+.kv dd{margin:0}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 18px}
+.stat div{border:1px solid var(--line);border-radius:14px;padding:10px 11px}
+.stat b{display:block;font-size:17px;font-weight:600;letter-spacing:-.02em}
+.stat small{color:var(--dim);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+h2{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:20px 0 10px}
+h2:first-child{margin-top:0}
+.parts{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.parts button{width:100%;text-align:left;display:flex;justify-content:space-between;gap:10px;padding:8px 11px;border:1px solid transparent;border-radius:10px;background:#ffffff06;font-size:12.5px}
+.parts button:hover,.parts button[aria-pressed=true]{border-color:var(--line);background:#ffffff12}
+.parts small{color:var(--dim);font-family:var(--mono);font-size:10.5px}
+.note{border-left:2px solid var(--warn);padding:2px 0 2px 11px;color:var(--muted);margin:0 0 10px}
+.src{display:block;padding:9px 11px;border:1px solid var(--line);border-radius:11px;margin:0 0 7px;text-decoration:none;font-size:12px}
+.src small{display:block;color:var(--dim);font-family:var(--mono);font-size:10px;word-break:break-all;margin-top:3px}
+.dock{position:fixed;left:26px;bottom:22px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;z-index:3;max-width:calc(100vw - 420px)}
+.chip{padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:var(--glass);backdrop-filter:blur(14px);font-size:12px}
+.chip[aria-pressed=true]{background:var(--accent);color:#0c1116;border-color:var(--accent)}
+.range{display:flex;gap:10px;align-items:center;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--glass);backdrop-filter:blur(14px);font-size:12px;color:var(--muted)}
+.range input{accent-color:var(--accent);width:120px}
+.tip{position:fixed;pointer-events:none;padding:6px 10px;border-radius:9px;background:var(--glass2);border:1px solid var(--line);font-size:12px;z-index:6;transform:translate(12px,12px);opacity:0;transition:opacity .12s}
+#loader{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg);z-index:9;transition:opacity .5s}
+#loader div{width:220px;text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+#loader i{display:block;height:2px;background:var(--accent);width:0;margin-top:14px;transition:width .3s}
+.toggle-panel{display:none}
+@media (max-width:820px){
+ .top{padding:14px 16px}.title p{display:none}
+ .panel{left:0;right:0;top:auto;bottom:0;width:auto;height:46vh;border-radius:22px 22px 0 0;transform:translateY(calc(100% - 52px));transition:transform .3s}
+ .panel.open{transform:none}
+ .toggle-panel{display:block;border:0;background:transparent;padding:12px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+ .dock{left:16px;right:16px;bottom:64px;max-width:none}
+ .range input{width:90px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+html.phone-fit .top{zoom:var(--fit);left:0;right:auto;width:calc(100vw / var(--fit));padding:14px 16px}
+html.phone-fit .title p{display:none}
+html.phone-fit .title h1{font-size:28px}
+html.phone-fit .panel{zoom:var(--fit);left:0;right:auto;top:auto;bottom:0;width:calc(100vw / var(--fit));height:calc(46vh / var(--fit));border-radius:22px 22px 0 0;transform:translateY(calc(100% - 52px))}
+html.phone-fit .panel.open{transform:none}
+html.phone-fit .toggle-panel{display:block;border:0;background:transparent;padding:12px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+html.phone-fit .dock{zoom:var(--fit);left:8px;right:auto;bottom:calc(64px);max-width:calc((100vw - 16px) / var(--fit));flex-wrap:nowrap;overflow-x:auto}
+html.phone-fit .chip{flex:0 0 auto}
+html.phone-fit #loader div{zoom:var(--fit)}
+</style>
+</head>
+<body>
+<div id="loader"><div>Opening exhibit<i></i></div></div>
+<canvas id="c" aria-label="Interactive 3D model; drag to orbit, scroll to zoom"></canvas>
+<header class="top">
+  <div class="title">
+    <a class="back" href="Canyon_Collection.html">← Museum</a>
+    <div style="margin-top:18px" class="eyebrow" id="eyebrow"></div>
+    <h1 id="name"></h1>
+    <p id="lede"></p>
+  </div>
+</header>
+<aside class="panel" id="panel">
+  <button class="toggle-panel" id="togglePanel" aria-expanded="false">Details</button>
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="exhibit">Exhibit</button>
+    <button role="tab" aria-selected="false" data-tab="parts">Parts</button>
+    <button role="tab" aria-selected="false" data-tab="evidence">Evidence</button>
+  </div>
+  <section class="pane" data-pane="exhibit" id="paneExhibit"></section>
+  <section class="pane" data-pane="parts" hidden><ul class="parts" id="partList"></ul></section>
+  <section class="pane" data-pane="evidence" id="paneEvidence" hidden></section>
+</aside>
+<nav class="dock" aria-label="View controls">
+  <button class="chip" data-view="side">Side</button>
+  <button class="chip" data-view="hero">Three-quarter</button>
+  <button class="chip" data-view="cockpit">Cockpit</button>
+  <button class="chip" data-view="drivetrain">Drivetrain</button>
+  <label class="range">Explode <input id="explode" type="range" min="0" max="1" step="0.01" value="0"></label>
+  <button class="chip" id="spin" aria-pressed="false">Turntable</button>
+</nav>
+<div class="tip" id="tip"></div>
+<script>window.__SPEEDMAX_GLB="__GLB__";</script>
+<script>__APP__</script>
+</body>
+</html>

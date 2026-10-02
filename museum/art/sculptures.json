@@ -1,0 +1,81 @@
+{
+ "schema_version": 1,
+ "note": "Sculptures generated for the museum; raw records in museum/sources/higgsfield/.",
+ "sculptures": [
+  {
+   "id": "the-tuck",
+   "title": "The Tuck",
+   "material": "Bronze (generated model)",
+   "text": "Rider and machine as one shape: the position every bike in this building was drawn around.",
+   "file": "the-tuck.glb",
+   "height": 0.95,
+   "footprint": 1.6,
+   "plinth": [
+    1.7,
+    0.8,
+    0.85
+   ],
+   "tris": 19859,
+   "bytes": 437092,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "meshy_v6_text_to_3d",
+    "job_id": "a2dacf4f-89fe-4069-916e-defdaa977df2",
+    "created": "2026-09-29",
+    "prompt": "Abstract polished bronze sculpture of a cyclist merged with a bicycle in a low aerodynamic time-trial tuck, smooth flowing elongated forms like a teardrop, no face details, mounted on a simple square black stone base",
+    "source_record": "museum/sources/higgsfield/sculptures-20260929.json"
+   }
+  },
+  {
+   "id": "basalt-airfoil",
+   "title": "Basalt airfoil",
+   "material": "Basalt with a lava vein (generated model)",
+   "text": "The shape of the wind, cut from the ground the Queen K is built on.",
+   "file": "basalt-airfoil.glb",
+   "height": 1.45,
+   "footprint": 0.7,
+   "plinth": [
+    0.8,
+    0.9,
+    0.8
+   ],
+   "tris": 15371,
+   "bytes": 193076,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "meshy_v6_text_to_3d",
+    "job_id": "737dc0a6-955c-46eb-be68-e9c630651c6c",
+    "created": "2026-09-29",
+    "prompt": "Modern sculpture of a smooth teardrop airfoil carved from glossy black volcanic basalt with a thin glowing orange vein running through it, standing upright on a small plinth",
+    "source_record": "museum/sources/higgsfield/sculptures-20260929.json"
+   }
+  },
+  {
+   "id": "sea-glass-wave",
+   "title": "Sea-glass wave",
+   "material": "Sea glass and marble (generated model)",
+   "text": "The swim before the ride: the bay's colour, caught at the top of a wave.",
+   "file": "sea-glass-wave.glb",
+   "height": 1.05,
+   "footprint": 1.25,
+   "plinth": [
+    1.35,
+    0.8,
+    1.35
+   ],
+   "tris": 18487,
+   "bytes": 461620,
+   "provenance": {
+    "kind": "ai-generated",
+    "tool": "Higgsfield",
+    "model": "meshy_v6_text_to_3d",
+    "job_id": "4d04d4d4-a277-4fd7-bf49-8263897c1a05",
+    "created": "2026-09-29",
+    "prompt": "Stylized sculpture of a breaking ocean wave in polished turquoise sea glass and white marble foam, abstract and elegant, on a round driftwood base",
+    "source_record": "museum/sources/higgsfield/sculptures-20260929.json"
+   }
+  }
+ ]
+}

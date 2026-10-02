@@ -1,0 +1,1277 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-01T08:21:05.948Z",
+  "sources": [
+    {
+      "id": "https://www.slowtwitch.com/feed/",
+      "name": "Slowtwitch",
+      "kind": "news",
+      "website": "https://www.slowtwitch.com/",
+      "feed_url": "https://www.slowtwitch.com/feed/",
+      "note": "Triathlon reporting and analysis",
+      "status": "ok",
+      "checked_at": "2026-10-01T08:21:05.655Z",
+      "last_success_at": "2026-10-01T08:21:05.655Z"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feed/",
+      "name": "Triathlon Magazine",
+      "kind": "news",
+      "website": "https://triathlonmagazine.ca/",
+      "feed_url": "https://triathlonmagazine.ca/feed/",
+      "note": "Triathlon reporting from Canada",
+      "status": "ok",
+      "checked_at": "2026-10-01T08:21:05.388Z",
+      "last_success_at": "2026-10-01T08:21:05.388Z"
+    },
+    {
+      "id": "https://bigislandnow.com/feed/",
+      "name": "Big Island Now",
+      "kind": "kona",
+      "website": "https://bigislandnow.com/",
+      "feed_url": "https://bigislandnow.com/feed/",
+      "note": "Hawaiʻi Island news, including Kona",
+      "status": "ok",
+      "checked_at": "2026-10-01T08:21:03.874Z",
+      "last_success_at": "2026-10-01T08:21:03.874Z"
+    },
+    {
+      "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "name": "Lionel Sanders",
+      "kind": "video",
+      "website": "https://www.youtube.com/channel/UC-gct8TB_8l5HsQHBBr8hyQ",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "note": "Official athlete channel",
+      "status": "ok",
+      "checked_at": "2026-10-01T08:21:05.781Z",
+      "last_success_at": "2026-10-01T08:21:05.781Z"
+    },
+    {
+      "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "name": "Lucy Charles-Barclay",
+      "kind": "video",
+      "website": "https://www.youtube.com/channel/UC6PP69DCmBwMCPf9RSSTNTg",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "note": "Team Charles-Barclay · Lucy & Reece",
+      "status": "ok",
+      "checked_at": "2026-10-01T08:21:05.751Z",
+      "last_success_at": "2026-10-01T08:21:05.751Z"
+    },
+    {
+      "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "name": "Paula Findlay · TTL",
+      "kind": "video",
+      "website": "https://www.youtube.com/channel/UC8Wjskc9fSkYLporjscGIBQ",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "note": "That Triathlon Life · Paula Findlay & Eric Lagerstrom",
+      "status": "ok",
+      "checked_at": "2026-10-01T08:21:05.801Z",
+      "last_success_at": "2026-10-01T08:21:05.801Z"
+    },
+    {
+      "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "name": "Sam Laidlow",
+      "kind": "video",
+      "website": "https://www.youtube.com/channel/UCP6EsU9T2RykT1quNR5moeg",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "note": "Official athlete channel",
+      "status": "ok",
+      "checked_at": "2026-10-01T08:21:05.907Z",
+      "last_success_at": "2026-10-01T08:21:05.907Z"
+    },
+    {
+      "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "name": "Sam Long",
+      "kind": "video",
+      "website": "https://www.youtube.com/channel/UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "note": "Official athlete channel",
+      "status": "ok",
+      "checked_at": "2026-10-01T08:21:05.944Z",
+      "last_success_at": "2026-10-01T08:21:05.944Z"
+    },
+    {
+      "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "name": "Jan Frodeno",
+      "kind": "video",
+      "website": "https://www.youtube.com/channel/UCaxiAhuGz2SvnIYml4B5qMA",
+      "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "note": "Frodeno Going Mental · official podcast",
+      "status": "ok",
+      "checked_at": "2026-10-01T08:21:05.935Z",
+      "last_success_at": "2026-10-01T08:21:05.935Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://bigislandnow.com/2026/09/30/hawaii-county-weather-forecast-for-october-01-2026/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaii County Weather Forecast for October 01, 2026",
+      "url": "https://bigislandnow.com/2026/09/30/hawaii-county-weather-forecast-for-october-01-2026/",
+      "published_at": "2026-10-01T06:30:13.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/30/hawaii-county-surf-forecast-for-october-01-2026/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaii County Surf Forecast for October 01, 2026",
+      "url": "https://bigislandnow.com/2026/09/30/hawaii-county-surf-forecast-for-october-01-2026/",
+      "published_at": "2026-10-01T06:00:07.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/30/north-kohala-police-station-phone-lines-down/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "UPDATE: North Kohala police station phone lines now operational",
+      "url": "https://bigislandnow.com/2026/09/30/north-kohala-police-station-phone-lines-down/",
+      "published_at": "2026-10-01T02:05:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/30/police-motorists-advised-to-avoid-portion-of-highway-11-in/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "UPDATE: Police report Highway 11 open to all traffic near 111-mile marker",
+      "url": "https://bigislandnow.com/2026/09/30/police-motorists-advised-to-avoid-portion-of-highway-11-in/",
+      "published_at": "2026-10-01T00:39:30.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/30/flags-ordered-lowered-to-honor-life-service-of-former-lawmaker-patricia-saiki/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Flags ordered lowered to honor life, service of former lawmaker Patricia Saiki",
+      "url": "https://bigislandnow.com/2026/09/30/flags-ordered-lowered-to-honor-life-service-of-former-lawmaker-patricia-saiki/",
+      "published_at": "2026-10-01T00:16:54.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/2026-ironman-foundation-laulima-auction-is-live-features-3-kona-slots-and-more/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "2026 IRONMAN Foundation Laulima Auction is Live, Features 3 Kona Slots and More",
+      "url": "https://www.slowtwitch.com/triathlon/2026-ironman-foundation-laulima-auction-is-live-features-3-kona-slots-and-more/",
+      "published_at": "2026-09-30T23:46:30.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/news/what-is-woven-inside-ironmans-new-initiative-for-women-in-triathlon/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "What Is Woven? Inside Ironman’s New Initiative for Women in Triathlon",
+      "url": "https://triathlonmagazine.ca/news/what-is-woven-inside-ironmans-new-initiative-for-women-in-triathlon/",
+      "published_at": "2026-09-30T19:28:28.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.slowtwitch.com/running/a-tale-of-two-trail-shoes-asics-trabuco-max-5-vs-blazeblast/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "A Tale of Two Trail Shoes: ASICS Trabuco Max 5 vs Blazeblast",
+      "url": "https://www.slowtwitch.com/running/a-tale-of-two-trail-shoes-asics-trabuco-max-5-vs-blazeblast/",
+      "published_at": "2026-09-30T18:17:49.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/30/solid-waste-facility-closures-announced-because-of-ironman-world-championship/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Solid waste facility closures announced because of Ironman World Championship",
+      "url": "https://bigislandnow.com/2026/09/30/solid-waste-facility-closures-announced-because-of-ironman-world-championship/",
+      "published_at": "2026-09-30T18:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feature/jackson-laundry-wins-ironman-70-3-augusta-and-believes-his-best-is-still-ahead/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Jackson Laundry Wins Ironman 70.3 Augusta and Believes His Best Is Still Ahead",
+      "url": "https://triathlonmagazine.ca/feature/jackson-laundry-wins-ironman-70-3-augusta-and-believes-his-best-is-still-ahead/",
+      "published_at": "2026-09-30T15:10:56.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/30/hawai%ca%bbi-county-awards-450k-in-impact-grants/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaiʻi County awards $450K in Impact Grants",
+      "url": "https://bigislandnow.com/2026/09/30/hawai%ca%bbi-county-awards-450k-in-impact-grants/",
+      "published_at": "2026-09-30T15:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/30/18-deputy-sheriffs-sworn-in-including-5-assigned-to-big-island-sheriff-divisions-in-hilo-kona/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "18 deputy sheriffs sworn in, including 5 assigned to Big Island sheriff divisions in Hilo, Kona",
+      "url": "https://bigislandnow.com/2026/09/30/18-deputy-sheriffs-sworn-in-including-5-assigned-to-big-island-sheriff-divisions-in-hilo-kona/",
+      "published_at": "2026-09-30T13:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/30/what-big-island-residents-need-to-know-wednesday-about-tropical-storm-nolo/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "What Big Island residents need to know Wednesday about Hurricane Nolo",
+      "url": "https://bigislandnow.com/2026/09/30/what-big-island-residents-need-to-know-wednesday-about-tropical-storm-nolo/",
+      "published_at": "2026-09-30T12:46:17.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/30/police-thank-community-for-successful-badges-and-buckets-fundraiser/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Police thank community for successful Badges and Buckets fundraiser",
+      "url": "https://bigislandnow.com/2026/09/30/police-thank-community-for-successful-badges-and-buckets-fundraiser/",
+      "published_at": "2026-09-30T11:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/hawaii-county-weather-forecast-for-september-30-2026/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaii County Weather Forecast for September 30, 2026",
+      "url": "https://bigislandnow.com/2026/09/29/hawaii-county-weather-forecast-for-september-30-2026/",
+      "published_at": "2026-09-30T06:30:08.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/hawaii-county-surf-forecast-for-september-30-2026/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaii County Surf Forecast for September 30, 2026",
+      "url": "https://bigislandnow.com/2026/09/29/hawaii-county-surf-forecast-for-september-30-2026/",
+      "published_at": "2026-09-30T06:00:05.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/essential-water-use-only-notice-replaced-with-water-restriction-notice-for-several-ka%ca%bbu-communities/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Essential water use only notice replaced with water restriction notice for several Kaʻū communities",
+      "url": "https://bigislandnow.com/2026/09/29/essential-water-use-only-notice-replaced-with-water-restriction-notice-for-several-ka%ca%bbu-communities/",
+      "published_at": "2026-09-30T02:33:18.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feature/hurricane-nolo-and-the-ironman-world-championship-what-we-know/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Hurricane Nolo and the Ironman World Championship: What We Know",
+      "url": "https://triathlonmagazine.ca/feature/hurricane-nolo-and-the-ironman-world-championship-what-we-know/",
+      "published_at": "2026-09-30T00:39:18.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/2-big-island-residents-appointed-to-state-panels/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "2 Big Island residents appointed to state panels",
+      "url": "https://bigislandnow.com/2026/09/29/2-big-island-residents-appointed-to-state-panels/",
+      "published_at": "2026-09-30T00:00:33.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/police-seek-missing-volcano-man/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Police seek missing Volcano man",
+      "url": "https://bigislandnow.com/2026/09/29/police-seek-missing-volcano-man/",
+      "published_at": "2026-09-29T23:31:30.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.slowtwitch.com/running/salomons-aero-blaze-4-is-the-personification-of-if-it-aint-broke-dont-fix-it-till-it-is/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Salomon&#8217;s Aero Blaze 4 is the Personification of &#8220;If It Ain&#8217;t Broke, Don&#8217;t Fix It Till It Is&#8221;",
+      "url": "https://www.slowtwitch.com/running/salomons-aero-blaze-4-is-the-personification-of-if-it-aint-broke-dont-fix-it-till-it-is/",
+      "published_at": "2026-09-29T21:25:00.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.slowtwitch.com/running/nike-is-betting-big-on-trail-with-a-revamped-acg/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Nike is Betting Big on Trail With a Revamped ACG",
+      "url": "https://www.slowtwitch.com/running/nike-is-betting-big-on-trail-with-a-revamped-acg/",
+      "published_at": "2026-09-29T20:13:07.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/big-island-man-wanted-on-2-outstanding-warrants-recently-indicted-for-reported-jewelry-store-theft/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Big Island man wanted on 2 outstanding warrants recently indicted for reported jewelry store theft",
+      "url": "https://bigislandnow.com/2026/09/29/big-island-man-wanted-on-2-outstanding-warrants-recently-indicted-for-reported-jewelry-store-theft/",
+      "published_at": "2026-09-29T18:22:36.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/briefs-for-sept-29-community-policing-events-set-for-hilo-kona-this-week/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Briefs for Sept. 29: Community policing events set for Hilo, Kona this week",
+      "url": "https://bigislandnow.com/2026/09/29/briefs-for-sept-29-community-policing-events-set-for-hilo-kona-this-week/",
+      "published_at": "2026-09-29T18:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/big-island-officials-residents-relieved-after-hurricane-nolo-passes-without-causing-major-damage/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Big Island officials, residents relieved after Hurricane Nolo passes without causing major damage",
+      "url": "https://bigislandnow.com/2026/09/29/big-island-officials-residents-relieved-after-hurricane-nolo-passes-without-causing-major-damage/",
+      "published_at": "2026-09-29T15:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.slowtwitch.com/cycling/behind-the-scenes-at-canyon-hq/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Behind the Scenes at Canyon HQ",
+      "url": "https://www.slowtwitch.com/cycling/behind-the-scenes-at-canyon-hq/",
+      "published_at": "2026-09-29T14:39:26.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/puna-%ca%bbopio-hub-to-offer-free-job-skills-workshops-for-transitional-age-youth/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Puna ʻŌpio Hub to offer free job skills workshops for transitional age youth",
+      "url": "https://bigislandnow.com/2026/09/29/puna-%ca%bbopio-hub-to-offer-free-job-skills-workshops-for-transitional-age-youth/",
+      "published_at": "2026-09-29T13:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=31ND8Kzvulc",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "The World Championship Camp",
+      "url": "https://www.youtube.com/watch?v=31ND8Kzvulc",
+      "published_at": "2026-09-29T12:00:07.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/31ND8Kzvulc/hqdefault.jpg"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/29/lifeguard-certification-offered-at-pahoa-community-aquatic-center/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Lifeguard certification offered at Pāhoa Community Aquatic Center",
+      "url": "https://bigislandnow.com/2026/09/29/lifeguard-certification-offered-at-pahoa-community-aquatic-center/",
+      "published_at": "2026-09-29T11:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/28/hawaii-county-weather-forecast-for-september-29-2026/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaii County Weather Forecast for September 29, 2026",
+      "url": "https://bigislandnow.com/2026/09/28/hawaii-county-weather-forecast-for-september-29-2026/",
+      "published_at": "2026-09-29T06:30:09.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/28/hawaii-county-surf-forecast-for-september-29-2026/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaii County Surf Forecast for September 29, 2026",
+      "url": "https://bigislandnow.com/2026/09/28/hawaii-county-surf-forecast-for-september-29-2026/",
+      "published_at": "2026-09-29T06:00:05.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/28/hawai%ca%bbi-police-seek-help-in-search-for-missing-endangered-woman/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Update: Police locate missing, endangered woman",
+      "url": "https://bigislandnow.com/2026/09/28/hawai%ca%bbi-police-seek-help-in-search-for-missing-endangered-woman/",
+      "published_at": "2026-09-29T03:30:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/28/water-restriction-notice-issued-for-kalapana/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Department of Water Supply customers urged to reduce water use in Kalapana",
+      "url": "https://bigislandnow.com/2026/09/28/water-restriction-notice-issued-for-kalapana/",
+      "published_at": "2026-09-29T03:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/09/28/flood-advisory-issued-for-parts-of-big-island-as-heavy-rains-fall-over-southeast-slopes/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "UPDATE 6: High wind advisory canceled for Kohala, high surf advisory canceled",
+      "url": "https://bigislandnow.com/2026/09/28/flood-advisory-issued-for-parts-of-big-island-as-heavy-rains-fall-over-southeast-slopes/",
+      "published_at": "2026-09-29T01:38:40.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feature/matt-hauser-wins-by-0-08-seconds-vasco-vilaca-takes-the-world-title-at-wtcs-final-in-pontevedra/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Matt Hauser Wins by 0.08 Seconds, Vasco Vilaça Takes the World Title at WTCS Final in Pontevedra",
+      "url": "https://triathlonmagazine.ca/feature/matt-hauser-wins-by-0-08-seconds-vasco-vilaca-takes-the-world-title-at-wtcs-final-in-pontevedra/",
+      "published_at": "2026-09-28T22:40:15.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/we-noticed-slowtwitch-team-applications-open-mcnulty-surprises-at-uci-worlds-frodeno-fast-in-berlin-and-more/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "We Noticed: Slowtwitch Team Applications Open, McNulty Surprises at UCI Worlds, Frodeno Fast in Berlin and More",
+      "url": "https://www.slowtwitch.com/triathlon/we-noticed-slowtwitch-team-applications-open-mcnulty-surprises-at-uci-worlds-frodeno-fast-in-berlin-and-more/",
+      "published_at": "2026-09-28T20:00:26.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=ZsqWRCrVH08",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Molly Seidel: What a Medal Doesn't Fix",
+      "url": "https://www.youtube.com/watch?v=ZsqWRCrVH08",
+      "published_at": "2026-09-28T11:31:42.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/ZsqWRCrVH08/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/hauser-takes-the-world-triathlon-final-vilaca-takes-the-championship-yee-serves-notice/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Hauser Takes the World Triathlon Final, Vilaca Takes the Championship, Yee Serves Notice",
+      "url": "https://www.slowtwitch.com/triathlon/hauser-takes-the-world-triathlon-final-vilaca-takes-the-championship-yee-serves-notice/",
+      "published_at": "2026-09-27T19:02:33.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=NRVPzDjck-8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "There's no place like it - NICE Ironman 70.3 World Champs 2026",
+      "url": "https://www.youtube.com/watch?v=NRVPzDjck-8",
+      "published_at": "2026-09-27T15:00:07.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/NRVPzDjck-8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/cassandre-beaugrand-blasts-to-world-triathlon-championship-win/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Cassandre Beaugrand Blasts to World Triathlon Championship Win",
+      "url": "https://www.slowtwitch.com/triathlon/cassandre-beaugrand-blasts-to-world-triathlon-championship-win/",
+      "published_at": "2026-09-26T21:02:54.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feature/untouchable-cassandre-beaugrand-completes-perfect-wtcs-season-in-pontevedra/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Untouchable: Cassandre Beaugrand Completes Perfect WTCS Season in Pontevedra",
+      "url": "https://triathlonmagazine.ca/feature/untouchable-cassandre-beaugrand-completes-perfect-wtcs-season-in-pontevedra/",
+      "published_at": "2026-09-26T20:33:04.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/news/canadian-qualifiers-join-lisa-bentley-in-kona/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Canadian Qualifiers: Join Lisa Bentley in Kona",
+      "url": "https://triathlonmagazine.ca/news/canadian-qualifiers-join-lisa-bentley-in-kona/",
+      "published_at": "2026-09-26T20:31:16.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/casper-stornes-crashes-bike-in-training-out-of-kona/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Casper Stornes Crashes Bike in Training, Out of Kona",
+      "url": "https://www.slowtwitch.com/triathlon/casper-stornes-crashes-bike-in-training-out-of-kona/",
+      "published_at": "2026-09-25T20:12:35.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feature/breaking-ironman-world-champion-casper-stornes-out-of-kona-after-bike-crash/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Breaking: Ironman World Champion Casper Stornes Out of Kona After Bike Crash",
+      "url": "https://triathlonmagazine.ca/feature/breaking-ironman-world-champion-casper-stornes-out-of-kona-after-bike-crash/",
+      "published_at": "2026-09-25T19:34:38.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/we-noticed-weather-forces-im-70-3-jones-beach-postponement-t50-and-challenger-series-schedules-announced-and-more/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "We Noticed: Weather Forces IM 70.3 Jones Beach Postponement, T50 and Challenger Series Schedules Announced and More",
+      "url": "https://www.slowtwitch.com/triathlon/we-noticed-weather-forces-im-70-3-jones-beach-postponement-t50-and-challenger-series-schedules-announced-and-more/",
+      "published_at": "2026-09-25T18:36:34.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/news/ironman-70-3-new-york-pros-re-routed-to-augusta/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Ironman 70.3 New York Pros Re-Routed to Augusta",
+      "url": "https://triathlonmagazine.ca/news/ironman-70-3-new-york-pros-re-routed-to-augusta/",
+      "published_at": "2026-09-25T18:30:39.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/news/triathlon-world-tour-announces-30-more-races-for-2027/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Triathlon World Tour Announces 30 More Races for 2027",
+      "url": "https://triathlonmagazine.ca/news/triathlon-world-tour-announces-30-more-races-for-2027/",
+      "published_at": "2026-09-25T15:44:22.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feature/breaking-ironman-70-3-new-york-cancelled-due-to-coastal-storm/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Breaking: Ironman 70.3 New York Cancelled Due to Coastal Storm",
+      "url": "https://triathlonmagazine.ca/feature/breaking-ironman-70-3-new-york-cancelled-due-to-coastal-storm/",
+      "published_at": "2026-09-25T15:16:23.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/1o70rtj9xjI",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "KONA dream shots unlocked with DJI Avata 360. Fly first, frame the shot later 🤘#djiavata360",
+      "url": "https://www.youtube.com/shorts/1o70rtj9xjI",
+      "published_at": "2026-09-23T16:04:42.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/1o70rtj9xjI/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=7wsJpG6pxvA",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "Kona Baseline Testing / The Long Way to Kona ep. 1",
+      "url": "https://www.youtube.com/watch?v=7wsJpG6pxvA",
+      "published_at": "2026-09-21T21:14:57.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/7wsJpG6pxvA/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=0KKKzu3g6CY",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Fabio Wibmer: What It Really Takes to Do the Impossible",
+      "url": "https://www.youtube.com/watch?v=0KKKzu3g6CY",
+      "published_at": "2026-09-21T03:15:31.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/0KKKzu3g6CY/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=9RkL5StOPHU",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "Nice at Full Speed | 70.3 World Championship Descent",
+      "url": "https://www.youtube.com/watch?v=9RkL5StOPHU",
+      "published_at": "2026-09-20T15:00:07.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/9RkL5StOPHU/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=zz-cmygsheU",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "TRAINING CAMP DAY IN THE LIFE | WHOOP",
+      "url": "https://www.youtube.com/watch?v=zz-cmygsheU",
+      "published_at": "2026-09-18T11:19:16.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/zz-cmygsheU/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=kmDayJOe-tU",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Kílian Jornet: The Terrifying Truth About Your Limits",
+      "url": "https://www.youtube.com/watch?v=kmDayJOe-tU",
+      "published_at": "2026-09-14T01:00:30.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/kmDayJOe-tU/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/wUqCldW_7iY",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "Get these into your weekly swim plan! 🧜🏻‍♀️",
+      "url": "https://www.youtube.com/shorts/wUqCldW_7iY",
+      "published_at": "2026-09-09T18:10:30.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/wUqCldW_7iY/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=Uo-MtpF0GJ8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "What Success Doesn’t Teach You - Jan Frodeno on Failure, Pressure & Identity",
+      "url": "https://www.youtube.com/watch?v=Uo-MtpF0GJ8",
+      "published_at": "2026-09-07T01:30:04.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/Uo-MtpF0GJ8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=-gbCxYLbJ3k",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "This Drone is a Cycling Footage Cheat Code",
+      "url": "https://www.youtube.com/watch?v=-gbCxYLbJ3k",
+      "published_at": "2026-09-01T20:11:15.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/-gbCxYLbJ3k/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=aTvvDr1R2rs",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "IRONMAN KONA RECON - The Hype Is Real",
+      "url": "https://www.youtube.com/watch?v=aTvvDr1R2rs",
+      "published_at": "2026-08-30T15:00:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/aTvvDr1R2rs/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/a-zDF9Zf1-s",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "🔥 4x 3 minutes at 5% incline with 90s recovery 🧊 5 mins easy then repeat!",
+      "url": "https://www.youtube.com/shorts/a-zDF9Zf1-s",
+      "published_at": "2026-08-20T14:34:01.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/a-zDF9Zf1-s/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=iAunv22Rd1E",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "America's Next Best Race? || XTERRA Portland",
+      "url": "https://www.youtube.com/watch?v=iAunv22Rd1E",
+      "published_at": "2026-08-19T17:05:31.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/iAunv22Rd1E/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/i25ZA04JQj4",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "First flight with the AVATA 360 from our Tarmac SL9 Video 🫡",
+      "url": "https://www.youtube.com/shorts/i25ZA04JQj4",
+      "published_at": "2026-08-15T15:04:03.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/i25ZA04JQj4/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/xqPaH0He75w",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "Find out more in my latest video! A full 12 hours in the life of a professional triathlete!",
+      "url": "https://www.youtube.com/shorts/xqPaH0He75w",
+      "published_at": "2026-08-14T12:15:58.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/xqPaH0He75w/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=Ilhsf3__qrQ",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "Air to the Throne | Breaking the IRONMAN World Record",
+      "url": "https://www.youtube.com/watch?v=Ilhsf3__qrQ",
+      "published_at": "2026-08-13T17:00:09.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/Ilhsf3__qrQ/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=erX1srPOs_I",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "Full training day | 12 hours with Lucy Charles-Barclay",
+      "url": "https://www.youtube.com/watch?v=erX1srPOs_I",
+      "published_at": "2026-08-12T16:00:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/erX1srPOs_I/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/bF4seIS5FXs",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "A bit more aero now 🫢",
+      "url": "https://www.youtube.com/shorts/bF4seIS5FXs",
+      "published_at": "2026-08-07T17:46:00.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/bF4seIS5FXs/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/KHfwruNk9Ro",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "New vlog out now!!",
+      "url": "https://www.youtube.com/shorts/KHfwruNk9Ro",
+      "published_at": "2026-08-07T10:55:38.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/KHfwruNk9Ro/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/5JQoS5VTXfs",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "She’s so feral 🤣🐕",
+      "url": "https://www.youtube.com/shorts/5JQoS5VTXfs",
+      "published_at": "2026-08-07T09:33:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/5JQoS5VTXfs/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=NmIpbrMbp1g",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "Everything I've been up to!",
+      "url": "https://www.youtube.com/watch?v=NmIpbrMbp1g",
+      "published_at": "2026-08-06T14:01:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/NmIpbrMbp1g/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=kpab3s497Ho",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "What's Going Through My Mind Winning by 5 Minutes? | 70.3 Boise Recap",
+      "url": "https://www.youtube.com/watch?v=kpab3s497Ho",
+      "published_at": "2026-08-02T22:37:15.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/kpab3s497Ho/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=iX6PBO0oQBA",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "Mechanical vs. Metabolic Load",
+      "url": "https://www.youtube.com/watch?v=iX6PBO0oQBA",
+      "published_at": "2026-07-31T17:24:13.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/iX6PBO0oQBA/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/q4gIiovGdWo",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "The pace was … a little off",
+      "url": "https://www.youtube.com/shorts/q4gIiovGdWo",
+      "published_at": "2026-07-29T12:36:29.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/q4gIiovGdWo/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=CHDWdosyuA0",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "Paula's SL9 Climbing Bike + Riding The Oregon Coast // POST IRONMAN PLACID",
+      "url": "https://www.youtube.com/watch?v=CHDWdosyuA0",
+      "published_at": "2026-07-27T21:20:50.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/CHDWdosyuA0/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/wL4NTzhvx_4",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "Things get serious on the track 🔥 #teamcharlesbarclay",
+      "url": "https://www.youtube.com/shorts/wL4NTzhvx_4",
+      "published_at": "2026-07-27T15:28:36.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/wL4NTzhvx_4/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/yS6nUNuAJ2w",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "One life, make sure you find out 💪🏻 #teamcharlesbarclay",
+      "url": "https://www.youtube.com/shorts/yS6nUNuAJ2w",
+      "published_at": "2026-07-27T12:39:20.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/yS6nUNuAJ2w/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/Hyr80wdkWK8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "Grab me a gluten free beer and I’m down! 🍻",
+      "url": "https://www.youtube.com/shorts/Hyr80wdkWK8",
+      "published_at": "2026-07-22T10:33:40.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/Hyr80wdkWK8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=Tqnu-_mm7lI",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "\"43% of Olympians Dope\" – Enhanced Games CEO's Toughest Interview Yet",
+      "url": "https://www.youtube.com/watch?v=Tqnu-_mm7lI",
+      "published_at": "2026-07-20T01:30:15.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/Tqnu-_mm7lI/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/LiDazUwokxY",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
+      "title": "Challenge Roth 💚 Check out the full race recap now! #teamcharlesbarclay",
+      "url": "https://www.youtube.com/shorts/LiDazUwokxY",
+      "published_at": "2026-07-15T09:18:13.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/LiDazUwokxY/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=uryOea9froQ",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Francesco Puppi on the Western States 100, the Pain Cave & Mental Strength",
+      "url": "https://www.youtube.com/watch?v=uryOea9froQ",
+      "published_at": "2026-07-13T02:15:12.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/uryOea9froQ/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=ovdKx5qyg8g",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "Tarmac SL9 Unboxing, Running After Hip Surgery, and IRONMAN TRAINING",
+      "url": "https://www.youtube.com/watch?v=ovdKx5qyg8g",
+      "published_at": "2026-07-12T15:11:42.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/ovdKx5qyg8g/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=R50lLMEN56U",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "My New Canyon Speedmax",
+      "url": "https://www.youtube.com/watch?v=R50lLMEN56U",
+      "published_at": "2026-07-11T13:00:05.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/R50lLMEN56U/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=0PZ8A9aPkkI",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "The Cost of Fitness",
+      "url": "https://www.youtube.com/watch?v=0PZ8A9aPkkI",
+      "published_at": "2026-07-07T21:14:22.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/0PZ8A9aPkkI/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=0cVaRd_W0PI",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Sam Laidlow Just Made Triathlon History… Here's What Was Going On Inside His Mind!",
+      "url": "https://www.youtube.com/watch?v=0cVaRd_W0PI",
+      "published_at": "2026-07-07T14:08:55.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/0cVaRd_W0PI/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=3hVP3mEU0Bc",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "3 Weeks Out From Boise 70.3… Here’s Where I’m At",
+      "url": "https://www.youtube.com/watch?v=3hVP3mEU0Bc",
+      "published_at": "2026-07-03T18:41:12.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/3hVP3mEU0Bc/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/t_0ScDXI2yE",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "peace amidst the chaos🙂‍↕️",
+      "url": "https://www.youtube.com/shorts/t_0ScDXI2yE",
+      "published_at": "2026-07-02T16:03:34.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/t_0ScDXI2yE/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=5i4LxtYFFyk",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "Head Above Water - IRONMAN Lanzarote Documentary",
+      "url": "https://www.youtube.com/watch?v=5i4LxtYFFyk",
+      "published_at": "2026-06-30T16:00:05.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/5i4LxtYFFyk/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/XbFUl1nnl0c",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "Head Above Water | Ironman Lanzarote Documentary",
+      "url": "https://www.youtube.com/shorts/XbFUl1nnl0c",
+      "published_at": "2026-06-29T16:33:12.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/XbFUl1nnl0c/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=U1IV4N-7VRc",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Chris McCormack: How I Got Inside Their Heads | The Dark Art of Winning",
+      "url": "https://www.youtube.com/watch?v=U1IV4N-7VRc",
+      "published_at": "2026-06-29T04:45:37.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/U1IV4N-7VRc/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=FJcu4AgPCLY",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "Stop Strapping Bottles Everywhere - My Custom Shiv Tri + Hip Surgery Update",
+      "url": "https://www.youtube.com/watch?v=FJcu4AgPCLY",
+      "published_at": "2026-06-27T00:39:42.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/FJcu4AgPCLY/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/9_fKY1Wglv0",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Sebastian Steudtner: Facing Life and Death 🌊💀",
+      "url": "https://www.youtube.com/shorts/9_fKY1Wglv0",
+      "published_at": "2026-06-23T09:53:57.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/9_fKY1Wglv0/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/iLQyZbWf0Fg",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Nino Schurter: Pressure is a Gift 🎁🔥",
+      "url": "https://www.youtube.com/shorts/iLQyZbWf0Fg",
+      "published_at": "2026-06-23T09:44:50.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/iLQyZbWf0Fg/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/HsCBO8O0t7g",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Tom Pidcock: Nothing to Fail At 🎯❌",
+      "url": "https://www.youtube.com/shorts/HsCBO8O0t7g",
+      "published_at": "2026-06-23T09:42:25.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/HsCBO8O0t7g/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/-l3Ou4vwhXY",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Tom Pidcock: Anxiety is Wasted Energy 🛑🔋",
+      "url": "https://www.youtube.com/shorts/-l3Ou4vwhXY",
+      "published_at": "2026-06-23T09:40:02.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/-l3Ou4vwhXY/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/j_r1_6_cD2U",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Mastering the Controllables: Emotion vs. Logic 🧠🚴‍♂️",
+      "url": "https://www.youtube.com/shorts/j_r1_6_cD2U",
+      "published_at": "2026-06-23T09:38:11.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/j_r1_6_cD2U/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/EYaOxFOIm4g",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Tom Pidcock: Walking Away to Win 🥇🚶‍♂️",
+      "url": "https://www.youtube.com/shorts/EYaOxFOIm4g",
+      "published_at": "2026-06-23T09:30:37.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/EYaOxFOIm4g/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/XTO5cAElMY4",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Demi Vollering: Overcoming Panic on the Bike 🧠🚴‍♀️",
+      "url": "https://www.youtube.com/shorts/XTO5cAElMY4",
+      "published_at": "2026-06-23T09:27:40.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/XTO5cAElMY4/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=QCtxPe_ta5s",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "When Winning Becomes Your Why",
+      "url": "https://www.youtube.com/watch?v=QCtxPe_ta5s",
+      "published_at": "2026-06-17T18:47:37.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/QCtxPe_ta5s/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=AO5u4HPnM3E",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "Behind the Results: What I Was Really Dealing With",
+      "url": "https://www.youtube.com/watch?v=AO5u4HPnM3E",
+      "published_at": "2026-06-16T21:01:21.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/AO5u4HPnM3E/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=xNi0HB5Y8RE",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "8x8 Threshold Session",
+      "url": "https://www.youtube.com/watch?v=xNi0HB5Y8RE",
+      "published_at": "2026-06-08T16:48:04.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/xNi0HB5Y8RE/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=OhEex2EVIKk",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "The Chattanooga Experience",
+      "url": "https://www.youtube.com/watch?v=OhEex2EVIKk",
+      "published_at": "2026-06-02T21:07:59.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/OhEex2EVIKk/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=6jAEyt17cP4",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "The Last Hurrah Ride: Tucon-Patagonia-Tucson Bike Packing",
+      "url": "https://www.youtube.com/watch?v=6jAEyt17cP4",
+      "published_at": "2026-05-10T15:23:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/6jAEyt17cP4/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=AmhiFIVa1MI",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "Going Back to My Old Coach",
+      "url": "https://www.youtube.com/watch?v=AmhiFIVa1MI",
+      "published_at": "2026-05-03T13:14:53.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/AmhiFIVa1MI/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/ZW3NDM0Kxxo",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "Which do you think is better?",
+      "url": "https://www.youtube.com/shorts/ZW3NDM0Kxxo",
+      "published_at": "2026-04-30T19:04:05.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/ZW3NDM0Kxxo/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=E5i18a7aYDA",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "Down To Earth - A Barcelona Marathon Documentary",
+      "url": "https://www.youtube.com/watch?v=E5i18a7aYDA",
+      "published_at": "2026-04-30T16:00:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/E5i18a7aYDA/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/e3n40PFSRlE",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "The fundamentals of my swim week.",
+      "url": "https://www.youtube.com/shorts/e3n40PFSRlE",
+      "published_at": "2026-04-28T22:07:01.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/e3n40PFSRlE/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/gwzj8wMLAV8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "Why my HOA pool is a secret weapon to improve swimming #triathlon",
+      "url": "https://www.youtube.com/shorts/gwzj8wMLAV8",
+      "published_at": "2026-04-28T00:03:30.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/gwzj8wMLAV8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=-dk9CWcQjdM",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "Kona Camp Vlog 2026",
+      "url": "https://www.youtube.com/watch?v=-dk9CWcQjdM",
+      "published_at": "2026-04-22T16:35:31.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/-dk9CWcQjdM/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=RcczFCbevys",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "Thoughts After IRONMAN Texas",
+      "url": "https://www.youtube.com/watch?v=RcczFCbevys",
+      "published_at": "2026-04-22T16:34:03.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/RcczFCbevys/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=6jG6bqGiGLc",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "Pure Triathlon Culture - Oceanside 70.3",
+      "url": "https://www.youtube.com/watch?v=6jG6bqGiGLc",
+      "published_at": "2026-04-15T20:36:33.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/6jG6bqGiGLc/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/1KULsCHqo1Y",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "Ironman Texas Mindset #triathlon #ironman #cycling #athletemindset",
+      "url": "https://www.youtube.com/shorts/1KULsCHqo1Y",
+      "published_at": "2026-04-15T13:08:30.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/1KULsCHqo1Y/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=D75TGq7js4o",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "Start Where You Are || IRONMAN Texas Race Week",
+      "url": "https://www.youtube.com/watch?v=D75TGq7js4o",
+      "published_at": "2026-04-14T16:24:15.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/D75TGq7js4o/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=ol6HfXgIFbs",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "Focus on Yourself",
+      "url": "https://www.youtube.com/watch?v=ol6HfXgIFbs",
+      "published_at": "2026-04-08T17:51:09.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/ol6HfXgIFbs/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=_nenuzE4ETk",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "The Gutsiest Race of My Career | Oceanside Race Recap",
+      "url": "https://www.youtube.com/watch?v=_nenuzE4ETk",
+      "published_at": "2026-04-03T21:31:51.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/_nenuzE4ETk/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=vNysziupSeQ",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "Consistency is King",
+      "url": "https://www.youtube.com/watch?v=vNysziupSeQ",
+      "published_at": "2026-03-31T14:00:54.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/vNysziupSeQ/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/9wG-bo4LmJs",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "My New Collection “Elements” is now available! #triathlon",
+      "url": "https://www.youtube.com/shorts/9wG-bo4LmJs",
+      "published_at": "2026-03-24T13:49:44.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/9wG-bo4LmJs/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=nc-n91PKBT8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "One of the Hardest Wins of My Career | 70.3 Dallas Little Elm Recap",
+      "url": "https://www.youtube.com/watch?v=nc-n91PKBT8",
+      "published_at": "2026-03-23T00:12:43.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/nc-n91PKBT8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=OpCKllcDELA",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "Recovering From Hip Surgery - Week 1",
+      "url": "https://www.youtube.com/watch?v=OpCKllcDELA",
+      "published_at": "2026-03-19T22:39:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/OpCKllcDELA/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=o3k69OFSDB8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "My Swim Benchmark Session",
+      "url": "https://www.youtube.com/watch?v=o3k69OFSDB8",
+      "published_at": "2026-03-12T16:13:11.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/o3k69OFSDB8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=O7K63LGBZnY",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "Hip Surgery Is A GO - Tucson Miles While Waiting",
+      "url": "https://www.youtube.com/watch?v=O7K63LGBZnY",
+      "published_at": "2026-03-06T20:05:00.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/O7K63LGBZnY/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=U3--NaZNE-8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "One Workout Won’t Win a Race || 3×5K Benchmark",
+      "url": "https://www.youtube.com/watch?v=U3--NaZNE-8",
+      "published_at": "2026-03-03T18:00:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/U3--NaZNE-8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=4PfCtXG75jA",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "How Many Years Do I Have Left? | 2026 Season Plan",
+      "url": "https://www.youtube.com/watch?v=4PfCtXG75jA",
+      "published_at": "2026-02-24T22:03:47.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/4PfCtXG75jA/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=Rg6tmF7asK8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
+      "title": "Wrangling Up the Troops One Last Time",
+      "url": "https://www.youtube.com/watch?v=Rg6tmF7asK8",
+      "published_at": "2026-02-17T18:58:19.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/Rg6tmF7asK8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=Jhxl_XfTlQI",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "High Volume. Less Margin. My 2026 Day In The Life",
+      "url": "https://www.youtube.com/watch?v=Jhxl_XfTlQI",
+      "published_at": "2026-02-11T13:00:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/Jhxl_XfTlQI/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=5I_ymzboZa8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "End of Season Wrap-Up + Brutally Ranking Triathlon Trends",
+      "url": "https://www.youtube.com/watch?v=5I_ymzboZa8",
+      "published_at": "2025-12-23T17:00:11.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/5I_ymzboZa8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=D9XcGnTtsGE",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "How I Won La Quinta | My 20th Pro Win | Raw",
+      "url": "https://www.youtube.com/watch?v=D9XcGnTtsGE",
+      "published_at": "2025-12-14T18:03:11.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/D9XcGnTtsGE/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=IGYBj_Esyuc",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "Crystal Blue | 2025 Ironman World Championship, Nice | Sam Laidlow Documentary N°3",
+      "url": "https://www.youtube.com/watch?v=IGYBj_Esyuc",
+      "published_at": "2025-11-16T17:00:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/IGYBj_Esyuc/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/EAYGwZnCzt4",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "Crystal Blue | IRONMAN World Championship 2025 Trailer",
+      "url": "https://www.youtube.com/shorts/EAYGwZnCzt4",
+      "published_at": "2025-11-14T15:51:56.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/EAYGwZnCzt4/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=K8suFa2PfyQ",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "Ironman World Champs Raw Race Report | Nice 2025 (14th Place Overall)",
+      "url": "https://www.youtube.com/watch?v=K8suFa2PfyQ",
+      "published_at": "2025-09-22T21:57:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/K8suFa2PfyQ/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/2_1aWMuLvOU",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "T-1 Day Till the #ironmanworldchampionship",
+      "url": "https://www.youtube.com/shorts/2_1aWMuLvOU",
+      "published_at": "2025-09-13T10:52:08.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/2_1aWMuLvOU/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=LAibcXSlJn0",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "Prepping for Worlds with a Brand New Team (and Bike 👀)",
+      "url": "https://www.youtube.com/watch?v=LAibcXSlJn0",
+      "published_at": "2025-08-27T17:04:58.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/LAibcXSlJn0/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/oCmUD4wG85Y",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "either way I can’t lose #triathlon #cycling",
+      "url": "https://www.youtube.com/shorts/oCmUD4wG85Y",
+      "published_at": "2025-08-06T09:37:42.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/oCmUD4wG85Y/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/nW0_JkMFzBk",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "bro earned his way into this video🤣",
+      "url": "https://www.youtube.com/shorts/nW0_JkMFzBk",
+      "published_at": "2025-07-30T18:46:09.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/nW0_JkMFzBk/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/qKZ07nea34k",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "understandable tbh",
+      "url": "https://www.youtube.com/shorts/qKZ07nea34k",
+      "published_at": "2025-07-26T10:34:17.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/qKZ07nea34k/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=786RLMOgyv8",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "Every Athlete Dreams of Racing Here | Challenge Roth 2025",
+      "url": "https://www.youtube.com/watch?v=786RLMOgyv8",
+      "published_at": "2025-07-22T17:00:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/786RLMOgyv8/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=PjeynzAGRKE",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "Inside My Life as a Pro Athlete - Full Training Week",
+      "url": "https://www.youtube.com/watch?v=PjeynzAGRKE",
+      "published_at": "2025-06-26T16:00:06.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/PjeynzAGRKE/hqdefault.jpg"
+    },
+    {
+      "id": "https://www.youtube.com/shorts/P3g3YdOI_A0",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
+      "title": "A week in the life with Sam Laidlow",
+      "url": "https://www.youtube.com/shorts/P3g3YdOI_A0",
+      "published_at": "2025-06-26T13:59:26.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/P3g3YdOI_A0/hqdefault.jpg"
+    }
+  ]
+}

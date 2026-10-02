@@ -1,0 +1,52 @@
+{
+ "schema_version": 1,
+ "note": "Reusable decoration index. Props use explicit room placements; installations provide a complete local atmosphere with mobile density and visibility culling. Existing paintings and sculptures remain in museum/art; bikes remain in museum/catalog/products.json.",
+ "props": [
+  {
+   "id": "kona-palm",
+   "name": "Basalt-potted Kona palm",
+   "builder": "palm",
+   "height": 2.3
+  },
+  {
+   "id": "race-marker",
+   "name": "Swim / bike / run sculpture",
+   "builder": "race-marker",
+   "height": 1.2
+  }
+ ],
+ "installations": [
+  {
+   "id": "bio",
+   "name": "Bioluminescent garden",
+   "builder": "bio",
+   "source": "web/src/engine/room-installations.js",
+   "min_width": 8.6,
+   "min_depth": 4.45
+  },
+  {
+   "id": "horror",
+   "name": "The suspended light",
+   "builder": "horror",
+   "source": "web/src/engine/room-installations.js",
+   "min_width": 8.6,
+   "min_depth": 4.45
+  },
+  {
+   "id": "alien",
+   "name": "Orbital scanning bay",
+   "builder": "alien",
+   "source": "web/src/engine/room-installations.js",
+   "min_width": 8.6,
+   "min_depth": 4.45
+  },
+  {
+   "id": "zombie",
+   "name": "The overgrown yard",
+   "builder": "zombie",
+   "source": "web/src/engine/room-installations.js",
+   "min_width": 8.6,
+   "min_depth": 4.45
+  }
+ ]
+}

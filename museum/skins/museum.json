@@ -1,0 +1,163 @@
+{
+ "schema_version": 1,
+ "note": "Museum liveries painted by web/src/engine/skins.js. Bike-specific liveries for the Against the Clock wing live with each bike in museum/atlas/bikes.json; the WYLD dyes and the Bike Porn films are adapted from museum/wyld_room.json and web/src/sanctuary.js.",
+ "skins": [
+  {
+   "id": "hall-speedmax-three-2005",
+   "name": "Documented finish",
+   "kind": "archive",
+   "frame": "#14161a",
+   "group": "hall"
+  },
+  {
+   "id": "hall-speedmax-2007",
+   "name": "Documented finish",
+   "kind": "archive",
+   "frame": "#8a1f1f",
+   "group": "hall"
+  },
+  {
+   "id": "hall-speedmax-al-2011",
+   "name": "Documented finish",
+   "kind": "archive",
+   "frame": "#d8d8dc",
+   "group": "hall"
+  },
+  {
+   "id": "hall-speedmax-cf-2011",
+   "name": "Documented finish",
+   "kind": "archive",
+   "frame": "#101014",
+   "group": "hall"
+  },
+  {
+   "id": "hall-cfr",
+   "name": "Documented finish",
+   "kind": "archive",
+   "frame": "#eceaf0",
+   "group": "hall"
+  },
+  {
+   "id": "hall-slx",
+   "name": "Documented finish",
+   "kind": "archive",
+   "frame": "#cdc8dd",
+   "group": "hall"
+  },
+  {
+   "id": "theme-bio",
+   "name": "Bio",
+   "kind": "theme",
+   "frame": "#1f6b3a",
+   "glow": {
+    "color": "#1f6b3a",
+    "intensity": 0.28
+   },
+   "group": "galleries"
+  },
+  {
+   "id": "theme-horror",
+   "name": "Horror",
+   "kind": "theme",
+   "frame": "#1a0a0e",
+   "glow": {
+    "color": "#1a0a0e",
+    "intensity": 0.28
+   },
+   "group": "galleries"
+  },
+  {
+   "id": "theme-alien",
+   "name": "Alien",
+   "kind": "theme",
+   "frame": "#0c3d3a",
+   "glow": {
+    "color": "#0c3d3a",
+    "intensity": 0.28
+   },
+   "group": "galleries"
+  },
+  {
+   "id": "theme-zombie",
+   "name": "Zombie",
+   "kind": "theme",
+   "frame": "#5a5834",
+   "glow": {
+    "color": "#5a5834",
+    "intensity": 0.28
+   },
+   "group": "galleries"
+  },
+  {
+   "id": "lava-night",
+   "name": "Lava Night",
+   "kind": "theme",
+   "frame": "#141116",
+   "finish": {
+    "roughness": 0.32,
+    "metalness": 0.25,
+    "clearcoat": 1
+   },
+   "decals": {
+    "color": "#ff7a1a",
+    "glow": "#ff4d00",
+    "intensity": 1.6
+   },
+   "group": "lava-night"
+  },
+  {
+   "id": "art-witchcraft",
+   "name": "Witchcraft",
+   "kind": "theme",
+   "group": "artworld",
+   "frame": "#130d1a",
+   "accent": "#8e59c4",
+   "note": "Black-violet lacquer with a quiet ritual glow."
+  },
+  {
+   "id": "art-stitched",
+   "name": "Stitched",
+   "kind": "theme",
+   "group": "artworld",
+   "frame": "#d7cdbc",
+   "accent": "#8e2635",
+   "note": "Bone-toned shell, dark seams and polished metal."
+  },
+  {
+   "id": "art-pagan",
+   "name": "Pagan",
+   "kind": "theme",
+   "group": "artworld",
+   "frame": "#211b14",
+   "accent": "#a5823a",
+   "note": "Dark bronze and runic gold, restrained rather than costume-like."
+  },
+  {
+   "id": "art-moonlit",
+   "name": "Moonlit",
+   "kind": "theme",
+   "group": "artworld",
+   "frame": "#0a1627",
+   "accent": "#8ca5d0",
+   "note": "Midnight carbon that changes under cold highlights."
+  },
+  {
+   "id": "art-carnival",
+   "name": "Carnival",
+   "kind": "theme",
+   "group": "artworld",
+   "frame": "#4b111d",
+   "accent": "#e2c5a4",
+   "note": "Oxblood lacquer with pale graphic fragments."
+  },
+  {
+   "id": "art-ritual-forest",
+   "name": "Ritual Forest",
+   "kind": "theme",
+   "group": "artworld",
+   "frame": "#0d1c15",
+   "accent": "#62805f",
+   "note": "Black-green carbon with mossy reflections and bronze details."
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+  "source_repository": "joaoccaldas/canyonmuseum",
+  "source_sha": "856b98f0d9392c48ef7a6ff0fedaa39d459ef14c",
+  "target_repository": "joaoccaldas/konam",
+  "strategy": "exact-tree snapshot excluding workflows; workflows replayed separately",
+  "history_policy": "source repository remains immutable historical history; target records exact source SHA",
+  "migration_log": [
+    {
+      "step": "M0-00",
+      "status": "PASS",
+      "detail": "Created private target repository joaoccaldas/konam."
+    },
+    {
+      "step": "M0-01",
+      "status": "FAILED_SAFELY",
+      "detail": "Attempted full branch/tag Git push from target Actions. GitHub rejected branch creation because the Actions installation token lacks separate workflows permission. No source security gate was weakened."
+    },
+    {
+      "step": "M0-02",
+      "status": "PASS",
+      "detail": "Imported exact working tree at frozen source SHA through target Action, excluding .github/workflows only."
+    },
+    {
+      "step": "M0-03",
+      "status": "PASS",
+      "detail": "Replayed all 12 source workflow files through connected GitHub write capability."
+    },
+    {
+      "step": "M0-04",
+      "status": "PASS",
+      "detail": "Removed bootstrap import workflow from M0 candidate."
+    },
+    {
+      "step": "M0-05",
+      "status": "PASS",
+      "detail": "Compared all 962 source blobs by path/mode/blob SHA. Missing=0, extra source-path blobs=0, mismatched=0."
+    },
+    {
+      "step": "M0-06",
+      "status": "IN_PROGRESS",
+      "detail": "Exact-source M0 equivalence, security, integration, Museum, interaction and visual gates running on target candidate."
+    }
+  ],
+  "intentional_target_only_paths": [
+    "docs/migration/M0_SOURCE.json",
+    ".github/workflows/m0-equivalence.yml"
+  ],
+  "intentional_modified_source_paths": [
+    ".github/workflows/konam-pre-migration.yml (source-only comparator scoped to canyonmuseum; target uses M0 equivalence gate)"
+  ],
+  "source_tree_sha": "d8982d38e1760651d69c31f3787c13f0815fd7c7",
+  "source_blob_count": 962,
+  "source_blob_bytes": 110386376,
+  "tree_comparison": {
+    "source_blobs": 962,
+    "target_source_blobs": 962,
+    "missing": 0,
+    "extra_source_paths": 0,
+    "mismatched_blob_or_mode": 0
+  }
+}

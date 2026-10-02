@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joaoccaldas.github.io/canyonmuseum/schemas/v1/reward.schema.json",
+  "title": "Reward",
+  "type": "object",
+  "required": ["xp", "credits"],
+  "additionalProperties": false,
+  "properties": {
+    "xp": { "type": "integer", "minimum": 0 },
+    "credits": { "type": "integer" },
+    "badge": { "type": "string" },
+    "unlock": { "type": "string" }
+  }
+}

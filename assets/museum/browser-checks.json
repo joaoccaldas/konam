@@ -1,0 +1,30 @@
+[
+  {
+    "name": "desktop",
+    "viewport": [
+      1512,
+      982
+    ],
+    "parts": 45,
+    "speed_kmh": 40.8,
+    "tour_stops": 5,
+    "explosion_return": true,
+    "accessory_toggles": true,
+    "console_errors": [],
+    "offline": true
+  },
+  {
+    "name": "mobile",
+    "viewport": [
+      390,
+      844
+    ],
+    "parts": 45,
+    "speed_kmh": 40.8,
+    "tour_stops": 5,
+    "explosion_return": true,
+    "accessory_toggles": true,
+    "console_errors": [],
+    "offline": true
+  }
+]

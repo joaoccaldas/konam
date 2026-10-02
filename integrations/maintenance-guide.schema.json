@@ -1,0 +1,44 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://caldas.studio/schemas/maintenance-guide-v1.json",
+  "title":"Maintenance Guide V1",
+  "type":"object",
+  "required":["schema_version","id","entity_id","guide_type","title","safety","source_records"],
+  "properties":{
+    "schema_version":{"const":1},
+    "id":{"type":"string","pattern":"^[a-z0-9][a-z0-9._-]*$"},
+    "entity_id":{"type":"string"},
+    "guide_type":{"enum":["pre-ride-check","cleaning","setup","travel","service","troubleshooting","replacement","tip"]},
+    "title":{"type":"string"},
+    "summary":{"type":"string"},
+    "steps":{
+      "type":"array",
+      "items":{
+        "type":"object",
+        "required":["id","text"],
+        "properties":{
+          "id":{"type":"string"},
+          "text":{"type":"string"},
+          "risk":{"enum":["low","moderate","professional-service"]},
+          "source_ref":{"type":["string","null"]}
+        },
+        "additionalProperties":false
+      }
+    },
+    "interval":{"type":["object","null"],"additionalProperties":true},
+    "safety":{
+      "type":"object",
+      "required":["manufacturer_manual_overrides","professional_service_when_uncertain"],
+      "properties":{
+        "manufacturer_manual_overrides":{"type":"boolean"},
+        "professional_service_when_uncertain":{"type":"boolean"},
+        "warning":{"type":["string","null"]}
+      },
+      "additionalProperties":false
+    },
+    "source_records":{"type":"array","items":{"type":"string"}},
+    "related_component_ids":{"type":"array","items":{"type":"string"}},
+    "commerce_offer_ids":{"type":"array","items":{"type":"string"}}
+  },
+  "additionalProperties":true
+}

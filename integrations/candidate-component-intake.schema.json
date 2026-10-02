@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://caldas.studio/schemas/candidate-component-intake-v1.json",
+  "title": "Candidate Component Intake V1",
+  "type": "object",
+  "required": ["schema_version","source_branch","source_commit","items"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "source_branch": { "type": "string" },
+    "source_commit": { "type": "string", "minLength": 7 },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id","category","brand","model","asset_path",
+          "representation","readiness","states","semantic_parts",
+          "source_records","reuse_targets","blockers"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+          "category": {
+            "enum": ["wheel","crankset","cassette","aerobar_extensions","hydration","saddle","other"]
+          },
+          "brand": { "type": "string" },
+          "model": { "type": "string" },
+          "asset_path": { "type": "string" },
+          "representation": {
+            "enum": ["official-spec-driven","reference-calibrated","geometry-study","concept"]
+          },
+          "readiness": {
+            "enum": ["candidate","blocked","internal-only","public-ready"]
+          },
+          "states": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "enum": ["assembled","exploded"] }
+          },
+          "semantic_parts": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "fitment": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "setup_slot": {
+            "type": ["string","null"],
+            "enum": ["wheel", null]
+          },
+          "reuse_targets": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "museum",
+                "engineering_story",
+                "compare",
+                "race_setup",
+                "bike_configurator",
+                "mcp",
+                "commerce",
+                "partner_embed"
+              ]
+            }
+          },
+          "source_records": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "blockers": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

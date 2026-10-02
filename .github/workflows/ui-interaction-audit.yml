@@ -1,0 +1,58 @@
+name: UI interaction evidence
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ui-interaction-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  interaction:
+    name: Buttons ${{ matrix.viewport }}
+    strategy:
+      fail-fast: false
+      matrix:
+        viewport: [phone320, phone390, landscape, desktop]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Compile and seal the app from source
+        run: |
+          node tools/build_pages.mjs
+          node tools/build_app.mjs
+      - name: Confirm committed generated artifacts
+        run: git diff --exit-code -- app sw.js '*.html' web/dist
+      - name: Unit and consumer compilation contracts
+        run: npm test
+        working-directory: web
+      - name: Exercise visible UI controls and persisted outcomes
+        env:
+          AUDIT_VIEWPORT: ${{ matrix.viewport }}
+        run: |
+          python3 -m http.server 8754 --bind 127.0.0.1 >/tmp/kona-ui-http.log 2>&1 &
+          PID=$!
+          trap 'kill "$PID" || true' EXIT
+          for i in {1..40}; do curl -fsS http://127.0.0.1:8754/ >/dev/null && break; sleep .25; done
+          CHROME_PATH="$(which google-chrome || which chromium)" node web/ui-interaction-audit.mjs http://127.0.0.1:8754/ ui-interaction-evidence
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ui-interactions-${{ matrix.viewport }}-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ui-interaction-evidence/
+          if-no-files-found: warn
+          retention-days: 14

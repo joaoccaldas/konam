@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "purpose": "Product Intake Validation V0. Test-only data; not part of production museum/catalog.",
+  "base_main_sha": "869b5535f07c258b0778396b4f1e1862ebbd7d86",
+  "asset_source": {
+    "branch": "assets/kona-environment-pack-20260930",
+    "commit": "20fa0802e3a604c2465bee731547dda7940a4efa"
+  },
+  "integration_reference": {
+    "branch": "feat/integration-contract-v0-20260930",
+    "observed_head": "96449c6550e9836481a5023c50afee2caa88642f"
+  },
+  "rooms": [
+    {
+      "id": "test-multibrand-bike-room",
+      "title": "Multi-brand Bike Intake",
+      "products": [
+        "cervelo-p5-disc-mk2-size54"
+      ],
+      "design": {
+        "wall": "#ece7de",
+        "floor": "#d9cfbf",
+        "accent": "#2e5358"
+      },
+      "story": "Test-only room proving a non-Canyon bike can enter the generic room/render path without brand-specific runtime code."
+    },
+    {
+      "id": "test-running-engineering-room",
+      "title": "Running Engineering Intake",
+      "products": [
+        "nike-alphafly-3-study"
+      ],
+      "design": {
+        "wall": "#f0eee9",
+        "floor": "#dad6ce",
+        "accent": "#6e6154"
+      },
+      "story": "Test-only room proving the same product/exhibit path can display a shoe without creating a shoe application."
+    }
+  ],
+  "products": [
+    {
+      "id": "cervelo-p5-disc-mk2-size54",
+      "brand": "Cervelo",
+      "model": "P5 Disc MK2",
+      "type": "bike",
+      "representation": "manufacturer-geometry-v0.2",
+      "public_claim": "Manufacturer-geometry-informed reconstruction; not described as CAD-exact.",
+      "source_records": [
+        "https://www.cervelo.com/en-US/support/P5%20DISC%20MK2"
+      ],
+      "asset_path": "assets/kona-heritage/bikes/cervelo-p5-disc-mk2-size54.glb",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share",
+        "visit"
+      ],
+      "readiness": "candidate",
+      "setup_slot": "bike",
+      "geometry_mm": {
+        "wheelbase": 995,
+        "chainstay": 405,
+        "bb_drop": 75,
+        "stack": 503,
+        "reach": 418,
+        "head_tube": 98
+      },
+      "geometry_deg": {
+        "head_angle": 72.5,
+        "seat_angle": 79
+      },
+      "metrics": {
+        "glb_bytes": 391508,
+        "triangles_approx": 6256,
+        "primitives": 60,
+        "materials": 3
+      },
+      "blockers": [
+        "visual/silhouette QA still required before production exhibit",
+        "asset source branch normal Museum checks not green at observed snapshot"
+      ]
+    },
+    {
+      "id": "nike-alphafly-3-study",
+      "brand": "Nike",
+      "model": "Alphafly 3",
+      "type": "shoe",
+      "representation": "official-spec-informed-v0.2",
+      "public_claim": "Official-spec-informed reconstructed study; not CAD-exact.",
+      "source_records": [
+        "https://www.nike.com/se/en/t/alphafly-3-mens-road-racing-shoes-KnKE5jwD/FD8311-402"
+      ],
+      "asset_path": "assets/kona-heritage/shoes/nike-alphafly-3-study.glb",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "equip",
+        "share",
+        "visit"
+      ],
+      "readiness": "candidate",
+      "setup_slot": "shoe",
+      "official_specs": {
+        "weight_g_approx": 218,
+        "heel_to_toe_drop_mm": 8,
+        "plate": "full-length carbon-fibre Flyplate",
+        "air_units": 2,
+        "foam": "ZoomX",
+        "upper": "Atomknit",
+        "foot_length_reference_mm": 271
+      },
+      "metrics": {
+        "glb_bytes": 181292,
+        "triangles_approx": 2868,
+        "primitives": 19,
+        "materials": 8
+      },
+      "blockers": [
+        "prototype-not-cad-exact",
+        "visual/silhouette QA still required before production exhibit",
+        "asset source branch normal Museum checks not green at observed snapshot"
+      ]
+    }
+  ]
+}

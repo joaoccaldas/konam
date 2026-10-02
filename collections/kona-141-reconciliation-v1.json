@@ -1,0 +1,3020 @@
+{
+  "schema_version": 1,
+  "generated_from": {
+    "collection": "collections/kona-141-v1.json",
+    "main_inventory": "app/admin-assets.json",
+    "next100": "museum/assets/next100-v1.json@asset/next-100-3d-v1"
+  },
+  "warning": "Heuristic reconciliation. Candidate matches are not promotion decisions, and NO_CANDIDATE_FOUND does not mean a new 3D model is required. Human provenance, representation choice and visual QA remain mandatory.",
+  "states": [
+    "READY_EXISTING",
+    "EXISTING_NEEDS_QA",
+    "EXISTING_NEEDS_RESTYLE",
+    "EXISTING_2D_STORY",
+    "NEXT100_CANDIDATE",
+    "NEEDS_SOURCE",
+    "NO_CANDIDATE_FOUND"
+  ],
+  "summary": {
+    "NO_CANDIDATE_FOUND": 55,
+    "NEEDS_SOURCE": 19,
+    "EXISTING_2D_STORY": 32,
+    "NEXT100_CANDIDATE": 14,
+    "READY_EXISTING": 21
+  },
+  "items": [
+    {
+      "item_id": "k141-001",
+      "number": 1,
+      "name": "Queen Kaʻahumanu Highway",
+      "room_id": "room-001",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "painting:queen-k-first-light",
+          "name": "Queen K, first light",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "room:hall",
+          "name": "The Queen K Hall",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "room:tri",
+          "name": "Long course",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-002",
+      "number": 2,
+      "name": "Black Lava",
+      "room_id": "room-001",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "edition-lava-night-lava-night",
+          "name": "Lava Night",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "painting:lava-meets-sea",
+          "name": "Where the lava meets the sea",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "room:hween",
+          "name": "Lava Night",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-003",
+      "number": 3,
+      "name": "The Crosswind",
+      "room_id": "room-001",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "painting:crosswind",
+          "name": "Crosswind",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "artifact-queen-k-windsock",
+          "name": "Queen K windsock",
+          "type": "artifact",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-004",
+      "number": 4,
+      "name": "The Mirage",
+      "room_id": "room-001",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "painting:mirage",
+          "name": "Mirage",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "artifact-prototype-aero-fork",
+          "name": "Prototype aero fork",
+          "type": "artifact",
+          "brand": "Engineering Archive",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-005",
+      "number": 5,
+      "name": "Kawaihae Turn",
+      "room_id": "room-001",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "painting:kohala-turn",
+          "name": "Kohala, the turn",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "room:tri",
+          "name": "Long course",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "room:atlas-against-the-clock-tri",
+          "name": "Long course · Against the Clock",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-006",
+      "number": 6,
+      "name": "Hawi Turnaround",
+      "room_id": "room-001",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "cervelo-p3c-2006-study",
+          "name": "P3C 2006",
+          "type": "bike",
+          "brand": "Cervélo",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "felt-da-2011-study",
+          "name": "DA 2011",
+          "type": "bike",
+          "brand": "Felt",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-007",
+      "number": 7,
+      "name": "Aero Bottle",
+      "room_id": "room-001",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "room:tri",
+          "name": "Long course",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 6
+        },
+        {
+          "id": "room:atlas-against-the-clock-tri",
+          "name": "Long course · Against the Clock",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 6
+        },
+        {
+          "id": "cervelo-p5x-2017-study",
+          "name": "P5X 2017",
+          "type": "bike",
+          "brand": "Cervélo",
+          "lane": "next100",
+          "score": 6
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-008",
+      "number": 8,
+      "name": "Disc Wheel",
+      "room_id": "room-001",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-009",
+      "number": 9,
+      "name": "The Lava Marker",
+      "room_id": "room-001",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-010",
+      "number": 10,
+      "name": "Headwind",
+      "room_id": "room-001",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-011",
+      "number": 11,
+      "name": "Kailua Bay",
+      "room_id": "room-002",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "artifact-swim-buoy-miniature",
+          "name": "Kailua Bay buoy miniature",
+          "type": "artifact",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "painting:race-morning-bay",
+          "name": "Race morning, the bay",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "painting:lava-meets-sea",
+          "name": "Where the lava meets the sea",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-012",
+      "number": 12,
+      "name": "Start Buoy",
+      "room_id": "room-002",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "artifact-swim-buoy-miniature",
+          "name": "Kailua Bay buoy miniature",
+          "type": "artifact",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-013",
+      "number": 13,
+      "name": "Swim Cap",
+      "room_id": "room-002",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "artifact-swim-buoy-miniature",
+          "name": "Kailua Bay buoy miniature",
+          "type": "artifact",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "decor:race-marker",
+          "name": "Swim / bike / run sculpture",
+          "type": "decoration",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "quintana-roo-superform-1990-study",
+          "name": "Superform 1990",
+          "type": "bike",
+          "brand": "Quintana Roo",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-014",
+      "number": 14,
+      "name": "Goggles",
+      "room_id": "room-002",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "gear-openwater-goggles-study",
+          "name": "Open-water goggles",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 17
+        },
+        {
+          "id": "gear-swimskin-study",
+          "name": "Race swimskin",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "decor:race-marker",
+          "name": "Swim / bike / run sculpture",
+          "type": "decoration",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-015",
+      "number": 15,
+      "name": "Timing Mat: Swim Out",
+      "room_id": "room-002",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "gear-openwater-goggles-study",
+          "name": "Open-water goggles",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "decor:race-marker",
+          "name": "Swim / bike / run sculpture",
+          "type": "decoration",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "artifact-timing-chip-vintage",
+          "name": "Vintage timing chip",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-016",
+      "number": 16,
+      "name": "Body Marking Pen",
+      "room_id": "room-002",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "edition-artworld-ritual-forest",
+          "name": "Ritual Forest",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "met-drone-widebody-study",
+          "name": "Drone Wide Body",
+          "type": "helmet",
+          "brand": "MET",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-017",
+      "number": 17,
+      "name": "Coffee Boat",
+      "room_id": "room-002",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-018",
+      "number": 18,
+      "name": "The First Stroke",
+      "room_id": "room-002",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-019",
+      "number": 19,
+      "name": "Salt",
+      "room_id": "room-002",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-020",
+      "number": 20,
+      "name": "3.8",
+      "room_id": "room-002",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-021",
+      "number": 21,
+      "name": "Kailua Pier",
+      "room_id": "room-003",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "artifact-swim-buoy-miniature",
+          "name": "Kailua Bay buoy miniature",
+          "type": "artifact",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "artifact-race-week-wristband",
+          "name": "Race-week wristband",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-022",
+      "number": 22,
+      "name": "Bike Rack",
+      "room_id": "room-003",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "artifact-transition-rack-tag",
+          "name": "Transition rack tag",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "castelli-free-sanremo3-study",
+          "name": "Free Sanremo 3 Suit",
+          "type": "trisuit",
+          "brand": "Castelli",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "roka-gen2-elite-aero-study",
+          "name": "Gen II Elite Aero II",
+          "type": "trisuit",
+          "brand": "ROKA",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-023",
+      "number": 23,
+      "name": "Race Number",
+      "room_id": "room-003",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-024",
+      "number": 24,
+      "name": "Timing Chip",
+      "room_id": "room-003",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "artifact-timing-chip-vintage",
+          "name": "Vintage timing chip",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "atlas-studio-small-650c",
+          "name": "Small-frame triathlon bike, 650c",
+          "type": "bike",
+          "brand": "Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "artifact-kona-vintage-bib",
+          "name": "Vintage Kona race bib",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-025",
+      "number": 25,
+      "name": "Transition Bag",
+      "room_id": "room-003",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "edition-artworld-ritual-forest",
+          "name": "Ritual Forest",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "artifact-transition-rack-tag",
+          "name": "Transition rack tag",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "gear-transition-bottle-study",
+          "name": "Transition bottle",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-026",
+      "number": 26,
+      "name": "Pump Queue",
+      "room_id": "room-003",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "painting:race-morning-bay",
+          "name": "Race morning, the bay",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-027",
+      "number": 27,
+      "name": "Helmet on Bars",
+      "room_id": "room-003",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "giro-aerohead-mips-study",
+          "name": "Aerohead MIPS",
+          "type": "helmet",
+          "brand": "Giro",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "oakley-aro7-study",
+          "name": "ARO7",
+          "type": "helmet",
+          "brand": "Oakley",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "met-drone-widebody-study",
+          "name": "Drone Wide Body",
+          "type": "helmet",
+          "brand": "MET",
+          "lane": "next100",
+          "score": 7
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-028",
+      "number": 28,
+      "name": "Bare Feet",
+      "room_id": "room-003",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-029",
+      "number": 29,
+      "name": "Old Course Map",
+      "room_id": "room-003",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "room:tri",
+          "name": "Long course",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "room:atlas-against-the-clock-tri",
+          "name": "Long course · Against the Clock",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "cervelo-p5x-2017-study",
+          "name": "P5X 2017",
+          "type": "bike",
+          "brand": "Cervélo",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-030",
+      "number": 30,
+      "name": "The Empty Pier",
+      "room_id": "room-003",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-031",
+      "number": 31,
+      "name": "Aliʻi Drive",
+      "room_id": "room-004",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-032",
+      "number": 32,
+      "name": "Running Shoe",
+      "room_id": "room-004",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "nike-alphafly-3-study",
+          "name": "Alphafly 3",
+          "type": "shoe",
+          "brand": "Nike",
+          "lane": "main",
+          "score": 7
+        },
+        {
+          "id": "asics-metaspeed-sky-paris-study",
+          "name": "METASPEED SKY PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "asics-metaspeed-edge-paris-study",
+          "name": "METASPEED EDGE PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 7
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-033",
+      "number": 33,
+      "name": "Aid Station Cup",
+      "room_id": "room-004",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-034",
+      "number": 34,
+      "name": "Sponge",
+      "room_id": "room-004",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-035",
+      "number": 35,
+      "name": "Glow Stick",
+      "room_id": "room-004",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-036",
+      "number": 36,
+      "name": "Finish Carpet",
+      "room_id": "room-004",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-037",
+      "number": 37,
+      "name": "Finish Arch",
+      "room_id": "room-004",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-038",
+      "number": 38,
+      "name": "The Last Mile",
+      "room_id": "room-004",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "specialized-shiv-2011-study",
+          "name": "Shiv 2011",
+          "type": "bike",
+          "brand": "Specialized",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "asics-metaspeed-sky-paris-study",
+          "name": "METASPEED SKY PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "asics-metaspeed-edge-paris-study",
+          "name": "METASPEED EDGE PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-039",
+      "number": 39,
+      "name": "Midnight",
+      "room_id": "room-004",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-040",
+      "number": 40,
+      "name": "The Bell",
+      "room_id": "room-004",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-041",
+      "number": 41,
+      "name": "Champion's Wreath",
+      "room_id": "room-005",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-042",
+      "number": 42,
+      "name": "Winning Bike: Early Era",
+      "room_id": "room-005",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "softride-powerwing-1999-study",
+          "name": "PowerWing 1999",
+          "type": "bike",
+          "brand": "Softride",
+          "lane": "next100",
+          "score": 5
+        },
+        {
+          "id": "artifact-kona-vintage-bib",
+          "name": "Vintage Kona race bib",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "gear-openwater-goggles-study",
+          "name": "Open-water goggles",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-043",
+      "number": 43,
+      "name": "Winning Bike: Aero Era",
+      "room_id": "room-005",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "artifact-vintage-aero-bottle",
+          "name": "Vintage aero bottle",
+          "type": "artifact",
+          "brand": "Engineering Archive",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "gear-aerobar-extension-study",
+          "name": "Aero extension pair",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "atlas-type-aerobar-1989",
+          "name": "Road bike with clip-on aero bars",
+          "type": "bike",
+          "brand": "Type study",
+          "lane": "main",
+          "score": 5
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-044",
+      "number": 44,
+      "name": "Winning Bike: Integrated Era",
+      "room_id": "room-005",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "trek-ttx-2009-study",
+          "name": "Equinox TTX 2009",
+          "type": "bike",
+          "brand": "Trek",
+          "lane": "next100",
+          "score": 5
+        },
+        {
+          "id": "giant-trinity-advanced-2016-study",
+          "name": "Trinity Advanced Pro 2016",
+          "type": "bike",
+          "brand": "Giant",
+          "lane": "next100",
+          "score": 5
+        },
+        {
+          "id": "cube-aerium-c68x-study",
+          "name": "Aerium C:68X",
+          "type": "bike",
+          "brand": "CUBE",
+          "lane": "next100",
+          "score": 5
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-045",
+      "number": 45,
+      "name": "Champion's Shoes",
+      "room_id": "room-005",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-046",
+      "number": 46,
+      "name": "Champion's Bib",
+      "room_id": "room-005",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "artifact-kona-vintage-bib",
+          "name": "Vintage Kona race bib",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "quintana-roo-superform-1990-study",
+          "name": "Superform 1990",
+          "type": "bike",
+          "brand": "Quintana Roo",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "castelli-free-sanremo3-study",
+          "name": "Free Sanremo 3 Suit",
+          "type": "trisuit",
+          "brand": "Castelli",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-047",
+      "number": 47,
+      "name": "Course Record Card",
+      "room_id": "room-005",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "room:tri",
+          "name": "Long course",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "room:atlas-against-the-clock-tri",
+          "name": "Long course · Against the Clock",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "cervelo-p5x-2017-study",
+          "name": "P5X 2017",
+          "type": "bike",
+          "brand": "Cervélo",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-048",
+      "number": 48,
+      "name": "First-Time Champion",
+      "room_id": "room-005",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "painting:queen-k-first-light",
+          "name": "Queen K, first light",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "specialized-shiv-2011-study",
+          "name": "Shiv 2011",
+          "type": "bike",
+          "brand": "Specialized",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "asics-metaspeed-sky-paris-study",
+          "name": "METASPEED SKY PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-049",
+      "number": 49,
+      "name": "Comeback",
+      "room_id": "room-005",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "kona-medal-1980s-study",
+          "name": "Finisher Medal · 1980s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "kona-medal-1990s-study",
+          "name": "Finisher Medal · 1990s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "kona-medal-2000s-study",
+          "name": "Finisher Medal · 2000s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-050",
+      "number": 50,
+      "name": "The Empty Podium",
+      "room_id": "room-005",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-051",
+      "number": 51,
+      "name": "Merckx Hour Bike",
+      "room_id": "room-006",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "atlas-merckx-hour-1972",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-052",
+      "number": 52,
+      "name": "Obree Study",
+      "room_id": "room-006",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "atlas-obree-riverside",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-053",
+      "number": 53,
+      "name": "Lotus 108 Study",
+      "room_id": "room-006",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "atlas-lotus-108-1992",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-054",
+      "number": 54,
+      "name": "Zipp 2001 Study",
+      "room_id": "room-006",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "atlas-zipp-2001",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-055",
+      "number": 55,
+      "name": "Funny Bike",
+      "room_id": "room-006",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "atlas-type-funny-1980s",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-056",
+      "number": 56,
+      "name": "Pursuit Bike",
+      "room_id": "room-006",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "atlas-type-pursuit",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-057",
+      "number": 57,
+      "name": "650c Low Profile",
+      "room_id": "room-006",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "atlas-type-lowpro-650c",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-058",
+      "number": 58,
+      "name": "Clip-On Aerobar",
+      "room_id": "room-006",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "atlas-type-aerobar-1989",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-059",
+      "number": 59,
+      "name": "Disc-Brake Superbike",
+      "room_id": "room-006",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "atlas-type-disc-superbike",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-060",
+      "number": 60,
+      "name": "60 Minutes",
+      "room_id": "room-006",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-061",
+      "number": 61,
+      "name": "Speedmax Three",
+      "room_id": "room-007",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "canyon-speedmax-three-2005",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-062",
+      "number": 62,
+      "name": "SpeedMax 3.0",
+      "room_id": "room-007",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "canyon-speedmax-2007",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-063",
+      "number": 63,
+      "name": "Speedmax AL",
+      "room_id": "room-007",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "canyon-speedmax-al-2011",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-064",
+      "number": 64,
+      "name": "Speedmax CF",
+      "room_id": "room-007",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "canyon-speedmax-cf-2011",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-065",
+      "number": 65,
+      "name": "Speedmax CF SLX 2015 Study",
+      "room_id": "room-007",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "canyon-kona-cfslx-2015",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-066",
+      "number": 66,
+      "name": "Speedmax CFR Disc 2019 Study",
+      "room_id": "room-007",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "canyon-kona-cfr-2019",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-067",
+      "number": 67,
+      "name": "Speedmax CF SLX 8 Di2",
+      "room_id": "room-007",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "canyon-slx-2027",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-068",
+      "number": 68,
+      "name": "Speedmax CFR AXS",
+      "room_id": "room-007",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "canyon-cfr-2027",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-069",
+      "number": 69,
+      "name": "Exploded Speedmax",
+      "room_id": "room-007",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "canyon-cfr-2027",
+          "name": "Speedmax CFR AXS",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 5
+        },
+        {
+          "id": "canyon-slx-2027",
+          "name": "Speedmax CF SLX 8 Di2",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 5
+        },
+        {
+          "id": "canyon-speedmax-three-2005",
+          "name": "Speedmax Three",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 5
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-070",
+      "number": 70,
+      "name": "The Missing Generation",
+      "room_id": "room-007",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-071",
+      "number": 71,
+      "name": "Aerobar",
+      "room_id": "room-008",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-072",
+      "number": 72,
+      "name": "Base Bar",
+      "room_id": "room-008",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "gear-aerobar-extension-study",
+          "name": "Aero extension pair",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-073",
+      "number": 73,
+      "name": "Aero Extension",
+      "room_id": "room-008",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "gear-aerobar-extension-study",
+          "name": "Aero extension pair",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "atlas-type-aerobar-1989",
+          "name": "Road bike with clip-on aero bars",
+          "type": "bike",
+          "brand": "Type study",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "atlas-studio-gravel-aero",
+          "name": "Aero gravel bike",
+          "type": "bike",
+          "brand": "Studio",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-074",
+      "number": 74,
+      "name": "Deep Front Wheel",
+      "room_id": "room-008",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "gear-deep-front-wheel-study",
+          "name": "Deep front wheel",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 24
+        },
+        {
+          "id": "atlas-type-aerobar-1989",
+          "name": "Road bike with clip-on aero bars",
+          "type": "bike",
+          "brand": "Type study",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "atlas-studio-gravel-aero",
+          "name": "Aero gravel bike",
+          "type": "bike",
+          "brand": "Studio",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-075",
+      "number": 75,
+      "name": "Rear Disc",
+      "room_id": "room-008",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "gear-rear-disc-wheel-study",
+          "name": "Rear disc wheel",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 9
+        },
+        {
+          "id": "canyon-kona-cfr-2019",
+          "name": "Speedmax CFR Disc",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "atlas-type-disc-superbike",
+          "name": "Disc-brake triathlon superbike",
+          "type": "bike",
+          "brand": "Type study",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-076",
+      "number": 76,
+      "name": "Aero Helmet",
+      "room_id": "room-008",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "giro-aerohead-mips-study",
+          "name": "Aerohead MIPS",
+          "type": "helmet",
+          "brand": "Giro",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "oakley-aro7-study",
+          "name": "ARO7",
+          "type": "helmet",
+          "brand": "Oakley",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "met-drone-widebody-study",
+          "name": "Drone Wide Body",
+          "type": "helmet",
+          "brand": "MET",
+          "lane": "next100",
+          "score": 10
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-077",
+      "number": 77,
+      "name": "Bento Box",
+      "room_id": "room-008",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "giant-trinity-advanced-sl-2027-study",
+          "name": "Trinity Advanced SL 2027",
+          "type": "bike",
+          "brand": "Giant",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "atlas-type-aerobar-1989",
+          "name": "Road bike with clip-on aero bars",
+          "type": "bike",
+          "brand": "Type study",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "atlas-studio-gravel-aero",
+          "name": "Aero gravel bike",
+          "type": "bike",
+          "brand": "Studio",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-078",
+      "number": 78,
+      "name": "Integrated Hydration",
+      "room_id": "room-008",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "giant-trinity-advanced-sl-2027-study",
+          "name": "Trinity Advanced SL 2027",
+          "type": "bike",
+          "brand": "Giant",
+          "lane": "next100",
+          "score": 9
+        },
+        {
+          "id": "trek-ttx-2009-study",
+          "name": "Equinox TTX 2009",
+          "type": "bike",
+          "brand": "Trek",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "cube-aerium-c68x-study",
+          "name": "Aerium C:68X",
+          "type": "bike",
+          "brand": "CUBE",
+          "lane": "next100",
+          "score": 6
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-079",
+      "number": 79,
+      "name": "Wind-Tunnel Smoke Line",
+      "room_id": "room-008",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "artifact-prototype-aero-fork",
+          "name": "Prototype aero fork",
+          "type": "artifact",
+          "brand": "Engineering Archive",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "painting:moving-air",
+          "name": "Silhouette in moving air",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "room:tunnel",
+          "name": "Workshop & tunnel",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-080",
+      "number": 80,
+      "name": "CdA",
+      "room_id": "room-008",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-081",
+      "number": 81,
+      "name": "Race-Day Shoe",
+      "room_id": "room-009",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "asics-metaspeed-sky-paris-study",
+          "name": "METASPEED SKY PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "asics-metaspeed-edge-paris-study",
+          "name": "METASPEED EDGE PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "adidas-adizero-adios-pro-evo1-study",
+          "name": "Adizero Adios Pro Evo 1",
+          "type": "shoe",
+          "brand": "adidas",
+          "lane": "next100",
+          "score": 10
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-082",
+      "number": 82,
+      "name": "Carbon-Plated Shoe",
+      "room_id": "room-009",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-083",
+      "number": 83,
+      "name": "Aero Helmet",
+      "room_id": "room-009",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "giro-aerohead-mips-study",
+          "name": "Aerohead MIPS",
+          "type": "helmet",
+          "brand": "Giro",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "oakley-aro7-study",
+          "name": "ARO7",
+          "type": "helmet",
+          "brand": "Oakley",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "met-drone-widebody-study",
+          "name": "Drone Wide Body",
+          "type": "helmet",
+          "brand": "MET",
+          "lane": "next100",
+          "score": 10
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-084",
+      "number": 84,
+      "name": "Road Helmet",
+      "room_id": "room-009",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "giro-aerohead-mips-study",
+          "name": "Aerohead MIPS",
+          "type": "helmet",
+          "brand": "Giro",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "oakley-aro7-study",
+          "name": "ARO7",
+          "type": "helmet",
+          "brand": "Oakley",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "met-drone-widebody-study",
+          "name": "Drone Wide Body",
+          "type": "helmet",
+          "brand": "MET",
+          "lane": "next100",
+          "score": 7
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-085",
+      "number": 85,
+      "name": "Trisuit",
+      "room_id": "room-009",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "castelli-free-sanremo3-study",
+          "name": "Free Sanremo 3 Suit",
+          "type": "trisuit",
+          "brand": "Castelli",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "roka-gen2-elite-aero-study",
+          "name": "Gen II Elite Aero II",
+          "type": "trisuit",
+          "brand": "ROKA",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "zone3-aeroforce-x2-study",
+          "name": "Aeroforce-X II",
+          "type": "trisuit",
+          "brand": "Zone3",
+          "lane": "next100",
+          "score": 7
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-086",
+      "number": 86,
+      "name": "Race Belt",
+      "room_id": "room-009",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-087",
+      "number": 87,
+      "name": "Sunglasses",
+      "room_id": "room-009",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "gear-deep-front-wheel-study",
+          "name": "Deep front wheel",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "gear-rear-disc-wheel-study",
+          "name": "Rear disc wheel",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "gear-between-arms-hydration-study",
+          "name": "Between-arms hydration",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-088",
+      "number": 88,
+      "name": "Wetsuit",
+      "room_id": "room-009",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "gear-openwater-goggles-study",
+          "name": "Open-water goggles",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "decor:race-marker",
+          "name": "Swim / bike / run sculpture",
+          "type": "decoration",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "artifact-swim-buoy-miniature",
+          "name": "Kailua Bay buoy miniature",
+          "type": "artifact",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-089",
+      "number": 89,
+      "name": "Watch",
+      "room_id": "room-009",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-090",
+      "number": 90,
+      "name": "The Spare Sock",
+      "room_id": "room-009",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-091",
+      "number": 91,
+      "name": "T1 Bag",
+      "room_id": "room-010",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "artifact-transition-rack-tag",
+          "name": "Transition rack tag",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "gear-transition-bottle-study",
+          "name": "Transition bottle",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-092",
+      "number": 92,
+      "name": "T2 Bag",
+      "room_id": "room-010",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-093",
+      "number": 93,
+      "name": "Elastic Laces",
+      "room_id": "room-010",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-094",
+      "number": 94,
+      "name": "Helmet Buckle",
+      "room_id": "room-010",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "giro-aerohead-mips-study",
+          "name": "Aerohead MIPS",
+          "type": "helmet",
+          "brand": "Giro",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "oakley-aro7-study",
+          "name": "ARO7",
+          "type": "helmet",
+          "brand": "Oakley",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "met-drone-widebody-study",
+          "name": "Drone Wide Body",
+          "type": "helmet",
+          "brand": "MET",
+          "lane": "next100",
+          "score": 7
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-095",
+      "number": 95,
+      "name": "Bike Shoes on Pedals",
+      "room_id": "room-010",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "craft-kype-pro-study",
+          "name": "Kype Pro",
+          "type": "shoe",
+          "brand": "Craft",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "nike-alphafly-3-study",
+          "name": "Alphafly 3",
+          "type": "shoe",
+          "brand": "Nike",
+          "lane": "main",
+          "score": 4
+        },
+        {
+          "id": "asics-metaspeed-sky-paris-study",
+          "name": "METASPEED SKY PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 4
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-096",
+      "number": 96,
+      "name": "Towel",
+      "room_id": "room-010",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-097",
+      "number": 97,
+      "name": "Sunscreen",
+      "room_id": "room-010",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-098",
+      "number": 98,
+      "name": "Number Belt",
+      "room_id": "room-010",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "artifact-kona-vintage-bib",
+          "name": "Vintage Kona race bib",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "artifact-transition-rack-tag",
+          "name": "Transition rack tag",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "artifact-queen-k-windsock",
+          "name": "Queen K windsock",
+          "type": "artifact",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-099",
+      "number": 99,
+      "name": "Lost Bottle",
+      "room_id": "room-010",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "artifact-vintage-aero-bottle",
+          "name": "Vintage aero bottle",
+          "type": "artifact",
+          "brand": "Engineering Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "gear-aero-bottle-study",
+          "name": "Aero frame bottle",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "gear-transition-bottle-study",
+          "name": "Transition bottle",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-100",
+      "number": 100,
+      "name": "Four Minutes",
+      "room_id": "room-010",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "champions-gold-medal-original",
+          "name": "Champions Gold Token",
+          "type": "medal",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "artifact-transition-rack-tag",
+          "name": "Transition rack tag",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "gear-transition-bottle-study",
+          "name": "Transition bottle",
+          "type": "gear",
+          "brand": "KONA Original",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-101",
+      "number": 101,
+      "name": "Athlete Wristband",
+      "room_id": "room-011",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-102",
+      "number": 102,
+      "name": "Check-In Envelope",
+      "room_id": "room-011",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "edition-artworld-ritual-forest",
+          "name": "Ritual Forest",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-103",
+      "number": 103,
+      "name": "Expo Tote",
+      "room_id": "room-011",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-104",
+      "number": 104,
+      "name": "Sticker Sheet",
+      "room_id": "room-011",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-105",
+      "number": 105,
+      "name": "Course Briefing Card",
+      "room_id": "room-011",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-106",
+      "number": 106,
+      "name": "Morning Swim Token",
+      "room_id": "room-011",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-107",
+      "number": 107,
+      "name": "Underwear Run Card",
+      "room_id": "room-011",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-108",
+      "number": 108,
+      "name": "Bike Check-In Tag",
+      "room_id": "room-011",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "artifact-transition-rack-tag",
+          "name": "Transition rack tag",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "artifact-prototype-tag",
+          "name": "Prototype test tag",
+          "type": "artifact",
+          "brand": "Engineering Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "canyon-cfr-2027",
+          "name": "Speedmax CFR AXS",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-109",
+      "number": 109,
+      "name": "Race-Morning Alarm",
+      "room_id": "room-011",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-110",
+      "number": 110,
+      "name": "Nothing New on Race Day",
+      "room_id": "room-011",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-111",
+      "number": 111,
+      "name": "Basalt",
+      "room_id": "room-012",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "sculpture:basalt-airfoil",
+          "name": "Basalt airfoil",
+          "type": "sculpture",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "decor:kona-palm",
+          "name": "Basalt-potted Kona palm",
+          "type": "decoration",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "castelli-free-sanremo3-study",
+          "name": "Free Sanremo 3 Suit",
+          "type": "trisuit",
+          "brand": "Castelli",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-112",
+      "number": 112,
+      "name": "Pacific Horizon",
+      "room_id": "room-012",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "artifact-course-marker-pin",
+          "name": "Course marker pin",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-113",
+      "number": 113,
+      "name": "Palm Shadow",
+      "room_id": "room-012",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "decor:kona-palm",
+          "name": "Basalt-potted Kona palm",
+          "type": "decoration",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-114",
+      "number": 114,
+      "name": "Coffee",
+      "room_id": "room-012",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-115",
+      "number": 115,
+      "name": "Volcano Card",
+      "room_id": "room-012",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-116",
+      "number": 116,
+      "name": "Kohala",
+      "room_id": "room-012",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "painting:kohala-turn",
+          "name": "Kohala, the turn",
+          "type": "painting",
+          "brand": "KONA Studio",
+          "lane": "main",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-117",
+      "number": 117,
+      "name": "Ocean Wind",
+      "room_id": "room-012",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-118",
+      "number": 118,
+      "name": "Sunset",
+      "room_id": "room-012",
+      "representation": "asset-or-card",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-119",
+      "number": 119,
+      "name": "Island Map",
+      "room_id": "room-012",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-120",
+      "number": 120,
+      "name": "Respect the Island",
+      "room_id": "room-012",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-121",
+      "number": 121,
+      "name": "1978",
+      "room_id": "room-013",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-122",
+      "number": 122,
+      "name": "Old Race Map",
+      "room_id": "room-013",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "room:tri",
+          "name": "Long course",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "room:atlas-against-the-clock-tri",
+          "name": "Long course · Against the Clock",
+          "type": "room",
+          "brand": "KONA World",
+          "lane": "main",
+          "score": 3
+        },
+        {
+          "id": "cervelo-p5x-2017-study",
+          "name": "P5X 2017",
+          "type": "bike",
+          "brand": "Cervélo",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-123",
+      "number": 123,
+      "name": "Paper Results Sheet",
+      "room_id": "room-013",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-124",
+      "number": 124,
+      "name": "Finisher Medal: Early Era",
+      "room_id": "room-013",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "kona-medal-1980s-study",
+          "name": "Finisher Medal · 1980s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "kona-medal-1990s-study",
+          "name": "Finisher Medal · 1990s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "kona-medal-2000s-study",
+          "name": "Finisher Medal · 2000s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 10
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-125",
+      "number": 125,
+      "name": "Finisher Medal: Modern Era",
+      "room_id": "room-013",
+      "representation": "asset-or-card",
+      "state": "NEXT100_CANDIDATE",
+      "candidates": [
+        {
+          "id": "kona-medal-1980s-study",
+          "name": "Finisher Medal · 1980s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "kona-medal-1990s-study",
+          "name": "Finisher Medal · 1990s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 10
+        },
+        {
+          "id": "kona-medal-2000s-study",
+          "name": "Finisher Medal · 2000s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 10
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-126",
+      "number": 126,
+      "name": "Old Bike Catalogue",
+      "room_id": "room-013",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "softride-powerwing-1999-study",
+          "name": "PowerWing 1999",
+          "type": "bike",
+          "brand": "Softride",
+          "lane": "next100",
+          "score": 5
+        },
+        {
+          "id": "artifact-kona-vintage-bib",
+          "name": "Vintage Kona race bib",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "canyon-cfr-2027",
+          "name": "Speedmax CFR AXS",
+          "type": "bike",
+          "brand": "Canyon",
+          "lane": "main",
+          "score": 2
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-127",
+      "number": 127,
+      "name": "Magazine Cover",
+      "room_id": "room-013",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "softride-powerwing-1999-study",
+          "name": "PowerWing 1999",
+          "type": "bike",
+          "brand": "Softride",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "artifact-kona-vintage-bib",
+          "name": "Vintage Kona race bib",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-128",
+      "number": 128,
+      "name": "Timing Chip Evolution",
+      "room_id": "room-013",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "artifact-timing-chip-vintage",
+          "name": "Vintage timing chip",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 6
+        },
+        {
+          "id": "softride-powerwing-1999-study",
+          "name": "PowerWing 1999",
+          "type": "bike",
+          "brand": "Softride",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "artifact-kona-vintage-bib",
+          "name": "Vintage Kona race bib",
+          "type": "artifact",
+          "brand": "Race Archive",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-129",
+      "number": 129,
+      "name": "Race Photo Contact Sheet",
+      "room_id": "room-013",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "kona-medal-1980s-study",
+          "name": "Finisher Medal · 1980s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "kona-medal-1990s-study",
+          "name": "Finisher Medal · 1990s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "kona-medal-2000s-study",
+          "name": "Finisher Medal · 2000s",
+          "type": "medal",
+          "brand": "KONA Archive",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-130",
+      "number": 130,
+      "name": "The Source",
+      "room_id": "room-013",
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-131",
+      "number": 131,
+      "name": "Witchcraft",
+      "room_id": "room-014",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "edition-artworld-witchcraft",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-132",
+      "number": 132,
+      "name": "Stitched",
+      "room_id": "room-014",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "edition-artworld-stitched",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-133",
+      "number": 133,
+      "name": "Moonlit",
+      "room_id": "room-014",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "edition-artworld-moonlit",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-134",
+      "number": 134,
+      "name": "Carnival",
+      "room_id": "room-014",
+      "representation": "existing-candidate",
+      "state": "READY_EXISTING",
+      "candidates": [
+        {
+          "id": "edition-artworld-carnival",
+          "lane": "main",
+          "score": 99
+        }
+      ],
+      "review_required": false
+    },
+    {
+      "item_id": "k141-135",
+      "number": 135,
+      "name": "The Intern's Badge",
+      "room_id": "room-014",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-136",
+      "number": 136,
+      "name": "A Completely Normal Rock",
+      "room_id": "room-014",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-137",
+      "number": 137,
+      "name": "Wrong Shoe",
+      "room_id": "room-014",
+      "representation": "asset-or-card",
+      "state": "NEEDS_SOURCE",
+      "candidates": [
+        {
+          "id": "nike-alphafly-3-study",
+          "name": "Alphafly 3",
+          "type": "shoe",
+          "brand": "Nike",
+          "lane": "main",
+          "score": 7
+        },
+        {
+          "id": "asics-metaspeed-sky-paris-study",
+          "name": "METASPEED SKY PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 7
+        },
+        {
+          "id": "asics-metaspeed-edge-paris-study",
+          "name": "METASPEED EDGE PARIS",
+          "type": "shoe",
+          "brand": "ASICS",
+          "lane": "next100",
+          "score": 7
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-138",
+      "number": 138,
+      "name": "Key With No Door",
+      "room_id": "room-014",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-139",
+      "number": 139,
+      "name": "Door With No Key",
+      "room_id": "room-014",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-140",
+      "number": 140,
+      "name": "???",
+      "room_id": "room-014",
+      "representation": "asset-or-card",
+      "state": "NO_CANDIDATE_FOUND",
+      "candidates": [
+        {
+          "id": "castelli-free-sanremo3-study",
+          "name": "Free Sanremo 3 Suit",
+          "type": "trisuit",
+          "brand": "Castelli",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "roka-gen2-elite-aero-study",
+          "name": "Gen II Elite Aero II",
+          "type": "trisuit",
+          "brand": "ROKA",
+          "lane": "next100",
+          "score": 3
+        },
+        {
+          "id": "zone3-aeroforce-x2-study",
+          "name": "Aeroforce-X II",
+          "type": "trisuit",
+          "brand": "Zone3",
+          "lane": "next100",
+          "score": 3
+        }
+      ],
+      "review_required": true
+    },
+    {
+      "item_id": "k141-141",
+      "number": 141,
+      "name": "The Point Six",
+      "room_id": null,
+      "representation": "card/story",
+      "state": "EXISTING_2D_STORY",
+      "candidates": [],
+      "review_required": true
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+name: App release seal
+
+# The installable museum only accepts an update whose files match the SHA-256 hashes sealed
+# into sw.js. This check fails a pull request that changes a museum file without re-sealing
+# (node tools/build_app.mjs), so a release can never ship with a manifest that doesn't match.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tools/build_app.mjs
+      - name: sw.js and app/app-manifest.json are up to date
+        run: git diff --exit-code -- sw.js app/app-manifest.json || { echo "::error::Run 'node tools/build_app.mjs' and commit sw.js + app/app-manifest.json"; exit 1; }

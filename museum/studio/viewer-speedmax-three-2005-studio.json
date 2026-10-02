@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "key": "speedmax-three-2005",
+    "name": "Three · MY2005",
+    "family": "Speedmax",
+    "year": "2005",
+    "era": "2002–2005",
+    "size": "53",
+    "weight": 8.75,
+    "price": null,
+    "claim": "Canyon's pure triathlon machine of the mid-2000s: a black 7005 aluminium frame, full-carbon fork and a Carbotec disc as standard.",
+    "pageTitle": "Canyon Museum — Speedmax Three (2005)",
+    "exhibit": "03",
+    "gear": "54 / 42",
+    "gearSub": "Dura-Ace 12–23 · bar-end",
+    "rims": "Disc",
+    "chainring": 54,
+    "cog": 12,
+    "tyreFront": "CONTINENTAL GP3000 · 23-622",
+    "tyreRear": "CARBOTEC DISC · rear"
+  },
+  "hero": {
+    "eyebrow": "Canyon collection · Exhibit 03 · 2002–2005",
+    "title": "Speedmax",
+    "titleSpan": "Three · MY2005",
+    "sub": "A reference-calibrated heritage study.",
+    "lede": "Canyon's pure triathlon machine of the mid-2000s: a black 7005 aluminium frame, full-carbon fork and a Carbotec disc as standard."
+  },
+  "geometry": {
+    "sizes": [
+      "53"
+    ],
+    "rows": [
+      [
+        "Head angle",
+        "73° (size 53)"
+      ],
+      [
+        "Seat angle",
+        "75°"
+      ],
+      [
+        "Top tube",
+        "540 mm (53)"
+      ],
+      [
+        "Chainstay",
+        "410 mm published · 398 mm measured"
+      ],
+      [
+        "Wheelbase",
+        "989 mm (53)"
+      ]
+    ]
+  },
+  "geometryNote": "Scale comes from circle fits to both tyres in Canyon's archived side photo. Every tube is a traced centreline with its side-view depth measured from the photo; widths across the bike are inferred. Parts are rebuilt from the archived specification.",
+  "presets": {
+    "race_black": {
+      "name": "Race Black",
+      "sub": "Race Black Metallic · as photographed",
+      "frame": "#050506",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#d9d9d9",
+      "cockpit": "carbon",
+      "rimText": "#d9d9d9"
+    },
+    "team_white": {
+      "name": "Team White",
+      "sub": "Archived Canyon colourway",
+      "frame": "#e4e4e4",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#0a0a0a",
+      "cockpit": "carbon",
+      "rimText": "#0a0a0a"
+    },
+    "pro_white_red": {
+      "name": "Pro White / red",
+      "sub": "Archived Canyon colourway",
+      "frame": "#eeeeee",
+      "finish": "gloss",
+      "irid": 0,
+      "decal": "#c8102e",
+      "cockpit": "carbon",
+      "rimText": "#c8102e"
+    }
+  },
+  "defaultCfg": {
+    "preset": "race_black",
+    "frame": "#050506",
+    "finish": "gloss",
+    "irid": 0,
+    "decal": "#d9d9d9",
+    "cockpit": "carbon",
+    "rimText": "#d9d9d9"
+  },
+  "parts": {
+    "frame": {
+      "name": "Frame",
+      "group": "frame",
+      "spec": "New F5 Super Aero, 7005 Ultralight Aluminium",
+      "note": "Archived frame specification, 2005."
+    },
+    "fork": {
+      "name": "Fork",
+      "group": "frame",
+      "spec": "Smolik Motivation full carbon",
+      "note": "Archived fork specification, 2005."
+    },
+    "crankset": {
+      "name": "Crankset",
+      "group": "drivetrain",
+      "spec": "FSA CK-805TT Carbon Pro Team Issue 54/42",
+      "note": "Archived crankset specification, 2005."
+    },
+    "chainrings": {
+      "name": "Chainrings",
+      "group": "drivetrain",
+      "spec": "FSA CK-805TT Carbon Pro Team Issue 54/42",
+      "note": "Archived crankset specification, 2005."
+    },
+    "crank_arm_ds": {
+      "name": "Drive-side crank",
+      "group": "drivetrain",
+      "spec": "FSA CK-805TT Carbon Pro Team Issue 54/42",
+      "note": "Archived crankset specification, 2005."
+    },
+    "crank_arm_nds": {
+      "name": "Non-drive crank",
+      "group": "drivetrain",
+      "spec": "FSA CK-805TT Carbon Pro Team Issue 54/42",
+      "note": "Archived crankset specification, 2005."
+    },
+    "spindle": {
+      "name": "Bottom-bracket spindle",
+      "group": "drivetrain",
+      "spec": "FSA CK-805TT Carbon Pro Team Issue 54/42",
+      "note": "Archived crankset specification, 2005."
+    },
+    "cassette": {
+      "name": "Cassette",
+      "group": "drivetrain",
+      "spec": "Shimano Dura-Ace 12-23",
+      "note": "Archived cassette specification, 2005."
+    },
+    "chain": {
+      "name": "Chain",
+      "group": "drivetrain",
+      "spec": "Shimano Dura-Ace, bar-end shifters",
+      "note": "Archived drivetrain specification, 2005."
+    },
+    "rear_derailleur": {
+      "name": "Rear derailleur",
+      "group": "drivetrain",
+      "spec": "Shimano Dura-Ace, bar-end shifters",
+      "note": "Archived drivetrain specification, 2005."
+    },
+    "front_derailleur": {
+      "name": "Front derailleur",
+      "group": "drivetrain",
+      "spec": "Shimano Dura-Ace, bar-end shifters",
+      "note": "Archived drivetrain specification, 2005."
+    },
+    "brake_front": {
+      "name": "Front brake",
+      "group": "brakes",
+      "spec": "Shimano Dura-Ace",
+      "note": "Archived brakes specification, 2005."
+    },
+    "brake_rear": {
+      "name": "Rear brake",
+      "group": "brakes",
+      "spec": "Shimano Dura-Ace",
+      "note": "Archived brakes specification, 2005."
+    },
+    "brake_levers": {
+      "name": "Brake levers",
+      "group": "cockpit",
+      "spec": "Syntace SpaceControl",
+      "note": "Archived brake levers specification, 2005."
+    },
+    "wheel_front": {
+      "name": "Front wheel",
+      "group": "wheels",
+      "spec": "Citec 3000 front · Carbotec disc rear (Citec hubs)",
+      "note": "Archived wheels specification, 2005."
+    },
+    "wheel_rear": {
+      "name": "Rear wheel",
+      "group": "wheels",
+      "spec": "Citec 3000 front · Carbotec disc rear (Citec hubs)",
+      "note": "Archived wheels specification, 2005."
+    },
+    "saddle": {
+      "name": "Saddle",
+      "group": "contact",
+      "spec": "Selle San Marco Aspide",
+      "note": "Archived saddle specification, 2005."
+    },
+    "seatpost": {
+      "name": "Seatpost",
+      "group": "contact",
+      "spec": "Iridium Carbon",
+      "note": "Archived seatpost specification, 2005."
+    },
+    "stem": {
+      "name": "Stem",
+      "group": "cockpit",
+      "spec": "Syntace F99 stem · Stratos 400 bar · C2 clip-on",
+      "note": "Archived cockpit specification, 2005."
+    },
+    "base_bar": {
+      "name": "Base bar",
+      "group": "cockpit",
+      "spec": "Syntace F99 stem · Stratos 400 bar · C2 clip-on",
+      "note": "Archived cockpit specification, 2005."
+    },
+    "extensions": {
+      "name": "Clip-on extensions",
+      "group": "cockpit",
+      "spec": "Syntace F99 stem · Stratos 400 bar · C2 clip-on",
+      "note": "Archived cockpit specification, 2005."
+    },
+    "cables": {
+      "name": "Cable housings",
+      "group": "cockpit",
+      "spec": "Shimano Dura-Ace, bar-end shifters",
+      "note": "Archived drivetrain specification, 2005."
+    }
+  },
+  "partsReplace": true,
+  "tour": [
+    {
+      "view": "side",
+      "title": "A silhouette from the archive",
+      "text": "The Speedmax name dates back to 1999 (Speedmax 1000/2000/3000, sold by Rad Sport Arnold). By 2002 Canyon published a dedicated 28-inch triathlon geometry, the same table this Speedmax One/Two/Three range used until 2005. Triathlon Magazin gave the Three 23 of 25 points."
+    },
+    {
+      "view": "cockpit",
+      "title": "Cockpit of its era",
+      "text": "Clip-on extensions, cable housings and the cockpit hardware documented for this build. Side profiles are traced from the archived photograph; depths remain interpreted."
+    },
+    {
+      "view": "drivetrain",
+      "title": "The drivetrain, as listed",
+      "text": "54 / 42 rings with a Dura-Ace 12–23 · bar-end cassette. Switch to Ride to see cadence drive the wheels through the listed ratio."
+    },
+    {
+      "view": "nds",
+      "title": "The other side of the story",
+      "text": "Brakes, hubs and frame details follow the archived specification. Where the photo is silent, shapes are inferred and marked as such."
+    },
+    {
+      "view": "hero",
+      "title": "Exhibit 03 · Speedmax Three · MY2005",
+      "text": "A photo-calibrated reconstruction. Orbit freely, repaint it in the Customizer, or light it in the Aero lab. Sources and uncertainties are listed in Specs."
+    }
+  ],
+  "unavailableOptions": [
+    "aerofuel",
+    "frontBottle",
+    "rearBottles",
+    "shield",
+    "rearDisc"
+  ],
+  "discOption": false,
+  "dimsOverlay": false
+}

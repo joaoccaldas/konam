@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joaoccaldas.github.io/canyonmuseum/schemas/v1/progression-profile.schema.json",
+  "title": "ProgressionProfile",
+  "type": "object",
+  "required": [
+    "schema",
+    "access_tier",
+    "xp",
+    "level",
+    "discoveries",
+    "ledger",
+    "seen"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "progression-v1"
+    },
+    "access_tier": {
+      "enum": [
+        "visitor",
+        "passport",
+        "athlete"
+      ]
+    },
+    "xp": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "level_name": {
+      "type": "string"
+    },
+    "streak": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "discoveries": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "badges": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unlocks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "seen": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Idempotent event ids. A repeated id grants nothing."
+    },
+    "ledger": {
+      "type": "array",
+      "items": {
+        "$ref": "currency-ledger.schema.json"
+      }
+    },
+    "credits": {
+      "type": "integer"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "progression-event.schema.json"
+      }
+    },
+    "acquisitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item_id",
+          "method",
+          "at"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "item_id": {
+            "type": "string"
+          },
+          "method": {
+            "enum": [
+              "hidden",
+              "trade",
+              "event"
+            ]
+          },
+          "at": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

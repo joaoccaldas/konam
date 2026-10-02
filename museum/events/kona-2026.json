@@ -1,0 +1,13 @@
+{
+ "schema_version": 1,
+ "id": "kona-2026",
+ "name": "Kona 2026",
+ "title": "Race week, Kailua-Kona",
+ "date": "2026-10-10",
+ "place": "Kailua-Kona, Hawaiʻi",
+ "note": "An event is a lens on the catalogue: which products lead, which themes are offered, what the share card says. No product data lives here.",
+ "featured": ["canyon-cfr-2027", "canyon-kona-cfr-2019", "canyon-kona-cfslx-2015", "atlas-type-disc-superbike", "atlas-studio-kona-2030"],
+ "themes": ["sunny-side", "tiffany-tide", "aero-glam"],
+ "share_line": "Built my Kona bike in the Speedmax Museum studio",
+ "accent": "#e8471c"
+}

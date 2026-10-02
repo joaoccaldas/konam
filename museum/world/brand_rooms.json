@@ -1,0 +1,111 @@
+{
+ "schema_version": 1,
+ "note": "Production brand rooms. One descriptor per themed room; the landing builds each through the data-driven engine (web/src/engine/roomscene.js). A room is data, not code — add a brand by adding an entry here plus a GLB under assets/. No brand-specific runtime allowed.",
+ "rooms": [
+  {
+   "id": "nike-running",
+   "name": "Nike Running Lab",
+   "kicker": "The shoe under the marathon leg",
+   "story": "Footwear as engineering: the Alphafly 3 reconstructed from Nike's published specification — ZoomX foam, a full-length carbon Flyplate and two forefoot Air Zoom units. An independent study.",
+   "kind": "brand",
+   "theme": {
+    "wall": "#f0eee9",
+    "wallRough": 0.85,
+    "floor": "marble",
+    "accent": "#ff3d00",
+    "ceil": "#fbf9fa",
+    "gloss": 0.65
+   },
+   "bounds": {
+    "x0": 9.6,
+    "x1": 21.6,
+    "z0": -46.6,
+    "z1": -64.6
+   },
+   "height": 5.0,
+   "door": {
+    "wall": "west",
+    "z0": -49.9,
+    "z1": -47.1,
+    "h": 3.4
+   },
+   "light": {
+    "fillI": 20,
+    "skyStrip": true,
+    "accents": [
+     {
+      "x": 14.2,
+      "y": 3.4,
+      "z": -52.0,
+      "color": "#ffe9e0",
+      "i": 6,
+      "dist": 13
+     },
+     {
+      "x": 18.0,
+      "y": 3.2,
+      "z": -60.0,
+      "color": "#e8f0ff",
+      "i": 5,
+      "dist": 12
+     }
+    ]
+   },
+   "products": [
+    {
+     "id": "nike-alphafly-3-study",
+     "brand": "Nike",
+     "model": "Alphafly 3",
+     "type": "shoe",
+     "year": "2024",
+     "glb": "assets/kona-heritage/shoes/nike-alphafly-3-study.glb",
+     "sub": "Road-racing super shoe",
+     "text": "ZoomX foam over a full-length carbon Flyplate, two forefoot Air Zoom units under an Atomknit upper. ~218 g in a reference size, 8 mm drop.",
+     "source": "https://www.nike.com/se/en/t/alphafly-3-mens-road-racing-shoes-KnKE5jwD/FD8311-402",
+     "buy": "https://www.nike.com/se/en/t/alphafly-3-mens-road-racing-shoes-KnKE5jwD/FD8311-402",
+     "legal": "Independent reconstructed study from the public specification. Not affiliated with or endorsed by Nike.",
+     "stats": [
+      [
+       "~218 g",
+       "reference size"
+      ],
+      [
+       "8 mm",
+       "drop"
+      ],
+      [
+       "ZoomX",
+       "foam"
+      ],
+      [
+       "Flyplate",
+       "carbon"
+      ]
+     ],
+     "station": {
+      "kind": "stand",
+      "x": 16.6,
+      "z": -55.6,
+      "rotY": 1.1,
+      "top": 0
+     },
+     "capabilities": [
+      "inspect",
+      "compare",
+      "equip",
+      "share",
+      "buy"
+     ]
+    }
+   ],
+   "decorations": [
+    {
+     "prop": "race-marker",
+     "x": 20.900000000000002,
+     "z": -63.89999999999999,
+     "height": 1.1
+    }
+   ]
+  }
+ ]
+}

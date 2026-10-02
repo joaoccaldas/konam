@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "principles": [
+    "Quests reward curiosity, observation, mastery and participation.",
+    "Optional personal disclosure is never required for rewards.",
+    "Safety, compatibility and essential race information are never quest-gated."
+  ],
+  "quests": [
+    {
+      "id": "q-found-001",
+      "room_id": "room-001",
+      "title": "Why does this road matter?",
+      "type": "riddle",
+      "reward_item_ids": [
+        "k141-010"
+      ],
+      "completion_rule": "answer-from-room",
+      "attempts": 3,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-002",
+      "room_id": "room-002",
+      "title": "What does 3.8 mean here?",
+      "type": "riddle",
+      "reward_item_ids": [
+        "k141-020"
+      ],
+      "completion_rule": "answer:3.8",
+      "attempts": 3,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-003",
+      "room_id": "room-003",
+      "title": "Find the smallest object that can ruin the whole day.",
+      "type": "observation",
+      "reward_item_ids": [
+        "k141-024"
+      ],
+      "completion_rule": "find:timing-chip",
+      "attempts": null,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-004",
+      "room_id": "room-004",
+      "title": "When does Kona stop waiting?",
+      "type": "riddle",
+      "reward_item_ids": [
+        "k141-039"
+      ],
+      "completion_rule": "answer:midnight",
+      "attempts": 3,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-005",
+      "room_id": "room-005",
+      "title": "What belongs on a podium before anyone wins?",
+      "type": "riddle",
+      "reward_item_ids": [
+        "k141-050"
+      ],
+      "completion_rule": "answer:empty",
+      "attempts": 3,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-006",
+      "room_id": "room-006",
+      "title": "One rider. One hour. What are they really racing?",
+      "type": "story",
+      "reward_item_ids": [
+        "k141-060"
+      ],
+      "completion_rule": "complete-story",
+      "attempts": null,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-007",
+      "room_id": "room-007",
+      "title": "Which generation is missing?",
+      "type": "archive",
+      "reward_item_ids": [
+        "k141-070"
+      ],
+      "completion_rule": "answer-from-sources",
+      "attempts": null,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-008",
+      "room_id": "room-008",
+      "title": "Name the thing the rider cannot see but spends years reducing.",
+      "type": "riddle",
+      "reward_item_ids": [
+        "k141-080"
+      ],
+      "completion_rule": "answer:cda",
+      "attempts": 3,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-009",
+      "room_id": "room-009",
+      "title": "Find the object nobody remembers until they need it.",
+      "type": "observation",
+      "reward_item_ids": [
+        "k141-090"
+      ],
+      "completion_rule": "find:spare-sock",
+      "attempts": null,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-010",
+      "room_id": "room-010",
+      "title": "Complete the transition drill.",
+      "type": "challenge",
+      "reward_item_ids": [
+        "k141-100"
+      ],
+      "completion_rule": "complete:transition-drill",
+      "attempts": null,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-011",
+      "room_id": "room-011",
+      "title": "Finish race-week setup without being forced to disclose optional personal data.",
+      "type": "onboarding",
+      "reward_item_ids": [
+        "k141-110"
+      ],
+      "completion_rule": "complete:onboarding",
+      "attempts": null,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-012",
+      "room_id": "room-012",
+      "title": "Explore the island story sequence.",
+      "type": "story",
+      "reward_item_ids": [
+        "k141-120"
+      ],
+      "completion_rule": "complete:island-sequence",
+      "attempts": null,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-013",
+      "room_id": "room-013",
+      "title": "Open the evidence behind an exhibit.",
+      "type": "source",
+      "reward_item_ids": [
+        "k141-130"
+      ],
+      "completion_rule": "open:source-record",
+      "attempts": null,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-found-014",
+      "room_id": "room-014",
+      "title": "Find the key that opens nothing. For now.",
+      "type": "secret",
+      "reward_item_ids": [
+        "k141-138"
+      ],
+      "completion_rule": "find:key-with-no-door",
+      "attempts": null,
+      "availability": {
+        "kind": "permanent",
+        "condition": null
+      },
+      "repeatable": false,
+      "commercial": false
+    },
+    {
+      "id": "q-meta-141",
+      "room_id": null,
+      "title": "What did we round away?",
+      "type": "meta",
+      "reward_item_ids": [
+        "k141-141"
+      ],
+      "completion_rule": "answer:0.6",
+      "attempts": null,
+      "availability": {
+        "kind": "condition",
+        "condition": "14-room-quests-complete + 14-anchor-items-owned"
+      },
+      "repeatable": false,
+      "commercial": false
+    }
+  ]
+}

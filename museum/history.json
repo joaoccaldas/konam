@@ -1,0 +1,241 @@
+{
+ "schema_version": 1,
+ "title": "History Lane",
+ "dir": "assets/history",
+ "note": "Canyon from a trailer of Italian parts to Kona. Dates from Canyon’s own history page, Wikipedia and press coverage; photographs from Wikimedia Commons, painted (tools/paint_canvases.py) and credited. The sculptures are abstract tributes, not likenesses.",
+ "canvases": [
+  {
+   "id": "store-2008",
+   "local": "bikes-1.jpg",
+   "crop": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "source": {
+    "file": "File:Canyon bicycles 1.JPG",
+    "page": "https://commons.wikimedia.org/wiki/File:Canyon_bicycles_1.JPG",
+    "author": "Gerolsteiner91",
+    "license": "CC BY-SA 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5"
+   },
+   "caption": "The Canyon store in Koblenz, February 2008 (closed in 2009)",
+   "aspect": 1.6898
+  },
+  {
+   "id": "hq-2009",
+   "local": "hq-2009.jpg",
+   "crop": [
+    0.08,
+    0,
+    0.92,
+    1
+   ],
+   "source": {
+    "file": "File:Canyon hq.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Canyon_hq.jpg",
+    "author": "Canyon Bicycles GmbH",
+    "license": "Copyrighted free use",
+    "licenseUrl": ""
+   },
+   "caption": "Canyon headquarters, Koblenz, 2009",
+   "aspect": 1.784
+  },
+  {
+   "id": "hq-2015",
+   "local": "koblenz-panoramio.jpg",
+   "crop": null,
+   "source": {
+    "file": "File:Canyon in Koblenz - panoramio.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Canyon_in_Koblenz_-_panoramio.jpg",
+    "author": "qwesy qwesy",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+   },
+   "caption": "Canyon in Koblenz, July 2015",
+   "aspect": 1.3527
+  },
+  {
+   "id": "home-2019",
+   "local": "home-2019.jpg",
+   "crop": null,
+   "source": {
+    "file": "File:CANYON-Home-Koblenz-2019.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:CANYON-Home-Koblenz-2019.jpg",
+    "author": "Désirée von Canal",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "caption": "Canyon Home, Koblenz, September 2019",
+   "aspect": 1.5015
+  },
+  {
+   "id": "speedmax-2023",
+   "local": "koblenz-2023.jpg",
+   "crop": [
+    0.1,
+    0,
+    0.95,
+    1
+   ],
+   "source": {
+    "file": "File:Canyon, Koblenz (LRM 20231021 130224).jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Canyon,_Koblenz_(LRM_20231021_130224).jpg",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
+   },
+   "caption": "A Speedmax on display in Koblenz, October 2023",
+   "aspect": 1.134
+  }
+ ],
+ "chapters": [
+  {
+   "year": "1970s–80s",
+   "title": "A trailer at the races",
+   "kind": "sculpture",
+   "sculpture": "trailer",
+   "text": "Roman Arnold's father imported Italian bike parts and sold them from a trailer on the sidelines of his son's races.",
+   "sources": [
+    "https://www.canyon.com/en-us/jobs-bike-industry/how-canyon-began.html"
+   ]
+  },
+  {
+   "year": "1985",
+   "title": "Radsport Arnold",
+   "kind": "sculpture",
+   "sculpture": "founders",
+   "text": "Roman Arnold and his brother Franc found Radsport Arnold, a retailer of bike parts, and open their first shop in the city centre of Koblenz.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Canyon_Bicycles",
+    "https://www.canyon.com/en-us/jobs-bike-industry/how-canyon-began.html"
+   ]
+  },
+  {
+   "year": "1996",
+   "title": "The first Canyon",
+   "kind": "lost",
+   "text": "The first Canyon-branded bike reaches the market — a mountain bike. No photograph of it is held here; the frame stays empty.",
+   "sources": [
+    "https://www.canyon.com/en-us/jobs-bike-industry/how-canyon-began.html"
+   ]
+  },
+  {
+   "year": "1999",
+   "title": "The first Speedmax",
+   "kind": "lost",
+   "text": "Rad Sport Arnold sells the aluminium Speedmax 1000, 2000 and 3000 with a 75° “Triathlon 2000” geometry; TRIATHLET reviews the Speedmax 2000 in its September 1999 issue.",
+   "sources": [
+    "https://web.archive.org/web/20001026102235/http://www.canyon.de:80/trifeatures.html"
+   ]
+  },
+  {
+   "year": "2001",
+   "title": "From dealer to maker",
+   "kind": "text",
+   "text": "The company becomes a bicycle manufacturer and hires frame designer Lutz Scheffer.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Canyon_Bicycles"
+   ]
+  },
+  {
+   "year": "2002",
+   "title": "The name Canyon",
+   "kind": "text",
+   "text": "Radsport Arnold is renamed Canyon Bicycles GmbH.",
+   "sources": [
+    "https://www.canyon.com/en-us/jobs-bike-industry/how-canyon-began.html",
+    "https://en.wikipedia.org/wiki/Canyon_Bicycles"
+   ]
+  },
+  {
+   "year": "2003",
+   "title": "Direct, online",
+   "kind": "text",
+   "text": "Canyon starts selling bikes to customers online, directly — the model that drives its growth.",
+   "sources": [
+    "https://www.canyon.com/en-us/jobs-bike-industry/how-canyon-began.html"
+   ]
+  },
+  {
+   "year": "2007",
+   "title": "A pro team",
+   "kind": "text",
+   "text": "Canyon equips its first professional team, UCI ProTour squad Unibet.com, including a Speedmax time-trial bike.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Canyon_Bicycles",
+    "https://web.archive.org/web/20071026002802/http://www.canyon.com:80/_en/triathlonbikes/index.html?b=135"
+   ]
+  },
+  {
+   "year": "2008",
+   "title": "The Koblenz store",
+   "kind": "photo",
+   "canvas": "store-2008",
+   "text": "The Canyon store in Koblenz, photographed in February 2008. It closed in 2009.",
+   "sources": [
+    "https://commons.wikimedia.org/wiki/File:Canyon_bicycles_1.JPG"
+   ]
+  },
+  {
+   "year": "2009",
+   "title": "Headquarters",
+   "kind": "photo",
+   "canvas": "hq-2009",
+   "text": "Canyon’s headquarters in Koblenz, in a photograph released by the company in 2009.",
+   "sources": [
+    "https://commons.wikimedia.org/wiki/File:Canyon_hq.jpg"
+   ]
+  },
+  {
+   "year": "2012",
+   "title": "Speedmax CF",
+   "kind": "text",
+   "text": "The carbon Speedmax CF, previewed at Eurobike 2011 with “Trident” tube profiles, wins a red dot “best of the best” award.",
+   "sources": [
+    "https://web.archive.org/web/20121015130728/http://www.canyon.com:80/_en/triathlonbikes/series/speedmax-cf-tria.html"
+   ]
+  },
+  {
+   "year": "2015",
+   "title": "Kona",
+   "kind": "photo",
+   "canvas": "hq-2015",
+   "text": "Jan Frodeno wins the Ironman World Championship on a Speedmax CF SLX — the first of Canyon’s Kona titles. (Photo: Canyon in Koblenz, July 2015.)",
+   "sources": [
+    "https://en.wikipedia.org/wiki/2015_Ironman_World_Championship"
+   ]
+  },
+  {
+   "year": "2019",
+   "title": "Canyon Home",
+   "kind": "photo",
+   "canvas": "home-2019",
+   "text": "Canyon Home in Koblenz, photographed in September 2019. That October, Frodeno wins Kona again in a course record.",
+   "sources": [
+    "https://commons.wikimedia.org/wiki/File:CANYON-Home-Koblenz-2019.jpg"
+   ]
+  },
+  {
+   "year": "2020",
+   "title": "A new chapter",
+   "kind": "text",
+   "text": "Roman Arnold steps back as CEO to chair Canyon’s advisory board. In December, Groupe Bruxelles Lambert takes a majority stake; Arnold reinvests alongside it.",
+   "sources": [
+    "https://www.forbes.com/sites/carltonreid/2020/12/15/adidas-largest-shareholder-groupe-bruxelles-lambert-takes-majority-stake-in-canyon-bicycles/",
+    "https://www.gbl.com/en/media/3490/20201215%20GBL%20-%20Press%20Release%20Signing%20Canyon.pdf"
+   ]
+  },
+  {
+   "year": "2023",
+   "title": "Still Koblenz",
+   "kind": "photo",
+   "canvas": "speedmax-2023",
+   "text": "A Speedmax on display in Koblenz, where it all started. The next year Patrick Lange sets the Kona course record on a Speedmax CFR.",
+   "sources": [
+    "https://commons.wikimedia.org/wiki/File:Canyon,_Koblenz_(LRM_20231021_130224).jpg"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "id": "trek-equinox-9-my2004",
+  "brand": "Trek",
+  "model": "Equinox 9",
+  "generation": "trek-equinox-alpha-sl",
+  "model_year": 2004,
+  "launch_year": 2003,
+  "launch_year_basis": "Photo captured on trekbikes.com on 2003-09-22 (Wayback timestamp 20030922065745); the manufacturer's model year is 2004.",
+  "size": "pending-calibration",
+  "finish": "Pearl White/Baja Blue",
+  "status": "modelling",
+  "coordinate_system": {
+    "unit": "metre",
+    "forward": "+X",
+    "up": "+Z",
+    "drive_side": "-Y"
+  },
+  "source_geometry": "museum/heritage/specs-equinox-alphasl-my2004.json",
+  "trim": "equinox_9",
+  "reconstruction_adapter": "trek-equinox-alphasl-2004-tubes-v1",
+  "references": [
+    {
+      "path": "assets/reference/heritage/web/20030922065745_bikes_2004_road_large_equinox9.jpg",
+      "url": "https://web.archive.org/web/20030922065745id_/http://www.trekbikes.com:80/images/bikes/2004/road/large/equinox9.jpg",
+      "role": "Side photo: calibration, tube depths, silhouette check",
+      "sha256": "d5cbc151b088aad391e77fd183ceb1b11944b1de18d35092569f1693630724f3"
+    },
+    {
+      "path": "assets/reference/heritage/catalogs/2004_Trek_Spec_Catalog.pdf",
+      "url": "https://media.trekbikes.com/image/upload/v1779307205/2004_Trek_Spec_Catalog.pdf",
+      "role": "Geometry table and component list (PDF pages 80-81)",
+      "sha256": "c58e16001b9542b34aa505f4008daeef7d973a55aa5161d055a0620d80f5536c"
+    },
+    {
+      "path": "assets/reference/heritage/web/20030922063540_bikes_2004_road_large_equinox7.jpg",
+      "url": "https://web.archive.org/web/20030922063540id_/http://www.trekbikes.com:80/images/bikes/2004/road/large/equinox7.jpg",
+      "role": "Same-frame sibling photo (Equinox 7): cross-check of tube shapes only",
+      "sha256": "516ea489110295a157988194de679142e61e963aa05c1bea804a34152047e9de"
+    }
+  ],
+  "pipeline": {
+    "out_dir": "assets/museum/trek-equinox-9-my2004",
+    "data_dir": "blender/heritage_data/trek-equinox-9-my2004",
+    "reference": "assets/reference/heritage/web/20030922065745_bikes_2004_road_large_equinox9.jpg",
+    "adapter_module": "adapters.equinox_alphasl_2004",
+    "calibration_input": {
+      "photo": "assets/reference/heritage/web/20030922065745_bikes_2004_road_large_equinox9.jpg",
+      "wheel": "700c",
+      "tyre_outer_diameter_mm": 668,
+      "tyre_basis": "700 x 23c Bontrager Race X Lite (published). ISO 622 mm bead seat + 2 x 23 mm nominal tyre height.",
+      "tyre_dark_threshold": 70,
+      "rear_window": [
+        0,
+        180,
+        330,
+        513
+      ],
+      "front_window": [
+        455,
+        180,
+        784,
+        513
+      ],
+      "big_ring_outer_mm": 218.9,
+      "rear_exclude_deg": [
+        [
+          345,
+          360
+        ],
+        [
+          0,
+          45
+        ]
+      ],
+      "chainring_bcd_mm": 130,
+      "chainring_bolts_px": [
+        [
+          346.9,
+          393.1
+        ],
+        [
+          313.1,
+          400.6
+        ],
+        [
+          295.0,
+          370.6
+        ],
+        [
+          318.75,
+          345.0
+        ],
+        [
+          351.9,
+          358.75
+        ]
+      ],
+      "chainring_bolts_basis": "Five chainring bolt centres hand-marked on an 8x crop of the photo (2026-09-27). Published: Shimano Ultegra 53/39, 130 mm bolt hole circle.",
+      "pedal_eye_px": [
+        405.6,
+        383.1
+      ]
+    },
+    "trace": "blender/heritage/adapters/equinox_alphasl_2004_trace.json"
+  },
+  "uncertainties": [
+    "Scale rests on the nominal 700x23c tyre outer diameter (668 mm); real inflated height differs by a few mm.",
+    "Photo is 784 px wide (lower-confidence tier); tube depths are measured to roughly +/-1 px (~1.3 mm).",
+    "Lateral tube widths, stay spread, fork crown width and hub spacing are not visible from the side and are inferred (130 mm rear / 100 mm front rim-brake spacing).",
+    "White top tube and head area sit on a white background; their edges are traced from faint shading."
+  ],
+  "deliverables": {
+    "bike": "assets/museum/trek-equinox-9-my2004/bike_master.blend",
+    "scene": "assets/museum/trek-equinox-9-my2004/museum_scene.blend",
+    "glb": "assets/museum/trek-equinox-9-my2004/bike_web.glb",
+    "viewer": "Trek_Equinox_9_MY2004.html"
+  },
+  "validation": {
+    "geometry": "assets/museum/trek-equinox-9-my2004/checks/geometry-checks.json",
+    "silhouette": "assets/museum/trek-equinox-9-my2004/silhouette-report.json",
+    "renders": [
+      "hero",
+      "side",
+      "front",
+      "drivetrain",
+      "cockpit"
+    ]
+  },
+  "viewer_profile": "museum/heritage/viewer-trek-equinox-9-my2004.json"
+}

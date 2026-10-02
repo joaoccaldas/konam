@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Speedmax Museum app icon: a Kona sunset over the Pacific, a tri bike on the horizon. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#12181d"/><stop offset=".62" stop-color="#1c2a33"/><stop offset="1" stop-color="#0f3b44"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff3d8e"/><stop offset=".5" stop-color="#e9a0d8"/><stop offset="1" stop-color="#5fd8d3"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#138a8f"/><stop offset="1" stop-color="#0b4a52"/>
+    </linearGradient>
+    <clipPath id="above"><rect x="0" y="0" width="512" height="318"/></clipPath>
+  </defs>
+  <rect width="512" height="512" fill="url(#sky)"/>
+  <circle cx="256" cy="318" r="150" fill="url(#sun)" clip-path="url(#above)"/>
+  <rect x="0" y="318" width="512" height="194" fill="url(#sea)"/>
+  <g stroke="#5fd8d3" stroke-opacity=".55" stroke-width="7" stroke-linecap="round" fill="none">
+    <path d="M150 352h212"/><path d="M186 382h140"/><path d="M220 410h72"/>
+  </g>
+  <rect x="0" y="314" width="512" height="8" fill="#e8471c"/>
+  <!-- the bike: a Speedmax in profile, wheels on the horizon; disc rear, deep-rim front, aero triangle, extensions -->
+  <g transform="translate(0 -4)">
+    <circle cx="170" cy="268" r="56" fill="#12181d" stroke="#fbf9f5" stroke-width="12"/>
+    <circle cx="170" cy="268" r="9" fill="#fbf9f5"/>
+    <circle cx="346" cy="268" r="56" fill="none" stroke="#fbf9f5" stroke-width="12"/>
+    <circle cx="346" cy="268" r="40" fill="none" stroke="#fbf9f5" stroke-width="10" stroke-opacity=".45"/>
+    <g fill="none" stroke="#fbf9f5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M170 268 L250 268 L310 184 L226 196 Z" stroke-width="17"/>
+      <path d="M226 196 L214 158" stroke-width="15"/>
+      <path d="M190 154 h46" stroke-width="15"/>
+      <path d="M310 184 L346 268" stroke-width="15"/>
+      <path d="M306 172 L316 158 L384 158" stroke-width="13"/>
+    </g>
+  </g>
+</svg>

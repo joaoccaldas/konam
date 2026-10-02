@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Product Intake Proof V0</title><style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:system-ui,sans-serif;background:#dfe7e8;color:#162126}
+#proof{position:fixed;inset:0;width:100%;height:100%;touch-action:none}
+.chrome{position:fixed;z-index:3;top:max(10px,env(safe-area-inset-top));left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));display:flex;gap:8px;flex-wrap:wrap;pointer-events:none}
+button{pointer-events:auto;border:1px solid #ffffff99;background:#ffffffdd;backdrop-filter:blur(10px);height:44px;padding:0 14px;border-radius:999px;font-weight:700}
+#loadCandidates{background:#162126;color:#fff}
+#info{position:fixed;z-index:4;left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));max-height:45vh;overflow:auto;background:#fffffff0;border-radius:18px;padding:14px 16px;box-shadow:0 12px 36px #0003}
+#info h2{margin:0 0 4px;font-size:20px}#info p{margin:6px 0;font-size:12px;line-height:1.4;overflow-wrap:anywhere}#info [data-claim]{font-weight:700}
+@media (min-width:800px){#info{left:auto;width:390px}}
+</style></head><body>
+<canvas id="proof" aria-label="Test-only product intake rooms"></canvas>
+<div class="chrome"><button id="loadCandidates">Load deferred candidates</button>__ROOM_BUTTONS__</div>
+<aside id="info" hidden><h2></h2><p data-type></p><p data-claim></p><p><b>Asset</b> <span data-path></span></p><p><b>Capabilities</b> <span data-cap></span></p><p><b>Sources</b> <span data-source></span></p></aside>
+<script>
+window.__intakeProofReady=false;
+window.__intakeProofDiagnostics={stages:[],errors:[],requestFailures:[],timestamps:{},bootAt:performance.now()};
+window.__intakeStage=function(name,detail){
+  const d=window.__intakeProofDiagnostics;
+  d.stages.push(detail==null?name:{name,detail});
+  d.timestamps[name]=Math.round(performance.now()-d.bootAt);
+};
+window.__intakeError=function(kind,value){
+  window.__intakeProofDiagnostics.errors.push({kind,message:String(value?.stack||value),at:Math.round(performance.now()-window.__intakeProofDiagnostics.bootAt)});
+};
+window.__intakeStage('BOOT_HTML');
+addEventListener('error',e=>window.__intakeError('window.error',e.error||e.message));
+addEventListener('unhandledrejection',e=>window.__intakeError('unhandledrejection',e.reason));
+window.__INTAKE_PROOF=__DATA__;
+window.__intakeStage('DATA_READY');
+</script><script>__APP__</script></body></html>

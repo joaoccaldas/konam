@@ -1,0 +1,196 @@
+{
+ "photo": "assets/reference/heritage/web/20030922065745_bikes_2004_road_large_equinox9.jpg",
+ "traced_by": "hand-read from 4-5x gridded crops of the photo, 2026-09-27; +/-1 px",
+ "background_min": 236,
+ "background_spread": 14,
+ "joints_px": {
+  "rear_axle": [
+   153.64,
+   355.52
+  ],
+  "front_axle": [
+   628.93,
+   353.9
+  ],
+  "bb_spindle": [
+   325.14,
+   373.36
+  ],
+  "head_tube_top": [
+   530,
+   116
+  ],
+  "head_tube_bottom_cup": [
+   555,
+   202
+  ],
+  "seat_tube_top": [
+   260,
+   100
+  ],
+  "seat_clamp": [
+   240,
+   38
+  ],
+  "saddle_tail": [
+   179,
+   20
+  ],
+  "saddle_nose": [
+   306,
+   22
+  ],
+  "saddle_top_at_clamp": [
+   240,
+   13
+  ],
+  "basebar_clamp": [
+   548,
+   90
+  ],
+  "bullhorn_tip": [
+   672,
+   84
+  ],
+  "extension_tip": [
+   688,
+   25
+  ],
+  "armrest_centre_top": [
+   560,
+   40
+  ]
+ },
+ "tubes": {
+  "head_tube": {
+   "p0": [
+    555,
+    200
+   ],
+   "p1": [
+    531,
+    118
+   ],
+   "stations": [
+    0.25,
+    0.4,
+    0.55,
+    0.7
+   ],
+   "max_half_px": 22
+  },
+  "top_tube": {
+   "p0": [
+    270,
+    137
+   ],
+   "p1": [
+    522,
+    128
+   ],
+   "stations": [
+    0.1,
+    0.25,
+    0.4,
+    0.55,
+    0.7,
+    0.85
+   ],
+   "max_half_px": 24
+  },
+  "down_tube": {
+   "p0": [
+    325,
+    373
+   ],
+   "p1": [
+    550,
+    190
+   ],
+   "stations": [
+    0.3,
+    0.45,
+    0.6,
+    0.75,
+    0.85
+   ],
+   "max_half_px": 40
+  },
+  "seat_tube": {
+   "p0": [
+    325,
+    373
+   ],
+   "p1": [
+    260,
+    100
+   ],
+   "stations": [
+    0.45,
+    0.55,
+    0.65,
+    0.75,
+    0.9
+   ],
+   "max_half_px": 20,
+   "mask": "blue"
+  },
+  "seat_stay": {
+   "p0": [
+    160,
+    343
+   ],
+   "p1": [
+    266,
+    146
+   ],
+   "stations": [
+    0.15,
+    0.3,
+    0.45,
+    0.6,
+    0.75
+   ],
+   "max_half_px": 14,
+   "mask": "blue"
+  },
+  "chain_stay": {
+   "p0": [
+    165,
+    356
+   ],
+   "p1": [
+    300,
+    369
+   ],
+   "stations": [
+    0.2,
+    0.35,
+    0.5,
+    0.65,
+    0.8
+   ],
+   "max_half_px": 14,
+   "mask": "blue"
+  },
+  "fork_blade": {
+   "p0": [
+    560,
+    214
+   ],
+   "p1": [
+    628,
+    350
+   ],
+   "stations": [
+    0.1,
+    0.25,
+    0.4,
+    0.55,
+    0.7,
+    0.85
+   ],
+   "max_half_px": 24
+  }
+ }
+}

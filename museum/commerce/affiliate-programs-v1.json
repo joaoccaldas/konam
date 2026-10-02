@@ -1,0 +1,48 @@
+{
+  "schema": "affiliate-program-registry-v1",
+  "updated_at": "2026-09-30",
+  "policy": {
+    "ranking_independent_of_commission": true,
+    "disclosure_required": true,
+    "reward_user_for_click": false,
+    "unapproved_links_must_not_be_tracked": true
+  },
+  "programs": [
+    {
+      "id": "affiliate:canyon",
+      "brand": "Canyon",
+      "status": "research-verified-not-applied",
+      "commission": "2% base on bikes; higher opportunities may apply",
+      "cookie_days": 30,
+      "network": "brand program",
+      "source": "https://www.canyon.com/en-us/affiliate-program/"
+    },
+    {
+      "id": "affiliate:nike-se",
+      "brand": "Nike",
+      "status": "research-verified-not-applied",
+      "commission": "up to 11% on qualified sales",
+      "cookie_days": 30,
+      "network": "Nike affiliate programme",
+      "source": "https://www.nike.com/se/en/help/a/nike-affiliate-programme"
+    },
+    {
+      "id": "affiliate:zwift-eu",
+      "brand": "Zwift",
+      "status": "research-verified-not-applied",
+      "commission": "5% of basket value less tax on most hardware/accessories; subscriptions excluded",
+      "cookie_days": null,
+      "network": "Impact",
+      "source": "https://www.zwift.com/eu/partner-with-zwift"
+    },
+    {
+      "id": "affiliate:specialized",
+      "brand": "Specialized",
+      "status": "research-verified-not-applied",
+      "commission": "3%–12% on bikes and equipment",
+      "cookie_days": 30,
+      "network": "Rakuten",
+      "source": "https://www.specialized.com/us/en/specialized-affiliate-program"
+    }
+  ]
+}

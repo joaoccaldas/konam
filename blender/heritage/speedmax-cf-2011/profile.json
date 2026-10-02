@@ -1,0 +1,14 @@
+{
+ "key": "speedmax-cf-2011",
+ "photo": {"path": "assets/reference/heritage/photos/g5_cf9pro_team.jpg", "background": [24, 23, 21], "tolerance": 8,
+  "wheel_guess": {"rear": {"centre": [170, 340], "radius": 133, "arcs": [[70, 290]]},
+                  "front": {"centre": [570, 340], "radius": 134, "arcs": [[-60, 200]]}}},
+ "published": {
+  "tyre": "Continental Competition 22-622 tubular",
+  "tyre_outer_diameter_mm": 666,
+  "geometry": {"sizes": ["S", "M", "L"],
+   "wheelbase_mm": [[970, 985], [995, 1010], [1020, 1035]],
+   "chainstay_mm": [380, 395], "head_tube_angle_deg": 72.5, "seat_tube_angle_deg": [75, 78],
+   "head_tube_mm": [110, 125, 135], "reach_mm": [409, 429, 454], "stack_mm": [506, 520, 530]}
+ }
+}

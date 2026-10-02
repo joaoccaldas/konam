@@ -1,0 +1,60 @@
+{
+  "schema": "entry-data-v1",
+  "event": {
+    "id": "kona-2026",
+    "name": "IRONMAN World Championship",
+    "date": "2026-10-10",
+    "location": "Kailua-Kona, Hawaiʻi",
+    "venue": "Kailua Pier"
+  },
+  "race_week": [
+    {
+      "id": "kona-2026-expo-oct-06",
+      "kind": "expo",
+      "date": "2026-10-06",
+      "start": "12:00",
+      "end": "19:00",
+      "venue": "Hale Hālāwai Park, Aliʻi Drive"
+    },
+    {
+      "id": "kona-2026-expo-oct-07",
+      "kind": "expo",
+      "date": "2026-10-07",
+      "start": "10:00",
+      "end": "16:00",
+      "venue": "Hale Hālāwai Park, Aliʻi Drive"
+    },
+    {
+      "id": "kona-2026-expo-oct-08",
+      "kind": "expo",
+      "date": "2026-10-08",
+      "start": "10:00",
+      "end": "16:00",
+      "venue": "Hale Hālāwai Park, Aliʻi Drive"
+    },
+    {
+      "id": "kona-2026-expo-oct-09",
+      "kind": "expo",
+      "date": "2026-10-09",
+      "start": "10:00",
+      "end": "14:00",
+      "venue": "Hale Hālāwai Park, Aliʻi Drive"
+    }
+  ],
+  "places": [
+    {
+      "id": "kailua-pier",
+      "region": "Kailua-Kona",
+      "name": "Kailua Pier",
+      "purpose": "Race-week anchor and swim-start reference",
+      "visit_with_care": false
+    },
+    {
+      "id": "hale-halawai",
+      "region": "Aliʻi Drive",
+      "name": "Hale Hālāwai Park",
+      "purpose": "Official 2026 IRONMAN Expo venue",
+      "visit_with_care": false
+    }
+  ]
+}

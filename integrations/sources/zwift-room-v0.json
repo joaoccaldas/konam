@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "id": "tech-zwift-v0",
+  "provider_id": "zwift",
+  "title": "Zwift Lab / Marketplace",
+  "partnership_status": "unofficial-concept",
+  "updated": "2026-09-30",
+  "products": [
+    {
+      "id": "zwift-ride-kickr-core-2",
+      "name": "Zwift Ride with KICKR CORE 2",
+      "type": "smart_bike_bundle",
+      "current_eu_price_eur": 1199.99,
+      "source": "https://eu.zwift.com/collections/all",
+      "freshness": "2026-09-30"
+    },
+    {
+      "id": "zwift-ride-v2-smart-frame",
+      "name": "Zwift Ride Smart Frame",
+      "type": "smart_frame",
+      "current_eu_price_eur": 799.99,
+      "features": [
+        "adjustable-cranks",
+        "expanded-saddle-adjustment",
+        "handlebar-controls",
+        "virtual-shifting"
+      ],
+      "source": "https://www.zwift.com/eu/zwift-ride-smart-bike",
+      "freshness": "2026-09-30"
+    },
+    {
+      "id": "wahoo-kickr-core-2-zwift",
+      "name": "Wahoo KICKR CORE 2 with Zwift Cog and Click",
+      "type": "smart_trainer",
+      "current_eu_price_eur": 549.99,
+      "features": [
+        "smart-resistance",
+        "virtual-shifting",
+        "zwift-cog",
+        "zwift-click"
+      ],
+      "source": "https://eu.zwift.com/products/wahoo-kickr-core-2",
+      "freshness": "2026-09-30"
+    },
+    {
+      "id": "zwift-cog-click-upgrade",
+      "name": "Zwift Cog and Click Upgrade Kit",
+      "type": "trainer_accessory",
+      "current_eu_price_eur": 49.99,
+      "source": "https://eu.zwift.com/collections/all",
+      "freshness": "2026-09-30"
+    },
+    {
+      "id": "zwift-ride-tablet-holder",
+      "name": "Zwift Ride Tablet Holder",
+      "type": "accessory",
+      "current_eu_price_eur": 49.99,
+      "source": "https://eu.zwift.com/products/zwift-ride-tablet-holder",
+      "freshness": "2026-09-30"
+    }
+  ],
+  "features": [
+    "virtual-shifting",
+    "steering",
+    "handlebar-control",
+    "smart-resistance",
+    "powerups",
+    "ride-ons",
+    "multi-platform-device-support"
+  ],
+  "support_sources": [
+    "https://eu.zwift.com/pages/zwift-ride-setup",
+    "https://support.zwift.com/",
+    "https://www.zwift.com/eu/how-it-works"
+  ],
+  "affiliate": {
+    "status": "program-available-not-approved",
+    "network": "Impact",
+    "markets": [
+      "US",
+      "UK",
+      "EU"
+    ],
+    "hardware_accessories_commission_percent": 5,
+    "subscription_commission": false,
+    "source": "https://www.zwift.com/eu/partner-with-zwift"
+  },
+  "disclaimer": "Unofficial Caldas Studio concept unless Zwift explicitly approves partnership/branding. Prices/features are source-dated and must be refreshed before public use."
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "removed_on": "2026-09-30",
+  "reason": "Full third-party Canyon ecommerce HTML snapshots were unnecessary in the public repository and excluded from deployment. Preserve only source URLs/research intent.",
+  "sources": [
+    {
+      "id": "chain",
+      "source_url": "https://www.canyon.com/en-se/gear/bike-parts/components/drivetrain/chains/",
+      "note": "Use current official Canyon product/support pages when refreshing price/spec data."
+    },
+    {
+      "id": "cassette",
+      "source_url": "https://www.canyon.com/en-se/gear/bike-parts/components/drivetrain/cassettes/",
+      "note": "Use current official Canyon product/support pages when refreshing price/spec data."
+    },
+    {
+      "id": "arm-pads",
+      "source_url": "https://www.canyon.com/en-se/gear/bike-parts/contact-points/aero-bars/",
+      "note": "Historical research pointer only; do not assume current SKU URL."
+    },
+    {
+      "id": "udh-hanger",
+      "source_url": "https://www.canyon.com/en-se/gear/bike-parts/spare-and-wear-parts/derailleur-hangers/",
+      "note": "Historical research pointer only."
+    },
+    {
+      "id": "bottom-bracket",
+      "source_url": "https://www.canyon.com/en-se/gear/bike-parts/components/bottom-brackets/",
+      "note": "Historical research pointer only."
+    },
+    {
+      "id": "aeroshield-pro-upgrade",
+      "source_url": "https://www.canyon.com/en-se/gear/bike-parts/contact-points/aero-bars/",
+      "note": "Historical research pointer only; verify current official SKU before display."
+    }
+  ]
+}

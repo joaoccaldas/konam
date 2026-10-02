@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-30",
+  "purpose": "Official/reliable affiliate and vendor-link options for Caldas Studio. 'active' means program exists and is a candidate for application; it does not imply the user's account is approved.",
+  "providers": [
+    {
+      "id": "canyon-affiliate",
+      "category": "bike-brand",
+      "provider": "Canyon",
+      "status": "program-available",
+      "network": "Canyon affiliate program",
+      "markets": [
+        "US; market availability must be checked before use elsewhere"
+      ],
+      "economics": {
+        "commission": "2% base on bikes; higher opportunities possible",
+        "cookie_days": 30
+      },
+      "integration": [
+        "deep-link"
+      ],
+      "source": "https://www.canyon.com/en-us/affiliate-program/",
+      "notes": "Apply before using affiliate tracking. Good direct path for Canyon bike/product objects."
+    },
+    {
+      "id": "specialized-affiliate",
+      "category": "bike-brand",
+      "provider": "Specialized",
+      "status": "program-available",
+      "network": "Rakuten",
+      "markets": [
+        "program availability varies by market"
+      ],
+      "economics": {
+        "commission": "3%-12% on bikes and equipment",
+        "cookie_days": 30
+      },
+      "integration": [
+        "affiliate-link"
+      ],
+      "source": "https://www.specialized.com/us/en/specialized-affiliate-program",
+      "notes": "Strong fit for future Shiv/product objects and brand campaigns."
+    },
+    {
+      "id": "nike-affiliate-se",
+      "category": "footwear-brand",
+      "provider": "Nike",
+      "status": "program-available",
+      "network": "CJ Affiliate",
+      "markets": [
+        "Sweden/EU program page verified"
+      ],
+      "economics": {
+        "commission": "up to 11% on valid sales",
+        "cookie_days": 30
+      },
+      "integration": [
+        "affiliate-link",
+        "product-feed"
+      ],
+      "source": "https://www.nike.com/se/en/help/a/nike-affiliate-programme",
+      "notes": "Strong fit for Alphafly/Vaporfly product objects. Approval required."
+    },
+    {
+      "id": "booking-affiliate",
+      "category": "travel",
+      "provider": "Booking.com",
+      "status": "program-available",
+      "network": "CJ / official affiliate networks",
+      "markets": [
+        "global/region-dependent"
+      ],
+      "economics": {
+        "commission": "commission on qualified bookings; rate varies by agreement",
+        "cookie_days": null
+      },
+      "integration": [
+        "links",
+        "banners",
+        "affiliate-network-tools"
+      ],
+      "source": "https://m.booking.com/affiliate-program/v2/index.en-gb.html",
+      "notes": "Useful for lodging, rental transport and attractions around race destinations. Approval and regional terms apply."
+    },
+    {
+      "id": "kayak-affiliate",
+      "category": "travel-meta",
+      "provider": "KAYAK Affiliate Network",
+      "status": "program-available",
+      "network": "KAYAK Affiliate Network",
+      "markets": [
+        "global/subject to approval"
+      ],
+      "economics": {
+        "commission": "KAYAK states 50% commission on clicks, bookings and ad revenue; contractual basis should be verified during onboarding",
+        "cookie_days": null
+      },
+      "integration": [
+        "deeplink",
+        "widget",
+        "search-box",
+        "white-label",
+        "api"
+      ],
+      "source": "https://affiliates.kayak.com/",
+      "notes": "Potentially useful for flights, hotels, cars and packages. Strong integration options, including API/white-label."
+    },
+    {
+      "id": "viator-affiliate",
+      "category": "activities",
+      "provider": "Viator",
+      "status": "program-available",
+      "network": "Viator Partner Program",
+      "markets": [
+        "global"
+      ],
+      "economics": {
+        "commission": "8% on completed experience bookings",
+        "cookie_days": 30
+      },
+      "integration": [
+        "affiliate-link",
+        "widget",
+        "api",
+        "iframe",
+        "custom-checkout-later"
+      ],
+      "source": "https://partnerresources.viator.com/",
+      "notes": "Very strong fit for destination/trip-planner experiences. Keep checkout off-platform initially."
+    },
+    {
+      "id": "dtswiss-official-dealers",
+      "category": "component-vendor-discovery",
+      "provider": "DT Swiss",
+      "status": "non-affiliate-official-dealer-source",
+      "network": null,
+      "markets": [
+        "dealer-based"
+      ],
+      "economics": {
+        "commission": null,
+        "cookie_days": null
+      },
+      "integration": [
+        "official-dealer-locator"
+      ],
+      "source": "https://www.dtswiss.com/en/support/dealer-locator",
+      "notes": "DT Swiss says products are sold through official dealers. Use dealer locator or approved dealer links until an affiliate agreement exists."
+    },
+    {
+      "id": "shimano-official-dealers",
+      "category": "component-vendor-discovery",
+      "provider": "Shimano",
+      "status": "non-affiliate-official-dealer-source",
+      "network": null,
+      "markets": [
+        "dealer-based"
+      ],
+      "economics": {
+        "commission": null,
+        "cookie_days": null
+      },
+      "integration": [
+        "official-dealer-locator"
+      ],
+      "source": "https://bike.shimano.com/dealer-locator.html",
+      "notes": "Use official dealer/stock locator as safe default for Shimano components until an approved monetized retailer partner exists."
+    }
+  ],
+  "policy": {
+    "approval_required": true,
+    "affiliate_ids_in_repo": false,
+    "editorial_independence": true,
+    "disclosure_required": true,
+    "default_when_unapproved": "ordinary or official-vendor link with no affiliate tracking"
+  }
+}

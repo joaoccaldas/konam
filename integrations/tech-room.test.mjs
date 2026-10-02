@@ -1,0 +1,13 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+const room=JSON.parse(fs.readFileSync(new URL("./sources/zwift-room-v0.json", import.meta.url),"utf8"));
+const schema=JSON.parse(fs.readFileSync(new URL("./tech-room.schema.json", import.meta.url),"utf8"));
+assert.equal(room.schema_version,1);
+assert.equal(room.partnership_status,"unofficial-concept");
+assert.ok(room.products.length>=4);
+assert.ok(room.features.includes("virtual-shifting"));
+assert.equal(room.affiliate.status,"program-available-not-approved");
+assert.equal(room.affiliate.hardware_accessories_commission_percent,5);
+assert.equal(room.affiliate.subscription_commission,false);
+assert.ok(schema.properties.partnership_status.enum.includes("partner-approved"));
+console.log("Tech room contract PASS");

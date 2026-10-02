@@ -1,0 +1,73 @@
+{
+  "photo": "assets/reference/speed-concept-slr/SpeedConceptSLRFrameset-26-35671-A-Primary.png",
+  "size": "M",
+  "scale_mm_per_px": 0.3849145892561646,
+  "rotation_deg": -0.0923911121138722,
+  "translation_mm": [
+    -685.1570139276218,
+    1132.3344225148342
+  ],
+  "landmark_residuals_mm": {
+    "rear_axle": [
+      -2.953352590352381,
+      -2.8160330385859424
+    ],
+    "front_axle": [
+      -1.407673208973165,
+      -2.4984178963774184
+    ],
+    "bb": [
+      4.361025799325716,
+      5.314450934962906
+    ]
+  },
+  "model_landmarks_mm": {
+    "rear_axle": [
+      -402.11938525766203,
+      336.0
+    ],
+    "front_axle": [
+      592.8806147423379,
+      336.0
+    ],
+    "bb": [
+      0.0,
+      256.0
+    ]
+  },
+  "regions": {
+    "main": {
+      "cells": 121330,
+      "max_half_width_mm": 38.01832953172289
+    },
+    "seatstay_L": {
+      "cells": 12035,
+      "max_half_width_mm": 8.0
+    },
+    "seatstay_R": {
+      "cells": 12035,
+      "max_half_width_mm": 8.0
+    },
+    "chainstay_L": {
+      "cells": 16952,
+      "max_half_width_mm": 10.0
+    },
+    "chainstay_R": {
+      "cells": 16952,
+      "max_half_width_mm": 10.0
+    },
+    "fork_upper": {
+      "cells": 2364,
+      "max_half_width_mm": 24.07851329007158
+    },
+    "fork_blade_L": {
+      "cells": 22406,
+      "max_half_width_mm": 12.0
+    },
+    "fork_blade_R": {
+      "cells": 22406,
+      "max_half_width_mm": 12.0
+    }
+  },
+  "basis": "Occupancy = photo silhouette (alpha). Half-widths are INFERRED from Trek front/top photos and control points listed in the pillow spec; side-view shape is PHOTO-derived."
+}

@@ -1,0 +1,115 @@
+{
+  "photo": "assets/reference/heritage/web/20030922065745_bikes_2004_road_large_equinox9.jpg",
+  "image_size_px": [
+    784,
+    513
+  ],
+  "tyre_outer_diameter_mm": 668,
+  "tyre_basis": "700 x 23c Bontrager Race X Lite (published). ISO 622 mm bead seat + 2 x 23 mm nominal tyre height.",
+  "rear_tyre_fit": {
+    "cx": 153.64059022698638,
+    "cy": 355.52391525973076,
+    "r": 153.05912840680512,
+    "rms_px": 0.4494671875388873,
+    "n_inliers": 529,
+    "n_rays": 595,
+    "inlier_fraction": 0.8890756302521008,
+    "ellipse_a": 153.0938769749511,
+    "ellipse_b": 153.05313584266753,
+    "aspect": 0.9997338813733861
+  },
+  "front_tyre_fit": {
+    "cx": 628.9305193323171,
+    "cy": 353.899251232842,
+    "r": 153.76803676463425,
+    "rms_px": 0.45493433406888817,
+    "n_inliers": 699,
+    "n_rays": 720,
+    "inlier_fraction": 0.9708333333333333,
+    "ellipse_a": 153.82387562738387,
+    "ellipse_b": 153.7216624586966,
+    "aspect": 0.9993355181809692
+  },
+  "mm_per_px": 2.177121441078256,
+  "axle_distance_px": 475.2927058583484,
+  "axle_line_tilt_deg": 0.19585104504407796,
+  "wheelbase_from_photo_mm": 1034.7699407123112,
+  "size_match": {
+    "size": "58",
+    "published_wheelbase_mm": 1031,
+    "relative_residual": 0.0036565865298847275,
+    "within_1pct": true,
+    "all_candidates": [
+      {
+        "size": "58",
+        "relative_residual": 0.0036565865298847275
+      },
+      {
+        "size": "60",
+        "relative_residual": 0.021031276525722654
+      },
+      {
+        "size": "56",
+        "relative_residual": 0.025540079992379738
+      },
+      {
+        "size": "54",
+        "relative_residual": 0.03684362796824765
+      }
+    ]
+  },
+  "bb_prediction": {
+    "chainstay_mm": 410,
+    "bb_drop_mm": 68.0,
+    "bb_height_mm": 266,
+    "predicted_px": [
+      339.4601428800079,
+      386.1228214384377
+    ],
+    "chainring_edge_fit": {
+      "cx": 334.70212762475416,
+      "cy": 384.384715462972,
+      "r": 46.032635535323216,
+      "n": 170
+    },
+    "chainring_edge_residual": {
+      "dx_px": -4.758015255253724,
+      "dy_px": -1.7381059754657144,
+      "dist_px": 5.065542572240093,
+      "dist_mm": 11.028301344718606
+    },
+    "spindle_from_bolts": {
+      "centre_px": [
+        325.1428178746018,
+        373.3631266607754
+      ],
+      "bolt_circle_px": 59.60433241782217,
+      "bolt_fit_rms_px": 0.5290881594370814,
+      "bolt_circle_mm_at_scale": 129.7658700879964,
+      "published_bcd_mm": 130,
+      "bcd_relative_residual": -0.001800999323104624,
+      "residual_vs_predicted_px": [
+        -14.317325005406076,
+        -12.759694777662332
+      ],
+      "residual_vs_predicted_mm": 41.752830576999834,
+      "photo_chainstay_mm": 375.39566280728764,
+      "photo_bb_drop_mm": 40.11420880546437,
+      "photo_bb_height_mm": 293.8857911945356,
+      "basis": "Five chainring bolt centres hand-marked on an 8x crop of the photo (2026-09-27). Published: Shimano Ultegra 53/39, 130 mm bolt hole circle.",
+      "crank_length_mm_at_scale": 176.44309913260273
+    }
+  },
+  "frame_x_axis_px": [
+    0.9999941578042678,
+    -0.003418238922801712
+  ],
+  "frame_up_axis_px": [
+    -0.003418238922801712,
+    -0.9999941578042678
+  ],
+  "notes": [
+    "Scale depends on the nominal tyre outer diameter; a 2 mm tyre-height error is ~0.3% of scale.",
+    "Ellipse aspect near 1.0 indicates an orthogonal side view."
+  ]
+}

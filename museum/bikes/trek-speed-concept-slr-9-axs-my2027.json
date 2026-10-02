@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "id": "trek-speed-concept-slr-9-axs-my2027",
+  "brand": "Trek",
+  "model": "Speed Concept SLR 9 AXS",
+  "generation": "trek-speed-concept-slr-gen3",
+  "model_year": 2027,
+  "launch_year": 2022,
+  "launch_year_basis": "Model year from Trek's own image name ('-27-'); third-generation Speed Concept platform introduced in 2022 (Trek page quotes 2022 reviews). Platform launch date not yet taken from a Trek press release.",
+  "size": "pending-calibration",
+  "finish": "Matte Deep Smoke",
+  "status": "modelling",
+  "coordinate_system": {
+    "unit": "metre",
+    "forward": "+X",
+    "up": "+Z",
+    "drive_side": "-Y"
+  },
+  "source_geometry": "museum/current/specs-speed-concept-slr-gen3.json",
+  "trim": "slr_9_axs",
+  "reconstruction_adapter": "trek-speed-concept-slr-gen3-pillow-v1",
+  "references": [
+    {
+      "path": "assets/reference/speed-concept-slr/SpeedConceptSLR9AXS-27-86500-A-Primary-Temp.png",
+      "url": "https://media.trekbikes.com/image/upload/f_png/SpeedConceptSLR9AXS-27-86500-A-Primary-Temp",
+      "role": "Side photo, complete bike: calibration, components, silhouette check",
+      "sha256": "d4bc62e8955bd5f9b2a06793d101d68b8fd2f2811ea4e2f53253f970fcde6f1c"
+    },
+    {
+      "path": "assets/reference/speed-concept-slr/SpeedConceptSLRFrameset-26-35671-A-Primary.png",
+      "url": "https://media.trekbikes.com/image/upload/f_png/SpeedConceptSLRFrameset-26-35671-A-Primary",
+      "role": "Side photo, bare frameset (4000 px): frame and fork silhouette",
+      "sha256": "6d05760440101ae6df640cb2db53d2c534aa1c92fa71ed97aa95ff4ad354722c"
+    },
+    {
+      "path": "assets/reference/speed-concept-slr/SpeedConceptSLR9AXS-27-86500-A-Alt2.png",
+      "url": "https://media.trekbikes.com/image/upload/f_png/SpeedConceptSLR9AXS-27-86500-A-Alt2",
+      "role": "Top view: cockpit and lateral widths",
+      "sha256": "112c1e80d41870eba2a0e198e72a44e91248bc3a2cae57c4740e75e352d6f7a1"
+    },
+    {
+      "path": "assets/reference/speed-concept-slr/SpeedConceptSLR9AXS-27-86500-A-Alt3.png",
+      "url": "https://media.trekbikes.com/image/upload/f_png/SpeedConceptSLR9AXS-27-86500-A-Alt3",
+      "role": "Front view: lateral widths, fork stance, cockpit",
+      "sha256": "3d3ac7c972553963414d92dd4fb3cdc7f16cf2bd90d699376eb805ce524f755a"
+    },
+    {
+      "path": "assets/reference/speed-concept-slr/Geometry_Lines_NEW_2050x1500_v2_Speed_ConceptSLR_MY22.png",
+      "url": "https://media.trekbikes.com/image/upload/f_png/Geometry_Lines_NEW_2050x1500_v2_Speed%20ConceptSLR_MY22",
+      "role": "Trek geometry diagram (MY22 label)",
+      "sha256": "936f2be7f785e1165f1cb70fdb0208f087f91572fcf23e1f5c91d6ab7d84d24a"
+    },
+    {
+      "path": "museum/current/specs-speed-concept-slr-gen3.json",
+      "url": "https://www.trekbikes.com/us/en_US/bikes/road-bikes/triathlon-bikes/speed-concept/f/F231/speed-concept-slr-9-axs/86500/5355351",
+      "role": "Geometry and component list transcribed from the rendered product page (2026-09-27)",
+      "sha256": "260baca696239c9b38aaf0077ea5e17e3da48f874c1c09d1f99f022c18e06cfb"
+    }
+  ],
+  "pipeline": {
+    "out_dir": "assets/museum/trek-speed-concept-slr-9-axs-my2027",
+    "data_dir": "blender/heritage_data/trek-speed-concept-slr-9-axs-my2027",
+    "reference": "assets/reference/speed-concept-slr/SpeedConceptSLR9AXS-27-86500-A-Primary-Temp.png",
+    "adapter_module": "adapters.speed_concept_slr_gen3",
+    "calibration_input": {
+      "photo": "assets/reference/speed-concept-slr/SpeedConceptSLR9AXS-27-86500-A-Primary-Temp.png",
+      "wheel": "700c",
+      "tyre_outer_diameter_mm": 672,
+      "tyre_basis": "Bontrager R4 320 700x25mm (published): ISO 622 bead seat + 2 x 25 mm nominal height.",
+      "tyre_dark_threshold": 90,
+      "rear_window": [
+        0,
+        995,
+        1240,
+        2230
+      ],
+      "front_window": [
+        1760,
+        995,
+        3000,
+        2230
+      ],
+      "big_ring_outer_mm": 199.0,
+      "rear_exclude_deg": [
+        [
+          340,
+          360
+        ],
+        [
+          0,
+          60
+        ]
+      ]
+    },
+    "pillow": "blender/heritage/adapters/speed_concept_slr_gen3_pillow.json"
+  },
+  "uncertainties": [
+    "Scale rests on the nominal 700x25 tyre outer diameter (672 mm).",
+    "Lateral frame widths come from Trek's front and top photos, which are perspective views; widths are approximate.",
+    "Internal routing, bearing seats and storage internals are not modelled.",
+    "SRAM RED E1 and Aeolus RSL external forms are reconstructed from photos; mechanisms are simplified."
+  ],
+  "deliverables": {
+    "bike": "assets/museum/trek-speed-concept-slr-9-axs-my2027/bike_master.blend",
+    "scene": "assets/museum/trek-speed-concept-slr-9-axs-my2027/museum_scene.blend",
+    "glb": "assets/museum/trek-speed-concept-slr-9-axs-my2027/bike_web.glb",
+    "viewer": "site/bikes/trek-speed-concept-slr-9-axs-my2027/"
+  },
+  "validation": {
+    "geometry": "assets/museum/trek-speed-concept-slr-9-axs-my2027/checks/geometry-checks.json",
+    "silhouette": "assets/museum/trek-speed-concept-slr-9-axs-my2027/silhouette-report.json",
+    "renders": [
+      "hero",
+      "side",
+      "front",
+      "drivetrain",
+      "cockpit"
+    ]
+  }
+}

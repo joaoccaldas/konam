@@ -1,0 +1,1145 @@
+{
+  "schema_version": 1,
+  "generated_by": "tools/build_triathlon_graph.mjs",
+  "generated_from": [
+    "integrations/public-catalog.json"
+  ],
+  "privacy": {
+    "contains_user_state": false,
+    "remote_writes": false
+  },
+  "counts": {
+    "nodes": 66,
+    "edges": 49
+  },
+  "nodes": [
+    {
+      "id": "brand-canyon",
+      "kind": "brand",
+      "public": true,
+      "label": "Canyon"
+    },
+    {
+      "id": "canyon-cfr-2027",
+      "kind": "product",
+      "public": true,
+      "label": "Speedmax CFR AXS",
+      "source_records": [
+        "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cfr/speedmax-cfr-axs/4524.html",
+        "museum/viewer-cfr.json"
+      ],
+      "product_type": "bike",
+      "representation": "published"
+    },
+    {
+      "id": "canyon-slx-2027",
+      "kind": "product",
+      "public": true,
+      "label": "Speedmax CF SLX 8 Di2",
+      "source_records": [
+        "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cf-slx/speedmax-cf-slx-8-di2/4520.html",
+        "museum/viewer-slx.json"
+      ],
+      "product_type": "bike",
+      "representation": "published"
+    },
+    {
+      "id": "canyon-speedmax-three-2005",
+      "kind": "product",
+      "public": true,
+      "label": "Speedmax Three",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-three-my2005.json"
+      ],
+      "product_type": "bike",
+      "representation": "published"
+    },
+    {
+      "id": "canyon-speedmax-2007",
+      "kind": "product",
+      "public": true,
+      "label": "SpeedMax 3.0",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-3-0-my2007.json"
+      ],
+      "product_type": "bike",
+      "representation": "published"
+    },
+    {
+      "id": "canyon-speedmax-al-2011",
+      "kind": "product",
+      "public": true,
+      "label": "Speedmax AL 9.0",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-al-9-my2011.json"
+      ],
+      "product_type": "bike",
+      "representation": "published"
+    },
+    {
+      "id": "canyon-speedmax-cf-2011",
+      "kind": "product",
+      "public": true,
+      "label": "Speedmax CF 9.0 Pro",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-cf-9-pro-my2011.json"
+      ],
+      "product_type": "bike",
+      "representation": "published"
+    },
+    {
+      "id": "canyon-kona-cfslx-2015",
+      "kind": "product",
+      "public": true,
+      "label": "Speedmax CF SLX",
+      "source_records": [
+        "assets/kona-years/bikes/cfslx-2015/build-meta.json"
+      ],
+      "product_type": "bike",
+      "representation": "geometry-study"
+    },
+    {
+      "id": "canyon-kona-cfr-2019",
+      "kind": "product",
+      "public": true,
+      "label": "Speedmax CFR Disc",
+      "source_records": [
+        "assets/kona-years/bikes/cfr-2019/build-meta.json"
+      ],
+      "product_type": "bike",
+      "representation": "geometry-study"
+    },
+    {
+      "id": "brand-colnago",
+      "kind": "brand",
+      "public": true,
+      "label": "Colnago"
+    },
+    {
+      "id": "atlas-merckx-hour-1972",
+      "kind": "product",
+      "public": true,
+      "label": "Eddy Merckx Hour bike",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:EddyMerckxHourRecordBike.jpg"
+      ],
+      "product_type": "bike",
+      "representation": "reference-calibrated"
+    },
+    {
+      "id": "brand-obree",
+      "kind": "brand",
+      "public": true,
+      "label": "Obree"
+    },
+    {
+      "id": "atlas-obree-riverside",
+      "kind": "product",
+      "public": true,
+      "label": "Graeme Obree's bikes",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Graeme_Obree_display_at_the_Riverside_Museum.jpg"
+      ],
+      "product_type": "bike",
+      "representation": "reference-calibrated"
+    },
+    {
+      "id": "brand-lotus",
+      "kind": "brand",
+      "public": true,
+      "label": "Lotus"
+    },
+    {
+      "id": "atlas-lotus-108-1992",
+      "kind": "product",
+      "public": true,
+      "label": "Lotus Type 108",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Lotus_108_(24281585325).jpg"
+      ],
+      "product_type": "bike",
+      "representation": "reference-calibrated"
+    },
+    {
+      "id": "brand-zipp",
+      "kind": "brand",
+      "public": true,
+      "label": "Zipp"
+    },
+    {
+      "id": "atlas-zipp-2001",
+      "kind": "product",
+      "public": true,
+      "label": "Zipp 2001",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Zipp_frames.jpg"
+      ],
+      "product_type": "bike",
+      "representation": "reference-calibrated"
+    },
+    {
+      "id": "brand-stevens",
+      "kind": "brand",
+      "public": true,
+      "label": "Stevens"
+    },
+    {
+      "id": "atlas-stevens-tri",
+      "kind": "product",
+      "public": true,
+      "label": "Stevens triathlon bike",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Stevens_triathlon_bicycle.JPG"
+      ],
+      "product_type": "bike",
+      "representation": "reference-calibrated"
+    },
+    {
+      "id": "brand-unbranded",
+      "kind": "brand",
+      "public": true,
+      "label": "Unbranded"
+    },
+    {
+      "id": "atlas-alu-tri-2005",
+      "kind": "product",
+      "public": true,
+      "label": "Aluminium triathlon bike",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Triathlonrad.jpg"
+      ],
+      "product_type": "bike",
+      "representation": "reference-calibrated"
+    },
+    {
+      "id": "brand-type-study",
+      "kind": "brand",
+      "public": true,
+      "label": "Type study"
+    },
+    {
+      "id": "atlas-type-funny-1980s",
+      "kind": "product",
+      "public": true,
+      "label": "Funny bike",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "atlas-type-pursuit",
+      "kind": "product",
+      "public": true,
+      "label": "Track pursuit bike",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "atlas-type-disc-superbike",
+      "kind": "product",
+      "public": true,
+      "label": "Disc-brake triathlon superbike",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "atlas-type-aerobar-1989",
+      "kind": "product",
+      "public": true,
+      "label": "Road bike with clip-on aero bars",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "atlas-type-lowpro-650c",
+      "kind": "product",
+      "public": true,
+      "label": "Low-profile triathlon bike, 650c",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "atlas-type-hour-track",
+      "kind": "product",
+      "public": true,
+      "label": "Modern Hour bike",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "atlas-type-draft-legal",
+      "kind": "product",
+      "public": true,
+      "label": "Draft-legal triathlon bike",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "brand-studio",
+      "kind": "brand",
+      "public": true,
+      "label": "Studio"
+    },
+    {
+      "id": "atlas-studio-kona-2030",
+      "kind": "product",
+      "public": true,
+      "label": "Kona concept 2030",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "concept"
+    },
+    {
+      "id": "atlas-studio-small-650c",
+      "kind": "product",
+      "public": true,
+      "label": "Small-frame triathlon bike, 650c",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "concept"
+    },
+    {
+      "id": "atlas-studio-xl-tri",
+      "kind": "product",
+      "public": true,
+      "label": "XL triathlon bike",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "concept"
+    },
+    {
+      "id": "atlas-studio-alloy-entry",
+      "kind": "product",
+      "public": true,
+      "label": "Entry alloy triathlon bike",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "concept"
+    },
+    {
+      "id": "atlas-studio-sprint-track",
+      "kind": "product",
+      "public": true,
+      "label": "Track sprint bike",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "concept"
+    },
+    {
+      "id": "atlas-studio-beam-2020s",
+      "kind": "product",
+      "public": true,
+      "label": "Beam triathlon concept",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "concept"
+    },
+    {
+      "id": "atlas-studio-wing-road",
+      "kind": "product",
+      "public": true,
+      "label": "Wing frame, road triathlon",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "concept"
+    },
+    {
+      "id": "atlas-studio-gravel-aero",
+      "kind": "product",
+      "public": true,
+      "label": "Aero gravel bike",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "concept"
+    },
+    {
+      "id": "edition-film-aero-glam",
+      "kind": "product",
+      "public": true,
+      "label": "Alien Glam",
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-film-couture",
+      "kind": "product",
+      "public": true,
+      "label": "Blush Couture",
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-film-tiffany-tide",
+      "kind": "product",
+      "public": true,
+      "label": "Tiffany Tide",
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-film-hex",
+      "kind": "product",
+      "public": true,
+      "label": "Witching Hour",
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-film-stay-weird",
+      "kind": "product",
+      "public": true,
+      "label": "Stay Weird",
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-film-lake-house",
+      "kind": "product",
+      "public": true,
+      "label": "Lake Fog",
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-film-sanctuary",
+      "kind": "product",
+      "public": true,
+      "label": "Stained Glass",
+      "source_records": [
+        "museum/themes/films.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-galleries-bio",
+      "kind": "product",
+      "public": true,
+      "label": "Bio room CFR",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-galleries-horror",
+      "kind": "product",
+      "public": true,
+      "label": "Horror room CFR",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-galleries-alien",
+      "kind": "product",
+      "public": true,
+      "label": "Alien room CFR",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-galleries-zombie",
+      "kind": "product",
+      "public": true,
+      "label": "Zombie room CFR",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-lava-night-lava-night",
+      "kind": "product",
+      "public": true,
+      "label": "Lava Night",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-artworld-witchcraft",
+      "kind": "product",
+      "public": true,
+      "label": "Witchcraft",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-artworld-stitched",
+      "kind": "product",
+      "public": true,
+      "label": "Stitched",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-artworld-pagan",
+      "kind": "product",
+      "public": true,
+      "label": "Pagan",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-artworld-moonlit",
+      "kind": "product",
+      "public": true,
+      "label": "Moonlit",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-artworld-carnival",
+      "kind": "product",
+      "public": true,
+      "label": "Carnival",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "edition-artworld-ritual-forest",
+      "kind": "product",
+      "public": true,
+      "label": "Ritual Forest",
+      "source_records": [
+        "museum/skins/museum.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
+    },
+    {
+      "id": "kona-2026",
+      "kind": "event",
+      "public": true,
+      "label": "IRONMAN World Championship",
+      "source_records": [
+        "https://regwcusa.ironman.com/event/2026-ironman-world-championship-kona"
+      ]
+    },
+    {
+      "id": "kailua-pier",
+      "kind": "place",
+      "public": true,
+      "label": "Kailua Pier",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona/historic-kailua-village-kailua-kona"
+      ]
+    },
+    {
+      "id": "kailua-bay",
+      "kind": "place",
+      "public": true,
+      "label": "Kailua Bay",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/things-to-do/beaches/kailua-bay"
+      ]
+    },
+    {
+      "id": "historic-kailua-village",
+      "kind": "place",
+      "public": true,
+      "label": "Historic Kailua Village",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona/historic-kailua-village-kailua-kona"
+      ]
+    },
+    {
+      "id": "puuhonua-o-honaunau",
+      "kind": "place",
+      "public": true,
+      "label": "Puʻuhonua o Hōnaunau National Historical Park",
+      "source_records": [
+        "https://www.nps.gov/puho/planyourvisit/index.htm"
+      ]
+    },
+    {
+      "id": "kaloko-honokohau",
+      "kind": "place",
+      "public": true,
+      "label": "Kaloko-Honokōhau National Historical Park",
+      "source_records": [
+        "https://www.nps.gov/kaho/learn/historyculture/index.htm"
+      ]
+    },
+    {
+      "id": "kealakekua-bay",
+      "kind": "place",
+      "public": true,
+      "label": "Kealakekua Bay",
+      "source_records": [
+        "https://www.gohawaii.com/kona"
+      ]
+    },
+    {
+      "id": "kona-coffee-country",
+      "kind": "place",
+      "public": true,
+      "label": "Kona Coffee Country",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/things-to-do/land-activities/coffee-plantations"
+      ]
+    },
+    {
+      "id": "hawaii-volcanoes",
+      "kind": "place",
+      "public": true,
+      "label": "Hawaiʻi Volcanoes National Park",
+      "source_records": [
+        "https://www.gohawaii.com/experiences/sightseeing/Volcanoes"
+      ]
+    },
+    {
+      "id": "puukohola-heiau",
+      "kind": "place",
+      "public": true,
+      "label": "Puʻukoholā Heiau National Historic Site",
+      "source_records": [
+        "https://www.nps.gov/places/puukohola-heiau.htm"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "canyon-cfr-2027",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "published",
+      "source_records": [
+        "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cfr/speedmax-cfr-axs/4524.html",
+        "museum/viewer-cfr.json"
+      ]
+    },
+    {
+      "from": "canyon-slx-2027",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "published",
+      "source_records": [
+        "https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/cf-slx/speedmax-cf-slx-8-di2/4520.html",
+        "museum/viewer-slx.json"
+      ]
+    },
+    {
+      "from": "canyon-speedmax-three-2005",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "published",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-three-my2005.json"
+      ]
+    },
+    {
+      "from": "canyon-speedmax-2007",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "published",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-3-0-my2007.json"
+      ]
+    },
+    {
+      "from": "canyon-speedmax-al-2011",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "published",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-al-9-my2011.json"
+      ]
+    },
+    {
+      "from": "canyon-speedmax-cf-2011",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "published",
+      "source_records": [
+        "museum/catalog.json",
+        "museum/bikes/canyon-speedmax-cf-9-pro-my2011.json"
+      ]
+    },
+    {
+      "from": "canyon-kona-cfslx-2015",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "published",
+      "source_records": [
+        "assets/kona-years/bikes/cfslx-2015/build-meta.json"
+      ]
+    },
+    {
+      "from": "canyon-kona-cfr-2019",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "published",
+      "source_records": [
+        "assets/kona-years/bikes/cfr-2019/build-meta.json"
+      ]
+    },
+    {
+      "from": "atlas-merckx-hour-1972",
+      "relationship": "manufactured_by",
+      "to": "brand-colnago",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:EddyMerckxHourRecordBike.jpg"
+      ]
+    },
+    {
+      "from": "atlas-obree-riverside",
+      "relationship": "manufactured_by",
+      "to": "brand-obree",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Graeme_Obree_display_at_the_Riverside_Museum.jpg"
+      ]
+    },
+    {
+      "from": "atlas-lotus-108-1992",
+      "relationship": "manufactured_by",
+      "to": "brand-lotus",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Lotus_108_(24281585325).jpg"
+      ]
+    },
+    {
+      "from": "atlas-zipp-2001",
+      "relationship": "manufactured_by",
+      "to": "brand-zipp",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Zipp_frames.jpg"
+      ]
+    },
+    {
+      "from": "atlas-stevens-tri",
+      "relationship": "manufactured_by",
+      "to": "brand-stevens",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Stevens_triathlon_bicycle.JPG"
+      ]
+    },
+    {
+      "from": "atlas-alu-tri-2005",
+      "relationship": "manufactured_by",
+      "to": "brand-unbranded",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json",
+        "https://commons.wikimedia.org/wiki/File:Triathlonrad.jpg"
+      ]
+    },
+    {
+      "from": "atlas-type-funny-1980s",
+      "relationship": "manufactured_by",
+      "to": "brand-type-study",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-type-pursuit",
+      "relationship": "manufactured_by",
+      "to": "brand-type-study",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-type-disc-superbike",
+      "relationship": "manufactured_by",
+      "to": "brand-type-study",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-type-aerobar-1989",
+      "relationship": "manufactured_by",
+      "to": "brand-type-study",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-type-lowpro-650c",
+      "relationship": "manufactured_by",
+      "to": "brand-type-study",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-type-hour-track",
+      "relationship": "manufactured_by",
+      "to": "brand-type-study",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-type-draft-legal",
+      "relationship": "manufactured_by",
+      "to": "brand-type-study",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-studio-kona-2030",
+      "relationship": "manufactured_by",
+      "to": "brand-studio",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-studio-small-650c",
+      "relationship": "manufactured_by",
+      "to": "brand-studio",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-studio-xl-tri",
+      "relationship": "manufactured_by",
+      "to": "brand-studio",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-studio-alloy-entry",
+      "relationship": "manufactured_by",
+      "to": "brand-studio",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-studio-sprint-track",
+      "relationship": "manufactured_by",
+      "to": "brand-studio",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-studio-beam-2020s",
+      "relationship": "manufactured_by",
+      "to": "brand-studio",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-studio-wing-road",
+      "relationship": "manufactured_by",
+      "to": "brand-studio",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-studio-gravel-aero",
+      "relationship": "manufactured_by",
+      "to": "brand-studio",
+      "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "edition-film-aero-glam",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/themes/films.json"
+      ]
+    },
+    {
+      "from": "edition-film-couture",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/themes/films.json"
+      ]
+    },
+    {
+      "from": "edition-film-tiffany-tide",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/themes/films.json"
+      ]
+    },
+    {
+      "from": "edition-film-hex",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/themes/films.json"
+      ]
+    },
+    {
+      "from": "edition-film-stay-weird",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/themes/films.json"
+      ]
+    },
+    {
+      "from": "edition-film-lake-house",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/themes/films.json"
+      ]
+    },
+    {
+      "from": "edition-film-sanctuary",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/themes/films.json"
+      ]
+    },
+    {
+      "from": "edition-galleries-bio",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-galleries-horror",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-galleries-alien",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-galleries-zombie",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-lava-night-lava-night",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-artworld-witchcraft",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-artworld-stitched",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-artworld-pagan",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-artworld-moonlit",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-artworld-carnival",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "edition-artworld-ritual-forest",
+      "relationship": "manufactured_by",
+      "to": "brand-canyon",
+      "evidence": "provisional",
+      "source_records": [
+        "museum/skins/museum.json"
+      ]
+    },
+    {
+      "from": "kailua-pier",
+      "relationship": "related_to",
+      "to": "kona-2026",
+      "evidence": "published",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona/historic-kailua-village-kailua-kona"
+      ]
+    },
+    {
+      "from": "kailua-bay",
+      "relationship": "related_to",
+      "to": "kona-2026",
+      "evidence": "published",
+      "source_records": [
+        "https://www.gohawaii.com/islands/hawaii-big-island/things-to-do/beaches/kailua-bay"
+      ]
+    }
+  ]
+}

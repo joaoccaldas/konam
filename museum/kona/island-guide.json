@@ -1,0 +1,228 @@
+{
+ "schema_version": 1,
+ "updated": "2026-09-29",
+ "purpose": "Sourced foundation for the Kona race-week companion and Island Stories wing. Editorial history/culture is kept separate from practical trip-planning metadata.",
+ "population": {
+  "geography": "Hawaii County, Hawaii",
+  "estimate_date": "2025-07-01",
+  "population": 210043,
+  "change_since_2020_percent": 4.7,
+  "source": "https://www.census.gov/quickfacts/fact/table/hawaiicountyhawaii/BZA115223",
+  "note": "County-level context for the island of Hawaiʻi; not a Kailua-Kona city estimate."
+ },
+ "principles": [
+  "Hawaiʻi is a living place and home, not a race backdrop.",
+  "Use Native Hawaiian names and diacritics where source material provides them.",
+  "Culturally significant sites require context and respectful-visit guidance.",
+  "Visitor planning never overrides official closures, safety advice, access rules or local guidance.",
+  "The app stores saved places locally by default and does not track a visitor's live location."
+ ],
+ "stories": [
+  {
+   "id": "kanaka-maoli-voyaging",
+   "title": "Voyaging & Kānaka Maoli",
+   "summary": "Native Hawaiians navigated to and flourished in the Hawaiian Islands for centuries, developing cultural traditions and lifeways that remain living practices today.",
+   "source": "https://www.gohawaii.com/hawaiian-culture/traditions",
+   "evidence": "published"
+  },
+  {
+   "id": "royal-kona",
+   "title": "Royal Kona",
+   "summary": "Kailua-Kona includes places associated with Hawaiian royalty; Kamehameha I spent his later years at Kamakahonu near Kailua Pier.",
+   "source": "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona/historic-kailua-village-kailua-kona",
+   "evidence": "published"
+  },
+  {
+   "id": "puuhonua",
+   "title": "Puʻuhonua o Hōnaunau",
+   "summary": "The National Historical Park preserves major traditional Hawaiian sites, including the puʻuhonua, Royal Grounds and monumental Great Wall.",
+   "source": "https://www.nps.gov/puho/learn/historyculture/index.htm",
+   "evidence": "published",
+   "sensitivity": "culturally-significant"
+  },
+  {
+   "id": "volcanic-island",
+   "title": "Land shaped by volcanoes",
+   "summary": "Hawaiʻi Island includes Kīlauea, Maunaloa, Maunakea, Hualālai and Kohala; volcanic landscapes shape both the island and the race environment.",
+   "source": "https://www.gohawaii.com/experiences/sightseeing/Volcanoes",
+   "evidence": "published"
+  },
+  {
+   "id": "kona-coffee",
+   "title": "Kona coffee country",
+   "summary": "Kona coffee is grown on upland slopes in North and South Kona, where elevation, cloud cover and volcanic soils support coffee farming.",
+   "source": "https://www.gohawaii.com/islands/hawaii-big-island/things-to-do/land-activities/coffee-plantations",
+   "evidence": "published"
+  }
+ ],
+ "places": [
+  {
+   "id": "kailua-pier",
+   "name": "Kailua Pier",
+   "region": "Kailua-Kona",
+   "categories": [
+    "race-week",
+    "history",
+    "walk"
+   ],
+   "purpose": "Race start/finish context and historic Kailua Village anchor.",
+   "location_query": "Kailua Pier, Kailua-Kona, Hawaii",
+   "source": "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona/historic-kailua-village-kailua-kona",
+   "sensitivity": "normal",
+   "safety": "Check event access restrictions during race week."
+  },
+  {
+   "id": "kailua-bay",
+   "name": "Kailua Bay",
+   "region": "Kailua-Kona",
+   "categories": [
+    "race-week",
+    "ocean",
+    "swim"
+   ],
+   "purpose": "IRONMAN swim-course context and central bay experience.",
+   "location_query": "Kailua Bay, Kailua-Kona, Hawaii",
+   "source": "https://www.gohawaii.com/islands/hawaii-big-island/things-to-do/beaches/kailua-bay",
+   "sensitivity": "normal",
+   "safety": "Ocean conditions vary; follow current local ocean-safety guidance."
+  },
+  {
+   "id": "historic-kailua-village",
+   "name": "Historic Kailua Village",
+   "region": "Kailua-Kona",
+   "categories": [
+    "history",
+    "walk",
+    "food"
+   ],
+   "purpose": "Compact walking area connecting Aliʻi Drive, historic sites, dining and race-week atmosphere.",
+   "location_query": "Historic Kailua Village, Kailua-Kona, Hawaii",
+   "source": "https://www.gohawaii.com/islands/hawaii-big-island/regions/kona/historic-kailua-village-kailua-kona",
+   "sensitivity": "normal"
+  },
+  {
+   "id": "puuhonua-o-honaunau",
+   "name": "Puʻuhonua o Hōnaunau National Historical Park",
+   "region": "South Kona",
+   "categories": [
+    "history",
+    "culture",
+    "walk"
+   ],
+   "purpose": "Learn about traditional Hawaiian history and the Royal Grounds through an authoritative NPS interpretation.",
+   "location_query": "Puʻuhonua o Hōnaunau National Historical Park, Hawaii",
+   "source": "https://www.nps.gov/puho/planyourvisit/index.htm",
+   "sensitivity": "culturally-significant",
+   "visit_with_care": "Use the NPS self-guided interpretation; stay on permitted paths and treat ceremonial places as cultural sites, not photo props."
+  },
+  {
+   "id": "kaloko-honokohau",
+   "name": "Kaloko-Honokōhau National Historical Park",
+   "region": "North Kona",
+   "categories": [
+    "history",
+    "culture",
+    "coast",
+    "walk"
+   ],
+   "purpose": "Explore coastal cultural landscapes including traditional fishponds, heiau and petroglyphs.",
+   "location_query": "Kaloko-Honokōhau National Historical Park, Hawaii",
+   "source": "https://www.nps.gov/kaho/learn/historyculture/index.htm",
+   "sensitivity": "culturally-significant",
+   "visit_with_care": "This is a living cultural landscape with fishponds, heiau, petroglyphs and historic trails. Follow park guidance and protect cultural resources."
+  },
+  {
+   "id": "kealakekua-bay",
+   "name": "Kealakekua Bay",
+   "region": "South Kona",
+   "categories": [
+    "history",
+    "ocean",
+    "snorkel"
+   ],
+   "purpose": "Historic and marine setting south of Kailua-Kona.",
+   "location_query": "Kealakekua Bay, Hawaii",
+   "source": "https://www.gohawaii.com/kona",
+   "sensitivity": "culturally-significant",
+   "safety": "Use permitted access and current ocean guidance."
+  },
+  {
+   "id": "kona-coffee-country",
+   "name": "Kona Coffee Country",
+   "region": "North & South Kona uplands",
+   "categories": [
+    "coffee",
+    "food",
+    "culture",
+    "scenic"
+   ],
+   "purpose": "Connect race visitors with the agricultural landscape behind Kona coffee.",
+   "location_query": "Holualoa, Hawaii",
+   "source": "https://www.gohawaii.com/islands/hawaii-big-island/things-to-do/land-activities/coffee-plantations",
+   "sensitivity": "normal"
+  },
+  {
+   "id": "hawaii-volcanoes",
+   "name": "Hawaiʻi Volcanoes National Park",
+   "region": "Kaʻū / Puna",
+   "categories": [
+    "volcano",
+    "landscape",
+    "hike",
+    "full-day"
+   ],
+   "purpose": "Understand the volcanic processes that formed and continue to shape Hawaiʻi Island.",
+   "location_query": "Hawaiʻi Volcanoes National Park, Hawaii",
+   "source": "https://www.gohawaii.com/experiences/sightseeing/Volcanoes",
+   "sensitivity": "natural-cultural",
+   "safety": "Check National Park Service alerts, closures, weather and volcanic conditions before travel."
+  },
+  {
+   "id": "puukohola-heiau",
+   "name": "Puʻukoholā Heiau National Historic Site",
+   "region": "Kawaihae",
+   "categories": [
+    "history",
+    "culture",
+    "scenic"
+   ],
+   "purpose": "Learn about a major heiau built under Kamehameha I and its role in Hawaiian history.",
+   "location_query": "Puʻukoholā Heiau National Historic Site, Hawaii",
+   "source": "https://www.nps.gov/places/puukohola-heiau.htm",
+   "sensitivity": "culturally-significant"
+  }
+ ],
+ "race_2026": {
+  "event": "IRONMAN World Championship",
+  "date": "2026-10-10",
+  "location": "Kailua-Kona, Hawaiʻi",
+  "source": "https://regwcusa.ironman.com/event/2026-ironman-world-championship-kona"
+ },
+ "planner_phases": [
+  {
+   "id": "save",
+   "stage": "P1",
+   "purpose": "Save places locally and group them by race-week, history/culture, ocean, coffee/food and landscape."
+  },
+  {
+   "id": "collections",
+   "stage": "P1",
+   "purpose": "Curated half-day/full-day collections with clear time and travel assumptions."
+  },
+  {
+   "id": "race-overlay",
+   "stage": "P2",
+   "purpose": "Race-week overlays for course context, closures and spectator planning, only from current official sources."
+  },
+  {
+   "id": "map-routing",
+   "stage": "P2",
+   "purpose": "Map/deep-link routing without background location tracking."
+  },
+  {
+   "id": "live",
+   "stage": "Later",
+   "purpose": "Live conditions/traffic only through explicit official integrations and with fresh timestamps."
+  }
+ ]
+}

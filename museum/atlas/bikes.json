@@ -1,0 +1,1952 @@
+{
+ "schema_version": 1,
+ "title": "Against the Clock — time-trial bicycles beyond Canyon",
+ "method": "Each machine is rebuilt in Blender (blender/atlas_build.py) from its own skeleton. Proportions are scaled from the reference photograph with the wheel as the ruler (700c tyre ≈ 668 mm); tube depths and small parts are a silhouette study. Named machines carry the photograph they were built from; type studies name no maker. No Canyon model is recoloured and presented as another brand.",
+ "evidence_classes": {
+  "P": "published fact",
+  "F": "read from the reference photograph",
+  "I": "inferred for the model"
+ },
+ "bikes": [
+  {
+   "key": "merckx-hour-1972",
+   "room": "hour",
+   "kind": "named",
+   "name": "Eddy Merckx Hour bike",
+   "maker": "Built for Eddy Merckx (Colnago)",
+   "year": 1972,
+   "facts": [
+    [
+     "P",
+     "Eddy Merckx set the Hour record in Mexico City on 25 October 1972."
+    ],
+    [
+     "F",
+     "The display board beside the bike reads 49.431 km."
+    ],
+    [
+     "F",
+     "Orange lugged steel frame, round tubes, drop bars in white tape, 32-spoke box rims, no brakes."
+    ],
+    [
+     "I",
+     "Frame angles and lengths scaled from the photograph."
+    ]
+   ],
+   "text": "Round steel tubes, a fixed gear and nothing else. Every later machine in this wing is an argument with this one.",
+   "ref": {
+    "file": "EddyMerckxHourRecordBike.jpg",
+    "title": "File:EddyMerckxHourRecordBike.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:EddyMerckxHourRecordBike.jpg",
+    "license": "CC BY-SA 3.0",
+    "artist": "David Edgar",
+    "caption": "On display at Eddy Merckx metro station, Brussels"
+   },
+   "arch": "diamond",
+   "bars": "drop",
+   "tubes": {
+    "section": "round",
+    "seat_chord": 0.0286,
+    "seat_width": 0.0286,
+    "top_chord": 0.0254,
+    "top_width": 0.0254,
+    "down_chord": 0.0286,
+    "down_width": 0.0286,
+    "head_chord": 0.032,
+    "head_width": 0.032,
+    "cs_chord": 0.02,
+    "ss_chord": 0.016,
+    "fork_chord": 0.026,
+    "stay_drop": 0.0
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "spoked",
+    "front_depth": 0.018,
+    "rear_depth": 0.018,
+    "spokes": 32
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.055,
+    "chainstay": 0.4,
+    "stack": 0.545,
+    "reach": 0.385,
+    "head_angle": 74,
+    "seat_angle": 74,
+    "head_tube": 0.125,
+    "seat_tube": 0.56,
+    "saddle_height": 0.72,
+    "stem": 0.12,
+    "stem_rise": -0.01,
+    "bar_width": 0.4,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.035
+   },
+   "skins": [
+    {
+     "id": "as-displayed",
+     "name": "As displayed",
+     "kind": "photo",
+     "frame": "#ea6f12",
+     "accent": "#ea6f12",
+     "rim": "#b9bcc0",
+     "tape": "#f2f0ea",
+     "saddle": "#1a1a1a"
+    },
+    {
+     "id": "studio-chrome",
+     "name": "Chrome",
+     "kind": "studio",
+     "frame": "#c8ccd0",
+     "accent": "#c8ccd0",
+     "rim": "#b9bcc0",
+     "tape": "#1a1a1a"
+    },
+    {
+     "id": "studio-basalt",
+     "name": "Basalt",
+     "kind": "studio",
+     "frame": "#1c1d20",
+     "accent": "#e8471c",
+     "rim": "#b9bcc0",
+     "tape": "#1a1a1a"
+    }
+   ],
+   "brand": "Colnago"
+  },
+  {
+   "key": "obree-riverside",
+   "room": "hour",
+   "kind": "named",
+   "name": "Graeme Obree's bikes",
+   "maker": "Graeme Obree",
+   "year": 1993,
+   "facts": [
+    [
+     "P",
+     "Graeme Obree set the Hour record in Hamar, Norway, on 17 July 1993, on a bike he built himself."
+    ],
+    [
+     "F",
+     "The Riverside Museum display shows white round-tube frames lettered G. OBREE, on tri-spoke wheels."
+    ],
+    [
+     "I",
+     "This model follows the displayed frames, not a specific record machine; narrow bars stand for his tucked position."
+    ]
+   ],
+   "text": "Built at home, raced against the world. The tuck came first; the bike was made to hold it.",
+   "ref": {
+    "file": "Graeme_Obree_display_at_the_Riverside_Museum.jpg",
+    "title": "File:Graeme Obree display at the Riverside Museum.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Graeme_Obree_display_at_the_Riverside_Museum.jpg",
+    "license": "CC BY 2.0",
+    "artist": "Ed Webster",
+    "caption": "Riverside Museum, Glasgow"
+   },
+   "arch": "diamond",
+   "bars": "narrow",
+   "tubes": {
+    "section": "round",
+    "seat_chord": 0.03,
+    "seat_width": 0.03,
+    "top_chord": 0.028,
+    "top_width": 0.028,
+    "down_chord": 0.032,
+    "down_width": 0.032,
+    "head_chord": 0.034,
+    "head_width": 0.034,
+    "cs_chord": 0.02,
+    "ss_chord": 0.016,
+    "fork_chord": 0.028,
+    "stay_drop": 0.03
+   },
+   "wheels": {
+    "front": "trispoke",
+    "rear": "trispoke",
+    "front_depth": 0.03,
+    "rear_depth": 0.03
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.05,
+    "chainstay": 0.39,
+    "stack": 0.52,
+    "reach": 0.4,
+    "head_angle": 74,
+    "seat_angle": 77,
+    "head_tube": 0.11,
+    "seat_tube": 0.54,
+    "saddle_height": 0.72,
+    "stem": 0.13,
+    "stem_rise": -0.03,
+    "bar_width": 0.36,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.04
+   },
+   "skins": [
+    {
+     "id": "as-displayed",
+     "name": "As displayed",
+     "kind": "photo",
+     "frame": "#efece4",
+     "accent": "#efece4",
+     "rim": "#b08a4a",
+     "disc": "#16171b",
+     "saddle": "#1a1a1a",
+     "tape": "#1a1a1a"
+    },
+    {
+     "id": "studio-saltire",
+     "name": "Saltire",
+     "kind": "studio",
+     "frame": "#1f4fa3",
+     "accent": "#f2f0ea",
+     "rim": "#b08a4a",
+     "disc": "#16171b"
+    },
+    {
+     "id": "studio-lava",
+     "name": "Lava",
+     "kind": "studio",
+     "frame": "#c8401a",
+     "accent": "#1c1d20",
+     "rim": "#b08a4a",
+     "disc": "#16171b"
+    }
+   ],
+   "brand": "Obree"
+  },
+  {
+   "key": "lotus-108-1992",
+   "room": "mono",
+   "kind": "named",
+   "name": "Lotus Type 108",
+   "maker": "LotusSport",
+   "year": 1992,
+   "facts": [
+    [
+     "P",
+     "Chris Boardman won the 4,000 m individual pursuit at the Barcelona Olympics in 1992 on this design."
+    ],
+    [
+     "F",
+     "A single carbon wing, a monoblade fork and a single rear stay; rear disc, front tri-spoke, bullhorn bar with extensions."
+    ],
+    [
+     "I",
+     "Wing outline and stay depth scaled from the photograph."
+    ]
+   ],
+   "text": "No tubes at all: one wing, one blade at each end. It made every frame beside it look like scaffolding.",
+   "ref": {
+    "file": "Lotus_108__24281585325_.jpg",
+    "title": "File:Lotus 108 (24281585325).jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Lotus_108_(24281585325).jpg",
+    "license": "CC BY 2.0",
+    "artist": "Paul Hudson",
+    "caption": "Design Museum, London"
+   },
+   "arch": "monocoque",
+   "bars": "aero",
+   "tubes": {
+    "section": "aero",
+    "wing_thick": 0.042,
+    "head_chord": 0.11,
+    "head_width": 0.042
+   },
+   "wheels": {
+    "front": "trispoke",
+    "rear": "disc",
+    "front_depth": 0.03,
+    "rear_depth": 0.02
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.03,
+    "chainstay": 0.4,
+    "stack": 0.5,
+    "reach": 0.46,
+    "head_angle": 73,
+    "seat_angle": 78,
+    "head_tube": 0.14,
+    "seat_tube": 0.52,
+    "saddle_height": 0.73,
+    "stem": 0.06,
+    "stem_rise": 0.0,
+    "bar_width": 0.38,
+    "ext_width": 0.07,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.04
+   },
+   "skins": [
+    {
+     "id": "as-displayed",
+     "name": "As displayed",
+     "kind": "photo",
+     "frame": "#141416",
+     "accent": "#141416",
+     "rim": "#b08a4a",
+     "disc": "#141416",
+     "saddle": "#1a1a1a"
+    },
+    {
+     "id": "studio-gold",
+     "name": "Pursuit gold",
+     "kind": "studio",
+     "frame": "#141416",
+     "accent": "#c9a13b",
+     "rim": "#b08a4a",
+     "disc": "#c9a13b"
+    },
+    {
+     "id": "studio-reef",
+     "name": "Reef",
+     "kind": "studio",
+     "frame": "#138a8f",
+     "accent": "#12181d",
+     "rim": "#b08a4a",
+     "disc": "#12181d"
+    }
+   ],
+   "brand": "Lotus"
+  },
+  {
+   "key": "zipp-2001",
+   "room": "mono",
+   "kind": "named",
+   "name": "Zipp 2001",
+   "maker": "Zipp",
+   "year": null,
+   "era": "1990s",
+   "facts": [
+    [
+     "F",
+     "The reference shows two Zipp 2001 frames, one black and one red: a carbon beam from the head tube over the rear wheel, no seat tube."
+    ],
+    [
+     "I",
+     "Year given as the early 1990s; wheels, bars and drivetrain are a study, not the frames' original build."
+    ]
+   ],
+   "text": "Take away the seat tube and hang the rider off a beam. The rules later insisted on two triangles; this is why.",
+   "ref": {
+    "file": "Zipp_frames.jpg",
+    "title": "File:Zipp frames.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Zipp_frames.jpg",
+    "license": "Public domain",
+    "artist": "Nfreeman2",
+    "caption": "Left to right: black 2001, red 2001"
+   },
+   "arch": "beam",
+   "bars": "aero",
+   "tubes": {
+    "section": "aero",
+    "head_chord": 0.08,
+    "head_width": 0.04
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "disc",
+    "front_depth": 0.06,
+    "rear_depth": 0.02,
+    "spokes": 18
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.06,
+    "chainstay": 0.41,
+    "stack": 0.52,
+    "reach": 0.44,
+    "head_angle": 73,
+    "seat_angle": 78,
+    "head_tube": 0.13,
+    "seat_tube": 0.45,
+    "saddle_height": 0.73,
+    "stem": 0.08,
+    "stem_rise": 0.0,
+    "bar_width": 0.4,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.045
+   },
+   "skins": [
+    {
+     "id": "photo-black",
+     "name": "Black 2001",
+     "kind": "photo",
+     "frame": "#141416",
+     "accent": "#141416",
+     "disc": "#16171b"
+    },
+    {
+     "id": "photo-red",
+     "name": "Red 2001",
+     "kind": "photo",
+     "frame": "#c8161d",
+     "accent": "#141416",
+     "disc": "#16171b"
+    },
+    {
+     "id": "studio-sand",
+     "name": "Sand",
+     "kind": "studio",
+     "frame": "#e9dcc4",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    }
+   ],
+   "brand": "Zipp"
+  },
+  {
+   "key": "stevens-tri",
+   "room": "tri",
+   "kind": "named",
+   "name": "Stevens triathlon bike",
+   "maker": "Stevens",
+   "year": null,
+   "facts": [
+    [
+     "F",
+     "Photographed racked at a triathlon: white and red frame with black, deep spoked carbon wheels, aero bars and extensions, a bottle in the frame."
+    ],
+    [
+     "I",
+     "Year not recorded on the photograph; tube depths are a silhouette study."
+    ]
+   ],
+   "text": "The triathlon superbike as most age-groupers met it: deep tubes, deep wheels, everything pointed forward.",
+   "ref": {
+    "file": "Stevens_triathlon_bicycle.jpg",
+    "title": "File:Stevens triathlon bicycle.JPG",
+    "page": "https://commons.wikimedia.org/wiki/File:Stevens_triathlon_bicycle.JPG",
+    "license": "CC BY-SA 3.0",
+    "artist": "Ximeg",
+    "caption": "Racked at a triathlon in Gera"
+   },
+   "arch": "superbike",
+   "bars": "aero",
+   "tubes": {
+    "section": "kamm",
+    "seat_chord": 0.075,
+    "seat_width": 0.03,
+    "top_chord": 0.055,
+    "top_width": 0.032,
+    "down_chord": 0.085,
+    "down_width": 0.04,
+    "head_chord": 0.085,
+    "head_width": 0.042,
+    "cs_chord": 0.03,
+    "ss_chord": 0.028,
+    "fork_chord": 0.055,
+    "stay_drop": 0.1
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "spoked",
+    "front_depth": 0.06,
+    "rear_depth": 0.06,
+    "spokes": 20
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.065,
+    "chainstay": 0.405,
+    "stack": 0.5,
+    "reach": 0.43,
+    "head_angle": 73,
+    "seat_angle": 78,
+    "head_tube": 0.12,
+    "seat_tube": 0.5,
+    "saddle_height": 0.72,
+    "stem": 0.07,
+    "stem_rise": -0.01,
+    "bar_width": 0.4,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.045
+   },
+   "skins": [
+    {
+     "id": "as-photographed",
+     "name": "As photographed",
+     "kind": "photo",
+     "frame": "#f1f1ef",
+     "accent": "#c8102e",
+     "rim": "#141416",
+     "saddle": "#141414"
+    },
+    {
+     "id": "studio-ironside",
+     "name": "Ironside",
+     "kind": "studio",
+     "frame": "#1c1d20",
+     "accent": "#f3b64f",
+     "rim": "#141416"
+    },
+    {
+     "id": "studio-queen-k",
+     "name": "Queen K",
+     "kind": "studio",
+     "frame": "#e8471c",
+     "accent": "#1c1d20",
+     "rim": "#141416"
+    }
+   ],
+   "brand": "Stevens"
+  },
+  {
+   "key": "alu-tri-2005",
+   "room": "tri",
+   "kind": "named",
+   "name": "Aluminium triathlon bike",
+   "maker": "Unbranded in the photograph",
+   "year": 2005,
+   "facts": [
+    [
+     "F",
+     "Black aluminium frame with round oversized tubes, clip-on aero bars, tri-spoke wheels with tan-wall tyres (photographed December 2005)."
+    ],
+    [
+     "I",
+     "Maker not identified from the photograph; shown as a type of its time."
+    ]
+   ],
+   "text": "A road frame made fast with bolt-on parts: clip-ons and tri-spokes. How most triathletes went aero in the 2000s.",
+   "ref": {
+    "file": "Triathlonrad.jpg",
+    "title": "File:Triathlonrad.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Triathlonrad.jpg",
+    "license": "CC BY-SA 3.0",
+    "artist": "GS (de.wikipedia)",
+    "caption": "Triathlonrad, December 2005"
+   },
+   "arch": "diamond",
+   "bars": "aero",
+   "tubes": {
+    "section": "round",
+    "seat_chord": 0.034,
+    "seat_width": 0.034,
+    "top_chord": 0.036,
+    "top_width": 0.036,
+    "down_chord": 0.045,
+    "down_width": 0.045,
+    "head_chord": 0.04,
+    "head_width": 0.04,
+    "cs_chord": 0.022,
+    "ss_chord": 0.018,
+    "fork_chord": 0.034,
+    "stay_drop": 0.03,
+    "tt_drop": 0.06
+   },
+   "wheels": {
+    "front": "trispoke",
+    "rear": "trispoke",
+    "front_depth": 0.03,
+    "rear_depth": 0.03
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.07,
+    "chainstay": 0.41,
+    "stack": 0.56,
+    "reach": 0.39,
+    "head_angle": 73,
+    "seat_angle": 74,
+    "head_tube": 0.15,
+    "seat_tube": 0.54,
+    "saddle_height": 0.73,
+    "stem": 0.1,
+    "stem_rise": 0.02,
+    "bar_width": 0.42,
+    "ext_width": 0.08,
+    "crank": 0.1725,
+    "fork_length": 0.37,
+    "rake": 0.045
+   },
+   "skins": [
+    {
+     "id": "as-photographed",
+     "name": "As photographed",
+     "kind": "photo",
+     "frame": "#1a1a1c",
+     "accent": "#1a1a1c",
+     "rim": "#16171b",
+     "disc": "#16171b",
+     "saddle": "#141414"
+    },
+    {
+     "id": "studio-silver",
+     "name": "Raw aluminium",
+     "kind": "studio",
+     "frame": "#aeb2b6",
+     "accent": "#aeb2b6",
+     "disc": "#16171b"
+    },
+    {
+     "id": "studio-sun",
+     "name": "Sun",
+     "kind": "studio",
+     "frame": "#f3b64f",
+     "accent": "#12181d",
+     "disc": "#16171b"
+    }
+   ],
+   "brand": "Unbranded"
+  },
+  {
+   "key": "type-funny-1980s",
+   "room": "types",
+   "kind": "type",
+   "name": "Funny bike",
+   "maker": "Type study",
+   "year": 1985,
+   "facts": [
+    [
+     "P",
+     "Low-profile 'funny bikes' with a smaller front wheel were used in time trials and on the track in the 1980s."
+    ],
+    [
+     "I",
+     "No maker is modelled. 24-inch front wheel, 700c rear disc, sloping top tube, bullhorn bar."
+    ]
+   ],
+   "text": "Drop the front of the bike and the rider drops with it. A smaller front wheel was the first aero position you could buy.",
+   "ref": null,
+   "arch": "funny",
+   "bars": "bullhorn",
+   "tubes": {
+    "section": "round",
+    "seat_chord": 0.03,
+    "seat_width": 0.03,
+    "top_chord": 0.028,
+    "top_width": 0.028,
+    "down_chord": 0.032,
+    "down_width": 0.032,
+    "head_chord": 0.034,
+    "head_width": 0.034,
+    "cs_chord": 0.02,
+    "ss_chord": 0.016,
+    "fork_chord": 0.028,
+    "stay_drop": 0.0
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "disc",
+    "front_depth": 0.02,
+    "rear_depth": 0.02,
+    "spokes": 28
+   },
+   "geometry": {
+    "wheel_front": 0.6,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.06,
+    "chainstay": 0.4,
+    "stack": 0.46,
+    "reach": 0.4,
+    "head_angle": 74,
+    "seat_angle": 75,
+    "head_tube": 0.08,
+    "seat_tube": 0.54,
+    "saddle_height": 0.72,
+    "stem": 0.11,
+    "stem_rise": -0.02,
+    "bar_width": 0.4,
+    "crank": 0.17,
+    "fork_length": 0.34,
+    "rake": 0.035
+   },
+   "skins": [
+    {
+     "id": "study-pearl",
+     "name": "Pearl",
+     "kind": "studio",
+     "frame": "#efe9df",
+     "accent": "#12181d",
+     "disc": "#12181d",
+     "tape": "#12181d"
+    },
+    {
+     "id": "study-coral",
+     "name": "Coral",
+     "kind": "studio",
+     "frame": "#ff6f59",
+     "accent": "#12181d",
+     "disc": "#f2f0ea",
+     "tape": "#f2f0ea"
+    },
+    {
+     "id": "study-cobalt",
+     "name": "Cobalt",
+     "kind": "studio",
+     "frame": "#1d4fd6",
+     "accent": "#f2f0ea",
+     "disc": "#f2f0ea",
+     "tape": "#f2f0ea"
+    }
+   ]
+  },
+  {
+   "key": "type-pursuit",
+   "room": "types",
+   "kind": "type",
+   "name": "Track pursuit bike",
+   "maker": "Type study",
+   "year": 2000,
+   "facts": [
+    [
+     "I",
+     "No maker is modelled. Seat tube curved round the rear wheel, fixed gear with a solid chainring, discs front and rear, no brakes."
+    ]
+   ],
+   "text": "Four kilometres on a velodrome, alone. Everything that does not push or steer has been taken off.",
+   "ref": null,
+   "arch": "pursuit",
+   "bars": "aero",
+   "disc_ring": true,
+   "tubes": {
+    "section": "aero",
+    "seat_chord": 0.08,
+    "seat_width": 0.026,
+    "top_chord": 0.05,
+    "top_width": 0.026,
+    "down_chord": 0.085,
+    "down_width": 0.032,
+    "head_chord": 0.09,
+    "head_width": 0.036,
+    "cs_chord": 0.035,
+    "ss_chord": 0.03,
+    "fork_chord": 0.06,
+    "stay_drop": 0.05
+   },
+   "wheels": {
+    "front": "disc",
+    "rear": "disc",
+    "front_depth": 0.02,
+    "rear_depth": 0.02
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.04,
+    "chainstay": 0.39,
+    "stack": 0.49,
+    "reach": 0.45,
+    "head_angle": 74,
+    "seat_angle": 77,
+    "head_tube": 0.11,
+    "seat_tube": 0.5,
+    "saddle_height": 0.73,
+    "stem": 0.06,
+    "stem_rise": -0.01,
+    "bar_width": 0.36,
+    "ext_width": 0.06,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.04,
+    "chainring_r": 0.12
+   },
+   "skins": [
+    {
+     "id": "study-velodrome",
+     "name": "Velodrome",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#f3b64f",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-rainbow",
+     "name": "Arc",
+     "kind": "studio",
+     "frame": "#f2f0ea",
+     "accent": "#1d4fd6",
+     "disc": "#f2f0ea"
+    },
+    {
+     "id": "study-ember",
+     "name": "Ember",
+     "kind": "studio",
+     "frame": "#9a3b17",
+     "accent": "#e0a458",
+     "disc": "#12181d"
+    }
+   ]
+  },
+  {
+   "key": "type-disc-superbike",
+   "room": "types",
+   "kind": "type",
+   "name": "Disc-brake triathlon superbike",
+   "maker": "Type study",
+   "year": 2024,
+   "facts": [
+    [
+     "I",
+     "No maker is modelled. Deep truncated-airfoil tubes, dropped stays, integrated nose, storage on the top tube, a bottle between the arms and two behind the saddle, rear disc."
+    ]
+   ],
+   "text": "The long-course bike carries its own race: food on the top tube, a bottle between the arms, two more behind the saddle.",
+   "ref": null,
+   "arch": "superbike",
+   "bars": "aero",
+   "bento": true,
+   "bottle_between_arms": true,
+   "rear_bottles": true,
+   "tubes": {
+    "section": "kamm",
+    "seat_chord": 0.09,
+    "seat_width": 0.032,
+    "top_chord": 0.06,
+    "top_width": 0.03,
+    "down_chord": 0.1,
+    "down_width": 0.042,
+    "head_chord": 0.1,
+    "head_width": 0.042,
+    "cs_chord": 0.032,
+    "ss_chord": 0.03,
+    "fork_chord": 0.065,
+    "stay_drop": 0.2,
+    "hug": true,
+    "fork_paint": true
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "disc",
+    "front_depth": 0.08,
+    "rear_depth": 0.02,
+    "spokes": 20
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.07,
+    "chainstay": 0.41,
+    "stack": 0.52,
+    "reach": 0.43,
+    "head_angle": 73,
+    "seat_angle": 79,
+    "head_tube": 0.13,
+    "seat_tube": 0.49,
+    "saddle_height": 0.72,
+    "stem": 0.06,
+    "stem_rise": 0.0,
+    "bar_width": 0.4,
+    "ext_width": 0.075,
+    "crank": 0.165,
+    "fork_length": 0.37,
+    "rake": 0.05
+   },
+   "skins": [
+    {
+     "id": "study-kona-sand",
+     "name": "Kona sand",
+     "kind": "studio",
+     "frame": "#e9dcc4",
+     "accent": "#b4541f",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-reef",
+     "name": "Reef",
+     "kind": "studio",
+     "frame": "#138a8f",
+     "accent": "#d5ecea",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-night",
+     "name": "Night",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#ff592c",
+     "disc": "#12181d"
+    }
+   ]
+  },
+  {
+   "key": "type-aerobar-1989",
+   "room": "clipon",
+   "kind": "type",
+   "name": "Road bike with clip-on aero bars",
+   "maker": "Type study",
+   "year": 1989,
+   "facts": [
+    [
+     "P",
+     "Clip-on aero bars, first used by triathletes, reached Grand Tour time trials at the end of the 1980s."
+    ],
+    [
+     "I",
+     "No maker is modelled. Steel road frame, drop bars with clip-on extensions, 32-spoke wheels."
+    ]
+   ],
+   "text": "The cheapest watts ever sold: bolt two tubes to a road bar and fold the rider in half.",
+   "ref": null,
+   "arch": "diamond",
+   "bars": "drop_clip",
+   "tubes": {
+    "section": "round",
+    "seat_chord": 0.0286,
+    "seat_width": 0.0286,
+    "top_chord": 0.0254,
+    "top_width": 0.0254,
+    "down_chord": 0.0286,
+    "down_width": 0.0286,
+    "head_chord": 0.032,
+    "head_width": 0.032,
+    "cs_chord": 0.02,
+    "ss_chord": 0.016,
+    "fork_chord": 0.026,
+    "stay_drop": 0.0
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "spoked",
+    "front_depth": 0.02,
+    "rear_depth": 0.02,
+    "spokes": 32
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.07,
+    "chainstay": 0.41,
+    "stack": 0.55,
+    "reach": 0.385,
+    "head_angle": 73,
+    "seat_angle": 74,
+    "head_tube": 0.13,
+    "seat_tube": 0.56,
+    "saddle_height": 0.72,
+    "stem": 0.12,
+    "stem_rise": -0.01,
+    "bar_width": 0.42,
+    "ext_width": 0.07,
+    "clip_reach": 0.32,
+    "crank": 0.1725,
+    "fork_length": 0.37,
+    "rake": 0.045
+   },
+   "skins": [
+    {
+     "id": "study-team-blue",
+     "name": "Team blue",
+     "kind": "studio",
+     "frame": "#1d4fd6",
+     "accent": "#f2f0ea",
+     "tape": "#f2f0ea",
+     "rim": "#b9bcc0"
+    },
+    {
+     "id": "study-yellow",
+     "name": "Maillot",
+     "kind": "studio",
+     "frame": "#f2c14e",
+     "accent": "#12181d",
+     "tape": "#12181d",
+     "rim": "#b9bcc0"
+    },
+    {
+     "id": "study-steel",
+     "name": "Bare steel",
+     "kind": "studio",
+     "frame": "#8e9399",
+     "accent": "#8e9399",
+     "tape": "#12181d",
+     "rim": "#b9bcc0"
+    }
+   ]
+  },
+  {
+   "key": "type-lowpro-650c",
+   "room": "clipon",
+   "kind": "type",
+   "name": "Low-profile triathlon bike, 650c",
+   "maker": "Type study",
+   "year": 1994,
+   "facts": [
+    [
+     "P",
+     "Many 1990s triathlon frames used smaller 650c wheels to bring the rider lower and forward."
+    ],
+    [
+     "I",
+     "No maker is modelled. 650c wheels front and rear, 80° seat angle, aero tubes, rear disc."
+    ]
+   ],
+   "text": "Small wheels, steep seat, the rider pitched forward over the bars: the triathlon bike stops pretending to be a road bike.",
+   "ref": null,
+   "arch": "funny",
+   "bars": "aero",
+   "tubes": {
+    "section": "aero",
+    "seat_chord": 0.06,
+    "seat_width": 0.03,
+    "top_chord": 0.045,
+    "top_width": 0.03,
+    "down_chord": 0.07,
+    "down_width": 0.036,
+    "head_chord": 0.07,
+    "head_width": 0.038,
+    "cs_chord": 0.026,
+    "ss_chord": 0.022,
+    "fork_chord": 0.045,
+    "stay_drop": 0.05
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "disc",
+    "front_depth": 0.035,
+    "rear_depth": 0.02,
+    "spokes": 24
+   },
+   "geometry": {
+    "wheel_front": 0.62,
+    "wheel_rear": 0.62,
+    "bb_drop": 0.05,
+    "chainstay": 0.39,
+    "stack": 0.47,
+    "reach": 0.43,
+    "head_angle": 73,
+    "seat_angle": 80,
+    "head_tube": 0.09,
+    "seat_tube": 0.48,
+    "saddle_height": 0.7,
+    "stem": 0.08,
+    "stem_rise": -0.01,
+    "bar_width": 0.4,
+    "ext_width": 0.08,
+    "crank": 0.17,
+    "fork_length": 0.35,
+    "rake": 0.04
+   },
+   "skins": [
+    {
+     "id": "study-neon",
+     "name": "Neon",
+     "kind": "studio",
+     "frame": "#d9ff3f",
+     "accent": "#ff3d8e",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-splatter",
+     "name": "Surf",
+     "kind": "studio",
+     "frame": "#5fd8d3",
+     "accent": "#1d4fd6",
+     "disc": "#f2f0ea"
+    },
+    {
+     "id": "study-graphite",
+     "name": "Graphite",
+     "kind": "studio",
+     "frame": "#2c353c",
+     "accent": "#e8471c",
+     "disc": "#12181d"
+    }
+   ]
+  },
+  {
+   "key": "type-hour-track",
+   "room": "velodrome",
+   "kind": "type",
+   "name": "Modern Hour bike",
+   "maker": "Type study",
+   "year": 2019,
+   "facts": [
+    [
+     "I",
+     "No maker is modelled. Truncated-airfoil tubes, seat tube curved round the rear wheel, discs front and rear, narrow extensions, fixed gear, no brakes."
+    ]
+   ],
+   "text": "Everything the pursuit bike learned, stretched over sixty minutes: narrower, lower, and built around the rider's shoulders.",
+   "ref": null,
+   "arch": "pursuit",
+   "bars": "aero",
+   "disc_ring": true,
+   "tubes": {
+    "section": "kamm",
+    "seat_chord": 0.09,
+    "seat_width": 0.024,
+    "top_chord": 0.055,
+    "top_width": 0.024,
+    "down_chord": 0.09,
+    "down_width": 0.03,
+    "head_chord": 0.1,
+    "head_width": 0.034,
+    "cs_chord": 0.035,
+    "ss_chord": 0.03,
+    "fork_chord": 0.065,
+    "stay_drop": 0.15
+   },
+   "wheels": {
+    "front": "disc",
+    "rear": "disc",
+    "front_depth": 0.02,
+    "rear_depth": 0.02
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.04,
+    "chainstay": 0.385,
+    "stack": 0.48,
+    "reach": 0.46,
+    "head_angle": 74,
+    "seat_angle": 78,
+    "head_tube": 0.1,
+    "seat_tube": 0.5,
+    "saddle_height": 0.73,
+    "stem": 0.05,
+    "stem_rise": -0.02,
+    "bar_width": 0.34,
+    "ext_width": 0.045,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.04,
+    "chainring_r": 0.13
+   },
+   "skins": [
+    {
+     "id": "study-record",
+     "name": "Record",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#c8161d",
+     "disc": "#12181d"
+    },
+    {
+     "id": "study-rainbow-bands",
+     "name": "Arc",
+     "kind": "studio",
+     "frame": "#f2f0ea",
+     "accent": "#1d4fd6",
+     "disc": "#f2f0ea"
+    },
+    {
+     "id": "study-copper",
+     "name": "Copper",
+     "kind": "studio",
+     "frame": "#b4541f",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    }
+   ]
+  },
+  {
+   "key": "type-draft-legal",
+   "room": "velodrome",
+   "kind": "type",
+   "name": "Draft-legal triathlon bike",
+   "maker": "Type study",
+   "year": 2021,
+   "facts": [
+    [
+     "P",
+     "In draft-legal triathlon, riders use road bikes; clip-on bars must not reach past the brake levers."
+    ],
+    [
+     "I",
+     "No maker is modelled. Aero road frame, drop bars with short clip-ons, deep spoked wheels."
+    ]
+   ],
+   "text": "The fastest bike that is still allowed to ride in a bunch: a road bike with its elbows tucked in.",
+   "ref": null,
+   "arch": "superbike",
+   "bars": "drop_clip",
+   "tubes": {
+    "section": "kamm",
+    "seat_chord": 0.065,
+    "seat_width": 0.03,
+    "top_chord": 0.045,
+    "top_width": 0.032,
+    "down_chord": 0.07,
+    "down_width": 0.04,
+    "head_chord": 0.07,
+    "head_width": 0.04,
+    "cs_chord": 0.028,
+    "ss_chord": 0.024,
+    "fork_chord": 0.05,
+    "stay_drop": 0.18
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "spoked",
+    "front_depth": 0.05,
+    "rear_depth": 0.06,
+    "spokes": 22
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.07,
+    "chainstay": 0.405,
+    "stack": 0.54,
+    "reach": 0.39,
+    "head_angle": 73,
+    "seat_angle": 74,
+    "head_tube": 0.14,
+    "seat_tube": 0.52,
+    "saddle_height": 0.72,
+    "stem": 0.1,
+    "stem_rise": -0.01,
+    "bar_width": 0.4,
+    "ext_width": 0.06,
+    "clip_reach": 0.2,
+    "crank": 0.1725,
+    "fork_length": 0.37,
+    "rake": 0.045
+   },
+   "skins": [
+    {
+     "id": "study-reef",
+     "name": "Reef",
+     "kind": "studio",
+     "frame": "#138a8f",
+     "accent": "#f2f0ea",
+     "tape": "#f2f0ea",
+     "rim": "#141416"
+    },
+    {
+     "id": "study-lava",
+     "name": "Lava",
+     "kind": "studio",
+     "frame": "#e8471c",
+     "accent": "#12181d",
+     "tape": "#12181d",
+     "rim": "#141416"
+    },
+    {
+     "id": "study-pearl",
+     "name": "Pearl",
+     "kind": "studio",
+     "frame": "#efe9df",
+     "accent": "#c9a13b",
+     "tape": "#12181d",
+     "rim": "#141416"
+    }
+   ]
+  },
+  {
+   "key": "studio-kona-2030",
+   "room": null,
+   "kind": "type",
+   "name": "Kona concept 2030",
+   "maker": "Studio design",
+   "year": 2030,
+   "facts": [
+    [
+     "I",
+     "A studio design, not a product. Deeper kamm sections, very steep seat angle, integrated storage, discs front and rear."
+    ]
+   ],
+   "text": "What the long-course bike might become when the rules stop moving: deeper, narrower, everything inside.",
+   "ref": null,
+   "arch": "superbike",
+   "bars": "aero",
+   "bento": true,
+   "bottle_between_arms": true,
+   "rear_bottles": true,
+   "tubes": {
+    "section": "kamm",
+    "seat_chord": 0.1,
+    "seat_width": 0.032,
+    "top_chord": 0.06,
+    "top_width": 0.03,
+    "down_chord": 0.115,
+    "down_width": 0.042,
+    "head_chord": 0.115,
+    "head_width": 0.042,
+    "cs_chord": 0.032,
+    "ss_chord": 0.03,
+    "fork_chord": 0.065,
+    "stay_drop": 0.2,
+    "hug": true,
+    "fork_paint": true
+   },
+   "wheels": {
+    "front": "disc",
+    "rear": "disc",
+    "front_depth": 0.08,
+    "rear_depth": 0.02,
+    "spokes": 20
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.07,
+    "chainstay": 0.41,
+    "stack": 0.5,
+    "reach": 0.45,
+    "head_angle": 73,
+    "seat_angle": 81,
+    "head_tube": 0.13,
+    "seat_tube": 0.49,
+    "saddle_height": 0.72,
+    "stem": 0.06,
+    "stem_rise": 0.0,
+    "bar_width": 0.4,
+    "ext_width": 0.075,
+    "crank": 0.165,
+    "fork_length": 0.37,
+    "rake": 0.05
+   },
+   "skins": [
+    {
+     "id": "prism",
+     "name": "Prism",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#5fd8d3"
+    },
+    {
+     "id": "sunrise",
+     "name": "Sunrise",
+     "kind": "studio",
+     "frame": "#ff6f59",
+     "accent": "#f3b64f"
+    },
+    {
+     "id": "pearl",
+     "name": "Pearl",
+     "kind": "studio",
+     "frame": "#efe9df",
+     "accent": "#138a8f"
+    }
+   ],
+   "museum": false,
+   "studio": true
+  },
+  {
+   "key": "studio-small-650c",
+   "room": null,
+   "kind": "type",
+   "name": "Small-frame triathlon bike, 650c",
+   "maker": "Studio design",
+   "year": 2024,
+   "facts": [
+    [
+     "I",
+     "A studio design. 650c wheels, short reach, low stack, steep seat angle."
+    ]
+   ],
+   "text": "For shorter riders: 650c wheels keep the handling and the position right on a small frame.",
+   "ref": null,
+   "arch": "funny",
+   "bars": "aero",
+   "tubes": {
+    "section": "aero",
+    "seat_chord": 0.06,
+    "seat_width": 0.03,
+    "top_chord": 0.045,
+    "top_width": 0.03,
+    "down_chord": 0.07,
+    "down_width": 0.036,
+    "head_chord": 0.07,
+    "head_width": 0.038,
+    "cs_chord": 0.026,
+    "ss_chord": 0.022,
+    "fork_chord": 0.045,
+    "stay_drop": 0.05
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "disc",
+    "front_depth": 0.035,
+    "rear_depth": 0.02,
+    "spokes": 24
+   },
+   "geometry": {
+    "wheel_front": 0.62,
+    "wheel_rear": 0.62,
+    "bb_drop": 0.05,
+    "chainstay": 0.39,
+    "stack": 0.44,
+    "reach": 0.39,
+    "head_angle": 73,
+    "seat_angle": 80,
+    "head_tube": 0.08,
+    "seat_tube": 0.44,
+    "saddle_height": 0.64,
+    "stem": 0.08,
+    "stem_rise": -0.01,
+    "bar_width": 0.4,
+    "ext_width": 0.08,
+    "crank": 0.17,
+    "fork_length": 0.35,
+    "rake": 0.04
+   },
+   "skins": [
+    {
+     "id": "coral",
+     "name": "Coral",
+     "kind": "studio",
+     "frame": "#ff6f59",
+     "accent": "#12181d"
+    },
+    {
+     "id": "lilac",
+     "name": "Lilac",
+     "kind": "studio",
+     "frame": "#a98bef",
+     "accent": "#f6df86"
+    },
+    {
+     "id": "ink",
+     "name": "Ink",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#ff3d8e"
+    }
+   ],
+   "museum": false,
+   "studio": true
+  },
+  {
+   "key": "studio-xl-tri",
+   "room": null,
+   "kind": "type",
+   "name": "XL triathlon bike",
+   "maker": "Studio design",
+   "year": 2024,
+   "facts": [
+    [
+     "I",
+     "A studio design. Stack and reach for a rider around 1.95 m."
+    ]
+   ],
+   "text": "For tall riders: long stack, long reach, the same aero lines scaled up.",
+   "ref": null,
+   "arch": "superbike",
+   "bars": "aero",
+   "bento": true,
+   "bottle_between_arms": true,
+   "rear_bottles": true,
+   "tubes": {
+    "section": "kamm",
+    "seat_chord": 0.09,
+    "seat_width": 0.032,
+    "top_chord": 0.06,
+    "top_width": 0.03,
+    "down_chord": 0.1,
+    "down_width": 0.042,
+    "head_chord": 0.1,
+    "head_width": 0.042,
+    "cs_chord": 0.032,
+    "ss_chord": 0.03,
+    "fork_chord": 0.065,
+    "stay_drop": 0.2,
+    "hug": true,
+    "fork_paint": true
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "disc",
+    "front_depth": 0.08,
+    "rear_depth": 0.02,
+    "spokes": 20
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.07,
+    "chainstay": 0.41,
+    "stack": 0.6,
+    "reach": 0.47,
+    "head_angle": 73,
+    "seat_angle": 79,
+    "head_tube": 0.2,
+    "seat_tube": 0.58,
+    "saddle_height": 0.84,
+    "stem": 0.06,
+    "stem_rise": 0.0,
+    "bar_width": 0.4,
+    "ext_width": 0.075,
+    "crank": 0.165,
+    "fork_length": 0.37,
+    "rake": 0.05
+   },
+   "skins": [
+    {
+     "id": "basalt",
+     "name": "Basalt",
+     "kind": "studio",
+     "frame": "#1c1d20",
+     "accent": "#e8471c"
+    },
+    {
+     "id": "sand",
+     "name": "Sand",
+     "kind": "studio",
+     "frame": "#e9dcc4",
+     "accent": "#12181d"
+    },
+    {
+     "id": "sea",
+     "name": "Sea",
+     "kind": "studio",
+     "frame": "#0f5458",
+     "accent": "#5fd8d3"
+    }
+   ],
+   "museum": false,
+   "studio": true
+  },
+  {
+   "key": "studio-alloy-entry",
+   "room": null,
+   "kind": "type",
+   "name": "Entry alloy triathlon bike",
+   "maker": "Studio design",
+   "year": 2022,
+   "facts": [
+    [
+     "I",
+     "A studio design. Round alloy tubes, clip-on bars, box-section spoked wheels."
+    ]
+   ],
+   "text": "The bike most first-timers start on: an alloy frame, clip-ons and good wheels.",
+   "ref": null,
+   "arch": "diamond",
+   "bars": "aero",
+   "tubes": {
+    "section": "round",
+    "seat_chord": 0.034,
+    "seat_width": 0.034,
+    "top_chord": 0.036,
+    "top_width": 0.036,
+    "down_chord": 0.045,
+    "down_width": 0.045,
+    "head_chord": 0.04,
+    "head_width": 0.04,
+    "cs_chord": 0.022,
+    "ss_chord": 0.018,
+    "fork_chord": 0.034,
+    "stay_drop": 0.03,
+    "tt_drop": 0.06
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "spoked",
+    "front_depth": 0.03,
+    "rear_depth": 0.03,
+    "spokes": 24
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.07,
+    "chainstay": 0.41,
+    "stack": 0.56,
+    "reach": 0.39,
+    "head_angle": 73,
+    "seat_angle": 74,
+    "head_tube": 0.15,
+    "seat_tube": 0.54,
+    "saddle_height": 0.73,
+    "stem": 0.1,
+    "stem_rise": 0.02,
+    "bar_width": 0.42,
+    "ext_width": 0.08,
+    "crank": 0.1725,
+    "fork_length": 0.37,
+    "rake": 0.045
+   },
+   "skins": [
+    {
+     "id": "race-red",
+     "name": "Race red",
+     "kind": "studio",
+     "frame": "#c8161d",
+     "accent": "#12181d",
+     "rim": "#16171b"
+    },
+    {
+     "id": "silver",
+     "name": "Silver",
+     "kind": "studio",
+     "frame": "#aeb2b6",
+     "accent": "#12181d",
+     "rim": "#16171b"
+    },
+    {
+     "id": "mint",
+     "name": "Mint",
+     "kind": "studio",
+     "frame": "#8fe7dc",
+     "accent": "#12181d",
+     "rim": "#16171b"
+    }
+   ],
+   "museum": false,
+   "studio": true
+  },
+  {
+   "key": "studio-sprint-track",
+   "room": null,
+   "kind": "type",
+   "name": "Track sprint bike",
+   "maker": "Studio design",
+   "year": 2023,
+   "facts": [
+    [
+     "I",
+     "A studio design. Short wheelbase, drop bars, disc rear and tri-spoke front."
+    ]
+   ],
+   "text": "The opposite of the Hour: short, stiff and built for 200 metres.",
+   "ref": null,
+   "arch": "pursuit",
+   "bars": "drop",
+   "disc_ring": true,
+   "tubes": {
+    "section": "kamm",
+    "seat_chord": 0.09,
+    "seat_width": 0.024,
+    "top_chord": 0.055,
+    "top_width": 0.024,
+    "down_chord": 0.09,
+    "down_width": 0.03,
+    "head_chord": 0.1,
+    "head_width": 0.034,
+    "cs_chord": 0.035,
+    "ss_chord": 0.03,
+    "fork_chord": 0.065,
+    "stay_drop": 0.15
+   },
+   "wheels": {
+    "front": "trispoke",
+    "rear": "disc",
+    "front_depth": 0.02,
+    "rear_depth": 0.02
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.04,
+    "chainstay": 0.375,
+    "stack": 0.5,
+    "reach": 0.41,
+    "head_angle": 74,
+    "seat_angle": 78,
+    "head_tube": 0.1,
+    "seat_tube": 0.5,
+    "saddle_height": 0.73,
+    "stem": 0.05,
+    "stem_rise": -0.02,
+    "bar_width": 0.34,
+    "ext_width": 0.045,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.04,
+    "chainring_r": 0.13
+   },
+   "skins": [
+    {
+     "id": "gold",
+     "name": "Gold",
+     "kind": "studio",
+     "frame": "#c9a13b",
+     "accent": "#12181d",
+     "disc": "#12181d",
+     "tape": "#12181d"
+    },
+    {
+     "id": "white",
+     "name": "White",
+     "kind": "studio",
+     "frame": "#f2f0ea",
+     "accent": "#c8161d",
+     "disc": "#f2f0ea",
+     "tape": "#12181d"
+    },
+    {
+     "id": "black",
+     "name": "Black",
+     "kind": "studio",
+     "frame": "#12181d",
+     "accent": "#c9a13b",
+     "disc": "#12181d",
+     "tape": "#c9a13b"
+    }
+   ],
+   "museum": false,
+   "studio": true
+  },
+  {
+   "key": "studio-beam-2020s",
+   "room": null,
+   "kind": "type",
+   "name": "Beam triathlon concept",
+   "maker": "Studio design",
+   "year": 2025,
+   "facts": [
+    [
+     "I",
+     "A studio design inspired by 1990s beam frames. No seat tube; the saddle rides on a cantilevered beam."
+    ]
+   ],
+   "text": "The beam bike returns where the rules allow it: triathlon, not the UCI.",
+   "ref": null,
+   "arch": "beam",
+   "bars": "aero",
+   "tubes": {
+    "section": "aero",
+    "head_chord": 0.08,
+    "head_width": 0.04
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "disc",
+    "front_depth": 0.06,
+    "rear_depth": 0.02,
+    "spokes": 18
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.06,
+    "chainstay": 0.41,
+    "stack": 0.52,
+    "reach": 0.44,
+    "head_angle": 73,
+    "seat_angle": 78,
+    "head_tube": 0.13,
+    "seat_tube": 0.45,
+    "saddle_height": 0.73,
+    "stem": 0.08,
+    "stem_rise": 0.0,
+    "bar_width": 0.4,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.045
+   },
+   "skins": [
+    {
+     "id": "volt",
+     "name": "Volt",
+     "kind": "studio",
+     "frame": "#d9ff3f",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    },
+    {
+     "id": "cobalt",
+     "name": "Cobalt",
+     "kind": "studio",
+     "frame": "#1d4fd6",
+     "accent": "#f2f0ea",
+     "disc": "#12181d"
+    },
+    {
+     "id": "graphite",
+     "name": "Graphite",
+     "kind": "studio",
+     "frame": "#2c353c",
+     "accent": "#ff592c",
+     "disc": "#12181d"
+    }
+   ],
+   "museum": false,
+   "studio": true
+  },
+  {
+   "key": "studio-wing-road",
+   "room": null,
+   "kind": "type",
+   "name": "Wing frame, road triathlon",
+   "maker": "Studio design",
+   "year": 2026,
+   "facts": [
+    [
+     "I",
+     "A studio design using the monocoque wing architecture with a spoked front wheel and aero bars."
+    ]
+   ],
+   "text": "The monocoque wing on a road-going triathlon bike: bottles, brakes and all.",
+   "ref": null,
+   "arch": "monocoque",
+   "bars": "aero",
+   "tubes": {
+    "section": "aero",
+    "wing_thick": 0.042,
+    "head_chord": 0.11,
+    "head_width": 0.042
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "disc",
+    "front_depth": 0.06,
+    "rear_depth": 0.02,
+    "spokes": 20
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.03,
+    "chainstay": 0.4,
+    "stack": 0.5,
+    "reach": 0.46,
+    "head_angle": 73,
+    "seat_angle": 78,
+    "head_tube": 0.14,
+    "seat_tube": 0.52,
+    "saddle_height": 0.73,
+    "stem": 0.06,
+    "stem_rise": 0.0,
+    "bar_width": 0.38,
+    "ext_width": 0.07,
+    "crank": 0.17,
+    "fork_length": 0.37,
+    "rake": 0.04
+   },
+   "skins": [
+    {
+     "id": "lava",
+     "name": "Lava",
+     "kind": "studio",
+     "frame": "#1c1d20",
+     "accent": "#ff592c",
+     "disc": "#12181d"
+    },
+    {
+     "id": "reef",
+     "name": "Reef",
+     "kind": "studio",
+     "frame": "#138a8f",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    },
+    {
+     "id": "blush",
+     "name": "Blush",
+     "kind": "studio",
+     "frame": "#f2a7c3",
+     "accent": "#12181d",
+     "disc": "#12181d"
+    }
+   ],
+   "museum": false,
+   "studio": true
+  },
+  {
+   "key": "studio-gravel-aero",
+   "room": null,
+   "kind": "type",
+   "name": "Aero gravel bike",
+   "maker": "Studio design",
+   "year": 2025,
+   "facts": [
+    [
+     "I",
+     "A studio design. Aero road frame with short clip-ons and deep spoked wheels."
+    ]
+   ],
+   "text": "Drop bars, deep tubes, wider tyres: time-trial ideas on a dirt road.",
+   "ref": null,
+   "arch": "superbike",
+   "bars": "drop_clip",
+   "tubes": {
+    "section": "kamm",
+    "seat_chord": 0.065,
+    "seat_width": 0.03,
+    "top_chord": 0.045,
+    "top_width": 0.032,
+    "down_chord": 0.07,
+    "down_width": 0.04,
+    "head_chord": 0.07,
+    "head_width": 0.04,
+    "cs_chord": 0.028,
+    "ss_chord": 0.024,
+    "fork_chord": 0.05,
+    "stay_drop": 0.18
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "spoked",
+    "front_depth": 0.05,
+    "rear_depth": 0.06,
+    "spokes": 22
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.07,
+    "chainstay": 0.405,
+    "stack": 0.54,
+    "reach": 0.39,
+    "head_angle": 73,
+    "seat_angle": 74,
+    "head_tube": 0.14,
+    "seat_tube": 0.52,
+    "saddle_height": 0.72,
+    "stem": 0.1,
+    "stem_rise": -0.01,
+    "bar_width": 0.4,
+    "ext_width": 0.06,
+    "clip_reach": 0.2,
+    "crank": 0.1725,
+    "fork_length": 0.37,
+    "rake": 0.045
+   },
+   "skins": [
+    {
+     "id": "olive",
+     "name": "Olive",
+     "kind": "studio",
+     "frame": "#5a5834",
+     "accent": "#e0a458",
+     "tape": "#e0a458"
+    },
+    {
+     "id": "clay",
+     "name": "Clay",
+     "kind": "studio",
+     "frame": "#b4541f",
+     "accent": "#12181d",
+     "tape": "#12181d"
+    },
+    {
+     "id": "fog",
+     "name": "Fog",
+     "kind": "studio",
+     "frame": "#dfeae6",
+     "accent": "#0f3a44",
+     "tape": "#0f3a44"
+    }
+   ],
+   "museum": false,
+   "studio": true
+  }
+ ],
+ "extra_refs": [
+  {
+   "file": "Eddy_Merckx_bike_-_Mexico_City_1972.jpg",
+   "title": "File:Eddy Merckx bike - Mexico City 1972.JPG",
+   "page": "https://commons.wikimedia.org/wiki/File:Eddy_Merckx_bike_-_Mexico_City_1972.JPG",
+   "license": "CC BY-SA 4.0",
+   "artist": "eugenio.baccarini",
+   "caption": "Bikes used by Eddy Merckx for the Hour Record, Mexico City 1972"
+  },
+  {
+   "file": "Lotus_sport_bike_Glasgow_Transport_Museum.jpg",
+   "title": "File:Lotus sport bike Glasgow Transport Museum.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Lotus_sport_bike_Glasgow_Transport_Museum.jpg",
+   "license": "CC BY 2.0",
+   "artist": "Jordanhill School D&T Dept",
+   "caption": "A LotusSport bike, Glasgow Museum of Transport"
+  }
+ ]
+}

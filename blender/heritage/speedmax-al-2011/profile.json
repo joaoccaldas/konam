@@ -1,0 +1,14 @@
+{
+ "key": "speedmax-al-2011",
+ "photo": {"path": "assets/reference/heritage/photos/g4_al9_team.jpg", "background": [24, 23, 21], "tolerance": 8,
+  "wheel_guess": {"rear": {"centre": [168, 339], "radius": 132, "arcs": [[70, 290]]},
+                  "front": {"centre": [568, 339], "radius": 134, "arcs": [[-60, 200]]}}},
+ "published": {
+  "tyre": "Continental Grand Prix 4000 S 23-622",
+  "tyre_outer_diameter_mm": 668,
+  "geometry": {"sizes": ["XS", "S", "M", "L", "XL"],
+   "wheelbase_mm": [[945, 975], [980, 995], [995, 1010], [1010, 1025], [1035, 1050]],
+   "chainstay_mm": [380, 395], "head_tube_angle_deg": 72.5, "seat_tube_angle_deg": [75, 78],
+   "head_tube_mm": [90, 105, 125, 145, 175], "reach_mm": [404, 420, 430, 440, 457], "stack_mm": [485, 499, 518, 537, 565]}
+ }
+}

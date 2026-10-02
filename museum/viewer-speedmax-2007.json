@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "bike": {
+    "key": "speedmax-2007",
+    "exhibit": "02",
+    "era": "2006–2008",
+    "family": "SpeedMax",
+    "name": "3.0 · MY2007",
+    "years": "MY2007",
+    "size": "53",
+    "finishName": "Race Black",
+    "pageTitle": "Canyon Museum — SpeedMax 3.0 (2007)",
+    "lede": "The New MR3 frame: straighter, deeper 7005 tubes, a Super Aero seat tube and carbon rear stays, raced by Canyon's pros in black.",
+    "story": "For 2006-2007 Canyon rebuilt the SpeedMax around the New MR3 frame while keeping the proven triathlon geometry. In 2007 team UNIBET's time-trial riders used a separate SpeedMax TT Pro with its own TT geometry; no photograph of that bike survives in the archive.",
+    "stats": [
+      {
+        "value": "9.10 kg",
+        "label": "Canyon weight"
+      },
+      {
+        "value": "54 × 42",
+        "label": "Chainrings"
+      },
+      {
+        "value": "Disc",
+        "label": "Carbotec rear"
+      }
+    ],
+    "spec": [
+      [
+        "Frame",
+        "New MR3, 7005 Ultralight Aluminium, SuperAero shape, Opti-Size tubeset"
+      ],
+      [
+        "Fork",
+        "Smolik Motivation"
+      ],
+      [
+        "Headset",
+        "Tange integrated"
+      ],
+      [
+        "Drivetrain",
+        "Shimano Dura-Ace, bar-end shifters"
+      ],
+      [
+        "Brake levers",
+        "Syntace SpaceControl"
+      ],
+      [
+        "Brakes",
+        "Shimano Dura-Ace"
+      ],
+      [
+        "Wheels",
+        "Mavic Cosmic Elite front · Carbotec disc rear (Citec hub)"
+      ],
+      [
+        "Cassette",
+        "Shimano Dura-Ace 11-23"
+      ],
+      [
+        "Tyres",
+        "Continental Grand Prix Triathlon 23-622"
+      ],
+      [
+        "Crankset",
+        "FSA Team Issue MegaExo TT 54/42"
+      ],
+      [
+        "Cockpit",
+        "Syntace F99 stem · Stratos 200 bar · SLS aerobar"
+      ],
+      [
+        "Saddle",
+        "Selle Italia SLR T1"
+      ],
+      [
+        "Seatpost",
+        "Iridium Carbon Aero"
+      ],
+      [
+        "Colour",
+        "Race Black"
+      ]
+    ],
+    "geometry": [
+      [
+        "Head angle",
+        "73° (size 53)"
+      ],
+      [
+        "Seat angle",
+        "75°"
+      ],
+      [
+        "Top tube",
+        "540 mm (53)"
+      ],
+      [
+        "Chainstay",
+        "410 mm published · 405 mm measured"
+      ],
+      [
+        "Wheelbase",
+        "989 mm (53) · 987 mm measured"
+      ]
+    ],
+    "method": "Scale comes from circle fits to both tyres in Canyon's archived side photo. Every tube is a traced centreline with its side-view depth measured from the photo; widths across the bike are inferred. Parts are rebuilt from the archived specification.",
+    "uncertainties": [
+      "Scale 2.500 mm per pixel from tyre fits; measured wheelbase 990 mm.",
+      "The photographed disc reads CITEC; the specification lists a Carbotec disc on a Citec hub. Both are recorded.",
+      "Stays cross the grey disc wheel in the photo; their edges were read by eye from 1:1 crops.",
+      "Head tube partly hidden by cable housings; its depth was set from the registered photo difference.",
+      "Lateral tube widths, stay spread and fork crown width are inferred; the photo fixes side-view shapes only.",
+      "Components are simplified external forms rebuilt from the published specification; hidden mechanisms are not modelled.",
+      "Graphics use DIN Condensed Bold in place of Canyon's lettering; positions and sizes traced from the photo.",
+      "Cable routing is traced where visible; hidden runs are not modelled."
+    ],
+    "sources": [
+      {
+        "label": "Canyon specification page (archived)",
+        "url": "https://web.archive.org/web/20070221004213/http://www.canyon.com:80/_en/triathlonbikes/equipment.html?b=26"
+      },
+      {
+        "label": "Canyon studio photograph",
+        "url": "https://web.archive.org/web/20061207042845/http://www.canyon.com:80/flash/bike/images/speedmax-9/r-black/wallpaper.jpg"
+      },
+      {
+        "label": "Geometry table (archived 2007-02-21)",
+        "url": "https://web.archive.org/web/20070221004203/http://www.canyon.com:80/_en/triathlonbikes/geometry.html?b=26"
+      }
+    ]
+  },
+  "presets": [
+    {
+      "name": "Explore · Race Black",
+      "colors": {
+        "paint_frame": "#050506",
+        "paint_accent": "#050506",
+        "decal_light": "#d9d9d9",
+        "decal_dark": "#d9d9d9"
+      }
+    },
+    {
+      "name": "Explore · Team White",
+      "colors": {
+        "paint_frame": "#e4e4e4",
+        "paint_accent": "#050506",
+        "decal_dark": "#0a0a0a",
+        "decal_light": "#0a0a0a"
+      }
+    },
+    {
+      "name": "Explore · Pro White / red",
+      "colors": {
+        "paint_frame": "#eeeeee",
+        "paint_accent": "#c8102e",
+        "decal_dark": "#c8102e",
+        "decal_light": "#c8102e"
+      }
+    },
+    {
+      "name": "Explore · Stealth",
+      "colors": {
+        "paint_frame": "#1b1d20",
+        "paint_accent": "#0d0e10",
+        "decal_dark": "#34373c",
+        "decal_light": "#34373c"
+      }
+    }
+  ],
+  "partLabels": {
+    "base_bar": "Base bar",
+    "extensions": "Clip-on extensions",
+    "cables": "Cable housings"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "photo": "assets/reference/speed-concept-slr/SpeedConceptSLRFrameset-26-35671-A-Primary.png",
+  "size": "M",
+  "size_basis": "Complete-bike photo: crank measures 171.6 mm at tyre scale vs 170 mm published for M (S uses 160 mm).",
+  "tyre_od": 672,
+  "landmarks_px": {"rear_axle": [731, 2075], "front_axle": [3320, 2070], "bb": [1795, 2260]},
+  "landmarks_basis": "Hand-marked on 2x gridded crops: rear and front thru-axle holes, BB shell circle centre (2026-09-27).",
+  "grid_mm": 1.0,
+  "grid_bounds_mm": [-460, 720, 190, 870],
+  "superellipse_n": 2.6,
+  "regions_px": {
+    "fork": [[2957, 860], [3120, 860], [3450, 2200], [3150, 2200], [2880, 1230], [2952, 1200]],
+    "stays": [[600, 1400], [1345, 1400], [1345, 2020], [1480, 2120], [1600, 2200], [1660, 2330], [600, 2330]]
+  },
+  "stay_split_deg": 15,
+  "stay_shear": {"seatstay": [-175, 62, 16, 8], "chainstay": [-56, 60, 40, 10]},
+  "stay_shear_basis": "[x_end_mm, y_at_dropout, y_at_end, half_width]. INFERRED: 142 mm rear spacing, T47 shell width, typical stay sections.",
+  "main_halfwidth_px": [
+    [2880, 1000, 22], [2880, 1150, 24],
+    [2750, 960, 22], [2400, 960, 19], [2000, 955, 18], [1600, 950, 19], [1420, 960, 20],
+    [1480, 1250, 18], [1520, 1600, 17], [1620, 1950, 20], [1700, 2150, 26], [1350, 1530, 17],
+    [2750, 1250, 22], [2400, 1600, 20], [2100, 1950, 22], [1900, 2150, 30],
+    [1795, 2260, 43], [1700, 2280, 40], [1900, 2280, 40]
+  ],
+  "main_halfwidth_basis": "INFERRED half-widths (mm) at photo points, read from Trek's front (Alt3) and top (Alt2) views; not measured.",
+  "fork": {"crown_z_mm": 659, "overlap_mm": 25, "y_crown": 34, "y_dropout": 57, "blade_halfwidth": [12, 9],
+           "upper_halfwidth_px": [[2980, 1000, 22], [2980, 1180, 26]]}
+}

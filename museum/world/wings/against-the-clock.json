@@ -1,0 +1,23 @@
+{
+ "id": "against-the-clock",
+ "order": 1,
+ "name": "Against the Clock",
+ "sub": "Time-trial machines beyond Canyon",
+ "floor": "upper",
+ "y": 6.6,
+ "height": 4.4,
+ "corridor": { "x0": 10.8, "x1": 16.4, "z0": 27.2, "z1": 51.2, "style": "velodrome", "map_color": "#c89b62" },
+ "sides": { "east": { "x0": 16.4, "x1": 25.0 }, "west": { "x0": 2.2, "x1": 10.8 } },
+ "doors": { "south": { "x0": 11.8, "x1": 15.4, "depth": 1.2 }, "north": { "x0": 11.8, "x1": 15.4 } },
+ "south_wall_gap": { "x0": 7.5, "x1": 16.5 },
+ "features": { "clock": { "z": 49.2, "hanging": true } },
+ "rooms": [
+  { "id": "hour", "name": "The Hour", "sub": "One rider, sixty minutes", "side": "east", "z0": 27.8, "z1": 35.2, "tint": "#f6c9a8", "wall": "#8a3316", "ink": "#fbf1e6",
+    "plates": [{ "wall": "south", "lines": [["49.431", "KM · MERCKX · MEXICO CITY · 1972"], ["51.596", "KM · OBREE · HAMAR · 1993"]] }] },
+  { "id": "mono", "name": "Monocoque", "sub": "One piece, no tubes", "side": "east", "z0": 35.6, "z1": 43.0, "tint": "#c9a13b", "wall": "#1c1d20", "ink": "#f4efe7" },
+  { "id": "tri", "name": "Long course", "sub": "Triathlon machines", "side": "east", "z0": 43.4, "z1": 50.8, "tint": "#5fd8d3", "wall": "#0f5458", "ink": "#e8f6f4" },
+  { "id": "types", "name": "Types", "sub": "No maker named", "side": "west", "z0": 27.8, "z1": 35.2, "tint": "#e0a458", "wall": "#5a3a1e", "ink": "#f6eadb" },
+  { "id": "paint", "name": "Paint shop", "sub": "Every livery in the wing", "side": "west", "z0": 35.6, "z1": 43.0, "tint": "#ff3d8e", "wall": "#f4efe7", "ink": "#12181d", "feature": "paintshop" },
+  { "id": "refs", "name": "References", "sub": "The photographs behind the models", "side": "west", "z0": 43.4, "z1": 50.8, "tint": "#8e979d", "wall": "#2c353c", "ink": "#eef1f2", "feature": "references" }
+ ]
+}

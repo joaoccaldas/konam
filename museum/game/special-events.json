@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "events": {
+    "wyld": {
+      "enabled": false,
+      "reason": "Reserved special event; hidden until further notice.",
+      "content_ids": [
+        "sunny-side",
+        "film-sunny-side",
+        "edition-film-sunny-side"
+      ]
+    }
+  }
+}

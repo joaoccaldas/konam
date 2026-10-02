@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Canyon Speedmax Museum">
+  <!-- Kona at sunset: a Speedmax silhouette against the sun on the Queen K. Full-bleed so launchers can mask it to any shape; the bike sits inside the 80% safe zone. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b1411"/><stop offset=".55" stop-color="#5a2413"/><stop offset=".72" stop-color="#b8461a"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd27a"/><stop offset=".6" stop-color="#f39a3c"/><stop offset="1" stop-color="#e8471c"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16333a"/><stop offset="1" stop-color="#0b1417"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#sky)"/>
+  <circle cx="256" cy="318" r="148" fill="url(#sun)"/>
+  <rect y="352" width="512" height="160" fill="url(#sea)"/>
+  <path d="M40 352h432" stroke="#ffd27a" stroke-opacity=".55" stroke-width="3"/>
+  <path d="M96 374h320M150 392h212" stroke="#ffd27a" stroke-opacity=".25" stroke-width="4" stroke-linecap="round"/>
+  <g fill="none" stroke="#fbf6ee" stroke-linecap="round" stroke-linejoin="round" transform="translate(256 300) scale(.95) translate(-256 -300)">
+    <circle cx="156" cy="300" r="70" fill="#fbf6ee" stroke="none"/>
+    <circle cx="358" cy="300" r="56" stroke-width="26"/>
+    <path d="M156 300 L240 304 L214 204" stroke-width="15"/>
+    <path d="M240 304 L322 212 L358 300" stroke-width="15"/>
+    <path d="M214 204 C250 208 290 212 322 212" stroke-width="15"/>
+    <path d="M190 198 L232 198" stroke-width="16"/>
+    <path d="M322 212 L326 190 M318 190 L396 186" stroke-width="12"/>
+    <circle cx="240" cy="304" r="21" stroke-width="10"/>
+  </g>
+</svg>
