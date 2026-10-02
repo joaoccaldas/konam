@@ -13,6 +13,7 @@ import { renderRacePicker } from './race-cards.js';
 import { renderProgressSurface } from './me.js';
 import { avatarItemAccess } from '../engine/access.js';
 import { shareProgress, whatsappProgressUrl, safeAppUrl, progressShareText } from '../growth/social-share.js';
+import { PRODUCT_NAME } from '../product-meta.js';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const productId=id=>String(id||'').replace(/^product:/,'');
@@ -51,7 +52,7 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
   const menuItem=(action,mark,title,note)=>'<button type="button" data-race-self-action="'+action+'"><i aria-hidden="true">'+mark+'</i><span><b>'+title+'</b><small>'+note+'</small></span><em aria-hidden="true">↗</em></button>';
   root.innerHTML=
     '<section class="race-self-experience" aria-label="User Studio">'+
-      '<header class="studio-heading"><a href="index.html" class="studio-wordmark" aria-label="KONA title screen">KONA<span>USER STUDIO</span></a><button type="button" class="btn-text studio-home" data-studio-home>← Home</button><button class="studio-install" data-install-app type="button">Install app</button><span class="studio-save-state" role="status">● Saved on this device</span></header>'+
+      '<header class="studio-heading"><a href="index.html" class="studio-wordmark" aria-label="'+PRODUCT_NAME+' title screen">'+PRODUCT_NAME+'<span>USER STUDIO</span></a><button type="button" class="btn-text studio-home" data-studio-home>← Home</button><button class="studio-install" data-install-app type="button">Install app</button><span class="studio-save-state" role="status">● Saved on this device</span></header>'+
       '<div class="race-self-stage-wrap">'+
         '<div class="race-self-identity"><small>YOUR ATHLETE. YOUR STRANGE LITTLE UNIVERSE.</small><h1>Build the version of you that hasn’t raced yet.</h1><p>Make it yours. Then go find something you weren’t looking for.</p></div>'+
         '<div class="studio-canvas-frame"><canvas class="race-self-stage" data-race-self-stage aria-label="Interactive 3D User Studio"></canvas><p class="studio-stage-status" role="status">Preparing your athlete…</p></div>'+
@@ -61,8 +62,8 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
         menuItem('races','◉','Races',raceCount+' race badges')+
         menuItem('collection','◇','Collection',summary.total+' things found')+
         menuItem('progress','☆','Progress','Badges, milestones & history')+
-        menuItem('share','↗','Share KONA','Progress card, WhatsApp & more')+
-        menuItem('tour','?','Quick tour','Replay the 30-second KONA intro')+
+        menuItem('share','↗','Share '+PRODUCT_NAME,'Progress card, WhatsApp & more')+
+        menuItem('tour','?','Quick tour','Replay the 30-second '+PRODUCT_NAME+' intro')+
         menuItem('feed','≋','The Feed','News, YouTube & your RSS sources')+
         menuItem('travel','⌁','Travel to Kona','Island guide, arrivals & local stops')+
         (isAdmin?menuItem('assets','▦','Asset Library','Bikes, gear, rooms, art & world assets'):'')+
@@ -232,7 +233,7 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
   const showShare=()=>{
     const progress=gameProgress(readGameState());
     const wa=whatsappProgressUrl(progress);
-    drawerKicker.textContent='USER STUDIO · SHARE';drawerTitle.textContent='Share your KONA';
+    drawerKicker.textContent='USER STUDIO · SHARE';drawerTitle.textContent='Share your '+PRODUCT_NAME;
     drawerBody.innerHTML='<section class="kona-section artifact artifact--label share-studio">'+
       '<div class="kona-section-head"><h3>Give someone the rabbit hole.</h3><small>PRIVATE BY DEFAULT</small></div>'+
       '<p class="kona-source-note">'+esc(progressShareText(progress))+'</p>'+
@@ -245,13 +246,13 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
     const status=drawerBody.querySelector('[data-share-status]');
     drawerBody.querySelector('[data-share-progress]')?.addEventListener('click',async e=>{
       const button=e.currentTarget;button.disabled=true;const result=await shareProgress(progress);
-      status.textContent=result.ok?(result.method==='clipboard'?'Share sheet unavailable. KONA link copied.':'Share sheet opened safely.'):(result.reason==='cancelled'?'Not shared. Nothing left KONA.':'Sharing is unavailable here. Use WhatsApp or copy the link.');
+      status.textContent=result.ok?(result.method==='clipboard'?'Share sheet unavailable. '+PRODUCT_NAME+' link copied.':'Share sheet opened safely.'):(result.reason==='cancelled'?'Not shared. Nothing left '+PRODUCT_NAME+'.':'Sharing is unavailable here. Use WhatsApp or copy the link.');
       button.disabled=false;
     });
     drawerBody.querySelector('[data-share-copy]')?.addEventListener('click',async e=>{
       const url=safeAppUrl();if(!url)return;
       const button=e.currentTarget;
-      try{await navigator.clipboard.writeText(url);status.textContent='Clean KONA link copied.';button.textContent='Copied';}catch{status.textContent='Could not copy automatically. Use Share to apps… instead.';}
+      try{await navigator.clipboard.writeText(url);status.textContent='Clean '+PRODUCT_NAME+' link copied.';button.textContent='Copied';}catch{status.textContent='Could not copy automatically. Use Share to apps… instead.';}
     });
   };
 

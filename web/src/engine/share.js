@@ -1,4 +1,5 @@
 // engine/share.js — share what you are looking at.
+import { PRODUCT_NAME } from '../product-meta.js';
 //
 // Captures the 3D view straight after a render (no preserveDrawingBuffer needed), adds a caption
 // strip (the exhibit, the room, the museum), and hands the image to the system share sheet (Web Share
@@ -6,7 +7,7 @@
 // shared, it falls back to sharing the link, then to saving the image.
 
 /** Caption strip layout, pure (tested): returns the lines and the strip height for a width. */
-export function captionLayout(width, { title = '', place = '', site = 'KONA · Kailua-Kona' } = {}) {
+export function captionLayout(width, { title = '', place = '', site = `${PRODUCT_NAME} · Kailua-Kona` } = {}) {
   const pad = Math.round(width * .035), big = Math.max(18, Math.round(width * .03)), small = Math.max(12, Math.round(width * .018));
   return { pad, big, small, height: pad * 2 + big + small + Math.round(small * .8), lines: [title || place || site, [place && title ? place : '', site].filter(Boolean).join(' · ')] };
 }
@@ -28,7 +29,7 @@ export async function captureView(renderer, scene, camera, caption = {}) {
 }
 
 /** Share a blob (or save it). Returns 'shared' | 'link' | 'saved' | 'cancelled'. */
-export async function shareImage(blob, { title = 'KONA', text = '', url = location.href, filename = 'kona-share.jpg' } = {}) {
+export async function shareImage(blob, { title = PRODUCT_NAME, text = '', url = location.href, filename = 'kona-share.jpg' } = {}) {
   const file = new File([blob], filename, { type: 'image/jpeg' });
   try {
     if (navigator.canShare?.({ files: [file] })) { await navigator.share({ files: [file], title, text: [text, url].filter(Boolean).join('\n') }); return 'shared'; }
