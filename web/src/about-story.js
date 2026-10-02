@@ -6,13 +6,14 @@ const stories={
     title:'The Short Version',
     estimate:'~ 15 seconds',
     paragraphs:[
+      '<strong>Before anything else: I am proud this exists.</strong>',
       'One of my favourite people recently inspired me to get back into triathlon.',
       'So, naturally, I made an Excel sheet to track the comeback.',
-      'One thing led to another.',
+      'A lot of scattered pieces finally became one thing I could finish enough to share.',
       '<strong>Now there is an island.</strong>',
       'Here we are.'
     ],
-    note:'Small tracking sheet. Big consequences.',
+    note:'Not finished. Finished enough to be real.',
     image:'assets/kona-years/queen-k.jpg'
   },
   scenic:{
@@ -30,6 +31,9 @@ const stories={
       ['07','An island','The collection needed a world.']
     ],
     paragraphs:[
+      '<strong>Before the route gets longer: I am proud we got here.</strong>',
+      'Not because Kona.m is finished, and not because I suddenly know what it is supposed to become. I am proud because pieces that had been scattered across different projects, different years and different versions of me finally became something whole enough to share.',
+      'This also arrived during a hard stretch. Finishing one thing did not solve everything. It did prove that I could still take a pile of unfinished pieces and move them forward.',
       'There was no grand master plan. Just the next interesting puzzle.',
       '<strong>One bike. One room. One road. One problem.</strong>',
       'The whole picture did not need to be clear. Only the next piece.',
@@ -55,19 +59,25 @@ const stories={
       'The project became a way to turn curiosity into something visible: learn one thing, build one thing, discover the next thing, connect ideas that were not supposed to live next to each other.',
       'Sometimes that means computer science next to bike history. Sometimes 3D next to race stories. Sometimes a tiny interface problem becomes a whole room because apparently that was necessary.',
       'The point is not to know the whole map. It is to take the next step. Fix one bike. One screen. One room. One road. See what happens. Move again.',
-      'A lot of things get started. Fewer get finished. So this one matters.'
+      'A lot of things get started. Fewer get finished. So this one matters.',
+      '<strong>And I am proud of where this one is now.</strong>'
     ],
     sidequest:{
-      title:'A small operating-system bug:',
+      title:'Five seconds, after a lot more than five seconds:',
       body:[
-        'Sometimes the useful action takes five seconds.',
-        'Getting to those five seconds can take an absurd amount of time.',
-        'Eventually the only reliable solution is: stop negotiating with the task.'
+        'I had a package sitting there for more than a week. I needed to deliver it. I knew I needed to deliver it. Still, it stayed there.',
+        'Then I counted down: five, four, three, two, one. I picked it up and moved.',
+        'The action itself took seconds. The time before it was much longer. That does not automatically make the time before useless. Sometimes it is friction. Sometimes it is preparation. Usually it is a messy mixture of both.',
+        'Those five seconds mattered because they turned preparation into movement.'
       ],
       countdown:'5 · 4 · 3 · 2 · 1',
-      ending:'Move. No transformation. No inspirational soundtrack. Just the next action.'
+      ending:'Pick it up. Move. The important part is not that it took five seconds. The important part is that the next action finally happened.'
     },
     ending:[
+      'Kona.m feels like the larger version of that moment.',
+      'Pieces of it have existed across projects and years. Some were useful. Some failed. Some were abandoned. Some were preparing the next thing without looking like progress at the time.',
+      'During a hard stretch, enough of those pieces finally came together into the first project in a long time that I can look at and feel satisfied with.',
+      '<strong>That does not mean stopping.</strong> It means I do not need to know the next destination in order to be proud that I reached this one.',
       'That is also the product philosophy.',
       'Not: <strong>figure everything out.</strong>',
       'More: <strong>take the next useful step.</strong>',
