@@ -1,0 +1,42 @@
+name: Import Canyon Museum history
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-canyonmuseum.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: github.repository == 'joaoccaldas/konam'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Mirror source branches and tags into Kona.m
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git clone --mirror https://github.com/joaoccaldas/canyonmuseum.git source.git
+          cd source.git
+
+          TARGET="https://x-access-token:${GH_TOKEN}@github.com/joaoccaldas/konam.git"
+
+          echo "Source main:"
+          git rev-parse refs/heads/main
+          echo "Source refs:"
+          git show-ref | wc -l
+
+          # Preserve source history and every source branch/tag, but do not delete
+          # bootstrap-only target refs. The source branches themselves are pushed
+          # forcefully so the new repository becomes a faithful Git history copy.
+          git push "$TARGET" --force --all
+          git push "$TARGET" --force --tags
+
+          echo "Import complete."
+          echo "Expected Kona.m world-foundation branch:"
+          git rev-parse refs/heads/product/konam-world-foundation-v1-20261002
