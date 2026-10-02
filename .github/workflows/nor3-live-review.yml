@@ -1,0 +1,72 @@
+name: NOR3 live review evidence
+
+on:
+  push:
+    branches:
+      - evidence/nor3-live-validation
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install browser test dependencies
+        run: cd web && npm ci --ignore-scripts
+      - name: Validate deployed NOR3 review and capture evidence
+        env:
+          REVIEW_URL: https://joaoccaldas.github.io/konam/norwegian-engine-review.html
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME_PATH"
+          cd web
+          node --input-type=module <<'NODE'
+          import puppeteer from 'puppeteer-core';
+          import fs from 'node:fs';
+          const url=process.env.REVIEW_URL+'?live-evidence='+Date.now();
+          const out='../evidence/nor3-live'; fs.mkdirSync(out,{recursive:true});
+          const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH,headless:'new',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+          const cases=[['desktop',1440,900,1,false],['phone390',390,844,2,true],['landscape',844,390,2,true]];
+          const report={url,generated_at:new Date().toISOString(),cases:[]};
+          for(const [id,width,height,deviceScaleFactor,isMobile] of cases){
+            const page=await browser.newPage();
+            const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+            await page.setViewport({width,height,deviceScaleFactor,isMobile,hasTouch:isMobile});
+            const response=await page.goto(url,{waitUntil:'networkidle0',timeout:120000});
+            if(!response||!response.ok()) throw new Error(id+' HTTP '+response?.status());
+            await page.waitForFunction(()=>window.__NOR3_REVIEW_READY===true,{timeout:90000});
+            await new Promise(r=>setTimeout(r,1200));
+            const state=await page.evaluate(()=>({
+              title:document.title,
+              ready:window.__NOR3_REVIEW_READY===true,
+              loadingHidden:document.querySelector('[data-room-loading]')?.hidden===true,
+              canvas:{w:document.querySelector('canvas')?.width,h:document.querySelector('canvas')?.height},
+              label:document.querySelector('[data-room-label]')?.textContent,
+              status:document.querySelector('.room-review__status')?.textContent,
+              bodyBg:getComputedStyle(document.body).backgroundColor
+            }));
+            if(!state.ready||!state.loadingHidden||!state.canvas.w||!state.canvas.h||errors.length) throw new Error(id+' runtime invalid '+JSON.stringify({state,errors}));
+            await page.screenshot({path:out+'/'+id+'.png',fullPage:true});
+            report.cases.push({id,width,height,state,errors});
+            await page.close();
+          }
+          await browser.close();
+          fs.writeFileSync(out+'/report.json',JSON.stringify(report,null,2)+'\n');
+          console.log(JSON.stringify(report,null,2));
+          NODE
+      - name: Upload live review evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: nor3-live-review-evidence
+          path: evidence/nor3-live/
+          if-no-files-found: error
+          retention-days: 14
