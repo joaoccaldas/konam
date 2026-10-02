@@ -20,6 +20,8 @@ async function openViewport(viewport){
   const errors=[];
   page.on('console',m=>{if(m.type()==='error') errors.push('console: '+m.text())});
   page.on('pageerror',e=>errors.push('pageerror: '+e.message));
+  page.on('response',res=>{if(res.status()>=400) errors.push(`http ${res.status()}: ${res.url()}`)});
+  page.on('requestfailed',req=>errors.push(`requestfailed: ${req.url()} :: ${req.failure()?.errorText||'unknown'}`));
   await page.goto(base,{waitUntil:'networkidle0',timeout:120000});
   await page.waitForFunction(()=>window.__BEAST_CAVE_RENDER_READY===true,{timeout:60000});
   return {page,errors};
