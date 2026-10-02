@@ -268,7 +268,7 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
   root.querySelector('[data-race-self-action="collection"]')?.addEventListener('click',()=>openCollection?.());
   root.querySelector('[data-race-self-action="progress"]')?.addEventListener('click',showProgress);
   root.querySelector('[data-race-self-action="share"]')?.addEventListener('click',showShare);
-  root.querySelector('[data-race-self-action="newsletter"]')?.addEventListener('click',()=>import('./newsletter.js').then(m=>m.openNewsletterDialog()));
+  root.querySelector('[data-race-self-action="newsletter"]')?.addEventListener('click',()=>{const href=new URL('web/src/ui/newsletter.js',location.href).href;import(href).then(m=>m.openNewsletterDialog())});
   root.querySelector('[data-race-self-action="feed"]')?.addEventListener('click',()=>openFeed?.());
   root.querySelector('[data-race-self-action="travel"]')?.addEventListener('click',()=>openTravel?.());
   root.querySelector('[data-race-self-action="assets"]')?.addEventListener('click',()=>openAssets?.());
