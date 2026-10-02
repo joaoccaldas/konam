@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "catalog_version": "2026-10-02-v1",
   "concepts": [
     {
       "id": "lava-line-tee",
@@ -46,6 +47,5 @@
       "provider": null,
       "sellable": false
     }
-  ],
-  "catalog_version": "2026-10-02-v1"
+  ]
 }
