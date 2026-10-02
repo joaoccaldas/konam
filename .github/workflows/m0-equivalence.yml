@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   equivalence:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'migration/m0-')
     name: Exact source-tree equivalence
     runs-on: ubuntu-latest
     timeout-minutes: 15
