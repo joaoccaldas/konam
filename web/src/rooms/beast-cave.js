@@ -1,12 +1,12 @@
 // rooms/beast-cave.js
-// Lionel Sanders x Zwift "Beast Cave" prototype.
+// Lionel Sanders x Zwift "Beast Cave" production candidate.
 //
-// IMPORTANT: this module is intentionally UNWIRED. It is not imported by hall.js,
+// IMPORTANT: this production-candidate module is intentionally UNWIRED. It is not imported by hall.js,
 // navigation, the canonical 28-room registry, service worker manifests or release
-// bundles. It exists as a reviewable room builder that can be connected only
+// bundles. It exists as a production-quality room builder that can be connected only
 // after design, evidence, rights and performance review.
 //
-// Design reference: world/konam/prototypes/athlete-lionel-sanders-beast-cave-v1.json
+// Design reference: world/konam/candidates/athlete-lionel-sanders-beast-cave-v1.json
 // Philosophy: calm Kona.m shell, alive room; the trainer is the hero; Kona stays
 // visible as the destination. Avoid generic cyberpunk fitness aesthetics.
 
@@ -669,7 +669,7 @@ export function buildBeastCave({
 
   const group = new THREE.Group();
   group.name = 'athlete-lionel-sanders-beast-cave';
-  group.userData.prototypeOnly = true;
+  group.userData.productionCandidate = true;
   group.userData.publicNavigation = false;
   scene.add(group);
 
