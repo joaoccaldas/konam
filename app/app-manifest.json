@@ -1,5 +1,5 @@
 {
- "version": "4107b719c1d7",
+ "version": "a06439723256",
  "core": [
   "index.html",
   "about.html",
@@ -44,13 +44,13 @@
   "integrations/public-catalog.json": "W1xJL5pT+cwjQLj4y9Kg7X4JorCf+4XAF8AHKzF5CuU=",
   "manifest.webmanifest": "D80RDjSyU/ENx8num4CsbgCHG48x8J4k6F4pT2ANlUA=",
   "web/styles/entry.css": "ruRfYRpMIViGzb8+nGKD6Q/gHqhhzTixNeZOsbTMEDk=",
-  "web/styles/system.css": "bxxZgHsTXBgw8BDRrjsNmCEIXo1xalfp2HD/g/0Sf9k=",
+  "web/styles/system.css": "GEaKk1sYP6nNvgCLBeZweWM+gRk53vdfTeqF55jvEcY=",
   "web/styles/shell-mobile.css": "kt5DBDeglxFiMu2rTibzPhjqMWwMJKLRIMP5DSw+/Sg=",
   "web/styles/home.css": "M2QUd913oyU1YuRybHiuaPh6VSJUEJninKnS85efSig=",
   "web/styles/garage.css": "wm+HmyfZlvpb01WwKcB91XvG88Q8exKaG0hW8k70Xss=",
   "web/styles/race-self.css": "JxPCghbOItwYTKLRv8/Ch/CoThKNBW4Ew8JLJf6BQKI=",
-  "web/styles/companion.css": "RK+8MY0WexKOEBsAsHlNvi5FOdqTsY0eunFwf4lGkVk=",
-  "web/styles/admin-assets.css": "vQUZ8I1ty02sPN/4ABW7JID+bhr7PSQqcJdiT2YY4u8=",
+  "web/styles/companion.css": "ihsfW2Bl9oJGoOie5zNNOXbeaaGvs/IvQ3DHwR/4EEg=",
+  "web/styles/admin-assets.css": "6eioUgrEgpQMAiRcPojRAZQZryRLMtv9Irji65ru+Go=",
   "brand/tokens.css": "U81fLd9WTzpQwX2KkXlp7QzZ3FrzKiU5PA4A3/Dx4y8=",
   "brand/themes.css": "QeueApo0j1K6vIETWzqLGIKAvi28l+ThqMbqiVfbCfQ=",
   "brand/artifacts.css": "eFVVXE91n+Pf8sBFwoFhdF13k9k1Adq8NN/gdKfWyUg=",
@@ -250,6 +250,10 @@
   "assets/reference/paintings/speedmax-three-2005.jpg": "7aHIi/BnX+O+QmSh1Bi8mgKnIBhMB1WE4N0sjLq1/aM=",
   "assets/share/collection.jpg": "W6lRq4vdhYr3rNejeGLQnYbIlPXgnmvRBkAD6wN8+vo=",
   "assets/share/konam.png": "F8UvxFJ1beRZ1VXDtciBTpmcDKbeDwv1niH675TWHlE=",
-  "assets/share/museum.jpg": "MR9MD9E1O+efqEOc6xucgpUDOD9++PbpLjoyrd0S2PU="
+  "assets/share/museum.jpg": "MR9MD9E1O+efqEOc6xucgpUDOD9++PbpLjoyrd0S2PU=",
+  "app/admin-merch-concepts.json": "1tpyo+njFXb/irlONm8t2qfZqI057U1BB06Rlnxn2Cg=",
+  "assets/merch/concepts/intern-cap.svg": "n95FBap9H8UOD03bzTHE6puitBJngIyeBheJ9ZwebsE=",
+  "assets/merch/concepts/lava-line-tee.svg": "yPAGtvdXDtzWR3mXRMLbqrUeZfMRwL8MLyEbaKGr/Lc=",
+  "assets/merch/concepts/rabbit-hole-tote.svg": "wUPpRLxgZG2BZpzXkzh1i2UkIjUWI1pmm8jbxEytI5A="
  }
 }
