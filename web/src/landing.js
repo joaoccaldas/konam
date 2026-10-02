@@ -34,6 +34,7 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 import { coarse as dc, small as ds } from './detect.js';
 import { readPassportState, savePassportState } from './engine/passport-state.js';
 import { applyStoredEvent } from './engine/progression.js';
+import { createMachineInspection } from './engine/machine-inspection.js';
 
 const PIECES = window.__PIECES || [];
 const sway = [];                                                     // palm crowns moving in the trade wind
@@ -909,14 +910,18 @@ async function loadBike(p) {
   const bike = gltf.scene; dressBike(bike, p);
   const box = new THREE.Box3().setFromObject(bike), c = box.getCenter(new THREE.Vector3());
   bike.position.set(-c.x, -box.min.y, -c.z);
-  p.explodables = []; p.nodes = {};
-  bike.traverse(o => {
-    const ud = o.userData || {};
-    if (ud.part && !p.nodes[ud.part]) p.nodes[ud.part] = o;
-    if (ud.explode) p.explodables.push({ node: o, base: o.position.clone(), vec: B2T(ud.explode) });
+  p.inspection = createMachineInspection(bike, {
+    motion: 'step',
+    speed: 1.1,
+    reducedSpeed: 10,
+    distanceScale: 1.15,
   });
-  [...p.explodables].sort((a, b) => a.vec.length() - b.vec.length()).forEach((x, i, a) => x.delay = i / a.length);
-  p.ex = 0; p.exT = 0;
+  p.nodes = p.inspection.parts;
+  p.explodables = p.inspection.explodables; // compatibility alias for existing room/tooling consumers
+  Object.defineProperties(p, {
+    ex: { configurable: true, get: () => p.inspection.value, set: v => { p.inspection.value = v; } },
+    exT: { configurable: true, get: () => p.inspection.target, set: v => { p.inspection.target = v; } },
+  });
   const holder = new THREE.Group(); holder.add(bike); holder.rotation.y = p.rotY; holder.position.y = p.top;
   holder.scale.setScalar(.001); p.group.add(holder); p.bike = holder; p.bikeIn = 0;
   const cs = contactShadow(2.1, .55); cs.position.y = p.top + .004; cs.rotation.z = p.rotY; p.group.add(cs);
@@ -1820,14 +1825,7 @@ function frame(now) {
     p.ring.material.opacity += (want - p.ring.material.opacity) * (1 - Math.exp(-dt * 7.5));
     if (p.bike && p.bikeIn < 1) { p.bikeIn = Math.min(1, p.bikeIn + dt * 1.4); const e = 1 - Math.pow(1 - p.bikeIn, 3); p.bike.scale.setScalar(Math.max(.001, e)); }
   }
-  for (const p of PIECES) {
-    if (!p.explodables || Math.abs(p.ex - p.exT) < .0005) continue;
-    p.ex += Math.sign(p.exT - p.ex) * Math.min(Math.abs(p.exT - p.ex), dt * (reduce ? 10 : 1.1));
-    for (const x of p.explodables) {
-      const u = clamp((p.ex * 1.35 - x.delay * .35), 0, 1), e = u * u * (3 - 2 * u);
-      x.node.position.copy(x.base).addScaledVector(x.vec, e * 1.15);
-    }
-  }
+  for (const p of PIECES) p.inspection?.update(dt, { reduced: reduce });
   if (exploded && Math.hypot(P.x - exploded.pos.x, P.z - exploded.pos.z) > 7.5) setExploded(exploded, false);   // walked away
   const lab = exploded?.anchors ? exploded : null;
   $('labels').style.visibility = lab && lab.ex > .05 ? 'visible' : 'hidden';
