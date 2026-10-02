@@ -41,7 +41,7 @@ test('Home is lightweight while User Studio owns personal depth and tour replay'
   assert.match(home,/data-home-self/);
   assert.match(home,/YOUR RACE SELF/);
   assert.doesNotMatch(home,/race-self-stage\.js|hall\.js|museum-data\.js/);
-  for(const control of ['Avatar','Bike Studio','Races','Settings','Quick tour','The Feed','Travel to Kona']) assert.match(avatarHome,new RegExp(control));
+  for(const control of ['Avatar','Bike Studio','Races','Settings','Quick tour','The Feed','Travel to Kona','The useful email']) assert.match(avatarHome,new RegExp(control));
   assert.doesNotMatch(avatarHome,/Canyon Museum|Discover Kona|Race week/);
   assert.match(avatarHome,/Collection/);
   assert.match(avatarHome,/Progress/);
@@ -89,6 +89,7 @@ test('entry has questions, avatar, install handoff and replayable contextual onb
 test('Home button means Home and Admin Assets stays a generated, Me-only capability',()=>{
   assert.match(shell,/\[data-tab=home\]'\)\.onclick=now/);
   assert.match(shell,/renderAdminAssets/);
+  assert.match(shell,/renderAdminMerch/);
   assert.match(admin,/app\/admin-assets\.json/);
   for(const source of ['museum/catalog/products.json','museum/world/rooms.json','museum/world/brand_rooms.json','museum/world/decorations.json']){
     assert.ok(adminBuild.includes(source),'admin projection must derive from '+source);
