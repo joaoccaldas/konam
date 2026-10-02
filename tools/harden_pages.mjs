@@ -12,7 +12,7 @@ const normalizeSite = value => {
   if (!/^https:\/\//.test(v)) throw new Error('PUBLIC_SITE_URL must be an absolute https URL');
   return v.endsWith('/') ? v : v + '/';
 };
-const SITE = normalizeSite(process.env.PUBLIC_SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://konam.vercel.app/'));
+const SITE = normalizeSite(process.env.PUBLIC_SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : productMeta.canonical_site));
 const NAME = productMeta.product_name || 'Kona.m';
 const DISCLAIMER = 'An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.';
 

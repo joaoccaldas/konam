@@ -5,16 +5,17 @@ An independent, unofficial fan and research project. Not affiliated with, endors
 This file is generated from the same museum registries used by the public app. Stable ids in the JSON/data files are preferred over names for programmatic references.
 
 ## Public pages
-- Kona.m · Race the version of yourself: https://joaoccaldas.github.io/canyonmuseum/
-- Canyon Triathlon Collection · every Speedmax generation, compared: https://joaoccaldas.github.io/canyonmuseum/Canyon_Collection.html
-- Studio · Speedmax Museum — build, paint and share a time-trial bike: https://joaoccaldas.github.io/canyonmuseum/Studio.html
-- Speedmax Nights & History Lane · Canyon Speedmax Museum: https://joaoccaldas.github.io/canyonmuseum/Experiences.html
-- Canyon Museum — SpeedMax 3.0 (2007): https://joaoccaldas.github.io/canyonmuseum/Speedmax_2007_Museum.html
-- Canyon Museum — Speedmax AL 9.0 (2011): https://joaoccaldas.github.io/canyonmuseum/Speedmax_AL_2011_Museum.html
-- Canyon Museum — Speedmax CF 9.0 Pro (2011): https://joaoccaldas.github.io/canyonmuseum/Speedmax_CF_2011_Museum.html
-- Canyon Museum — Speedmax CFR AXS (2027): https://joaoccaldas.github.io/canyonmuseum/Speedmax_Museum.html
-- Canyon Museum — Speedmax CF SLX 8 Di2 (2027): https://joaoccaldas.github.io/canyonmuseum/Speedmax_SLX_Museum.html
-- Canyon Museum — Speedmax Three (2005): https://joaoccaldas.github.io/canyonmuseum/Speedmax_Three_2005_Museum.html
+- Kona.m · Race the version of yourself: https://joaoccaldas.github.io/konam/
+- Canyon Triathlon Collection · every Speedmax generation, compared: https://joaoccaldas.github.io/konam/Canyon_Collection.html
+- Studio · Speedmax Museum — build, paint and share a time-trial bike: https://joaoccaldas.github.io/konam/Studio.html
+- Speedmax Nights & History Lane · Canyon Speedmax Museum: https://joaoccaldas.github.io/konam/Experiences.html
+- About this company · Kona.m: https://joaoccaldas.github.io/konam/about.html
+- Canyon Museum — SpeedMax 3.0 (2007): https://joaoccaldas.github.io/konam/Speedmax_2007_Museum.html
+- Canyon Museum — Speedmax AL 9.0 (2011): https://joaoccaldas.github.io/konam/Speedmax_AL_2011_Museum.html
+- Canyon Museum — Speedmax CF 9.0 Pro (2011): https://joaoccaldas.github.io/konam/Speedmax_CF_2011_Museum.html
+- Canyon Museum — Speedmax CFR AXS (2027): https://joaoccaldas.github.io/konam/Speedmax_Museum.html
+- Canyon Museum — Speedmax CF SLX 8 Di2 (2027): https://joaoccaldas.github.io/konam/Speedmax_SLX_Museum.html
+- Canyon Museum — Speedmax Three (2005): https://joaoccaldas.github.io/konam/Speedmax_Three_2005_Museum.html
 
 ## Evidence model
 P = published source. F = visible/read from a reference photograph. I = inferred for the model. G = generated artwork. Generated or inferred material is not presented as published fact.

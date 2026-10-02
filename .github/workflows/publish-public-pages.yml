@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -25,6 +26,63 @@ jobs:
     steps:
       - name: Checkout hardened source
         uses: actions/checkout@v4
+
+      - name: Wait for certification of this exact source SHA
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const required = ['checks.yml','app-seal.yml','release-security.yml','integration-contract.yml','visual-evidence-v2.yml','ui-interaction-audit.yml'];
+            const deadline = Date.now() + 25 * 60 * 1000;
+            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+            while (true) {
+              const pending = [];
+
+              for (const workflow_id of required) {
+                const {data} = await github.rest.actions.listWorkflowRuns({
+                  ...context.repo,
+                  workflow_id,
+                  head_sha: context.sha,
+                  per_page: 100
+                });
+                const runs = data.workflow_runs
+                  .filter(r => r.head_sha === context.sha)
+                  .sort((a,b) => b.id - a.id);
+
+                const success = runs.find(r => r.status === 'completed' && r.conclusion === 'success');
+                if (success) {
+                  core.info(`${workflow_id}: certified by ${success.html_url}`);
+                  continue;
+                }
+
+                const active = runs.find(r => r.status !== 'completed');
+                if (active) {
+                  pending.push(`${workflow_id}:${active.status}`);
+                  continue;
+                }
+
+                if (runs.length) {
+                  const latest = runs[0];
+                  core.setFailed(`${workflow_id} completed without a successful certification for ${context.sha}: ${latest.conclusion || latest.status} (${latest.html_url})`);
+                  return;
+                }
+
+                pending.push(`${workflow_id}:not-started`);
+              }
+
+              if (!pending.length) {
+                core.info(`All required workflows certified ${context.sha}`);
+                break;
+              }
+
+              if (Date.now() >= deadline) {
+                core.setFailed(`Timed out waiting for exact-SHA certification of ${context.sha}: ${pending.join(', ')}`);
+                return;
+              }
+
+              core.info(`Waiting for exact-SHA certification: ${pending.join(', ')}`);
+              await sleep(15000);
+            }
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -45,6 +103,7 @@ jobs:
           PUBLIC_SITE_URL: https://joaoccaldas.github.io/konam/
         run: |
           node tools/build_pages.mjs
+          node tools/build_app.mjs
           bash tools/stage_site.sh
 
       - name: Leak guard
