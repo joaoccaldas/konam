@@ -19,6 +19,7 @@ cp web/styles/hall-web.css web/styles/hall-mobile.css web/styles/studio.css web/
 cp web/src/about-story.js web/src/promo.js _site/web/src/
 cp brand/tokens.css brand/themes.css brand/artifacts.css brand/typography.css _site/brand/
 if [ -d downloads ]; then rsync -a downloads/ _site/downloads/; fi
+if [ -d review ]; then mkdir -p _site/review && rsync -a review/ _site/review/; fi
 rsync -a assets/ _site/assets/ --exclude reference/
 mkdir -p _site/assets/reference && rsync -a assets/reference/paintings/ _site/assets/reference/paintings/
 mkdir -p _site/docs && cp docs/FIT_RESEARCH_AND_ROADMAP.md _site/docs/
