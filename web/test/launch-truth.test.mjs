@@ -15,6 +15,9 @@ test('Kona.m launch identity is coherent on primary public surfaces',()=>{
   assert.match(landing,/<title>Kona\.m · Race the version of yourself<\/title>/);
   assert.match(landing,/Enter Kona\.m/);
   assert.match(landing,/Canyon Museum/);
+  const native=json('app/native/capacitor.config.json');
+  assert.equal(native.appName,'Kona.m');
+  assert.equal(native.appId,'com.caldasstudio.speedmaxmuseum');
 });
 
 test('all 14 founding rooms remain launch-visible and progressive rooms remain distinct',()=>{
