@@ -1,0 +1,54 @@
+name: Sync PR 8 generated release
+
+on:
+  push:
+    branches:
+      - fix/launch-readiness-critical
+    paths:
+      - .github/workflows/sync-pr8-generated.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-pr8-generated
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/launch-readiness-critical
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install build dependencies
+        run: npm ci --ignore-scripts
+        working-directory: web
+
+      - name: Regenerate deterministic public release
+        run: |
+          node tools/build_pages.mjs
+          node tools/build_app.mjs
+
+      - name: Commit generated tracked artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -u
+          if git diff --cached --quiet; then
+            echo "Generated artifacts already current."
+            exit 0
+          fi
+          git commit -m "build: regenerate launch artifacts"
+          git push origin HEAD:fix/launch-readiness-critical
