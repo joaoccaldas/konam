@@ -427,3 +427,19 @@ body.return-moment-open{overflow:hidden}
 
 /* Release touch-target floor for contextual text links surfaced in account/progression/garage states. */
 .kona-note a,#konaAccount a,.garage-level-note a{min-height:48px;display:inline-flex;align-items:center}
+
+
+/* Newsletter follows the existing invitation/modal grammar; no parallel visual language. */
+.kona-newsletter{width:min(560px,calc(100% - 32px));border:1px solid var(--brand-line);border-radius:var(--brand-sheet-radius);background:var(--brand-bg);color:var(--brand-ink);padding:32px;box-shadow:0 24px 100px #0005}
+.kona-newsletter::backdrop{background:#080b0eb0;backdrop-filter:blur(8px)}
+.kona-newsletter>small{font:700 11px var(--brand-font-ui);letter-spacing:.12em}
+.kona-newsletter h2{font:400 clamp(42px,8vw,64px)/1 var(--brand-font-editorial);margin:22px 0 16px}
+.kona-newsletter>p{line-height:1.6}
+.newsletter-close{float:right;border:1px solid var(--brand-line);background:var(--brand-surface);color:var(--brand-ink);width:var(--brand-touch);height:var(--brand-touch);border-radius:50%;font-size:24px}
+.kona-newsletter form{display:grid;gap:12px;margin:24px 0}
+.kona-newsletter label{display:grid;gap:7px;font:650 12px/1.4 var(--brand-font-ui)}
+.kona-newsletter input{width:100%;min-height:var(--brand-touch);box-sizing:border-box;padding:12px 14px;border:1px solid var(--brand-line);border-radius:var(--brand-control-radius);background:var(--brand-surface);color:var(--brand-ink);font:400 16px/1.4 var(--brand-font-ui)}
+.kona-newsletter .kona-primary{min-height:var(--brand-touch)}
+.newsletter-honeypot{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.kona-newsletter :focus-visible{outline:2px solid var(--brand-ink);outline-offset:4px}
+@media(max-width:520px){.kona-newsletter{padding:24px 20px}.kona-newsletter h2{font-size:44px}}
