@@ -67,6 +67,13 @@ function bio(ctx) {
       const spores = motes({ n: lite ? 60 : 150, box: [cx - 3.6, cx + 4, Y + .1, Y + 3.8, r.z1 + .3, r.z0 - .3], color: '#c8ff7a', size: .045, rise: .07, sway: .18, seed: seed + 3 });
       rg.add(spores.points); L.motes.push(spores);
       Object.assign(L, { vines, podMat, tipMat, glow, pose });
+      L.update=t=>{
+        pose(t);
+        L.floorMat.emissiveIntensity=.12+Math.sin(t*1.1)*.06;
+        podMat.emissiveIntensity=.22+Math.sin(t*1.9)*.1;
+        tipMat.color.setScalar(.75+Math.sin(t*2.6)*.25).multiply(new THREE.Color('#c8ff7a'));
+        glow.intensity=(lite?2:4)*(.75+Math.sin(t*.8)*.25);
+      };
     }
 
 function horror(ctx) {
@@ -114,6 +121,22 @@ function horror(ctx) {
       const dust = motes({ n: lite ? 40 : 90, box: [cx - 1.1, cx + 1.1, Y + .2, Y + 2.6, cz - 1.5, cz + .6], color: '#ffd9a8', size: .022, rise: .025, sway: .2, opacity: .7, seed: seed + 2 });
       rg.add(dust.points); L.motes.push(dust);
       Object.assign(L, { pivot, bulbMat, bulbLight, pool, pairs, chains });
+      L.update=t=>{
+        pivot.rotation.z=Math.sin(t*1.05)*.32;pivot.rotation.x=Math.sin(t*.7)*.08;
+        const flick=(Math.sin(t*17)>.93||Math.sin(t*5.3+1)>.985)?.12:1;
+        bulbMat.color.setScalar(flick);
+        bulbLight.intensity=(lite?5:9)*flick;
+        pool.material.opacity=.22*flick;
+        pool.position.x=cx+Math.sin(pivot.rotation.z)*1.55;
+        L.floorMat.emissiveIntensity=.03+flick*.05;
+        for(const e of pairs){
+          const c=(t*e.rate+e.ph)%7;
+          e.g.scale.y=c<.12?.08:1;
+          e.g.visible=c<5.2||flick<1;
+          e.g.position.x=e.home.x+Math.sin(t*.3+e.ph)*.05;
+        }
+        for(const c of chains)c.g.rotation.z=Math.sin(t*.9+c.ph)*.03;
+      };
     }
 
 function alien(ctx) {
@@ -152,6 +175,15 @@ function alien(ctx) {
       const stars = motes({ n: lite ? 50 : 120, box: [cx - 3.8, cx + 4, Y + .3, Y + 3.9, r.z1 + .3, r.z0 - .3], color: '#9ffff4', size: .03, rise: .02, sway: .3, opacity: .75, seed: seed + 4 });
       rg.add(stars.points); L.motes.push(stars);
       Object.assign(L, { rings, beam, scan, scanMat, glyphs });
+      L.update=t=>{
+        rings.forEach((ring,i)=>{ring.rotation.z=t*(.3+i*.1)*(i%2?-1:1);ring.rotation.x=Math.PI/2+Math.sin(t*.4+i)*.12;});
+        beam.scale.y=.94+Math.sin(t*2.4)*.06;
+        const u=(Math.sin(t*.9)+1)/2;
+        scan.position.y=Y+.15+u*1.45;
+        scanMat.opacity=.1+Math.abs(Math.cos(t*.9))*.12;
+        glyphs.material.opacity=.4+(Math.sin(t*13)>.97?.35:0)+Math.sin(t*.6)*.1;
+        L.floorMat.emissiveIntensity=.14+Math.sin(t*2.2)*.05;
+      };
     }
 
 function zombie(ctx) {
@@ -224,6 +256,13 @@ function zombie(ctx) {
       const ash = motes({ n: lite ? 50 : 120, box: [cx - 3.8, cx + 4, Y + .1, Y + 3.9, r.z1 + .3, r.z0 - .3], color: '#e8e2b0', size: .03, rise: -.12, sway: .25, opacity: .55, seed: seed + 6 });
       rg.add(ash.points); L.motes.push(ash);
       Object.assign(L, { pose, mist, sodium, sodiumMat });
+      L.update=t=>{
+        pose(t);
+        mist.forEach((m,i)=>{m.material.map.offset.set(t*(.012+i*.006),t*(i%2?-.008:.006));});
+        const buzz=Math.sin(t*23)>.96?.35:1;
+        sodium.intensity=(lite?4:8)*buzz;
+        sodiumMat.color.setScalar(buzz).multiply(new THREE.Color('#ffb35a'));
+      };
     }
 
 export const INSTALLATION_BUILDERS=Object.freeze({bio,horror,alien,zombie});
