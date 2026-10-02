@@ -1,0 +1,2 @@
+Live revalidation trigger after camera fix deployment.
+Target main SHA: 224eae9bb424294498380b5a7c41287f9f9e01c2
