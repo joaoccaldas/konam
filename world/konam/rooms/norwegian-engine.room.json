@@ -4,24 +4,25 @@
   "name": "NOR // 3 · The Norwegian Engine",
   "classification": {
     "type": "athlete-room",
-    "status": "concept",
+    "status": "candidate",
     "public": false
   },
   "implementation": {
     "kind": "installation",
     "builder": "norwegian",
-    "source": "web/src/engine/room-installations.js",
-    "source_branch": "feat/norwegian-engine-room"
+    "source": "web/src/engine/room-installations.js"
   },
   "story": {
     "concept": "Three lanes. One system. Measure. Adapt. Repeat.",
     "editorial_status": "original-copy",
+    "sub": "Cold precision. Warm destination.",
+    "product_principle": "Race the version of yourself you haven't met yet.",
     "pitch": "pitch/norwegian-trio/pitch-story-v1.json"
   },
   "spatial": {
     "units": "meters",
     "coordinate_system": "host room-local; +x east, +z north, y vertical",
-    "layout": "world/konam/candidates/norwegian-engine-room-layout-v1.json",
+    "layout": "world/konam/candidates/norwegian-engine-layout-v2.json",
     "zones": [
       "three-rails",
       "protocol-table",
@@ -38,8 +39,8 @@
     ]
   },
   "assets": {
-    "manifest": "world/konam/candidates/norwegian-engine-assets-v1.json",
-    "placements": "world/konam/candidates/norwegian-engine-room-layout-v1.json",
+    "manifest": "world/konam/candidates/norwegian-engine-assets-v2.json",
+    "placements": "world/konam/candidates/norwegian-engine-layout-v2.json",
     "bike_pipeline": "museum/bike.schema.json"
   },
   "subjects": [
@@ -126,7 +127,9 @@
     }
   },
   "provenance": {
-    "concept": "independent KONA.m editorial concept",
+    "concept": "independent Kona.m editorial concept",
+    "runtime_geometry": "procedural candidate proxies",
+    "production_asset_source": "blender/norwegian_engine_assets.py",
     "generated_imagery": "reference-only-not-runtime-evidence"
   },
   "rights": {
@@ -165,5 +168,59 @@
       "sound",
       "local-lighting"
     ]
+  },
+  "review": {
+    "local_only": true,
+    "replace_area": "room-zombie",
+    "presentation": {
+      "kind": "room",
+      "floor": "#0b1115",
+      "vein": "#00a7c7",
+      "fog": "#071217",
+      "exposure": 0.9,
+      "decoration": "norwegian",
+      "surface": {
+        "floor": {
+          "kind": "crack",
+          "base": "#11171a",
+          "vein": "#25353c",
+          "repeat_divisor": [
+            2.4,
+            2.4
+          ],
+          "detail": 3,
+          "accent": "#ff6a00"
+        },
+        "wall": {
+          "kind": "panel",
+          "base": "#0b1115",
+          "vein": "#1c3842",
+          "repeat": [
+            2,
+            1
+          ]
+        },
+        "roughness": 0.72,
+        "metalness": 0.08,
+        "floor_emissive_map": false,
+        "ceiling": {
+          "kind": "solid",
+          "color": "#080b0e"
+        },
+        "ink": "#f4efe7"
+      },
+      "staging": {
+        "stand_dx": -2.75,
+        "stand_dz": 0,
+        "specimen_dx": -0.2,
+        "specimen_dz": 0,
+        "specimen_yaw": 1.5707963267948966
+      },
+      "lamp": {
+        "color": "#e6e9ed",
+        "intensity": 5.5,
+        "lite_intensity": 2.5
+      }
+    }
   }
 }
