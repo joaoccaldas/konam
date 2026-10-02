@@ -66,7 +66,7 @@ function block(p) {
   const url = SITE + (p.file === 'index.html' ? '' : p.file), img = SITE + p.image;
   const ld = {
     '@context': 'https://schema.org', '@type': p.type, name: p.title, description: p.description, url, image: img, inLanguage: 'en',
-    isAccessibleForFree: true, publisher: { '@type': 'Person', name: 'João Caldas', url: 'https://joaoccaldas.github.io/ai/' },
+    isAccessibleForFree: true, publisher: { '@type': 'Organization', name: PRODUCT_NAME },
     about: [{ '@type': 'Thing', name: 'Canyon Speedmax' }, { '@type': 'SportsEvent', name: 'IRONMAN World Championship', location: 'Kailua-Kona, Hawaii' }],
     disambiguatingDescription: DISCLAIMER,
   };
