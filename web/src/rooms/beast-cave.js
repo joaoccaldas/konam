@@ -539,20 +539,29 @@ function buildGearWall(group, obstacles, pickables) {
   box(group, 'GEAR_CABINET', [6.4, 2.1, .66], [10.35, 1.05, 8.95], cabinet);
   for (let i = 0; i < 4; i++) box(group, 'GEAR_SHELF', [6.2, .06, .62], [10.35, .42 + i * .48, 8.60], dark);
 
-  // Helmet proxy.
-  const helmet = new THREE.Mesh(
-    new THREE.SphereGeometry(.42, 24, 14, 0, Math.PI * 2, 0, Math.PI * .55),
-    dark
-  );
-  helmet.name = 'HELMET_PROXY';
-  helmet.scale.set(1.15, .7, 1);
-  helmet.position.set(8.4, 1.85, 8.35);
+  // Aero helmet study with shell, lower rim, visor and vents.
+  const helmet = new THREE.Group();
+  helmet.name='HELMET_STUDY';
+  helmet.position.set(8.4,1.75,8.28);
   group.add(helmet);
+  const shell=new THREE.Mesh(new THREE.SphereGeometry(.44,36,20,0,Math.PI*2,0,Math.PI*.66),dark);
+  shell.scale.set(1.25,.84,1.05);helmet.add(shell);
+  const rim=new THREE.Mesh(new THREE.TorusGeometry(.40,.035,10,36),metal);
+  rim.rotation.x=Math.PI/2;rim.position.y=-.03;helmet.add(rim);
+  const visor=new THREE.Mesh(new THREE.PlaneGeometry(.72,.18),new THREE.MeshPhysicalMaterial({color:'#111820',roughness:.08,metalness:.1,transparent:true,opacity:.82}));
+  visor.position.set(0,-.02,.42);visor.rotation.x=-.08;helmet.add(visor);
+  for(const x of [-.16,0,.16]){
+    const vent=new THREE.Mesh(new THREE.BoxGeometry(.055,.015,.34),mat('#050505',.8));
+    vent.position.set(x,.34,.06);vent.rotation.x=-.28;helmet.add(vent);
+  }
 
-  // Shoes.
+  // Shoe studies: sculpted toe + heel + closure strap, rather than boxes.
   for (let i = 0; i < 2; i++) {
-    const shoe = box(group, 'CYCLING_SHOE_PROXY', [.72, .22, .24], [9.55 + i * .85, 1.46, 8.35], textile, [0, i ? -.15 : .15, i ? -.03 : .03]);
-    shoe.scale.x = 1.2;
+    const shoe=new THREE.Group();shoe.name='CYCLING_SHOE_STUDY';shoe.position.set(9.45+i*.95,1.42,8.25);shoe.rotation.y=i?-.16:.16;group.add(shoe);
+    const toe=new THREE.Mesh(new THREE.SphereGeometry(.28,24,12),textile);toe.scale.set(1.55,.48,.72);toe.position.set(.16,0,0);shoe.add(toe);
+    const heel=box(shoe,'SHOE_HEEL',[.30,.24,.32],[-.25,.03,0],textile,[0,0,.06]);
+    const sole=box(shoe,'SHOE_SOLE',[.72,.06,.28],[.03,-.14,0],dark);
+    const strap=box(shoe,'SHOE_STRAP',[.08,.03,.40],[.02,.10,0],metal,[0,0,-.45]);
   }
 
   // Medal rail.
@@ -568,7 +577,7 @@ function buildGearWall(group, obstacles, pickables) {
   group.add(kit);
 
   addObstacle(obstacles, 10.35, 8.2, 2.8);
-  addPickable(pickables, helmet, 'gear-wall', 'Helmet');
+  addPickable(pickables, helmet, 'gear-wall', 'Aero helmet study');
 }
 
 function buildRecovery(group, obstacles, pickables) {
