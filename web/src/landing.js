@@ -34,7 +34,7 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 import { coarse as dc, small as ds } from './detect.js';
 import { readPassportState, savePassportState } from './engine/passport-state.js';
 import { applyStoredEvent } from './engine/progression.js';
-import { createMachineInspection } from './engine/machine-inspection.js';
+import { createMachineInspection, blenderVectorToThree } from './engine/machine-inspection.js';
 
 const PIECES = window.__PIECES || [];
 const sway = [];                                                     // palm crowns moving in the trade wind
@@ -55,7 +55,7 @@ if (!profile) throw new Error('KONA consumer Profile authority missing');
 const RS = renderSettings(profile.get().quality, { lite: coarse || small, dpr: devicePixelRatio });
 const lite = RS.lite;
 const reduce = profile.get().motion === 'reduced' || (profile.get().motion === 'auto' && matchMedia('(prefers-reduced-motion: reduce)').matches);
-const B2T = v => new THREE.Vector3(v[0], v[2], -v[1]);            // Blender (Z-up) -> three (Y-up)
+const B2T = blenderVectorToThree;                                  // global Blender (Z-up) -> three (Y-up) adapter
 
 // ------------------------------------------------------------------ layout (metres; the hall runs toward -z)
 const HALL = { x0: -7, x1: 7, z0: 5, z1: -46.5, h: 5.4 };
