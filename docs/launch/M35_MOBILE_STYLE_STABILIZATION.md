@@ -71,3 +71,32 @@ Measured source delta:
 - consumer entry ownership in world CSS: removed
 
 The visual target remains zero unexplained delta. World/mobile interaction evidence must remain green before merge.
+
+## M3.6 cascade-fossil batches 2–3
+
+After removing cross-surface entry ownership, the next audit traced the final mobile cascade for card, actions, rail, chips and joystick.
+
+Only declarations superseded by the later RC5 mobile grammar under the same/broader phone/coarse-pointer conditions were removed. State transitions, landscape-only geometry, phone-fit compatibility, overflow safety and selectors without static equivalence proof were retained.
+
+### Cumulative measured delta from M3
+
+| Metric | M3 baseline | Current | Delta |
+|---|---:|---:|---:|
+| hall-mobile.css bytes | 16,402 | 12,761 | -3,641 (-22.2%) |
+| lines | 254 | 204 | -50 (-19.7%) |
+| !important | 108 | 98 | -10 (-9.3%) |
+| media blocks | 15 | 15 | unchanged |
+| runtime JS/state/WebGL | baseline | baseline | unchanged |
+
+The unchanged media-block count is intentional: this round simplifies declarations inside the existing responsive architecture rather than changing breakpoints.
+
+### Remaining conflict concentration
+
+- `#card`: 23 references; highest remaining risk.
+- `.chip`: 10 references.
+- `#nearby` / `#tourPill`: 8 each, but no local !important debt; lower priority.
+- `#rail`: 7 references.
+- `#joy`: 4 references.
+- map card: low conflict.
+
+Next work should therefore stay on `#card` and its typography/state modifiers, then stop when remaining rules are breakpoint/state-distinct rather than historical duplicates.
