@@ -2,6 +2,7 @@
 // and three themed rooms. The ground museum stays Kona-warm. Colour up here belongs to the bay you are standing in.
 import * as THREE from 'three';
 import { buildInstallation } from './engine/room-installations.js';
+import { roomReviewAreas } from './engine/room-review.js';
 import { rootTex, crackTex, plasterTex, hexTex, panelTex, skyTex } from './roomkit.js';
 
 export const UPPER = 6.6;
@@ -10,7 +11,7 @@ const TOWER = { x0: 7.35, x1: 12.3, z0: 6.55, z1: 0.75 };
 const STAIR = { x0: 8.55, x1: 11.15, z0: 1.25, z1: 5.45 };
 const NAVE = { x0: 7.5, x1: 16.5, z0: 27.2, z1: 5.55 };
 // All room identity, theme values and decoration references come from the world registry.
-const areas=window.__ROOMS?.areas || [];
+const areas=roomReviewAreas(window.__ROOMS?.areas || []);
 const ROOMS=areas.filter(a=>a.presentation?.kind==='room').map(a=>({...a.presentation,id:a.id.replace('room-',''),name:a.name,sub:a.sub,text:a.text}));
 const BAYS=areas.filter(a=>a.presentation?.kind==='bay').map(a=>({...a.presentation,id:a.id.replace('bay-',''),title:a.name,sub:a.sub,text:a.text}));
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -180,6 +181,8 @@ export function buildGalleries(ctx) {
     slab.userData.gallery = spot;
     const L = buildInstallation(r.decoration,{group:rg,bounds:spot.bounds,elevation:Y,specimen,lite,obstacles,floorMat,seed});
     L.spot=spot;
+    spot.installation=L;
+    spot.specimenSlots=L.specimenSlots || null;
 
     live.push(L);
     return spot;
