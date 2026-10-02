@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">KONA</string>
-    <string name="title_activity_main">KONA</string>
+    <string name="app_name">Kona.m</string>
+    <string name="title_activity_main">Kona.m</string>
     <string name="package_name">com.caldasstudio.speedmaxmuseum</string>
     <string name="custom_url_scheme">com.caldasstudio.speedmaxmuseum</string>
 </resources>
