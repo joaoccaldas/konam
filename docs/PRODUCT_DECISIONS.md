@@ -1,71 +1,61 @@
-# Product Decision Log
+# Kona.m Product Decision Log
 
-This is the guardrail against feature stacking. Every material idea is evaluated before implementation.
+This is the guardrail against feature stacking.
 
 ## Decision rule
 
 A feature moves forward only when it:
-1. strengthens **Explore**, **Collect**, **Customize**, or **Share**; or materially improves reliability/security/privacy;
+1. strengthens Explore, Collect, Customize or Share, or materially improves reliability/security/privacy;
 2. has a clear mobile-first interaction;
-3. reuses or improves a shared data/engine contract rather than creating a bespoke mini-app;
-4. fits the current release milestone and performance budget.
+3. reuses a shared data/engine contract rather than creating a bespoke mini-app;
+4. fits the current release milestone and performance budget;
+5. does not create a second authority for state, navigation, styling or progression.
 
 Statuses:
-- **NOW** — appropriate for the current Kona launch/growth sprint.
-- **NEXT** — valuable, but depends on a current contract or QA milestone.
+- **NOW** — required or strongly launch-strengthening.
+- **NEXT** — valuable after launch/equivalence gate.
 - **LATER** — strategically useful but premature.
-- **HOLD** — idea needs evidence or a clearer user purpose.
+- **HOLD** — needs evidence/partner/cultural/technical proof.
 
 ## Current decisions
 
-| Idea | Loop / purpose | Status | Why |
-|---|---|---:|---|
-| Launch PWA hardening | Reliability | DONE | Required before public use; merged to main with checks + seal green. |
-| My Kona Setup V0 | Customize + Share + Return + platform proof | NOW / BUILT | Composes the existing Studio bike into a local/shareable race object; creates brand/equipment sockets without adding another configurator. |
-| Data-driven room art direction | Explore | NOW | Makes existing/new rooms feel authored without custom room code. |
-| Materials & Motion wing | Explore + Collect | NOW | Reuses existing assets and proves the room design schema cheaply. |
-| Island Stories wing | Explore + race-week utility | NOW | Directly relevant to Kona race window and expands the museum beyond equipment. |
-| Hawaiʻi Island guide data | Explore + trip planning | NOW | Creates a sourced foundation without location tracking or live-service risk. |
-| Nine hidden finds + rarity | Collect | NOW | Fulfils an existing 9-find promise and gives exploration persistent meaning. |
-| OAI-SearchBot + llms-full | Discoverability | NOW | Low runtime risk; improves machine-readable discovery and citations. |
-| EN + PT-BR locale contract | Market expansion | NOW (foundation only) | Stable ids/localization policy can land safely; translated public URLs wait until content exists. |
-| Full PT-BR UI/content | Explore + market launch | NEXT | Needs locale extraction from runtime strings and translation QA first. |
-| Daily/weekly Kona challenges | Collect + Return | NEXT | Depends on one canonical Passport state model. |
-| Garage for multiple saved builds | Customize + Return + Share | NEXT | My Kona Setup V0 proves one composed race object first; a multi-build Garage should reuse that contract after Passport/profile consolidation. |
-| One additional bike-brand wing | Explore + platform proof | NEXT | Must prove brand #2 can be data-driven before scaling brands. |
-| Helmets collection/configurator | Collect + Customize | NEXT | Best first equipment category after item contract is stable. |
-| Wheels | Collect + Customize | NEXT | Natural second equipment category and bike-slot integration. |
-| Shoes | Collect + Customize | LATER | Useful but weaker connection to the current bike-centric 3D scene than helmets/wheels. |
-| Trisuits / athlete avatar | Customize + Share | LATER | Requires body/avatar/privacy design; do not bolt it onto current Studio. |
-| Live race closures / traffic | Trip planning | LATER | Needs current official data integration and freshness/expiry guarantees. |
-| Background GPS | Trip planning | HOLD | Privacy/battery cost is not justified for V1; use explicit map/deep-link actions instead. |
-| Cloud accounts/sync | Return | LATER | No need to collect identity until cross-device retention is proven. |
-| Multiplayer museum | Share | LATER | High complexity and safety cost; deep-link sharing delivers more return now. |
-| WebXR | Explore | LATER | Mobile rendering/performance comes first. |
-| Booking/commerce | Revenue | LATER | Separate editorial content from commercial actions; only after partner model is explicit. |
+| Idea | Status | Decision |
+|---|---:|---|
+| M0 repository migration | DONE | Behavior-equivalent Kona.m repo established with exact-source evidence. |
+| Kona.m identity convergence | NOW | Consumer identity only; preserve Canyon facts, storage compatibility and native package identity. |
+| Physical phone acceptance | NOW | Real Android + iPhone proof remains distinct from headless viewport tests. |
+| Launch visual convergence | NOW | Fix evidence-backed inconsistencies only. No new global visual language. |
+| Founding 141 registry | NOW / DATA | Stable IDs/rules. Do not equate 141 with 141 launch GLBs. |
+| 28-room world registry | NOW / DATA | 14 founding + 14 progressive/future rooms. Build only where product value justifies it. |
+| English launch | NOW | Production launch language. |
+| pt-BR production localization | NEXT | Requires runtime copy extraction, metadata/hreflang and human QA. |
+| KONA Now / companion feed | NEXT | Replay cleanly after launch branch stabilizes; do not block migration/identity. |
+| Next100 generated 3D assets | NEXT / QA | Candidate lane only. Promote selectively after provenance/visual QA. |
+| Multibrand asset studies | NEXT / QA | Transfer assets/data, not old branded-room topology. |
+| Canonical Progression sole-write migration | NEXT | High-value cleanup, but state migration risk is too high for identity launch. |
+| `landing.js` decomposition | NEXT | Do bounded seams after launch equivalence; never wholesale rewrite. |
+| CSS ownership cleanup | NEXT | Reduce measured conflicts after launch with visual matrix proof. |
+| Renderer lifecycle convergence | NEXT | Apply best embedded-renderer lifecycle one surface at a time. |
+| Strava adapter | LATER | Useful loop, not a launch dependency. |
+| Trading | LATER | Requires authoritative ownership/transactions; collection must be completable without purchase/trade. |
+| Multiplayer | LATER | High complexity; sharing/deep links provide more immediate value. |
+| WebXR | LATER | Mobile performance first. |
+| Full PT-BR + additional languages | LATER / EVIDENCE | Expand after demand and localization architecture are proven. |
+| Sponsor/partner rooms | HOLD until agreement | Never present a speculative partner as current. |
+| Sacred/culturally restricted Hawaiian gamification | HOLD | Requires qualified cultural review and strong product reason. |
+| Background GPS | HOLD | Privacy/battery cost not justified for launch. |
+| New JS framework / Vite migration | HOLD | Current esbuild pipeline is proven; migration adds risk without launch value. |
 
-## Race-window priority
+## Until launch
 
-2026 IRONMAN World Championship in Kailua-Kona: **10 October 2026**.
+Effort order:
+1. exact build/release reliability;
+2. physical phone UX;
+3. truthful Kona.m identity;
+4. state continuity/privacy;
+5. first-session clarity;
+6. collection/content quality;
+7. share quality;
+8. commercial packaging.
 
-Until race week, effort order is:
-1. launch reliability and phone UX;
-2. Kona discoverability/shareability;
-3. Kona history/culture and useful visitor planning;
-4. collection/return mechanics;
-5. internationalization foundation;
-6. platform proof (one other brand + first equipment category).
-
-## Definition of a launch-safe additive change
-
-An additive feature may merge only if:
-- existing URLs still work;
-- existing localStorage data remains readable;
-- no new required account/permission;
-- no new third-party tracker;
-- CSP and leak guard remain green;
-- generated pages are committed;
-- service-worker seal is current;
-- unit tests + asset contract pass;
-- mobile QA shows no overlap/regression on target widths;
-- the feature has an obvious rollback path.
+No feature gets to jump this queue because it looks impressive in a mockup.

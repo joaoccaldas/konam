@@ -1,129 +1,136 @@
-# KONA Roadmap V8 — 30 Sep 2026
+# Kona.m Roadmap V9 — Launch Convergence
 
 ## Product
 
 **Race the version of yourself.**
 
-KONA is a mobile-first triathlon race-week, identity, gear, story, discovery and challenge platform. The Canyon Museum is a flagship collection inside the platform, not the parent brand.
+Kona.m is a mobile-first triathlon race-week, identity, gear, story, discovery and challenge platform. Canyon Museum is a flagship collection inside the platform, not the parent brand.
 
 ## Current production truth
 
-Main includes:
-- person-first RaceIdentity onboarding
-- Home / Discover / Garage / Plan / Me navigation
-- returning-user RaceIdentity continuity
-- local-first progression and credits ledger
-- lazy 3D entry
-- BrandRoom/Nike proof
-- privacy/security release gates
-- canonical repository hardening
-- RaceIdentity share loop V1
-- Progression V2 configuration and 20 original relics
-- Kona Local Graph V1
-- sourced affiliate registry V1
-- first tracked Supabase least-privilege migration
+M0 repository migration is complete and behavior-equivalent.
 
-Still release-gated/open:
-- real-phone mobile entry/readability + install fix
-- semantic token migration
-- bilingual EN/PT-BR SEO/i18n foundation
-- Identity Assist source adapters
-- real Garage
-- Discover/Artifact redesign
-- normalized backend
+M1 identity migration is in progress:
+- consumer name → Kona.m;
+- deterministic source/build authority preserved;
+- dependencies unchanged;
+- route IDs unchanged;
+- storage compatibility unchanged;
+- Android package ID unchanged;
+- Canyon Museum preserved as real historical/brand content.
 
-## North star
+## Launch objective
 
-**WARI — Weekly Active Race Identities.**
+Ship a serious, understandable, fast and reliable public beta before expanding scope.
 
-Supporting funnel:
-landing → Build → RaceIdentity reveal → share/save → Discover → challenge/collection → return.
+### Launch must prove
+1. clear first-use proposition;
+2. guest-first path;
+3. local persistence;
+4. Home / Discover / Garage / Plan / Me continuity;
+5. optional 3D depth;
+6. legitimate progression/collection;
+7. safe share;
+8. install/PWA reliability;
+9. security/privacy;
+10. exact-SHA build/deploy/rollback.
 
-## Ten execution gates
+## Language
 
-### G1 — Real-phone entry and install
-Pass Android + iPhone physical-device evidence. PWA install must be obvious. Native APK is advertised only when a signed artifact is actually published.
+Launch language: **English**.
 
-### G2 — Brand system
-Semantic tokens, typography, spacing, components and light/dark parity. Parent brand remains neutral until name clearance.
+pt-BR is the first post-launch language once primary runtime copy is locale-driven and translation/metadata/hreflang QA is complete.
 
-### G3 — English + Brazilian Portuguese
-All primary shell/onboarding/Discover/Garage/Plan/Me copy from locale records. Indexable English and pt-BR entry surfaces with reciprocal hreflang, localized metadata, sitemap and LLM guides.
+Do not publish a partially translated route or claim bilingual launch before that gate is met.
 
-### G4 — Discover + Artifact
-Places / Machines / People / Stories. Universal ArtifactDetail for bike, shoe, helmet, watch, component and memorabilia. 3D remains an explicit richer mode.
+## Near-term sequence
 
-### G5 — Garage + Passport
-Owned / Dream / Try equipment, saved setups and collections. Me owns Passport/progression/account. Empty states always offer a useful next action.
+### G1 — M1 identity convergence
+- Kona.m product name;
+- truthful public metadata;
+- deterministic generated outputs;
+- no broad redesign.
 
-### G6 — Progression V2 runtime
-Migrate hard-coded reward tables onto governed config. Reward meaningful firsts. Collections unlock cosmetics, historical rooms, challenge variants and dream-equipment slots. Never lock safety/compatibility.
+### G2 — physical-device acceptance
+- Android physical phone;
+- iPhone Safari/PWA;
+- portrait + short landscape;
+- background/return;
+- keyboard/input where relevant;
+- actual safe areas.
 
-### G7 — Growth loop
-RaceIdentity deep link, native share sheet, social-ready visual card, referral attribution and server-verified REFERRAL_ACTIVATED. Never reward a share-button tap.
+### G3 — first-session clarity
+- proposition understandable in seconds;
+- no forced account;
+- no forced 3D;
+- one primary action;
+- install secondary, truthful;
+- onboarding skippable.
 
-### G8 — Identity Assist + integrations
-Official-source candidate adapters; explicit confirmation before race history persists. External activity/gear integrations remain adapters and require consent/revoke controls.
+### G4 — state continuity
+- legacy/current state remains readable;
+- cloud backup/restore round-trip;
+- no duplicate progression authority introduced;
+- migration fixtures retained.
 
-### G9 — Commerce
-Apply to verified affiliate programs; activate links only after approval. Disclose affiliate status. Commission never affects ranking. Add B2B room/athlete/event activation packages.
+### G5 — launch visual consistency
+Golden surfaces:
+Landing · Home · Discover · Artifact · Garage.
 
-### G10 — Production certification
-Normalize valuable backend entities, migrations/backups/export/delete, observability, accessibility, 320/360/390/430 phone matrix, iPhone Safari/PWA, Android PWA/native, desktop Safari/Chrome, performance budgets and rollback proof.
+No new global visual language. Fix only evidence-backed inconsistencies.
 
-## Growth principles
+### G6 — Founding world content
+- stable 28-room registry;
+- Founding 141 data contract;
+- launch subset obtainable;
+- reuse existing assets/cards/environment before creating new high-fidelity models.
 
-- Share identity/value, not spam.
-- Optimize for share-to-build conversion, not raw share count.
-- Rewards follow accomplishment, collection completion, mastery and verified referral outcomes.
-- Social output should be attractive enough to post without editing.
-- WhatsApp/Instagram/Facebook/TikTok distribution should use the OS-native share sheet where possible.
-- No dark patterns, fake scarcity or forced contact access.
+### G7 — growth loop
+- useful share object;
+- deep-link return;
+- measure share → completed RaceIdentity;
+- never reward tap-to-share.
 
-## SEO / LLM principles
+### G8 — commercial readiness
+- package demonstrable B2B offers;
+- affiliate links only after approval;
+- no partner/sponsor claims before agreement;
+- commercial content visibly disclosed.
 
-- Useful crawlable text in the HTML.
-- Stable entity IDs and source/provenance records.
-- SoftwareApplication/Product/Place/Event structured data where truthful.
-- EN/PT-BR localized metadata and reciprocal hreflang.
-- concise llms.txt + detailed llms-full.txt + pt-BR guide.
-- no keyword stuffing, doorway pages or invented claims.
+## Post-launch sequence
 
-## Monetization
+1. pt-BR production localization;
+2. canonical Progression sole-write migration;
+3. room-engine convergence;
+4. `landing.js` bounded decomposition;
+5. renderer lifecycle convergence;
+6. CSS ownership cleanup;
+7. external integration adapters;
+8. additional brand/event activation templates.
 
-Now:
-- approved affiliate commerce
-- immersive brand prototypes
-- athlete/event activations
-- sponsor rooms
-- content/hosting retainers
+## Do not do before launch
 
-Later:
-- premium consumer features after retention proof
-- white-label experience engine
-- opt-in aggregate Owned/Dream/Try insight after privacy thresholds and scale
+- framework migration;
+- broad dependency upgrades;
+- new top-level navigation;
+- multiplayer;
+- trading;
+- WebXR;
+- full world rebuild;
+- full 141 bespoke 3D production;
+- speculative partner UI;
+- broad CSS redesign;
+- backend redesign unrelated to a launch blocker.
 
-## Definition of public beta
+## Definition of launch-safe change
 
-A newcomer on a real phone can:
-1. understand KONA immediately
-2. create a RaceIdentity without an account
-3. persist it
-4. optionally install/save
-5. Discover without loading 3D unless requested
-6. earn legitimate progression
-7. share a safe setup link
-8. return to a personalized Home
-9. encounter no P0/P1 blocker
-
-## Definition of production
-
-Public beta plus:
-- normalized valuable persistence
-- migration/backup/export/delete proof
-- security/privacy review
-- production observability
-- accessibility evidence
-- multi-device performance budgets
-- signed native distribution if offered
-- incident/rollback runbook
+A change may merge only if:
+- current URLs/flows remain intentional;
+- local state remains readable;
+- no new required account/permission;
+- no new tracker;
+- dependency delta is explicit;
+- generated outputs are current;
+- security and seal pass;
+- mobile interaction/visual evidence passes where relevant;
+- rollback is obvious.

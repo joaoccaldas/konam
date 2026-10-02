@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "default_locale": "en",
+  "launch_locales": [
+    "en"
+  ],
+  "expansion_order": [
+    "pt-BR"
+  ],
+  "locales": [
+    {
+      "id": "en",
+      "bcp47": "en",
+      "status": "launch",
+      "public_route": "/",
+      "runtime_copy_status": "current",
+      "metadata_status": "current"
+    },
+    {
+      "id": "pt-BR",
+      "bcp47": "pt-BR",
+      "status": "next",
+      "public_route": null,
+      "runtime_copy_status": "not-complete",
+      "metadata_status": "not-published"
+    }
+  ],
+  "publication_gate": [
+    "primary shell/onboarding/Discover/Garage/Plan/Me copy is locale-driven",
+    "translated canonical entry page exists",
+    "translated metadata exists",
+    "reciprocal hreflang is valid",
+    "fallback behavior is tested",
+    "human language QA is complete"
+  ],
+  "invariants": [
+    "entity IDs never change across locales",
+    "state/storage keys never change across locales",
+    "proper nouns and source titles are preserved unless an official localized name exists",
+    "do not publish hreflang for a locale without a real canonical translated page",
+    "never silently machine-translate factual evidence into a public canonical source"
+  ]
+}
