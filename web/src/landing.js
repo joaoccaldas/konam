@@ -959,28 +959,35 @@ async function loadThemeBikes() {
   const gltf = await loader.loadAsync(src);
   for (const room of galleries.rooms) {
     if (room.bike) continue;
-    const bike = gltf.scene.clone(true);
-    bike.traverse(o => {
-      if (!o.isMesh) return;
-      o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone();
-      o.castShadow = !lite;
-    });
-    dressBike(bike, { key: 'cfr', finish: null });
-    applySkin(slotsOf(bike), SKIN(`theme-${room.id}`));
-    const box = new THREE.Box3().setFromObject(bike), c = box.getCenter(new THREE.Vector3());
-    bike.position.set(-c.x, -box.min.y, -c.z);
-    const holder = new THREE.Group();
-    holder.add(bike);
-    holder.rotation.y = room.specimenYaw || 0;
-    holder.position.set(room.specimen.x, room.specimen.y + .2, room.specimen.z);
-    (room.group || galleries.group).add(holder);
-    room.bike = holder;
-    holder.traverse(o => {
-      if (!o.isMesh) return;
-      delete o.userData.piece;
-      o.userData.gallery = room;
-      pickables.push(o);
-    });
+    const slots = room.specimenSlots?.length ? room.specimenSlots : [room.specimen];
+    const rack = new THREE.Group();
+    rack.name = `room-machines-${room.id}`;
+    (room.group || galleries.group).add(rack);
+    const skin = SKIN(`theme-${room.id}`);
+    for (const slot of slots) {
+      const bike = gltf.scene.clone(true);
+      bike.traverse(o => {
+        if (!o.isMesh) return;
+        o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone();
+        o.castShadow = !lite;
+      });
+      dressBike(bike, { key: 'cfr', finish: null });
+      applySkin(slotsOf(bike), skin);
+      const box = new THREE.Box3().setFromObject(bike), centre = box.getCenter(new THREE.Vector3());
+      bike.position.set(-centre.x, -box.min.y, -centre.z);
+      const holder = new THREE.Group();
+      holder.add(bike);
+      holder.rotation.y = room.specimenYaw || 0;
+      holder.position.set(slot.x, slot.y + .2, slot.z);
+      rack.add(holder);
+      holder.traverse(o => {
+        if (!o.isMesh) return;
+        delete o.userData.piece;
+        o.userData.gallery = room;
+        pickables.push(o);
+      });
+    }
+    room.bike = rack;
   }
 }
 async function loadKonaMachines() {
