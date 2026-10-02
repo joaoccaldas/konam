@@ -4,13 +4,14 @@
   "name": "NOR // 3 · The Norwegian Engine",
   "classification": {
     "type": "athlete-room",
-    "status": "candidate",
+    "status": "concept",
     "public": false
   },
   "implementation": {
     "kind": "installation",
     "builder": "norwegian",
-    "source": "web/src/engine/room-installations.js"
+    "source": "web/src/engine/room-installations.js",
+    "source_branch": "feat/norwegian-engine-room"
   },
   "story": {
     "concept": "Three lanes. One system. Measure. Adapt. Repeat.",
@@ -149,5 +150,20 @@
       "rights"
     ],
     "public_wiring": false
+  },
+  "brand": {
+    "authority": "docs/BRAND_SYSTEM.md",
+    "tokens": "brand/tokens.css",
+    "ui": "global",
+    "typography": "global",
+    "tone": "Kona.m",
+    "theme_scope": [
+      "environment",
+      "story",
+      "props",
+      "materials",
+      "sound",
+      "local-lighting"
+    ]
   }
 }
