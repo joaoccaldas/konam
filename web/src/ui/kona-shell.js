@@ -133,6 +133,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openDiscover:explore,
       openPlan:plan,
       openCollection:collection,
+      openWorld:()=>{close();enter?.();},
       admin:accessContext.admin,
     });
     requestAnimationFrame(()=>requestAnimationFrame(()=>{if(request===studioRequest)startTour();}));
