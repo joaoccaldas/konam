@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:konam:room-manifest:v1",
+  "title": "KONA.m Room Manifest v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "classification",
+    "implementation",
+    "brand",
+    "story",
+    "spatial",
+    "assets",
+    "subjects",
+    "interactions",
+    "performance",
+    "provenance",
+    "rights",
+    "release"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string"},
+    "name": {"type": "string"},
+    "classification": {
+      "type": "object",
+      "required": ["type","status","public"],
+      "properties": {
+        "type": {"type": "string"},
+        "status": {"enum": ["concept","candidate","visual-review","technical-review","rights-review","approved-unwired","release-candidate","public","deprecated"]},
+        "public": {"type": "boolean"}
+      }
+    },
+    "implementation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind","builder","source"],
+          "properties": {
+            "kind": {"const": "installation"},
+            "builder": {"type": "string"},
+            "source": {"type": "string"},
+            "source_branch": {"type": "string"}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind","module"],
+          "properties": {
+            "kind": {"const": "native-room"},
+            "module": {"type": "string"},
+            "source_branch": {"type": "string"}
+          }
+        }
+      ]
+    },
+    "brand": {
+      "type": "object",
+      "required": ["authority","tokens","ui","typography","tone","theme_scope"],
+      "properties": {
+        "authority": {"const": "docs/BRAND_SYSTEM.md"},
+        "tokens": {"const": "brand/tokens.css"},
+        "ui": {"const": "global"},
+        "typography": {"const": "global"},
+        "tone": {"const": "Kona.m"},
+        "theme_scope": {"type": "array","items":{"type":"string"}}
+      }
+    },
+    "story": {"type": "object"},
+    "spatial": {"type": "object"},
+    "assets": {"type": "object"},
+    "subjects": {"type": "array"},
+    "interactions": {"type": "object"},
+    "performance": {"type": "object","required": ["mobile","tablet","desktop"]},
+    "provenance": {"type": "object"},
+    "rights": {"type": "object"},
+    "release": {"type": "object","required": ["evidence_path","required_gates"]}
+  }
+}

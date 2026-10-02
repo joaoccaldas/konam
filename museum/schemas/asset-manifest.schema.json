@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:konam:asset-manifest:v1",
+  "title": "KONA.m Generic Asset Manifest v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "type",
+    "name",
+    "format",
+    "source",
+    "generator",
+    "output",
+    "version",
+    "units",
+    "coordinate_system",
+    "scale",
+    "pivot_policy",
+    "materials",
+    "lod",
+    "reusable",
+    "provenance",
+    "rights_state",
+    "truth_classification",
+    "performance",
+    "validation_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "format": {
+      "enum": [
+        "glb",
+        "gltf",
+        "procedural"
+      ]
+    },
+    "source": {
+      "type": "string"
+    },
+    "generator": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "output": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "version": {
+      "type": "string"
+    },
+    "units": {
+      "const": "meters"
+    },
+    "coordinate_system": {
+      "type": "string"
+    },
+    "scale": {
+      "type": "number"
+    },
+    "pivot_policy": {
+      "type": "string"
+    },
+    "materials": {
+      "type": "array"
+    },
+    "lod": {
+      "type": "object"
+    },
+    "reusable": {
+      "type": "boolean"
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "rights_state": {
+      "enum": [
+        "original",
+        "licensed",
+        "rights-review",
+        "restricted"
+      ]
+    },
+    "truth_classification": {
+      "enum": [
+        "verified-fact",
+        "documented-historical-reference",
+        "independent-reconstruction",
+        "generic-equipment-study",
+        "editorial-interpretation",
+        "fictional-original-artistic-object"
+      ]
+    },
+    "performance": {
+      "type": "object"
+    },
+    "validation_status": {
+      "enum": [
+        "generator-defined",
+        "generated",
+        "validated",
+        "rejected"
+      ]
+    }
+  }
+}
