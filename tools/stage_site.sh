@@ -23,6 +23,8 @@ rsync -a assets/ _site/assets/ --exclude reference/
 mkdir -p _site/assets/reference && rsync -a assets/reference/paintings/ _site/assets/reference/paintings/
 mkdir -p _site/review/beast-cave
 cp review/beast-cave/index.html review/beast-cave/beast-cave-review.bundle.js _site/review/beast-cave/
+mkdir -p _site/experiences/beast-cave
+cp experiences/beast-cave/index.html experiences/beast-cave/beast-cave-experience.bundle.js _site/experiences/beast-cave/
 mkdir -p _site/docs && cp docs/FIT_RESEARCH_AND_ROADMAP.md _site/docs/
 mkdir -p _site/docs/audit-20260929
 cp docs/audit-20260929/room-horror.png docs/audit-20260929/room-alien.png docs/audit-20260929/room-zombie.png _site/docs/audit-20260929/
@@ -36,6 +38,7 @@ test -f _site/web/src/about-story.js && test -f _site/web/src/promo.js && test -
 test -f _site/web/styles/shell-mobile.css && test -f _site/web/styles/components.css && test -f _site/web/styles/admin-assets.css && test -f _site/web/styles/studio.css && test -f _site/web/styles/experience.css && test -f _site/web/styles/collection.css && test -f _site/brand/tokens.css && test -f _site/brand/typography.css
 test -f _site/app/museum-data.js && test -f _site/app/hall.js && test -f _site/app/studio.js && test -f _site/app/studio-catalog.js
 test -f _site/review/beast-cave/index.html && test -f _site/review/beast-cave/beast-cave-review.bundle.js
+test -f _site/experiences/beast-cave/index.html && test -f _site/experiences/beast-cave/beast-cave-experience.bundle.js
 test -f _site/docs/audit-20260929/room-horror.png && test -f _site/docs/audit-20260929/room-alien.png && test -f _site/docs/audit-20260929/room-zombie.png
 node tools/validate-staged-site.mjs _site
 node tools/scan_public_surface.mjs _site
