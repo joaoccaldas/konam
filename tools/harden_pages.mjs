@@ -6,8 +6,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
+const productMeta = JSON.parse(fs.readFileSync(path.join(root,'config/product-meta.json'),'utf8'));
 const SITE = 'https://joaoccaldas.github.io/canyonmuseum/';
-const NAME = 'Kona.m';
+const NAME = productMeta.product_name || 'Kona.m';
 const DISCLAIMER = 'An independent, unofficial fan and research project. Not affiliated with, endorsed by or sponsored by Canyon Bicycles GmbH. Canyon and Speedmax are trademarks of their owners.';
 
 // The only third parties the pages load (measured with a request log): Google Fonts and Wikimedia images.
