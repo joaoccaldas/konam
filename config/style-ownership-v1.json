@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "purpose": "Launch-time CSS blast-radius contract. Freeze visual design; make style ownership explicit.",
+  "owners": {
+    "brand/tokens.css": [
+      "semantic design tokens only"
+    ],
+    "brand/themes.css": [
+      "theme values only"
+    ],
+    "brand/artifacts.css": [
+      "shared artifact grammar"
+    ],
+    "brand/typography.css": [
+      "typography authority"
+    ],
+    "web/styles/components.css": [
+      "shared consumer components"
+    ],
+    "web/styles/system.css": [
+      "consumer shell primitives",
+      "install/update UI",
+      "shared panels"
+    ],
+    "web/styles/shell-mobile.css": [
+      "consumer mobile shell",
+      "bottom navigation",
+      "consumer panel layout"
+    ],
+    "web/styles/entry.css": [
+      "landing",
+      "onboarding",
+      "entry utilities"
+    ],
+    "web/styles/home.css": [
+      "Home"
+    ],
+    "web/styles/garage.css": [
+      "Garage"
+    ],
+    "web/styles/race-self.css": [
+      "User Studio",
+      "Race Self",
+      "avatar editor"
+    ],
+    "web/styles/companion.css": [
+      "Feed",
+      "Travel"
+    ],
+    "web/styles/admin-assets.css": [
+      "Admin Assets"
+    ],
+    "web/styles/hall-web.css": [
+      "immersive world desktop/shared chrome",
+      "world map"
+    ],
+    "web/styles/hall-mobile.css": [
+      "immersive world phone/coarse-pointer/landscape chrome"
+    ],
+    "web/styles/studio.css": [
+      "Bike Studio"
+    ],
+    "web/styles/experience.css": [
+      "Experiences"
+    ],
+    "web/styles/collection.css": [
+      "Collection"
+    ]
+  },
+  "forbidden_cross_ownership": {
+    "web/styles/hall-web.css": [
+      ".kona-bottom-nav",
+      ".kona-panel",
+      ".kona-home",
+      ".garage-shell",
+      ".companion-hero",
+      ".race-self-experience"
+    ],
+    "web/styles/hall-mobile.css": [
+      ".kona-bottom-nav",
+      ".kona-panel",
+      ".kona-home",
+      ".garage-shell",
+      ".companion-hero",
+      ".race-self-experience"
+    ],
+    "web/styles/shell-mobile.css": [
+      "#joy",
+      "#rail",
+      "#tourPill",
+      "#nearby",
+      "#coach"
+    ],
+    "web/styles/entry.css": [
+      "#joy",
+      "#rail",
+      "#tourPill",
+      ".race-self-experience",
+      ".companion-hero"
+    ]
+  },
+  "important_budget": {
+    "rule": "Launch stabilization is monotonic: existing legacy debt may stay, but it may not grow without changing this reviewed contract.",
+    "web/styles/hall-mobile.css": 95,
+    "web/styles/hall-web.css": 25,
+    "web/styles/system.css": 7,
+    "web/styles/shell-mobile.css": 1,
+    "web/styles/entry.css": 3
+  }
+}

@@ -14,9 +14,10 @@
     "race": "plan",
     "you": "me"
   },
-  "current_origin_status": "M1_PENDING_CANONICAL_DEPLOYMENT_DECISION",
+  "current_origin_status": "M3_5_GITHUB_PAGES_TARGET_SELECTED",
   "old_public_origin": "https://joaoccaldas.github.io/canyonmuseum/",
   "third_party_default_disclosure": "Independent study. Not affiliated with, endorsed by, or sponsored by the referenced brand or athlete unless explicitly stated otherwise.",
   "storage_namespace": "kona.*",
-  "legacy_storage_namespace": "speedmax.*"
+  "legacy_storage_namespace": "speedmax.*",
+  "site_origin": "https://joaoccaldas.github.io/konam/"
 }
