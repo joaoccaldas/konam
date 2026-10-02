@@ -33,6 +33,7 @@
       ]
     }
   ],
-  "buildCommand": "bash tools/stage_site.sh",
-  "outputDirectory": "_site"
+  "buildCommand": "node tools/build_pages.mjs && bash tools/stage_site.sh",
+  "outputDirectory": "_site",
+  "installCommand": "cd web && npm ci --ignore-scripts"
 }
