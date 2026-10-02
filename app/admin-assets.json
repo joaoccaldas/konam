@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
  "generated_by": "tools/build_admin_assets.mjs",
- "count": 104,
+ "count": 105,
  "rooms": [
   {
    "id": "hall",
@@ -30,6 +30,13 @@
    "floor": "ground",
    "floor_name": "Ground floor",
    "kind": "trophy"
+  },
+  {
+   "id": "beast",
+   "name": "Lionel Sanders · Beast Cave",
+   "floor": "ground",
+   "floor_name": "Ground floor",
+   "kind": "themed"
   },
   {
    "id": "pier",
@@ -280,6 +287,13 @@
      "floor": "ground",
      "floor_name": "Ground floor",
      "kind": "timeline"
+    },
+    {
+     "id": "beast",
+     "name": "Lionel Sanders · Beast Cave",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "themed"
     },
     {
      "id": "pier",
@@ -2464,6 +2478,39 @@
      "floor": "ground",
      "floor_name": "Ground floor",
      "kind": "trophy"
+    }
+   ]
+  },
+  {
+   "id": "room:beast",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Lionel Sanders · Beast Cave",
+   "year": "",
+   "category": "themed",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [
+    {
+     "text": "The work nobody sees"
+    }
+   ],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "#12181d",
+    "accent": "#ff6a00",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "beast",
+     "name": "Lionel Sanders · Beast Cave",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "themed"
     }
    ]
   },
