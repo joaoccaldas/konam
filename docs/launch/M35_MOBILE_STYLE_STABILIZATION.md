@@ -59,3 +59,15 @@ Delete only categories 2–5 when equivalence is proven by visual evidence and i
 - Visual Evidence V2 green at 320/360/390/430/landscape/desktop;
 - screenshots show no unexplained visual delta;
 - physical-device gate remains separately required.
+
+## M3.6 deletion batch 1
+
+Removed consumer-entry/install selectors from `hall-mobile.css`. These selectors cannot affect first-session entry because Hall styles are lazy-loaded only by `ensureWorldShell()` when the immersive world is opened. Keeping them there created a second, delayed owner that could restyle entry DOM after world loading.
+
+Measured source delta:
+- hall-mobile.css: 16,402 → 14,233 bytes (-2,169; -13.2%)
+- !important: 108 → 105 (-3)
+- runtime JS/WebGL/state: unchanged
+- consumer entry ownership in world CSS: removed
+
+The visual target remains zero unexplained delta. World/mobile interaction evidence must remain green before merge.
