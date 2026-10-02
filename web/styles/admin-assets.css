@@ -42,3 +42,18 @@
 .asset-thumb-generated::before{content:"";position:absolute;left:8%;right:8%;bottom:14%;height:30%;border:1px solid color-mix(in srgb,var(--preview-accent) 55%,transparent);border-radius:50%;transform:perspective(280px) rotateX(68deg);background:radial-gradient(ellipse,color-mix(in srgb,var(--preview-accent) 18%,transparent),transparent 68%)}
 .asset-thumb-generated i{position:absolute;left:50%;top:20%;width:34%;height:52%;transform:translateX(-50%);border:1px solid color-mix(in srgb,var(--preview-accent) 72%,white);box-shadow:0 0 42px color-mix(in srgb,var(--preview-accent) 32%,transparent)}
 .asset-thumb-generated span{position:absolute;left:14px;bottom:12px;color:white;font:800 10px/1 var(--brand-font-data);letter-spacing:.16em;text-transform:uppercase}
+
+
+/* Merch Studio reuses the admin portfolio shell and brand tokens. */
+.merch-grid{display:grid;grid-template-columns:1fr;gap:14px}
+.merch-card{overflow:hidden;border:1px solid var(--brand-line);border-radius:var(--brand-card-radius);background:var(--brand-surface);box-shadow:var(--artifact-shadow)}
+.merch-card img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--brand-lava)}
+.merch-card>div{display:grid;gap:8px;padding:16px}
+.merch-card small{font:700 9px/1.3 var(--brand-font-data);letter-spacing:.14em;text-transform:uppercase;color:var(--brand-ocean)}
+.merch-card h4{margin:0;font:400 32px/1 var(--brand-font-editorial)}
+.merch-card p{margin:0;color:var(--brand-muted);font:600 12px/1.5 var(--brand-font-ui)}
+.merch-card dl{display:grid;gap:0;margin:6px 0 0;border-top:1px solid var(--brand-line)}
+.merch-card dl div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--brand-line);font:550 11px/1.4 var(--brand-font-ui)}
+.merch-card dt{color:var(--brand-muted)}.merch-card dd{margin:0;text-align:right;font-weight:700}
+@media(min-width:680px){.merch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1080px){.merch-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
