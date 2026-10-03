@@ -130,7 +130,8 @@
   "provenance": {
     "concept": "independent KONA.m editorial concept",
     "generated_imagery": "reference-only-not-runtime-evidence",
-    "reuse_audit": "docs/evidence/NOR3_ASSET_REUSE_AUDIT_20261003.md"
+    "reuse_audit": "docs/evidence/NOR3_ASSET_REUSE_AUDIT_20261003.md",
+    "production_gate": "docs/evidence/NOR3_PRODUCTION_GATE_20261003.md"
   },
   "rights": {
     "endorsement": false,
@@ -150,7 +151,8 @@
       "interaction",
       "performance",
       "truth",
-      "rights"
+      "rights",
+      "canonical-cinematic-evidence"
     ],
     "public_wiring": false
   },
