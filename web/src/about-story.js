@@ -7,7 +7,7 @@ const stories={
     estimate:'~ 15 seconds',
     paragraphs:[
       '<strong>Before anything else: I am proud this exists.</strong>',
-      'One of my favourite people recently inspired me to get back into triathlon.',
+      'One of my favourite persons recently inspired me to get back into triathlon.',
       'So, naturally, I made an Excel sheet to track the comeback.',
       'A lot of scattered pieces finally became one thing I could finish enough to share.',
       '<strong>Now there is an island.</strong>',
