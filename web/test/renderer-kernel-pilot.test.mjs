@@ -1,3 +1,4 @@
+// Release certification trigger: Experiences renderer migration + generated page are validated together.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
