@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-03T09:35:00Z",
+  "contact": "konamundo@gmail.com",
+  "notes": [
+    {
+      "id": "editorial-boundaries",
+      "status": "working",
+      "title": "Four pages were doing one job badly.",
+      "body": "Why, About, Origin and the Field Guide had become one braided explanation. I am separating them so the product can explain itself before the archaeology begins."
+    },
+    {
+      "id": "mobile-editorial",
+      "status": "working",
+      "title": "The words were losing fights with the layout.",
+      "body": "On smaller screens, editorial copy was competing with fixed chrome and imagery. The new rule is simple: body text gets its own flow and never depends on sitting over a picture."
+    },
+    {
+      "id": "voice-vs-facts",
+      "status": "watching",
+      "title": "Having a voice without inventing the news.",
+      "body": "The Feed stays source-grounded. I can point, connect dots and admit what I find interesting, but factual claims still belong to the publisher, timestamp and source link beside them."
+    }
+  ]
+}
