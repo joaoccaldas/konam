@@ -22,7 +22,9 @@ export function createRendererContext({
   preserveDrawingBuffer=false,
 }={}){
   if(!canvas)throw new TypeError('renderer context requires a canvas');
-  const renderer=new THREE.WebGLRenderer({canvas,antialias,alpha,powerPreference,preserveDrawingBuffer});
+  let renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas,antialias,alpha,powerPreference,preserveDrawingBuffer});}
+  catch(error){globalThis.__konaAnalytics?.trackRuntimeError?.('renderer_init',{subsystem:'renderer'});throw error;}
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.toneMapping=TONE_MAPPING[toneMapping]??THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure=exposure;
@@ -31,6 +33,10 @@ export function createRendererContext({
 
   let disposed=false;
   let loop=null;
+  const onContextLost=()=>globalThis.__konaAnalytics?.trackRuntimeError?.('renderer_context_lost',{subsystem:'renderer'});
+  const onContextRestored=()=>globalThis.__konaAnalytics?.trackRuntimeError?.('renderer_context_restored',{subsystem:'renderer'});
+  canvas.addEventListener?.('webglcontextlost',onContextLost);
+  canvas.addEventListener?.('webglcontextrestored',onContextRestored);
 
   const visible=()=>typeof document==='undefined'||!document.hidden;
   const syncLoop=()=>{
@@ -54,6 +60,8 @@ export function createRendererContext({
       loop=null;
       renderer.setAnimationLoop(null);
       if(typeof document!=='undefined')document.removeEventListener('visibilitychange',onVisibility);
+      canvas.removeEventListener?.('webglcontextlost',onContextLost);
+      canvas.removeEventListener?.('webglcontextrestored',onContextRestored);
       renderer.dispose();
       if(forceContextLoss)renderer.forceContextLoss?.();
     },
