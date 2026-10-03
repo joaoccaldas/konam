@@ -9,7 +9,7 @@
 .companion-back,.companion-button,.companion-filters button{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:var(--brand-touch);padding:10px 16px;background:transparent;border:1px solid var(--brand-line);border-radius:var(--brand-control-radius);color:var(--brand-ink);font:650 13px/1.35 var(--brand-font-ui);cursor:pointer}
 .companion-back{border:0;padding-left:0}
 .companion-button:disabled{opacity:.55;cursor:wait}
-.companion-hero{margin:20px 0 28px;padding:26px 0;border-block:1px solid var(--brand-line)}
+.companion-hero{position:static;inset:auto;z-index:auto;display:block;align-items:initial;justify-content:initial;gap:0;pointer-events:auto;margin:20px 0 28px;padding:26px 0;border-block:1px solid var(--brand-line)}
 .companion-hero small,.companion-place>small,.companion-utilities article>small,.companion-arrival small{display:block;color:var(--brand-muted);font:700 10px/1.5 var(--brand-font-ui);letter-spacing:.14em;text-transform:uppercase}
 .companion-hero h3{font:400 clamp(42px,8vw,68px)/.98 var(--brand-font-editorial);letter-spacing:-.025em;max-width:12ch;margin:12px 0 16px;text-wrap:balance}
 .companion-hero p{max-width:40rem;font-size:15px;line-height:1.65;color:var(--brand-muted);margin:0}
