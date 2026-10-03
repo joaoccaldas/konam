@@ -17,6 +17,7 @@ const outfile = path.join(root, 'app/hall.js');
 const corefile = path.join(root, 'app/kona-core.js');
 const raceselffile = path.join(root, 'app/race-self-stage.js');
 const collectiblefile = path.join(root, 'app/collectible-stage.js');
+const findthumbfile = path.join(root, 'app/find-thumbnails.js');
 const adminpreviewfile = path.join(root, 'app/admin-asset-preview.js');
 const nor3reviewfile = path.join(root, 'app/nor3-review.js');
 const worldshellfile = path.join(root, 'app/world-shell.html');
@@ -46,6 +47,15 @@ await build({
   format: 'iife',
   minify: true,
   outfile: collectiblefile,
+  target: 'es2020',
+  legalComments: 'none',
+});
+await build({
+  entryPoints: [path.join(here, 'src/ui/find-thumbnails.js')],
+  bundle: true,
+  format: 'iife',
+  minify: true,
+  outfile: findthumbfile,
   target: 'es2020',
   legalComments: 'none',
 });
@@ -84,6 +94,8 @@ const raceSelfBundled = fs.readFileSync(raceselffile, 'utf8').replace(/<\/script
 fs.writeFileSync(raceselffile, `/* Race Self 3D stage. Edit web/src/ui/race-self-stage.js */\n${raceSelfBundled}`);
 const collectibleBundled = fs.readFileSync(collectiblefile, 'utf8').replace(/<\/script/gi, '<\\/script');
 fs.writeFileSync(collectiblefile, `/* KONA Finds 3D stage. Edit web/src/ui/collectible-stage.js */\n${collectibleBundled}`);
+const findThumbBundled = fs.readFileSync(findthumbfile, 'utf8').replace(/<\/script/gi, '<\\/script');
+fs.writeFileSync(findthumbfile, `/* Collected Find thumbnails. Edit web/src/ui/find-thumbnails.js */\n${findThumbBundled}`);
 const adminPreviewBundled = fs.readFileSync(adminpreviewfile, 'utf8').replace(/<\/script/gi, '<\\/script');
 fs.writeFileSync(adminpreviewfile, `/* Admin Asset Portfolio 3D previews. Edit web/src/ui/admin-asset-preview.js */\n${adminPreviewBundled}`);
 const bundled = fs.readFileSync(outfile, 'utf8').replace(/<\/script/gi, '<\\/script');

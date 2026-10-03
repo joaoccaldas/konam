@@ -15,6 +15,7 @@ import { renderProgressSurface } from './me.js';
 import { avatarItemAccess } from '../engine/access.js';
 import { shareProgress, whatsappProgressUrl, safeAppUrl, progressShareText, progressCardBlob } from '../growth/social-share.js';
 import { PRODUCT_NAME } from '../product-meta.js';
+import { STATE_CHANGE_EVENT } from '../engine/storage.js';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const productId=id=>String(id||'').replace(/^product:/,'');
@@ -50,7 +51,7 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
   const studioHref=bike?'Studio.html?p='+encodeURIComponent(bike.id):'Studio.html';
   const raceCount=(snapshot.race_history||[]).length;
 
-  const menuItem=(action,mark,title,note)=>'<button type="button" data-race-self-action="'+action+'"><i aria-hidden="true">'+mark+'</i><span><b>'+title+'</b><small>'+note+'</small></span><em aria-hidden="true">↗</em></button>';
+  const menuItem=(action,mark,title,note)=>'<button type="button" data-race-self-action="'+action+'"><i aria-hidden="true">'+mark+'</i><span><b>'+title+'</b><small data-menu-note="'+action+'">'+note+'</small></span><em aria-hidden="true">↗</em></button>';
   root.innerHTML=
     '<section class="race-self-experience" aria-label="User Studio">'+
       '<header class="studio-heading"><a href="index.html" class="studio-wordmark" aria-label="'+PRODUCT_NAME+' title screen">'+PRODUCT_NAME+'<span>USER STUDIO</span></a><button type="button" class="btn-text studio-home" data-studio-home>← Home</button><button class="studio-install" data-install-app type="button">Install app</button><span class="studio-save-state" role="status">● Saved on this device</span></header>'+
@@ -98,6 +99,17 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
     script.onload=mountStage;script.onerror=stageError;document.body.append(script);
   }
   root.querySelector('[data-stage-reset]').addEventListener('click',()=>stageApi?.resetView?.());
+
+  const syncPersonalSummary=()=>{
+    if(disposed)return;
+    const fresh=readGameState(),freshSummary=collectionSummary(fresh);
+    const raceNote=root.querySelector('[data-menu-note="races"]');
+    const collectionNote=root.querySelector('[data-menu-note="collection"]');
+    if(raceNote)raceNote.textContent=(fresh.race_history||[]).length+' race badges';
+    if(collectionNote)collectionNote.textContent=freshSummary.total+' collected items · '+freshSummary.finds+' Finds';
+  };
+  const onStateChange=()=>syncPersonalSummary();
+  globalThis.addEventListener?.(STATE_CHANGE_EVENT,onStateChange);
 
   const drawer=root.querySelector('[data-hub-drawer]');
   const drawerBody=root.querySelector('[data-hub-body]');
@@ -220,7 +232,7 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
     drawerKicker.textContent='USER STUDIO · RACES';drawerTitle.textContent='Your race cards';
     const host=document.createElement('div');
     drawerBody.replaceChildren(host);
-    renderRacePicker(host,{onChange:()=>{}});
+    renderRacePicker(host,{onChange:()=>syncPersonalSummary()});
     if(drawer.hidden)openDrawer();
   };
 
@@ -270,5 +282,5 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
   root.querySelector('[data-race-self-action="travel"]')?.addEventListener('click',()=>openTravel?.());
   root.querySelector('[data-race-self-action="assets"]')?.addEventListener('click',()=>openAssets?.());
   root.querySelector('[data-race-self-action="settings"]')?.addEventListener('click',()=>settings?.open?.());
-  return ()=>{disposed=true;stageApi?.dispose?.();script?.remove();document.removeEventListener('keydown',handleKey);};
+  return ()=>{disposed=true;globalThis.removeEventListener?.(STATE_CHANGE_EVENT,onStateChange);stageApi?.dispose?.();script?.remove();document.removeEventListener('keydown',handleKey);};
 }

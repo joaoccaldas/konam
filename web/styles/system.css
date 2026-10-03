@@ -354,6 +354,9 @@ body.return-moment-open{overflow:hidden}
 .find-card b{overflow-wrap:anywhere;font:400 23px/1.1 var(--brand-font-editorial)}
 .find-card small,.find-card span{font:500 11px/1.4 var(--brand-font-data);color:var(--brand-muted)}
 .find-card.is-collected{border-color:var(--brand-action)}
+.find-thumb{display:block;width:100%;aspect-ratio:8/5;object-fit:cover;border-radius:14px;border:1px solid var(--brand-line);background:var(--brand-surface);box-shadow:0 16px 28px -24px rgba(18,24,29,.45)}
+.find-card.is-locked .find-mark{display:grid;place-items:center;min-height:96px;border:1px dashed var(--brand-line);border-radius:14px;color:var(--brand-faint);font:400 42px/1 var(--brand-font-editorial)}
+.find-card.is-locked b{color:var(--brand-muted)}
 .find-mark{display:grid;place-items:center;width:100%;min-height:74px;font:400 48px/1 var(--brand-font-editorial);color:var(--brand-ink);font-style:normal}
 .find-mark svg{width:84px;height:70px}
 .find-card.is-locked .find-mark{color:var(--brand-muted)}
