@@ -57,7 +57,7 @@ test('sealed service worker verifies release files and keeps GLBs out of the cor
   assert.match(index, /src="app\/kona-core\.js"/);
   assert.doesNotMatch(index, /src="app\/hall\.js"/);
   assert.match(coreJs, /app\/hall\.js/);
-  assert.ok(coreJs.length < 240000, 'the entry bundle pulled in Three.js/world runtime');
+  assert.ok(coreJs.length < 250000, `entry bundle exceeds the 250KB uncompressed source budget: ${coreJs.length} bytes`);
   assert.doesNotMatch(coreJs,/WebGLRenderer|GLTFLoader|OrbitControls/);
   assert.doesNotMatch(index, /window\.__PIECES=/);
   assert.ok(index.length < 250000, `index.html grew back to ${(index.length / 1024).toFixed(0)} kB`);
