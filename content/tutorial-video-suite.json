@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "id": "konam-tutorial-video-suite-v1",
+  "public_policy": {
+    "optional": true,
+    "blocks_first_run": false,
+    "autoplay_audio": false,
+    "skippable": true,
+    "max_single_clip_seconds": 15,
+    "rule": "Value precedes tutorial. Films explain or inspire; they do not gate entry."
+  },
+  "groups": [
+    {
+      "id": "origin",
+      "label": "PART 1",
+      "title": "Brand & origin",
+      "purpose": "Explain why Kona.m exists before explaining controls."
+    },
+    {
+      "id": "walkthrough",
+      "label": "PART 2",
+      "title": "Real app walkthroughs",
+      "purpose": "Show the actual product in short, task-specific clips."
+    },
+    {
+      "id": "island",
+      "label": "PART 3",
+      "title": "Island, Field Guide & telemetry",
+      "purpose": "Connect the app to place, exploration and race-week context."
+    }
+  ],
+  "videos": [
+    {
+      "index": 1,
+      "id": "arrival",
+      "group": "origin",
+      "duration_seconds": 12,
+      "file_name": "kona_intro_01_arrival.mp4",
+      "source_received": false,
+      "title": "The Arrival & Rest-Day Bearings",
+      "hook": "A quiet arrival before the app starts asking anything.",
+      "beats": [
+        "Queen K at dawn",
+        "Kailua Pier quiet",
+        "rest-day notebook",
+        "short origin line: a training log became an island"
+      ],
+      "use": [
+        "about hero",
+        "optional pre-tour film"
+      ]
+    },
+    {
+      "index": 2,
+      "id": "machines",
+      "group": "origin",
+      "duration_seconds": 14,
+      "file_name": "kona_intro_02_machines.mp4",
+      "source_received": false,
+      "title": "The 3D Machine Lab & The Dream",
+      "hook": "Engineering with the wonder left in.",
+      "beats": [
+        "1972 steel",
+        "Obree",
+        "Lotus",
+        "Speedmax",
+        "exploded 3D",
+        "paint and inspect"
+      ],
+      "use": [
+        "Garage tutorial",
+        "museum intro"
+      ]
+    },
+    {
+      "index": 3,
+      "id": "race-self",
+      "group": "origin",
+      "duration_seconds": 12,
+      "file_name": "kona_intro_03_race_self.mp4",
+      "source_received": false,
+      "title": "Race the Version of Yourself",
+      "hook": "The product is personal before it is technical.",
+      "beats": [
+        "athlete identity",
+        "Queen K wind",
+        "passport",
+        "finish-line aspiration"
+      ],
+      "use": [
+        "Race Self intro",
+        "About epilogue"
+      ]
+    },
+    {
+      "index": 4,
+      "id": "first-entry",
+      "group": "walkthrough",
+      "duration_seconds": 13,
+      "file_name": "kona_intro_04_step_onboarding.mp4",
+      "source_received": false,
+      "title": "First Entry & Intent Calibration",
+      "hook": "Get to value before registration.",
+      "beats": [
+        "landing",
+        "why are you here",
+        "intent choices",
+        "first reward",
+        "skip remains visible"
+      ],
+      "use": [
+        "optional onboarding help",
+        "Field Guide tutorial"
+      ]
+    },
+    {
+      "index": 5,
+      "id": "race-self-home",
+      "group": "walkthrough",
+      "duration_seconds": 12.933333,
+      "file_name": "kona_intro_05_step_auth_avatar.mp4",
+      "source_received": true,
+      "title": "Meet Race Self & The Home Hub",
+      "hook": "Identity first, then Home: customize Race Self, make the app feel less like a browser, and meet the first suspicious Find.",
+      "beats": [
+        "Who are we sending into the lava?",
+        "Good enough. Let’s make trouble.",
+        "684,579 seconds on the clock",
+        "Curiosity is a training plan too."
+      ],
+      "use": [
+        "avatar onboarding",
+        "Home tutorial"
+      ],
+      "size_bytes": 3964902,
+      "media": {
+        "codec": "h264",
+        "width": 1920,
+        "height": 1080,
+        "fps": 60,
+        "verified_from_supplied_mp4": true
+      }
+    },
+    {
+      "index": 6,
+      "id": "garage-sync",
+      "group": "walkthrough",
+      "duration_seconds": 13,
+      "file_name": "kona_intro_06_step_3d_garage.mp4",
+      "source_received": false,
+      "title": "3D Machine Lab & Optional Sync",
+      "hook": "The machine is a playground, not an account wall.",
+      "beats": [
+        "bike archive",
+        "3D pedestal",
+        "exploded view",
+        "room transition",
+        "optional account/sync"
+      ],
+      "use": [
+        "Garage tutorial",
+        "cloud-backup explainer"
+      ]
+    },
+    {
+      "index": 7,
+      "id": "course-crucible",
+      "group": "island",
+      "duration_seconds": 13.716667,
+      "file_name": "kona_intro_07_course_crucible.mp4",
+      "source_received": true,
+      "title": "The 3D Island Crucible & Rooms",
+      "hook": "The island as a sequence of crucibles: ocean, highway, twilight and history.",
+      "beats": [
+        "Kailua Pier at Dawn: 2.4 miles of ocean",
+        "Queen K Highway: 112 miles against trade winds",
+        "The Energy Lab at Twilight",
+        "History Lane: from the trailer to the podium"
+      ],
+      "use": [
+        "World tutorial",
+        "Discover deep dive"
+      ],
+      "size_bytes": 5076584,
+      "media": {
+        "codec": "h264",
+        "width": 1920,
+        "height": 1080,
+        "fps": 60,
+        "verified_from_supplied_mp4": true
+      }
+    },
+    {
+      "index": 8,
+      "id": "field-guide-passport",
+      "group": "island",
+      "duration_seconds": 13.666667,
+      "file_name": "kona_intro_08_field_guide_passport.mp4",
+      "source_received": true,
+      "title": "Field Guide & Secret Passport",
+      "hook": "A quiet field guide, local wandering, strange Finds and a passport that remembers.",
+      "beats": [
+        "The Island Field Guide: Kona without algorithmic noise",
+        "Wander without Strava",
+        "The Suspicious Volcanic Rock & found artifacts",
+        "Stamp your digital passport"
+      ],
+      "use": [
+        "Field Guide tutorial",
+        "collections onboarding"
+      ],
+      "size_bytes": 6257904,
+      "media": {
+        "codec": "h264",
+        "width": 1920,
+        "height": 1080,
+        "fps": 60,
+        "verified_from_supplied_mp4": true
+      }
+    },
+    {
+      "index": 9,
+      "id": "telemetry-cockpit",
+      "group": "island",
+      "duration_seconds": 13.633333,
+      "file_name": "kona_intro_09_telemetry_cockpit.mp4",
+      "source_received": true,
+      "title": "Telemetry Cockpit & Hawi Crosswinds",
+      "hook": "Race-week timing, machine setup and history converge into one cockpit.",
+      "beats": [
+        "Countdown to gun time",
+        "Build, paint and dial in your race setup",
+        "Every Speedmax generation compared side by side",
+        "Race the version of yourself you haven’t met yet"
+      ],
+      "use": [
+        "Plan tutorial",
+        "race-week context"
+      ],
+      "size_bytes": 5475222,
+      "media": {
+        "codec": "h264",
+        "width": 1920,
+        "height": 1080,
+        "fps": 60,
+        "verified_from_supplied_mp4": true
+      }
+    }
+  ],
+  "publication": {
+    "repo_binary_directory": "assets/tutorials",
+    "current_status": "metadata-ready; supplied binaries are not yet published in the repository",
+    "do_not_render_broken_video_sources": true,
+    "source_package_note": "Videos 05, 07, 08 and 09 were visually inspected from the supplied 1920×1080 H.264 60fps source files. Public playback still waits for repository-controlled binary publication."
+  }
+}
