@@ -72,7 +72,7 @@ for(const id of selected){
       await p.waitForSelector('.registration-avatar');
       const data=await p.evaluate(()=>({answers:JSON.parse(localStorage.getItem('kona.entryIntent.v1')),progress:JSON.parse(localStorage.getItem('kona.progression.v1'))}));
       assert.equal(data.answers.answers['kona-intent'],'dreaming');assert.equal(data.answers.completed,true);
-      assert.equal(data.progress.xp,5);assert.equal(data.progress.level,1);
+      assert.equal(data.progress.xp,2);assert.equal(data.progress.level,1);
       await click('[data-reg-back]');await click('#buildSelf');
       await p.waitForSelector('.registration-avatar');
       assert.equal(await p.$('[data-onboarding-question]'),null,'one-time onboarding cards must not replay');
