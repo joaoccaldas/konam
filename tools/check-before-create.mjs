@@ -14,7 +14,7 @@ const authority={
   asset:['assets','museum/catalog','app/admin-assets.json','museum/schemas/asset-manifest.schema.json','skills/konam-room-studio/SKILL.md'],
   product:['museum/catalog/products.json','museum/bikes','integrations/public-catalog.json','web/src/engine/identity.js'],
   storage:['web/src/engine/storage.js','web/src/engine/game-state.js','web/src/engine/app-state.js'],
-  runtime:['web/src/landing.js','web/src/entry.js','web/src/ui/kona-shell.js','web/src/engine/machine-inspection.js'],
+  runtime:['web/src/landing.js','web/src/entry.js','web/src/ui/kona-shell.js','web/src/engine/machine-inspection.js','config/renderer-authority-v1.json','docs/architecture/RENDERER_AUTHORITY_R0.md'],
   schema:['museum/schemas','schemas','integrations','museum/bike.schema.json']
 };
 if(!authority[kind]){

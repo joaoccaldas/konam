@@ -18,6 +18,8 @@ This document names the canonical owners of product truth. If a proposed change 
 | Brand/UI | `docs/BRAND_SYSTEM.md`, `brand/tokens.css`, `web/styles/components.css` | compose existing primitives first |
 | Consumer shell | `web/src/entry.js` + `web/src/ui/kona-shell.js` | do not create a second shell/navigation authority |
 | World renderer/player | `web/src/landing.js` | rooms plug in through approved adapters |
+| Renderer authority freeze | `config/renderer-authority-v1.json` + `tools/authority-hygiene.mjs` | do not add a renderer constructor outside the explicit inventory; production entries must have a kernel migration disposition |
+| Shared renderer kernel | Wave 2 target: `web/src/render/` (not implemented yet) | migrate one bounded consumer at a time; do not create a parallel renderer stack |
 | Build outputs | source files + deterministic builders | never hand-edit generated bundles as authority |
 | Release truth | exact-SHA CI + evidence | branch existence is not production authority |
 
@@ -50,7 +52,7 @@ CREATE is last.
 ## New-authority rule
 
 A new implementation may add content or an adapter. It may not silently add another:
-- renderer
+- renderer constructor outside `config/renderer-authority-v1.json`
 - camera/player framework
 - storage namespace
 - progression engine
