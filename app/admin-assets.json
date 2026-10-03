@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
  "generated_by": "tools/build_admin_assets.mjs",
- "count": 105,
+ "count": 107,
  "rooms": [
   {
    "id": "hall",
@@ -202,6 +202,13 @@
   {
    "id": "nike-running",
    "name": "Nike Running Lab",
+   "floor": "ground",
+   "floor_name": "Ground floor",
+   "kind": "brand"
+  },
+  {
+   "id": "breitling",
+   "name": "Breitling · Endurance Pro",
    "floor": "ground",
    "floor_name": "Ground floor",
    "kind": "brand"
@@ -1678,6 +1685,46 @@
     {
      "id": "nike-running",
      "name": "Nike Running Lab",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "brand"
+    }
+   ]
+  },
+  {
+   "id": "multibrand-breitling-watch",
+   "kind": "product",
+   "type": "watch",
+   "brand": "Breitling",
+   "name": "Endurance-style Chronograph",
+   "year": 2026,
+   "category": "Chronograph study",
+   "material": "",
+   "glb": "assets/multibrand/breitling-watch/watch_web.glb",
+   "image": "",
+   "facts": [
+    {
+     "text": "Original titanium chronograph: case, bezel, dial, hands and bracelet. Independent study; not affiliated with or endorsed by Breitling."
+    }
+   ],
+   "stats": [
+    [
+     "~7 k",
+     "triangles"
+    ],
+    [
+     "titanium",
+     "case"
+    ],
+    [
+     "chronograph",
+     "type"
+    ]
+   ],
+   "locations": [
+    {
+     "id": "breitling",
+     "name": "Breitling · Endurance Pro",
      "floor": "ground",
      "floor_name": "Ground floor",
      "kind": "brand"
@@ -3340,6 +3387,35 @@
     {
      "id": "nike-running",
      "name": "Nike Running Lab",
+     "floor": "ground",
+     "floor_name": "Ground floor",
+     "kind": "brand"
+    }
+   ]
+  },
+  {
+   "id": "room:breitling",
+   "kind": "world",
+   "type": "room",
+   "brand": "KONA World",
+   "name": "Breitling · Endurance Pro",
+   "year": "",
+   "category": "brand",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [],
+   "preview": {
+    "kind": "room",
+    "floor": "basalt",
+    "accent": "#c8102e",
+    "fog": "#0b1116"
+   },
+   "locations": [
+    {
+     "id": "breitling",
+     "name": "Breitling · Endurance Pro",
      "floor": "ground",
      "floor_name": "Ground floor",
      "kind": "brand"
