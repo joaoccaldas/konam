@@ -5,14 +5,13 @@
   "parent_room": "room-026",
   "classification": {
     "type": "athlete-room",
-    "status": "concept",
+    "status": "candidate",
     "public": false
   },
   "implementation": {
     "kind": "installation",
     "builder": "norwegian",
-    "source": "web/src/engine/room-installations.js",
-    "source_branch": "feat/norwegian-engine-room"
+    "source": "web/src/engine/room-installations.js"
   },
   "story": {
     "concept": "Three lanes. One system. Measure. Adapt. Repeat.",
@@ -30,6 +29,7 @@
       "heat-cool",
       "podium-vault",
       "fjord-relief",
+      "recovery",
       "kona-line"
     ],
     "specimen_slots": [
@@ -88,7 +88,8 @@
       "protocol-table",
       "environment-bay",
       "vault",
-      "fjord-relief"
+      "fjord-relief",
+      "recovery"
     ]
   },
   "performance": {
@@ -128,7 +129,9 @@
   },
   "provenance": {
     "concept": "independent KONA.m editorial concept",
-    "generated_imagery": "reference-only-not-runtime-evidence"
+    "generated_imagery": "reference-only-not-runtime-evidence",
+    "reuse_audit": "docs/evidence/NOR3_ASSET_REUSE_AUDIT_20261003.md",
+    "production_gate": "docs/evidence/NOR3_PRODUCTION_GATE_20261003.md"
   },
   "rights": {
     "endorsement": false,
@@ -148,7 +151,8 @@
       "interaction",
       "performance",
       "truth",
-      "rights"
+      "rights",
+      "canonical-cinematic-evidence"
     ],
     "public_wiring": false
   },
