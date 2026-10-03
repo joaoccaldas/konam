@@ -5,7 +5,7 @@ import fs from 'node:fs';
 const read=p=>fs.readFileSync(new URL('../../'+p,import.meta.url),'utf8');
 
 test('Why Kona is globally reachable without replacing the five primary tabs',()=>{
-  const index=read('index.html');
+  const landing=read('web/landing.template.html');
   const shell=read('web/src/ui/kona-shell.js');
   const hardener=read('tools/harden_pages.mjs');
   const css=read('web/styles/system.css');
