@@ -27,6 +27,8 @@ export async function renderOnboardingBike(host,{onContinue,onSkip}={}){
   const title=[product?.brand,product?.label||product?.name||product?.model||reward.label].filter(Boolean).join(' ');
   const year=product?.year?String(product.year):'LEVEL '+state.level;
 
+  globalThis.__konaAnalytics?.track?.('first_bike_shown',{surface:'onboarding'});
+
   const paint=collected=>{
     host.innerHTML='<section class="onboarding-question" data-onboarding-bike>'+
       '<div class="onboarding-step-mark" aria-hidden="true"><strong>BIKE</strong><span>UNLOCKED</span></div>'+
