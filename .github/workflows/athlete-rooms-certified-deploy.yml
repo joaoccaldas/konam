@@ -1,0 +1,54 @@
+name: Deploy certified athlete rooms
+
+on:
+  push:
+    branches:
+      - refactor/public-athlete-rooms-deploy-v1
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: athlete-rooms-certified-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout certified release
+        uses: actions/checkout@v4
+        with:
+          ref: 64d83f56fccfa5ad475acb5e98e1e8755f195ae8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install
+        run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Stage exact certified public site
+        env:
+          GITHUB_SHA: 64d83f56fccfa5ad475acb5e98e1e8755f195ae8
+          GITHUB_REF_NAME: main
+        run: bash tools/stage_site.sh
+      - name: Validate staged surface
+        run: |
+          node tools/validate-staged-site.mjs _site
+          node tools/scan_public_surface.mjs _site
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
