@@ -76,3 +76,19 @@ test('NOR3 reusable asset generation remains candidate-only and reuse-audited',(
   assert.ok(fs.existsSync(path.join(ROOT,'blender/norwegian_engine_assets.py')));
   assert.equal(fs.existsSync(path.join(ROOT,'assets/rooms/norwegian-engine/direct-drive-trainer.glb')),false);
 });
+
+
+test('every NOR3 candidate asset is assigned to at least one runtime zone',()=>{
+  const assets=json('world/konam/candidates/norwegian-engine-assets-v1.json');
+  const mapped=new Set(Object.values(assets.runtime_mapping.zones).flat());
+  const unmapped=assets.assets.map(x=>x.id).filter(id=>!mapped.has(id));
+  assert.deepEqual(unmapped,[]);
+});
+
+test('NOR3 spatial layout covers every canonical room zone',()=>{
+  const room=json('world/konam/rooms/norwegian-engine.room.json');
+  const layout=json('world/konam/candidates/norwegian-engine-room-layout-v1.json');
+  const layoutZones=new Set(layout.zones.map(x=>x.id));
+  const missing=room.spatial.zones.filter(id=>id!=='room-shell'&&!layoutZones.has(id));
+  assert.deepEqual(missing,[]);
+});
