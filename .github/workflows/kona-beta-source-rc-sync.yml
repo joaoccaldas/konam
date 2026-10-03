@@ -99,7 +99,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TARGET: ${{ inputs.target_ref || github.ref_name }}
         run: |
-          for workflow in release-security.yml checks.yml integration-contract.yml app-seal.yml visual-evidence-v2.yml ui-interaction-audit.yml; do
+          for workflow in release-security.yml checks.yml integration-contract.yml app-seal.yml visual-evidence-v2.yml ui-interaction-audit.yml hostile-runtime.yml; do
             echo "dispatching $workflow on $TARGET"
             gh workflow run "$workflow" --ref "$TARGET"
           done
