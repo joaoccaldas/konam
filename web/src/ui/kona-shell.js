@@ -40,6 +40,13 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       `<div class="kona-panel-head"><div><small id="konaPanelEyebrow">${PRODUCT_NAME} · BETA</small><h2 id="konaPanelTitle">Now</h2></div><button id="konaPanelClose" type="button" aria-label="Close">×</button></div>`+
       '<div id="konaPanelBody" class="kona-panel-body"></div>'+
     '</div>'+
+    '<nav class="kona-desktop-nav" aria-label="Desktop navigation">'+
+      '<button type="button" data-desktop-tab="home">Now</button>'+
+      '<button type="button" data-desktop-tab="discover">Discover</button>'+
+      '<button type="button" data-desktop-tab="garage">Garage</button>'+
+      '<button type="button" data-desktop-tab="plan">Plan</button>'+
+      '<button type="button" data-desktop-tab="me">Studio</button>'+
+    '</nav>'+
     '<nav class="kona-bottom-nav" aria-label="Main navigation">'+
       '<button type="button" data-tab="home">'+icon('now')+'<span>Now</span></button>'+
       '<button type="button" data-tab="discover">'+icon('explore')+'<span>Discover</span></button>'+
@@ -59,6 +66,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     try{visible=navigationForState(readGameState(),{admin:accessContext.admin});}catch(_){}
     const shown=new Set(visible);
     shell.querySelectorAll('[data-tab]').forEach(button=>{button.hidden=!shown.has(button.dataset.tab);});
+    shell.querySelectorAll('[data-desktop-tab]').forEach(button=>{button.hidden=!shown.has(button.dataset.desktopTab);});
     const nav=shell.querySelector('.kona-bottom-nav');
     if(nav){
       nav.style.setProperty('--nav-count',String(Math.max(1,visible.length)));
@@ -84,7 +92,10 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     const token=++routeToken;
     setTimeout(()=>{if(token===routeToken&&!panel.hidden)surpriseLayer.maybeShow(surface);},2200);
   };
-  const setActive=id=>shell.querySelectorAll('[data-tab]').forEach(x=>(x.classList.toggle('on',x.dataset.tab===id),x.setAttribute('aria-current',x.dataset.tab===id?'page':'false')));
+  const setActive=id=>{
+    shell.querySelectorAll('[data-tab]').forEach(x=>(x.classList.toggle('on',x.dataset.tab===id),x.setAttribute('aria-current',x.dataset.tab===id?'page':'false')));
+    shell.querySelectorAll('[data-desktop-tab]').forEach(x=>(x.classList.toggle('on',x.dataset.desktopTab===id),x.setAttribute('aria-current',x.dataset.desktopTab===id?'page':'false')));
+  };
   let tourNode=null,tourTarget=null,tourFrame=0;
   const positionTour=()=>{
     if(!tourNode||!tourTarget)return;
@@ -276,6 +287,11 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   shell.querySelector('[data-tab=garage]').onclick=garage;
   shell.querySelector('[data-tab=plan]').onclick=plan;
   shell.querySelector('[data-tab=me]').onclick=me;
+  shell.querySelector('[data-desktop-tab=home]').onclick=now;
+  shell.querySelector('[data-desktop-tab=discover]').onclick=explore;
+  shell.querySelector('[data-desktop-tab=garage]').onclick=garage;
+  shell.querySelector('[data-desktop-tab=plan]').onclick=plan;
+  shell.querySelector('[data-desktop-tab=me]').onclick=me;
   const routeToUserStudio=()=>typeof openUserStudio==='function'?openUserStudio():me();
   shell.querySelector('[data-user-studio]').onclick=routeToUserStudio;
   addEventListener('keydown',e=>{if(e.key==='Escape'&&!e.defaultPrevented&&!panel.hidden&&document.body.classList.contains('museum-open'))close();});
