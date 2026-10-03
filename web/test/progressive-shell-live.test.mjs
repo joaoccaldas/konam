@@ -5,14 +5,19 @@ import fs from 'node:fs';
 const shell=fs.readFileSync(new URL('../src/ui/kona-shell.js',import.meta.url),'utf8');
 const home=fs.readFileSync(new URL('../src/ui/home.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../styles/system.css',import.meta.url),'utf8');
+const mobileCss=fs.readFileSync(new URL('../styles/shell-mobile.css',import.meta.url),'utf8');
 
 test('persistent shell is state-driven rather than five tabs for everyone',()=>{
   assert.match(shell,/navigationForState\(readGameState\(\)/);
   assert.match(shell,/button\.hidden=!shown\.has\(button\.dataset\.tab\)/);
   assert.match(shell,/--nav-count/);
+  assert.match(shell,/nav\.dataset\.count=String\(visible\.length\)/);
+  assert.match(shell,/aria-hidden/);
   assert.match(shell,/data-tab="home"[\s\S]*<span>Now<\/span>/);
   assert.match(css,/repeat\(var\(--nav-count,5\),1fr\)/);
   assert.match(css,/\[hidden\]/);
+  assert.match(mobileCss,/data-count="1"/,'a one-destination shell must not render a full-width redundant nav bar');
+  assert.match(mobileCss,/@media\(min-width:900px\)[\s\S]*\.kona-bottom-nav\{display:none!important\}/,'desktop must not inherit the phone bottom bar');
 });
 
 test('first Home does not automatically launch the old guided tour',()=>{
