@@ -212,7 +212,7 @@ ${BRANDS.length ? `- Brand-room studies: ${BRANDS.join('; ')}.` : ''}
 - Photographs are openly licensed (Wikimedia Commons, CC BY / CC BY-SA); authors and licences are shown beside every image.
 
 ## Privacy
-No accounts, no analytics, no cookies, no tracking by default. The Passport and settings stay in the visitor's own browser (localStorage). Public email sign-in is currently unavailable. Existing signed-in users may explicitly back up, restore or delete their cloud backup. See privacy.html for the beta data notice and remaining account launch requirements.
+No account is required. The public web beta uses privacy-minimal first-party session analytics without advertising cookies, account IDs, precise location, raw feedback text or a persistent visitor identifier; the packaged native app does not enable that public-web analytics path. Passport and settings stay local-first. Public email sign-in is currently unavailable. Existing signed-in users may explicitly back up, restore or delete their cloud backup. See privacy.html for the beta data notice and remaining account launch requirements.
 `);
 const roomsMd = fs.existsSync(path.join(root, 'docs/ROOMS.md')) ? fs.readFileSync(path.join(root, 'docs/ROOMS.md'), 'utf8') : '';
 const islandGuide = fs.existsSync(path.join(root, 'museum/kona/island-guide.json')) ? JSON.parse(fs.readFileSync(path.join(root, 'museum/kona/island-guide.json'), 'utf8')) : null;
@@ -246,7 +246,7 @@ ${roomsMd}
 ${guideLines}
 
 ## Privacy and app behavior
-No account is required. No default analytics, ad trackers or background location tracking. Profile, Passport, finds and saved app state are local-first unless a future sync feature is explicitly enabled by the visitor.
+No account is required. No ad trackers or background location tracking. The public web beta uses privacy-minimal first-party session analytics; the packaged native app does not enable that public-web analytics path. Profile, Passport, finds and saved app state are local-first unless sync is explicitly enabled by the visitor.
 `);
 
 console.log('hardened', PAGES.map(p => p.file).join(', '));
