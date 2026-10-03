@@ -21,3 +21,13 @@ test('kernel owns GPU lifecycle but not camera or controls',()=>{
   assert.doesNotMatch(kernel,/OrbitControls/);
   assert.doesNotMatch(kernel,/GLTFLoader/);
 });
+
+test('Race Self delegates renderer lifecycle while keeping camera and controls local',()=>{
+  const stage=read('src/ui/race-self-stage.js');
+  assert.match(stage,/createRendererContext/);
+  assert.doesNotMatch(stage,/new\s+THREE\.WebGLRenderer\s*\(/);
+  assert.match(stage,/new\s+THREE\.PerspectiveCamera\s*\(/);
+  assert.match(stage,/new\s+OrbitControls\s*\(/);
+  assert.match(stage,/__raceSelfRendererAuthority='shared-r0'/);
+  assert.match(stage,/renderContext\.dispose\(\{forceContextLoss:true\}\)/);
+});
