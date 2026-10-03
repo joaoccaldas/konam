@@ -47,7 +47,10 @@ const PAGES = [
     description: 'Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.', keepTitle: true },
   { file: 'about.html', type: 'AboutPage', image: 'assets/share/konam.png',
     title: 'About Kona.m · the Field Guide to the world, the game & the lab',
-    description: 'What Kona.m is and how to play it: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain it all.' },
+    description: 'What Kona.m is and how it works: Now, Race Self, machines, race week, discoveries, worlds, rooms, experiments and the systems underneath.' },
+  { file: 'why.html', type: 'AboutPage', image: 'assets/share/konam.png',
+    title: 'Why Kona.m · the story behind the experiment',
+    description: 'Why Kona.m exists: the short version, the scenic route, and the unfiltered story behind the project.' },
   { file: 'promo.html', type: 'WebPage', image: 'assets/share/konam.png',
     title: 'Kona.m Field Guide · how to play, worlds, bikes & experiments',
     description: 'A playful public guide to Kona.m: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain what this app actually is.', keepTitle: true },
@@ -171,7 +174,7 @@ for (const p of PAGES) {
     .map(href => `<link rel="stylesheet" href="${href}">`).join('');
   html = html.replace(/<\/head>/i, `<!--design-system:start-->${fonts}${missing}<!--design-system:end-->\n</head>`);
   html = html.replace(/<!--global-user-studio:start-->[\s\S]*?<!--global-user-studio:end-->\n?/g, '');
-  if (!['index.html','about.html','promo.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
+  if (!['index.html','about.html','why.html','promo.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
     html = html.replace(/<body([^>]*)>/i, match => match + GLOBAL_USER_STUDIO);
   }
   html=html.replace(/<script src="app\/standalone-access.js"><\/script>\n?/g,'');

@@ -48,6 +48,7 @@ jobs:
           CHROME_PATH=/usr/bin/google-chrome node web/studio-launch-audit.mjs http://127.0.0.1:8744
           CHROME_PATH=/usr/bin/google-chrome node web/launch-regression-browser.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/install-launch-audit.mjs http://127.0.0.1:8744
+          CHROME_PATH=/usr/bin/google-chrome node web/about-story-browser-audit.mjs http://127.0.0.1:8744
       - name: Built pages are up to date
         run: |
           node tools/build_pages.mjs

@@ -3,3 +3,16 @@
 /* Editorial labels need text contrast in every theme. */
 .about-estimate,.about-path-num,.about-sidequest-label,.about-countdown{color:var(--brand-ink)}
 .photo-credit{font:12px/1.6 var(--brand-font-ui);color:var(--brand-ink)}
+
+
+/* Why Kona continuous story ------------------------------------------------ */
+.about-scroll-invite{margin:34px 0 4px;text-align:center;font-size:30px;color:var(--brand-action)}
+.about-story-section{min-height:100svh;padding-top:72px;padding-bottom:92px;border-top:1px solid var(--brand-line);scroll-margin-top:84px}
+.about-story-section .about-story-head{position:relative}
+.why-hero{min-height:calc(100svh - 120px)}
+.about-story-section:nth-of-type(even) .about-photo-card{transform:rotate(-1deg)}
+.about-story-section:nth-of-type(odd) .about-note{transform:rotate(1deg)}
+@media(max-width:900px){
+ .why-hero{min-height:0}
+ .about-story-section{min-height:0;padding-top:48px;padding-bottom:64px;scroll-margin-top:76px}
+}
