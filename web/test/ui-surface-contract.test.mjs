@@ -63,7 +63,9 @@ test('Progress owns no independent persistence and keeps Passport compatibility 
   assert.match(me,/renderProgressSurface/);
   assert.match(me,/renderPassportSurface/);
   assert.doesNotMatch(me,/localStorage|writeStorage/);
-  assert.doesNotMatch(shell,/gameProgress|readGameState|sendMagicLink|backupGameState/);
+  assert.doesNotMatch(shell,/gameProgress|sendMagicLink|backupGameState/);
+  assert.match(shell,/readGameState/,'shell may read canonical state only to reveal navigation progressively');
+  assert.doesNotMatch(shell,/writeGameState|writeProgression|writePassportState/,'shell navigation remains read-only');
 });
 
 test('entry has questions, avatar, install handoff and replayable contextual onboarding',()=>{
@@ -86,7 +88,7 @@ test('entry has questions, avatar, install handoff and replayable contextual onb
   assert.match(registration,/data-reg-overlay/);
 });
 
-test('Home button means Home and Admin Assets stays a generated, Me-only capability',()=>{
+test('Now tab routes to Home behavior and Admin Assets stays a generated, Me-only capability',()=>{
   assert.match(shell,/\[data-tab=home\]'\)\.onclick=now/);
   assert.match(shell,/renderAdminAssets/);
   assert.match(admin,/app\/admin-assets\.json/);
