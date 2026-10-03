@@ -7,11 +7,23 @@ const external=(url,label,cls='')=>safeURL(url)?'<a class="'+cls+'" href="'+esc(
 const heading=(kicker,title,description)=>'<header class="companion-hero"><small>'+kicker+'</small><h3>'+title+'</h3><p>'+description+'</p></header>';
 const error=(node,retry)=>{node.innerHTML='<div class="companion-empty" role="status"><h4>Quick pit stop.</h4><p>This page could not load. Reconnect and try again; your Studio is still ready.</p><button class="companion-button" data-retry>Try again</button></div>';node.querySelector('[data-retry]').onclick=retry;};
 
+const internDispatch=(node,data)=>{
+ if(!node||!data?.headline)return;
+ const email=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.contact||'')?data.contact:'konamundo@gmail.com';
+ const watch=(data.watch||[]).slice(0,6).map((item,i)=>'<article class="intern-watch-item"><span>'+String(i+1).padStart(2,'0')+'</span><div><small>'+esc(item.source)+' · '+esc(formatDate(item.published_at))+'</small><h5>'+external(item.url,item.title)+'</h5><p>'+esc(item.intern_note||'Open the original source for the facts.')+'</p></div></article>').join('');
+ const notes=(data.build_notes||[]).slice(0,4).map(note=>'<article class="intern-build-note"><small>'+esc((note.status||'working').toUpperCase())+'</small><h5>'+esc(note.title)+'</h5><p>'+esc(note.body)+'</p></article>').join('');
+ node.innerHTML='<section class="intern-dispatch artifact artifact--label" aria-label="Intern Dispatch">'+
+  '<header><div><small>INTERN DISPATCH · '+esc(formatDate(data.generated_at))+'</small><h4>'+esc(data.headline)+'</h4><p>'+esc(data.dek||'')+'</p></div><span class="intern-dispatch-stamp">READ<br>BUILD<br>REPEAT</span></header>'+
+  '<div class="intern-dispatch-grid"><div><p class="intern-dispatch-label">WHAT I WOULD OPEN FIRST</p><div class="intern-watch">'+watch+'</div></div><aside><p class="intern-dispatch-label">WHAT FOUGHT BACK TODAY</p><div class="intern-build">'+notes+'</div></aside></div>'+
+  '<footer><p>'+esc(data.source_policy||'Source titles and links remain authoritative.')+'</p><a href="mailto:'+esc(email)+'">Write to the Intern · '+esc(email)+'</a></footer>'+
+ '</section>';
+};
+
 export function renderFeed(root,{back,scope='feed',compact=false}={}){
  const controller=new AbortController();
  root.innerHTML='<section class="companion-page" aria-label="'+(compact?'Island updates':'Triathlon Feed')+'">'+(compact?'<h4 class="companion-section-title">The island, in the loop.</h4>':'<button class="companion-back" data-back>← User Studio</button>'+heading('THE FEED · SWIM / BIKE / SCROLL','Your rest-day rabbit hole.','Triathlon headlines, athlete cameras and life on the island. Straight from the source.'))+
- '<div class="companion-tools"><a href="integrations/companion/rss.xml" data-personal-rss class="companion-button">Subscribe via RSS ↗</a><button class="companion-button" data-refresh>Refresh feed</button></div><div data-subscriptions></div><div data-feed-content aria-live="polite"><p>Gathering the good stuff…</p></div></section>';
- const page=root.firstElementChild,content=page.querySelector('[data-feed-content]');if(page.querySelector('[data-back]'))page.querySelector('[data-back]').onclick=back;
+ '<div class="companion-tools"><a href="integrations/companion/rss.xml" data-personal-rss class="companion-button">Subscribe via RSS ↗</a><button class="companion-button" data-refresh>Refresh feed</button></div><div data-intern-dispatch></div><div data-subscriptions></div><div data-feed-content aria-live="polite"><p>Gathering the good stuff…</p></div></section>';
+ const page=root.firstElementChild,content=page.querySelector('[data-feed-content]'),dispatchHost=page.querySelector('[data-intern-dispatch]');if(page.querySelector('[data-back]'))page.querySelector('[data-back]').onclick=back;
  let loadRequest=0;let data,fallback,managed=false,kind='all',source='all',query='',limit=18;
  function render(){
   const rows=filterFeed(data,{kind,source,query}),map=new Map(data.sources.map(s=>[s.id,s]));
@@ -28,6 +40,9 @@ export function renderFeed(root,{back,scope='feed',compact=false}={}){
   const refresh=page.querySelector('[data-refresh]');refresh.disabled=true;
   try{
    fallback ||= await loadCompanion('feed',{signal:controller.signal});
+   if(dispatchHost&&!dispatchHost.dataset.loaded){
+    try{const dispatch=await loadCompanion('intern-dispatch',{signal:controller.signal});if(!controller.signal.aborted){internDispatch(dispatchHost,dispatch);dispatchHost.dataset.loaded='true';}}catch(_){dispatchHost.remove();}
+   }
    const defaults=scope==='travel'?fallback.sources.filter(s=>s.kind==='kona'):fallback.sources;
    if(!managed){sourceManager(page.querySelector('[data-subscriptions]'),{scope,defaults,signal:controller.signal,onChange:()=>{source='all';load();}});managed=true;}
    const next=await liveSubscriptions(scope,subscriptions(scope,defaults),fallback,controller.signal);if(controller.signal.aborted||request!==loadRequest)return;data=next;
