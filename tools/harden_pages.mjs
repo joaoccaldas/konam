@@ -45,9 +45,15 @@ const PAGES = [
   { file: 'Experiences.html', type: 'WebPage', image: 'assets/share/museum.jpg',
     title: 'Speedmax Nights & History Lane · Canyon Speedmax Museum',
     description: 'Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.', keepTitle: true },
+  { file: 'why.html', type: 'WebPage', image: 'assets/share/konam.png',
+    title: 'Why Kona.m · the product thesis',
+    description: 'Why Kona.m exists: a richer way to explore triathlon through machines, places, history, stories, 3D interaction and play.' },
   { file: 'about.html', type: 'AboutPage', image: 'assets/share/konam.png',
-    title: 'About Kona.m · the Field Guide to the world, the game & the lab',
-    description: 'What Kona.m is and how to play it: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain it all.' },
+    title: 'About Kona.m · what the product is and how it works',
+    description: 'What Kona.m is: an independent triathlon world for identity, 3D bikes, equipment, places, stories, collections, race context and playful exploration.' },
+  { file: 'origin.html', type: 'WebPage', image: 'assets/share/konam.png',
+    title: 'Origin story · Kona.m',
+    description: 'The optional origin story behind Kona.m: returning to triathlon, an Excel sheet, AI, bikes, 3D, rooms, side quests and an island.' },
   { file: 'promo.html', type: 'WebPage', image: 'assets/share/konam.png',
     title: 'Kona.m Field Guide · how to play, worlds, bikes & experiments',
     description: 'A playful public guide to Kona.m: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain what this app actually is.', keepTitle: true },
@@ -69,7 +75,11 @@ const COMMON_DESIGN_LINKS = [
 ];
 const pageDesignLinks = file => file === 'index.html'
   ? [...COMMON_DESIGN_LINKS, 'web/styles/shell-mobile.css', 'web/styles/entry.css']
-  : COMMON_DESIGN_LINKS;
+  : ['why.html','about.html','origin.html'].includes(file)
+    ? [...COMMON_DESIGN_LINKS, 'web/styles/about.css']
+    : file === 'promo.html'
+      ? [...COMMON_DESIGN_LINKS, 'web/styles/promo.css']
+      : COMMON_DESIGN_LINKS;
 const FONTS = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300..800&display=swap';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const jsonld = o => JSON.stringify(o).replace(/</g, '\\u003c');
@@ -143,16 +153,8 @@ function block(p) {
 }
 
 
-// About is the Field Guide. promo.html is the single source; about.html is generated from it
-// so the two pages cannot drift. Only the page's own canonical/og:url and its head block differ.
-const MIRRORS = { 'about.html': 'promo.html' };
-for (const [target, source] of Object.entries(MIRRORS)) {
-  const html = fs.readFileSync(path.join(root, source), 'utf8')
-    .replace(/<!--harden:start-->[\s\S]*?<!--harden:end-->\n?/, '')
-    .replace(/(<link rel="canonical" href="[^"]*\/)promo\.html(")/g, `$1${target}$2`)
-    .replace(/(<meta property="og:url" content="[^"]*\/)promo\.html(")/g, `$1${target}$2`);
-  fs.writeFileSync(path.join(root, target), html);
-}
+// Why, About, Origin and the Field Guide are independent editorial surfaces.
+// The hardener may enrich their metadata, but it must never rewrite one page from another.
 
 for (const p of PAGES) {
   const f = path.join(root, p.file); if (!fs.existsSync(f)) continue;
@@ -171,7 +173,7 @@ for (const p of PAGES) {
     .map(href => `<link rel="stylesheet" href="${href}">`).join('');
   html = html.replace(/<\/head>/i, `<!--design-system:start-->${fonts}${missing}<!--design-system:end-->\n</head>`);
   html = html.replace(/<!--global-user-studio:start-->[\s\S]*?<!--global-user-studio:end-->\n?/g, '');
-  if (!['index.html','about.html','promo.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
+  if (!['index.html','why.html','about.html','origin.html','promo.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
     html = html.replace(/<body([^>]*)>/i, match => match + GLOBAL_USER_STUDIO);
   }
   html=html.replace(/<script src="app\/standalone-access.js"><\/script>\n?/g,'');
