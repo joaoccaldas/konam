@@ -90,24 +90,24 @@
     {
       "id": "nor3-lane-architecture",
       "type": "architecture-module",
-      "format": "glb",
+      "format": "procedural",
       "source": "blender/norwegian_engine_assets.py",
-      "output": "assets/rooms/norwegian-engine/lane-architecture.glb",
+      "output": null,
       "reusable": true,
       "material": "wet basalt / blackened steel / low-iron glass",
       "lod": "required",
-      "status": "generator-defined"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-protocol-wall",
       "type": "architecture-module",
-      "format": "glb",
+      "format": "procedural",
       "source": "blender/norwegian_engine_assets.py",
-      "output": "assets/rooms/norwegian-engine/protocol-wall.glb",
+      "output": null,
       "reusable": true,
       "material": "basalt / chalk panel / brushed frame",
       "lod": "required",
-      "status": "generator-defined"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-trainer",
@@ -117,7 +117,7 @@
       "output": "assets/rooms/norwegian-engine/direct-drive-trainer.glb",
       "reusable": true,
       "material": "powder-coated steel / machined alloy",
-      "status": "generator-defined"
+      "status": "candidate-authoring-only"
     },
     {
       "id": "nor3-run-deck",
@@ -127,7 +127,7 @@
       "output": "assets/rooms/norwegian-engine/run-deck.glb",
       "reusable": true,
       "material": "matte rubber / anodised alloy",
-      "status": "generator-defined"
+      "status": "candidate-authoring-only"
     },
     {
       "id": "nor3-protocol-table",
@@ -137,7 +137,7 @@
       "output": "assets/rooms/norwegian-engine/protocol-table.glb",
       "reusable": true,
       "material": "smoked oak / brushed steel",
-      "status": "generator-defined"
+      "status": "candidate-authoring-only"
     },
     {
       "id": "nor3-analyser",
@@ -147,34 +147,34 @@
       "output": "assets/rooms/norwegian-engine/analyser.glb",
       "reusable": true,
       "material": "dark anodised alloy / glass",
-      "status": "generator-defined"
+      "status": "candidate-authoring-only"
     },
     {
       "id": "nor3-vial-rack",
       "type": "prop",
-      "format": "glb",
+      "format": "procedural",
       "source": "blender/norwegian_engine_assets.py",
-      "output": "assets/rooms/norwegian-engine/vial-rack.glb",
+      "output": null,
       "reusable": true,
-      "status": "generator-defined"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-towel-rail",
       "type": "accessory",
-      "format": "glb",
+      "format": "procedural",
       "source": "blender/norwegian_engine_assets.py",
-      "output": "assets/rooms/norwegian-engine/towel-rail.glb",
+      "output": null,
       "reusable": true,
-      "status": "generator-defined"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-bottle-set",
       "type": "accessory",
-      "format": "glb",
+      "format": "procedural",
       "source": "blender/norwegian_engine_assets.py",
-      "output": "assets/rooms/norwegian-engine/bottle-set.glb",
+      "output": null,
       "reusable": true,
-      "status": "generator-defined"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-environment-bay",
@@ -184,16 +184,16 @@
       "output": "assets/rooms/norwegian-engine/environment-bay.glb",
       "reusable": true,
       "material": "low-iron glass / steel",
-      "status": "generator-defined"
+      "status": "candidate-authoring-only"
     },
     {
       "id": "nor3-fan",
       "type": "equipment",
-      "format": "glb",
+      "format": "procedural",
       "source": "blender/norwegian_engine_assets.py",
-      "output": "assets/rooms/norwegian-engine/fan.glb",
+      "output": null,
       "reusable": true,
-      "status": "generator-defined"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-podium-vault",
@@ -203,7 +203,7 @@
       "output": "assets/rooms/norwegian-engine/podium-vault.glb",
       "reusable": true,
       "rights": "original abstract geometry; not a medal/trophy replica",
-      "status": "generator-defined"
+      "status": "candidate-authoring-only"
     },
     {
       "id": "nor3-fjord-relief",
@@ -213,7 +213,7 @@
       "output": "assets/rooms/norwegian-engine/fjord-relief.glb",
       "reusable": true,
       "rights": "original geometry; no copied map or photography",
-      "status": "generator-defined"
+      "status": "candidate-authoring-only"
     },
     {
       "id": "nor3-overhead-ribs",
@@ -223,7 +223,7 @@
       "output": null,
       "reusable": true,
       "material": "blackened steel / warm reveal",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-service-spine",
@@ -233,7 +233,7 @@
       "output": null,
       "reusable": false,
       "material": "blackened steel / cool strip",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-wet-floor-fields",
@@ -243,7 +243,7 @@
       "output": null,
       "reusable": true,
       "material": "wet basalt reflective fields",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-contact-shadows",
@@ -253,7 +253,7 @@
       "output": null,
       "reusable": true,
       "material": "canvas radial alpha",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-environmental-type",
@@ -263,7 +263,7 @@
       "output": null,
       "reusable": true,
       "material": "canvas texture panels",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-lane-plaques",
@@ -273,7 +273,7 @@
       "output": null,
       "reusable": false,
       "material": "lane 01/02/03 plaques",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-protocol-cards",
@@ -283,7 +283,7 @@
       "output": null,
       "reusable": true,
       "material": "paper",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-heat-panel",
@@ -293,7 +293,7 @@
       "output": null,
       "reusable": true,
       "material": "warm emissive panel",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-recovery-bench",
@@ -303,7 +303,7 @@
       "output": null,
       "reusable": true,
       "material": "smoked oak / steel",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-recovery-props",
@@ -313,7 +313,7 @@
       "output": null,
       "reusable": true,
       "material": "rollers / bottles / linen / glass",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-kona-mark",
@@ -323,7 +323,7 @@
       "output": null,
       "reusable": false,
       "material": "warm directional mark",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-moisture-fields",
@@ -333,7 +333,7 @@
       "output": null,
       "reusable": true,
       "material": "motes particle field",
-      "status": "generated-review"
+      "status": "procedural-first"
     },
     {
       "id": "nor3-local-light-rig",
@@ -343,7 +343,7 @@
       "output": null,
       "reusable": false,
       "material": "cool / warm / vault practicals",
-      "status": "generated-review"
+      "status": "procedural-first"
     }
   ],
   "image_policy": {
@@ -466,5 +466,19 @@
     "GLB-designated assets are generator definitions from PR #15 and are not yet proven as committed runtime GLBs on main.",
     "cinematic-production-v3 currently renders many mapped assets procedurally in Three.js review geometry.",
     "Mapping an element does not promote it to canonical/public status; visual, performance, provenance and rights gates still apply."
-  ]
+  ],
+  "generation_policy": {
+    "default": "generate-none",
+    "command": "blender -b --python blender/norwegian_engine_assets.py -- <selected-assets>",
+    "primary_candidates": [
+      "trainer",
+      "run-deck",
+      "protocol-table",
+      "analyser",
+      "environment-bay",
+      "podium-vault",
+      "fjord-relief"
+    ],
+    "rule": "Generate only after canonical evidence shows the procedural representation is a material visual limitation. Do not batch-generate secondary props."
+  }
 }
