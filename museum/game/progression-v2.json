@@ -23,6 +23,11 @@
       "credits": 0,
       "repeat": "once-per-day"
     },
+    "FEEDBACK_RESPONSE": {
+      "xp": 10,
+      "credits": 0,
+      "repeat": "once-per-prompt"
+    },
     "PRODUCT_VIEWED": {
       "xp": 5,
       "credits": 0,
