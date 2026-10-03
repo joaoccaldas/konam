@@ -286,5 +286,7 @@ html{scroll-padding-top:92px}
  .promo-header .promo-wordmark span{display:none}
  .promo-header{min-height:48px}
  .promo-section{padding-top:56px;padding-bottom:56px}
- .field-rail-nav{max-height:calc(100svh - 88px)}
+ /* Continuous scroll is clearer than a floating utility in short landscape.
+    The Guide remains available in portrait and larger layouts. */
+ .field-rail{display:none}
 }
