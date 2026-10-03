@@ -3,7 +3,8 @@
 // A random session ID and first-touch acquisition context live only for the current browser session. Native builds no-op.
 const ENDPOINT='https://mtvpnoqwjpoqaiocrklq.supabase.co/functions/v1/site-analytics';
 const PUBLIC_KEY='sb_publishable_lVueu3GqNcPe4Z9KsChvJw_VfmnVi5u';
-const PROD=!globalThis.__NATIVE&&location.hostname==='joaoccaldas.github.io'&&location.pathname.startsWith('/konam');
+const HAS_BROWSER=typeof location!=='undefined'&&typeof document!=='undefined';
+const PROD=HAS_BROWSER&&!globalThis.__NATIVE&&location.hostname==='joaoccaldas.github.io'&&location.pathname.startsWith('/konam');
 const RUNTIME_CODES=new Set(['uncaught_js','unhandled_promise','renderer_init','renderer_context_lost','renderer_context_restored','route_load','state_read','state_write','companion_load']);
 const RUNTIME_SUBSYSTEMS=new Set(['runtime','renderer','navigation','storage','companion']);
 const runtimeCounts=new Map();let runtimeTotal=0;
@@ -17,13 +18,15 @@ const uuid=()=>{
 const getSession=key=>{try{return sessionStorage.getItem(key)}catch(_){return null}};
 const setSession=(key,value)=>{try{sessionStorage.setItem(key,value)}catch(_){}};
 const param=(name,max)=>{
+  if(!HAS_BROWSER)return null;
   const value=new URLSearchParams(location.search).get(name);
   return value?value.slice(0,max):null;
 };
 const referrerHost=()=>{
+  if(!HAS_BROWSER)return null;
   try{return document.referrer?new URL(document.referrer).hostname.slice(0,160):null}catch(_){return null}
 };
-const surfaceFromPath=()=>location.pathname.endsWith('/konam/')||location.pathname.endsWith('/konam/index.html')?'landing':location.pathname.split('/').pop()?.replace(/\.html$/,'')||'page';
+const surfaceFromPath=()=>!HAS_BROWSER?'non-browser':location.pathname.endsWith('/konam/')||location.pathname.endsWith('/konam/index.html')?'landing':location.pathname.split('/').pop()?.replace(/\.html$/,'')||'page';
 
 const sessionId=(()=>{
   const key='kona.analytics.session.v1';
@@ -33,6 +36,7 @@ const sessionId=(()=>{
 })();
 
 const analyticsMode=(()=>{
+  if(!HAS_BROWSER)return 'off';
   const key='kona.analytics.mode.v2';
   const requested=param('analytics_mode',20);
   let mode=['public','qa','off'].includes(requested)?requested:getSession(key);
@@ -45,6 +49,7 @@ const ENABLED=PROD&&analyticsMode!=='off';
 const trafficClass=analyticsMode==='qa'?'qa':analyticsMode==='automation'?'automation':'public';
 
 const acquisition=(()=>{
+  if(!HAS_BROWSER)return {landing_path:'/',referrer_host:null,campaign_source:null,campaign_medium:null,campaign_name:null};
   const key='kona.analytics.acquisition.v2';
   try{
     const existing=JSON.parse(getSession(key)||'null');
@@ -128,36 +133,40 @@ trackSiteEvent('page_view');
   arm();
 })();
 
-addEventListener('error',event=>{
-  if(!(event instanceof ErrorEvent))return;
-  try{
-    const filename=event.filename?new URL(event.filename,location.href):null;
-    if(filename&&filename.origin!==location.origin)return;
-  }catch{return;}
-  trackRuntimeError('uncaught_js',{subsystem:'runtime'});
-});
-
-addEventListener('unhandledrejection',()=>{trackRuntimeError('unhandled_promise',{subsystem:'runtime'});});
-
-const eventForTarget=target=>{
-  if(target.closest('#buildSelf'))return ['entry_continue','landing'];
-  if(target.closest('#entryWorld'))return ['world_opened','world'];
-  if(target.closest('#entryInvite'))return ['share_invoked','landing'];
-  if(target.closest('#entryInstall,[data-install-app]'))return ['install_invoked','landing'];
-  if(target.closest('[data-onboarding-bike-collect]'))return ['first_bike_collected','onboarding'];
-  if(target.closest('[data-onboarding-bike-skip]'))return ['first_bike_skipped','onboarding'];
-  if(target.closest('[data-home-feed]'))return ['kona_now_feed_opened','home'];
-  if(target.closest('[data-home-travel]'))return ['kona_now_travel_opened','home'];
-  const tab=target.closest('[data-tab]')?.getAttribute('data-tab');
-  if(tab==='garage')return ['garage_opened','garage'];
-  if(tab==='discover')return ['discover_opened','discover'];
-  if(tab==='plan')return ['plan_opened','plan'];
-  if(tab==='me')return ['me_opened','me'];
-  return null;
-};
-document.addEventListener('click',event=>{
-  const hit=eventForTarget(event.target);
-  if(hit)trackSiteEvent(hit[0],{surface:hit[1]});
-},{capture:true});
+if(HAS_BROWSER){
+  addEventListener('error',event=>{
+    if(!(event instanceof ErrorEvent))return;
+    try{
+      const filename=event.filename?new URL(event.filename,location.href):null;
+      if(filename&&filename.origin!==location.origin)return;
+    }catch{return;}
+    trackRuntimeError('uncaught_js',{subsystem:'runtime'});
+  });
+  
+  addEventListener('unhandledrejection',()=>{trackRuntimeError('unhandled_promise',{subsystem:'runtime'});});
+  
+  const eventForTarget=target=>{
+    if(target.closest('#buildSelf'))return ['entry_continue','landing'];
+    if(target.closest('#entryWorld'))return ['world_opened','world'];
+    if(target.closest('#entryInvite'))return ['share_invoked','landing'];
+    if(target.closest('#entryInstall,[data-install-app]'))return ['install_invoked','landing'];
+    if(target.closest('[data-onboarding-bike-collect]'))return ['first_bike_collected','onboarding'];
+    if(target.closest('[data-onboarding-bike-skip]'))return ['first_bike_skipped','onboarding'];
+    if(target.closest('[data-home-feed]'))return ['kona_now_feed_opened','home'];
+    if(target.closest('[data-home-travel]'))return ['kona_now_travel_opened','home'];
+    const tab=target.closest('[data-tab]')?.getAttribute('data-tab');
+    if(tab==='garage')return ['garage_opened','garage'];
+    if(tab==='discover')return ['discover_opened','discover'];
+    if(tab==='plan')return ['plan_opened','plan'];
+    if(tab==='me')return ['me_opened','me'];
+    return null;
+  };
+  document.addEventListener('click',event=>{
+    const hit=eventForTarget(event.target);
+    if(hit)trackSiteEvent(hit[0],{surface:hit[1]});
+  },{capture:true});
+  
+  
+}
 
 globalThis.__konaAnalytics={track:trackSiteEvent,trackRuntimeError,sessionId,enabled:ENABLED,trafficClass};
