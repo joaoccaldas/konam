@@ -183,4 +183,36 @@ setView('overview');
 loading.hidden=true;
 requestAnimationFrame(frame);
 window.__NOR3_REVIEW_READY=true;
-window.__NOR3_REVIEW_METRICS={lite,objects:room.children.length,pickables:(L.reviewPickables||[]).length,variant:'cinematic-production-v3'};
+window.__NOR3_REVIEW_API={
+  setView:(id)=>setView(id),
+  render:()=>renderer.render(scene,camera),
+  metrics:()=>{
+    renderer.render(scene,camera);
+    let meshes=0,lights=0,materials=new Set(),geometries=new Set(),textures=new Set();
+    room.traverse(o=>{
+      if(o.isMesh){
+        meshes++;geometries.add(o.geometry.uuid);
+        const ms=Array.isArray(o.material)?o.material:[o.material];
+        for(const m of ms){if(!m)continue;materials.add(m.uuid);if(m.map)textures.add(m.map.uuid);if(m.normalMap)textures.add(m.normalMap.uuid);if(m.roughnessMap)textures.add(m.roughnessMap.uuid);}
+      }
+      if(o.isLight)lights++;
+    });
+    const info=renderer.info.render;
+    return {
+      lite,
+      variant:'cinematic-production-v3',
+      objects:room.children.length,
+      meshes,
+      lights,
+      pickables:(L.reviewPickables||[]).length,
+      unique_geometries:geometries.size,
+      unique_materials:materials.size,
+      textures:textures.size,
+      draw_calls:info.calls,
+      triangles:info.triangles,
+      points:info.points,
+      lines:info.lines
+    };
+  }
+};
+window.__NOR3_REVIEW_METRICS=window.__NOR3_REVIEW_API.metrics();
