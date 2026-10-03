@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - launch/public-surface-certification-20261002
+      - refactor/beast-cave-review-validation-v1
   workflow_dispatch:
 
 permissions:
