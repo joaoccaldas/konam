@@ -45,8 +45,8 @@ export function registerVisit({storage=globalThis.localStorage,session=globalThi
 }
 export function nextReturnMoment(state,{standalone=false,native=false}={}){
   const s={...fresh(),...(state||{})};
-  if(s.visits>=2&&!s.raceWeekFeedbackAsked)return 'feedback-race-week';
   if(s.visits>=3&&!s.rewardsSeen)return 'rewards';
+  if(!standalone&&!native&&s.visits>=4&&!s.raceWeekFeedbackAsked)return 'feedback-race-week';
   if(standalone||native||s.installOptOut||s.installEngaged)return null;
   if(s.visits>=5&&!s.installTeaserSeen)return 'install-teaser';
   if(s.installDismissals>=1&&s.visits>=s.lastInstallPromptVisit+3&&!s.installReminderSeen)return 'install-reminder';
