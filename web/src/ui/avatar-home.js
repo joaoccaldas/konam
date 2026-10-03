@@ -282,5 +282,5 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
   root.querySelector('[data-race-self-action="travel"]')?.addEventListener('click',()=>openTravel?.());
   root.querySelector('[data-race-self-action="assets"]')?.addEventListener('click',()=>openAssets?.());
   root.querySelector('[data-race-self-action="settings"]')?.addEventListener('click',()=>settings?.open?.());
-  return ()=>{disposed=true;stageApi?.dispose?.();script?.remove();document.removeEventListener('keydown',handleKey);};
+  return ()=>{disposed=true;globalThis.removeEventListener?.(STATE_CHANGE_EVENT,onStateChange);stageApi?.dispose?.();script?.remove();document.removeEventListener('keydown',handleKey);};
 }
