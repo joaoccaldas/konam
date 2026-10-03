@@ -10,9 +10,11 @@ test('persistent shell is state-driven rather than five tabs for everyone',()=>{
   assert.match(shell,/navigationForState\(readGameState\(\)/);
   assert.match(shell,/button\.hidden=!shown\.has\(button\.dataset\.tab\)/);
   assert.match(shell,/--nav-count/);
+  assert.match(shell,/nav\.hidden=visible\.length<2/);
   assert.match(shell,/data-tab="home"[\s\S]*<span>Now<\/span>/);
   assert.match(css,/repeat\(var\(--nav-count,5\),1fr\)/);
-  assert.match(css,/\[hidden\]/);
+  assert.match(css,/\.kona-bottom-nav\[hidden\]\{display:none!important\}/);
+  assert.match(css,/Desktop shell: promote navigation into a compact top dock/);
 });
 
 test('first Home does not automatically launch the old guided tour',()=>{
