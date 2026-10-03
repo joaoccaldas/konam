@@ -67,12 +67,26 @@ test('unlocks follow requirements and do not reopen', () => {
 });
 
 
-test('three onboarding answers reach level 2 exactly once',()=>{
+test('onboarding answers personalize without levelling the player',()=>{
   let state=emptyProgression();
-  for(const q of ['intent','history','energy']) state=applyEvent(state,{type:'ONBOARDING_ANSWER',id:'onboarding:'+q,subject:q}).state;
-  assert.equal(state.xp,45);
-  assert.equal(state.level,2);
+  for(const q of ['intent','history','energy','movie','camp']) state=applyEvent(state,{type:'ONBOARDING_ANSWER',id:'onboarding:'+q,subject:q}).state;
+  assert.equal(state.xp,5);
+  assert.equal(state.level,1);
   const duplicate=applyEvent(state,{type:'ONBOARDING_ANSWER',id:'onboarding:intent',subject:'intent'});
   assert.equal(duplicate.duplicate,true);
-  assert.equal(duplicate.state.xp,45);
+  assert.equal(duplicate.state.xp,5);
+});
+
+test('starter bike is available at level 1 and first discovery creates the first level-up',()=>{
+  const starter=levelFor(0).rewards.find(r=>r.type==='bike'&&r.id==='canyon-cfr-2027');
+  assert.ok(starter,'starter bike should not depend on questionnaire XP');
+  let state=emptyProgression();
+  for(const q of ['intent','history','energy','movie','camp']) state=applyEvent(state,{type:'ONBOARDING_ANSWER',id:'onboarding:'+q,subject:q}).state;
+  state=applyEvent(state,{type:'EQUIPMENT_ADDED',id:'onboarding-bike:canyon-cfr-2027:dream',subject:'canyon-cfr-2027',relationship:'dream'}).state;
+  assert.equal(state.xp,15);
+  assert.equal(state.level,1);
+  state=applyEvent(state,{type:'FIND_DISCOVERED',id:'first-find',subject:'find:shore:lava'}).state;
+  assert.equal(state.xp,65);
+  assert.equal(state.level,2);
+  assert.equal(state.level_name,'Explorer');
 });
