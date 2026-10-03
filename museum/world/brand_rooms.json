@@ -188,9 +188,9 @@
     }
    ],
    "mood": {
-    "exposure": 1.02,
-    "hemi": 0.12,
-    "sun": 0.08,
+    "exposure": 0.82,
+    "hemi": 0.05,
+    "sun": 0.03,
     "fill": 2.5,
     "spots": [
      {
@@ -203,6 +203,17 @@
       "shadow": true,
       "ty": 1.0,
       "shaftOpacity": 0.15
+     },
+     {
+      "x": 30.5,
+      "z": -28.4,
+      "y": 5.15,
+      "ty": 2.2,
+      "color": "#cfdcff",
+      "i": 28,
+      "angle": 0.55,
+      "dist": 8,
+      "shaft": false
      }
     ],
     "haze": {
@@ -276,7 +287,18 @@
      }
     ],
     "env": 0.22,
-    "floor": "#3a3a3e"
+    "floor": "#3a3a3e",
+    "fog": {
+     "near": 4,
+     "far": 30,
+     "color": "#07080b"
+    },
+    "dais": {
+     "x": 30.5,
+     "z": -24.0,
+     "r": 1.25,
+     "color": "#c8102e"
+    }
    }
   }
  ]

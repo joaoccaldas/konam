@@ -128,6 +128,120 @@
       },
       "rights": "original",
       "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "generated-trainer",
+      "kind": "training-equipment",
+      "decision": "NEW",
+      "source": "generated-higgsfield",
+      "source_ref": "assets/rooms/beast-cave/hf-trainer.glb",
+      "runtime_ref": "web/src/beast-cave.js#BEAST_ASSETS",
+      "rights": "generated-unbranded-rights-review",
+      "lifecycle": "candidate",
+      "provenance": {
+        "tool": "Higgsfield MCP",
+        "reference_image": {
+          "model": "gpt_image_2_5",
+          "job_id": "d67e77f6-b254-4f40-8d87-8d2c7164d438",
+          "prompt_summary": "studio product photo of a generic direct-drive smart trainer; no logos, text or brand marks"
+        },
+        "mesh": {
+          "model": "meshy_v7_image_to_3d",
+          "job_id": "e5b57a8e-5f1a-479b-829c-3da49836a7a6",
+          "options": {
+            "should_texture": true,
+            "enable_pbr": true,
+            "target_polycount": 14000
+          }
+        },
+        "optimisation": "gltf-transform optimize --texture-size 1024 --texture-compress webp --compress meshopt",
+        "generated": "2026-10-03"
+      },
+      "validation": {
+        "sha256": "5301daf10848ea47172fd78944e1b321f15d483c857355a93526598bba26564f",
+        "bytes": 634400,
+        "triangles_approx": 14000,
+        "texture_edge": 1024,
+        "brand_marks": "none visible in reference image"
+      },
+      "truth": "Generic equipment. Not a model of any named product and not presented as any athlete's equipment.",
+      "fallback": "procedural stand-in in web/src/beast-cave.js until the GLB loads"
+    },
+    {
+      "asset_id": "generated-drum-fan",
+      "kind": "training-equipment",
+      "decision": "NEW",
+      "source": "generated-higgsfield",
+      "source_ref": "assets/rooms/beast-cave/hf-drum-fan.glb",
+      "runtime_ref": "web/src/beast-cave.js#BEAST_ASSETS",
+      "rights": "generated-unbranded-rights-review",
+      "lifecycle": "candidate",
+      "provenance": {
+        "tool": "Higgsfield MCP",
+        "reference_image": {
+          "model": "gpt_image_2_5",
+          "job_id": "497f31de-6fec-49fa-8ea2-d60b67aee4b8",
+          "prompt_summary": "studio product photo of a generic industrial drum fan; no logos, text or brand marks"
+        },
+        "mesh": {
+          "model": "meshy_v7_image_to_3d",
+          "job_id": "036a7075-a980-4a96-a9ba-23e1d464875a",
+          "options": {
+            "should_texture": true,
+            "enable_pbr": true,
+            "target_polycount": 14000
+          }
+        },
+        "optimisation": "gltf-transform optimize --texture-size 1024 --texture-compress webp --compress meshopt",
+        "generated": "2026-10-03"
+      },
+      "validation": {
+        "sha256": "7517cad2e2983436c2cb4e04b9f5715f39622e88027c9d81c0b1a8b5056a2efd",
+        "bytes": 881120,
+        "triangles_approx": 14000,
+        "texture_edge": 1024,
+        "brand_marks": "none visible in reference image"
+      },
+      "truth": "Generic equipment. Not a model of any named product and not presented as any athlete's equipment.",
+      "fallback": "procedural stand-in in web/src/beast-cave.js until the GLB loads"
+    },
+    {
+      "asset_id": "generated-curved-treadmill",
+      "kind": "training-equipment",
+      "decision": "NEW",
+      "source": "generated-higgsfield",
+      "source_ref": "assets/rooms/beast-cave/hf-curved-treadmill.glb",
+      "runtime_ref": "web/src/beast-cave.js#BEAST_ASSETS",
+      "rights": "generated-unbranded-rights-review",
+      "lifecycle": "candidate",
+      "provenance": {
+        "tool": "Higgsfield MCP",
+        "reference_image": {
+          "model": "gpt_image_2_5",
+          "job_id": "2dc05839-6de7-43f7-81bc-15df5ec129fd",
+          "prompt_summary": "studio product photo of a generic non-motorised curved treadmill; no logos, text or brand marks"
+        },
+        "mesh": {
+          "model": "meshy_v7_image_to_3d",
+          "job_id": "5a2622e0-2e29-473e-9beb-8470549ae9d4",
+          "options": {
+            "should_texture": true,
+            "enable_pbr": true,
+            "target_polycount": 14000
+          }
+        },
+        "optimisation": "gltf-transform optimize --texture-size 1024 --texture-compress webp --compress meshopt",
+        "generated": "2026-10-03"
+      },
+      "validation": {
+        "sha256": "d9ea4f8f646014e4204868a9802dd8151ef2a36e6b2a7610a08d82681a8b0a7a",
+        "bytes": 483512,
+        "triangles_approx": 14000,
+        "texture_edge": 1024,
+        "brand_marks": "none visible in reference image"
+      },
+      "truth": "Generic equipment. Not a model of any named product and not presented as any athlete's equipment.",
+      "fallback": "procedural stand-in in web/src/beast-cave.js until the GLB loads"
     }
   ],
   "constraints": {

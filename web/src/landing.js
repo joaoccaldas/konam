@@ -1043,6 +1043,7 @@ async function loadBeastBike() {
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!beast || !cfr?.glb || beast.bikeSpot.bike) return;
   const gltf = await loader.loadAsync(cfr.glb);
   beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
+  beast.useAssets(loader);
 }
 async function loadAll() {
   const order = [...modelled].sort((a, b) => a.pos.distanceTo(start) - b.pos.distanceTo(start));
@@ -1947,6 +1948,7 @@ function frame(now) {
     const moodRoom = reg === 'beast' ? beast?.mood : brandRooms.find(r => r.desc.id === reg)?.mood || null;
     const wantHemi = hemiBase * (moodRoom?.hemi ?? 1), wantSun = sunBase * (moodRoom?.sun ?? 1), km = reduce ? 1 : 1 - Math.exp(-dt * 2.5);
     hemi.intensity += (wantHemi - hemi.intensity) * km; sun.intensity += (wantSun - sun.intensity) * km;
+    if (scene.fog) { const fn = moodRoom?.fog?.near ?? 70, ff = moodRoom?.fog?.far ?? 420; scene.fog.near += (fn - scene.fog.near) * km; scene.fog.far += (ff - scene.fog.far) * km; }   // depth: close fog in the dark rooms
     hween.group.visible = reg === 'hween' || P.z > -32;
     sanctuary.group.visible = true;                                   // the chapel's walls and roof always draw; upstairs only its bikes are culled
     for (const f of sanctuary.films) if (f.bike) f.bike.visible = reg !== 'gallery';

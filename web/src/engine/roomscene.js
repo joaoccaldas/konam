@@ -83,7 +83,7 @@ export function buildBrandRoom(desc, { lite = false, spinners = [], obstacles = 
   for (const z of [b.z0 - .005, b.z1 + .005]) { const s = new THREE.Mesh(new THREE.PlaneGeometry(RW - .4, .06), cove); s.position.set(CX, H - .3, z); s.rotation.y = z === b.z0 ? Math.PI : 0; group.add(s); }
 
   // lighting: neutral fill + optional accents (skipped on lite phones)
-  const mood = desc.mood || null;
+  const mood = desc.mood ? { ...desc.mood, fogColor: desc.mood.fog?.color ? new THREE.Color(desc.mood.fog.color) : null } : null;
   group.add(new THREE.PointLight('#ffffff', mood?.fill ?? (lite ? 22 : (desc.light?.fillI ?? 18)), 24, 1.2).translateY(0));
   const fill = group.children[group.children.length - 1]; fill.position.set(CX, H - .5, CZ);
   if (!lite) for (const a of desc.light?.accents || []) { const pl = new THREE.PointLight(a.color || accent, a.i ?? 6, a.dist ?? 12, 1.4); pl.position.set(a.x, a.y, a.z); group.add(pl); }
@@ -176,6 +176,14 @@ function cinematic(desc, mood, { group, lite, b, H, accent, obstacles, pickables
   if (mood.haze) {
     const h = mood.haze, m = motes({ n: lite ? Math.round((h.n || 120) * .4) : (h.n || 120), box: [b.x0 + .6, b.x1 - .6, .3, H - .4, b.z1 + .6, b.z0 - .6], color: h.color || '#ffffff', size: h.size || .02, rise: .015, sway: .3, opacity: h.opacity ?? .5, seed: 83 });
     group.add(m.points); motesList.push(m);
+  }
+  if (mood.dais) {                                                    // a low stage under the hero product, ringed in the accent colour
+    const d = mood.dais, disc = new THREE.Mesh(new THREE.CylinderGeometry(d.r, d.r + .06, .06, 72), new THREE.MeshPhysicalMaterial({ color: '#08090c', roughness: .25, metalness: .5, clearcoat: 1, envMapIntensity: .4 }));
+    disc.position.set(d.x, .03, d.z); disc.receiveShadow = true; group.add(disc);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(d.r + .02, .012, 8, 128), new THREE.MeshBasicMaterial({ color: d.color || accent, toneMapped: false }));
+    ring.rotation.x = Math.PI / 2; ring.position.set(d.x, .062, d.z); group.add(ring);
+    const halo = new THREE.Mesh(new THREE.RingGeometry(d.r, d.r + .9, 96), new THREE.MeshBasicMaterial({ color: d.color || accent, transparent: true, opacity: lite ? .05 : .08, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+    halo.rotation.x = -Math.PI / 2; halo.position.set(d.x, .014, d.z); group.add(halo);
   }
   const mono = mood.monument;
   if (mono?.kind === 'race-clock') {

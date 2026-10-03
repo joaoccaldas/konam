@@ -194,7 +194,7 @@ export function buildGalleries(ctx) {
   }
   function update(t, visitor, reduce, scene, renderer, region = 'gallery', mood = null) {   // mood: a downstairs room's own exposure (Beast Cave, Breitling)
     const inside = roomAt(visitor.x, visitor.z);
-    if (scene?.fog) scene.fog.color.copy(inside ? fogOf[inside.id] : baseFog);
+    if (scene?.fog) scene.fog.color.copy(inside ? fogOf[inside.id] : (mood?.fogColor || baseFog));
     if (renderer) {
       const want = inside ? inside.exposure : (mood?.exposure ?? .96);
       renderer.toneMappingExposure += (want - renderer.toneMappingExposure) * (reduce ? 1 : .08);
