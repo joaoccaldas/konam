@@ -1,0 +1,61 @@
+name: Rebuild streamed direct viewers
+
+on:
+  push:
+    branches:
+      - editorial/split-why-about-origin-field-guide
+    paths:
+      - web/build.mjs
+      - web/build_heritage.mjs
+      - web/index.template.html
+      - web/heritage.template.html
+      - web/src/main.js
+      - web/src/heritage.js
+      - tools/rebuild_direct_viewers.mjs
+      - .github/workflows/rebuild-direct-viewers.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: streamed-direct-viewers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: editorial/split-why-about-origin-field-guide
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install web build dependencies
+        run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Rebuild six direct viewers from canonical GLBs
+        run: node tools/rebuild_direct_viewers.mjs
+      - name: Re-seal offline manifest
+        run: node tools/build_app.mjs
+      - name: Verify GLBs are external and manifest-backed
+        run: |
+          ! grep -q 'window.__SPEEDMAX_GLB="' Speedmax_*Museum.html
+          grep -q 'window.__SPEEDMAX_GLB_URL=' Speedmax_Museum.html
+          grep -q 'assets/museum/speedmax_web.glb' app/app-manifest.json
+          grep -q 'assets/heritage/speedmax-2007/speedmax_web.glb' app/app-manifest.json
+      - name: Commit generated viewer artifacts
+        run: |
+          if git diff --quiet -- Speedmax_*Museum.html app/app-manifest.json sw.js sitemap.xml llms.txt llms-full.txt; then
+            echo 'Generated viewers already current.'
+            exit 0
+          fi
+          git config user.name 'Kona.m Build'
+          git config user.email 'actions@users.noreply.github.com'
+          git add Speedmax_*Museum.html app/app-manifest.json sw.js sitemap.xml llms.txt llms-full.txt
+          git commit -m 'build: regenerate streamed direct viewers'
+          git push origin HEAD:editorial/split-why-about-origin-field-guide
