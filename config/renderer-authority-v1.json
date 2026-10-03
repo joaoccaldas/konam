@@ -11,84 +11,26 @@
     "repo_source_constructors": 14,
     "browser_or_viewer_constructors": 12,
     "web_src_guarded_constructors": 11,
-    "offline_tool_constructors": 2
+    "offline_tool_constructors": 2,
+    "public_runtime_legacy_constructors": 7,
+    "canonical_kernel_constructors": 1
   },
   "first_pilot": "web/src/ui/collectible-stage.js",
   "renderers": [
     {
-      "path": "web/src/landing.js",
-      "class": "production-world-host",
+      "path": "web/src/render/renderer.js",
+      "class": "shared-renderer-kernel",
       "public_runtime": true,
-      "migrate": "kernel-required",
-      "priority": 6,
-      "risk": "high",
+      "migrate": "canonical-kernel",
+      "priority": 0,
+      "risk": "low",
       "current": {
         "hidden_pause": true,
-        "explicit_dispose": false,
+        "explicit_dispose": true,
         "orbit_controls": false,
-        "room_environment": true
+        "room_environment": false
       },
-      "reason": "Primary walkable world; migrate after kernel proves parity on smaller surfaces."
-    },
-    {
-      "path": "web/src/hall.js",
-      "class": "production-hall",
-      "public_runtime": true,
-      "migrate": "kernel-required",
-      "priority": 4,
-      "risk": "medium",
-      "current": {
-        "hidden_pause": false,
-        "explicit_dispose": false,
-        "orbit_controls": false,
-        "room_environment": true
-      },
-      "reason": "Standalone collection hall with duplicated renderer/camera/environment lifecycle."
-    },
-    {
-      "path": "web/src/main.js",
-      "class": "production-machine-viewer",
-      "public_runtime": true,
-      "migrate": "kernel-required",
-      "priority": 5,
-      "risk": "high",
-      "current": {
-        "hidden_pause": true,
-        "explicit_dispose": false,
-        "orbit_controls": true,
-        "room_environment": true
-      },
-      "reason": "Feature-rich viewer with post-processing; migrate only after kernel supports its pipeline."
-    },
-    {
-      "path": "web/src/heritage.js",
-      "class": "production-heritage-viewer",
-      "public_runtime": true,
-      "migrate": "kernel-required",
-      "priority": 3,
-      "risk": "medium",
-      "current": {
-        "hidden_pause": false,
-        "explicit_dispose": false,
-        "orbit_controls": true,
-        "room_environment": true
-      },
-      "reason": "Reference-backed machine viewer, moderate complexity and useful second pilot."
-    },
-    {
-      "path": "web/src/studio/main.js",
-      "class": "production-studio",
-      "public_runtime": true,
-      "migrate": "kernel-required",
-      "priority": 7,
-      "risk": "high",
-      "current": {
-        "hidden_pause": true,
-        "explicit_dispose": false,
-        "orbit_controls": true,
-        "room_environment": true
-      },
-      "reason": "High-value interactive studio; migrate after embedded/viewer contracts stabilize."
+      "reason": "Canonical renderer construction and visibility/disposal lifecycle seam introduced by the Collectible Stage R0 pilot."
     },
     {
       "path": "web/src/exp/engine.js",
@@ -121,19 +63,49 @@
       "reason": "Strong existing lifecycle; good early kernel consumer after Collectible Stage."
     },
     {
-      "path": "web/src/ui/collectible-stage.js",
-      "class": "embedded-collectible",
+      "path": "web/src/heritage.js",
+      "class": "production-heritage-viewer",
       "public_runtime": true,
-      "migrate": "kernel-pilot",
-      "priority": 1,
-      "risk": "low",
+      "migrate": "kernel-required",
+      "priority": 3,
+      "risk": "medium",
       "current": {
         "hidden_pause": false,
-        "explicit_dispose": true,
+        "explicit_dispose": false,
         "orbit_controls": true,
-        "room_environment": false
+        "room_environment": true
       },
-      "reason": "Small, lazy, isolated, Meshopt-enabled and explicitly disposable. Best first migration pilot."
+      "reason": "Reference-backed machine viewer, moderate complexity and useful second pilot."
+    },
+    {
+      "path": "web/src/hall.js",
+      "class": "production-hall",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 4,
+      "risk": "medium",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": false,
+        "room_environment": true
+      },
+      "reason": "Standalone collection hall with duplicated renderer/camera/environment lifecycle."
+    },
+    {
+      "path": "web/src/main.js",
+      "class": "production-machine-viewer",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 5,
+      "risk": "high",
+      "current": {
+        "hidden_pause": true,
+        "explicit_dispose": false,
+        "orbit_controls": true,
+        "room_environment": true
+      },
+      "reason": "Feature-rich viewer with post-processing; migrate only after kernel supports its pipeline."
     },
     {
       "path": "web/src/ui/admin-asset-preview.js",
@@ -151,34 +123,34 @@
       "reason": "One renderer intentionally reused for thumbnails; not user-path critical."
     },
     {
-      "path": "web/src/product-intake-proof.js",
-      "class": "test-harness",
-      "public_runtime": false,
-      "migrate": "harness-exempt",
-      "priority": 99,
-      "risk": "low",
+      "path": "web/src/landing.js",
+      "class": "production-world-host",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 6,
+      "risk": "high",
       "current": {
-        "hidden_pause": false,
-        "explicit_dispose": false,
-        "orbit_controls": true,
-        "room_environment": true
-      },
-      "reason": "Test-only proof harness. Must not drive production kernel design."
-    },
-    {
-      "path": "web/src/room-review-norwegian.js",
-      "class": "review-harness",
-      "public_runtime": false,
-      "migrate": "review-exempt",
-      "priority": 99,
-      "risk": "low",
-      "current": {
-        "hidden_pause": false,
+        "hidden_pause": true,
         "explicit_dispose": false,
         "orbit_controls": false,
         "room_environment": true
       },
-      "reason": "Review-only evidence harness, intentionally separate from public room runtime."
+      "reason": "Primary walkable world; migrate after kernel proves parity on smaller surfaces."
+    },
+    {
+      "path": "web/src/studio/main.js",
+      "class": "production-studio",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 7,
+      "risk": "high",
+      "current": {
+        "hidden_pause": true,
+        "explicit_dispose": false,
+        "orbit_controls": true,
+        "room_environment": true
+      },
+      "reason": "High-value interactive studio; migrate after embedded/viewer contracts stabilize."
     },
     {
       "path": "web/heritage/viewer.js",
@@ -224,6 +196,61 @@
         "room_environment": true
       },
       "reason": "Offline painting generation tool; not a browser runtime authority."
+    },
+    {
+      "path": "web/src/product-intake-proof.js",
+      "class": "test-harness",
+      "public_runtime": false,
+      "migrate": "harness-exempt",
+      "priority": 99,
+      "risk": "low",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": true,
+        "room_environment": true
+      },
+      "reason": "Test-only proof harness. Must not drive production kernel design."
+    },
+    {
+      "path": "web/src/room-review-norwegian.js",
+      "class": "review-harness",
+      "public_runtime": false,
+      "migrate": "review-exempt",
+      "priority": 99,
+      "risk": "low",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": false,
+        "room_environment": true
+      },
+      "reason": "Review-only evidence harness, intentionally separate from public room runtime."
+    }
+  ],
+  "pilot_status": "implementation-review",
+  "migrated_consumers": [
+    {
+      "path": "web/src/ui/collectible-stage.js",
+      "renderer_authority": "web/src/render/renderer.js",
+      "status": "pilot-review",
+      "preserves": [
+        "scene",
+        "camera",
+        "controls",
+        "framing",
+        "lighting",
+        "GLB loading",
+        "animation intent"
+      ],
+      "moves": [
+        "WebGLRenderer construction",
+        "output color space",
+        "tone mapping",
+        "DPR cap",
+        "document visibility suspension",
+        "renderer disposal"
+      ]
     }
   ]
 }

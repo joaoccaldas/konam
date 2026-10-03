@@ -69,7 +69,7 @@ for(const p of rendererPaths)if(!actualRendererPaths.has(p))
   errors.push(p+': renderer inventory entry has no WebGLRenderer constructor');
 for(const entry of rendererEntries){
   for(const k of ['path','class','migrate','reason'])if(!entry?.[k])errors.push('renderer inventory entry missing '+k+': '+JSON.stringify(entry));
-  if(entry.public_runtime===true && !['kernel-required','kernel-pilot','kernel-candidate'].includes(entry.migrate))
+  if(entry.public_runtime===true && !['canonical-kernel','kernel-required','kernel-pilot','kernel-candidate'].includes(entry.migrate))
     errors.push(entry.path+': public runtime renderer must have a kernel migration disposition');
 }
 

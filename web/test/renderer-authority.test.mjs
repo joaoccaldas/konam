@@ -19,18 +19,21 @@ test('renderer authority inventory is unique, explicit and migration-bound',()=>
   for(const entry of inventory.renderers){
     assert.ok(entry.path&&entry.class&&entry.migrate&&entry.reason,JSON.stringify(entry));
     if(entry.public_runtime){
-      assert.ok(['kernel-required','kernel-pilot','kernel-candidate'].includes(entry.migrate),entry.path);
+      assert.ok(['canonical-kernel','kernel-required','kernel-pilot','kernel-candidate'].includes(entry.migrate),entry.path);
     }
   }
 });
 
-test('Collectible Stage is the bounded first kernel pilot',()=>{
+test('Collectible Stage is the bounded first migrated kernel consumer',()=>{
   const inventory=json('config/renderer-authority-v1.json');
-  const pilot=inventory.renderers.find(x=>x.path===inventory.first_pilot);
+  assert.equal(inventory.first_pilot,'web/src/ui/collectible-stage.js');
+  const kernel=inventory.renderers.find(x=>x.path==='web/src/render/renderer.js');
+  assert.ok(kernel);
+  assert.equal(kernel.migrate,'canonical-kernel');
+  const pilot=inventory.migrated_consumers?.find(x=>x.path===inventory.first_pilot);
   assert.ok(pilot);
-  assert.equal(pilot.migrate,'kernel-pilot');
-  assert.equal(pilot.risk,'low');
-  assert.equal(pilot.current.explicit_dispose,true);
+  assert.equal(pilot.renderer_authority,'web/src/render/renderer.js');
+  assert.equal(pilot.status,'pilot-review');
 });
 
 test('architecture hygiene consumes the renderer inventory instead of a second hardcoded allowlist',()=>{
