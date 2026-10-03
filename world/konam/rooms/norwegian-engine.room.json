@@ -30,6 +30,7 @@
       "heat-cool",
       "podium-vault",
       "fjord-relief",
+      "recovery",
       "kona-line"
     ],
     "specimen_slots": [
@@ -88,7 +89,8 @@
       "protocol-table",
       "environment-bay",
       "vault",
-      "fjord-relief"
+      "fjord-relief",
+      "recovery"
     ]
   },
   "performance": {
