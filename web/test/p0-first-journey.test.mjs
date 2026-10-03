@@ -4,7 +4,7 @@ const shell=fs.readFileSync(new URL('../src/ui/kona-shell.js',import.meta.url),'
 const html=fs.readFileSync(new URL('../landing.template.html',import.meta.url),'utf8');
 const harden=fs.readFileSync(new URL('../../tools/harden_pages.mjs',import.meta.url),'utf8');
 
-test('landing exposes build and sign-in without requiring 3D',()=>{assert.match(html,/id="buildSelf"/);assert.match(html,/id="entrySignIn"/);});
+test('landing exposes build and invite without requiring 3D',()=>{assert.match(html,/id="buildSelf"/);assert.match(html,/id="entryInvite"/);});
 test('first run moves through questions, avatar and install handoff without gear gates',()=>{
   assert.match(entry,/step==='questions'/);
   assert.match(entry,/paintQuest\(firstRunStep\(\)\)/);
@@ -23,7 +23,7 @@ test('contextual onboarding runs once and can be replayed',()=>{
   assert.match(shell,/replayTour/);
   assert.match(shell,/tour:replayTour/);
 });
-test('sign-in remains optional and local-first',()=>{
+test('invite remains optional and local-first',()=>{
   assert.match(entry,/Continue without account/);
   assert.match(entry,/sendMagicLink/);
   assert.match(entry,/enterApp\('home'\)/);
