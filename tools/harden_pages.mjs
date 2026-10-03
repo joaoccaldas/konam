@@ -47,10 +47,10 @@ const PAGES = [
     description: 'Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.', keepTitle: true },
   { file: 'about.html', type: 'AboutPage', image: 'assets/share/konam.png',
     title: 'About this company · Kona.m',
-    description: 'Why Kona.m exists, told three ways: short, scenic and unfiltered.', keepTitle: true },
+    description: 'The origin, company history, Field Guide and tutorial map for Kona.m: from a training log to 3D bikes, rooms, worlds and the island.', keepTitle: true },
   { file: 'promo.html', type: 'WebPage', image: 'assets/share/konam.png',
     title: 'Kona.m Field Guide · how to play, worlds, bikes & experiments',
-    description: 'A playful public guide to Kona.m: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain what this app actually is.', keepTitle: true },
+    description: 'A playful public guide to Kona.m: company history, onboarding, a nine-part tutorial film map, 3D bikes, worlds, collections, experiments and FAQs.', keepTitle: true },
 ];
 for (const f of fs.readdirSync(root).filter(f => /^Speedmax_.*_?Museum\.html$/.test(f))) {
   const html = fs.readFileSync(path.join(root, f), 'utf8');
