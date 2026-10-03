@@ -40,7 +40,7 @@ test('privacy notice describes public-web analytics and native no-op',()=>{
   assert.match(privacy,/privacy-minimal first-party product analytics/i);
   assert.match(privacy,/random ID limited to the current browser session/i);
   assert.match(privacy,/packaged native app does not enable this public-web analytics path/i);
-  assert.match(privacy,/stores no IP address, user agent, email, account ID, precise location, raw feedback text or persistent visitor identifier/i);
+  assert.match(privacy,/stores no IP address, user agent, email, account ID, precise location, raw feedback text, raw error message, stack trace or persistent visitor identifier/i);
 });
 
 
