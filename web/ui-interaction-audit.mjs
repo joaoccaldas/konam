@@ -68,9 +68,13 @@ for(const id of selected){
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.cards.v1')),'seen');
       assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),75);
     });
-    await step('avatar registration choices persist and first-run tour can finish',async()=>{
+    await step('avatar registration persists, first Home stays calm, and manual tour can finish',async()=>{
       await click('[data-reg-archetype="aero"]');await click('[data-reg-trisuit="aero-panel"]');
       await click('[data-reg-continue]');await p.waitForSelector('.onboarding-handoff');await inventory('install-rotate-handoff');await p.screenshot({path:path.join(out,prefix+'-handoff.png')});await click('[data-handoff-continue]');await waitHome();
+      assert.equal(await p.$('.kona-tour'),null,'fresh Home must not auto-open the tutorial');
+      assert.match(await text('#konaPanelBody'),/KONA NOW|YOUR RACE SELF/i,'fresh Home must explain the useful core immediately');
+      assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),null,'manual tour must remain available until explicitly opened');
+      await p.evaluate(async()=>{await window.__konaShell.tour();});
       await p.waitForSelector('.kona-tour');
       for(let i=0;i<4;i++){assert.equal(await p.$eval('.tour-target',e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'}),true,'tour must highlight a visible control');await click('[data-tour-next]');}
       await p.waitForFunction(()=>!document.querySelector('.kona-tour'));
