@@ -1814,6 +1814,7 @@ function frame(now) {
   // Zero visual cost: pause expensive 3D work when it cannot be seen.
   // Reset the clock while paused so resuming never creates a physics/camera jump.
   if (document.hidden || document.body.classList.contains('kona-panel-open') || document.body.classList.contains('settings-open')) { last = now; return; }
+  const gap = Math.min(2, (now - last) / 1000);                       // real elapsed time: room moods settle in ~1 s even at low fps
   const dt = Math.min(.05, (now - last) / 1000); last = now; const t = now / 1000;
   // movement: gentle acceleration, slide along obstacles
   let ix = 0, iz = 0;
@@ -1946,7 +1947,7 @@ function frame(now) {
     }
     for (const r of brandRooms) if (r.update && (reg === r.desc.id || reg === 'beast' || reg === 'hall')) r.update(t, reduce);
     const moodRoom = reg === 'beast' ? beast?.mood : brandRooms.find(r => r.desc.id === reg)?.mood || null;
-    const wantHemi = hemiBase * (moodRoom?.hemi ?? 1), wantSun = sunBase * (moodRoom?.sun ?? 1), km = reduce ? 1 : 1 - Math.exp(-dt * 2.5);
+    const wantHemi = hemiBase * (moodRoom?.hemi ?? 1), wantSun = sunBase * (moodRoom?.sun ?? 1), km = reduce ? 1 : 1 - Math.exp(-gap * 2.5);
     hemi.intensity += (wantHemi - hemi.intensity) * km; sun.intensity += (wantSun - sun.intensity) * km;
     if (scene.fog) { const fn = moodRoom?.fog?.near ?? 70, ff = moodRoom?.fog?.far ?? 420; scene.fog.near += (fn - scene.fog.near) * km; scene.fog.far += (ff - scene.fog.far) * km; }   // depth: close fog in the dark rooms
     hween.group.visible = reg === 'hween' || P.z > -32;
