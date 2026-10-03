@@ -61,12 +61,10 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
       '</div>'+
       '<nav class="studio-destinations" aria-label="Your journey"><small class="studio-menu-label">YOUR JOURNEY</small>'+
         menuItem('races','◉','Races',raceCount+' race badges')+
-        menuItem('collection','◇','Collection',summary.total+' things found')+
+        menuItem('collection','◇','Finds',summary.total+' things found')+
         menuItem('progress','☆','Progress','Badges, milestones & history')+
         menuItem('share','↗','Share '+PRODUCT_NAME,'Progress card, WhatsApp & more')+
         menuItem('tour','?','Quick tour','Replay the 30-second '+PRODUCT_NAME+' intro')+
-        menuItem('feed','≋','The Feed','News, YouTube & your RSS sources')+
-        menuItem('travel','⌁','Travel to Kona','Island guide, arrivals & local stops')+
         (isAdmin?menuItem('assets','▦','Asset Library','Bikes, gear, rooms, art & world assets'):'')+
         '<p class="studio-menu-note">Your history lives here.<br>The world stays out there.</p>'+
       '</nav>'+
