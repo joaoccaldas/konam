@@ -8,7 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const steps = [['companion', 'tools/build_companion.mjs'], ['catalogue', 'tools/build_catalog.mjs'], ['entry-preview', 'tools/build_entry_catalog.mjs'], ['public-catalog', 'tools/build_public_catalog.mjs'], ['public-graph', 'tools/build_triathlon_graph.mjs'], ['registry', 'tools/build_registry.mjs'], ['admin-assets', 'tools/build_admin_assets.mjs'], ['museum', 'web/build_landing.mjs'], ['studio', 'web/build_studio.mjs'],
-  ['collection', 'tools/build_collection.mjs'], ['experiences', 'web/build_experience.mjs'], ['nor3-review', 'web/build_nor3_review.mjs'], ['hardening', 'tools/harden_pages.mjs']];
+  ['collection', 'tools/build_collection.mjs'], ['experiences', 'web/build_experience.mjs'], ['public-story', 'tools/build_public_story.mjs'], ['about', 'tools/build_about_company.mjs'], ['nor3-review', 'web/build_nor3_review.mjs'], ['hardening', 'tools/harden_pages.mjs']];
 for (const [name, file] of steps) {
   const t = Date.now();
   const out = execFileSync(process.execPath, [path.join(root, file)], { cwd: root, encoding: 'utf8' }).trim().split('\n').pop();
