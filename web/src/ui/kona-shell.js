@@ -102,7 +102,10 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(!tourNode||!tourTarget)return;
     const t=tourTarget.getBoundingClientRect(),c=tourNode.getBoundingClientRect(),v=window.visualViewport;
     const vw=v?.width||innerWidth,vh=v?.height||innerHeight,pad=16,gap=16;
-    const candidates=[{x:t.left,y:t.top-c.height-gap},{x:t.left,y:t.bottom+gap},{x:t.right+gap,y:t.top},{x:t.left-c.width-gap,y:t.top}].map(p=>({x:Math.max(pad,Math.min(p.x,vw-c.width-pad)),y:Math.max(pad,Math.min(p.y,vh-c.height-pad))}));
+    const panelHead=panel.hidden?null:panel.querySelector('.kona-panel-head')?.getBoundingClientRect();
+    const safeTop=panelHead?Math.max(pad,panelHead.bottom+8):pad;
+    const maxY=Math.max(safeTop,vh-c.height-pad);
+    const candidates=[{x:t.left,y:t.top-c.height-gap},{x:t.left,y:t.bottom+gap},{x:t.right+gap,y:t.top},{x:t.left-c.width-gap,y:t.top}].map(p=>({x:Math.max(pad,Math.min(p.x,vw-c.width-pad)),y:Math.max(safeTop,Math.min(p.y,maxY))}));
     const overlap=p=>Math.max(0,Math.min(p.x+c.width,t.right+8)-Math.max(p.x,t.left-8))*Math.max(0,Math.min(p.y+c.height,t.bottom+8)-Math.max(p.y,t.top-8));
     const best=candidates.sort((a,b)=>overlap(a)-overlap(b))[0];
     Object.assign(tourNode.style,{left:best.x+'px',top:best.y+'px',bottom:'auto',transform:'none'});
