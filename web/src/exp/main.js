@@ -28,6 +28,7 @@ function tutorial(key, steps) {
 }
 const canvas = $('stage');
 const stage = createStage(canvas);
+addEventListener('pagehide', () => stage.dispose(), { once: true });
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
 const pickAt = (x, y, list) => { ndc.set(x / innerWidth * 2 - 1, -(y / innerHeight) * 2 + 1); ray.setFromCamera(ndc, stage.camera); return ray.intersectObjects(list, true)[0] || null; };
 let soundOn = false;
