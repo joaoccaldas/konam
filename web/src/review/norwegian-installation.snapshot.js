@@ -1,5 +1,5 @@
 // Review-only generated snapshot of the NOR // 3 candidate implementation.
-// Source lineage: PR #15 feat/norwegian-engine-room.
+// Source lineage: PR #15 feat/norwegian-engine-room @ 70e0efee80d0d16dcd6d7ef4fd8d35eb43b33a5a.
 // This file is deliberately review-only until the candidate room implementation lands on main.
 // Geometry is original editorial interpretation; athlete-specific equipment remains unassigned.
 
@@ -275,5 +275,5 @@ function norwegian(ctx) {
 }
 
 export function buildNorwegianReview(ctx){return norwegian(ctx);}
-export const REVIEW_SOURCE_SHA='6115139fd817663fac0a8e5a59297e6a2f65edae';
+export const REVIEW_SOURCE_SHA='70e0efee80d0d16dcd6d7ef4fd8d35eb43b33a5a';
 export const REVIEW_VARIANT='cinematic-production-v2';
