@@ -23,7 +23,7 @@ test('contextual onboarding runs once and can be replayed',()=>{
   assert.match(shell,/replayTour/);
   assert.match(shell,/tour:replayTour/);
 });
-test('invite remains optional and local-first',()=>{
+test('account save flow remains optional and local-first',()=>{
   assert.match(entry,/Continue without account/);
   assert.match(entry,/sendMagicLink/);
   assert.match(entry,/enterApp\('home'\)/);
