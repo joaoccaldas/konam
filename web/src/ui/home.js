@@ -46,6 +46,14 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
       '<h3 data-countdown-value>'+esc(headline)+'</h3><p>'+esc(note)+'</p>'+
       '<button class="kona-primary" type="button" data-home-plan>What matters next <span>→</span></button>'+
     '</section>'+
+    '<section class="kona-section artifact artifact--label home-kona-now">'+
+      '<div class="kona-section-head"><div><small>KONA NOW · RACE WEEK</small><h3>What is happening?</h3></div><span class="t-data">RETURN HERE</span></div>'+
+      '<div class="kona-list">'+
+        '<article><i>NOW</i><div><b>The Intern has been reading everything again.</b><span>Athlete videos, triathlon headlines and island updates, source-grounded and refreshable.</span></div><button type="button" class="btn-text" data-home-feed>Open feed →</button></article>'+
+        '<article><i>KOA</i><div><b>Just landed?</b><span>Flights, roads, race-week essentials, bike help, coffee and useful island stops.</span></div><button type="button" class="btn-text" data-home-travel>Plan Kona →</button></article>'+
+        '<article><i>NEXT</i><div><b>What matters next.</b><span>Your race-week timeline and the next useful thing, without turning preparation into homework.</span></div><button type="button" class="btn-text" data-home-plan>Open plan →</button></article>'+
+      '</div><p class="kona-source-note">Freshness and source status are shown inside the Feed. Local listings are independent, not endorsements.</p>'+
+    '</section>'+
     '<section class="home-race-self artifact artifact--label">'+
       '<div class="home-race-self-visual">'+avatarPreview(style)+'</div>'+
       '<div class="home-race-self-copy"><small>YOUR RACE SELF</small><h3>'+esc(goal)+'</h3>'+
