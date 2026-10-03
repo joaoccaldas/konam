@@ -4,8 +4,8 @@ import { applyEvent, canUnlock, migratePassport, levelFor, COLLECTIBLES, UNLOCKS
 
 test('xp maps onto named levels and does not skip the table', () => {
   assert.equal(levelFor(0).name, 'Visitor');
+  assert.ok(levelFor(0).rewards.some(r=>r.type==='bike'&&r.id==='canyon-cfr-2027'));
   assert.equal(levelFor(40).name, 'Explorer');
-  assert.ok(levelFor(40).rewards.some(r=>r.type==='bike'&&r.id==='canyon-cfr-2027'));
   assert.equal(levelFor(2000).name, 'Kahuna');
   assert.equal(levelFor(99999).level, 10);
 });
