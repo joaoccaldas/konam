@@ -21,19 +21,22 @@ test('different adapters share one contract',()=>{
   assert.equal(j('world/konam/rooms/beast-cave.room.json').implementation.kind,'native-room');
 });
 
-test('both concept packages validate with same validator',()=>{
+test('both room packages validate with same validator',()=>{
   for(const id of ['norwegian-engine','beast-cave']){
     const r=spawnSync(process.execPath,['tools/validate-room-package.mjs',id],{cwd:ROOT,encoding:'utf8'});
     assert.equal(r.status,0,r.stderr||r.stdout);
   }
 });
 
-test('cross-branch implementations are concept-only',()=>{
-  for(const id of ['norwegian-engine','beast-cave']){
-    const m=j('world/konam/rooms/'+id+'.room.json');
-    assert.equal(m.classification.status,'concept');
-    assert.ok(m.implementation.source_branch);
-  }
+test('cross-branch implementations stay concept-only while local candidates drop source_branch',()=>{
+  const nor=j('world/konam/rooms/norwegian-engine.room.json');
+  assert.equal(nor.classification.status,'concept');
+  assert.ok(nor.implementation.source_branch);
+
+  const beast=j('world/konam/rooms/beast-cave.room.json');
+  assert.equal(beast.classification.status,'candidate');
+  assert.equal('source_branch' in beast.implementation,false);
+  assert.ok(fs.existsSync(path.join(ROOT,beast.implementation.module)));
 });
 
 test('rooms consume one global Kona.m brand authority',()=>{
