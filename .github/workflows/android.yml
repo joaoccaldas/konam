@@ -1,7 +1,7 @@
 name: KONA Android App
 
 # Builds the Android app (Capacitor shell bundling the museum), boots it on an emulator as a
-# smoke test, then publishes the APK to the website at downloads/KONA.apk together
+# smoke test, produces a signed Play-ready AAB when release signing is configured, then publishes the APK to the website at downloads/KONA.apk together
 # with app/android-version.json (version, size, SHA-256), which installed apps check over
 # HTTPS to offer the update. Android installs an update only if it is signed with the same key.
 #
@@ -106,6 +106,11 @@ jobs:
           (cd android && ./gradlew assembleRelease --no-daemon)
           cp android/app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/KONA.apk"
           "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs "$GITHUB_WORKSPACE/KONA.apk"
+          if [ "${{ steps.signing.outputs.signed }}" = "true" ]; then
+            (cd android && ./gradlew bundleRelease --no-daemon)
+            cp android/app/build/outputs/bundle/release/app-release.aab "$GITHUB_WORKSPACE/KONA.aab"
+            sha256sum "$GITHUB_WORKSPACE/KONA.aab" > "$GITHUB_WORKSPACE/KONA.aab.sha256"
+          fi
           sha=$(sha256sum "$GITHUB_WORKSPACE/KONA.apk" | cut -d' ' -f1)
           bytes=$(stat -c %s "$GITHUB_WORKSPACE/KONA.apk")
           printf '{"versionCode":%s,"versionName":"%s","apk":"downloads/KONA.apk","sha256":"%s","bytes":%s}\n' \
@@ -116,6 +121,8 @@ jobs:
           name: KONA-apk
           path: |
             KONA.apk
+            KONA.aab
+            KONA.aab.sha256
             android-version.json
           if-no-files-found: error
 
