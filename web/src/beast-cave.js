@@ -21,7 +21,7 @@ export const BLINK = { x0: 29.4, x1: 31.6, h: 3.0, z: -17.85, toRoom: 'breitling
 // cinematic mood the host applies while the visitor is inside (exposure + global light dimming)
 export const BEAST_MOOD = Object.freeze({ exposure: .78, hemi: .06, sun: .03, fog: { near: 5, far: 34 }, fogColor: new THREE.Color('#0b0908') });
 // generated equipment (Higgsfield → Meshy image-to-3D, optimised with gltf-transform); procedural stand-ins until loaded
-const TRAINER_YAW = Math.PI / 2;                                              // orientation of the generated trainer mesh in trainer space (x = bike forward)
+const TRAINER_YAW = 0;                                              // orientation of the generated trainer mesh in trainer space (x = bike forward)
 export const BEAST_ASSETS = Object.freeze({ trainer: 'assets/rooms/beast-cave/hf-trainer.glb', fan: 'assets/rooms/beast-cave/hf-drum-fan.glb', treadmill: 'assets/rooms/beast-cave/hf-curved-treadmill.glb' });
 let rectLib = false;
 
@@ -112,7 +112,7 @@ export function buildBeastCave(ctx) {
     g.font=`italic 400 60px ${SERIF}`;g.letterSpacing='2px';g.lineWidth=core?2.5:7;g.strokeText('the work nobody sees',w/2,h*.83);
   });
   const neonCore=new THREE.Mesh(new THREE.PlaneGeometry(neonW,neonH),new THREE.MeshBasicMaterial({map:neonTex(18,true),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,fog:false}));
-  const neonHalo=new THREE.Mesh(new THREE.PlaneGeometry(neonW*1.25,neonH*1.6),new THREE.MeshBasicMaterial({map:neonTex(70,false),transparent:true,opacity:.85,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,fog:false}));
+  const neonHalo=new THREE.Mesh(new THREE.PlaneGeometry(neonW,neonH),new THREE.MeshBasicMaterial({map:neonTex(70,false),transparent:true,opacity:.85,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,fog:false}));
   for(const m of [neonHalo,neonCore]){m.rotation.y=Math.PI;m.position.set(neonX,neonY,BROOM.z0-.12);group.add(m);}
   neonCore.position.z-=.02;
   const neonBack=new THREE.Mesh(new THREE.PlaneGeometry(neonW+.5,neonH+.3),new THREE.MeshStandardMaterial({color:'#0a0909',roughness:.4,metalness:.6}));neonBack.rotation.y=Math.PI;neonBack.position.set(neonX,neonY,BROOM.z0-.06);group.add(neonBack);
@@ -136,7 +136,7 @@ export function buildBeastCave(ctx) {
   const info=(mesh,rec)=>{ for(const m of [].concat(mesh)){m.userData.info=rec;pickables.push(m);} infos.push(rec); return rec; };
 
   // ---------------------------------------------------------------- lights: almost nothing, placed with intent
-  const fill=new THREE.PointLight('#c9b7a8',lite?5:3,26,1.4);fill.position.set(CX-4,BROOM.h-.6,CZ);group.add(fill);
+  const fill=new THREE.PointLight('#c9b7a8',lite?3:1.4,26,1.4);fill.position.set(CX-4,BROOM.h-.6,CZ);group.add(fill);
   const heroX=25.2, heroZ=CZ;                                         // the bike faces east, into the screen
   const spot=new THREE.SpotLight('#ffd8b0',lite?60:85,9,.42,.65,1.3);
   spot.position.set(heroX-.4,BROOM.h-.25,heroZ);spot.target.position.set(heroX-.2,.6,heroZ);
@@ -185,7 +185,7 @@ export function buildBeastCave(ctx) {
   const screen=new THREE.Mesh(new THREE.PlaneGeometry(screenW,screenH),new THREE.MeshBasicMaterial({map:screenTex,toneMapped:false,fog:false}));
   screen.rotation.y=-Math.PI/2;at(screen,BROOM.x1-.11,2.75,heroZ);
   const screenPool=lightPool(5.5,7.5,'#7aa7e0',lite?.05:.09);screenPool.position.set(BROOM.x1-3,.02,heroZ);group.add(screenPool);
-  const screenRect=new THREE.RectAreaLight('#9fb6e8',lite?3:4.5,screenW,screenH);screenRect.position.set(BROOM.x1-.2,2.75,heroZ);screenRect.lookAt(BROOM.x1-5,2.2,heroZ);group.add(screenRect);
+  const screenRect=new THREE.RectAreaLight('#9fb6e8',lite?1.6:2.4,screenW,screenH);screenRect.position.set(BROOM.x1-.2,2.75,heroZ);screenRect.lookAt(BROOM.x1-5,2.2,heroZ);group.add(screenRect);
   // the screen in the polished floor: the same live texture, mirrored and fading away from the wall
   const reflect=new THREE.Mesh(new THREE.PlaneGeometry(screenH*1.1,screenW),new THREE.ShaderMaterial({uniforms:{map:{value:screenTex},strength:{value:lite?.16:.24}},
     vertexShader:'varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }',
@@ -263,8 +263,8 @@ export function buildBeastCave(ctx) {
   bottle(heroX+.95,heroZ+.75,false);bottle(heroX+1.15,heroZ+.6,true);bottle(heroX-1.3,heroZ-.9,false);
   const gels=new THREE.MeshStandardMaterial({color:'#d9c9a3',roughness:.6});
   for(let i=0;i<5;i++){const p=new THREE.Mesh(new THREE.BoxGeometry(.11,.006,.05),gels);p.rotation.y=rand()*3;at(p,heroX-1.6+rand()*.4,.035,heroZ+.8+rand()*.3);}
-  const towelMat=new THREE.MeshStandardMaterial({color:'#d8d0c2',roughness:1,side:THREE.DoubleSide});
-  const towelGeo=new THREE.PlaneGeometry(.42,.78,6,16);{const p=towelGeo.attributes.position;for(let i=0;i<p.count;i++){const y=p.getY(i),x=p.getX(i);p.setZ(i,-Math.pow(Math.abs(y)/.39,1.7)*.32+Math.sin(x*14+y*6)*.012);}towelGeo.computeVertexNormals();}
+  const towelMat=new THREE.MeshStandardMaterial({map:canvasTex(128,128,(g,w,h)=>{g.fillStyle='#6f6862';g.fillRect(0,0,w,h);g.fillStyle='rgba(255,255,255,.06)';for(let y=0;y<h;y+=3)g.fillRect(0,y,w,1);g.fillStyle='#b4541f';g.fillRect(0,h*.86,w,h*.05);}),roughness:1,side:THREE.DoubleSide,envMapIntensity:.05});
+  const towelGeo=new THREE.PlaneGeometry(.3,.56,6,16);{const p=towelGeo.attributes.position;for(let i=0;i<p.count;i++){const y=p.getY(i),x=p.getX(i);p.setZ(i,-Math.pow(Math.abs(y)/.39,1.7)*.32+Math.sin(x*14+y*6)*.012);}towelGeo.computeVertexNormals();}
   const towel=new THREE.Mesh(towelGeo,towelMat);towel.rotation.x=-Math.PI/2;towel.castShadow=!lite;
   // a second towel, thrown on the floor
   const floorTowel=new THREE.Mesh(new THREE.PlaneGeometry(.5,.8,4,8),towelMat);{const p=floorTowel.geometry.attributes.position;for(let i=0;i<p.count;i++)p.setZ(i,Math.abs(Math.sin(p.getY(i)*9))*.03);floorTowel.geometry.computeVertexNormals();}
@@ -284,7 +284,7 @@ export function buildBeastCave(ctx) {
     g.fillStyle='rgba(20,20,20,.35)';g.font=`500 .035px ${FONT}`;g.fillText('example session · not an athlete’s plan',.07,.84);
   },512);
   board.material.toneMapped=true;board.position.set(0,1.32,.03);wb.add(board);
-  const boardBack=new THREE.Mesh(new THREE.BoxGeometry(1.36,.96,.03),pale);boardBack.position.set(0,1.32,0);wb.add(boardBack);
+  const boardBack=new THREE.Mesh(new THREE.BoxGeometry(1.36,.96,.03),dark);boardBack.position.set(0,1.32,0);wb.add(boardBack);
   info([board,boardBack],{eyebrow:'THE PLAN',title:'Written down, then done.',sub:'Interval whiteboard',text:'A generic threshold session written the way a pain cave keeps them: on a board, in marker, ticked off with a shaking hand. It is an example, not an athlete’s actual plan.'});
   obstacles.push({c:wb.position.clone(),r:.6});
 
@@ -381,7 +381,7 @@ export function buildBeastCave(ctx) {
   obstacles.push({c:crate.position.clone(),r:.6});
 
   // ---------------------------------------------------------------- archive: mirrors + swim erg (north-east)
-  const mirrorMat=new THREE.MeshPhysicalMaterial({color:'#8d969c',metalness:.95,roughness:.06,envMapIntensity:.9,clearcoat:1,clearcoatRoughness:.08});
+  const mirrorMat=new THREE.MeshPhysicalMaterial({color:'#3a3f44',metalness:.95,roughness:.12,envMapIntensity:.25,clearcoat:1,clearcoatRoughness:.08});
   for(let i=0;i<3;i++){const p=new THREE.Mesh(new THREE.PlaneGeometry(1.5,2.4),mirrorMat);p.rotation.y=Math.PI;p.position.set(22.8+i*1.7,1.6,BROOM.z0-.03);group.add(p);}
   const erg=new THREE.Group();erg.position.set(31.6,0,-6.0);group.add(erg);
   const bench=new THREE.Mesh(new THREE.BoxGeometry(2.5,.2,.55),pale);bench.position.set(0,.68,0);erg.add(bench);
@@ -481,9 +481,9 @@ export function buildBeastCave(ctx) {
       const [fanG,treadG,trainerG]=await Promise.all([load(BEAST_ASSETS.fan),load(BEAST_ASSETS.treadmill),load(BEAST_ASSETS.trainer)]);
       if(fanG){
         fanGroups.forEach((old,k)=>{
-          const f=seat(k?fanG.clone(true):fanG,.66);f.position.copy(old.position);
+          const f=seat(k?fanG.clone(true):fanG,.52);f.position.copy(old.position);
           const d=new THREE.Vector3(heroX-.3-old.position.x,0,heroZ-old.position.z);f.rotation.y=Math.atan2(d.x,d.z);   // the grille (+z) looks at the saddle
-          const blur=new THREE.Mesh(new THREE.CircleGeometry(.2,40),fanBlurMat);blur.position.set(0,.36,.16);f.add(blur);fanRotors[k]=blur;
+          const blur=new THREE.Mesh(new THREE.CircleGeometry(.2,40),fanBlurMat);blur.position.set(0,.28,.12);f.add(blur);fanRotors[k]=blur;
           group.add(f);old.visible=false;f.traverse(o=>{if(o.isMesh&&o!==blur){o.userData.info=old.userData.info;pickables.push(o);}});
         });
       }
