@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "generated_from": "source audit 2026-10-03",
+  "policy": {
+    "canonical_future_authority": "web/src/render/",
+    "new_renderer_constructors": "forbidden_without_explicit_inventory_change",
+    "migration_rule": "production renderers migrate one bounded surface at a time after visual/performance parity; old constructor is deleted after parity",
+    "exemptions": "offline build tools and isolated review/test harnesses may retain local renderers until their own simplification is justified"
+  },
+  "counts": {
+    "repo_source_constructors": 14,
+    "browser_or_viewer_constructors": 12,
+    "web_src_guarded_constructors": 11,
+    "offline_tool_constructors": 2
+  },
+  "first_pilot": "web/src/ui/collectible-stage.js",
+  "renderers": [
+    {
+      "path": "web/src/landing.js",
+      "class": "production-world-host",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 6,
+      "risk": "high",
+      "current": {
+        "hidden_pause": true,
+        "explicit_dispose": false,
+        "orbit_controls": false,
+        "room_environment": true
+      },
+      "reason": "Primary walkable world; migrate after kernel proves parity on smaller surfaces."
+    },
+    {
+      "path": "web/src/hall.js",
+      "class": "production-hall",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 4,
+      "risk": "medium",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": false,
+        "room_environment": true
+      },
+      "reason": "Standalone collection hall with duplicated renderer/camera/environment lifecycle."
+    },
+    {
+      "path": "web/src/main.js",
+      "class": "production-machine-viewer",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 5,
+      "risk": "high",
+      "current": {
+        "hidden_pause": true,
+        "explicit_dispose": false,
+        "orbit_controls": true,
+        "room_environment": true
+      },
+      "reason": "Feature-rich viewer with post-processing; migrate only after kernel supports its pipeline."
+    },
+    {
+      "path": "web/src/heritage.js",
+      "class": "production-heritage-viewer",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 3,
+      "risk": "medium",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": true,
+        "room_environment": true
+      },
+      "reason": "Reference-backed machine viewer, moderate complexity and useful second pilot."
+    },
+    {
+      "path": "web/src/studio/main.js",
+      "class": "production-studio",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 7,
+      "risk": "high",
+      "current": {
+        "hidden_pause": true,
+        "explicit_dispose": false,
+        "orbit_controls": true,
+        "room_environment": true
+      },
+      "reason": "High-value interactive studio; migrate after embedded/viewer contracts stabilize."
+    },
+    {
+      "path": "web/src/exp/engine.js",
+      "class": "shared-experience-stage",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 2,
+      "risk": "medium",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": false,
+        "room_environment": false
+      },
+      "reason": "Already shared across standalone experiences, so convergence here removes multiple downstream lifecycle variants."
+    },
+    {
+      "path": "web/src/ui/race-self-stage.js",
+      "class": "embedded-race-self",
+      "public_runtime": true,
+      "migrate": "kernel-required",
+      "priority": 2,
+      "risk": "low-medium",
+      "current": {
+        "hidden_pause": true,
+        "explicit_dispose": true,
+        "orbit_controls": true,
+        "room_environment": false
+      },
+      "reason": "Strong existing lifecycle; good early kernel consumer after Collectible Stage."
+    },
+    {
+      "path": "web/src/ui/collectible-stage.js",
+      "class": "embedded-collectible",
+      "public_runtime": true,
+      "migrate": "kernel-pilot",
+      "priority": 1,
+      "risk": "low",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": true,
+        "orbit_controls": true,
+        "room_environment": false
+      },
+      "reason": "Small, lazy, isolated, Meshopt-enabled and explicitly disposable. Best first migration pilot."
+    },
+    {
+      "path": "web/src/ui/admin-asset-preview.js",
+      "class": "admin-preview",
+      "public_runtime": false,
+      "migrate": "kernel-candidate",
+      "priority": 5,
+      "risk": "low",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": false,
+        "room_environment": false
+      },
+      "reason": "One renderer intentionally reused for thumbnails; not user-path critical."
+    },
+    {
+      "path": "web/src/product-intake-proof.js",
+      "class": "test-harness",
+      "public_runtime": false,
+      "migrate": "harness-exempt",
+      "priority": 99,
+      "risk": "low",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": true,
+        "room_environment": true
+      },
+      "reason": "Test-only proof harness. Must not drive production kernel design."
+    },
+    {
+      "path": "web/src/room-review-norwegian.js",
+      "class": "review-harness",
+      "public_runtime": false,
+      "migrate": "review-exempt",
+      "priority": 99,
+      "risk": "low",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": false,
+        "room_environment": true
+      },
+      "reason": "Review-only evidence harness, intentionally separate from public room runtime."
+    },
+    {
+      "path": "web/heritage/viewer.js",
+      "class": "legacy-heritage-viewer",
+      "public_runtime": false,
+      "migrate": "legacy-retire-or-migrate",
+      "priority": 8,
+      "risk": "medium",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": true,
+        "room_environment": true
+      },
+      "reason": "Still bundled by tools/heritage/build_site.mjs; reconcile with current heritage authority before retirement."
+    },
+    {
+      "path": "tools/render_entry_art.mjs",
+      "class": "offline-render-tool",
+      "public_runtime": false,
+      "migrate": "offline-exempt",
+      "priority": 99,
+      "risk": "none",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": false,
+        "room_environment": true
+      },
+      "reason": "Offline reproducible render tool; visitors never load this renderer."
+    },
+    {
+      "path": "tools/render_paintings.mjs",
+      "class": "offline-render-tool",
+      "public_runtime": false,
+      "migrate": "offline-exempt",
+      "priority": 99,
+      "risk": "none",
+      "current": {
+        "hidden_pause": false,
+        "explicit_dispose": false,
+        "orbit_controls": false,
+        "room_environment": true
+      },
+      "reason": "Offline painting generation tool; not a browser runtime authority."
+    }
+  ]
+}
