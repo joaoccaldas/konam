@@ -12,7 +12,7 @@ test('site analytics is privacy-minimal and session-scoped',()=>{
   assert.doesNotMatch(src,/localStorage/);
   assert.doesNotMatch(src,/document\.cookie|cookie=/);
   assert.doesNotMatch(src,/email|user_id|account_id|userAgent|navigator\.userAgent/);
-  assert.match(src,/credentials:'omit'/);
+  assert.match(src,/credentials:'omit'/);\n  assert.match(src,/'compact'.*'medium'.*'wide'/s);
 });
 
 test('site analytics only sends from the canonical public origin',()=>{
