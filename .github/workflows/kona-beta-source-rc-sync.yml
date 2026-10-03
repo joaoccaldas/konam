@@ -90,7 +90,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json integrations/triathlon-graph.json docs/ROOMS.md ./*.html web/dist/*.html sw.js app/app-manifest.json app/entry-data.json app/admin-assets.json app/admin-asset-preview.js app/viewport.js app/kona-core.js app/world-shell.html app/race-self-stage.js app/collectible-stage.js app/nor3-review.js app/museum-data.js app/hall.js app/studio.js app/standalone-access.js app/studio-catalog.js robots.txt sitemap.xml llms.txt llms-full.txt
+          git add museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json integrations/triathlon-graph.json docs/ROOMS.md ./*.html web/dist/*.html sw.js app/app-manifest.json app/entry-data.json app/admin-assets.json app/admin-asset-preview.js app/viewport.js app/kona-core.js app/world-shell.html app/race-self-stage.js app/collectible-stage.js app/nor3-review.js app/museum-data.js app/hall.js app/studio.js app/studio-catalog.js robots.txt sitemap.xml llms.txt llms-full.txt
           if git diff --cached --quiet; then echo "outputs current"; exit 0; fi
           git commit -m "build: sync deterministic outputs"
           git push origin HEAD:"$TARGET"
