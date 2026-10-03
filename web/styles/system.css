@@ -66,7 +66,9 @@ body:has(#konaShell):not(.museum-open) > #fallback{display:none}
   border:0;border-top:1px solid var(--kona-line);border-radius:0;background:color-mix(in srgb,var(--kona-surface-strong) 94%,transparent);
   backdrop-filter:blur(22px) saturate(1.08);-webkit-backdrop-filter:blur(22px) saturate(1.08);box-shadow:0 -14px 34px -30px rgba(0,0,0,.55)
 }
-.kona-panel-open .kona-bottom-nav{display:grid}\n.kona-bottom-nav [hidden],.kona-user-menu[hidden]{display:none!important}
+.kona-panel-open .kona-bottom-nav{display:grid}
+.kona-bottom-nav[hidden]{display:none!important}
+.kona-bottom-nav [hidden],.kona-user-menu[hidden]{display:none!important}
 .kona-bottom-nav button,.kona-bottom-nav a{
   min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
   position:relative;color:var(--kona-muted);border:0;border-radius:0;appearance:none;background:transparent;font:650 10px/1 var(--sans);letter-spacing:.01em;text-decoration:none;touch-action:manipulation
