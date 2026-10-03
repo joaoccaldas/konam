@@ -140,3 +140,5 @@ If the event vocabulary or stored analytics fields change, update together:
 Do not add raw text, identity, health, precise location, advertising IDs, user-agent collection or fingerprinting to this stream.
 
 Deterministic public outputs are generated and sealed by the canonical source-sync workflow before merge.
+
+Source-sync trigger: analytics v2.
