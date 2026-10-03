@@ -13,7 +13,15 @@ The room may have a radically different atmosphere. The product architecture may
 
 ## Non-negotiable architecture
 
-Before writing room code, inspect:
+Before writing room code, run:
+
+`node tools/check-before-create.mjs room <room-name-or-id>`
+
+Before creating a room asset, run:
+
+`node tools/check-before-create.mjs asset <asset-name-or-id>`
+
+Record the reuse decision in the room/asset planning notes. Then inspect:
 - `docs/BRAND_SYSTEM.md`
 - `brand/tokens.css`
 - `world/konam/rooms-v1.json`

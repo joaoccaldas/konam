@@ -32,6 +32,8 @@ jobs:
         run: node tools/validate-bikes.mjs
       - name: Repository hygiene
         run: node tools/repo-hygiene.mjs
+      - name: Architecture authority
+        run: node tools/authority-hygiene.mjs
       - name: Brand authority
         run: node tools/brand-hygiene.mjs
       - name: Published asset contract
