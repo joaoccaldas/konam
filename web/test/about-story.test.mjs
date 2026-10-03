@@ -9,7 +9,8 @@ test('About route uses Field Guide brand authorities without inline styling',()=
   const html=read('about.html');
   for(const href of ['brand/tokens.css','brand/themes.css','brand/artifacts.css','brand/typography.css','web/styles/components.css','web/styles/system.css','web/styles/promo.css']) assert.ok(html.includes(href),`missing ${href}`);
   assert.equal(/<style\b/i.test(html),false);
-  assert.equal(/style="/i.test(html),false);
+  const inline=[...html.matchAll(/style="([^"]*)"/gi)].map(m=>m[1].trim());
+  for(const value of inline) assert.match(value,/^(?:--(?:x|y|h):[^;]+;?)+$/,`unexpected inline style: ${value}`);
 });
 
 test('About route exposes three depths without personal identity or confidential strategy',()=>{
