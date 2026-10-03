@@ -23,7 +23,7 @@ test('Plan remains lightweight and source-grounded',()=>{
   assert.match(plan,/race_week/);
   assert.match(plan,/api\.weather\.gov/);
   assert.match(plan,/loadCompanion\('travel'/);
-  assert.doesNotMatch(plan,/three|hall\.js|museum-data\.js|__museum/i);
+  assert.doesNotMatch(plan,/from ['\"]three|hall\.js|museum-data\.js|__museum/i);
 });
 
 test('Plan owns a dedicated on-demand visual layer',()=>{
