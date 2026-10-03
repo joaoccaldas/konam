@@ -1,0 +1,56 @@
+name: Hostile runtime gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hostile-runtime-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  hostile-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install
+        run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Build and stage exact candidate
+        run: |
+          node tools/build_pages.mjs
+          node tools/build_app.mjs
+          git diff --exit-code -- app sw.js '*.html' web/dist museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json
+          bash tools/stage_site.sh
+      - name: Stress + offline + no-WebGL
+        env:
+          CI: '1'
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          (cd _site && python3 -m http.server 8761 --bind 127.0.0.1 >/tmp/kona-hostile-http.log 2>&1) &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..30}; do curl -fsS http://127.0.0.1:8761/ >/dev/null && break; sleep .5; done
+          node web/launch-stress.mjs http://127.0.0.1:8761
+          node web/release-offline-audit.mjs http://127.0.0.1:8761/
+      - name: Upload hostile-runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hostile-runtime-${{ github.sha }}
+          path: output/playwright/
+          if-no-files-found: warn
+          retention-days: 14
