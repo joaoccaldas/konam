@@ -24,10 +24,8 @@ execFileSync('bash', [join(root, 'tools', 'stage_site.sh')], { cwd: root, stdio:
 rmSync(www, { recursive: true, force: true });
 cpSync(staged, www, { recursive: true });
 rmSync(join(www, 'sw.js'), { force: true });
-// The Field Guide is a public web portal, not part of the installable Android experience.
-// Keep promo.html available only if explicitly navigated from the staged bundle, but do not
-// ship its web-only controller into the native runtime surface.
-rmSync(join(www, 'web', 'src', 'promo.js'), { force: true });
+// About is the Field Guide (about.html is generated from promo.html), so its controller
+// web/src/promo.js ships with the app; without it the in-app About page would not work.
 // Candidate room review surfaces are web-only evidence and never ship inside the native app.
 rmSync(join(www, 'norwegian-engine-review.html'), { force: true });
 rmSync(join(www, 'web', 'src', 'room-review-norwegian.js'), { force: true });
