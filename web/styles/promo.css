@@ -233,3 +233,58 @@
 }
 
 .support-hours{margin:0 0 28px}
+
+
+/* Product shape ------------------------------------------------------------ */
+.promo-product-shape{overflow:hidden}
+.product-shape-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.product-shape-card{position:relative;min-height:420px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--brand-line);border-radius:26px;overflow:hidden;background:var(--brand-surface)}
+.product-shape-card::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.13;background:radial-gradient(circle at 75% 18%,var(--shape-accent),transparent 32%)}
+.product-shape-card>span{position:absolute;left:28px;top:26px;font:800 8px var(--brand-font-ui);letter-spacing:.15em;color:var(--shape-accent)}
+.product-shape-card h3{position:relative;margin:0 0 14px;font:400 clamp(40px,4vw,62px)/.9 var(--brand-font-editorial);letter-spacing:-.035em}
+.product-shape-card p{position:relative;max-width:30rem;margin:0 0 28px;color:var(--brand-muted);font-size:12px;line-height:1.65}
+.product-shape-card small{position:relative;padding-top:16px;border-top:1px solid var(--brand-line);font:800 7px var(--brand-font-ui);letter-spacing:.12em;color:var(--shape-accent)}
+.product-shape-now{--shape-accent:var(--brand-action)}
+.product-shape-you{--shape-accent:var(--brand-lilac)}
+.product-shape-world{--shape-accent:var(--brand-ocean);background:var(--brand-lava);color:var(--brand-mist)}
+.product-shape-world p{color:#aab5ba}.product-shape-world small{border-color:#ffffff18}
+.product-shape-note{margin:28px 6px 0;font-size:27px;color:var(--brand-personality);transform:rotate(-1deg)}
+
+html{scroll-padding-top:92px}
+.promo-section{scroll-margin-top:92px}
+
+@media(max-width:900px){
+ .product-shape-flow{grid-template-columns:1fr}
+ .product-shape-card{min-height:300px}
+}
+
+/* Compact/mobile editorial safety ----------------------------------------- */
+/* The fixed desktop rail/header must never sit over story text. The extra
+   max-height rule also catches phone landscape / desktop-site viewports. */
+@media (pointer:coarse), (max-height:560px){
+ .promo-header{
+   position:sticky;top:max(6px,env(safe-area-inset-top));left:auto;right:auto;
+   width:auto;margin:6px 8px 0;min-height:52px;padding:7px 8px 7px 12px;
+   transform:none!important;transition:none!important;
+ }
+ .promo-wordmark strong{font-size:22px}.promo-wordmark span{font-size:7px}
+ .promo-enter{min-height:38px;padding-inline:13px}.promo-system-trigger{display:none}
+ .promo-section{scroll-margin-top:72px}
+ .field-rail{top:auto;left:8px;bottom:max(8px,env(safe-area-inset-bottom));width:52px;transform:translateY(90px);z-index:120}
+ .field-rail.is-ready{transform:none}.field-rail.is-open{width:calc(100vw - 16px)}
+ .field-rail-toggle{left:0;top:auto;bottom:0;width:52px;min-height:52px;padding:0;border-radius:50%;transform:none}
+ .field-rail-toggle b,.field-rail-toggle small{display:none}
+ .field-rail-nav{
+   position:fixed;left:8px;right:8px;bottom:calc(68px + env(safe-area-inset-bottom));top:auto;
+   width:auto;max-height:min(68svh,520px);transform:translateY(24px) scale(.96);
+   transform-origin:left bottom;border-radius:22px;
+ }
+ .field-rail.is-open .field-rail-nav{transform:none}
+}
+
+@media(max-height:560px) and (orientation:landscape){
+ .promo-header .promo-wordmark span{display:none}
+ .promo-header{min-height:48px}
+ .promo-section{padding-top:56px;padding-bottom:56px}
+ .field-rail-nav{max-height:calc(100svh - 88px)}
+}
