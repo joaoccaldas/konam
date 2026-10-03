@@ -1,6 +1,6 @@
 // ui/onboarding-questions.js
 import { readStorage, writeStorage } from '../engine/storage.js';
-import { applyStoredEvent, ensureProgression, LEVELS } from '../engine/progression.js';
+import { applyStoredEvent, ensureProgression, LEVELS, EVENTS } from '../engine/progression.js';
 import { PRODUCT_NAME } from '../product-meta.js';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -79,7 +79,7 @@ export function renderOnboardingQuestions(host,{onDone,onSkip}={}){
       '<div class="onboarding-step-mark" aria-hidden="true"><strong>'+esc(q.mark)+'</strong><span>OF '+String(QUESTIONS.length).padStart(2,'0')+'</span></div>'+
       '<div class="onboarding-question-copy"><p class="eyebrow">'+esc(q.kicker)+'</p><h2>'+esc(q.title)+'</h2><p>'+esc(q.note)+'</p>'+(index===0?'<p class="onboarding-story">Curious how this began? <a href="about.html" target="_blank" rel="noopener">Read our story ↗</a></p>':'')+'</div>'+
       '<div class="onboarding-answer-grid">'+q.answers.map(([id,tag,label])=>'<button type="button" data-onboarding-answer="'+esc(id)+'"><small>'+esc(tag)+'</small><b>'+esc(label)+'</b><i aria-hidden="true">→</i></button>').join('')+'</div>'+
-      '<div class="onboarding-reward"><small>YOUR COMPLETELY SERIOUS REWARD METER</small><b>+15 XP</b><span>'+(next?'Next: Level '+next.level+' · '+next.name:'You have become suspiciously powerful.')+'</span></div>'+
+      '<div class="onboarding-reward"><small>YOUR COMPLETELY SERIOUS REWARD METER</small><b>+'+esc(EVENTS.ONBOARDING_ANSWER.xp)+' XP</b><span>'+(next?'Next: Level '+next.level+' · '+next.name:'You have become suspiciously powerful.')+'</span></div>'+
       '<div class="onboarding-actions"><button type="button" class="btn-text" data-onboarding-skip>Skip the interrogation</button><span>'+(index+1)+' / '+QUESTIONS.length+'</span></div>'+
     '</section>';
     host.querySelectorAll('[data-onboarding-answer]').forEach(btn=>btn.onclick=()=>{
