@@ -75,10 +75,8 @@ test('entry has questions, avatar, install handoff and replayable contextual onb
   assert.match(entry,/paintQuest\(firstRunStep\(\)\)/);
   assert.match(entry,/renderOnboardingQuestions/);
   assert.match(entry,/renderAvatarRegistration/);
-  assert.match(entry,/onContinue:\(\)=>paintQuest\('install'\)/);
-  assert.match(entry,/if\(step==='install'\)/);
-  assert.match(entry,/data-install-app/);
-  assert.match(entry,/Turn your phone sideways/);
+  
+  assert.match(entry,/onContinue:\(\)=>enterApp\('home'\)/);
   assert.match(onboarding,/What brings you to Kona/);
   assert.match(onboarding,/ONBOARDING_ANSWER/);
   assert.doesNotMatch(entry,/data-race-picker/);
@@ -100,5 +98,5 @@ test('Now tab routes to Home behavior and Admin Assets stays a generated, Me-onl
 
 test('visual evidence covers launch, companion and museum-return states across Random mode',()=>{
   assert.match(visual,/\['light','dark','random'\]/);
-  for(const view of ['landing','onboarding-profile','avatar-registration','install-handoff','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','bike-studio']) assert.match(visual,new RegExp(view));
+  for(const view of ['landing','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','bike-studio']) assert.match(visual,new RegExp(view));
 });
