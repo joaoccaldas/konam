@@ -1,8 +1,8 @@
 # Trek triathlon museum: handover (2026-09-27)
 
-Repo: `~/Developer/trek-tri-museum-3d`. **No git repo yet** (never `git init`-ed). Reference implementation
-(read-only, another session is working in it): `~/Developer/speedmax-cfr-3d`. The brief this work follows is
-`speedmax-cfr-3d/docs/BRAND_MUSEUM_AGENT_PROMPT.md` (brand = Trek, category = triathlon/TT).
+Repo: this repository (the Trek work began as a separate working copy before it was merged in). Reference
+implementation: the Canyon Speedmax museum in this repository. The brief this work follows is
+`docs/BRAND_MUSEUM_AGENT_PROMPT.md` (brand = Trek, category = triathlon/TT).
 
 ## What the owner asked for, in order
 
@@ -139,5 +139,4 @@ Repo: `~/Developer/trek-tri-museum-3d`. **No git repo yet** (never `git init`-ed
   - Not yet: a manifest-driven `tools/build_museum.py` for the heritage path, a parameterised browser smoke test,
     and the `not-modelled` status in the schema.
 - Owner decisions pending: whether the 1986 Tri Series counts; published table vs photographed geometry.
-- Session close per `performance-os/AGENTS.md` does not apply (different repo). Record an outcome in the knowledge hub
-  when a Speed Concept build is validated.
+- Record an outcome in the project notes when a Speed Concept build is validated.

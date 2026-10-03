@@ -22,7 +22,7 @@ function avatarPreview(styleInput){
   '</div>';
 }
 
-export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage,openDiscover,openPlan,openCollection,openWorld,admin=false}={}){
+export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage,openDiscover,openPlan,openCollection,openWorld,openFeed,openTravel,admin=false}={}){
   const snapshot=readGameState();
   const identity=snapshot.race_identity||{};
   const collection=collectionSummary(snapshot);
@@ -41,11 +41,18 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
   const horizonHtml=horizon.map(item=>'<article class="home-horizon-card '+(item.unlocked?'is-revealed':'is-locked')+'"><div class="home-horizon-silhouette"><span>'+esc(item.silhouette)+'</span></div><small>'+(item.unlocked?'MILESTONE REACHED':'LEVEL '+item.level)+'</small><h4>'+esc(item.unlocked?item.reveal:item.tease)+'</h4><p>Reward preview. Availability is shown in Progress.</p></article>').join('');
 
   root.innerHTML=
-    '<section class="home-world-hero artifact artifact--photo"><div class="home-world-hero-media"><img src="assets/share/museum.jpg" alt="Kona.m 3D world preview" loading="eager" decoding="async"></div><div class="home-world-hero-copy"><small>KONA.M · 3D WORLD</small><h3>Walk into it.</h3><p>Explore the museum, rooms, bikes and hidden details in the real 3D world.</p><button type="button" class="kona-primary" data-home-world>Enter the 3D world <span>→</span></button></div></section>'+
     '<section class="kona-hero-card artifact artifact--hero home-today">'+
       '<small>'+esc(event.name||PRODUCT_NAME+' · TODAY')+'</small>'+
       '<h3 data-countdown-value>'+esc(headline)+'</h3><p>'+esc(note)+'</p>'+
       '<button class="kona-primary" type="button" data-home-plan>What matters next <span>→</span></button>'+
+    '</section>'+
+    '<section class="kona-section artifact artifact--label home-kona-now">'+
+      '<div class="kona-section-head"><div><small>KONA NOW · RACE WEEK</small><h3>What is happening?</h3></div><span class="t-data">RETURN HERE</span></div>'+
+      '<div class="kona-list">'+
+        '<article><i>NOW</i><div><b>The Intern has been reading everything again.</b><span>Athlete videos, triathlon headlines and island updates, source-grounded and refreshable.</span></div><button type="button" class="btn-text" data-home-feed>Open feed →</button></article>'+
+        '<article><i>KOA</i><div><b>Just landed?</b><span>Flights, roads, race-week essentials, bike help, coffee and useful island stops.</span></div><button type="button" class="btn-text" data-home-travel>Plan Kona →</button></article>'+
+        '<article><i>NEXT</i><div><b>What matters next.</b><span>Your race-week timeline and the next useful thing, without turning preparation into homework.</span></div><button type="button" class="btn-text" data-home-plan>Open plan →</button></article>'+
+      '</div><p class="kona-source-note">Freshness and source status are shown inside the Feed. Local listings are independent, not endorsements.</p>'+
     '</section>'+
     '<section class="home-race-self artifact artifact--label">'+
       '<div class="home-race-self-visual">'+avatarPreview(style)+'</div>'+
@@ -55,6 +62,7 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
       '</div>'+
     '</section>'+
     '<section class="kona-section artifact artifact--label home-first-find"><small>YOUR FIRST DETOUR</small><h3>Something small is hiding here.</h3><p>Spot the volcanic rock. Tap it. '+PRODUCT_NAME+' Finds will keep the story.</p><div class="ui-cluster"><span class="t-hand" aria-hidden="true">That suspicious little rock →</span><button type="button" class="btn-icon" data-first-find aria-label="Collect Perfect Volcanic Rock"'+(firstFound?' disabled':'')+'><svg viewBox="0 0 100 70" aria-hidden="true"><path d="M12 52 24 25 47 12 72 18 89 45 70 60 36 64Z" fill="currentColor"/></svg></button></div><p class="kona-source-note" role="status" data-first-find-status>'+(firstFound?'Perfect Volcanic Rock is saved in '+PRODUCT_NAME+' Finds.':'Your first Find is waiting.')+'</p><button type="button" class="btn-text" data-home-finds>Open '+PRODUCT_NAME+' Finds →</button></section>'+
+    '<section class="home-world-hero artifact artifact--photo"><div class="home-world-hero-media"><img src="assets/share/museum.jpg" alt="Kona.m 3D world preview" loading="lazy" decoding="async"></div><div class="home-world-hero-copy"><small>KONA.M · 3D WORLD</small><h3>Then go deeper.</h3><p>The museum, rooms, bikes and hidden details are still here. Enter when you want the world underneath the useful stuff.</p><button type="button" class="kona-primary" data-home-world>Enter the 3D world <span>→</span></button></div></section>'+
     '<section class="home-postcard artifact artifact--photo">'+
       '<div class="home-postcard-photo" aria-hidden="true"><img src="assets/kona-years/queen-k.jpg" alt="" loading="lazy" decoding="async"></div>'+
       '<div class="home-postcard-copy"><small>KAILUA-KONA · HAWAIʻI</small><h3>Not just a race.</h3><p>Roads, lava, people, machines and strange little details worth finding.</p><button type="button" class="kona-link-btn" data-home-discover>Discover something →</button></div>'+
@@ -79,7 +87,9 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
   root.querySelector('[data-home-self]')?.addEventListener('click',()=>openRaceSelf?.());
   root.querySelector('[data-home-garage]')?.addEventListener('click',()=>openGarage?.());
   root.querySelector('[data-home-discover]')?.addEventListener('click',()=>openDiscover?.());
-  root.querySelector('[data-home-plan]')?.addEventListener('click',()=>openPlan?.());
+  root.querySelectorAll('[data-home-plan]').forEach(button=>button.addEventListener('click',()=>openPlan?.()));
+  root.querySelector('[data-home-feed]')?.addEventListener('click',()=>openFeed?.());
+  root.querySelector('[data-home-travel]')?.addEventListener('click',()=>openTravel?.());
   root.querySelector('[data-home-nudge]')?.addEventListener('click',e=>{
     const button=e.currentTarget,id='nudge:'+dayKey;
     try {

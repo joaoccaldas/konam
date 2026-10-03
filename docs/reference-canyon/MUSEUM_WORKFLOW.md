@@ -18,7 +18,7 @@ Original source scripts and original Blend/GLB/HTML files are preserved in `asse
 Validated on macOS, Blender 5.2.2 LTS, Python 3.9 with the versions in `requirements-museum.txt`, Node 24 and the committed npm lockfile. Blender needs the DIN Condensed Bold macOS system font used by the legacy component builder. Browser checks use local Google Chrome. The geometry pipeline itself has no network calls.
 
 ```sh
-cd ~/Developer/speedmax-cfr-3d
+cd <repo-root>
 python3 -m venv .venv
 .venv/bin/pip install -r requirements-museum.txt
 cd web
@@ -145,7 +145,7 @@ Before adding a new exhibit to the collection page:
 ### Rebuild everything from scratch
 
 ```sh
-cd ~/Developer/speedmax-cfr-3d
+cd <repo-root>
 python3 tools/build_museum.py --manifest museum/bikes/canyon-speedmax-cfr-axs-my2027-m.json --lods
 python3 tools/build_museum.py --manifest museum/bikes/canyon-speedmax-slx-8-di2-my2027-m.json --lods
 node tools/build_collection.mjs

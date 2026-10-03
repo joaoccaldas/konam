@@ -11,7 +11,7 @@ This file is generated from the same museum registries used by the public app. S
 - Canyon Triathlon Collection · every Speedmax generation, compared: https://joaoccaldas.github.io/konam/Canyon_Collection.html
 - Studio · Speedmax Museum — build, paint and share a time-trial bike: https://joaoccaldas.github.io/konam/Studio.html
 - Speedmax Nights & History Lane · Canyon Speedmax Museum: https://joaoccaldas.github.io/konam/Experiences.html
-- About this company · Kona.m: https://joaoccaldas.github.io/konam/about.html
+- About Kona.m · the Field Guide to the world, the game & the lab: https://joaoccaldas.github.io/konam/about.html
 - Kona.m Field Guide · how to play, worlds, bikes & experiments: https://joaoccaldas.github.io/konam/promo.html
 - Canyon Museum — SpeedMax 3.0 (2007): https://joaoccaldas.github.io/konam/Speedmax_2007_Museum.html
 - Canyon Museum — Speedmax AL 9.0 (2011): https://joaoccaldas.github.io/konam/Speedmax_AL_2011_Museum.html
@@ -258,4 +258,4 @@ Editorial stories:
 - Kona coffee country: Kona coffee is grown on upland slopes in North and South Kona, where elevation, cloud cover and volcanic soils support coffee farming. · source: https://www.gohawaii.com/islands/hawaii-big-island/things-to-do/land-activities/coffee-plantations
 
 ## Privacy and app behavior
-No account is required. No default analytics, ad trackers or background location tracking. Profile, Passport, finds and saved app state are local-first unless a future sync feature is explicitly enabled by the visitor.
+No account is required. No ad trackers or background location tracking. The public web beta uses privacy-minimal first-party session analytics; the packaged native app does not enable that public-web analytics path. Profile, Passport, finds and saved app state are local-first unless sync is explicitly enabled by the visitor.

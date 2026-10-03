@@ -133,6 +133,8 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openDiscover:explore,
       openPlan:plan,
       openCollection:collection,
+      openFeed:feed,
+      openTravel:travel,
       openWorld:()=>{close();enter?.();},
       admin:accessContext.admin,
     });

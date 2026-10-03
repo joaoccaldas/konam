@@ -30,8 +30,9 @@ test('Vercel publishes only the staged allowlist',()=>{
 
 test('About page runtime is present in the staged public bundle',()=>{
   const stage=fs.readFileSync(new URL('../../tools/stage_site.sh',import.meta.url),'utf8');
-  assert.match(stage,/web\/styles\/about\.css/);
-  assert.match(stage,/web\/src\/about-story\.js/);
-  assert.match(stage,/test -f _site\/web\/src\/about-story\.js/);
-  assert.match(stage,/test -f _site\/web\/styles\/about\.css/);
+  // About is generated from the Field Guide (promo.html) and runs on its controller and styles.
+  assert.match(stage,/web\/styles\/promo\.css/);
+  assert.match(stage,/web\/src\/promo\.js/);
+  assert.match(stage,/test -f _site\/web\/src\/promo\.js/);
+  assert.match(stage,/test -f _site\/web\/styles\/promo\.css/);
 });

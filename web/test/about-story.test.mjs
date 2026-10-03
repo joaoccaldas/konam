@@ -4,34 +4,33 @@ import { readFileSync } from 'node:fs';
 
 const root=new URL('../../',import.meta.url);
 const read=path=>readFileSync(new URL(path,root),'utf8');
+const stripHead=html=>html.replace(/<head>[\s\S]*?<\/head>/,'<head></head>')
+  .replace(/(["'])\.\/(?:about|promo)\.html/g,'$1SELF')
+  .replace(/=(["'])(?:about|promo)\.html\1/g,'="SELF"');
 
-test('About route uses Field Guide brand authorities without inline styling',()=>{
-  const html=read('about.html');
-  for(const href of ['brand/tokens.css','brand/themes.css','brand/artifacts.css','brand/typography.css','web/styles/components.css','web/styles/system.css','web/styles/promo.css']) assert.ok(html.includes(href),`missing ${href}`);
-  assert.equal(/<style\b/i.test(html),false);
-  const inline=[...html.matchAll(/style="([^"]*)"/gi)].map(m=>m[1].trim());
-  for(const value of inline) assert.match(value,/^(?:--(?:x|y|h):[^;]+;?)+$/,`unexpected inline style: ${value}`);
+test('about.html is the Field Guide generated from the promo source',()=>{
+  const about=read('about.html'),promo=read('promo.html');
+  assert.equal(stripHead(about),stripHead(promo),'about.html must be regenerated from promo.html (node tools/build_pages.mjs)');
+  assert.match(about,/<link rel="canonical" href="[^"]*\/about\.html">/);
+  assert.doesNotMatch(about,/<link rel="canonical" href="[^"]*\/promo\.html">/);
+  assert.match(about,/<title>About Kona\.m · the Field Guide/);
+  for(const href of ['brand/tokens.css','web/styles/promo.css','web/src/promo.js']) assert.ok(about.includes(href),`missing ${href}`);
 });
 
-test('About route exposes three depths without personal identity or confidential strategy',()=>{
-  const source=read('web/src/about-story.js');
-  for(const route of ["'short'","'scenic'","'unfiltered'","'final'"]) assert.ok(source.includes(route));
-  assert.ok(source.includes('Finished enough to let you in.'));
-  assert.ok(source.includes('One bike. One room. One road.'));
-  assert.equal(/Jo[aã]o|Caldas|gmail|street address|phone number/i.test(source),false);
-  assert.equal(/\$\s*\d|subscription|pavilion licensing|revenue|monetiz|pricing|roadmap|2027 platform/i.test(source),false);
+test('Field Guide is the only About runtime authority',()=>{
+  const about=read('about.html');
+  assert.match(about,/web\/styles\/promo\.css/);
+  assert.match(about,/web\/src\/promo\.js/);
+  assert.doesNotMatch(about,/about-story\.js|web\/styles\/about\.css/);
+  assert.equal(/<style\b/i.test(about),false);
 });
 
-test('About stylesheet stays route scoped and token driven',()=>{
-  const css=read('web/styles/about.css');
-  assert.ok(css.includes('.about-page'));
-  assert.ok(css.includes('var(--brand-bg)'));
-  assert.ok(css.includes('var(--brand-font-editorial)'));
-  assert.ok(css.includes('var(--brand-font-hand)'));
-  assert.equal(/:root\s*\{/.test(css),false);
+test('Field Guide contact is the public Kona.m project inbox, never a private personal address',()=>{
+  const promo=read('promo.html');
+  assert.match(promo,/konamundo@gmail\.com/);
+  assert.doesNotMatch(promo,/joaoccaldas(?:&#64;|@)gmail\.com|Jo[aã]o\s+Caldas/i);
 });
 
-test('landing exposes About this company',()=>{
-  const template=read('web/landing.template.html');
-  assert.ok(template.includes('href="about.html">About this company</a>'));
+test('landing names the Field Guide by purpose',()=>{
+  assert.match(read('web/landing.template.html'),/href="about\.html">What is Kona\.m\?<\/a>/);
 });

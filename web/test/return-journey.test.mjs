@@ -16,11 +16,14 @@ test('return journey counts once per browser session',()=>{
   assert.equal(b.counted,false);
 });
 
-test('reward education arrives before install nudges',()=>{
-  const storage=memory(),session=memory();
+test('reward education arrives before one-tap feedback and install nudges',()=>{
+  const storage=memory();
   let s=readReturnJourney(storage);s.visits=3;
   assert.equal(nextReturnMoment(s,{}),'rewards');
   s=recordReturnMoment(s,'rewards','shown',storage);
+  s.visits=4;
+  assert.equal(nextReturnMoment(s,{}),'feedback-race-week');
+  s=recordReturnMoment(s,'feedback-race-week','feedback-yes',storage);
   s.visits=5;
   assert.equal(nextReturnMoment(s,{}),'install-teaser');
 });
@@ -28,7 +31,7 @@ test('reward education arrives before install nudges',()=>{
 test('install reminders are sparse and respect permanent opt out',()=>{
   const storage=memory();
   let s=readReturnJourney(storage);
-  s.visits=5;s.rewardsSeen=true;
+  s.visits=5;s.rewardsSeen=true;s.raceWeekFeedbackAsked=true;
   s=recordReturnMoment(s,'install-teaser','dismiss-install',storage);
   s.visits=7;assert.equal(nextReturnMoment(s,{}),null);
   s.visits=8;assert.equal(nextReturnMoment(s,{}),'install-reminder');
@@ -38,8 +41,8 @@ test('install reminders are sparse and respect permanent opt out',()=>{
   s.visits=50;assert.equal(nextReturnMoment(s,{}),null);
 });
 
-test('installed and native users never receive install nudges',()=>{
-  const s={schema:1,visits:8,rewardsSeen:true,installTeaserSeen:false};
+test('installed and native users never receive install or public-web feedback nudges',()=>{
+  const s={schema:1,visits:8,rewardsSeen:true,raceWeekFeedbackAsked:false,installTeaserSeen:false};
   assert.equal(nextReturnMoment(s,{standalone:true}),null);
   assert.equal(nextReturnMoment(s,{native:true}),null);
 });
