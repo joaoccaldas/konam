@@ -707,7 +707,7 @@ function buildUI() {
   $('#xrayBtn').onclick = () => { S.xray = !S.xray; $('#xrayBtn').classList.toggle('active', S.xray); applyGhost(); };
   $('#spinBtn').onclick = () => { S.spin = !S.spin; controls.autoRotate = S.spin; controls.autoRotateSpeed = .7; $('#spinBtn').classList.toggle('active', S.spin); };
   $('#shotBtn').onclick = screenshot;
-  $('#glbBtn').onclick = () => download(new Blob([GLB], { type: 'model/gltf-binary' }), 'speedmax_cfr_axs_web.glb');
+  $('#glbBtn').onclick = async () => { try { const res=await fetch(window.__SPEEDMAX_GLB_URL); if(!res.ok) throw new Error('HTTP '+res.status); download(await res.blob(), `speedmax_${BIKE.key||'bike'}_web.glb`); } catch(e) { toast('GLB download unavailable'); console.error(e); } };
   $('#quality').value = S.quality;
   $('#quality').onchange = e => { S.quality = e.target.value; applyQuality(); };
   $('#hint').textContent = coarse ? 'Drag to orbit · pinch to zoom · tap a part' : 'Drag to orbit · scroll to zoom · click any part';
