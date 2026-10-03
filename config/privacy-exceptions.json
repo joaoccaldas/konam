@@ -33,6 +33,38 @@
       "reason": "Dedicated public Kona.m project contact address on origin.html; not a private personal address.",
       "approved_by": "owner (2026-10-03)",
       "added": "2026-10-03"
+    },
+    {
+      "file": ".github/workflows/intern-daily.yml",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Dedicated public Kona.m project contact address used by the Intern editorial system; not a private personal address.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
+    },
+    {
+      "file": "integrations/companion/intern-dispatch.json",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Dedicated public Kona.m project contact address used by the Intern editorial system; not a private personal address.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
+    },
+    {
+      "file": "integrations/companion/intern-notes.json",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Dedicated public Kona.m project contact address used by the Intern editorial system; not a private personal address.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
+    },
+    {
+      "file": "tools/build_intern_dispatch.mjs",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Dedicated public Kona.m project contact address used by the Intern editorial system; not a private personal address.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
     }
   ]
 }
