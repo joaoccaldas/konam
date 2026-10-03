@@ -4,33 +4,57 @@ import { readFileSync } from 'node:fs';
 
 const root=new URL('../../',import.meta.url);
 const read=path=>readFileSync(new URL(path,root),'utf8');
-const stripHead=html=>html.replace(/<head>[\s\S]*?<\/head>/,'<head></head>')
-  .replace(/(["'])\.\/(?:about|promo)\.html/g,'$1SELF')
-  .replace(/=(["'])(?:about|promo)\.html\1/g,'="SELF"');
 
-test('about.html is the Field Guide generated from the promo source',()=>{
-  const about=read('about.html'),promo=read('promo.html');
-  assert.equal(stripHead(about),stripHead(promo),'about.html must be regenerated from promo.html (node tools/build_pages.mjs)');
-  assert.match(about,/<link rel="canonical" href="[^"]*\/about\.html">/);
-  assert.doesNotMatch(about,/<link rel="canonical" href="[^"]*\/promo\.html">/);
-  assert.match(about,/<title>About Kona\.m · the Field Guide/);
-  for(const href of ['brand/tokens.css','web/styles/promo.css','web/src/promo.js']) assert.ok(about.includes(href),`missing ${href}`);
+test('Why, About, Origin and Field Guide have separate editorial jobs',()=>{
+  const why=read('why.html'),about=read('about.html'),origin=read('origin.html'),guide=read('promo.html');
+  assert.match(why,/WHY KONA\.M/);
+  assert.match(why,/Triathlon is bigger/);
+  assert.doesNotMatch(why,/Excel sheet|HOW TO PLAY|Privacy & data in this beta/i);
+
+  assert.match(about,/ABOUT KONA\.M/);
+  assert.match(about,/Home[\s\S]*Discover[\s\S]*Garage[\s\S]*Plan[\s\S]*Me/);
+  assert.match(about,/INDEPENDENCE \+ CONTEXT/);
+  assert.doesNotMatch(about,/THE SHORT VERSION|Side quest\. Side quest/i);
+
+  assert.match(origin,/ORIGIN STORY \/ OPTIONAL/);
+  assert.match(origin,/Excel sheet/);
+  assert.match(origin,/Training[\s\S]*Excel[\s\S]*AI[\s\S]*Bikes/);
+
+  assert.match(guide,/FIELD GUIDE/);
+  assert.match(guide,/HOW TO PLAY|START HERE/);
+  assert.match(guide,/web\/src\/promo\.js/);
+
+  assert.notEqual(about,guide,'About must never be regenerated from the Field Guide');
 });
 
-test('Field Guide is the only About runtime authority',()=>{
-  const about=read('about.html');
-  assert.match(about,/web\/styles\/promo\.css/);
-  assert.match(about,/web\/src\/promo\.js/);
-  assert.doesNotMatch(about,/about-story\.js|web\/styles\/about\.css/);
-  assert.equal(/<style\b/i.test(about),false);
+test('editorial pages use one responsive system and keep the origin optional',()=>{
+  for(const file of ['why.html','about.html','origin.html']){
+    const html=read(file);
+    assert.match(html,/web\/styles\/about\.css/);
+    assert.doesNotMatch(html,/web\/src\/promo\.js|about-story\.js/);
+    assert.match(html,/href="promo\.html">Field Guide/);
+    assert.match(html,/mailto:konamundo@gmail\.com/);
+  }
+  assert.match(read('about.html'),/href="origin\.html"/);
+  assert.match(read('why.html'),/href="origin\.html"/);
 });
 
-test('Field Guide contact is the public Kona.m project inbox, never a private personal address',()=>{
-  const promo=read('promo.html');
-  assert.match(promo,/konamundo@gmail\.com/);
-  assert.doesNotMatch(promo,/joaoccaldas(?:&#64;|@)gmail\.com|Jo[aã]o\s+Caldas/i);
+test('the hardener cannot collapse About back into the Field Guide',()=>{
+  const hardener=read('tools/harden_pages.mjs');
+  assert.doesNotMatch(hardener,/MIRRORS|About is the Field Guide|generated from the promo source/);
+  for(const file of ['why.html','about.html','origin.html','promo.html']) assert.match(hardener,new RegExp("file: '"+file.replace('.','\\.')+"'"));
 });
 
-test('landing names the Field Guide by purpose',()=>{
-  assert.match(read('web/landing.template.html'),/href="about\.html">What is Kona\.m\?<\/a>/);
+test('public Intern contact is a project inbox, never the creator personal address',()=>{
+  for(const file of ['why.html','about.html','origin.html','promo.html']){
+    const html=read(file);
+    if(file!=='promo.html') assert.match(html,/konamundo@gmail\.com/);
+    assert.doesNotMatch(html,/joaoccaldas(?:&#64;|@)gmail\.com|Jo[aã]o\s+Caldas/i);
+  }
+});
+
+test('landing separates product explanation from optional origin',()=>{
+  const landing=read('web/landing.template.html');
+  assert.match(landing,/href="about\.html">What is Kona\.m\?<\/a>/);
+  assert.match(landing,/href="origin\.html">Read the origin/);
 });
