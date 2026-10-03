@@ -2,6 +2,7 @@
   "schema_version": 1,
   "id": "norwegian-engine",
   "name": "NOR // 3 · The Norwegian Engine",
+  "parent_room": "room-026",
   "classification": {
     "type": "athlete-room",
     "status": "concept",

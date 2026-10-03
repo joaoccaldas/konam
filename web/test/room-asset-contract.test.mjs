@@ -51,3 +51,14 @@ test('bike pipeline is reused, not forked',()=>{
     assert.equal(j('world/konam/rooms/'+id+'.room.json').assets.bike_pipeline,'museum/bike.schema.json');
   }
 });
+
+
+test('athlete rooms are children of the canonical Athlete Rooms district',()=>{
+  for(const id of ['norwegian-engine','beast-cave']){
+    const m=j('world/konam/rooms/'+id+'.room.json');
+    assert.equal(m.parent_room,'room-026');
+  }
+  const world=j('world/konam/rooms-v1.json');
+  const parent=(world.rooms||[]).find(x=>x.id==='room-026');
+  assert.equal(parent?.slug,'athlete-rooms');
+});

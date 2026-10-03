@@ -2,6 +2,7 @@
   "schema_version": 1,
   "id": "beast-cave",
   "name": "Beast Cave",
+  "parent_room": "room-026",
   "classification": {
     "type": "athlete-room",
     "status": "concept",
