@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
-import {buildNorwegianReview} from './review/norwegian-installation.snapshot.js';
+import {buildInstallation} from './engine/room-installations.js';
 
 const canvas=document.querySelector('[data-room-canvas]');
 const loading=document.querySelector('[data-room-loading]');
@@ -57,11 +57,7 @@ for(let i=0;i<6;i++){
 }
 const obstacles=[];
 const specimen=new THREE.Vector3(.55,Y,cz);
-const L={id:'norwegian',group:room,floorMat,motes:[]};
-const put=(mesh,x,y,z)=>{mesh.position.set(x,y,z);room.add(mesh);return mesh};
-const box=(w,h,d,x,y,z,mat)=>put(new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat),x,y,z);
-const r={id:'norwegian',z0:Math.max(bounds.z0,bounds.z1),z1:Math.min(bounds.z0,bounds.z1)};
-buildNorwegianReview({r,rg:room,put,box,seed:401,lite,cx,cz,Y,rw,rd,specimen,obstacles,L,bounds});
+const L=buildInstallation('norwegian',{group:room,bounds,elevation:Y,specimen,lite,obstacles,floorMat,seed:401});
 room.traverse(o=>{if(o.isMesh){o.castShadow=!lite;o.receiveShadow=true}});
 
 // Host lighting: restrained ambient, directional moon/cold key and warm/cool cross-light.
