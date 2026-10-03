@@ -17,6 +17,14 @@ if(!states.includes(m.classification?.status))fail('invalid lifecycle');
 if(m.classification.status==='public' && m.classification.public!==true)fail('public lifecycle requires public=true');
 if(m.classification.status!=='public' && m.classification.public!==false)fail('non-public lifecycle requires public=false');
 
+const world=json('world/konam/rooms-v1.json');
+const canonicalParent=(world.rooms||[]).find(room=>room.id===m.parent_room)||null;
+if(m.parent_room && !canonicalParent)fail('parent_room must reference canonical world room');
+if(m.classification?.type==='athlete-room'){
+  if(m.parent_room!=='room-026')fail('athlete-room must be a child of canonical room-026 Athlete Rooms');
+  if(canonicalParent?.slug!=='athlete-rooms')fail('room-026 canonical parent mismatch');
+}
+
 if(m.brand?.authority!=='docs/BRAND_SYSTEM.md')fail('room must consume canonical docs/BRAND_SYSTEM.md');
 if(m.brand?.tokens!=='brand/tokens.css')fail('room must consume canonical brand/tokens.css');
 if(m.brand?.ui!=='global' || m.brand?.typography!=='global')fail('room may not own a parallel UI/typography authority');
@@ -72,6 +80,7 @@ console.log(JSON.stringify({
   implementation:impl.kind,
   implementationLocal:localImplementation,
   sourceBranch:impl.source_branch||null,
+  parentRoom:m.parent_room||null,
   publicWiring:publicHit,
   brandAuthority:m.brand.authority
 },null,2));
