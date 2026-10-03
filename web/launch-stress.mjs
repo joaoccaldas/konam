@@ -3,7 +3,8 @@ import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const base=process.argv[2]||'http://127.0.0.1:8744';
-const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--use-angle=metal']});
+const launchArgs=process.env.CI?['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']:['--use-angle=metal'];
+const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:launchArgs});
 const report={};
 try{
  const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.setBypassServiceWorker(true);await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
