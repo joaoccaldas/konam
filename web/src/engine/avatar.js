@@ -5,7 +5,7 @@
 export const AVATAR_SCHEMA_VERSION=5;
 
 export const AVATAR_ARCHETYPES=Object.freeze([
-  Object.freeze({id:'minecraft',label:'Minecraft',note:'Block-built, playful and instantly readable.',shape:'voxel',animation:'bounce'}),
+  Object.freeze({id:'minecraft',label:'Blocky',note:'Block-built, playful and instantly readable.',shape:'voxel',animation:'bounce'}),
   Object.freeze({id:'renegade',label:'Badass',note:'Athletic street-racer silhouette with optional ink.',shape:'renegade',animation:'swagger'}),
   Object.freeze({id:'aero',label:'Aero',note:'Lean futuristic race avatar with a technical silhouette.',shape:'aero',animation:'ready'}),
   Object.freeze({id:'islander',label:'Islander',note:'Relaxed Kona explorer with a softer, sun-ready silhouette.',shape:'islander',animation:'sway'}),
