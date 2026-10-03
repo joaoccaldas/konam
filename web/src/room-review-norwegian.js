@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
-import {buildNorwegianReview} from './review/norwegian-installation.snapshot.js';
+import {buildInstallation} from './engine/room-installations.js';
+import {loadSpeedmax} from './exp/engine.js';
 
 const canvas=document.querySelector('[data-room-canvas]');
 const loading=document.querySelector('[data-room-loading]');
@@ -57,12 +58,33 @@ for(let i=0;i<6;i++){
 }
 const obstacles=[];
 const specimen=new THREE.Vector3(.55,Y,cz);
-const L={id:'norwegian',group:room,floorMat,motes:[]};
-const put=(mesh,x,y,z)=>{mesh.position.set(x,y,z);room.add(mesh);return mesh};
-const box=(w,h,d,x,y,z,mat)=>put(new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat),x,y,z);
-const r={id:'norwegian',z0:Math.max(bounds.z0,bounds.z1),z1:Math.min(bounds.z0,bounds.z1)};
-buildNorwegianReview({r,rg:room,put,box,seed:401,lite,cx,cz,Y,rw,rd,specimen,obstacles,L,bounds});
+const L=buildInstallation('norwegian',{group:room,bounds,elevation:Y,specimen,lite,obstacles,floorMat,seed:401});
 room.traverse(o=>{if(o.isMesh){o.castShadow=!lite;o.receiveShadow=true}});
+
+// The room owns only the three specimen anchors. Bike identity/loading remains canonical.
+// One neutral CFR study is cloned into all lanes; athlete-specific equipment/liveries stay
+// unassigned until sourced and rights-cleared.
+async function mountCanonicalSpecimens(){
+  if(!L.specimenSlots?.length)return;
+  try{
+    const canonical=await loadSpeedmax('assets/museum/speedmax_web.glb',{shadows:!lite});
+    const horizontal=Math.max(canonical.size.x,canonical.size.z)||1;
+    const scale=1.72/horizontal;
+    for(const slot of L.specimenSlots){
+      const holder=canonical.holder.clone(true);
+      holder.scale.setScalar(scale);
+      holder.rotation.y=Math.PI/2;
+      holder.position.copy(slot);
+      holder.position.y+=.02;
+      holder.userData.nor3CanonicalSpecimen=true;
+      room.add(holder);
+    }
+    room.traverse(o=>{if(o.userData?.nor3BikeFallback)o.visible=false;});
+  }catch(error){
+    console.warn('NOR // 3 canonical bike unavailable; keeping neutral fallback study',error);
+  }
+}
+mountCanonicalSpecimens();
 
 // Host lighting: restrained ambient, directional moon/cold key and warm/cool cross-light.
 scene.add(new THREE.HemisphereLight('#8fb7c3','#160c08',lite?.72:.58));
@@ -187,4 +209,36 @@ setView('overview');
 loading.hidden=true;
 requestAnimationFrame(frame);
 window.__NOR3_REVIEW_READY=true;
-window.__NOR3_REVIEW_METRICS={lite,objects:room.children.length,pickables:(L.reviewPickables||[]).length,variant:'cinematic-production-v2'};
+window.__NOR3_REVIEW_API={
+  setView:(id)=>setView(id),
+  render:()=>renderer.render(scene,camera),
+  metrics:()=>{
+    renderer.render(scene,camera);
+    let meshes=0,lights=0,materials=new Set(),geometries=new Set(),textures=new Set();
+    room.traverse(o=>{
+      if(o.isMesh){
+        meshes++;geometries.add(o.geometry.uuid);
+        const ms=Array.isArray(o.material)?o.material:[o.material];
+        for(const m of ms){if(!m)continue;materials.add(m.uuid);if(m.map)textures.add(m.map.uuid);if(m.normalMap)textures.add(m.normalMap.uuid);if(m.roughnessMap)textures.add(m.roughnessMap.uuid);}
+      }
+      if(o.isLight)lights++;
+    });
+    const info=renderer.info.render;
+    return {
+      lite,
+      variant:'cinematic-production-v3',
+      objects:room.children.length,
+      meshes,
+      lights,
+      pickables:(L.reviewPickables||[]).length,
+      unique_geometries:geometries.size,
+      unique_materials:materials.size,
+      textures:textures.size,
+      draw_calls:info.calls,
+      triangles:info.triangles,
+      points:info.points,
+      lines:info.lines
+    };
+  }
+};
+window.__NOR3_REVIEW_METRICS=window.__NOR3_REVIEW_API.metrics();
