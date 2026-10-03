@@ -66,7 +66,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     try{visible=navigationForState(readGameState(),{admin:accessContext.admin});}catch(_){}
     const shown=new Set(visible);
     shell.querySelectorAll('[data-tab]').forEach(button=>{button.hidden=!shown.has(button.dataset.tab);});
-    shell.querySelectorAll('[data-desktop-tab]').forEach(button=>{button.hidden=!shown.has(button.dataset.desktopTab);});
+    shell.querySelectorAll('[data-desktop-tab]').forEach(button=>{button.hidden=false;});
     const nav=shell.querySelector('.kona-bottom-nav');
     if(nav){
       nav.style.setProperty('--nav-count',String(Math.max(1,visible.length)));
