@@ -166,9 +166,7 @@
 @media(pointer:coarse) and (orientation:landscape) and (max-height:700px){
   .promo-header{position:absolute;left:10px;right:10px;top:8px;min-height:52px}.promo-wordmark span,.promo-system-trigger{display:none}.promo-enter{min-height:40px}
   .promo-section{scroll-margin-top:18px}
-  .field-rail{top:auto;bottom:10px;left:10px;transform:translate(0,90px);width:54px}.field-rail.is-ready{transform:none}.field-rail.is-open{width:min(340px,calc(100vw - 20px))}
-  .field-rail-toggle{position:absolute;left:0;bottom:0;top:auto;transform:none;width:54px;min-height:54px;border-radius:50%;padding:0}.field-rail-toggle b,.field-rail-toggle small{display:none}
-  .field-rail-nav{left:0;bottom:64px;top:auto;width:min(340px,calc(100vw - 20px));max-height:min(72vh,430px);transform:translateY(30px) scale(.92);transform-origin:left bottom;border-radius:22px}.field-rail.is-open .field-rail-nav{transform:none}
+  .field-rail{display:none}
   .why-story-chapter{min-height:0;padding:44px 0;grid-template-columns:minmax(0,1.2fr) minmax(250px,.8fr);gap:32px}.why-story-chapter--path,.why-story-chapter--countdown{grid-template-columns:minmax(240px,.75fr) minmax(0,1.25fr)}.why-story-chapter--dark{padding:32px}.why-story-photo{min-height:310px}.why-story-copy h3{font-size:clamp(38px,6vw,60px)}
 }
 
