@@ -34,3 +34,28 @@ test('Field Guide contact is the public Kona.m project inbox, never a private pe
 test('landing names the Field Guide by purpose',()=>{
   assert.match(read('web/landing.template.html'),/href="about\.html">What is Kona\.m\?<\/a>/);
 });
+
+test('Why Kona is one continuous personal story, not three duplicate route choices',()=>{
+  const promo=read('promo.html');
+  for(const id of ['why-origin','why-evolution','why-sidequests','why-move','why-arrival']) assert.match(promo,new RegExp(`id="${id}"`));
+  assert.match(promo,/WHY KONA\.M EXISTS \/ THE REAL STORY/);
+  assert.match(promo,/One story\.<br><em>Keep scrolling\.<\/em>/);
+  assert.doesNotMatch(promo,/story=(?:short|scenic|unfiltered)/);
+  assert.equal((promo.match(/I am proud we got here\./g)||[]).length,1);
+  assert.equal((promo.match(/There was no grand master plan/g)||[]).length,1);
+});
+
+test('Field Guide hero introduces the page without retelling the Why story',()=>{
+  const promo=read('promo.html');
+  const hero=promo.match(/<section class="promo-hero"[\s\S]*?<\/section>/)?.[0]||'';
+  assert.match(hero,/The first part is personal\. It appears once, below, in full\./);
+  assert.doesNotMatch(hero,/I am proud this exists|Excel sheet|3D bikes\. Then a game/);
+});
+
+test('short coarse landscape moves chrome away from editorial text',()=>{
+  const css=read('web/styles/promo.css');
+  assert.match(css,/@media\(pointer:coarse\) and \(orientation:landscape\) and \(max-height:700px\)/);
+  assert.match(css,/\.promo-header\{position:absolute/);
+  assert.match(css,/\.field-rail\{top:auto;bottom:10px/);
+  assert.match(css,/\.promo-section\{scroll-margin-top:18px\}/);
+});
