@@ -77,3 +77,41 @@ What makes an athlete with a big YouTube channel say yes: (a) it's true to how h
 4. Kona screen, Ride camera and Beast Interval challenge.
 5. Experiment wall with sourced cards, plus the Zwift "build this cave" card.
 6. Capture the pitch fly-through (portrait first).
+
+---
+
+# v2 — split, cinematic pass, generated equipment (2026-10-03)
+
+Evidence: `v2/` (desktop 1440×900, phone portrait 390×844 `p-arrive.png`, phone landscape 844×390 `l-arrive.png`).
+Captured headless (SwiftShader); a real GPU renders the same scene at full frame rate.
+
+## What changed
+
+| Area | Change | Evidence |
+|---|---|---|
+| Footprint | Beast Cave is the north half (z −4…−17.7); Breitling keeps the south half unchanged, joined in review by one door in the party wall. A test fails if they overlap again. | `d-door.png`, `d-breit.png` |
+| Acoustic foam | ~5k real 3D pyramids on three walls, one instanced draw call | `d-neon.png`, `d-hero.png` |
+| Neon | Amber "BEAST CAVE / the work nobody sees" with a painted halo (no post pass) and a RectAreaLight onto the room | `d-neon.png`, `d-side.png` |
+| Screen | Original Queen K → Energy Lab route study, live power trace, RectAreaLight, mirrored in the floor | `d-hero.png` |
+| Hero | Empty saddle; Speedmax CFR study on a generated direct-drive trainer at the rear axle; drum fans aimed at the saddle; towel, bottles, sweat | `d-close.png`, `d-side.png` |
+| Story | Experiment wall: five published results read as one loop; The Gap with 2:27 (Kona 2017) | `d-exp.png`, `d-gap.png` |
+| Gear | Dense slatwall: helmets, bottles, shoes, blank bibs, medals | `d-gear.png` |
+| Run | Generated curved treadmill | `d-tread.png` |
+| Ride | "Ride" puts the visitor in the cockpit for a 60 s interval; fans, light and flywheel sound follow the watts; ≥ 30 s in band logs CHALLENGE_COMPLETED | — |
+| Breitling | Data-driven mood: dark exposure, fog, spot + shaft on the watch, glossy dais, 17-hour race-clock dial, swim/bike/run portals onto the Pacific | `d-breit.png`, `d-portals.png` |
+| Phones | Arrival frames the bike against the screen; a hint replaces the full card | `p-arrive.png`, `l-arrive.png` |
+
+## Generated assets
+
+Trainer, drum fan and curved treadmill were generated with Higgsfield (gpt_image_2_5 unbranded reference → Meshy 7 image-to-3D) and optimised with gltf-transform (1K WebP textures, meshopt, ~14k tris, 480–880 KB each). Job IDs, hashes and the `generated-unbranded-rights-review` status are in `world/konam/candidates/beast-cave-asset-manifest-v1.json`. Procedural stand-ins render until each GLB loads.
+
+## Truth boundaries kept
+
+- Facts come from `pitch/lionel-sanders/career-facts-v1.json`, all sourced and dated. The Antigravity notes' "440 W threshold" and "St. George 2021 near miss" are unsourced and were not used.
+- No likeness, no endorsement or partnership claims, no Zwift UI or route art, no Breitling marks.
+
+## Still open
+
+- Fronds from the hall palm at (6.1, −11.8) poke through the west wall near the Gap.
+- The artworld Secret Collection room (x 35–55, z −15.5…−44) overlaps Breitling's east glass strip (x 35–36.5). This was there before this work; Breitling's footprint is unchanged.
+- Public URL: GitHub Pages publishes `main` only after certification, so the room needs a merge to be public.
