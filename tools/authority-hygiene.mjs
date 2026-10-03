@@ -31,19 +31,15 @@ function walk(dir){
 const src=walk(path.join(ROOT,'web/src')).filter(p=>/\.js$/.test(p));
 const rel=p=>path.relative(ROOT,p).replaceAll('\\','/');
 
-const rendererAllow=new Set([
-  'web/src/ui/admin-asset-preview.js',
-  'web/src/ui/collectible-stage.js',
-  'web/src/hall.js',
-  'web/src/ui/race-self-stage.js',
-  'web/src/heritage.js',
-  'web/src/exp/engine.js',
-  'web/src/main.js',
-  'web/src/landing.js',
-  'web/src/studio/main.js',
-  'web/src/product-intake-proof.js',
-  'web/src/room-review-norwegian.js'
-]);
+const rendererInventoryPath=path.join(ROOT,'config/renderer-authority-v1.json');
+if(!fs.existsSync(rendererInventoryPath))errors.push('missing canonical renderer inventory: config/renderer-authority-v1.json');
+const rendererInventory=fs.existsSync(rendererInventoryPath)
+  ? JSON.parse(fs.readFileSync(rendererInventoryPath,'utf8'))
+  : {renderers:[]};
+const rendererEntries=Array.isArray(rendererInventory.renderers)?rendererInventory.renderers:[];
+const rendererPaths=rendererEntries.map(x=>x.path);
+if(new Set(rendererPaths).size!==rendererPaths.length)errors.push('renderer authority inventory contains duplicate paths');
+const rendererAllow=new Set(rendererEntries.filter(x=>String(x.path||'').startsWith('web/src/')).map(x=>x.path));
 const directStorageAllow=new Set([
   'web/src/finds.js',
   'web/src/exp/main.js',
@@ -57,6 +53,24 @@ for(const file of src){
     errors.push(r+': new renderer authority; reuse an approved runtime or update authority map explicitly');
   if(/localStorage\.(?:getItem|setItem|removeItem)\s*\(/.test(text)&&!directStorageAllow.has(r))
     errors.push(r+': direct localStorage authority; use web/src/engine/storage.js');
+}
+
+const rendererScanRoots=['web/src','web/heritage','tools'];
+const actualRendererPaths=new Set();
+for(const rootName of rendererScanRoots){
+  for(const file of walk(path.join(ROOT,rootName)).filter(p=>/\.(?:js|mjs)$/.test(p))){
+    const text=fs.readFileSync(file,'utf8');
+    if(/new\s+THREE\.WebGLRenderer\s*\(/.test(text))actualRendererPaths.add(rel(file));
+  }
+}
+for(const p of actualRendererPaths)if(!rendererPaths.includes(p))
+  errors.push(p+': renderer constructor missing from config/renderer-authority-v1.json');
+for(const p of rendererPaths)if(!actualRendererPaths.has(p))
+  errors.push(p+': renderer inventory entry has no WebGLRenderer constructor');
+for(const entry of rendererEntries){
+  for(const k of ['path','class','migrate','reason'])if(!entry?.[k])errors.push('renderer inventory entry missing '+k+': '+JSON.stringify(entry));
+  if(entry.public_runtime===true && !['kernel-required','kernel-pilot','kernel-candidate'].includes(entry.migrate))
+    errors.push(entry.path+': public runtime renderer must have a kernel migration disposition');
 }
 
 const bikeSchemas=walk(ROOT).map(rel).filter(p=>/bike.*schema\.json$/i.test(p));
