@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "id": "konam-company-history-v1",
+  "public_frontend_anonymous": true,
+  "title": "How Kona.m became Kona.m",
+  "lede": "There was no master plan. There was training, an Excel sheet, AI, bikes, rooms, an island, and a suspicious number of side quests.",
+  "current_posture": "Finished enough to let you in. Not finished enough to stop changing.",
+  "phases": [
+    {
+      "id": "training",
+      "index": "00",
+      "label": "THE RETURN",
+      "title": "Back to triathlon",
+      "summary": "One of my favourite persons recently inspired me to get back into triathlon. The first problem was simple: understand the comeback and start moving again.",
+      "truth": "founder-origin-story",
+      "source": [
+        "web/src/about-story.js",
+        "KONA_M_PRESTIGE_STORYBOOK source package"
+      ]
+    },
+    {
+      "id": "excel",
+      "index": "01",
+      "label": "THE SHEET",
+      "title": "Excel, naturally",
+      "summary": "The comeback needed a tracking sheet. It was supposed to stay a tracking sheet. This is the last point at which the scope behaved normally.",
+      "truth": "founder-origin-story",
+      "source": [
+        "web/src/about-story.js"
+      ]
+    },
+    {
+      "id": "ai-bikes",
+      "index": "02",
+      "label": "THE SIDE QUEST",
+      "title": "AI, bikes, then 3D bikes",
+      "summary": "AI became a way to learn by making. Bikes became the subject. Then the bikes became three-dimensional objects that could be inspected, compared and rebuilt.",
+      "truth": "founder-origin-story",
+      "source": [
+        "web/src/about-story.js",
+        "docs/PRODUCT.md"
+      ]
+    },
+    {
+      "id": "canyonmuseum",
+      "index": "03",
+      "label": "THE PROOF OF CONCEPT",
+      "title": "CanyonMuseum",
+      "summary": "The first bounded world was a bike museum: a proof that browser-native 3D, engineering history, evidence and playful interaction could coexist. CanyonMuseum was the working project identity, not a claim of brand affiliation.",
+      "truth": "project-history",
+      "source": [
+        "docs/KONAM_PRE_MIGRATION_AUDIT_V1.md",
+        "museum/history.json"
+      ]
+    },
+    {
+      "id": "konam",
+      "index": "04",
+      "label": "THE NAME OUTGREW THE ROOM",
+      "title": "Kona.m",
+      "summary": "The project stopped fitting inside a single-brand museum. The museum became one part of a broader triathlon world: identity, machines, places, stories, progression and experiments. Kona.m became the master product identity.",
+      "truth": "project-history",
+      "source": [
+        "docs/PRODUCT.md",
+        "config/product-meta.json"
+      ]
+    },
+    {
+      "id": "world",
+      "index": "05",
+      "label": "THE WORLD",
+      "title": "Rooms, places and 141 reasons to look twice",
+      "summary": "The museum became a world. Race places, rooms, Finds, stamps, keys and the 140.6 idea turned browsing into exploration. The Point Six became the reminder that not everything worth finding should be handed over immediately.",
+      "truth": "product-history",
+      "source": [
+        "docs/PRODUCT.md",
+        "world/konam",
+        "museum/world"
+      ]
+    },
+    {
+      "id": "system",
+      "index": "06",
+      "label": "THE SYSTEM",
+      "title": "Make the weird things reusable",
+      "summary": "As athlete rooms, partner ideas and new worlds appeared, the architecture had to stop rediscovering itself. Shared room, asset, story, provenance and release contracts became part of the product.",
+      "truth": "architecture-history",
+      "source": [
+        "docs/architecture/ROOM_ASSET_CONTRACT_V1.md",
+        "docs/STORY_ENGINE.md"
+      ]
+    },
+    {
+      "id": "now",
+      "index": "07",
+      "label": "NOW",
+      "title": "Finished enough to let you in",
+      "summary": "Kona.m is deliberately not presented as finished-finished. The current goal is to make each useful piece clearer, more reliable and more alive, then learn what deserves to exist next.",
+      "truth": "current-product-philosophy",
+      "source": [
+        "web/src/about-story.js",
+        "docs/PRODUCT.md"
+      ]
+    }
+  ],
+  "principles": [
+    {
+      "title": "Curiosity before certainty",
+      "body": "The next useful puzzle can be enough. The whole map does not need to be visible first."
+    },
+    {
+      "title": "Useful before impressive",
+      "body": "3D, AI and cinematic presentation are depth layers. The core experience must still make sense without them."
+    },
+    {
+      "title": "Truth stays attached",
+      "body": "Editorial interpretation, reconstructed objects, verified facts and future concepts should not blur into one another."
+    },
+    {
+      "title": "Independent by default",
+      "body": "Referenced races, athletes and brands do not imply sponsorship, endorsement or affiliation."
+    },
+    {
+      "title": "Local-first where possible",
+      "body": "The first experience should work without forcing registration, tracking or a cloud account."
+    }
+  ],
+  "public_cta": {
+    "label": "Enter Kona.m",
+    "href": "./"
+  }
+}
