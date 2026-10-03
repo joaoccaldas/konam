@@ -8,11 +8,11 @@
     "exemptions": "offline build tools and isolated review/test harnesses may retain local renderers until their own simplification is justified"
   },
   "counts": {
-    "repo_source_constructors": 14,
-    "browser_or_viewer_constructors": 12,
-    "web_src_guarded_constructors": 11,
+    "repo_source_constructors": 13,
+    "browser_or_viewer_constructors": 11,
+    "web_src_guarded_constructors": 10,
     "offline_tool_constructors": 2,
-    "public_runtime_legacy_constructors": 7,
+    "public_runtime_legacy_constructors": 6,
     "canonical_kernel_constructors": 1
   },
   "first_pilot": "web/src/ui/collectible-stage.js",
@@ -46,21 +46,6 @@
         "room_environment": false
       },
       "reason": "Already shared across standalone experiences, so convergence here removes multiple downstream lifecycle variants."
-    },
-    {
-      "path": "web/src/ui/race-self-stage.js",
-      "class": "embedded-race-self",
-      "public_runtime": true,
-      "migrate": "kernel-required",
-      "priority": 2,
-      "risk": "low-medium",
-      "current": {
-        "hidden_pause": true,
-        "explicit_dispose": true,
-        "orbit_controls": true,
-        "room_environment": false
-      },
-      "reason": "Strong existing lifecycle; good early kernel consumer after Collectible Stage."
     },
     {
       "path": "web/src/heritage.js",
@@ -250,6 +235,29 @@
         "DPR cap",
         "document visibility suspension",
         "renderer disposal"
+      ]
+    },
+    {
+      "path": "web/src/ui/race-self-stage.js",
+      "renderer_authority": "web/src/render/renderer.js",
+      "status": "implementation-review",
+      "preserves": [
+        "scene",
+        "camera",
+        "OrbitControls",
+        "avatar/equipment loading",
+        "framing",
+        "lighting",
+        "animation intent",
+        "settings-panel pause"
+      ],
+      "moves": [
+        "WebGLRenderer construction",
+        "output color space",
+        "tone mapping",
+        "DPR cap",
+        "document visibility suspension",
+        "renderer disposal/context loss"
       ]
     }
   ]
