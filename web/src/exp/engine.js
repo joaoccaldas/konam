@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { createMachineInspection } from '../engine/machine-inspection.js';
+import { createRendererContext } from '../render/renderer.js';
 
 export const coarse = matchMedia('(pointer: coarse)').matches;
 export const lite = coarse || innerWidth < 760 || (navigator.hardwareConcurrency || 8) <= 4;
@@ -21,25 +22,46 @@ export function canvasTex(w, h, draw, repeat) {
 export const seeded = seed => { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; };
 
 export function createStage(canvas) {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !lite || devicePixelRatio < 2, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, lite ? 1.5 : 2));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.AgXToneMapping;
+  const renderContext = createRendererContext({
+    canvas,
+    antialias: !lite || devicePixelRatio < 2,
+    powerPreference: 'high-performance',
+    maxDpr: lite ? 1.5 : 2,
+    toneMapping: 'agx',
+  });
+  const { renderer } = renderContext;
   renderer.shadowMap.enabled = !lite; renderer.shadowMap.type = THREE.PCFShadowMap;
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(50, 1, .05, 600);
   const pmrem = new THREE.PMREMGenerator(renderer);
+  let environmentTarget = null;
   const frameFns = [];
+  let disposed = false;
   const stage = {
     renderer, scene, camera,
     onFrame: f => frameFns.push(f),
     // environment from a small scene of the theme's own light (sky, moon, fire, lamps): reflections that belong
-    envFrom(envScene, intensity = 1) { const rt = pmrem.fromScene(envScene, .02); scene.environment = rt.texture; scene.environmentIntensity = intensity; },
+    envFrom(envScene, intensity = 1) {
+      environmentTarget?.dispose?.();
+      environmentTarget = pmrem.fromScene(envScene, .02);
+      scene.environment = environmentTarget.texture;
+      scene.environmentIntensity = intensity;
+    },
     resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.fov = h > w ? 62 : 45; camera.updateProjectionMatrix(); },
+    dispose() {
+      if (disposed) return;
+      disposed = true;
+      removeEventListener('resize', stage.resize);
+      renderContext.setAnimationLoop(null);
+      environmentTarget?.dispose?.();
+      environmentTarget = null;
+      pmrem.dispose();
+      renderContext.dispose({ forceContextLoss: true });
+    },
   };
   addEventListener('resize', stage.resize); stage.resize();
   let last = performance.now();
-  renderer.setAnimationLoop(now => { const dt = Math.min(.05, (now - last) / 1000); last = now; for (const f of frameFns) f(dt, now / 1000); renderer.render(scene, camera); });
+  renderContext.setAnimationLoop(now => { if (disposed) return; const dt = Math.min(.05, (now - last) / 1000); last = now; for (const f of frameFns) f(dt, now / 1000); renderer.render(scene, camera); });
   return stage;
 }
 
