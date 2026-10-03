@@ -214,6 +214,136 @@
       "reusable": true,
       "rights": "original geometry; no copied map or photography",
       "status": "generator-defined"
+    },
+    {
+      "id": "nor3-overhead-ribs",
+      "type": "architecture-detail",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": true,
+      "material": "blackened steel / warm reveal",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-service-spine",
+      "type": "architecture-detail",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": false,
+      "material": "blackened steel / cool strip",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-wet-floor-fields",
+      "type": "surface-treatment",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": true,
+      "material": "wet basalt reflective fields",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-contact-shadows",
+      "type": "render-primitive",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": true,
+      "material": "canvas radial alpha",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-environmental-type",
+      "type": "environmental-typography",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": true,
+      "material": "canvas texture panels",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-lane-plaques",
+      "type": "environmental-typography",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": false,
+      "material": "lane 01/02/03 plaques",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-protocol-cards",
+      "type": "prop-set",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": true,
+      "material": "paper",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-heat-panel",
+      "type": "environment-prop",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": true,
+      "material": "warm emissive panel",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-recovery-bench",
+      "type": "furniture",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": true,
+      "material": "smoked oak / steel",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-recovery-props",
+      "type": "prop-set",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": true,
+      "material": "rollers / bottles / linen / glass",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-kona-mark",
+      "type": "environmental-typography",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": false,
+      "material": "warm directional mark",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-moisture-fields",
+      "type": "atmosphere",
+      "format": "procedural",
+      "source": "web/src/roomkit.js",
+      "output": null,
+      "reusable": true,
+      "material": "motes particle field",
+      "status": "generated-review"
+    },
+    {
+      "id": "nor3-local-light-rig",
+      "type": "lighting",
+      "format": "procedural",
+      "source": "web/src/review/norwegian-installation.snapshot.js",
+      "output": null,
+      "reusable": false,
+      "material": "cool / warm / vault practicals",
+      "status": "generated-review"
     }
   ],
   "image_policy": {
@@ -277,5 +407,64 @@
       "huge mirrored surfaces",
       "brand logos without approval"
     ]
-  }
+  },
+  "runtime_mapping": {
+    "review_variant": "cinematic-production-v3",
+    "source": "web/src/review/norwegian-installation.snapshot.js",
+    "zones": {
+      "three-rails": [
+        "nor3-lane-architecture",
+        "nor3-trainer",
+        "nor3-run-deck",
+        "nor3-towel-rail",
+        "nor3-bottle-set",
+        "nor3-lane-plaques",
+        "nor3-contact-shadows",
+        "nor3-wet-floor-fields"
+      ],
+      "protocol-table": [
+        "nor3-protocol-table",
+        "nor3-analyser",
+        "nor3-vial-rack",
+        "nor3-protocol-wall",
+        "nor3-protocol-cards",
+        "nor3-environmental-type"
+      ],
+      "environment-bay": [
+        "nor3-environment-bay",
+        "nor3-moisture-fields"
+      ],
+      "heat-cool": [
+        "nor3-fan",
+        "nor3-heat-panel"
+      ],
+      "podium-vault": [
+        "nor3-podium-vault",
+        "nor3-local-light-rig"
+      ],
+      "fjord-relief": [
+        "nor3-fjord-relief"
+      ],
+      "recovery": [
+        "nor3-recovery-bench",
+        "nor3-recovery-props",
+        "nor3-contact-shadows"
+      ],
+      "kona-line": [
+        "nor3-kona-mark",
+        "nor3-local-light-rig"
+      ],
+      "room-shell": [
+        "nor3-overhead-ribs",
+        "nor3-service-spine",
+        "nor3-wet-floor-fields",
+        "nor3-local-light-rig"
+      ]
+    }
+  },
+  "mapping_notes": [
+    "GLB-designated assets are generator definitions from PR #15 and are not yet proven as committed runtime GLBs on main.",
+    "cinematic-production-v3 currently renders many mapped assets procedurally in Three.js review geometry.",
+    "Mapping an element does not promote it to canonical/public status; visual, performance, provenance and rights gates still apply."
+  ]
 }
