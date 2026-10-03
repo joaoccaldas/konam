@@ -24,8 +24,8 @@ execFileSync('bash', [join(root, 'tools', 'stage_site.sh')], { cwd: root, stdio:
 rmSync(www, { recursive: true, force: true });
 cpSync(staged, www, { recursive: true });
 rmSync(join(www, 'sw.js'), { force: true });
-// About is the Field Guide (about.html is generated from promo.html), so its controller
-// web/src/promo.js ships with the app; without it the in-app About page would not work.
+// The About / Field Guide route is part of the staged public surface and depends on promo.js.
+// Keep its controller in the native bundle so About behaves the same on web and Android.
 // Candidate room review surfaces are web-only evidence and never ship inside the native app.
 rmSync(join(www, 'norwegian-engine-review.html'), { force: true });
 rmSync(join(www, 'web', 'src', 'room-review-norwegian.js'), { force: true });

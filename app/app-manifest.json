@@ -1,5 +1,5 @@
 {
- "version": "41d558ba6095",
+ "version": "cb33649dc9e4",
  "core": [
   "index.html",
   "about.html",
@@ -33,11 +33,11 @@
  ],
  "files": {
   "index.html": "nPGjEwIdgiTLLWBjMobxTmPxwhSlsCJ5m91YQ/dLWu4=",
-  "about.html": "VI8kGdgyJKcW0VegokPD4kmo7y1eunkPOS15tozviSA=",
+  "about.html": "boPenG5vOgDqQ53ypoBoeWMQ6CF0WgGu0GpAqbMgUbA=",
   "credits.html": "oKwMWdw6p5K/d9xLgcuZWryResUAIp8/uqUOomRfX48=",
   "privacy.html": "owpVVfx6vIhly8iqwgymVQ0knoGQ0b2I/BSfcJWcfBU=",
   "web/src/promo.js": "IB/RDbIYaaLrH//MZpZOccxPX1odHbhu4WThfi6ExkE=",
-  "web/styles/promo.css": "VORvxDNBGX+CGKo5ZXIuyL3wYtPClw3gWA5VAhqA5tM=",
+  "web/styles/promo.css": "R5KRXsy/n6eONDRGNVnitRm+g/tgp9ed+nfhLGSJSLY=",
   "app/viewport.js": "s84yeQXxX9xSWnlj+1xuK84iotaJzl1NKMWjShrB2F0=",
   "app/kona-core.js": "SmMz2qjV1YpuIloQcqQIa0wdgkzO11qQtiIZWc/Ju1U=",
   "app/entry-data.json": "u70GqhCPsNX6TZI4LhPBmxQkdjHsA1534QN/mMdyufU=",
@@ -89,7 +89,7 @@
   "Speedmax_SLX_Museum.html": "7cZRJjPE+tbiGubxi0NiZAxfEoNVRFB3mPynYJA7Xo4=",
   "Speedmax_Three_2005_Museum.html": "5TqrTGBOJ1BGZx35D9FF51IRfduiKVpxJzK1c52tCZo=",
   "Studio.html": "nGOVpzOSJoj5dbiLz54tKcM4gvDgaqPTOXqn08eEQcI=",
-  "promo.html": "g+RKndls4K6GVec8gv4HVAdgBiZCfzmLW23eOUIUPYM=",
+  "promo.html": "rFJRlFmRZZQNG1A4ZfCAFKvxAVga/ztEzSyvNhsfaMk=",
   "assets/art/paintings/builders-bench.jpg": "AYYSF1BMlgQJodQ0jhQyrPoDM/VWMje/TnPEjvBVAoA=",
   "assets/art/paintings/crosswind.jpg": "6to32GpQsK0TRot+06sdVSc6asouaIiOKRxxCxZ1dXg=",
   "assets/art/paintings/kohala-turn.jpg": "EG0TNXObOZ/Ur52EvO5RADs+fP2tp486ACrkGCx+ArM=",

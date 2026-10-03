@@ -15,6 +15,14 @@ test('About is the Field Guide, generated from promo.html with its own URL and t
   for(const href of ['brand/tokens.css','web/styles/promo.css','web/src/promo.js']) assert.ok(about.includes(href),`missing ${href}`);
 });
 
+test('About route uses Field Guide brand authorities without inline styling',()=>{
+  const html=read('about.html');
+  for(const href of ['brand/tokens.css','brand/themes.css','brand/artifacts.css','brand/typography.css','web/styles/components.css','web/styles/system.css','web/styles/promo.css']) assert.ok(html.includes(href),`missing ${href}`);
+  assert.equal(/<style\b/i.test(html),false);
+  const inline=[...html.matchAll(/style="([^"]*)"/gi)].map(m=>m[1].trim());
+  for(const value of inline) assert.match(value,/^(?:--(?:x|y|h):[^;]+;?)+$/,`unexpected inline style: ${value}`);
+});
+
 // The previous three-depth About story is retained as source but no longer shipped.
 test('About route exposes three depths without personal identity or confidential strategy',()=>{
   const source=read('web/src/about-story.js');
