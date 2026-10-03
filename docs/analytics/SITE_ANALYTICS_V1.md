@@ -24,7 +24,7 @@ Stored:
 - coarse surface
 - referring hostname only
 - random session-scoped UUID
-- coarse viewport: phone / tablet / desktop
+- coarse viewport: compact / medium / wide
 - optional UTM source / medium / campaign
 
 Not stored:
