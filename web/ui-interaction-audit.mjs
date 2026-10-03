@@ -38,7 +38,7 @@ for(const id of selected){
     if(id==='desktop')await el.click();else await el.tap();
   };
   const text=selector=>p.$eval(selector,e=>e.textContent||'');
-  const waitHome=()=>p.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden&&document.querySelector('#konaPanelTitle')?.textContent==='Home');
+  const waitHome=()=>p.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden&&document.querySelector('#konaPanelTitle')?.textContent==='Now');
   const enter=async()=>{await p.goto(base,{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.__konaShell);};
   const inventory=async surface=>{
     const controls=await p.evaluate(()=>[...document.querySelectorAll('button,a[href],input,select,summary')].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=='hidden'&&!e.closest('[hidden]')).map(e=>{const r=e.getBoundingClientRect();return{tag:e.tagName,label:e.getAttribute('aria-label')||e.textContent?.trim().slice(0,100)||e.getAttribute('placeholder'),disabled:!!e.disabled,width:Math.round(r.width),height:Math.round(r.height),href:e.getAttribute('href')};}));
@@ -56,6 +56,8 @@ for(const id of selected){
       await p.waitForSelector('[data-onboarding-question]');await inventory('onboarding');
       await p.screenshot({path:path.join(out,prefix+'-onboarding.png')});
       for(const answer of ['dreaming','never','ocean','seen','review'])await click('[data-onboarding-answer="'+answer+'"]');
+      await p.waitForFunction(()=>document.querySelector('[data-onboarding-bike]')||document.querySelector('.registration-avatar'));
+      if(await p.$('[data-onboarding-bike]'))await click('[data-onboarding-bike-skip]');
       await p.waitForSelector('.registration-avatar');
       const data=await p.evaluate(()=>({answers:JSON.parse(localStorage.getItem('kona.entryIntent.v1')),progress:JSON.parse(localStorage.getItem('kona.progression.v1'))}));
       assert.equal(data.answers.answers['kona-intent'],'dreaming');assert.equal(data.answers.completed,true);
@@ -74,12 +76,15 @@ for(const id of selected){
       await p.waitForFunction(()=>!document.querySelector('.kona-tour'));
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),'seen');
     });
-    await step('Home actions and five-tab navigation reach their declared surfaces',async()=>{
+    await step('Now actions and canonical routes reach their declared surfaces',async()=>{
       assert.equal(await p.$eval('.kona-user-menu',e=>getComputedStyle(e).display),'none','panel navigation must not be covered by the floating Studio shortcut');
-      for(const [selector,title] of [['[data-home-plan]','Plan'],['[data-home-garage]','Garage'],['[data-home-discover]','Discover']]){
+      for(const [selector,title] of [['[data-home-plan]','Plan'],['[data-home-garage]','Garage']]){
         await click(selector);await p.waitForFunction(t=>document.querySelector('#konaPanelTitle')?.textContent===t,{},title);
         await inventory(title);await click('[data-tab="home"]');await waitHome();
       }
+      await p.evaluate(async()=>{await window.__konaShell.explore();});
+      await p.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Discover');
+      await inventory('Discover');await click('[data-tab="home"]');await waitHome();
       await click('[data-home-self]');await p.waitForSelector('.race-self-experience');await inventory('User Studio');
     });
     let raceId;
