@@ -30,10 +30,9 @@ test('Block avatar keeps compatibility id but does not expose Minecraft as featu
   assert.doesNotMatch(avatar,/label:'Minecraft'/);
 });
 
-test('PWA shortcut views are honored without returning-visit gating',()=>{
+test('PWA shortcuts preserve first-run onboarding and honor views for returning users',()=>{
   const entry=read('web/src/entry.js');
-  assert.match(entry,/\['home','garage','collection','discover','plan','me','feed','travel'\]\.includes\(q\.get\('view'\)\)\) enterApp\(q\.get\('view'\)\)/);
-  assert.doesNotMatch(entry,/returningVisit && \['home','garage'/);
+  assert.match(entry,/returningVisit && \['home','garage','collection','discover','plan','me','feed','travel'\]\.includes\(q\.get\('view'\)\)/);
 });
 
 test('History Lane source composes image URLs at runtime rather than hard-coding a template token into src',()=>{
