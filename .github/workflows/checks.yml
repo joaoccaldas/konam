@@ -52,5 +52,5 @@ jobs:
       - name: Built pages are up to date
         run: |
           node tools/build_pages.mjs
-          git diff --stat --exit-code -- museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json integrations/triathlon-graph.json docs/ROOMS.md '*.html' 'web/dist/*.html' app/kona-core.js app/admin-assets.json app/admin-asset-preview.js app/race-self-stage.js app/collectible-stage.js app/museum-data.js app/hall.js app/studio.js app/studio-catalog.js \
+          git diff --stat --exit-code -- museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json integrations/triathlon-graph.json docs/ROOMS.md web/src/generated/game-config.js '*.html' 'web/dist/*.html' app/kona-core.js app/admin-assets.json app/admin-asset-preview.js app/race-self-stage.js app/collectible-stage.js app/museum-data.js app/hall.js app/studio.js app/studio-catalog.js \
             || { echo "::error::built pages/bundles are stale: run node tools/build_pages.mjs and commit all generated outputs"; exit 1; }

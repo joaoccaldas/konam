@@ -8,31 +8,29 @@ import { PRODUCT_NAME } from '../product-meta.js';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-export function unlockedOnboardingBike(state=ensureProgression()){
+export function onboardingDreamBike(){
   return LEVELS
-    .filter(row=>row.level<=state.level)
     .flatMap(row=>row.rewards||[])
-    .filter(reward=>reward.type==='bike')
-    .at(-1)||null;
+    .find(reward=>reward.type==='bike')||null;
 }
 
 export async function renderOnboardingBike(host,{onContinue,onSkip}={}){
   const state=ensureProgression();
-  const reward=unlockedOnboardingBike(state);
+  const reward=onboardingDreamBike();
   if(!reward){onContinue?.();return;}
 
   const product=await getPublicProduct(reward.id).catch(()=>null);
   const productId=canonicalProductId(reward.id);
   const already=readGarage().some(item=>item.product_id===productId);
   const title=[product?.brand,product?.label||product?.name||product?.model||reward.label].filter(Boolean).join(' ');
-  const year=product?.year?String(product.year):'LEVEL '+state.level;
+  const year=product?.year?String(product.year):'DREAM BIKE';
 
   globalThis.__konaAnalytics?.track?.('first_bike_shown',{surface:'onboarding'});
 
   const paint=collected=>{
     host.innerHTML='<section class="onboarding-question" data-onboarding-bike>'+
-      '<div class="onboarding-step-mark" aria-hidden="true"><strong>BIKE</strong><span>UNLOCKED</span></div>'+
-      '<div class="onboarding-question-copy"><p class="eyebrow">YOUR FIRST MACHINE</p><h2>'+esc(collected?'It is in your collection.':'Want a bike?')+'</h2><p>'+esc(collected?'Garage and Collection now read the same canonical bike record. Nothing duplicated.':'You earned the first bike available at your level. Add it to your Kona and the same record will appear in Garage and Collection.')+'</p></div>'+
+      '<div class="onboarding-step-mark" aria-hidden="true"><strong>BIKE</strong><span>DREAM PICK</span></div>'+
+      '<div class="onboarding-question-copy"><p class="eyebrow">YOUR FIRST MACHINE</p><h2>'+esc(collected?'Dream bike saved.':'Pick a dream machine?')+'</h2><p>'+esc(collected?'Garage and Collection now read the same canonical bike record. Keep exploring to unlock its full experience.':'Add this as a dream bike now. It appears in Garage and Collection; exploration unlocks the deeper 3D experience.')+'</p></div>'+
       '<div class="onboarding-answer-grid"><button type="button" data-onboarding-bike-collect'+(collected?' disabled':'')+'><small>'+esc(year)+'</small><b>'+esc(title||reward.label||reward.id)+'</b><i aria-hidden="true">'+(collected?'✓':'→')+'</i></button></div>'+
       '<div class="onboarding-reward"><small>'+(collected?'COLLECTED':'COLLECTION REWARD')+'</small><b>'+(collected?'GARAGE + COLLECTION':'+10 XP')+'</b><span>This marks a Kona.m collection choice, not a claim that you own the physical bike.</span></div>'+
       '<div class="onboarding-actions">'+
