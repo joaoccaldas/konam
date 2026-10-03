@@ -1,4 +1,3 @@
-import { openInviteDialog } from './ui/invite.js';
 // Kona.m entry. HTML is already on screen. This file does not import Three.js.
 // The museum runtime loads only after the visitor chooses to explore.
 import { mountCountdown } from './ui/countdown.js';
@@ -260,4 +259,3 @@ else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());
 else if (returningVisit && ['home','garage','collection','discover','plan','me','feed','travel'].includes(q.get('view'))) enterApp(q.get('view'));
 
-document.getElementById('entryInvite')?.addEventListener('click',openInviteDialog);
