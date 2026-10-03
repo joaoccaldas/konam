@@ -163,7 +163,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     syncNavigation();
     scheduleSurprise('home');
     setTimeout(()=>{
-      if(!panel.hidden&&title.textContent==='Home'&&!document.querySelector('.kona-tour'))returnJourney.maybeShow();
+      if(!panel.hidden&&title.textContent==='Now'&&!document.querySelector('.kona-tour'))returnJourney.maybeShow();
     },1200);
   }
 
