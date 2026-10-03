@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "status": "origin-pending",
+  "current_origin": "https://joaoccaldas.github.io/canyonmuseum/",
+  "rule": "Do not change canonical origin until production Kona.m URL is selected and redirect/rollback plan exists.",
+  "authority": {
+    "product": "config/product-meta.json",
+    "page_metadata": "tools/harden_pages.mjs",
+    "public_catalog": "integrations/public-catalog.json",
+    "llm": [
+      "llms.txt",
+      "llms-full.txt"
+    ],
+    "crawler": [
+      "robots.txt",
+      "sitemap.xml"
+    ]
+  },
+  "launch_origin_cutover": [
+    "select production URL and HTTPS host",
+    "configure deploy from one exact certified SHA",
+    "update source-owned SITE/origin authority",
+    "regenerate canonical/OG/Twitter/JSON-LD/robots/sitemap/llms/RSS",
+    "verify every generated URL belongs to new origin or an intentional external source",
+    "keep old Canyon Museum URLs reachable via redirect or compatibility landing where technically possible",
+    "submit/verify sitemap only after live 200/canonical checks",
+    "run link/canonical crawler and rollback test"
+  ],
+  "llm_rules": [
+    "llms.txt remains concise and factual",
+    "llms-full.txt is generated from canonical registries where possible",
+    "prefer stable IDs over display names for machine references",
+    "clearly distinguish published fact, visible photo evidence, inference and generated artwork",
+    "do not expose private/user state",
+    "do not claim partnerships or certification without evidence"
+  ]
+}
