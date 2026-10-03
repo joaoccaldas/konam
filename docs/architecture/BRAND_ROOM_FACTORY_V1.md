@@ -161,6 +161,8 @@ Do not switch the authored file until the join fixture equals the current hall p
 
 ### Tests before any deletion
 
+The fixture is `web/test/brand-room-join.test.mjs`. `projectHallProduct` in `web/src/engine/product.js` builds the hall object. The authored room file is still the inline product, and the hall still reads that object.
+
 - Fixture: join(candidate or catalog row, room ref) deep-equals the current hall product, including station and the legal line.
 - `validateBrandRoom` accepts `product_id` plus station when the resolved asset ends in `.glb`, and still rejects an unknown id.
 - A blocked candidate with no room stays hidden. The same id inside a public brand room stays visible.
