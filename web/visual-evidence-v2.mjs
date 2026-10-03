@@ -64,7 +64,13 @@ async function capture(vp,state,theme){
      // Returning users land here. No personal/world 3D should be required.
    }else if(['collection','find-studio'].includes(state)){
      await press('[data-first-find]');await p.waitForFunction(()=>document.querySelector('[data-first-find]')?.disabled);await press('[data-home-finds]');await p.waitForSelector('[data-find]');
-     if(state==='find-studio'){await press('[data-find="find:shore:lava"]');await p.waitForSelector('.find-studio');}
+     if(state==='find-studio'){
+       const find=await p.waitForSelector('[data-find="find:shore:lava"]',{visible:true});
+       await find.evaluate(e=>e.scrollIntoView({block:'center',inline:'center',behavior:'instant'}));
+       await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+       await find.click();
+       await p.waitForSelector('.find-studio');
+     }
    }else if(['user-studio','avatar-editor','progress'].includes(state)){
      const switched=await p.evaluate(async()=>{const shell=window.__konaShell;if(!shell?.me)return false;await shell.me();return true;});
      if(!switched)throw new Error('could not enter User Studio');
@@ -107,7 +113,7 @@ async function capture(vp,state,theme){
    // retain their existing compact layout. Record the threshold with evidence.
    const targetMinimum=touchViewport?48:24;
    const small=els.map(x=>{const r=x.getBoundingClientRect();return{tag:x.tagName,text:(x.textContent||'').trim().slice(0,50),w:r.width,h:r.height};}).filter(x=>x.w<targetMinimum||x.h<targetMinimum);
-   const grid=document.querySelector('.finds-grid'),cards=grid?[...grid.querySelectorAll('[data-find]')].slice(0,2):[];
+   const grid=document.querySelector('.finds-vault-grid,.finds-grid'),cards=grid?[...grid.querySelectorAll('[data-find]')].slice(0,2):[];
    const collectionGrid=grid?{display:getComputedStyle(grid).display,columns:getComputedStyle(grid).gridTemplateColumns.split(' ').length,sameFirstRow:cards.length===2&&Math.abs(cards[0].getBoundingClientRect().top-cards[1].getBoundingClientRect().top)<1}:null;
    const back=document.querySelector('#konaPanelClose');
    const backCovered=back&&visible(back)?(()=>{const r=back.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return !(hit===back||back.contains(hit))})():false;
@@ -170,7 +176,10 @@ for(const r of report){
  if(r.state==='plan'&&!/Plan|race week|Expo|October/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: no Plan content detected`);
  if(r.state==='progress'&&!/Progress|XP|Credits|milestones/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: no Progress content detected`);
  if(r.metrics.panelBackCovered)violations.push(`${r.viewport}/${r.theme}/${r.state}: panel back is covered`);
- if(r.state==='collection'&&(!r.metrics.collectionGrid||r.metrics.collectionGrid.display!=='grid'||r.metrics.collectionGrid.columns!==(r.viewport==='desktop'?4:2)||!r.metrics.collectionGrid.sameFirstRow))violations.push(`${r.viewport}/${r.theme}: Finds cards are not arranged in the canonical responsive grid`);
+ if(r.state==='collection'){
+   const expectedColumns=r.viewport==='desktop'||r.viewport==='landscape-phone'?10:(r.viewport==='320'||r.viewport==='360'?4:5);
+   if(!r.metrics.collectionGrid||r.metrics.collectionGrid.display!=='grid'||r.metrics.collectionGrid.columns!==expectedColumns||!r.metrics.collectionGrid.sameFirstRow)violations.push(`${r.viewport}/${r.theme}: Finds vault is not arranged in the canonical responsive grid`);
+ }
  if(r.state==='bike-studio'&&!/Speedmax|Bikes/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: Bike Studio missing`);
 }
 if(violations.length){console.error(violations.join('\n'));process.exitCode=1}
