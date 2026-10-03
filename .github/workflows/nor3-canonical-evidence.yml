@@ -1,0 +1,51 @@
+name: NOR3 canonical cinematic evidence
+
+on:
+  push:
+    branches:
+      - reconcile/nor3-cinematic-assets-v1
+    paths-ignore:
+      - 'docs/evidence/nor3-canonical/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nor3-canonical-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Build and stage exact candidate
+        run: |
+          node tools/build_pages.mjs
+          node tools/build_app.mjs
+          bash tools/stage_site.sh
+      - name: Capture canonical NOR3 evidence
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          python3 -m http.server 8765 --directory _site >/tmp/nor3-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..30}; do curl -fsS http://127.0.0.1:8765/norwegian-engine-review.html >/dev/null && break; sleep 1; done
+          node web/nor3-canonical-evidence.mjs http://127.0.0.1:8765/norwegian-engine-review.html
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nor3-canonical-evidence-${{ github.sha }}
+          path: docs/evidence/nor3-canonical/
+          if-no-files-found: error
+          retention-days: 14
