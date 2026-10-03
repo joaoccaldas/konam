@@ -42,7 +42,7 @@ test('crawler files exist and point at the public site', () => {
   assert.match(robots, /Sitemap: https:\/\/(?:konam\.vercel\.app|joaoccaldas\.github\.io\/konam)\/sitemap\.xml/);
   assert.match(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8'), /<loc>https:\/\/(?:konam\.vercel\.app|joaoccaldas\.github\.io\/konam)\/<\/loc>/);
   const llms = fs.readFileSync(path.join(root, 'llms.txt'), 'utf8');
-  assert.match(llms, /Not affiliated/); assert.match(llms, /No accounts, no analytics/);
+  assert.match(llms, /Not affiliated/); assert.match(llms, /privacy-minimal first-party session analytics/i);
   assert.doesNotMatch(llms, /Anne Haug/);                        // she won on a Cervélo: facts come from kona_champions.json
   const full = fs.readFileSync(path.join(root, 'llms-full.txt'), 'utf8');
   assert.match(full, /Rooms and exhibits/);
