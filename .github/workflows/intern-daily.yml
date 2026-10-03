@@ -1,0 +1,54 @@
+name: Daily Intern Dispatch
+
+on:
+  schedule:
+    - cron: '15 15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-intern-dispatch
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Refresh source feed
+        run: deno run --allow-net --allow-read --allow-write tools/refresh_companion.ts
+
+      - name: Build Intern Dispatch
+        run: node tools/build_intern_dispatch.mjs
+
+      - name: Validate generated editorial
+        run: |
+          node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('integrations/companion/intern-dispatch.json'));if(d.schema_version!==1||!d.watch?.length||!d.contact)process.exit(1)"
+          grep -q "konamundo@gmail.com" integrations/companion/intern-dispatch.json
+
+      - name: Commit only refreshed public snapshots
+        run: |
+          if git diff --quiet -- integrations/companion/feed.json integrations/companion/rss.xml integrations/companion/intern-dispatch.json; then
+            echo "No feed changes."
+            exit 0
+          fi
+          git config user.name "Kona.m Intern"
+          git config user.email "actions@users.noreply.github.com"
+          git add integrations/companion/feed.json integrations/companion/rss.xml integrations/companion/intern-dispatch.json
+          git commit -m "content: refresh daily Intern Dispatch"
+          git push origin HEAD:main
