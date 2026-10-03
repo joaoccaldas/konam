@@ -369,16 +369,22 @@ function norwegian(ctx) {
       'Lane console','Environmental and session information lives here. It is editorial UI, not an athlete data claim.');
     console.rotation.z=-.05;
 
-    // Canonical bike slot represented by a neutral spatial study only.
+    // Canonical bike slot. The procedural study remains only as a fallback until the host
+    // supplies the canonical CFR model. It is tagged so review/host code can hide it without
+    // knowing mesh names or reimplementing the room.
     const bx=cx-.22,by=Y+.66;
-    const wf=ring(.42,.026,steel,bx-.55,by,z,Math.PI/2);
-    const wr=ring(.42,.026,steel,bx+.55,by,z,Math.PI/2);
-    mark(wf,'Canonical bike slot','The room reserves a bike position, but no athlete-specific bike is assigned without a verified source.');
+    const fallback=[];
+    const wf=ring(.42,.026,steel,bx-.55,by,z,Math.PI/2);fallback.push(wf);
+    const wr=ring(.42,.026,steel,bx+.55,by,z,Math.PI/2);fallback.push(wr);
+    mark(wf,'Canonical bike slot','The room reserves a canonical bike position, but no athlete-specific bike or livery is assigned without a verified source.');
     const pBB=new THREE.Vector3(bx,by-.05,z),pSeat=new THREE.Vector3(bx-.10,by+.54,z),pHead=new THREE.Vector3(bx+.42,by+.30,z);
-    rod(pBB,pSeat,.026,blackSteel);rod(pSeat,pHead,.026,blackSteel);rod(pHead,pBB,.026,blackSteel);
-    rod(pSeat,new THREE.Vector3(bx-.55,by,z),.022,blackSteel);rod(pHead,new THREE.Vector3(bx+.55,by,z),.022,blackSteel);
-    rod(new THREE.Vector3(bx+.40,by+.34,z),new THREE.Vector3(bx+.70,by+.42,z),.018,steel);
-    box(.34,.035,.10,bx-.14,by+.61,z,blackSteel);
+    fallback.push(
+      rod(pBB,pSeat,.026,blackSteel),rod(pSeat,pHead,.026,blackSteel),rod(pHead,pBB,.026,blackSteel),
+      rod(pSeat,new THREE.Vector3(bx-.55,by,z),.022,blackSteel),rod(pHead,new THREE.Vector3(bx+.55,by,z),.022,blackSteel),
+      rod(new THREE.Vector3(bx+.40,by+.34,z),new THREE.Vector3(bx+.70,by+.42,z),.018,steel),
+      box(.34,.035,.10,bx-.14,by+.61,z,blackSteel)
+    );
+    fallback.filter(Boolean).forEach(o=>{o.userData.nor3BikeFallback=true;});
 
     // Accessories and signs of use.
     const bottle=new THREE.Mesh(new THREE.CylinderGeometry(.045,.052,.34,16),glass);
