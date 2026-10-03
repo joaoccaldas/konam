@@ -74,6 +74,21 @@ body:has(#konaShell):not(.museum-open) > #fallback{display:none}
 .kona-bottom-nav svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .kona-bottom-nav .on{color:var(--kona-accent);background:transparent}
 .kona-bottom-nav .on::before{content:"";position:absolute;top:-6px;left:28%;right:28%;height:2px;background:var(--kona-accent)}
+.kona-desktop-nav{display:none}
+@media(min-width:900px){
+  .kona-panel-open .kona-desktop-nav{
+    position:fixed;z-index:39;top:max(16px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);
+    display:flex;align-items:center;gap:4px;padding:5px;border:1px solid var(--kona-line);border-radius:999px;
+    background:color-mix(in srgb,var(--kona-surface-strong) 94%,transparent);backdrop-filter:blur(18px) saturate(1.06);-webkit-backdrop-filter:blur(18px) saturate(1.06);
+    box-shadow:0 14px 40px -30px rgba(0,0,0,.5)
+  }
+  .kona-desktop-nav button{
+    min-height:40px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--kona-muted);
+    font:700 11px/1 var(--sans);letter-spacing:.01em;cursor:pointer
+  }
+  .kona-desktop-nav button.on{background:var(--brand-ink);color:var(--brand-surface)}
+  .kona-desktop-nav button[hidden]{display:none}
+}
 .kona-panel{
   position:fixed;z-index:36;inset:0;background:
     radial-gradient(circle at 78% 0,color-mix(in srgb,var(--kona-cyan) 11%,transparent),transparent 34%),

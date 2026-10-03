@@ -33,12 +33,16 @@ export function renderEntryProductStage(host,{profile}={}){
     host.dataset.previewId=selected.id;host.classList.toggle('entry-secret-preview',!!selected.secret);
     bike.hidden=!!selected.secret;silhouette.hidden=!selected.secret;
     if(selected.secret){bike.removeAttribute('src');bike.alt='';title.textContent='Something worth finding.';label.textContent='Secret Collection';}
-    else{bike.alt=[selected.brand,selected.label].filter(Boolean).join(' ');bike.src=selected.image;title.textContent='Canyon. Unrestrained.';label.textContent=[selected.brand,selected.label,selected.year].filter(Boolean).join(' · ');}
+    else{bike.alt=[selected.brand,selected.label].filter(Boolean).join(' ');bike.src=selected.image;title.textContent=selected.label||'Another machine';label.textContent=[selected.brand,selected.year].filter(Boolean).join(' · ');}
     title.title=title.textContent;
   };
   bike.addEventListener('error',()=>{bike.hidden=true;silhouette.hidden=false;label.textContent='Preview unavailable · keep exploring';});
   show();
-  host.querySelector('.entry-livery').addEventListener('click',()=>{selected=chooseEntryPreview(catalog.bikes,selected?.id);show();});
+  host.querySelector('.entry-livery').addEventListener('click',()=>{
+    const currentIndex=Math.max(0,catalog.bikes.findIndex(item=>item.id===selected?.id));
+    selected=catalog.bikes.length?catalog.bikes[(currentIndex+1)%catalog.bikes.length]:null;
+    show();
+  });
   const move=e=>{
     if(e.pointerType!=='mouse'||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
     const r=host.getBoundingClientRect(),x=(e.clientX-r.left)/Math.max(1,r.width)-.5,y=(e.clientY-r.top)/Math.max(1,r.height)-.5;

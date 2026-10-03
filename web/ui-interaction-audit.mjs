@@ -39,6 +39,17 @@ for(const id of selected){
   };
   const text=selector=>p.$eval(selector,e=>e.textContent||'');
   const waitHome=()=>p.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden&&document.querySelector('#konaPanelTitle')?.textContent==='Now');
+  const goHome=async()=>{
+    const route=await p.evaluate(()=>{
+      const visible=el=>el&&getComputedStyle(el).display!=='none'&&getComputedStyle(el).visibility!=='hidden'&&el.getClientRects().length>0;
+      const mobile=document.querySelector('[data-tab="home"]');
+      const desktop=document.querySelector('[data-desktop-tab="home"]');
+      if(visible(mobile)){mobile.click();return'mobile';}
+      if(visible(desktop)){desktop.click();return'desktop';}
+      window.__konaShell?.now?.();return'api';
+    });
+    await waitHome();return route;
+  };
   const enter=async()=>{await p.goto(base,{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.__konaShell);};
   const inventory=async surface=>{
     const controls=await p.evaluate(()=>[...document.querySelectorAll('button,a[href],input,select,summary')].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=='hidden'&&!e.closest('[hidden]')).map(e=>{const r=e.getBoundingClientRect();return{tag:e.tagName,label:e.getAttribute('aria-label')||e.textContent?.trim().slice(0,100)||e.getAttribute('placeholder'),disabled:!!e.disabled,width:Math.round(r.width),height:Math.round(r.height),href:e.getAttribute('href')};}));
@@ -90,11 +101,11 @@ for(const id of selected){
       assert.equal(await p.$eval('.kona-user-menu',e=>getComputedStyle(e).display),'none','panel navigation must not be covered by the floating Studio shortcut');
       for(const [selector,title] of [['[data-home-plan]','Plan'],['[data-home-garage]','Garage']]){
         await click(selector);await p.waitForFunction(t=>document.querySelector('#konaPanelTitle')?.textContent===t,{},title);
-        await inventory(title);await click('[data-tab="home"]');await waitHome();
+        await inventory(title);await goHome();await waitHome();
       }
       await p.evaluate(async()=>{await window.__konaShell.explore();});
       await p.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Discover');
-      await inventory('Discover');await click('[data-tab="home"]');await waitHome();
+      await inventory('Discover');await goHome();await waitHome();
       await click('[data-home-self]');await p.waitForSelector('.race-self-experience');await inventory('User Studio');
     });
     let raceId;
@@ -184,7 +195,7 @@ for(const id of selected){
       assert.equal((await p.$$('.plan-priority-card')).length,3,'Plan should lead with three glanceable priorities');
       assert.ok((await p.$$('.plan-day')).length>=1,'race-week timeline must be visual');
       assert.ok((await p.$$('a[href*="airports.hawaii.gov"]')).length>=2);await inventory('Plan cockpit');
-      await click('[data-tab="home"]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'normal');
+      await goHome();await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'normal');
       await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
     await step('sharing exports a real PNG, handles cancellation, and preserves private data',async()=>{

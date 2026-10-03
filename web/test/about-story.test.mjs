@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { readFileSync } from 'node:fs';
 
 const root=new URL('../../',import.meta.url);
@@ -55,4 +56,14 @@ test('Field Guide compact layout has an explicit no-occlusion contract',()=>{
   assert.match(css,/\.promo-header\{[\s\S]*position:sticky/);
   assert.match(css,/\.field-rail-nav\{[\s\S]*position:fixed/);
   assert.match(css,/bottom:calc\(68px \+ env\(safe-area-inset-bottom\)\)/);
+});
+
+
+test('About does not duplicate Why story choices',()=>{
+  const promo=fs.readFileSync(new URL('../../promo.html',import.meta.url),'utf8');
+  assert.match(promo,/href="why\.html"/);
+  assert.doesNotMatch(promo,/why-version-card/);
+  assert.doesNotMatch(promo,/The Short Version/);
+  assert.doesNotMatch(promo,/The Scenic Route/);
+  assert.doesNotMatch(promo,/The Unfiltered Version/);
 });

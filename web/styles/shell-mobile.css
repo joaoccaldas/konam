@@ -45,3 +45,11 @@ html.phone-fit #appSheet>div{zoom:var(--fit);width:min(420px,calc((100vw - 24px)
 .kona-list a,.kona-list button{display:inline-flex;align-items:center;justify-content:center;padding:0 12px;border-radius:12px}
 .race-card-actions button{padding-inline:12px}
 #entryInstall,#installBtn{min-height:48px;padding:0 16px;border-radius:999px}
+
+
+/* Progressive disclosure should simplify chrome, not leave an empty navigation rail. */
+.kona-panel-open .kona-bottom-nav[data-count="0"],.kona-panel-open .kona-bottom-nav[data-count="1"]{display:none}
+@media(min-width:900px){
+  .kona-panel-open .kona-bottom-nav{display:none}
+  .kona-panel{padding-bottom:max(var(--brand-space-4),env(safe-area-inset-bottom))}
+}

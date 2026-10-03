@@ -23,9 +23,10 @@ try{
   await page.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden);
   await page.evaluate(()=>{
    const mobile=document.querySelector('[data-tab="me"]');
+   const desktop=document.querySelector('[data-desktop-tab="me"]');
    const global=document.querySelector('[data-user-studio]');
    const visible=el=>el&&getComputedStyle(el).display!=='none'&&el.getClientRects().length>0;
-   const target=visible(mobile)?mobile:visible(global)?global:null;
+   const target=visible(mobile)?mobile:visible(desktop)?desktop:visible(global)?global:null;
    if(!target)throw new Error('No visible User Studio route');
    target.click();
   });
