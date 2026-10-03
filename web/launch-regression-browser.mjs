@@ -13,7 +13,7 @@ async function pageFor(width=390,height=844){
  return {context,page,errors};
 }
 async function progress(page){
- await page.goto(base,{waitUntil:'networkidle0'});await page.click('#entrySignIn');await page.click('#continueLocal');await page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Home');await page.evaluate(async()=>{await window.__konaShell.me();});
+ await page.goto(base,{waitUntil:'networkidle0'});await page.click('#buildSelf');await page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Now');await page.evaluate(async()=>{await window.__konaShell.me();});
  await page.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame,{timeout:60000});await page.waitForSelector('[data-race-self-action="progress"]');await page.click('[data-race-self-action="progress"]');
  await page.waitForSelector('#konaAccount');
 }
@@ -22,19 +22,15 @@ try{
  const expected=JSON.parse(fs.readFileSync(new URL('../museum/entry-catalog.json',import.meta.url))).bikes.map(x=>x.id);
  const previews=await hero.page.evaluate(()=>{const seen=new Set([document.querySelector('[data-preview-id]').dataset.previewId]),random=Math.random;try{for(let i=0;i<300;i++){Math.random=()=>((i*37)%300)/300;document.querySelector('.entry-livery').click();seen.add(document.querySelector('[data-preview-id]').dataset.previewId);}return [...seen];}finally{Math.random=random;}});
  assert.deepEqual([...previews].sort(),expected.sort());assert.doesNotMatch(await hero.page.$eval('#intro',e=>e.innerText),/wyld/i);assert.deepEqual(hero.errors,[]);report.push({journey:'all landing catalogue previews reachable without progression; no WYLD',status:'PASS'});await hero.context.close();
- // Entry form stays usable after repeated Back and anonymous continuation.
+ // Local-first continuation stays usable at every release viewport.
  for(const [width,height] of [[320,720],[390,844],[844,390],[1440,900]]){
   const {context,page,errors}=await pageFor(width,height);await page.goto(base,{waitUntil:'networkidle0'});
-  for(let i=0;i<5;i++){
-   await page.click('#entrySignIn');await page.waitForSelector('#saveForm',{visible:true});
-   assert.equal(await page.$eval('#konaQuest',e=>e.hidden),false);
-   await page.click('#backFromSave');
-  }
-  await page.click('#entrySignIn');await page.click('#continueLocal');await page.waitForFunction(()=>!document.querySelector('#konaPanel').hidden);
-  assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Home/);
+  assert.equal(await page.$('#entrySignIn'),null,'unavailable sign-in must not be advertised');
+  await page.click('#buildSelf');await page.waitForFunction(()=>!document.querySelector('#konaPanel').hidden);
+  assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Now/);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   assert.equal(await page.$eval('[data-tab="home"]',e=>getComputedStyle(e).borderTopStyle),'none');
-  assert.deepEqual(errors,[]);report.push({journey:'sign-in reentry and local continuation',width,height,status:'PASS'});await context.close();
+  assert.deepEqual(errors,[]);report.push({journey:'local-first continuation',width,height,status:'PASS'});await context.close();
  }
  // No email is sent. Exercise async form success and all error states through real DOM events.
  for(const status of [200,429,500]){
@@ -60,8 +56,8 @@ try{
  }
  // A late stylesheet cannot reopen the previous tab after a newer navigation.
  const nav=await pageFor();await nav.page.goto(base,{waitUntil:'networkidle0'});
- await nav.page.click('#entrySignIn');await nav.page.click('#continueLocal');
- await nav.page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Home');
+ await nav.page.click('#buildSelf');
+ await nav.page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Now');
  await nav.page.setRequestInterception(true);
  nav.page.on('request',r=>r.url().includes('/web/styles/race-self.css')?setTimeout(()=>r.continue(),500):r.continue());
  await nav.page.evaluate(async()=>{await Promise.all([window.__konaShell.me(),window.__konaShell.explore()]);});
@@ -74,7 +70,7 @@ try{
  await page.goto(new URL('Experiences.html',base).href,{waitUntil:'networkidle0'});await page.waitForFunction(()=>window.__exp?.passport);
  const experience=await page.evaluate(()=>{window.__exp.passport.stamp('part:launch-regression','Inspected component',5);return window.__exp.passport.state;});
  assert.ok(experience.discoveries.includes('cfr'));assert.ok(experience.stamps['part:launch-regression']);
- await page.goto(base,{waitUntil:'networkidle0'});await page.click('#entrySignIn');await page.click('#continueLocal');await page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Home');await page.evaluate(async()=>{await window.__konaShell.explore();});await page.click('[data-enter-world]');
+ await page.goto(base,{waitUntil:'networkidle0'});await page.click('#buildSelf');await page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Now');await page.evaluate(async()=>{await window.__konaShell.explore();});await page.click('[data-enter-world]');
  await page.waitForFunction(()=>window.__museum?.renderer);assert.deepEqual(await page.evaluate(()=>({bikes:window.__museum.wyldBikes.length,room:!!window.__museum.scene.getObjectByName('wyldRoom'),data:window.__WYLDROOM,nav:!!document.querySelector('[data-room=wyld]')})),{bikes:0,room:false,data:null,nav:false});await page.evaluate(()=>window.__konaShell.now());
  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('kona.passport.v1')));
  assert.ok(saved.discoveries.includes('cfr'));assert.ok(saved.stamps['part:launch-regression']);assert.ok(saved.visits>=3);
