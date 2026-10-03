@@ -65,6 +65,14 @@
       "reason": "Dedicated public Kona.m project contact address used by the Intern editorial system; not a private personal address.",
       "approved_by": "owner (2026-10-03)",
       "added": "2026-10-03"
+    },
+    {
+      "file": "web/src/ui/companion.js",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Fallback display for the dedicated public Kona.m project inbox in the Intern Dispatch UI; not a private personal address.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
     }
   ]
 }
