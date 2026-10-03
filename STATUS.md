@@ -5,7 +5,7 @@ Working status baseline for launch hardening.
 ## Canonical production truth
 
 - Default branch: `main`
-- Repository visibility: private during launch hardening
+- Repository visibility: public and open source (github.com/joaoccaldas/konam)
 - Product: Kona.m, built on the Canyon Museum production factory
 - Consumer proposition: **Race the version of yourself**
 - Product principle: **Simple surface. Deep world underneath.**
