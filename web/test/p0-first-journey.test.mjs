@@ -4,8 +4,8 @@ const shell=fs.readFileSync(new URL('../src/ui/kona-shell.js',import.meta.url),'
 const html=fs.readFileSync(new URL('../landing.template.html',import.meta.url),'utf8');
 const harden=fs.readFileSync(new URL('../../tools/harden_pages.mjs',import.meta.url),'utf8');
 
-test('landing exposes build and sign-in without requiring 3D',()=>{assert.match(html,/id="buildSelf"/);assert.match(html,/id="entrySignIn"/);});
-test('first run moves through questions, avatar and install handoff without gear gates',()=>{
+test('landing exposes build without requiring 3D or unavailable sign-in',()=>{assert.match(html,/id="buildSelf"/);assert.doesNotMatch(html,/id="entrySignIn"/);});
+test('first run moves through questions, first bike, avatar and install handoff without a gear wall',()=>{
   assert.match(entry,/step==='questions'/);
   assert.match(entry,/paintQuest\(firstRunStep\(\)\)/);
   assert.match(entry,/renderOnboardingQuestions/);
