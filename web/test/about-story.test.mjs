@@ -56,6 +56,6 @@ test('short coarse landscape moves chrome away from editorial text',()=>{
   const css=read('web/styles/promo.css');
   assert.match(css,/@media\(pointer:coarse\) and \(orientation:landscape\) and \(max-height:700px\)/);
   assert.match(css,/\.promo-header\{position:absolute/);
-  assert.match(css,/\.field-rail\{top:auto;bottom:10px/);
+  assert.match(css,/\.field-rail\{display:none\}/);
   assert.match(css,/\.promo-section\{scroll-margin-top:18px\}/);
 });
