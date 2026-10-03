@@ -35,9 +35,10 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   });
   const shell=document.createElement('div'); shell.id='konaShell';
   shell.innerHTML=
+    '<a class="kona-why-global" href="why.html" aria-label="Read Why Kona">Why Kona</a>'+ 
     '<button type="button" class="kona-user-menu" data-user-studio aria-label="Open User Studio" title="User Studio"><i></i><span>Studio</span></button>'+
     '<div id="konaPanel" class="kona-panel" hidden>'+
-      `<div class="kona-panel-head"><div><small id="konaPanelEyebrow">${PRODUCT_NAME} · BETA</small><h2 id="konaPanelTitle">Now</h2></div><button id="konaPanelClose" type="button" aria-label="Close">×</button></div>`+
+      `<div class="kona-panel-head"><div><small id="konaPanelEyebrow">${PRODUCT_NAME} · BETA</small><h2 id="konaPanelTitle">Now</h2></div><div class="kona-panel-actions"><a class="kona-panel-why" href="why.html">Why Kona</a><button id="konaPanelClose" type="button" aria-label="Close">×</button></div></div>`+
       '<div id="konaPanelBody" class="kona-panel-body"></div>'+
     '</div>'+
     '<nav class="kona-desktop-nav" aria-label="Desktop navigation">'+
