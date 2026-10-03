@@ -76,7 +76,7 @@ const pageDesignLinks = file => file === 'index.html'
 const FONTS = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300..800&display=swap';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const jsonld = o => JSON.stringify(o).replace(/</g, '\\u003c');
-const GLOBAL_USER_STUDIO = '<!--global-user-studio:start--><a class="global-user-studio" href="index.html?view=me" aria-label="Open User Studio">USER STUDIO</a><!--global-user-studio:end-->';
+const GLOBAL_USER_STUDIO = '<!--global-user-studio:start--><nav class="global-kona-links" aria-label="Kona.m shortcuts"><a class="global-why-kona" href="why.html">WHY KONA</a><a class="global-user-studio" href="index.html?view=me" aria-label="Open User Studio">USER STUDIO</a></nav><!--global-user-studio:end-->';
 const ANALYTICS_SCRIPT = '<script type="module" src="web/src/site-analytics.js"></script>';
 
 function block(p) {
