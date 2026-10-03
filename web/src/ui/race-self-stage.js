@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { buildAvatar } from '../engine/avatar-models.js';
+import { createRendererContext } from '../render/renderer.js';
 
 const plain=(color,roughness=.72)=>new THREE.MeshStandardMaterial({color,roughness,metalness:.02});
 function disposeObject(obj){
@@ -23,8 +24,16 @@ function frameObject(obj,target=1.8){
 export async function mountRaceSelfStage(canvas,{accent='#e8471c',avatarStyle=null,bike=null,shoe=null,onReady}={}){
   if(!canvas)return {dispose(){}};
   let disposed=false;
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'low-power',alpha:true});
-  const dpr=Math.min(devicePixelRatio||1,1.5);renderer.setPixelRatio(dpr);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+  const renderContext=createRendererContext({
+    canvas,
+    antialias:false,
+    alpha:true,
+    powerPreference:'low-power',
+    maxDpr:1.5,
+    toneMapping:'aces',
+    exposure:1.05,
+  });
+  const {renderer}=renderContext;
   const scene=new THREE.Scene();scene.background=null;
   const camera=new THREE.PerspectiveCamera(38,1,.05,50);camera.position.set(.7,1.22,5.4);
   const controls=new OrbitControls(camera,canvas);controls.target.set(0,1.0,0);controls.enableDamping=true;controls.enablePan=false;controls.minDistance=3.4;controls.maxDistance=7.5;controls.maxPolarAngle=Math.PI*.55;
@@ -59,8 +68,8 @@ export async function mountRaceSelfStage(canvas,{accent='#e8471c',avatarStyle=nu
   const ro=new ResizeObserver(resize);ro.observe(canvas);resize();
   let startedAt=performance.now();
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
-  renderer.setAnimationLoop(now=>{
-    if(disposed||document.hidden||document.body.classList.contains('settings-open'))return;
+  renderContext.setAnimationLoop(now=>{
+    if(disposed||document.body.classList.contains('settings-open'))return;
     const t=reducedMotion.matches?0:(now-startedAt)/1000,base=avatar.userData.baseY??.03,kind=avatar.userData.avatarAnimation;
     if(kind==='bounce')avatar.position.y=base+Math.sin(t*2.1)*.012;
     else if(kind==='swagger'){avatar.position.y=base+Math.sin(t*1.45)*.006;avatar.rotation.z=Math.sin(t*.85)*.012;}
@@ -68,6 +77,7 @@ export async function mountRaceSelfStage(canvas,{accent='#e8471c',avatarStyle=nu
     else {avatar.position.y=base+Math.sin(t*1.15)*.009;avatar.rotation.z=Math.sin(t*.7)*.018;}
     controls.update();renderer.render(scene,camera);
   });
+  canvas.__raceSelfRendererAuthority='shared-r0';
   onReady?.();
   return {
     resetView:fitCamera,
@@ -77,6 +87,6 @@ export async function mountRaceSelfStage(canvas,{accent='#e8471c',avatarStyle=nu
       scene.remove(avatar);disposeObject(avatar);avatar=buildAvatar(next);avatar.position.copy(pos);avatar.rotation.copy(rot);avatar.scale.copy(scale);avatar.userData.baseY=pos.y;scene.add(avatar);
       rim.color.set(next?.accent||accent);fitCamera();
     },
-    dispose(){disposed=true;ro.disconnect();renderer.setAnimationLoop(null);controls.dispose();disposeObject(scene);renderer.dispose();renderer.forceContextLoss();delete canvas.__studioFrame;}
+    dispose(){disposed=true;ro.disconnect();renderContext.setAnimationLoop(null);controls.dispose();disposeObject(scene);renderContext.dispose({forceContextLoss:true});delete canvas.__studioFrame;delete canvas.__raceSelfRendererAuthority;}
   };
 }

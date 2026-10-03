@@ -11,8 +11,11 @@ test('renderer authority inventory is unique, explicit and migration-bound',()=>
   const inventory=json('config/renderer-authority-v1.json');
   assert.equal(inventory.schema_version,1);
   assert.equal(inventory.first_pilot,'web/src/ui/collectible-stage.js');
-  assert.equal(inventory.counts.repo_source_constructors,14);
-  assert.equal(inventory.counts.browser_or_viewer_constructors,12);
+  assert.equal(inventory.counts.repo_source_constructors,13);
+  assert.equal(inventory.counts.browser_or_viewer_constructors,11);
+  assert.equal(inventory.counts.web_src_guarded_constructors,10);
+  assert.equal(inventory.counts.public_runtime_legacy_constructors,6);
+  assert.equal(inventory.counts.canonical_kernel_constructors,1);
   assert.equal(inventory.counts.offline_tool_constructors,2);
   const paths=inventory.renderers.map(x=>x.path);
   assert.equal(new Set(paths).size,paths.length,'renderer paths must be unique');
