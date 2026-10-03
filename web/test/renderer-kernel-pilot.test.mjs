@@ -31,3 +31,13 @@ test('Race Self delegates renderer lifecycle while keeping camera and controls l
   assert.match(stage,/__raceSelfRendererAuthority='shared-r0'/);
   assert.match(stage,/renderContext\.dispose\(\{forceContextLoss:true\}\)/);
 });
+
+
+test('hall releases GPU resources when its page leaves',()=>{
+  const hall=read('src/landing.js');
+  assert.match(hall,/disposeObject3D\(scene/);
+  assert.match(hall,/renderer\.dispose\(\)/);
+  assert.match(hall,/renderer\.forceContextLoss/);
+  assert.match(hall,/pagehide/);
+  assert.match(hall,/cancelAnimationFrame\(frameId\)/);
+});
