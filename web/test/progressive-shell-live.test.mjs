@@ -15,6 +15,7 @@ test('persistent shell is state-driven rather than five tabs for everyone',()=>{
   assert.match(shell,/aria-hidden/);
   assert.match(shell,/data-tab="home"[\s\S]*<span>Now<\/span>/);
   assert.match(shell,/data-desktop-tab="home"[\s\S]*data-desktop-tab="me"/,'desktop has a dedicated compact route surface');
+  assert.match(shell,/\[data-desktop-tab\][\s\S]*button\.hidden=false/,'desktop keeps canonical destinations visible while mobile disclosure remains progressive');
   assert.match(css,/repeat\(var\(--nav-count,5\),1fr\)/);
   assert.match(css,/\[hidden\]/);
   assert.match(mobileCss,/data-count="1"/,'a one-destination shell must not render a full-width redundant nav bar');
