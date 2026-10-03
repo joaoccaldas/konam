@@ -1,3 +1,4 @@
+// Release certification trigger: About source, generated mirror and public metadata are validated together.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
