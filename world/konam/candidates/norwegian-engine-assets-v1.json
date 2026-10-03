@@ -473,12 +473,33 @@
     "primary_candidates": [
       "trainer",
       "run-deck",
-      "protocol-table",
-      "analyser",
-      "environment-bay",
-      "podium-vault",
-      "fjord-relief"
+      "analyser"
     ],
-    "rule": "Generate only after canonical evidence shows the procedural representation is a material visual limitation. Do not batch-generate secondary props."
+    "rule": "Generate only after canonical evidence shows the procedural representation is a material visual limitation. Do not batch-generate secondary props.",
+    "conditional_candidates": [
+      "environment-bay",
+      "protocol-table"
+    ],
+    "procedural_preferred": [
+      "podium-vault",
+      "fjord-relief",
+      "fan",
+      "vial-rack",
+      "lane-architecture",
+      "protocol-wall",
+      "towel-rail",
+      "bottle-set",
+      "recovery-bench",
+      "recovery-props"
+    ],
+    "evidence_hypothesis": {
+      "trainer": "High leverage: repeated in all three athlete lanes and currently represented by primitive cylinders/boxes.",
+      "run-deck": "High leverage: repeated in all three lanes and required to read as a complete training station.",
+      "analyser": "High leverage: focal object in the dedicated Protocol camera view and currently low-detail.",
+      "environment-bay": "Conditional: silhouette is already carried by glass/frame composition; author only if canonical screenshots lack depth/physical credibility.",
+      "protocol-table": "Conditional: simple furniture may not justify another GLB unless close-up evidence exposes the limitation.",
+      "podium-vault": "Keep procedural unless evidence fails; abstract geometry is intentional.",
+      "fjord-relief": "Keep procedural unless evidence fails; layered procedural geometry is part of the visual concept."
+    }
   }
 }
