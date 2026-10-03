@@ -19,7 +19,7 @@ const sessionId=(()=>{
     return id;
   }catch(_){return uuid();}
 })();
-const viewport=()=>innerWidth<600?'phone':innerWidth<1024?'tablet':'desktop';
+const viewport=()=>innerWidth<600?'compact':innerWidth<1024?'medium':'wide';
 const param=(name,max)=>{
   const value=new URLSearchParams(location.search).get(name);
   return value?value.slice(0,max):null;
