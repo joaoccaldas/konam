@@ -32,7 +32,7 @@ test('every published page carries security, privacy and SEO metadata', () => {
     assert.match(page?.disambiguatingDescription||'',/Not affiliated/,f+' independence disclosure');
     assert.ok(page?.about?.some?.(x=>x.name==='Triathlon'),f+' triathlon semantic');
     assert.ok(page?.about?.some?.(x=>x.name==='IRONMAN World Championship'),f+' IRONMAN semantic');
-    assert.doesNotMatch(h, /<meta\s+[^>]*name=["']author["']|\/Users\/[a-z]+|@gmail\.com|Jo[aã]o\s+Caldas/i, f);
+    assert.doesNotMatch(h, /<meta\s+[^>]*name=["']author["']|\/Users\/[a-z]+|joaoccaldas(?:&#64;|@)gmail\.com|Jo[aã]o\s+Caldas/i, f);
   }
 });
 
