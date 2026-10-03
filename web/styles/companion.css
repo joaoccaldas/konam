@@ -74,3 +74,32 @@
 @media(max-width:520px){.companion-hero{margin:8px 0 20px;padding:18px 0}.companion-hero h3{font-size:38px}.companion-hero p{font-size:14px;line-height:1.5}.companion-hero>small{display:none}.companion-tools{margin-bottom:12px}.companion-manager{margin:12px 0;padding:4px 0}.companion-freshness{font-size:11px}.companion-filters{padding:4px 0}}
 .companion-lead{display:none}
 @media(min-width:700px){.companion-hero:has(.companion-lead){display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:8px 24px}.companion-hero:has(.companion-lead) h3{font-size:48px;margin:4px 0}.companion-hero:has(.companion-lead) p{font-size:14px}.companion-lead{display:grid;grid-column:2;grid-row:1/4;gap:8px;align-self:center;font-size:12px;line-height:1.4}.companion-lead img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}.companion-lead span{font-size:10px;color:var(--brand-muted)}.companion-lead b{font-weight:650}}
+
+
+/* Intern Dispatch ----------------------------------------------------------- */
+.intern-dispatch{margin:22px 0 30px;padding:24px;border:1px solid var(--brand-line);border-radius:26px;background:
+  radial-gradient(circle at 100% 0,color-mix(in srgb,var(--brand-personality) 10%,transparent),transparent 36%),
+  var(--brand-surface);box-shadow:var(--artifact-shadow)}
+.intern-dispatch header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:start;padding-bottom:22px;border-bottom:1px solid var(--brand-line)}
+.intern-dispatch header small,.intern-dispatch-label{font:800 8px/1.4 var(--brand-font-ui);letter-spacing:.16em;color:var(--brand-muted);text-transform:uppercase}
+.intern-dispatch header h4{margin:8px 0 10px;font:400 clamp(36px,6vw,58px)/.96 var(--brand-font-editorial);letter-spacing:-.025em;max-width:12ch}
+.intern-dispatch header p{max-width:44rem;margin:0;color:var(--brand-muted);font:500 13px/1.65 var(--brand-font-ui)}
+.intern-dispatch-stamp{display:grid;place-items:center;width:84px;aspect-ratio:1;border:1px solid var(--brand-personality);border-radius:50%;color:var(--brand-personality);font:800 8px/1.35 var(--brand-font-ui);letter-spacing:.12em;text-align:center;transform:rotate(6deg)}
+.intern-dispatch-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:30px;padding:24px 0}
+.intern-watch{display:grid}.intern-watch-item{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:16px 0;border-top:1px solid var(--brand-line)}
+.intern-watch-item:first-child{border-top:0}.intern-watch-item>span{font:600 10px var(--brand-font-data);color:var(--brand-action)}
+.intern-watch-item small{font:700 8px/1.4 var(--brand-font-ui);letter-spacing:.08em;color:var(--brand-muted)}
+.intern-watch-item h5{margin:5px 0 7px;font:400 23px/1.1 var(--brand-font-editorial)}
+.intern-watch-item p{margin:0;font:500 15px/1.45 var(--brand-font-hand);color:var(--brand-ink)}
+.intern-build{display:grid;gap:8px;margin-top:12px}.intern-build-note{padding:16px;border:1px solid var(--brand-line);border-radius:18px;background:color-mix(in srgb,var(--brand-bg) 45%,var(--brand-surface))}
+.intern-build-note small{font:800 7px/1.4 var(--brand-font-ui);letter-spacing:.15em;color:var(--brand-action)}
+.intern-build-note h5{margin:8px 0;font:400 24px/1 var(--brand-font-editorial)}
+.intern-build-note p{margin:0;color:var(--brand-muted);font-size:11px;line-height:1.6}
+.intern-dispatch footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:18px;border-top:1px solid var(--brand-line)}
+.intern-dispatch footer p{max-width:42rem;margin:0;color:var(--brand-muted);font-size:10px;line-height:1.6}
+.intern-dispatch footer a{flex:0 0 auto;min-height:46px;padding:0 15px;display:inline-flex;align-items:center;border-radius:999px;background:var(--brand-action);color:var(--brand-on-action);font:800 10px var(--brand-font-ui)}
+@media(max-width:720px){
+  .intern-dispatch{padding:18px;border-radius:22px}.intern-dispatch header{grid-template-columns:1fr}.intern-dispatch-stamp{display:none}
+  .intern-dispatch-grid{grid-template-columns:1fr;gap:22px}.intern-dispatch footer{align-items:stretch;flex-direction:column}.intern-dispatch footer a{justify-content:center}
+  .intern-watch-item h5{font-size:21px}
+}
