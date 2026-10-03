@@ -207,7 +207,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
 
   async function collection(){
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
-    await featureStyle('',null);
+    await featureStyle('finds','web/styles/finds.css');
     if(request!==studioRequest)return;
     title.textContent='Collection'; eyebrow.textContent=`${PRODUCT_NAME} · CARDS & ITEMS`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('');
