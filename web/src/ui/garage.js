@@ -5,7 +5,6 @@ import { readGarage, groupGarage } from '../engine/garage.js';
 import { readGameState } from '../engine/game-state.js';
 import { getPublicProduct } from '../engine/catalog.js';
 import { renderRaceBadges } from './race-cards.js';
-import { ensureProgression } from '../engine/progression.js';
 
 const legacyId = id => String(id || '').replace(/^product:/, '');
 
@@ -33,8 +32,6 @@ async function raceSetupHero(){
 export async function renderGarageSurface(root,{admin=false}={}) {
   const groups = groupGarage(readGarage());
   const setup=await raceSetupHero();
-  const progression=ensureProgression();
-  const bikeUnlocked=admin||progression.level>=2;
   root.replaceChildren();
 
   const hero=node('section','garage-setup-hero artifact artifact--hero');
@@ -42,7 +39,7 @@ export async function renderGarageSurface(root,{admin=false}={}) {
     '<div class="garage-setup-media" aria-hidden="true"><img src="assets/kona-years/kailua-bay.jpg" alt="" loading="lazy" decoding="async"></div>'+
     '<div class="garage-setup-overlay"></div>'+
     '<svg class="garage-bike-mark" viewBox="0 0 180 92" aria-hidden="true"><circle cx="38" cy="66" r="23"/><circle cx="142" cy="66" r="23"/><path d="M38 66 72 31l28 35H64l36-35 42 35M72 31h38m-10 0 14-14m-10 0h24"/></svg>'+
-    '<div class="garage-setup-copy"><small>YOUR RACE SETUP</small><h3></h3><p class="garage-setup-meta"></p><p class="garage-setup-goal"></p>'+(bikeUnlocked?'<a class="kona-primary" href="'+setup.href+'">'+(setup.bike?'Configure':'Choose your first bike')+' <span>→</span></a>':'<button class="kona-primary" type="button" disabled>Bike ownership unlocks at Level 2</button><p class="garage-level-note">Collect the first Find on Home for +50 XP and your first bike. <a href="index.html?view=home">Go to your first Find →</a></p>')+'</div>';
+    '<div class="garage-setup-copy"><small>YOUR RACE SETUP</small><h3></h3><p class="garage-setup-meta"></p><p class="garage-setup-goal"></p>'+'<a class="kona-primary" href="'+setup.href+'">'+(setup.bike?'Configure':'Choose your first bike')+' <span>→</span></a></div>';
   hero.querySelector('h3').textContent=setup.title;
   hero.querySelector('.garage-setup-meta').textContent=setup.meta;
   hero.querySelector('.garage-setup-goal').textContent=setup.goal;
