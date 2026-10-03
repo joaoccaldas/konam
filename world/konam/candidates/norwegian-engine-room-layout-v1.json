@@ -132,6 +132,20 @@
       ]
     },
     {
+      "id": "recovery",
+      "position": {
+        "x": "cx+1.05",
+        "y": 0,
+        "z": "south-wall+0.62"
+      },
+      "assets": [
+        "nor3-recovery-bench",
+        "nor3-recovery-props",
+        "nor3-contact-shadows"
+      ],
+      "note": "Procedural/shared first. Promote to dedicated GLB only if reuse or visual evidence justifies it."
+    },
+    {
       "id": "kona-line",
       "position": {
         "x": "east-wall",
