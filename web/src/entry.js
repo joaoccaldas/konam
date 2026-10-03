@@ -170,21 +170,8 @@ function paintQuest(step) {
     renderAvatarRegistration(host,{
       profile,
       onBack:()=>{setEntryMode('landing');host.hidden=true;document.getElementById('buildSelf')?.focus();},
-      onContinue:()=>paintQuest('install')
+      onContinue:()=>enterApp('home')
     });
-    return;
-  }
-  if(step==='install'){
-    const landscape=matchMedia('(orientation: landscape)').matches;
-    host.innerHTML='<section class="onboarding-handoff">'+
-      `<div class="onboarding-handoff-copy"><p class="eyebrow">ONE TINY THING</p><h2>Make ${PRODUCT_NAME} feel less like a browser.</h2><p>Then turn your phone sideways when the world gets serious.</p></div>`+
-      '<div class="onboarding-handoff-grid">'+
-        `<article class="onboarding-tip install-tip"><span class="handoff-mark">↓</span><small>01 · INSTALL</small><h3>Put ${PRODUCT_NAME} on your phone.</h3><p>If the install prompt lands somewhere unexpected, use your browser menu to install or add Kona.m to your Home Screen.</p><button type="button" class="btn-primary" data-install-app>Install ${PRODUCT_NAME}</button></article>`+
-        '<article class="onboarding-tip rotate-tip '+(landscape?'is-landscape':'')+'"><div class="phone-rotate" aria-hidden="true"><i></i><b>↻</b></div><small>02 · ROTATE</small><h3>'+(landscape?'Perfect. Keep it sideways.':'Turn your phone sideways.')+'</h3><p>The 3D world is built for landscape. Rotate when you want the full view.</p></article>'+
-      '</div>'+
-      `<div class="quest-nav"><button type="button" class="btn-primary" data-handoff-continue>Show me ${PRODUCT_NAME} →</button></div>`+
-    '</section>';
-    host.querySelector('[data-handoff-continue]')?.addEventListener('click',()=>enterApp('home'));
     return;
   }
   if(step==='save'){
