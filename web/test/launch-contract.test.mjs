@@ -53,7 +53,7 @@ test('local storage failure is observable instead of falsely reporting saved',as
 
 test('Beast Cave review URL opens the canonical world runtime',()=>{
  const entry=read('web/src/entry.js');
- assert.match(entry,/q\.get\('reviewRoom'\) === 'beast-cave'\) openMuseum\(\)/);
+ assert.match(entry,/q\.get\('reviewRoom'\) === 'beast-cave'\) openMuseum\('beast'\)/);
  const landing=read('web/src/landing.js');
  assert.match(landing,/reviewRoom'\) === 'beast-cave'/);
  assert.match(landing,/buildBeastCave/);
