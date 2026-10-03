@@ -1,4 +1,4 @@
-// Bundle one heritage exhibit into a self-contained, offline HTML page.
+// Bundle one heritage exhibit with a separately cacheable, service-worker verified GLB.
 // GLB=... BIKE_PROFILE=museum/viewer-<key>.json OUT_HTML=... node build_heritage.mjs
 import { build } from 'esbuild';
 import fs from 'fs';
@@ -8,7 +8,9 @@ for (const k of ['GLB', 'BIKE_PROFILE', 'OUT_HTML']) if (!process.env[k]) throw 
 const res = await build({ entryPoints: [path.join(here, 'src/heritage.js')], bundle: true, format: 'iife', minify: true, write: false,
   target: 'es2020', legalComments: 'none' });
 const app = res.outputFiles[0].text.replace(/<\/script/gi, '<\\/script');
-const glb = fs.readFileSync(process.env.GLB).toString('base64');
+const root = path.resolve(here, '..');
+const glbUrl = path.relative(root, process.env.GLB).split(path.sep).join('/');
+if (!glbUrl || glbUrl.startsWith('../')) throw new Error('GLB must live inside the published repository');
 const profile = JSON.parse(fs.readFileSync(process.env.BIKE_PROFILE, 'utf8'));
 // Measured results come from this build's own reports, never from hand-typed numbers.
 if (process.env.CHECKS_DIR) {
@@ -29,8 +31,8 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 const html = fs.readFileSync(path.join(here, 'heritage.template.html'), 'utf8')
   .replace('__TITLE__', () => esc(profile.bike.pageTitle))
   .replace('<head>', () => '<head><script>window.__BIKE_PROFILE=' + JSON.stringify(profile).replaceAll('<', '\\u003c') + ';</script>')
-  .replace('__GLB__', () => glb)
+  .replace('__GLB_URL__', () => glbUrl)
   .replace('__APP__', () => '/* Canyon heritage exhibit · three.js (MIT) bundled */\n' + app);
 fs.mkdirSync(path.dirname(process.env.OUT_HTML), { recursive: true });
 fs.writeFileSync(process.env.OUT_HTML, html);
-console.log('wrote', process.env.OUT_HTML, (html.length / 1e6).toFixed(2), 'MB');
+console.log('wrote', process.env.OUT_HTML, (html.length / 1e6).toFixed(2), 'MB · streamed GLB', glbUrl);
