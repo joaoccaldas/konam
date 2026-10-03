@@ -28,6 +28,7 @@ if (process.env.CHECKS_DIR) {
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const html = fs.readFileSync(path.join(here, 'heritage.template.html'), 'utf8')
   .replace('__TITLE__', () => esc(profile.bike.pageTitle))
+  .replace('__DESCRIPTION__', () => esc(`${profile.bike.family} ${profile.bike.name} interactive 3D engineering exhibit with sourced specifications, geometry, parts inspection and reconstruction evidence.`))
   .replace('<head>', () => '<head><script>window.__BIKE_PROFILE=' + JSON.stringify(profile).replaceAll('<', '\\u003c') + ';</script>')
   .replace('__GLB_URL__', () => glbUrl)
   .replace('__APP__', () => '/* Canyon heritage exhibit · three.js (MIT) bundled */\n' + app);
