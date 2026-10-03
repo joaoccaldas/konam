@@ -8,11 +8,11 @@
     "exemptions": "offline build tools and isolated review/test harnesses may retain local renderers until their own simplification is justified"
   },
   "counts": {
-    "repo_source_constructors": 13,
-    "browser_or_viewer_constructors": 11,
-    "web_src_guarded_constructors": 10,
+    "repo_source_constructors": 12,
+    "browser_or_viewer_constructors": 10,
+    "web_src_guarded_constructors": 9,
     "offline_tool_constructors": 2,
-    "public_runtime_legacy_constructors": 6,
+    "public_runtime_legacy_constructors": 5,
     "canonical_kernel_constructors": 1
   },
   "first_pilot": "web/src/ui/collectible-stage.js",
@@ -31,21 +31,6 @@
         "room_environment": false
       },
       "reason": "Canonical renderer construction and visibility/disposal lifecycle seam introduced by the Collectible Stage R0 pilot."
-    },
-    {
-      "path": "web/src/exp/engine.js",
-      "class": "shared-experience-stage",
-      "public_runtime": true,
-      "migrate": "kernel-required",
-      "priority": 2,
-      "risk": "medium",
-      "current": {
-        "hidden_pause": false,
-        "explicit_dispose": false,
-        "orbit_controls": false,
-        "room_environment": false
-      },
-      "reason": "Already shared across standalone experiences, so convergence here removes multiple downstream lifecycle variants."
     },
     {
       "path": "web/src/heritage.js",
@@ -218,7 +203,7 @@
     {
       "path": "web/src/ui/collectible-stage.js",
       "renderer_authority": "web/src/render/renderer.js",
-      "status": "pilot-review",
+      "status": "merged",
       "preserves": [
         "scene",
         "camera",
@@ -240,7 +225,7 @@
     {
       "path": "web/src/ui/race-self-stage.js",
       "renderer_authority": "web/src/render/renderer.js",
-      "status": "implementation-review",
+      "status": "merged",
       "preserves": [
         "scene",
         "camera",
@@ -258,6 +243,35 @@
         "DPR cap",
         "document visibility suspension",
         "renderer disposal/context loss"
+      ]
+    },
+    {
+      "path": "web/src/exp/engine.js",
+      "renderer_authority": "web/src/render/renderer.js",
+      "status": "implementation-review",
+      "preserves": [
+        "scene",
+        "PerspectiveCamera",
+        "orbit camera",
+        "rail camera",
+        "scene builders",
+        "machine inspection",
+        "audio",
+        "story UI"
+      ],
+      "moves": [
+        "WebGLRenderer construction",
+        "output color space",
+        "AgX tone mapping",
+        "DPR cap",
+        "document visibility suspension",
+        "renderer disposal"
+      ],
+      "lifecycle_additions": [
+        "resize listener removal",
+        "PMREM disposal",
+        "environment render-target disposal",
+        "pagehide disposal"
       ]
     }
   ]
