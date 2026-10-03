@@ -10,7 +10,8 @@ test('primary mobile nav keeps the canonical five routes but labels Home as Now'
 });
 
 test('persistent nav uses progressive visibility rather than removing canonical routes',()=>{
-  const nav=source.slice(source.indexOf('<nav class="kona-bottom-nav'),source.indexOf('</nav>')+6);
+  const start=source.indexOf('<nav class="kona-bottom-nav');
+  const nav=source.slice(start,source.indexOf('</nav>',start)+6);
   for(const id of ['home','discover','garage','plan','me']) assert.match(nav,new RegExp('data-tab="'+id+'"'));
   assert.match(source,/navigationForState\(readGameState\(\)/);
   assert.match(source,/button\.hidden=!shown\.has\(button\.dataset\.tab\)/);
