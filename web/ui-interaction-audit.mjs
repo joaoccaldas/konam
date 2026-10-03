@@ -120,7 +120,7 @@ for(const id of selected){
       assert.equal(rows.filter(r=>r.race_id===raceId).length,1);assert.equal(rows.find(r=>r.race_id===raceId).result.bib,'TEST-7');
     });
     await step('race state survives reload and Remove actually removes the saved card',async()=>{
-      await enter();await click('#buildSelf');await waitHome();await click('[data-tab="me"]');
+      await enter();await click('#buildSelf');await waitHome();await click('[data-home-self]');
       await click('[data-race-self-action="races"]');await p.waitForSelector('[data-race-badges] [data-remove-race]');
       assert.match(await text('[data-race-badges]'),/Registered/);
       await click('[data-race-badges] [data-remove-race]');
@@ -153,7 +153,7 @@ for(const id of selected){
       assert.match(await text('[data-hub-body]'),/Level road|LEVEL [23]/);await inventory('Progress');
       await click('[data-hub-close]');await click('[data-race-self-action="tour"]');
       await p.waitForSelector('.kona-tour');await click('[data-tour-skip]');await p.waitForFunction(()=>!document.querySelector('.kona-tour'));
-      await click('[data-tab="me"]');
+      await click('[data-home-self]');
     });
     await step('first Find earns once, all 100 slots and filters work, and Item Studio loads the actual model',async()=>{
       await click('[data-studio-home]');await waitHome();
@@ -172,7 +172,7 @@ for(const id of selected){
       await click('[data-finds-back]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);await click('[data-studio-home]');await waitHome();
       assert.equal(await p.$eval('[data-first-find]',e=>e.disabled),true);
       assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),earned.xp);
-      await click('[data-tab="me"]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
+      await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
     await step('countdown defaults to seconds, normal/timezone persist, and traveller brief has useful sourced links',async()=>{
       await click('[data-studio-home]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'seconds');
@@ -183,7 +183,7 @@ for(const id of selected){
       assert.match(await text('#konaPanelBody'),/Land at KOA|THE INTERN|Official websites & social/);
       assert.equal((await p.$$('.kona-brief-thumbnail')).length,2);assert.ok((await p.$$('a[href*="airports.hawaii.gov"]')).length>=3);await inventory('What matters most');
       await click('[data-tab="home"]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'normal');
-      await click('[data-tab="me"]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
+      await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
     await step('sharing exports a real PNG, handles cancellation, and preserves private data',async()=>{
       await click('[data-race-self-action="share"]');await p.waitForSelector('[data-hub-drawer]:not([hidden])');
