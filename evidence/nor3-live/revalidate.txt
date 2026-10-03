@@ -1,2 +1,2 @@
-Live revalidation trigger after camera fix deployment.
-Target main SHA: 224eae9bb424294498380b5a7c41287f9f9e01c2
+Live revalidation trigger after cinematic v2 deployment.
+Target main SHA: 242c13e90782372fc3252bbf27ec872bcc2568f8
