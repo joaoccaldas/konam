@@ -7,9 +7,9 @@ const external=(url,label,cls='')=>safeURL(url)?'<a class="'+cls+'" href="'+esc(
 const heading=(kicker,title,description)=>'<header class="companion-hero"><small>'+kicker+'</small><h3>'+title+'</h3><p>'+description+'</p></header>';
 const error=(node,retry)=>{node.innerHTML='<div class="companion-empty" role="status"><h4>Quick pit stop.</h4><p>This page could not load. Reconnect and try again; your Studio is still ready.</p><button class="companion-button" data-retry>Try again</button></div>';node.querySelector('[data-retry]').onclick=retry;};
 
-export function renderFeed(root,{back,scope='feed',compact=false}={}){
+export function renderFeed(root,{back,scope='feed',compact=false,backLabel='User Studio'}={}){
  const controller=new AbortController();
- root.innerHTML='<section class="companion-page" aria-label="'+(compact?'Island updates':'Triathlon Feed')+'">'+(compact?'<h4 class="companion-section-title">The island, in the loop.</h4>':'<button class="companion-back" data-back>← User Studio</button>'+heading('THE FEED · SWIM / BIKE / SCROLL','Your rest-day rabbit hole.','Triathlon headlines, athlete cameras and life on the island. Straight from the source.'))+
+ root.innerHTML='<section class="companion-page" aria-label="'+(compact?'Island updates':'Triathlon Feed')+'">'+(compact?'<h4 class="companion-section-title">The island, in the loop.</h4>':'<button class="companion-back" data-back>← '+esc(backLabel)+'</button>'+heading('THE FEED · SWIM / BIKE / SCROLL','Your rest-day rabbit hole.','Triathlon headlines, athlete cameras and life on the island. Straight from the source.'))+
  '<div class="companion-tools"><a href="integrations/companion/rss.xml" data-personal-rss class="companion-button">Subscribe via RSS ↗</a><button class="companion-button" data-refresh>Refresh feed</button></div><div data-subscriptions></div><div data-feed-content aria-live="polite"><p>Gathering the good stuff…</p></div></section>';
  const page=root.firstElementChild,content=page.querySelector('[data-feed-content]');if(page.querySelector('[data-back]'))page.querySelector('[data-back]').onclick=back;
  let loadRequest=0;let data,fallback,managed=false,kind='all',source='all',query='',limit=18;
@@ -49,9 +49,9 @@ export function renderFeed(root,{back,scope='feed',compact=false}={}){
  page.querySelector('[data-refresh]').onclick=load;load();return ()=>controller.abort();
 }
 
-export function renderTravel(root,{back}={}){
+export function renderTravel(root,{back,backLabel='User Studio'}={}){
  const controller=new AbortController();let disposeFeed=null;
- root.innerHTML='<section class="companion-page" aria-label="Travel to Kona"><button class="companion-back" data-back>← User Studio</button>'+heading('TRAVEL · KAILUA-KONA','Less logistics.<br>More aloha.','Land, find your bearings, support local. Your island pit crew starts here.')+'<div data-travel-content><p>Unpacking the island guide…</p></div></section>';
+ root.innerHTML='<section class="companion-page" aria-label="Travel to Kona"><button class="companion-back" data-back>← '+esc(backLabel)+'</button>'+heading('TRAVEL · KAILUA-KONA','Less logistics.<br>More aloha.','Land, find your bearings, support local. Your island pit crew starts here.')+'<div data-travel-content><p>Unpacking the island guide…</p></div></section>';
  const page=root.firstElementChild,content=page.querySelector('[data-travel-content]');page.querySelector('[data-back]').onclick=back;
  async function load(){
   try{
