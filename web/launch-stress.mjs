@@ -24,7 +24,8 @@ try{
  report.frameIntervalsMs=await page.evaluate(()=>new Promise(resolve=>{const deltas=[];let prev=performance.now();function frame(t){deltas.push(t-prev);prev=t;if(deltas.length<90)requestAnimationFrame(frame);else{deltas.sort((a,b)=>a-b);resolve({median:deltas[45],p95:deltas[85]})}}requestAnimationFrame(frame)}));
  await page.goto(base+'/Studio.html',{waitUntil:'domcontentloaded'});
  await page.waitForFunction(()=>window.__studio?.CAT?.products?.length>0);
- await page.evaluate(async()=>{const studio=window.__studio;const target=studio.CAT.products.find(Boolean);if(!target)throw new Error('Studio catalog empty');await studio.show(target);});
+ await page.waitForSelector('.prod:not([disabled])',{visible:true});
+ await page.click('.prod:not([disabled])');
  await page.waitForFunction(()=>window.__studio?.current?.root);
  const fit=()=>page.evaluate(()=>{
   const {camera,current}=window.__studio;const box=new (camera.position.constructor)(); // use existing Three values; no remote imports.
