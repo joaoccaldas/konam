@@ -34,7 +34,11 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
   const races=Array.isArray(snapshot.race_history)?snapshot.race_history.length:0;
   let progression={level:1,level_name:'Visitor'};try{progression=ensureProgression();}catch(_){ }
   const firstFound=(progression.discoveries||[]).includes('find:shore:lava');
-  const horizon=discoveryHorizon(progression,4,{admin});
+  const meaningfulDiscovery=(progression.discoveries||[]).some(id=>!/^bike:/.test(id));
+  const showWorldDepth=admin||meaningfulDiscovery;
+  const showHorizon=admin||Number(progression.level||1)>=3;
+  const showInvite=admin||meaningfulDiscovery;
+  const horizon=showHorizon?discoveryHorizon(progression,4,{admin}):[];
   const nudges=['A bike in the archive is judging your tyre pressure.','Imagine an easy spin. Now imagine agreeing on what easy means.','Today’s detour: learn one thing you did not come here for.','An empty display shelf is a perfectly respectable beginning.'];
   const dayKey=new Date().toISOString().slice(0,10),nudge=nudges[Math.abs([...dayKey].reduce((a,c)=>a+c.charCodeAt(0),0))%nudges.length];
   const nudgesEnabled=!!profile?.get?.().notifications?.enabled;
@@ -62,14 +66,14 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
       '</div>'+
     '</section>'+
     '<section class="kona-section artifact artifact--label home-first-find"><small>YOUR FIRST DETOUR</small><h3>Something small is hiding here.</h3><p>Spot the volcanic rock. Tap it. '+PRODUCT_NAME+' Finds will keep the story.</p><div class="ui-cluster"><span class="t-hand" aria-hidden="true">That suspicious little rock →</span><button type="button" class="btn-icon" data-first-find aria-label="Collect Perfect Volcanic Rock"'+(firstFound?' disabled':'')+'><svg viewBox="0 0 100 70" aria-hidden="true"><path d="M12 52 24 25 47 12 72 18 89 45 70 60 36 64Z" fill="currentColor"/></svg></button></div><p class="kona-source-note" role="status" data-first-find-status>'+(firstFound?'Perfect Volcanic Rock is saved in '+PRODUCT_NAME+' Finds.':'Your first Find is waiting.')+'</p><button type="button" class="btn-text" data-home-finds>Open '+PRODUCT_NAME+' Finds →</button></section>'+
-    '<section class="home-world-hero artifact artifact--photo"><div class="home-world-hero-media"><img src="assets/share/museum.jpg" alt="Kona.m 3D world preview" loading="lazy" decoding="async"></div><div class="home-world-hero-copy"><small>KONA.M · 3D WORLD</small><h3>Then go deeper.</h3><p>The museum, rooms, bikes and hidden details are still here. Enter when you want the world underneath the useful stuff.</p><button type="button" class="kona-primary" data-home-world>Enter the 3D world <span>→</span></button></div></section>'+
-    '<section class="home-postcard artifact artifact--photo">'+
+    (showWorldDepth?'<section class="home-world-hero artifact artifact--photo"><div class="home-world-hero-media"><img src="assets/share/museum.jpg" alt="Kona.m 3D world preview" loading="lazy" decoding="async"></div><div class="home-world-hero-copy"><small>KONA.M · 3D WORLD</small><h3>Then go deeper.</h3><p>The museum, rooms, bikes and hidden details are still here. Enter when you want the world underneath the useful stuff.</p><button type="button" class="kona-primary" data-home-world>Enter the 3D world <span>→</span></button></div></section>':'')+
+    (showWorldDepth?'<section class="home-postcard artifact artifact--photo">'+
       '<div class="home-postcard-photo" aria-hidden="true"><img src="assets/kona-years/queen-k.jpg" alt="" loading="lazy" decoding="async"></div>'+
       '<div class="home-postcard-copy"><small>KAILUA-KONA · HAWAIʻI</small><h3>Not just a race.</h3><p>Roads, lava, people, machines and strange little details worth finding.</p><button type="button" class="kona-link-btn" data-home-discover>Discover something →</button></div>'+
-    '</section>'+photoCredit()+
-    '<section class="home-invite kona-section artifact artifact--label"><small>KONA.M · BRING YOUR PEOPLE</small><h3>A good detour deserves company.</h3><p>Invite a friend to build their athlete and explore Kona. No account needed.</p><button type="button" class="kona-primary" data-invite-friends>Invite friends ↗</button></section>'+
+    '</section>'+photoCredit():'')+
+    (showInvite?'<section class="home-invite kona-section artifact artifact--label"><small>KONA.M · BRING YOUR PEOPLE</small><h3>A good detour deserves company.</h3><p>Invite a friend to build their athlete and explore Kona. No account needed.</p><button type="button" class="kona-primary" data-invite-friends>Invite friends ↗</button></section>':'')+
     (nudgesEnabled?'<section class="home-nudge artifact artifact--label"><div><small>'+PRODUCT_NAME+' NUDGE · +5 XP</small><h3>'+esc(nudge)+'</h3><p>No urgency. No streak panic. Just a small reason to look around.</p></div><button type="button" class="kona-link-btn" data-home-nudge>Read it. Apparently this counts.</button></section>':'')+
-    '<section class="home-horizon artifact artifact--label"><div class="home-horizon-head"><div><small>OVER THE HORIZON</small><h3>There is always something else.</h3></div><span class="t-data">'+(admin?'ADMIN · ALL LEVELS':'LVL '+esc(progression.level))+'</span></div><div class="home-horizon-grid">'+horizonHtml+'</div><p class="t-hand">Curiosity is a training plan too.</p></section>';
+    (showHorizon?'<section class="home-horizon artifact artifact--label"><div class="home-horizon-head"><div><small>OVER THE HORIZON</small><h3>There is always something else.</h3></div><span class="t-data">'+(admin?'ADMIN · ALL LEVELS':'LVL '+esc(progression.level))+'</span></div><div class="home-horizon-grid">'+horizonHtml+'</div><p class="t-hand">Curiosity is a training plan too.</p></section>':'');
 
   root.querySelector('[data-home-world]')?.addEventListener('click',()=>openWorld?.());
   root.querySelector('[data-invite-friends]')?.addEventListener('click',openInviteDialog);
