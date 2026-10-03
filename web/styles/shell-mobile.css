@@ -48,8 +48,8 @@ html.phone-fit #appSheet>div{zoom:var(--fit);width:min(420px,calc((100vw - 24px)
 
 
 /* Progressive disclosure should simplify chrome, not leave an empty navigation rail. */
-.kona-bottom-nav[data-count="0"],.kona-bottom-nav[data-count="1"]{display:none!important}
+.kona-panel-open .kona-bottom-nav[data-count="0"],.kona-panel-open .kona-bottom-nav[data-count="1"]{display:none}
 @media(min-width:900px){
-  .kona-bottom-nav{display:none!important}
+  .kona-panel-open .kona-bottom-nav{display:none}
   .kona-panel{padding-bottom:max(var(--brand-space-4),env(safe-area-inset-bottom))}
 }
