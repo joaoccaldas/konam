@@ -40,7 +40,7 @@ test('privacy notice describes public-web analytics and native no-op',()=>{
   assert.match(privacy,/privacy-minimal first-party product analytics/i);
   assert.match(privacy,/random ID limited to the current browser session/i);
   assert.match(privacy,/packaged native app does not enable this public-web analytics path/i);
-  assert.match(privacy,/stores no IP address, user agent, email, account ID, precise location, raw feedback text, raw error message, stack trace or persistent visitor identifier/i);
+  assert.match(privacy,/stores no IP address, user agent, email, account ID, precise location, full referrer URL, raw feedback text, raw error message, stack trace or persistent visitor identifier/i);
 });
 
 
@@ -91,4 +91,35 @@ test('runtime failure hooks report only coarse codes',()=>{
   for(const src of [renderer,entry,storage,companion]){
     assert.doesNotMatch(src,/trackRuntimeError\?\.\([^)]*(?:message|stack|email|token)/i);
   }
+});
+
+
+test('analytics v2 preserves first-touch acquisition and separates traffic quality',()=>{
+  const src=read('web/src/site-analytics.js');
+  const fn=read('supabase/functions/site-analytics/index.ts');
+  const migration=read('supabase/migrations/20261003123000_analytics_v2_traffic_quality.sql');
+  assert.match(src,/kona\.analytics\.acquisition\.v2/);
+  assert.match(src,/analytics_mode/);
+  assert.match(src,/navigator\.webdriver/);
+  assert.match(src,/traffic_class:trafficClass/);
+  assert.match(src,/landing_path:acquisition\.landing_path/);
+  assert.match(src,/session_engaged_15s/);
+  assert.match(fn,/trafficClasses=new Set\(\['public','qa','automation'\]\)/);
+  assert.match(fn,/Invalid traffic class/);
+  assert.match(fn,/Invalid landing path/);
+  assert.match(migration,/traffic_class in \('public','qa','automation'\)/);
+  assert.match(migration,/session_engaged_15s/);
+  assert.doesNotMatch(src,/navigator\.userAgent|localStorage|document\.cookie/);
+});
+
+test('every hardened public page receives exactly one analytics module',()=>{
+  const hardener=read('tools/harden_pages.mjs');
+  assert.match(hardener,/ANALYTICS_SCRIPT/);
+  assert.ok(hardener.includes('web/src/site-analytics.js'));
+  assert.match(hardener,/analyticsCount>1/);
+  assert.match(hardener,/analyticsViaStandalone/);
+  assert.match(hardener,/if\(!analyticsViaStandalone&&!analyticsCount\)/);
+  const standalone=read('web/src/standalone-access.js');
+  assert.match(standalone,/import ['"]\.\/site-analytics\.js['"]/);
+  assert.ok(hardener.includes("html.replace(/<\\/body>/i, ANALYTICS_SCRIPT+'\\n</body>')"));
 });
