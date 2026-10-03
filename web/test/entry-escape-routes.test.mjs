@@ -7,8 +7,8 @@ const system=fs.readFileSync(new URL('../styles/system.css',import.meta.url),'ut
 const studio=fs.readFileSync(new URL('../studio.template.html',import.meta.url),'utf8');
 const hardener=fs.readFileSync(new URL('../../tools/harden_pages.mjs',import.meta.url),'utf8');
 
-test('landing always exposes Enter, Sign in and Install',()=>{
-  assert.match(html,/id="buildSelf"/);assert.match(html,/id="entrySignIn"/);assert.match(html,/id="entryInstall"/);
+test('landing always exposes Enter, Invite friends and Install',()=>{
+  assert.match(html,/id="buildSelf"/);assert.match(html,/id="entryInvite"/);assert.match(html,/id="entryInstall"/);
 });
 test('one helper leaves intro and supports canonical consumer routes',()=>{
   assert.match(entry,/function enterApp\(first = 'home'\)/);
@@ -28,7 +28,7 @@ test('avatar setup can be escaped and does not trap the visitor',()=>{
   assert.match(entry,/onContinue:\(\)=>paintQuest\('install'\)/);
   assert.match(entry,/data-handoff-continue[\s\S]*enterApp\('home'\)/);
 });
-test('sign in is optional and exposes Continue without account',()=>{
+test('invite is optional and exposes Continue without account',()=>{
   assert.match(entry,/Continue without account/);assert.match(entry,/continueLocal/);assert.match(entry,/enterApp\('home'\)/);
 });
 test('P0 entry uses canonical storage adapter, never raw localStorage',()=>{
