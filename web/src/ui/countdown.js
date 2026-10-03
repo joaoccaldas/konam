@@ -15,7 +15,7 @@ export function countdownText(at,mode='seconds',now=Date.now()){
 export function mountCountdown(host,event,{}={}){
   const target=countdownTarget(event);if(!host||!target)return ()=>{};
   let pref;try{pref=JSON.parse(readStorage('countdown')||'null');}catch{}
-  let mode=pref?.mode==='normal'?'normal':'seconds',zone=ZONES.some(x=>x[0]===pref?.zone)?pref.zone:'Pacific/Honolulu';
+  let mode=pref?.mode==='seconds'?'seconds':'normal',zone=ZONES.some(x=>x[0]===pref?.zone)?pref.zone:'Pacific/Honolulu';
   const output=host.querySelector('[data-countdown-value]')||host.querySelector('strong,h3');
   const controls=document.createElement('details');controls.className='kona-countdown-options';
   controls.innerHTML='<summary>Countdown options</summary><div class="ui-cluster"><button type="button" class="btn-secondary" data-clock-mode="seconds">Seconds</button><button type="button" class="btn-secondary" data-clock-mode="normal">Normal</button><label class="ui-field"><span>Show the date in</span><select class="ui-select" aria-label="Countdown timezone">'+ZONES.map(([value,label])=>'<option value="'+value+'">'+label+'</option>').join('')+'</select></label></div><p class="kona-source-note" data-clock-target></p>';
