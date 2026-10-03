@@ -15,8 +15,8 @@ const parts = {};
 for (const [id, v] of Object.entries(mod.PARTS)) if (!v.alias && v.name) parts[id] = { name: v.name, group: v.group, spec: v.spec, weight: v.weight, note: v.note };
 // the part tree resolves aliases to the part that carries the information
 for (const [id, v] of Object.entries(mod.PARTS)) if (v.alias && parts[v.alias]) parts[id] = parts[v.alias];
-const refHtml = fs.readFileSync(path.join(root, 'assets/reference/cfr/product-4524-se.html'), 'utf8');
-const locales = [...new Set([...refHtml.matchAll(/https:\/\/www\.canyon\.com\/(en-[a-z]{2})\/road-bikes\/triathlon-bikes\/speedmax\/cfr\/speedmax-cfr-axs\/4524\.html/g)].map(m => m[1]))];
+// Canyon English locales that carry this product page (derived once from Canyon's own locale alternates).
+const locales = JSON.parse(fs.readFileSync(path.join(root, 'museum/canyon-product-refs.json'), 'utf8')).locales.list;
 const c = e.comparison, spec = profile.bike.specs;
 const data = {
   glb: 'assets/museum/speedmax_web.glb', studio: e.viewer, parts, locales,

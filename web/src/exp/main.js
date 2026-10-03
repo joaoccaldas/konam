@@ -4,6 +4,7 @@ import { createStage, orbit, rail, loadSpeedmax, canyonLocale, canyonSearch, amb
 import { NIGHTS, NIGHT_LIST } from './nights.js';
 import { buildHistory } from './history.js';
 import { createPassport } from '../passport.js';
+import { deferredSrc, hydrateImages } from '../engine/dom.js';
 
 const D = window.__EXP;                                               // parts sheet, history, Canyon links (inlined by the build)
 const $ = id => document.getElementById(id);
@@ -18,7 +19,7 @@ const MODES = [...NIGHT_LIST, ['history', 'History Lane', '📜']];
 $('switch').innerHTML = MODES.map(([id, name, icon]) => `<a class="chip${id === mode ? ' on' : ''}" href="#${id}" data-id="${id}"><span>${icon}</span>${esc(name)}</a>`).join('');
 $('switch').addEventListener('click', e => { const a = e.target.closest('a'); if (!a) return; e.preventDefault(); if (a.dataset.id !== mode) { location.hash = a.dataset.id; location.reload(); } });
 $('ppBtn').onclick = () => passport.open();
-function card(html, actions = '') { $('cBody').innerHTML = html; $('cActs').innerHTML = actions; $('card').classList.add('on'); }
+function card(html, actions = '') { $('cBody').innerHTML = html; hydrateImages($('cBody')); $('cActs').innerHTML = actions; $('card').classList.add('on'); }
 $('cClose').onclick = () => $('card').classList.remove('on');
 function tutorial(key, steps) {
   try { if (localStorage.getItem(key)) return; } catch (_) { }
@@ -112,7 +113,7 @@ function runHistory() {
     passport.stamp(`history:${c.year}`, `${c.year} · ${c.title}`, 10);
     const cv = c.canvas && D.history.canvases.find(x => x.id === c.canvas);
     card(`<div class="eb">History Lane · ${esc(c.year)}</div><h2>${esc(c.title)}</h2><p>${esc(c.text)}</p>
-      ${cv ? `<figure><img src="${esc(D.history.dir)}/${esc(cv.id)}.jpg" alt="${esc(cv.caption)}"><figcaption>${esc(cv.caption)} · painted from <a href="${esc(cv.source.page)}" target="_blank" rel="noopener">© ${esc(cv.source.author)} · ${esc(cv.source.license)} ↗</a></figcaption></figure>` : ''}
+      ${cv ? `<figure><img ${deferredSrc(D.history.dir + '/' + cv.id + '.jpg')} alt="${esc(cv.caption)}"><figcaption>${esc(cv.caption)} · painted from <a href="${esc(cv.source.page)}" target="_blank" rel="noopener">© ${esc(cv.source.author)} · ${esc(cv.source.license)} ↗</a></figcaption></figure>` : ''}
       ${c.kind === 'sculpture' ? '<p class="mut">An abstract bronze tribute made for the museum — not a likeness.</p>' : ''}
       <p class="src">${c.sources.map((u, i) => `<a href="${esc(u)}" target="_blank" rel="noopener">Source ${i + 1} ↗</a>`).join(' · ')}</p>`,
       `${c.index + 1 < H.stations.length ? '<button class="btn primary" id="aNext">Walk on →</button>' : ''}`);

@@ -12,3 +12,12 @@ export function rng(seed = 1) {
 }
 // Legacy linear congruential variant (kept byte-identical to the museum's original look).
 export function rnd7() { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+// Inline bundles are parsed speculatively by the browser while the page streams.
+// A literal `<img src="${...}">` inside an inline <script> can be fetched as a real
+// URL before the script runs (404 noise, wasted requests). Templates therefore emit
+// `data-kona-src` and call hydrateImages() after insertion.
+export const deferredSrc = url => 'data-kona-src="' + esc(url) + '"';
+export function hydrateImages(root) {
+  root?.querySelectorAll?.('img[data-kona-src]').forEach(img => { img.src = img.dataset.konaSrc; img.removeAttribute('data-kona-src'); });
+  return root;
+}

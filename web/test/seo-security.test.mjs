@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const pages = fs.readdirSync(root).filter(f => f.endsWith('.html'));
+// Owner-declared public contacts (config/privacy-exceptions.json) are the only permitted addresses.
+const declared = JSON.parse(fs.readFileSync(path.join(root, 'config/privacy-exceptions.json'), 'utf8')).exceptions.filter(e => e.kind === 'personal-email');
 
 test('every published page carries security, privacy and SEO metadata', () => {
   assert.ok(pages.length >= 8);
@@ -32,7 +34,8 @@ test('every published page carries security, privacy and SEO metadata', () => {
     assert.match(page?.disambiguatingDescription||'',/Not affiliated/,f+' independence disclosure');
     assert.ok(page?.about?.some?.(x=>x.name==='Triathlon'),f+' triathlon semantic');
     assert.ok(page?.about?.some?.(x=>x.name==='IRONMAN World Championship'),f+' IRONMAN semantic');
-    assert.doesNotMatch(h, /<meta\s+[^>]*name=["']author["']|\/Users\/[a-z]+|@gmail\.com|Jo[aã]o\s+Caldas/i, f);
+    const visible = declared.filter(e => e.file === f).reduce((s, e) => s.replaceAll(e.value, 'declared-contact'), h.replace(/&#64;|&#x40;|&commat;/gi, '@'));
+    assert.doesNotMatch(visible, /<meta\s+[^>]*name=["']author["']|\/Users\/[a-z]+|@gmail\.com|Jo[aã]o\s+Caldas/i, f);
   }
 });
 

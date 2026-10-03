@@ -82,9 +82,9 @@ function archivePhoto(manifests, key) {
   return { src: r.url.replace(/\/web\/(\d+)\//, '/web/$1im_/'), credit: `Canyon studio photograph · archived ${ts ? ts.slice(0, 4) : ''} · Wayback Machine`, href: r.url };
 }
 
-function productPhoto(file, pageUrl) {
-  const html = fs.readFileSync(path.join(root, file), 'utf8');
-  const src = html.match(/<meta property="og:image" content="([^"]+)"/)?.[1];
+// og:image of each Canyon product page, derived once into museum/canyon-product-refs.json.
+function productPhoto(key, pageUrl) {
+  const src = readJson('museum/canyon-product-refs.json').product_photos[key];
   return src ? { src, credit: 'Canyon.com product photograph', href: pageUrl } : null;
 }
 
@@ -131,7 +131,7 @@ export async function assembleMuseumData() {
       note: blurb, viewer: e.viewer, glb: glb[key], finish: finish[key], thumb: e.thumbnail, flagship: true,
       stats: [[`${spec.weightKg} kg`, 'size M'], [c.gear, `${c.cassette} · 12 sp`], [c.wheels.split('·')[1].trim().replace(' mm', ''), 'mm rims']],
       parts: await modernParts(e.viewerProfile),
-      photo: productPhoto(`assets/reference/${key}/product-${key === 'cfr' ? 4524 : 4520}-se.html`, spec.source || 'https://www.canyon.com/'),
+      photo: productPhoto(key, spec.source || 'https://www.canyon.com/'),
     });
   }
 

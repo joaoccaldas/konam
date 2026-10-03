@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "policy": "Every exception is a deliberate, visible owner decision. Obfuscating a value to get past the scanner is not allowed; declare it here instead.",
+  "exceptions": [
+    {
+      "file": "promo.html",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Dedicated project contact address for Kona.m collaboration on the Field Guide. Replaces the owner's personal address, which commit 41497f7 had hidden from the guard with an HTML entity.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import {DEFAULT_AIR,STOCK,forces} from './aero.mjs';
+import {deferredSrc,hydrateImages} from './engine/dom.js';
 const bikes=window.__COLLECTION,selected=new Set(bikes.map(b=>b.key)),$=id=>document.getElementById(id),esc=s=>String(s??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),money=n=>new Intl.NumberFormat('sv-SE',{maximumFractionDigits:0}).format(n)+' SEK';let tab='overview';
 $('collection-count').textContent=`${String(bikes.filter(b=>!b.notModelled).length).padStart(2,'0')} 3D EXHIBITS · ${String(bikes.length).padStart(2,'0')} MODELS · MY2027`;
 for(const [i,b] of bikes.entries()){
@@ -7,10 +8,10 @@ for(const [i,b] of bikes.entries()){
     ?`<div class="card-actions"><span class="primary disabled">Not yet modelled</span><a class="secondary" href="https://www.canyon.com/en-se/road-bikes/triathlon-bikes/speedmax/" target="_blank" rel="noopener">View at Canyon ↗</a></div>`
     :`<div class="card-actions"><a class="primary" href="${esc(b.viewer)}">Enter 3D studio →</a><button class="secondary" data-spec="${b.key}">Full specification</button></div>`;
   const img=b.image
-    ?`<img class="bike-image" src="${b.image}" alt="${esc(b.name)} official side reference">`
+    ?`<img class="bike-image" ${deferredSrc(b.image)} alt="${esc(b.name)} official side reference">`
     :`<div class="bike-image placeholder" aria-hidden="true"><span>3D exhibit<br>coming soon</span></div>`;
   card.innerHTML=`<div class="card-top"><div><span>MY${esc(b.year||'2027')} · SIZE ${esc(b.size||'M')} · ${esc(b.series)}</span><h2>${esc(b.name)}</h2></div><div class="card-number">${String(i+1).padStart(2,'0')}</div></div>${img}<div class="card-stats"><div><b>${b.weightKg??'—'} kg</b><small>Complete bike · ${esc(b.size||'M')}</small></div><div><b>${esc(b.gear)}</b><small>Chainrings</small></div>${b.priceSEK==null?`<div><b>${esc(b.era||'Archive')}</b><small>In production</small></div>`:`<div><b>${money(b.priceSEK)}</b><small>Canyon Sweden · from</small></div>`}</div>${actions}${b.notModelled?'':`<label class="compare-check"><input type="checkbox" checked data-select="${b.key}">Compare this bike</label>`}`;
-  $('carousel').append(card);
+  $('carousel').append(hydrateImages(card));
 }
 function scroll(dir){$('carousel').scrollBy({left:dir*($('carousel').firstElementChild.getBoundingClientRect().width+22),behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});} $('previous').onclick=()=>scroll(-1);$('next').onclick=()=>scroll(1);$('carousel').onkeydown=e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();scroll(e.key==='ArrowRight'?1:-1);}};
 const specCards=items=>items.map(c=>`<article class="spec-card"><small>${esc(c.type)}</small><b>${esc(c.name)}</b><dl>${Object.entries(c.features).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></article>`).join('');
@@ -36,14 +37,14 @@ document.querySelectorAll('[data-select]').forEach(e=>e.onchange=()=>{e.checked?
 // ---- Museum wings: every bike, grouped by era ----
 const heritageSet=new Set(['speedmax-three-2005','speedmax-2007','speedmax-al-2011','speedmax-cf-2011']);
 function wingCard(b,i){
-  const img=b.image?`<img src="${b.image}" alt="${esc(b.name)} reference" loading="lazy">`:`<div class="wc-soon-img"></div>`;
+  const img=b.image?`<img ${deferredSrc(b.image)} alt="${esc(b.name)} reference" loading="lazy">`:`<div class="wc-soon-img"></div>`;
   return `<a class="wing-card${b.notModelled?' wc-soon':''}" ${b.notModelled?'':`href="${esc(b.viewer)}"`}>${img}<span class="wc-info"><h3>${esc(b.name)}</h3><small>${esc(b.era||b.series||'')}</small></span><span class="wc-go">${b.notModelled?'Coming soon':'Enter exhibit →'}</span></a>`;
 }
 if($('wing-modern-body')){
   const modern=bikes.filter(b=>!heritageSet.has(b.key||b.id)&&!b.notModelled);
   const heritage=bikes.filter(b=>heritageSet.has(b.key||b.id));
-  $('wing-modern-body').innerHTML=modern.map(wingCard).join('');
-  $('wing-heritage-body').innerHTML=heritage.map(wingCard).join('');
+  $('wing-modern-body').innerHTML=modern.map(wingCard).join('');hydrateImages($('wing-modern-body'));
+  $('wing-heritage-body').innerHTML=heritage.map(wingCard).join('');hydrateImages($('wing-heritage-body'));
 }
 // hero metrics: real counts
 (function(){const m=document.createElement('div');m.className='hero-metrics';
