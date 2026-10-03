@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
  "generated_by": "tools/build_admin_assets.mjs",
- "count": 104,
+ "count": 105,
  "rooms": [
   {
    "id": "hall",
@@ -2332,6 +2332,40 @@
     "kind": "installation",
     "floor": "#16180c",
     "accent": "#d2e06a",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "installation:norwegian-engine",
+   "kind": "installation",
+   "type": "installation",
+   "brand": "KONA World",
+   "name": "NOR // 3 · The Norwegian Engine",
+   "year": "",
+   "category": "Room installation",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "norwegian",
+     "builder"
+    ],
+    [
+     "8.6 m",
+     "min width"
+    ],
+    [
+     "4.45 m",
+     "min depth"
+    ]
+   ],
+   "locations": [],
+   "preview": {
+    "kind": "installation",
+    "floor": "#12181d",
+    "accent": "#20b8d5",
     "fog": "#0b1116"
    }
   },
