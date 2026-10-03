@@ -5,13 +5,12 @@
   "parent_room": "room-026",
   "classification": {
     "type": "athlete-room",
-    "status": "concept",
+    "status": "candidate",
     "public": false
   },
   "implementation": {
     "kind": "native-room",
-    "module": "web/src/beast-cave.js",
-    "source_branch": "product/beast-cave-native-room"
+    "module": "web/src/beast-cave.js"
   },
   "story": {
     "concept": "A room for the work nobody sees.",

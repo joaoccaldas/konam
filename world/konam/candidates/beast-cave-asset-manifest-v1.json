@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "room_id": "beast-cave",
+  "policy": "reuse-first",
+  "assets": [
+    {
+      "asset_id": "hero-bike-speedmax-cfr",
+      "kind": "bike",
+      "decision": "REUSE",
+      "source": "canonical-product-pipeline",
+      "source_ref": "museum/bike.schema.json",
+      "runtime_ref": "existing CFR GLB via PIECES",
+      "rights": "existing-canonical",
+      "lifecycle": "approved"
+    },
+    {
+      "asset_id": "trainer-study",
+      "kind": "training-equipment",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/beast-cave.js",
+      "rights": "original",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "training-screen",
+      "kind": "environment-screen",
+      "decision": "NEW",
+      "source": "procedural-canvas",
+      "source_ref": "web/src/beast-cave.js",
+      "rights": "original-no-copied-ui",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "treadmill-study",
+      "kind": "training-equipment",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/beast-cave.js",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "runtime_ref": "web/src/beast-cave.js",
+      "authoring_candidate": {
+        "generator": "blender/beast_cave_assets.py",
+        "output": "assets/rooms/beast-cave/curved-treadmill.glb",
+        "status": "candidate-authoring-only"
+      }
+    },
+    {
+      "asset_id": "pain-cave-archive",
+      "kind": "installation",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/beast-cave.js",
+      "rights": "original-interpretation",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "gear-wall",
+      "kind": "installation",
+      "decision": "COMPOSE",
+      "source": "procedural-three",
+      "source_ref": "web/src/beast-cave.js",
+      "rights": "original-unlabelled-equipment",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "recovery-corner",
+      "kind": "installation",
+      "decision": "COMPOSE",
+      "source": "procedural-three",
+      "source_ref": "web/src/beast-cave.js",
+      "rights": "original",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "sculpture-the-gap",
+      "kind": "sculpture",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/beast-cave.js",
+      "rights": "original",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "sculpture-repeat",
+      "kind": "sculpture",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/beast-cave.js",
+      "rights": "original",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "room-signage",
+      "kind": "environmental-typography",
+      "decision": "REUSE",
+      "source": "canonical-lettering-helper",
+      "source_ref": "web/src/engine/textures.js",
+      "rights": "original-copy",
+      "lifecycle": "approved"
+    },
+    {
+      "asset_id": "cooling-rig",
+      "kind": "training-equipment",
+      "decision": "ADAPT",
+      "source": "procedural-three",
+      "source_ref": "web/src/beast-cave.js",
+      "runtime_ref": "existing animated generic fan geometry",
+      "authoring_candidate": {
+        "generator": "blender/beast_cave_assets.py",
+        "output": "assets/rooms/beast-cave/industrial-fan.glb",
+        "status": "candidate-authoring-only"
+      },
+      "rights": "original",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "acoustic-wall-module",
+      "kind": "architecture-detail",
+      "decision": "NEW",
+      "source": "deterministic-blender-candidate",
+      "source_ref": "blender/beast_cave_assets.py",
+      "runtime_ref": "procedural/instanced wall treatment pending visual comparison",
+      "authoring_candidate": {
+        "output": "assets/rooms/beast-cave/acoustic-wall.glb",
+        "status": "candidate-authoring-only"
+      },
+      "rights": "original",
+      "lifecycle": "candidate"
+    }
+  ],
+  "constraints": {
+    "copied_third_party_ui": false,
+    "copied_race_photography": false,
+    "athlete_likeness": false,
+    "official_partner_marks": false,
+    "athlete_specific_equipment_claims": false
+  },
+  "authoring": {
+    "higgsfield_reference": {
+      "projects": [
+        "Kona.m Beast Cave Asset Lab"
+      ],
+      "policy": "reference-only; repository Blender generator is source of truth"
+    },
+    "generation_command": "blender -b --python blender/beast_cave_assets.py -- treadmill fan acoustic-wall"
+  }
+}
