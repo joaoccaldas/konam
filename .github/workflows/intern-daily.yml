@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: daily-intern-dispatch
@@ -52,3 +53,14 @@ jobs:
           git add integrations/companion/feed.json integrations/companion/rss.xml integrations/companion/intern-dispatch.json
           git commit -m "content: refresh daily Intern Dispatch"
           git push origin HEAD:main
+
+      - name: Certify and publish the refreshed dispatch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          for workflow in checks.yml app-seal.yml release-security.yml integration-contract.yml visual-evidence-v2.yml ui-interaction-audit.yml; do
+            gh workflow run "$workflow" --ref main
+          done
+          gh workflow run pages.yml --ref main
