@@ -1,3 +1,4 @@
+// Sealed-Breitling latest-main release certification trigger.
 // Combined About + Collection release certification trigger.
 // Latest-main release certification trigger.
 // Release certification trigger: About source, generated mirror and public metadata are validated together.
