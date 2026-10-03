@@ -36,7 +36,7 @@ test('Collectible Stage is the bounded first migrated kernel consumer',()=>{
   const pilot=inventory.migrated_consumers?.find(x=>x.path===inventory.first_pilot);
   assert.ok(pilot);
   assert.equal(pilot.renderer_authority,'web/src/render/renderer.js');
-  assert.equal(pilot.status,'pilot-review');
+  assert.equal(pilot.status,'merged');
 });
 
 test('architecture hygiene consumes the renderer inventory instead of a second hardcoded allowlist',()=>{
