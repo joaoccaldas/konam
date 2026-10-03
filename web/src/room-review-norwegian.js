@@ -187,4 +187,4 @@ setView('overview');
 loading.hidden=true;
 requestAnimationFrame(frame);
 window.__NOR3_REVIEW_READY=true;
-window.__NOR3_REVIEW_METRICS={lite,objects:room.children.length,pickables:(L.reviewPickables||[]).length,variant:'cinematic-production-v2'};
+window.__NOR3_REVIEW_METRICS={lite,objects:room.children.length,pickables:(L.reviewPickables||[]).length,variant:'cinematic-production-v3'};
