@@ -271,8 +271,8 @@ body.install-open{overflow:hidden}
 body.kona-panel-open .kona-user-menu{display:none}
 body.kona-panel-open .kona-why-global{display:none}
 .kona-user-menu i{width:22px;height:26px;background:var(--user-accent);clip-path:polygon(25% 0,75% 0,75% 35%,100% 35%,100% 80%,75% 80%,75% 100%,25% 100%,25% 80%,0 80%,0 35%,25% 35%)}
-.kona-panel-actions{display:flex;align-items:center;gap:8px}
-.kona-panel-why{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 12px;border:1px solid var(--kona-line);border-radius:999px;color:var(--kona-muted);font:750 10px/1 var(--brand-font-ui);letter-spacing:.06em;text-decoration:none;white-space:nowrap}
+.kona-panel-actions{position:relative;z-index:1301;display:flex;align-items:center;gap:8px}
+.kona-panel-why{display:inline-flex;align-items:center;justify-content:center;min-height:var(--brand-touch);padding:0 12px;border:1px solid var(--kona-line);border-radius:999px;color:var(--kona-muted);font:750 10px/1 var(--brand-font-ui);letter-spacing:.06em;text-decoration:none;white-space:nowrap}
 @media(max-width:420px){.kona-panel-why{padding-inline:9px;font-size:9px}}
 /* Global escape invariant: User Studio and Why Kona remain reachable from the app and loaded world. */
 
