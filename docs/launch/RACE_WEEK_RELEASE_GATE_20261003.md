@@ -125,3 +125,12 @@ Before an Apple submission:
 Do not write “100% App Store approved”, “all tests passed”, “secure”, or “production ready” until the corresponding external review or exact-SHA evidence exists.
 
 The quality target is stronger: every public claim should have a reproducible artifact behind it.
+
+## Editorial + runtime hardening checkpoint
+
+- [x] Why / About / Origin / Field Guide are independent editorial authorities.
+- [x] Intern Dispatch is source-grounded and exposes the public project inbox only through declared privacy exceptions.
+- [x] Direct bike viewers stream canonical GLBs instead of Base64-inlining model bytes.
+- [x] Main hall releases GPU resources on page exit; 2D shell transitions retain the cheaper pause/resume path.
+- [x] Single-destination persistent navigation is suppressed; desktop navigation uses a compact dock.
+- [x] Generated HTML, app bundle, service-worker manifest and machine-readable pages rebuilt from one branch state before certification.
