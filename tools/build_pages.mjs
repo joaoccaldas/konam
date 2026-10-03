@@ -27,6 +27,12 @@ execFileSync(process.execPath,[path.join(root,'tools/harden_pages.mjs')],{cwd:ro
 const dist = path.join(root, 'web/dist');
 for (const f of fs.readdirSync(dist).filter(f => f.endsWith('.html'))) {
   const src = path.join(root, f === 'index.html' ? 'Canyon_Collection.html' : f);
-  if (fs.existsSync(src)) fs.copyFileSync(src, path.join(dist, f));
+  if (fs.existsSync(src)) {
+    let html=fs.readFileSync(src,'utf8');
+    // Direct viewers load canonical GLBs by URL. web/dist is two levels below root,
+    // so preserve legacy dist usability by rebasing only the generated GLB URL.
+    html=html.replace(/window\.__SPEEDMAX_GLB_URL="(?!https?:|\/)([^"]+)"/,(_,url)=>'window.__SPEEDMAX_GLB_URL="'+path.posix.join('../..',url)+'"');
+    fs.writeFileSync(path.join(dist,f),html);
+  }
 }
 console.log('mirror       web/dist ←', fs.readdirSync(dist).filter(f => f.endsWith('.html')).length, 'hardened pages');
