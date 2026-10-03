@@ -105,10 +105,12 @@ jobs:
         run: |
           bash tools/stage_site.sh
 
-      - name: Leak guard (no local paths, private emails, keys or saved third-party pages)
+      - name: Leak guard (canonical privacy scanner + third-party residue)
         run: |
-          if grep -rIlE '/Users/[a-z]+|/home/[a-z]+/|[A-Za-z0-9._%+-]{1,64}@(gmail|hotmail|outlook|icloud|yahoo)\.com|(^|[^A-Za-z0-9+/])(sk-[A-Za-z0-9]{20,80}|ghp_[A-Za-z0-9]{30,80}|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{35})([^A-Za-z0-9+/]|$)|demandware|cloudflareinsights' _site; then
-            echo "::error::private or third-party content in the published site"; exit 1; fi
+          node tools/scan_public_surface.mjs _site
+          if grep -rIlE 'demandware|cloudflareinsights' _site; then
+            echo "::error::saved third-party page residue in the published site"; exit 1
+          fi
           du -sh _site
 
       - name: Upload Pages artifact
