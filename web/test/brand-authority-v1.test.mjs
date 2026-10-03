@@ -38,8 +38,8 @@ test('typography roles remain canonical',()=>{
 });
 
 test('design-system documentation does not drift from runtime authority',()=>{
-  assert.match(design,/accent: #ff6a00/i);
-  assert.match(design,/cyan\/info: #00a7c7/i);
+  assert.match(design,/accent(?:\/action)?: #ff6a00/i);
+  assert.match(design,/cyan\/info(?:\/discovery)?: #00a7c7/i);
   assert.match(design,/Minimum touch target: 48 px/i);
   assert.match(design,/Race the version of yourself you haven't met yet\./);
 });
