@@ -95,3 +95,12 @@ test('Three.js runtime does not use the removed PCFSoftShadowMap constant', () =
   const src = files.map(f => fs.readFileSync(path.join(root, 'web/src', f), 'utf8')).join('\n');
   assert.doesNotMatch(src, /PCFSoftShadowMap/);
 });
+
+test('every page that declares the Apple web-app tag also declares the standard one', () => {
+  // Chrome flags apple-mobile-web-app-capable alone as deprecated; older iOS still reads it.
+  const root = new URL('../../', import.meta.url);
+  for (const f of ['web/landing.template.html', 'web/studio.template.html', 'index.html', 'Studio.html']) {
+    const h = fs.readFileSync(new URL(f, root), 'utf8');
+    if (/name="apple-mobile-web-app-capable"/.test(h)) assert.match(h, /<meta name="mobile-web-app-capable" content="yes">/, f);
+  }
+});
