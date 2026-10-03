@@ -1,5 +1,5 @@
 {
- "version": "7a5b80e216a3",
+ "version": "0434fdef8485",
  "core": [
   "index.html",
   "about.html",
@@ -49,7 +49,7 @@
   "integrations/public-catalog.json": "W1xJL5pT+cwjQLj4y9Kg7X4JorCf+4XAF8AHKzF5CuU=",
   "manifest.webmanifest": "D80RDjSyU/ENx8num4CsbgCHG48x8J4k6F4pT2ANlUA=",
   "web/styles/entry.css": "cyH/Cr+qIZV0iQ4w2xVi6JVlGl42uiRdSIPJDONNbvI=",
-  "web/styles/system.css": "WIEJ91RROdkeKFPtvjSInLtSjZ+ksIZdiJq1UCSm5p4=",
+  "web/styles/system.css": "EtpQH7PwHhojSmXJGw/C/D/DRjUieJk6BizKA5qEtvY=",
   "web/styles/shell-mobile.css": "kt5DBDeglxFiMu2rTibzPhjqMWwMJKLRIMP5DSw+/Sg=",
   "web/styles/home.css": "M2QUd913oyU1YuRybHiuaPh6VSJUEJninKnS85efSig=",
   "web/styles/garage.css": "wm+HmyfZlvpb01WwKcB91XvG88Q8exKaG0hW8k70Xss=",
