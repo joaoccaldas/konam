@@ -1,5 +1,5 @@
 {
- "version": "76ea09f469fc",
+ "version": "2c992c71c5dd",
  "core": [
   "index.html",
   "about.html",
@@ -35,12 +35,12 @@
  ],
  "files": {
   "index.html": "YPvqcEqQKh3kI5Eyjh4AJiwOcwkoyA/8fMBySgFFVrI=",
-  "about.html": "8ZhywOcqB2httbhf6c6yrMe/l8h5poeGULL8CebnI7w=",
+  "about.html": "uVq0cJSjToVB+QzMWIUuH2ZlL0eFvKefn5SKMDklrJc=",
   "credits.html": "oKwMWdw6p5K/d9xLgcuZWryResUAIp8/uqUOomRfX48=",
   "privacy.html": "yeVU/xhIdZQrVBZmjhdSSgQPfhQ2Eh2jBfmNOKVli4E=",
   "web/src/promo.js": "IB/RDbIYaaLrH//MZpZOccxPX1odHbhu4WThfi6ExkE=",
   "web/src/site-analytics.js": "pzSG7M+mEc8nLM4/jgJprdzwvOtYeyfwt09adByLI0U=",
-  "web/styles/promo.css": "BUNcb1nIZCO/pi5l7BPWXBinT5TS6i0M+kAvTuNSPrI=",
+  "web/styles/promo.css": "ZzWBYuRKEtbNPYteP2tHQxi0sdR2byYOJw4TIbhcWqg=",
   "app/viewport.js": "s84yeQXxX9xSWnlj+1xuK84iotaJzl1NKMWjShrB2F0=",
   "app/kona-core.js": "+y6Jp8yv+5PBIxvHa/IHcTK+SP2ZOMrdw4Qzp34OvVY=",
   "app/entry-data.json": "u70GqhCPsNX6TZI4LhPBmxQkdjHsA1534QN/mMdyufU=",
@@ -95,7 +95,7 @@
   "Speedmax_SLX_Museum.html": "7cZRJjPE+tbiGubxi0NiZAxfEoNVRFB3mPynYJA7Xo4=",
   "Speedmax_Three_2005_Museum.html": "5TqrTGBOJ1BGZx35D9FF51IRfduiKVpxJzK1c52tCZo=",
   "Studio.html": "1TmR0oU1KVq2rte4z8jozfTtWVEvQLoQB7i7N9s8U9U=",
-  "promo.html": "QD3fBXOknHk4Jagqnjnk3jlnEMmchNZlk/drSCukpDc=",
+  "promo.html": "IuNRTaBYoYRRSjOwKJ6mxe3ZGV4H2+GDhxsnXjDcJGM=",
   "why.html": "MNHoNL/v649AK53aMIYvlNGl2ZrPftQ0wa2INv41xgs=",
   "assets/art/paintings/builders-bench.jpg": "AYYSF1BMlgQJodQ0jhQyrPoDM/VWMje/TnPEjvBVAoA=",
   "assets/art/paintings/crosswind.jpg": "6to32GpQsK0TRot+06sdVSc6asouaIiOKRxxCxZ1dXg=",
