@@ -38,7 +38,13 @@
       "source": "procedural-three",
       "source_ref": "web/src/beast-cave.js",
       "rights": "original",
-      "lifecycle": "candidate"
+      "lifecycle": "candidate",
+      "runtime_ref": "web/src/beast-cave.js",
+      "authoring_candidate": {
+        "generator": "blender/beast_cave_assets.py",
+        "output": "assets/rooms/beast-cave/curved-treadmill.glb",
+        "status": "candidate-authoring-only"
+      }
     },
     {
       "asset_id": "pain-cave-archive",
@@ -93,6 +99,35 @@
       "source_ref": "web/src/engine/textures.js",
       "rights": "original-copy",
       "lifecycle": "approved"
+    },
+    {
+      "asset_id": "cooling-rig",
+      "kind": "training-equipment",
+      "decision": "ADAPT",
+      "source": "procedural-three",
+      "source_ref": "web/src/beast-cave.js",
+      "runtime_ref": "existing animated generic fan geometry",
+      "authoring_candidate": {
+        "generator": "blender/beast_cave_assets.py",
+        "output": "assets/rooms/beast-cave/industrial-fan.glb",
+        "status": "candidate-authoring-only"
+      },
+      "rights": "original",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "acoustic-wall-module",
+      "kind": "architecture-detail",
+      "decision": "NEW",
+      "source": "deterministic-blender-candidate",
+      "source_ref": "blender/beast_cave_assets.py",
+      "runtime_ref": "procedural/instanced wall treatment pending visual comparison",
+      "authoring_candidate": {
+        "output": "assets/rooms/beast-cave/acoustic-wall.glb",
+        "status": "candidate-authoring-only"
+      },
+      "rights": "original",
+      "lifecycle": "candidate"
     }
   ],
   "constraints": {
@@ -101,5 +136,14 @@
     "athlete_likeness": false,
     "official_partner_marks": false,
     "athlete_specific_equipment_claims": false
+  },
+  "authoring": {
+    "higgsfield_reference": {
+      "projects": [
+        "Kona.m Beast Cave Asset Lab"
+      ],
+      "policy": "reference-only; repository Blender generator is source of truth"
+    },
+    "generation_command": "blender -b --python blender/beast_cave_assets.py -- treadmill fan acoustic-wall"
   }
 }
