@@ -36,7 +36,7 @@ Not stored:
 - free-text feedback
 - precise location
 
-The Edge Function may inspect the forwarded IP transiently for in-memory rate limiting. It does not write the IP.
+The Edge Function may inspect the forwarded IP transiently for in-memory rate limiting. It does not write the IP. A database cron job deletes analytics events after 30 days.
 
 ## Interpretation
 
