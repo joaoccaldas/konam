@@ -48,7 +48,7 @@ const paths={
  race:{title:'You have a race.',copy:'Good. Start with your athlete, add the race, then use Plan for the serious bits. Visit Discover when your brain needs to remember why endurance sport is fun.',cta:'Build my athlete',href:'./'},
  dream:{title:'You are dreaming of Kona.',copy:'Excellent. No qualification paperwork required here. Start in Discover, visit Kona, collect something unnecessary, then build the version of yourself who might go there one day.',cta:'Start dreaming',href:'./'},
  bikes:{title:'You came for the bikes.',copy:'Correct answer according to the intern. Go straight to the Garage or museum. Rotate everything. Form strong opinions about equipment you may not own.',cta:'Show me bikes',href:'Canyon_Collection.html'},
- wander:{title:'No idea is a valid plan.',copy:'Enter Kona.m and click whatever has the most suspicious label. If confused, Home will recover you. If still confused, the intern probably shipped something late at night.',cta:'Drop me in',href:'./'}
+ wander:{title:'No idea is a valid plan.',copy:'Enter Kona.m and click whatever has the most suspicious label. If you lose the thread, Home will get you back to the useful bits.',cta:'Drop me in',href:'./'}
 };
 qsa('[data-path]').forEach(b=>b.addEventListener('click',()=>{
   const d=paths[b.dataset.path], out=qs('[data-onboarding-result]'); if(!d||!out)return;
