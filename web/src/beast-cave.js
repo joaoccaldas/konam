@@ -3,6 +3,8 @@
 // shared renderer, camera, cards, pickables, obstacles, map, route, quality and loading.
 import * as THREE from 'three';
 
+const seededRandom=(seed=0xB34C)=>()=>((seed=Math.imul(seed^seed>>>15,1|seed))^seed+Math.imul(seed^seed>>>7,61|seed))>>>0)/4294967296;
+
 export const BROOM = { x0: 7.35, x1: 35.35, z0: -4.0, z1: -26.0, h: 5.4 };
 export const BDOOR = { z0: -12.2, z1: -9.0, h: 3.4 };
 
@@ -25,8 +27,9 @@ export function buildBeastCave(ctx) {
   floor.position.set(CX,-.08,CZ); floor.receiveShadow=true; floor.userData.floor=true; group.add(floor); pickables.push(floor);
 
   const concrete = canvasTex(512,512,(g,w,h)=>{
+    const rand=seededRandom();
     g.fillStyle='#312d2a';g.fillRect(0,0,w,h);
-    for(let i=0;i<1700;i++){const v=52+Math.random()*35;g.fillStyle=`rgba(${v},${v-3},${v-6},${.04+Math.random()*.08})`;g.fillRect(Math.random()*w,Math.random()*h,1+Math.random()*2,1+Math.random()*2);}
+    for(let i=0;i<1700;i++){const v=52+rand()*35;g.fillStyle=`rgba(${v},${v-3},${v-6},${.04+rand()*.08})`;g.fillRect(rand()*w,rand()*h,1+rand()*2,1+rand()*2);}
     g.strokeStyle='rgba(235,220,205,.035)';for(let y=90;y<h;y+=120){g.beginPath();g.moveTo(0,y);g.lineTo(w,y+8);g.stroke();}
   },[6,4]);
   const wallMat = new THREE.MeshStandardMaterial({map:concrete,color:'#5b524c',roughness:.93,envMapIntensity:.28});
