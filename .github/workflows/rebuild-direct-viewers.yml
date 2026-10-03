@@ -1,35 +1,38 @@
-name: Rebuild streamed direct viewers
+name: Rebuild branch artifacts
 
 on:
   push:
     branches:
       - editorial/split-why-about-origin-field-guide
     paths:
-      - web/build.mjs
-      - web/build_heritage.mjs
-      - web/index.template.html
-      - web/heritage.template.html
-      - web/src/main.js
-      - web/src/heritage.js
-      - tools/rebuild_direct_viewers.mjs
-      - .github/workflows/rebuild-direct-viewers.yml
+      - 'why.html'
+      - 'about.html'
+      - 'origin.html'
+      - 'promo.html'
+      - 'web/**'
+      - 'tools/**'
+      - 'integrations/companion/**'
+      - 'config/**'
+      - '.github/workflows/rebuild-direct-viewers.yml'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: streamed-direct-viewers-${{ github.ref }}
+  group: editorial-branch-artifacts
   cancel-in-progress: true
 
 jobs:
   rebuild:
+    if: github.event_name == 'workflow_dispatch' || !startsWith(github.event.head_commit.message, 'build: regenerate branch artifacts')
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
           ref: editorial/split-why-about-origin-field-guide
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -38,26 +41,30 @@ jobs:
       - name: Install web build dependencies
         run: npm ci --ignore-scripts
         working-directory: web
-      - name: Rebuild six direct viewers from canonical GLBs
-        run: node tools/rebuild_direct_viewers.mjs
-      - name: Re-seal offline manifest
-        run: node tools/build_app.mjs
-      - name: Verify GLBs are external and manifest-backed
+      - name: Build, validate and commit the latest branch source
         run: |
-          ! grep -q 'window.__SPEEDMAX_GLB="' Speedmax_*Museum.html
-          grep -q 'window.__SPEEDMAX_GLB_URL=' Speedmax_Museum.html
-          grep -q 'assets/museum/speedmax_web.glb' app/app-manifest.json
-          grep -q 'assets/heritage/speedmax-2007/speedmax_web.glb' app/app-manifest.json
-      - name: Commit generated viewer artifacts
-        run: |
-          if git diff --quiet -- Speedmax_*Museum.html app/app-manifest.json sw.js sitemap.xml llms.txt llms-full.txt; then
-            echo 'Generated viewers already current.'
-            exit 0
-          fi
-          git config user.name 'Kona.m Build'
-          git config user.email 'actions@users.noreply.github.com'
-          git add Speedmax_*Museum.html app/app-manifest.json sw.js sitemap.xml llms.txt llms-full.txt
-          git commit -m 'build: regenerate streamed direct viewers'
-          git fetch origin editorial/split-why-about-origin-field-guide
-          git rebase origin/editorial/split-why-about-origin-field-guide
-          git push origin HEAD:editorial/split-why-about-origin-field-guide
+          set -euo pipefail
+          BRANCH='editorial/split-why-about-origin-field-guide'
+          for attempt in 1 2 3; do
+            git fetch origin "$BRANCH"
+            git reset --hard "origin/$BRANCH"
+            node tools/build_pages.mjs
+            node tools/rebuild_direct_viewers.mjs
+            node tools/build_app.mjs
+            bash tools/stage_site.sh
+            git add -- '*.html' 'web/dist/*.html' app sw.js sitemap.xml robots.txt llms.txt llms-full.txt \
+              museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json integrations/triathlon-graph.json \
+              integrations/companion/travel.json integrations/companion/intern-dispatch.json docs/ROOMS.md
+            if git diff --cached --quiet; then
+              echo 'Generated artifacts already current.'
+              exit 0
+            fi
+            git config user.name 'Kona.m Build'
+            git config user.email 'actions@users.noreply.github.com'
+            git commit -m 'build: regenerate branch artifacts'
+            if git push origin "HEAD:$BRANCH"; then exit 0; fi
+            echo "Branch advanced during build; retrying from latest source ($attempt/3)."
+            sleep 2
+          done
+          echo 'Could not publish generated artifacts after three attempts.' >&2
+          exit 1
