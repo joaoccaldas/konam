@@ -60,7 +60,11 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     const shown=new Set(visible);
     shell.querySelectorAll('[data-tab]').forEach(button=>{button.hidden=!shown.has(button.dataset.tab);});
     const nav=shell.querySelector('.kona-bottom-nav');
-    nav?.style.setProperty('--nav-count',String(Math.max(1,visible.length)));
+    if(nav){
+      nav.style.setProperty('--nav-count',String(Math.max(1,visible.length)));
+      nav.hidden=visible.length<2;
+      nav.dataset.destinationCount=String(visible.length);
+    }
     const studio=shell.querySelector('[data-user-studio]');
     if(studio)studio.hidden=!shown.has('me')&&!accessContext.admin;
     return visible;
