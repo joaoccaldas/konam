@@ -7,11 +7,11 @@ const launchArgs=process.env.CI?['--no-sandbox','--disable-dev-shm-usage','--use
 const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:launchArgs});
 const report={};
 try{
- const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.setBypassServiceWorker(true);await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+ const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.setBypassServiceWorker(true);await page.evaluateOnNewDocument(()=>{localStorage.setItem('kona.raceIdentity.v1',JSON.stringify({entity_type:'race-identity',event_id:'kona-2026',goal:{label:'Stress test'}}));localStorage.setItem('kona.onboarding.v1','seen');});await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
  const cdp=await page.createCDPSession();await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
  let start=Date.now();await page.goto(base,{waitUntil:'networkidle0'});report.entryReady4xCPUms=Date.now()-start;
  const before=await page.evaluate(()=>performance.getEntriesByType('resource').filter(r=>/\.glb|race-self-stage|hall\.js/.test(r.name)).length);assert.equal(before,0);
- start=Date.now();await page.click('#buildSelf');await page.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);report.studioReady4xCPUms=Date.now()-start;
+ start=Date.now();await page.click('#buildSelf');await page.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden);await page.evaluate(()=>window.__konaShell.me());await page.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);report.studioReady4xCPUms=Date.now()-start;
  await cdp.send('Emulation.setCPUThrottlingRate',{rate:1});
  for(let i=0;i<20;i++){
   await page.evaluate(()=>window.__konaShell.plan());await page.evaluate(()=>window.__konaShell.me());
