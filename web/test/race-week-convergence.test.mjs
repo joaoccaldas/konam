@@ -31,7 +31,7 @@ test('return feedback is one-tap, rewarded and never stores free text',()=>{
   const engine=read('web/src/engine/return-journey.js');
   const ui=read('web/src/ui/return-journey.js');
   const progression=JSON.parse(read('museum/game/progression-v2.json'));
-  assert.match(engine,/visits>=2&&!s\.raceWeekFeedbackAsked/);
+  assert.match(engine,/visits>=4&&!s\.raceWeekFeedbackAsked/);
   assert.match(ui,/FEEDBACK_RESPONSE/);
   assert.match(ui,/feedback_useful_yes/);
   assert.match(ui,/feedback_useful_no/);
