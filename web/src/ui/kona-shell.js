@@ -36,7 +36,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   const shell=document.createElement('div'); shell.id='konaShell';
   shell.innerHTML=
     '<a class="kona-why-global" href="why.html" aria-label="Read Why Kona">Why Kona</a>'+ 
-    '<button type="button" class="kona-user-menu" data-user-studio aria-label="Open User Studio" title="User Studio"><i></i><span>Studio</span></button>'+
+    '<button type="button" class="kona-user-menu" data-user-studio aria-label="Open User Studio" title="User Studio"><i></i><span>Me</span></button>'+
     '<div id="konaPanel" class="kona-panel" hidden>'+
       `<div class="kona-panel-head"><div><small id="konaPanelEyebrow">${PRODUCT_NAME} · BETA</small><h2 id="konaPanelTitle">Now</h2></div><div class="kona-panel-actions"><a class="kona-panel-why" href="why.html">Why Kona</a><button id="konaPanelClose" type="button" aria-label="Close">×</button></div></div>`+
       '<div id="konaPanelBody" class="kona-panel-body"></div>'+
@@ -59,6 +59,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
 
   let body=shell.querySelector('#konaPanelBody');
   const panel=shell.querySelector('#konaPanel'), title=shell.querySelector('#konaPanelTitle'), eyebrow=shell.querySelector('#konaPanelEyebrow');
+  let companionReturn=null;
   const accessContext={admin:false};
   globalThis.__konaAccess=accessContext;
   const accessReady=currentUser().then(user=>{accessContext.admin=isAdminUser(user);return accessContext;}).catch(()=>accessContext);
@@ -153,7 +154,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     panel.scrollTop=0;
   };
   const close=()=>{routeToken++;surpriseLayer.close();leaveRaceSelf();panel.hidden=true;document.body.classList.remove('kona-panel-open');setActive(document.body.classList.contains('walking')?'explore':'');};
-  shell.querySelector('#konaPanelClose').onclick=()=>panel.classList.contains('companion-panel')?raceSelf():close();
+  shell.querySelector('#konaPanelClose').onclick=()=>panel.classList.contains('companion-panel')?(companionReturn||raceSelf)():close();
 
   async function now(){
     await accessReady;
@@ -216,9 +217,10 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(request!==studioRequest)return;
     title.textContent=view==='feed'?'The Feed':'Travel to Kona';eyebrow.textContent=`${PRODUCT_NAME} · EXPLORE MORE`;
     panel.hidden=false;panel.classList.add('companion-panel');panel.scrollTop=0;
-    document.body.classList.add('kona-panel-open');setActive('discover');
+    document.body.classList.add('kona-panel-open');setActive(view==='feed'?'home':'plan');
     const back=origin==='home'?now:raceSelf;
     const backLabel=origin==='home'?'Now':'User Studio';
+    companionReturn=back;
     disposeStudio=(view==='feed'?renderFeed:renderTravel)(body,{back,backLabel});
   }
   const feed=(origin='studio')=>companion('feed',origin),travel=(origin='studio')=>companion('travel',origin);
@@ -227,7 +229,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('',null);
     if(request!==studioRequest)return;
-    title.textContent='Collection'; eyebrow.textContent=`${PRODUCT_NAME} · CARDS & ITEMS`;
+    title.textContent='Finds'; eyebrow.textContent=`${PRODUCT_NAME} · STORY COLLECTIBLES`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('');
     disposeStudio=await renderCollectionSurface(body,{admin:accessContext.admin,onBack:raceSelf});
   }
