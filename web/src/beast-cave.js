@@ -3,7 +3,7 @@
 // shared renderer, camera, cards, pickables, obstacles, map, route, quality and loading.
 import * as THREE from 'three';
 
-const seededRandom=(seed=0xB34C)=>()=>((seed=Math.imul(seed^seed>>>15,1|seed))^seed+Math.imul(seed^seed>>>7,61|seed))>>>0)/4294967296;
+const seededRandom=(seed=0xB34C)=>()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};
 
 export const BROOM = { x0: 7.35, x1: 35.35, z0: -4.0, z1: -26.0, h: 5.4 };
 export const BDOOR = { z0: -12.2, z1: -9.0, h: 3.4 };
