@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-03T09:35:00Z",
+  "feed_checked_at": "2026-10-01T08:21:05.948Z",
+  "headline": "The athletes have the microphone today.",
+  "dek": "I checked 135 source items across 9 feeds. 9/9 sources reported healthy at the last refresh. These are the things I would open first, not invented summaries.",
+  "source_policy": "Titles, publishers, timestamps and links come from the source feed. Intern commentary is clearly separated and never replaces the original reporting.",
+  "watch": [
+    {
+      "title": "Hawaii County Weather Forecast for October 01, 2026",
+      "url": "https://bigislandnow.com/2026/09/30/hawaii-county-weather-forecast-for-october-01-2026/",
+      "published_at": "2026-10-01T06:30:13.000Z",
+      "kind": "kona",
+      "source": "Big Island Now",
+      "source_status": "ok",
+      "intern_note": "Island desk. Useful context if you are in Kona, arriving soon or wondering what is changing around race week."
+    },
+    {
+      "title": "2026 IRONMAN Foundation Laulima Auction is Live, Features 3 Kona Slots and More",
+      "url": "https://www.slowtwitch.com/triathlon/2026-ironman-foundation-laulima-auction-is-live-features-3-kona-slots-and-more/",
+      "published_at": "2026-09-30T23:46:30.000Z",
+      "kind": "news",
+      "source": "Slowtwitch",
+      "source_status": "ok",
+      "intern_note": "Race desk. Open the original reporting for the full context."
+    },
+    {
+      "title": "The World Championship Camp",
+      "url": "https://www.youtube.com/watch?v=31ND8Kzvulc",
+      "published_at": "2026-09-29T12:00:07.000Z",
+      "kind": "video",
+      "source": "Lucy Charles-Barclay",
+      "source_status": "ok",
+      "intern_note": "Athlete camera. Watch the original before deciding what it means."
+    },
+    {
+      "title": "Hawaii County Surf Forecast for October 01, 2026",
+      "url": "https://bigislandnow.com/2026/09/30/hawaii-county-surf-forecast-for-october-01-2026/",
+      "published_at": "2026-10-01T06:00:07.000Z",
+      "kind": "kona",
+      "source": "Big Island Now",
+      "source_status": "ok",
+      "intern_note": "Island desk. Useful context if you are in Kona, arriving soon or wondering what is changing around race week."
+    },
+    {
+      "title": "UPDATE: North Kohala police station phone lines now operational",
+      "url": "https://bigislandnow.com/2026/09/30/north-kohala-police-station-phone-lines-down/",
+      "published_at": "2026-10-01T02:05:00.000Z",
+      "kind": "kona",
+      "source": "Big Island Now",
+      "source_status": "ok",
+      "intern_note": "Island desk. Useful context if you are in Kona, arriving soon or wondering what is changing around race week."
+    },
+    {
+      "title": "UPDATE: Police report Highway 11 open to all traffic near 111-mile marker",
+      "url": "https://bigislandnow.com/2026/09/30/police-motorists-advised-to-avoid-portion-of-highway-11-in/",
+      "published_at": "2026-10-01T00:39:30.000Z",
+      "kind": "kona",
+      "source": "Big Island Now",
+      "source_status": "ok",
+      "intern_note": "Island desk. Useful context if you are in Kona, arriving soon or wondering what is changing around race week."
+    }
+  ],
+  "build_notes": [
+    {
+      "id": "editorial-boundaries",
+      "status": "working",
+      "title": "Four pages were doing one job badly.",
+      "body": "Why, About, Origin and the Field Guide had become one braided explanation. I am separating them so the product can explain itself before the archaeology begins."
+    },
+    {
+      "id": "mobile-editorial",
+      "status": "working",
+      "title": "The words were losing fights with the layout.",
+      "body": "On smaller screens, editorial copy was competing with fixed chrome and imagery. The new rule is simple: body text gets its own flow and never depends on sitting over a picture."
+    },
+    {
+      "id": "voice-vs-facts",
+      "status": "watching",
+      "title": "Having a voice without inventing the news.",
+      "body": "The Feed stays source-grounded. I can point, connect dots and admit what I find interesting, but factual claims still belong to the publisher, timestamp and source link beside them."
+    }
+  ],
+  "contact": "konamundo@gmail.com"
+}
