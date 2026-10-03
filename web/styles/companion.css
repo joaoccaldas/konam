@@ -28,6 +28,8 @@
 .companion-story h4{font:400 27px/1.12 var(--brand-font-editorial);margin:8px 0 10px;overflow-wrap:anywhere}
 .companion-story h4 a{display:block;min-height:48px}
 .companion-story small,.companion-meta{font:550 11px/1.6 var(--brand-font-ui);color:var(--brand-muted);margin:0}
+.companion-intern{margin:10px 0 12px;padding-left:12px;border-left:2px solid var(--brand-personality);font:500 16px/1.45 var(--brand-font-hand);color:var(--brand-ink)}
+.companion-intern small{display:block;margin-bottom:4px;font:700 9px/1.4 var(--brand-font-data);letter-spacing:.12em;color:var(--brand-muted)}
 .companion-thumbnail{align-self:start;display:block;position:relative;background:var(--brand-ink);aspect-ratio:4/3;overflow:hidden}
 .companion-thumbnail img{display:block;width:100%;height:100%;object-fit:cover}
 .companion-thumbnail span{position:absolute;inset:auto 0 0;padding:7px;background:var(--brand-ink);color:var(--brand-bg);font:650 10px/1.4 var(--brand-font-ui)}
