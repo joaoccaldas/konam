@@ -81,13 +81,34 @@ A user must be able to understand, personalize and navigate the core app without
 
 ## About/company story
 
-The public About surface may explain the origin through three depths:
+The public About surface is the full Field Guide plus company/project history. It may explain the origin through three depths:
 
 - Short
 - Scenic Route
 - Unfiltered / ADHD
 
 The story stays anonymous on the frontend. It can be personal in voice without identifying the builder by name.
+
+Content authority:
+- `content/company-history.json` owns the stable public history phases and principles.
+- `promo.html` is the rich Field Guide surface.
+- `about.html` is generated from `promo.html` by `tools/build_about_company.mjs`; do not maintain a second hand-edited copy.
+- `tools/build_public_story.mjs` injects the machine-readable history and tutorial-film map into the Field Guide before hardening.
+
+## Tutorial film rule
+
+`content/tutorial-video-suite.json` defines the nine-part tutorial film map.
+
+Tutorial films are optional depth, not first-session gates:
+
+- value before tutorial
+- no autoplay audio
+- always skippable
+- keep each film at or below 15 seconds unless there is a documented reason
+- do not render a play control until the repository contains the verified binary asset
+- company/origin films explain meaning; walkthrough films explain tasks; island films explain place/context
+
+The first session must still work if every film fails to load.
 
 ## Launch decision rule
 
