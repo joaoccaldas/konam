@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - launch/public-surface-certification-20261002
+      - refactor/nor3-review-validation-v1
   workflow_dispatch:
 
 permissions:
