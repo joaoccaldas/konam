@@ -2,7 +2,8 @@ import puppeteer from 'puppeteer-core';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const base=(process.argv[2]||'http://127.0.0.1:8744/_site/').replace(/\/?$/,'/');
-const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--use-angle=metal']});
+const launchArgs=process.env.CI?['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']:['--use-angle=metal'];
+const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:launchArgs});
 const report={};
 try{
  const p=await browser.newPage();await p.setViewport({width:390,height:844});const bad=[];p.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)bad.push(r.url())});
