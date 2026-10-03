@@ -99,5 +99,5 @@ test('Now tab routes to Home behavior and Admin Assets stays a generated, Me-onl
 
 test('visual evidence covers launch, companion and museum-return states across Random mode',()=>{
   assert.match(visual,/\['light','dark','random'\]/);
-  for(const view of ['landing','sign-in','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','bike-studio']) assert.match(visual,new RegExp(view));
+  for(const view of ['landing','onboarding-profile','avatar-registration','install-handoff','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','bike-studio']) assert.match(visual,new RegExp(view));
 });
