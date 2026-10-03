@@ -101,14 +101,32 @@ export function buildBeastCave(ctx) {
   screen.rotation.y=-Math.PI/2;screen.position.set(BROOM.x1-.02,3.0,-13.5);group.add(screen);
   info(screen,'SCIENCE LAB','Control the variables.','Data · repeatability · heat','A controlled room makes the work measurable. The display is an original KONA.m training visualization, not a copied Zwift screen.');
 
-  // treadmill / run station
+  // treadmill / run station — original curved-slat study, kept procedural until the
+  // deterministic Blender candidate proves a material visual/performance advantage.
   const treadmill=new THREE.Group();treadmill.position.set(25.2,0,-18.7);treadmill.rotation.y=-Math.PI/2;group.add(treadmill);
-  const deck=new THREE.Mesh(new THREE.BoxGeometry(2.9,.18,.86),dark);deck.position.set(0,.15,0);treadmill.add(deck);
-  for(const x of [-1.2,1.2]){const r=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.7,24),steel);r.rotation.x=Math.PI/2;r.position.set(x,.21,0);treadmill.add(r);}
-  for(const z of [-.39,.39]){const p=new THREE.Mesh(new THREE.BoxGeometry(.09,1.3,.09),steel);p.position.set(.92,.83,z);p.rotation.z=-.15;treadmill.add(p);}
-  const console=new THREE.Mesh(new THREE.BoxGeometry(.5,.32,.78),dark);console.position.set(.73,1.56,0);treadmill.add(console);
-  info(console,'RUN LAB','Same cave, different suffering.','Run · form · repeat','The run station keeps the training loop inside one environment. The current treadmill is a KONA.m geometry study and will be replaced by a sourced production asset.');
+  const slatGeo=new THREE.BoxGeometry(.105,.07,.78),slatCount=28;
+  const slats=new THREE.InstancedMesh(slatGeo,rubber,slatCount),slatDummy=new THREE.Object3D();
+  for(let i=0;i<slatCount;i++){
+    const x=-1.45+i*(2.9/(slatCount-1)),curve=.17+.23*Math.pow(Math.abs(x)/1.45,2);
+    slatDummy.position.set(x,curve,0);slatDummy.rotation.set(0,0,-.28*(x/1.45));slatDummy.updateMatrix();slats.setMatrixAt(i,slatDummy.matrix);
+  }
+  slats.instanceMatrix.needsUpdate=true;treadmill.add(slats);
+  for(const z of [-.43,.43])for(const x of [-1.25,1.0]){const p=new THREE.Mesh(new THREE.BoxGeometry(.11,1.44,.11),steel);p.position.set(x,.82,z);p.rotation.z=x>0?-.18:.12;treadmill.add(p);}
+  const console=new THREE.Mesh(new THREE.BoxGeometry(.60,.36,.74),dark);console.position.set(.80,1.58,0);treadmill.add(console);
+  const treadDisplay=new THREE.Mesh(new THREE.PlaneGeometry(.42,.20),new THREE.MeshBasicMaterial({color:'#ff6a00',toneMapped:false}));treadDisplay.position.set(.49,1.61,0);treadDisplay.rotation.y=Math.PI/2;treadmill.add(treadDisplay);
+  info(console,'RUN LAB','Same cave, different suffering.','Run · form · repeat','The run station is an original KONA.m curved-slat treadmill study. A deterministic Blender candidate exists for visual comparison before any GLB is promoted.');
   obstacles.push({c:new THREE.Vector3(25.2,0,-18.7),r:1.7});
+
+  // Acoustic treatment: repeated modules are instanced so atmosphere improves without
+  // multiplying draw calls. No copied logos or slogans are used.
+  const foamMat=new THREE.MeshStandardMaterial({color:'#171514',roughness:.98});
+  const foamGeo=new THREE.BoxGeometry(.42,.18,.42),foamCount=20,foamPanels=new THREE.InstancedMesh(foamGeo,foamMat,foamCount),foamDummy=new THREE.Object3D();
+  let foamIndex=0;
+  for(let row=0;row<4;row++)for(let col=0;col<5;col++){
+    foamDummy.position.set(12.2+col*.48,.55+row*.48,BROOM.z0+.18);
+    foamDummy.rotation.set(Math.PI/2,0,(row+col)%2?.09:-.09);foamDummy.updateMatrix();foamPanels.setMatrixAt(foamIndex++,foamDummy.matrix);
+  }
+  foamPanels.instanceMatrix.needsUpdate=true;group.add(foamPanels);
 
   // documented pain-cave archive: mirrors + swim erg study
   const mirrorMat=new THREE.MeshPhysicalMaterial({color:'#9ca6ad',metalness:.92,roughness:.08,envMapIntensity:1.5,clearcoat:1,clearcoatRoughness:.08});
@@ -155,13 +173,14 @@ export function buildBeastCave(ctx) {
   },1024);
   story.position.set(21.5,2.75,BROOM.z0-.02);story.rotation.y=Math.PI;group.add(story);
 
-  const fans=[];
+  const fanRotors=[];
   for(let j=0;j<2;j++){
     const fan=new THREE.Group();fan.position.set(21+j*2.0,1.0,-10.0+j*.5);fan.rotation.y=-.7;group.add(fan);
     const rim=new THREE.Mesh(new THREE.TorusGeometry(.62,.06,10,36),dark);fan.add(rim);
-    const hub2=new THREE.Mesh(new THREE.CylinderGeometry(.11,.11,.18,18),steel);hub2.rotation.x=Math.PI/2;fan.add(hub2);
-    for(let i=0;i<6;i++){const a=i*Math.PI/3,b=new THREE.Mesh(new THREE.BoxGeometry(.10,.38,.035),steel);b.position.set(Math.cos(a)*.22,Math.sin(a)*.22,0);b.rotation.z=a;fan.add(b);}
-    fans.push(fan);obstacles.push({c:new THREE.Vector3(fan.position.x,0,fan.position.z),r:.75});
+    const rotor=new THREE.Group();fan.add(rotor);
+    const hub2=new THREE.Mesh(new THREE.CylinderGeometry(.11,.11,.18,18),steel);hub2.rotation.x=Math.PI/2;rotor.add(hub2);
+    for(let i=0;i<7;i++){const a=i*Math.PI*2/7,b=new THREE.Mesh(new THREE.BoxGeometry(.10,.38,.035),steel);b.position.set(Math.cos(a)*.22,Math.sin(a)*.22,0);b.rotation.z=a+.28;rotor.add(b);}
+    fanRotors.push(rotor);obstacles.push({c:new THREE.Vector3(fan.position.x,0,fan.position.z),r:.75});
   }
 
   // small floor glow at the hero station, same cheap additive convention as existing rooms.
@@ -179,7 +198,7 @@ export function buildBeastCave(ctx) {
       const holder=new THREE.Group();holder.add(bike);holder.rotation.y=bikeSpot.rotY;holder.position.set(heroX,.34,heroZ);group.add(holder);bikeSpot.bike=holder;
     },
     update(t,reduce){
-      if(!reduce) for(const [i,f] of fans.entries()) f.rotation.z=Math.sin(t*.45+i)*.025;
+      if(!reduce) for(const [i,rotor] of fanRotors.entries()) rotor.rotation.z=t*(8.5+i*.7);
       if(!reduce) heroGlow.material.opacity=.06+Math.sin(t*.7)*.012;
     }
   };
