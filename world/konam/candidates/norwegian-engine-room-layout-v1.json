@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "id": "norwegian-engine-room-layout-v1",
+  "status": "candidate-unwired",
+  "units": "meters",
+  "coordinate_system": "host room-local; +x east, +z north, y vertical",
+  "installation": "norwegian-engine",
+  "design_intent": "Three individual athlete lanes read as one shared performance system. Dark wet stone, smoked timber, brushed metal and low-iron glass; practical sources and reflected warmth instead of glossy sci-fi plastic.",
+  "zones": [
+    {
+      "id": "three-rails",
+      "anchor": {
+        "x": -0.85,
+        "y": 0,
+        "z": 0
+      },
+      "items": [
+        {
+          "id": "lane-01",
+          "athlete": "kristian-blummenfelt",
+          "position": {
+            "x": -0.85,
+            "z": "cz-rd*0.28"
+          },
+          "bike_slot": {
+            "x": -0.2,
+            "y": 0,
+            "z": "lane-z"
+          },
+          "trainer": "nor3-trainer",
+          "run_deck": "nor3-run-deck",
+          "accessories": [
+            "nor3-towel-rail",
+            "nor3-bottle-set"
+          ]
+        },
+        {
+          "id": "lane-02",
+          "athlete": "gustav-iden",
+          "position": {
+            "x": -0.85,
+            "z": "cz"
+          },
+          "bike_slot": {
+            "x": -0.2,
+            "y": 0,
+            "z": "lane-z"
+          },
+          "trainer": "nor3-trainer",
+          "run_deck": "nor3-run-deck",
+          "accessories": [
+            "nor3-towel-rail",
+            "nor3-bottle-set"
+          ]
+        },
+        {
+          "id": "lane-03",
+          "athlete": "casper-stornes",
+          "position": {
+            "x": -0.85,
+            "z": "cz+rd*0.28"
+          },
+          "bike_slot": {
+            "x": -0.2,
+            "y": 0,
+            "z": "lane-z"
+          },
+          "trainer": "nor3-trainer",
+          "run_deck": "nor3-run-deck",
+          "accessories": [
+            "nor3-towel-rail",
+            "nor3-bottle-set"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-table",
+      "position": {
+        "x": "cx+2.55",
+        "y": 1.02,
+        "z": "cz"
+      },
+      "assets": [
+        "nor3-protocol-table",
+        "nor3-analyser",
+        "nor3-vial-rack"
+      ]
+    },
+    {
+      "id": "environment-bay",
+      "position": {
+        "x": "cx+3.30",
+        "y": 0,
+        "z": "cz-rd*0.30"
+      },
+      "assets": [
+        "nor3-environment-bay"
+      ]
+    },
+    {
+      "id": "heat-cool",
+      "position": {
+        "x": "cx+3.15",
+        "y": 1.22,
+        "z": "cz+rd*0.28"
+      },
+      "assets": [
+        "nor3-fan"
+      ]
+    },
+    {
+      "id": "podium-vault",
+      "position": {
+        "x": "cx+2.35",
+        "y": 2.72,
+        "z": "north-wall"
+      },
+      "assets": [
+        "nor3-podium-vault"
+      ]
+    },
+    {
+      "id": "fjord-relief",
+      "position": {
+        "x": "cx+3.54",
+        "y": 0.22,
+        "z": "cz"
+      },
+      "assets": [
+        "nor3-fjord-relief"
+      ]
+    },
+    {
+      "id": "kona-line",
+      "position": {
+        "x": "east-wall",
+        "y": 2.95,
+        "z": "cz"
+      },
+      "asset": "procedural-host"
+    }
+  ],
+  "release_rules": {
+    "register_in_rooms_json": false,
+    "add_to_public_navigation": false,
+    "add_to_sitemap": false,
+    "athlete_bike_assignment_requires_verified_source": true,
+    "brand_marks_require_rights_review": true
+  }
+}
