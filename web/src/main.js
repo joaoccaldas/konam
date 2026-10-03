@@ -167,8 +167,6 @@ function tuneStock(m) {
 
 // ------------------------------------------------------------------ load
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-const b64 = s => { const bin = atob(s), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; };
-const GLB = b64(window.__SPEEDMAX_GLB);
 const bike = new THREE.Group(); scene.add(bike);
 const parts = {};            // part id -> node
 const meshesOf = {};         // part id -> meshes (nearest part ancestor)
@@ -179,7 +177,7 @@ let wheelF, wheelR, crankset, chainNode, chain = null, discMesh = null, zippMesh
 function progress(p, label) { $('#loadbar i').style.width = (p * 100).toFixed(0) + '%'; if (label) $('#loadlabel').textContent = label; }
 
 progress(.15, 'Unpacking carbon…');
-loader.parse(GLB.buffer, '', gltf => {
+loader.load(window.__SPEEDMAX_GLB_URL, gltf => {
   progress(.6, 'Laying up materials…');
   const root = gltf.scene;
   bike.add(root);
@@ -228,7 +226,7 @@ loader.parse(GLB.buffer, '', gltf => {
   setTimeout(() => document.body.classList.add('ready'), 250);
   flyTo(coarse ? 'side' : 'hero', 0);
   requestAnimationFrame(tick);
-}, err => { $('#loadlabel').textContent = 'Could not load the model: ' + err.message; console.error(err); });
+}, xhr => { if (xhr.total) progress(.15 + Math.min(.4, xhr.loaded / xhr.total * .4), 'Loading carbon…'); }, err => { $('#loadlabel').textContent = 'Could not load the model: ' + err.message; console.error(err); });
 
 function mapMaterial(m, mesh) {
   switch (m.name) {
@@ -709,7 +707,7 @@ function buildUI() {
   $('#xrayBtn').onclick = () => { S.xray = !S.xray; $('#xrayBtn').classList.toggle('active', S.xray); applyGhost(); };
   $('#spinBtn').onclick = () => { S.spin = !S.spin; controls.autoRotate = S.spin; controls.autoRotateSpeed = .7; $('#spinBtn').classList.toggle('active', S.spin); };
   $('#shotBtn').onclick = screenshot;
-  $('#glbBtn').onclick = () => download(new Blob([GLB], { type: 'model/gltf-binary' }), 'speedmax_cfr_axs_web.glb');
+  $('#glbBtn').onclick = async () => { try { const res=await fetch(window.__SPEEDMAX_GLB_URL); if(!res.ok) throw new Error('HTTP '+res.status); download(await res.blob(), `speedmax_${BIKE.key||'bike'}_web.glb`); } catch(e) { toast('GLB download unavailable'); console.error(e); } };
   $('#quality').value = S.quality;
   $('#quality').onchange = e => { S.quality = e.target.value; applyQuality(); };
   $('#hint').textContent = coarse ? 'Drag to orbit · pinch to zoom · tap a part' : 'Drag to orbit · scroll to zoom · click any part';

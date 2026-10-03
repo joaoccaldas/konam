@@ -72,11 +72,10 @@ addEventListener('resize', resize); resize();
 const bike = new THREE.Group(); scene.add(bike);
 const parts = {}, meshesOf = {};
 let inspection = null;
-const b64 = s => { const bin = atob(s), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; };
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 $('#loader i').style.width = '30%';
 let centre = new THREE.Vector3(0, .55, 0);
-loader.parse(b64(window.__SPEEDMAX_GLB).buffer, '', gltf => {
+loader.load(window.__SPEEDMAX_GLB_URL, gltf => {
   const root = gltf.scene; bike.add(root);
   root.traverse(o => {
     if (o.isMesh) {
@@ -101,7 +100,7 @@ loader.parse(b64(window.__SPEEDMAX_GLB).buffer, '', gltf => {
   view('hero', true);
   $('#loader i').style.width = '100%';
   setTimeout(() => { $('#loader').style.opacity = 0; setTimeout(() => $('#loader').remove(), 500); document.body.classList.add('ready'); window.__heritage = { parts: Object.keys(parts) }; }, 150);
-}, err => { $('#loader div').textContent = 'Model failed to load'; console.error(err); });
+}, xhr => { if (xhr.total) $('#loader i').style.width = (30 + Math.min(55, xhr.loaded / xhr.total * 55)).toFixed(0) + '%'; }, err => { $('#loader div').textContent = 'Model failed to load'; console.error(err); });
 
 // ------------------------------------------------------------------ parts, picking, isolate
 const LABELS = PROFILE.partLabels || {};
