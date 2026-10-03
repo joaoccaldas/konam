@@ -1,0 +1,49 @@
+/* Live KONA Finds vault — visual transfer from Field Guide, using canonical brand tokens only. */
+.finds-vault{overflow:hidden;border:1px solid var(--brand-line);border-radius:var(--brand-card-radius);background:
+  radial-gradient(circle at 78% 18%,color-mix(in srgb,var(--brand-lime) 7%,transparent),transparent 30%),
+  radial-gradient(circle at 12% 74%,color-mix(in srgb,var(--brand-ocean) 7%,transparent),transparent 28%),
+  var(--brand-lava);color:var(--brand-mist)}
+.finds-vault-head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid color-mix(in srgb,var(--brand-mist) 12%,transparent)}
+.finds-vault-head>div{min-width:0;min-height:94px;padding:16px;border-right:1px solid color-mix(in srgb,var(--brand-mist) 12%,transparent);display:flex;flex-direction:column;justify-content:flex-end}
+.finds-vault-head>div:last-child{border-right:0}
+.finds-vault-head small{font:800 8px/1.2 var(--brand-font-data);letter-spacing:.14em;color:color-mix(in srgb,var(--brand-mist) 58%,transparent)}
+.finds-vault-head strong{margin:8px 0 2px;font:400 clamp(24px,5vw,38px)/.9 var(--brand-font-editorial);letter-spacing:-.03em}
+.finds-vault-head span{font:600 8.5px/1.35 var(--brand-font-ui);color:color-mix(in srgb,var(--brand-mist) 52%,transparent)}
+.finds-vault-head>div:nth-child(3) strong{color:var(--brand-lime)}
+.finds-vault-head>div:nth-child(4) strong{font-size:clamp(18px,3vw,25px);color:var(--brand-lime)}
+.finds-vault-copy{display:grid;grid-template-columns:minmax(0,.8fr) minmax(260px,1.2fr);gap:22px;padding:22px;border-bottom:1px solid color-mix(in srgb,var(--brand-mist) 12%,transparent)}
+.finds-vault-copy small{font:800 9px/1.2 var(--brand-font-data);letter-spacing:.16em;color:var(--brand-ocean)}
+.finds-vault-copy h3{margin:8px 0 0;font:400 clamp(38px,8vw,64px)/.88 var(--brand-font-editorial);letter-spacing:-.035em}.finds-vault-copy h3 em{color:var(--brand-action)}
+.finds-vault-copy p{align-self:end;margin:0;color:color-mix(in srgb,var(--brand-mist) 65%,transparent);font:520 12px/1.65 var(--brand-font-ui)}
+.finds-vault-filters{display:flex;gap:6px;overflow-x:auto;padding:12px 16px;border-bottom:1px solid color-mix(in srgb,var(--brand-mist) 12%,transparent)}
+.finds-vault-filters button{flex:0 0 auto;min-height:40px;padding:0 12px;border:1px solid color-mix(in srgb,var(--brand-mist) 16%,transparent);border-radius:var(--brand-pill-radius);background:transparent;color:color-mix(in srgb,var(--brand-mist) 66%,transparent);font:750 9px/1 var(--brand-font-ui)}
+.finds-vault-filters button[aria-pressed="true"]{background:var(--brand-mist);color:var(--brand-lava);border-color:var(--brand-mist)}
+.finds-vault-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px;padding:16px}
+.find-vault-cell{position:relative;aspect-ratio:1;border:1px solid color-mix(in srgb,var(--brand-mist) 10%,transparent);border-radius:8px;background:color-mix(in srgb,var(--brand-basalt) 78%,var(--brand-lava));color:var(--brand-mist);overflow:hidden;padding:0;min-width:0}
+.find-vault-cell:hover,.find-vault-cell:focus-visible{z-index:2;border-color:var(--brand-lime);outline:none;transform:translateY(-1px)}
+.find-vault-number{position:absolute;right:5px;bottom:4px;font:700 6px/1 var(--brand-font-data);color:color-mix(in srgb,var(--brand-mist) 42%,transparent)}
+.find-vault-ghost{position:absolute;inset:18% 16%;display:grid;place-items:center;color:color-mix(in srgb,var(--brand-mist) 16%,transparent);filter:blur(3px);transform:rotate(var(--find-rot,0deg)) scale(.72)}
+.find-vault-ghost svg{width:100%;height:100%}
+.find-vault-status{position:absolute;left:5px;top:5px;font:800 6px/1 var(--brand-font-data);letter-spacing:.08em;color:transparent}
+.find-vault-cell>b{position:absolute;left:7px;right:7px;bottom:14px;text-align:left;font:650 8px/1.2 var(--brand-font-ui);color:var(--brand-mist);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.find-vault-cell.is-collected{border-color:color-mix(in srgb,var(--brand-lime) 58%,var(--brand-line));background:linear-gradient(145deg,color-mix(in srgb,var(--brand-ocean) 10%,var(--brand-basalt)),var(--brand-lava))}
+.find-vault-cell.is-collected .find-vault-ghost{color:var(--brand-lime);filter:none;opacity:.88;transform:scale(.7)}
+.find-vault-cell.is-collected .find-vault-status{color:var(--brand-lime)}
+.find-vault-cell.is-collected .find-vault-number{color:var(--brand-mist)}
+.finds-vault-foot{display:flex;justify-content:space-between;align-items:end;gap:18px;padding:20px 22px;border-top:1px solid color-mix(in srgb,var(--brand-mist) 12%,transparent)}
+.finds-vault-foot p{margin:0;max-width:70%;color:var(--brand-lime);font-size:clamp(18px,3vw,29px);transform:rotate(-.25deg)}
+.finds-vault-foot span{white-space:nowrap;font:700 8px/1.35 var(--brand-font-data);letter-spacing:.08em;color:color-mix(in srgb,var(--brand-mist) 54%,transparent)}
+.finds-back{margin:0 16px 16px;color:var(--brand-mist)!important}.finds-admin{margin:0 16px 16px;color:var(--brand-lime)}
+.find-studio{color:var(--brand-ink)}
+@media(max-width:760px){
+  .finds-vault-head{grid-template-columns:1fr 1fr}
+  .finds-vault-head>div:nth-child(2){border-right:0}
+  .finds-vault-copy{grid-template-columns:1fr}
+  .finds-vault-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:12px}
+  .find-vault-cell{border-radius:7px}
+  .finds-vault-foot{align-items:flex-start;flex-direction:column}
+  .finds-vault-foot p{max-width:100%}
+}
+@media(max-width:360px){.finds-vault-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(orientation:landscape) and (max-height:520px){.finds-vault-grid{grid-template-columns:repeat(10,minmax(0,1fr))}.finds-vault-copy{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){.find-vault-cell{transform:none!important}}
