@@ -248,7 +248,7 @@ function paintShared(draft){
 const q = new URLSearchParams(location.search);
 const shared=decodeShare(q.get('kona'));
 if(shared) paintShared(shared);
-else if (q.get('room') || q.get('map')) openMuseum();
+else if (q.get('room') || q.get('map') || q.get('reviewRoom') === 'beast-cave') openMuseum();
 else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());
 else if (returningVisit && ['home','garage','collection','discover','plan','me','feed','travel'].includes(q.get('view'))) enterApp(q.get('view'));
