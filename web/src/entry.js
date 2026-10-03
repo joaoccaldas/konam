@@ -61,7 +61,7 @@ function loadStyle(href,group='app') {
     link.rel='stylesheet'; link.href=href; link.dataset.styleScope=group;
     if(!managedStyles.has(group))managedStyles.set(group,new Set());
     managedStyles.get(group).add(link);
-    link.onload=()=>{syncManagedStyles();resolve(link);}; link.onerror=()=>{loads.delete(key);managedStyles.get(group)?.delete(link);link.remove();reject(new Error(href));};
+    link.onload=()=>{syncManagedStyles();resolve(link);}; link.onerror=()=>{globalThis.__konaAnalytics?.trackRuntimeError?.('route_load',{subsystem:'navigation'});loads.delete(key);managedStyles.get(group)?.delete(link);link.remove();reject(new Error(href));};
     document.head.append(link);syncManagedStyles();
   });
   loads.set(key,pending);
@@ -73,7 +73,7 @@ function loadScript(src) {
     const s = document.createElement('script');
     s.src = src;
     s.onload = () => resolve();
-    s.onerror = () => { loads.delete(src); s.remove(); reject(new Error(src)); };
+    s.onerror = () => { globalThis.__konaAnalytics?.trackRuntimeError?.('route_load',{subsystem:'navigation'}); loads.delete(src); s.remove(); reject(new Error(src)); };
     document.body.append(s);
   });
   loads.set(src, pending);
@@ -96,7 +96,7 @@ const ensureWorldShell = () => {
       const t=document.createElement('template'); t.innerHTML=html.trim();
       const anchor=document.getElementById('appSheet');
       document.body.insertBefore(t.content,anchor||document.body.firstChild);
-    }).catch(error=>{worldShellReady=null;throw error;});
+    }).catch(error=>{globalThis.__konaAnalytics?.trackRuntimeError?.('route_load',{subsystem:'navigation'});worldShellReady=null;throw error;});
   return worldShellReady;
 };
 let museumDataReady = null;
