@@ -41,7 +41,7 @@ try{
  await page.waitForFunction(()=>!document.querySelector('.kona-tour'));
  assert.equal(await page.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),'seen');
 
- await page.click('[data-tab="me"]');
+ await page.evaluate(async()=>{await window.__konaShell.me();});
  await page.waitForSelector('.race-self-experience');
  await page.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
  assert.ok(personal3D().some(u=>/race-self-stage\.js/i.test(u)),'personal 3D loads only after entering Me/User Studio');
