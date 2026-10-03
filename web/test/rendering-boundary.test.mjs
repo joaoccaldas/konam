@@ -16,8 +16,9 @@ test('mutable direct-viewer profile copy is escaped before HTML insertion',()=>{
 
 test('external companion feed fields pass through escape and safe URL helpers',()=>{
   const src=read('web/src/ui/companion.js');
-  for(const field of ['item.title','item.source','item.intern_note','data.headline','data.dek']) assert.match(src,new RegExp('esc\\('+field.replace('.','\\.')+''));
-  assert.match(src,/external\(item\.url,item\.title\)/);
+  for(const field of ['item.source','item.intern_note','data.headline','data.dek']) assert.match(src,new RegExp('esc\\\\('+field.replace('.','\\\\.')+''));
+  assert.match(src,/external\\(item\\.url,item\\.title\\)/);
+  assert.match(src,/const external=.*safeURL\\(url\\).*esc\\(label\\)/s);
   assert.match(src,/safeURL/);
 });
 
