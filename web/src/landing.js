@@ -36,6 +36,7 @@ import { coarse as dc, small as ds } from './detect.js';
 import { readPassportState, savePassportState } from './engine/passport-state.js';
 import { applyStoredEvent } from './engine/progression.js';
 import { createMachineInspection, blenderVectorToThree } from './engine/machine-inspection.js';
+import { disposeObject3D } from './world/disposal.js';
 
 const PIECES = window.__PIECES || [];
 const sway = [];                                                     // palm crowns moving in the trade wind
@@ -144,7 +145,8 @@ const museumFov = () => {
 };
 const camera = new THREE.PerspectiveCamera(museumFov(), 1, .12, 700);   // near .12: depth precision without shimmering; far covers the 600 m sky
 const pmrem = new THREE.PMREMGenerator(renderer);
-scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+const environmentTarget = pmrem.fromScene(new RoomEnvironment(), .04);
+scene.environment = environmentTarget.texture;
 scene.environmentIntensity = .55;
 
 // ------------------------------------------------------------------ canvas textures (plaster, travertine, basalt, lettering)
@@ -1747,9 +1749,10 @@ function resize() {
   camera.fov = museumFov(); camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize); resize();
-let last = performance.now(), shift = 0;
+let last = performance.now(), shift = 0, frameId = 0, hallDisposed = false;
 function frame(now) {
-  requestAnimationFrame(frame);
+  if(hallDisposed)return;
+  frameId = requestAnimationFrame(frame);
   // Zero visual cost: pause expensive 3D work when it cannot be seen.
   // Reset the clock while paused so resuming never creates a physics/camera jump.
   if (document.hidden || document.body.classList.contains('kona-panel-open') || document.body.classList.contains('settings-open')) { last = now; return; }
@@ -1907,7 +1910,20 @@ function frame(now) {
   window.__museumArt?.update?.(dt, t, P, camera, roomOf(P.x, P.z));
   renderer.render(scene, camera);
 }
-requestAnimationFrame(frame);
+frameId = requestAnimationFrame(frame);
+function disposeHallRuntime(){
+  if(hallDisposed)return;
+  hallDisposed=true;
+  cancelAnimationFrame(frameId);
+  removeEventListener('resize',resize);
+  try{audio?.ctx?.close?.();}catch(_){}
+  try{disposeObject3D(scene,{removeFromParent:false});}catch(error){console.warn('hall disposal',error);}
+  try{environmentTarget.dispose?.();pmrem.dispose?.();}catch(_){}
+  renderer.dispose();
+  renderer.forceContextLoss?.();
+}
+addEventListener('pagehide',disposeHallRuntime,{once:true});
+addEventListener('pageshow',event=>{if(event.persisted&&hallDisposed)location.reload();});
 onFontsReady();
 initAppShell();
 // progressive loading: the hall first (loadAll), then each room in the background, with a quiet status chip
