@@ -290,3 +290,12 @@ html{scroll-padding-top:92px}
     The Guide remains available in portrait and larger layouts. */
  .field-rail{display:none}
 }
+
+/* About/Why boundary: one compact gateway, no duplicated personal-story cards. */
+.promo-why-link{display:grid;gap:18px}
+.promo-editorial-bridge{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 22px;text-decoration:none;color:inherit}
+.promo-editorial-bridge div{display:grid;gap:5px}
+.promo-editorial-bridge small{font:800 9px/1.2 var(--brand-font-data);letter-spacing:.16em;color:var(--brand-muted)}
+.promo-editorial-bridge strong{font:400 clamp(24px,4vw,38px)/1 var(--brand-font-editorial)}
+.promo-editorial-bridge>span{font:400 34px/1 var(--brand-font-editorial);color:var(--brand-action)}
+@media(max-width:640px){.promo-editorial-bridge{padding:18px;align-items:flex-end}.promo-editorial-bridge strong{font-size:28px}}
