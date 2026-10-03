@@ -21,18 +21,23 @@ test('different adapters share one contract',()=>{
   assert.equal(j('world/konam/rooms/beast-cave.room.json').implementation.kind,'native-room');
 });
 
-test('both concept packages validate with same validator',()=>{
+test('both room packages validate with same validator',()=>{
   for(const id of ['norwegian-engine','beast-cave']){
     const r=spawnSync(process.execPath,['tools/validate-room-package.mjs',id],{cwd:ROOT,encoding:'utf8'});
     assert.equal(r.status,0,r.stderr||r.stdout);
   }
 });
 
-test('cross-branch implementations are concept-only',()=>{
+test('remote room implementations stay concept-only while local candidates are implemented in-repo',()=>{
   for(const id of ['norwegian-engine','beast-cave']){
     const m=j('world/konam/rooms/'+id+'.room.json');
-    assert.equal(m.classification.status,'concept');
-    assert.ok(m.implementation.source_branch);
+    if(m.implementation.source_branch){
+      assert.equal(m.classification.status,'concept',id+' remote implementation must remain concept');
+      continue;
+    }
+    assert.equal(m.classification.status,'candidate',id+' local implementation should be candidate');
+    const implementationPath=m.implementation.kind==='native-room'?m.implementation.module:m.implementation.source;
+    assert.ok(fs.existsSync(path.join(ROOT,implementationPath)),id+' local implementation path must exist');
   }
 });
 
