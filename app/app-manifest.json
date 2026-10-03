@@ -1,5 +1,5 @@
 {
- "version": "2d68c0b30d9b",
+ "version": "775a91b38e47",
  "core": [
   "index.html",
   "about.html",
@@ -18,6 +18,7 @@
   "web/styles/shell-mobile.css",
   "web/styles/home.css",
   "web/styles/garage.css",
+  "web/styles/finds.css",
   "web/styles/plan.css",
   "web/styles/race-self.css",
   "web/styles/companion.css",
@@ -42,7 +43,7 @@
   "web/src/site-analytics.js": "pzSG7M+mEc8nLM4/jgJprdzwvOtYeyfwt09adByLI0U=",
   "web/styles/promo.css": "R5KRXsy/n6eONDRGNVnitRm+g/tgp9ed+nfhLGSJSLY=",
   "app/viewport.js": "s84yeQXxX9xSWnlj+1xuK84iotaJzl1NKMWjShrB2F0=",
-  "app/kona-core.js": "sLxGCt1mtRTAVSE1t1B9LvECjV2rMfiKUt0oIaL0CGM=",
+  "app/kona-core.js": "pp4i0dM+1+ZQsM0LUX+6AvY2Q4iMeqE2DA9ByS9posQ=",
   "app/entry-data.json": "u70GqhCPsNX6TZI4LhPBmxQkdjHsA1534QN/mMdyufU=",
   "integrations/public-catalog.json": "W1xJL5pT+cwjQLj4y9Kg7X4JorCf+4XAF8AHKzF5CuU=",
   "manifest.webmanifest": "D80RDjSyU/ENx8num4CsbgCHG48x8J4k6F4pT2ANlUA=",
@@ -51,6 +52,7 @@
   "web/styles/shell-mobile.css": "kt5DBDeglxFiMu2rTibzPhjqMWwMJKLRIMP5DSw+/Sg=",
   "web/styles/home.css": "M2QUd913oyU1YuRybHiuaPh6VSJUEJninKnS85efSig=",
   "web/styles/garage.css": "wm+HmyfZlvpb01WwKcB91XvG88Q8exKaG0hW8k70Xss=",
+  "web/styles/finds.css": "+0rHPf3G8jTn0Qfi21P6yU5b89w2OJLvtfO3oOzwfYM=",
   "web/styles/plan.css": "8TDh2TPLeHb9PaXIbM7Xv11mBx28mP7PFo3xeKYNiKc=",
   "web/styles/race-self.css": "JxPCghbOItwYTKLRv8/Ch/CoThKNBW4Ew8JLJf6BQKI=",
   "web/styles/companion.css": "P2xlEGm6d0nDu9emz2CLrAUbStM+ejqvvSLeE71zOuU=",
