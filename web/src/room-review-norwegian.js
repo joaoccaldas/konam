@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
 import {buildInstallation} from './engine/room-installations.js';
+import {loadSpeedmax} from './exp/engine.js';
 
 const canvas=document.querySelector('[data-room-canvas]');
 const loading=document.querySelector('[data-room-loading]');
@@ -59,6 +60,31 @@ const obstacles=[];
 const specimen=new THREE.Vector3(.55,Y,cz);
 const L=buildInstallation('norwegian',{group:room,bounds,elevation:Y,specimen,lite,obstacles,floorMat,seed:401});
 room.traverse(o=>{if(o.isMesh){o.castShadow=!lite;o.receiveShadow=true}});
+
+// The room owns only the three specimen anchors. Bike identity/loading remains canonical.
+// One neutral CFR study is cloned into all lanes; athlete-specific equipment/liveries stay
+// unassigned until sourced and rights-cleared.
+async function mountCanonicalSpecimens(){
+  if(!L.specimenSlots?.length)return;
+  try{
+    const canonical=await loadSpeedmax('assets/museum/speedmax_web.glb',{shadows:!lite});
+    const horizontal=Math.max(canonical.size.x,canonical.size.z)||1;
+    const scale=1.72/horizontal;
+    for(const slot of L.specimenSlots){
+      const holder=canonical.holder.clone(true);
+      holder.scale.setScalar(scale);
+      holder.rotation.y=Math.PI/2;
+      holder.position.copy(slot);
+      holder.position.y+=.02;
+      holder.userData.nor3CanonicalSpecimen=true;
+      room.add(holder);
+    }
+    room.traverse(o=>{if(o.userData?.nor3BikeFallback)o.visible=false;});
+  }catch(error){
+    console.warn('NOR // 3 canonical bike unavailable; keeping neutral fallback study',error);
+  }
+}
+mountCanonicalSpecimens();
 
 // Host lighting: restrained ambient, directional moon/cold key and warm/cool cross-light.
 scene.add(new THREE.HemisphereLight('#8fb7c3','#160c08',lite?.72:.58));
