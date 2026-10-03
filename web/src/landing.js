@@ -45,6 +45,7 @@ const WROOMDATA = eventEnabled('wyld') ? window.__WYLDROOM || null : null;
 const BRANDROOMS = window.__BRANDROOMS?.rooms || [];
 const KY = window.__KONAYEARS || null;                                // Kona by Year: the pier
 const WYLD = { pink: '#ff3d8e', blush: '#ff8fbf', lilac: '#e9cde8', mint: '#8fe7dc', aqua: '#5fd8d3' };
+const BEAST_CAVE_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'beast-cave';
 // Phone detection must survive a browser's "Desktop view", where pointer and
 // viewport width both lie; detect.js adds the physical-screen signal.
 const coarse = dc;
@@ -103,7 +104,7 @@ function walkable(x, z) {
   const inDoor2 = !!WROOMDATA && x < WALK.x0 + .1 && x > WROOM.x1 - .6 && z < WDOOR.z1 - .45 && z > WDOOR.z0 + .45;
   const inWyld = !!WROOMDATA && x > WROOM.x0 + .7 && x < WROOM.x1 - .4 && z < WROOM.z0 - .6 && z > WROOM.z1 + .6;
   const inBrand = brandRooms.some(r => r.walkable(x, z));
-  if (!inHall && !inDoor && !inRoom && !inDoor2 && !inWyld && !inBrand && !(KY && pierWalkable(x, z)) && !hweenWalkable(x, z, WALK) && !beastCaveWalkable(x, z, WALK) && !sanctuaryWalkable(x, z) && !galleryWalkable(x, z) && !atlas.walkable(x, z)) return false;
+  if (!inHall && !inDoor && !inRoom && !inDoor2 && !inWyld && !inBrand && !(KY && pierWalkable(x, z)) && !hweenWalkable(x, z, WALK) && !(BEAST_CAVE_REVIEW && beastCaveWalkable(x, z, WALK)) && !sanctuaryWalkable(x, z) && !galleryWalkable(x, z) && !atlas.walkable(x, z)) return false;
   for (const o of obstacles) {
     if (o.c && Math.hypot(x - o.c.x, z - o.c.z) < o.r) return false;
     if (o.box && x > o.box[0] && x < o.box[1] && z > o.box[2] && z < o.box[3]) return false;
@@ -252,12 +253,16 @@ function glassRun(axis, from, to, fixed) {
   sill.position.set(axis === 'z' ? fixed : (from + to) / 2, .03, axis === 'z' ? (from + to) / 2 : fixed); hall.add(sill);
 }
 glassRun('z', HALL.z0, EDOOR.z1, HALL.x1);                 // above the galleries door
-glassRun('z', EDOOR.z0, BDOOR.z1, HALL.x1);                // between galleries and Beast Cave
-glassRun('z', BDOOR.z0, HALL.z1, HALL.x1);                 // south of the Beast Cave door
+if (BEAST_CAVE_REVIEW) {
+  glassRun('z', EDOOR.z0, BDOOR.z1, HALL.x1);
+  glassRun('z', BDOOR.z0, HALL.z1, HALL.x1);
+} else glassRun('z', EDOOR.z0, HALL.z1, HALL.x1);
 { const lintelE = new THREE.Mesh(new THREE.BoxGeometry(.2, HALL.h - EDOOR.h, EDOOR.z1 - EDOOR.z0), M.mullion);
   lintelE.position.set(HALL.x1, EDOOR.h + (HALL.h - EDOOR.h) / 2, (EDOOR.z0 + EDOOR.z1) / 2); hall.add(lintelE);
-  const lintelB = new THREE.Mesh(new THREE.BoxGeometry(.2, HALL.h - BDOOR.h, BDOOR.z1 - BDOOR.z0), M.mullion);
-  lintelB.position.set(HALL.x1, BDOOR.h + (HALL.h - BDOOR.h) / 2, (BDOOR.z0 + BDOOR.z1) / 2); hall.add(lintelB); }
+  if (BEAST_CAVE_REVIEW) {
+    const lintelB = new THREE.Mesh(new THREE.BoxGeometry(.2, HALL.h - BDOOR.h, BDOOR.z1 - BDOOR.z0), M.mullion);
+    lintelB.position.set(HALL.x1, BDOOR.h + (HALL.h - BDOOR.h) / 2, (BDOOR.z0 + BDOOR.z1) / 2); hall.add(lintelB);
+  } }
 if (KY) { glassRun('x', HALL.x0, 4.3, HALL.z1); glassRun('x', 6.5, HALL.x1, HALL.z1); }   // a doorway out to the pier
 else glassRun('x', HALL.x0, HALL.x1, HALL.z1);
 // skylight: open slats across the hall, the sun draws stripes on the floor
@@ -863,8 +868,8 @@ const pier = KY ? buildPier({ scene, data: KY, lettering, canvasTex, M, WYLD, FO
 // ------------------------------------------------------------------ Lava Night: the Halloween room by the entrance
 const hween = buildHalloween({ scene, canvasTex, lettering, lightPool, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x0 });
 hall.add(hween.sign);
-const beast = buildBeastCave({ scene, canvasTex, lettering, lightPool, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 });
-hall.add(beast.sign);
+const beast = BEAST_CAVE_REVIEW ? buildBeastCave({ scene, canvasTex, lettering, lightPool, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 }) : null;
+if (beast) hall.add(beast.sign);
 const sanctuary = buildSanctuary({ scene, lettering, lightPool, FONT, SERIF, lite, coarse, pickables, obstacles });
 sanctuary.sign.position.set(0, SDOOR.h + .7, HALL.z0 - .04); sanctuary.sign.rotation.y = Math.PI; hall.add(sanctuary.sign);
 const galleries = buildGalleries({ scene, lettering, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 });
@@ -934,7 +939,7 @@ async function loadBike(p) {
   bike.traverse(o => { if (o.isMesh) pickables.push(o); });
 }
 let pierBikeLoading = false, pierOut = false;
-const sideRooms = ['champRoom', 'wyldRoom', 'beastCaveRoom'].map(n => scene.getObjectByName(n)).filter(Boolean);
+const sideRooms = ['champRoom', 'wyldRoom', ...(BEAST_CAVE_REVIEW?['beastCaveRoom']:[])].map(n => scene.getObjectByName(n)).filter(Boolean);
 async function loadPierBike() {                                       // the current CFR, turning under the finish arch
   if (!pier || pierBikeLoading) return; pierBikeLoading = true;
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!cfr?.glb) return;
@@ -1030,7 +1035,7 @@ async function loadHweenBike() {
   hween.piece.bike.traverse(o => { if (o.isMesh) { o.userData.hween = hween.piece; delete o.userData.piece; } });
 }
 async function loadBeastBike() {
-  const cfr = PIECES.find(p => p.key === 'cfr'); if (!cfr?.glb || beast.bikeSpot.bike) return;
+  const cfr = PIECES.find(p => p.key === 'cfr'); if (!beast || !cfr?.glb || beast.bikeSpot.bike) return;
   const gltf = await loader.loadAsync(cfr.glb);
   beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
 }
@@ -1091,7 +1096,7 @@ const roomOf = (x, z) => {
   if (atlas.inside(x, z)) return 'gallery';                         // the data-built wings are part of the upper floor
   if (x > 7.15 && z > .6 && z < 28 && x < 26) return galleryFloorY(x, z) > 2.2 ? 'gallery' : 'stair';
   if (z > HALL.z0 - .15 && x > SROOM.x0 && x < SROOM.x1) return 'sanctuary';
-  if (beastCaveWalkable(x, z, WALK)) return 'beast';
+  if (BEAST_CAVE_REVIEW && beastCaveWalkable(x, z, WALK)) return 'beast';
   for (const r of brandRooms) if (r.walkable(x, z)) return r.desc.id;
   if (KY && pierWalkable(x, z)) return 'pier';
   if (x >= WALK.x0 - .05) return 'hall';
@@ -1455,7 +1460,7 @@ if (KONA.titles.length) $('railInner').insertAdjacentHTML('afterbegin', `<button
 if (WROOMDATA) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip wyld" data-room="wyld" aria-label="WYLD Room"><span class="n">W</span><span><small>4 DYES · MY2027</small><b>WYLD Room</b></span></button>`);
 if (pier) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip pier" data-room="pier" aria-label="The Kona Pier: Kona by Year"><span class="n"><img src="assets/kona-years/y2019.jpg" alt="" loading="lazy"></span><span><small>2014 — 2025</small><b>Kona by Year</b></span></button>`);
 $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip hween" data-room="hween" aria-label="Lava Night, the Halloween room"><span class="n" aria-hidden="true">🎃</span><span><small>HALLOWEEN</small><b>Lava Night</b></span></button>`);
-$('railInner').insertAdjacentHTML('afterbegin', `<button class="chip beast" data-room="beast" aria-label="Lionel Sanders Beast Cave"><span class="n">B</span><span><small>ATHLETE ROOM</small><b>Beast Cave</b></span></button>`);
+if (BEAST_CAVE_REVIEW) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip beast" data-room="beast" aria-label="Lionel Sanders Beast Cave review"><span class="n">B</span><span><small>REVIEW · ATHLETE ROOM</small><b>Beast Cave</b></span></button>`);
 for (const r of [...brandRooms].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip brand" data-room="${esc(r.desc.id)}" aria-label="${esc(r.desc.name)}"><span class="n" style="background:${esc(r.desc.theme?.accent || '#c9a13b')};-webkit-background-clip:text;background-clip:text;color:transparent">${esc(r.desc.name.slice(0, 1))}</span><span><small>${r.products.length} PRODUCT${r.products.length > 1 ? 'S' : ''}</small><b>${esc(r.desc.name)}</b></span></button>`);
 $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip sanctuary" data-room="sanctuary" aria-label="Sanctuary chapel, eight films"><span class="n">S</span><span><small>8 FILMS</small><b>Sanctuary</b></span></button>`);
 for (const w of [...atlas.wings].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip atlas" data-room="wing-${esc(w.id)}" aria-label="${esc(w.name)}: ${esc(w.sub)}"><span class="n" aria-hidden="true">${w.features?.clock ? '⏱' : '✦'}</span><span><small>UPPER FLOOR · ${atlas.rooms.filter(r => r.wing === w.id).reduce((n, r) => n + r.bikes.length + r.art.length, 0)} WORKS</small><b>${esc(w.name)}</b></span></button>`);
@@ -1466,7 +1471,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
   const AREA_COLOR = { hall: '#eadfca', sanctuary: '#d7c7e6', hween: '#f0a86c', beast: '#ff833d', kona: '#e2b27c', wyld: '#ffc4dd', pier: '#cfe4e2', stair: '#dcd6cb', nave: '#ece6da', ...Object.fromEntries(brandRooms.map(r => [r.desc.id, r.desc.theme?.accent || '#c9a13b'])) };
   const R = (id, name, sub, rect, floor, color, extra = {}) => ({ id, name, sub, x0: rect.x0, x1: rect.x1, z0: rect.z0, z1: rect.z1, floor, color, ...extra });
   const liveAreas = [
-    ...['hall', 'sanctuary', 'hween', 'beast', 'kona', ...(WROOMDATA?['wyld']:[]), ...(pier ? ['pier'] : []), 'stair', 'nave'].map(id => {
+    ...['hall', 'sanctuary', 'hween', ...(BEAST_CAVE_REVIEW?['beast']:[]), 'kona', ...(WROOMDATA?['wyld']:[]), ...(pier ? ['pier'] : []), 'stair', 'nave'].map(id => {
       const w = WORDS[id], rect = { hall: HALL, sanctuary: SROOM, hween: HROOM, beast: BROOM, kona: ROOM, wyld: WROOM, pier: pier && { x0: PIER.x0, x1: PIER.x1, z0: PIER.z0, z1: PIER.z1 }, stair: { x0: 7.35, x1: 12.3, z0: .75, z1: 6.55 }, nave: { x0: 7.5, x1: 16.5, z0: 5.55, z1: 27.2 } }[id];
       return R(id, w?.short || id, w?.sub || '', rect, w?.floor || 'ground', AREA_COLOR[id], id === 'stair' || id === 'nave' ? { layer: 0 } : {});
     }),
@@ -1481,7 +1486,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
   function prepareRoom(id){
     if(id==='pier'){pier?.load?.();loadPierBike();}
     else if(id==='hween') loadHweenBike();
-    else if(id==='beast') loadBeastBike();
+    else if(id==='beast' && BEAST_CAVE_REVIEW) loadBeastBike();
     else if(brandRooms.some(r=>r.desc.id===id)) loadBrand();
   }
   function safeOverview(area){
@@ -1866,8 +1871,8 @@ function frame(now) {
     for (const p of PIECES) if (p.bike) p.bike.visible = reg !== 'gallery' && (DOORZ[reg] == null || reg === 'pier' || Math.abs(p.pos.z - DOORZ[reg]) < 7);
     for (const b of wyldBikes) if (b.bike) b.bike.visible = reg === 'wyld' || (reg !== 'gallery' && reg !== 'champ' && P.z < -14);
     const upstairs = reg === 'gallery' || reg === 'stair';
-    const beastVisible = reg === 'beast' || (reg === 'hall' && P.z < BDOOR.z1 + 5 && P.z > BDOOR.z0 - 5);
-    beast.group.visible = beastVisible;
+    const beastVisible = !!beast && (reg === 'beast' || (reg === 'hall' && P.z < BDOOR.z1 + 5 && P.z > BDOOR.z0 - 5));
+    if (beast) beast.group.visible = beastVisible;
     if (beastVisible) beast.update(t, reduce);
     hween.group.visible = reg === 'hween' || P.z > -32;
     sanctuary.group.visible = true;                                   // the chapel's walls and roof always draw; upstairs only its bikes are culled
@@ -1907,7 +1912,7 @@ onFontsReady();
 initAppShell();
 // progressive loading: the hall first (loadAll), then each room in the background, with a quiet status chip
 {
-  const steps = [...(WROOMDATA?[['the WYLD Room',loadWyldBikes]]:[]), ['Lava Night', loadHweenBike], ['the Beast Cave', loadBeastBike], ['the Sanctuary', loadSanctuaryBikes], ['the Champions room', loadKonaMachines], ['the upper floor', loadThemeBikes], ['the wings', () => atlas.load(loader)], ['the brand rooms', loadBrand]];
+  const steps = [...(WROOMDATA?[['the WYLD Room',loadWyldBikes]]:[]), ['Lava Night', loadHweenBike], ...(BEAST_CAVE_REVIEW?[['the Beast Cave review', loadBeastBike]]:[]), ['the Sanctuary', loadSanctuaryBikes], ['the Champions room', loadKonaMachines], ['the upper floor', loadThemeBikes], ['the wings', () => atlas.load(loader)], ['the brand rooms', loadBrand]];
   const chip = $('bgload'), say = t => { if (chip) { chip.hidden = false; chip.querySelector('span').textContent = t; } };
   let chain = loadAll();
   let offline = false;
