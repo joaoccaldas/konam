@@ -5,6 +5,16 @@ import { readFileSync } from 'node:fs';
 const root=new URL('../../',import.meta.url);
 const read=path=>readFileSync(new URL(path,root),'utf8');
 
+test('about.html is the Field Guide generated from the promo source',()=>{
+  const about=read('about.html'),promo=read('promo.html');
+  const body=html=>html.replace(/<head>[\\s\\S]*?<\\/head>/,'<head></head>').replace(/(["'])\\.\\/(?:about|promo)\\.html/g,'$1SELF').replace(/=(?:"|')(?:about|promo)\\.html(?:"|')/g,'="SELF"');
+  assert.equal(body(about),body(promo),'about.html must be regenerated from promo.html (node tools/build_pages.mjs)');
+  assert.match(about,/<link rel="canonical" href="[^"]*\\/about\\.html">/);
+  assert.doesNotMatch(about,/<link rel="canonical" href="[^"]*\\/promo\\.html">/);
+  assert.match(about,/<title>About Kona\\.m · the Field Guide/);
+  for(const href of ['brand/tokens.css','web/styles/promo.css','web/src/promo.js']) assert.ok(about.includes(href),`missing ${href}`);
+});
+
 test('About route uses Field Guide brand authorities without inline styling',()=>{
   const html=read('about.html');
   for(const href of ['brand/tokens.css','brand/themes.css','brand/artifacts.css','brand/typography.css','web/styles/components.css','web/styles/system.css','web/styles/promo.css']) assert.ok(html.includes(href),`missing ${href}`);
@@ -31,7 +41,7 @@ test('About stylesheet stays route scoped and token driven',()=>{
   assert.equal(/:root\s*\{/.test(css),false);
 });
 
-test('landing exposes About this company',()=>{
+test('landing exposes the Field Guide clearly',()=>{
   const template=read('web/landing.template.html');
-  assert.ok(template.includes('href="about.html">About this company</a>'));
+  assert.ok(template.includes('href="about.html">What is Kona.m?</a>'));
 });
