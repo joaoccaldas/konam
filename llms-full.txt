@@ -12,6 +12,7 @@ This file is generated from the same museum registries used by the public app. S
 - Studio · Speedmax Museum — build, paint and share a time-trial bike: https://joaoccaldas.github.io/konam/Studio.html
 - Speedmax Nights & History Lane · Canyon Speedmax Museum: https://joaoccaldas.github.io/konam/Experiences.html
 - About Kona.m · the Field Guide to the world, the game & the lab: https://joaoccaldas.github.io/konam/about.html
+- Why Kona.m · the story behind the experiment: https://joaoccaldas.github.io/konam/why.html
 - Kona.m Field Guide · how to play, worlds, bikes & experiments: https://joaoccaldas.github.io/konam/promo.html
 - Canyon Museum — SpeedMax 3.0 (2007): https://joaoccaldas.github.io/konam/Speedmax_2007_Museum.html
 - Canyon Museum — Speedmax AL 9.0 (2011): https://joaoccaldas.github.io/konam/Speedmax_AL_2011_Museum.html
