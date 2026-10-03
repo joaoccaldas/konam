@@ -275,15 +275,15 @@ function norwegian(ctx) {
   };
 
   const rubber=new THREE.MeshStandardMaterial({color:'#0b0f11',roughness:.94});
-  const steel=new THREE.MeshStandardMaterial({color:'#2d363b',roughness:.30,metalness:.78});
-  const blackSteel=new THREE.MeshStandardMaterial({color:'#11171a',roughness:.42,metalness:.62});
-  const basalt=new THREE.MeshStandardMaterial({color:'#171d20',roughness:.88,metalness:.06});
-  const wet=new THREE.MeshPhysicalMaterial({color:'#111a1e',roughness:.20,metalness:.18,clearcoat:.72,clearcoatRoughness:.24,envMapIntensity:1.15});
-  const oak=new THREE.MeshStandardMaterial({color:'#342216',roughness:.70});
+  const steel=new THREE.MeshStandardMaterial({color:'#252d31',roughness:.44,metalness:.72});
+  const blackSteel=new THREE.MeshStandardMaterial({color:'#0d1214',roughness:.58,metalness:.58});
+  const basalt=new THREE.MeshStandardMaterial({color:'#101619',roughness:.97,metalness:.02});
+  const wet=new THREE.MeshPhysicalMaterial({color:'#0e1518',roughness:.52,metalness:.08,clearcoat:.24,clearcoatRoughness:.68,envMapIntensity:.72});
+  const oak=new THREE.MeshStandardMaterial({color:'#2b190f',roughness:.84});
   const paper=new THREE.MeshStandardMaterial({color:'#d8d0c3',roughness:.92});
   const linen=new THREE.MeshStandardMaterial({color:'#a8a29a',roughness:.98});
-  const glass=new THREE.MeshPhysicalMaterial({color:'#a8d2dc',roughness:.08,transmission:lite?.22:.58,transparent:true,opacity:lite?.25:.34,depthWrite:false,envMapIntensity:1.1});
-  const frost=new THREE.MeshPhysicalMaterial({color:'#82b8c7',roughness:.30,transmission:lite?.10:.26,transparent:true,opacity:lite?.16:.22,depthWrite:false});
+  const glass=new THREE.MeshPhysicalMaterial({color:'#8fb2bb',roughness:.22,transmission:lite?.12:.34,transparent:true,opacity:lite?.28:.42,depthWrite:false,envMapIntensity:.72});
+  const frost=new THREE.MeshPhysicalMaterial({color:'#749ca7',roughness:.48,transmission:lite?.06:.16,transparent:true,opacity:lite?.20:.30,depthWrite:false});
   const warm=new THREE.MeshStandardMaterial({color:'#3b1605',roughness:.38,emissive:'#ff6a00',emissiveIntensity:lite?.48:1.05});
   const warmDim=new THREE.MeshStandardMaterial({color:'#2b160d',roughness:.48,emissive:'#d74c14',emissiveIntensity:lite?.18:.42});
   const cold=new THREE.MeshStandardMaterial({color:'#10323d',roughness:.46,emissive:'#5bbdd0',emissiveIntensity:lite?.14:.34});
