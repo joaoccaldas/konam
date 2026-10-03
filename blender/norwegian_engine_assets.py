@@ -1,7 +1,7 @@
 # Blender generator for reusable NOR // 3 environment assets.
 # Run: blender -b --python blender/norwegian_engine_assets.py
 # Outputs are intentionally brand-neutral/original studies. Exact athlete gear is not generated here.
-import bpy, math, os
+import bpy, math, os, sys
 from mathutils import Vector
 
 ROOT=os.path.abspath(os.path.join(os.path.dirname(__file__),".."))
@@ -121,4 +121,32 @@ def build_relief():
       cube("ridge",(x,y,.25+h),( .035,.065,h),stone,.015)
     cube("base",(0,0,.10),(.40,1.45,.10),oak,.025); export("fjord-relief")
 
-for fn in (build_lane_architecture,build_protocol_wall,build_trainer,build_run_deck,build_table,build_analyser,build_vials,build_towel_rail,build_bottles,build_bay,build_fan,build_vault,build_relief): fn()
+BUILDERS={
+    "trainer": build_trainer,
+    "run-deck": build_run_deck,
+    "protocol-table": build_table,
+    "analyser": build_analyser,
+    "environment-bay": build_bay,
+    "podium-vault": build_vault,
+    "fjord-relief": build_relief,
+    # Secondary/procedural-first assets remain available only by explicit request.
+    "lane-architecture": build_lane_architecture,
+    "protocol-wall": build_protocol_wall,
+    "vial-rack": build_vials,
+    "towel-rail": build_towel_rail,
+    "bottle-set": build_bottles,
+    "fan": build_fan,
+}
+
+args=sys.argv[sys.argv.index("--")+1:] if "--" in sys.argv else []
+if not args:
+    print("NOR3_ASSET_GENERATOR: no assets selected; nothing generated")
+    print("Available:", ", ".join(BUILDERS))
+    print("Example: blender -b --python blender/norwegian_engine_assets.py -- trainer run-deck analyser")
+else:
+    unknown=[a for a in args if a not in BUILDERS]
+    if unknown:
+        raise SystemExit("Unknown NOR3 assets: "+", ".join(unknown))
+    for name in args:
+        BUILDERS[name]()
+
