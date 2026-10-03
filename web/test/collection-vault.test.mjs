@@ -1,3 +1,4 @@
+// Release certification trigger: Collection vault source and packaging are validated together.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
