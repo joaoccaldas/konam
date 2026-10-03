@@ -18,19 +18,19 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,lite?1.45:2));
 renderer.setSize(innerWidth,innerHeight,false);
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.AgXToneMapping;
-renderer.toneMappingExposure=1.02;
+renderer.toneMappingExposure=.92;
 renderer.shadowMap.enabled=!lite;
 renderer.shadowMap.type=THREE.PCFShadowMap;
 
 const scene=new THREE.Scene();
 scene.background=new THREE.Color('#05090b');
-scene.fog=new THREE.FogExp2('#081318',lite?.014:.018);
+scene.fog=new THREE.FogExp2('#071014',lite?.009:.012);
 const pmrem=new THREE.PMREMGenerator(renderer);
-scene.environment=pmrem.fromScene(new RoomEnvironment(),.04).texture;
+scene.environment=pmrem.fromScene(new RoomEnvironment(),.025).texture;
 
 const camera=new THREE.PerspectiveCamera(small?56:(lite?60:54),innerWidth/innerHeight,.08,100);
 const target=new THREE.Vector3(0,1.30,-.20);
-let yaw=.02,pitch=-.06,distance=lite?10.6:9.8;
+let yaw=.02,pitch=-.055,distance=lite?13.4:14.2;
 function updateCamera(drift=0){
   const cp=Math.cos(pitch),yy=yaw+drift;
   camera.position.set(target.x+Math.sin(yy)*cp*distance,target.y+Math.sin(pitch)*distance,target.z-Math.cos(yy)*cp*distance);
@@ -39,23 +39,32 @@ function updateCamera(drift=0){
 updateCamera();
 
 const room=new THREE.Group();room.name='review-host-room';scene.add(room);
-const bounds={x0:-4.3,x1:4.3,z0:-3.4,z1:3.4};
-const Y=0,cx=0,cz=0,rw=8.6,rd=6.8;
-const stone=new THREE.MeshStandardMaterial({color:'#10171a',roughness:.90,metalness:.04});
-const floorMat=new THREE.MeshPhysicalMaterial({color:'#0b1114',roughness:.32,metalness:.12,clearcoat:.58,clearcoatRoughness:.32,envMapIntensity:1.0});
-const backMat=new THREE.MeshStandardMaterial({color:'#141c20',roughness:.93,metalness:.03});
+const bounds={x0:-6.8,x1:6.8,z0:-5.4,z1:5.4};
+const Y=0,cx=0,cz=0,rw=13.6,rd=10.8;
+const wallH=5.6;
+const stone=new THREE.MeshStandardMaterial({color:'#0c1113',roughness:.98,metalness:.02});
+const floorMat=new THREE.MeshPhysicalMaterial({color:'#090d0f',roughness:.62,metalness:.06,clearcoat:.16,clearcoatRoughness:.72,envMapIntensity:.62});
+const backMat=new THREE.MeshStandardMaterial({color:'#111719',roughness:.99,metalness:.01});
 function addBox(w,h,d,x,y,z,mat=stone){
   const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
   o.position.set(x,y,z);o.receiveShadow=true;o.castShadow=!lite;room.add(o);return o;
 }
 const floor=addBox(rw,.12,rd,cx,-.06,cz,floorMat);floor.userData.floor=true;
-addBox(rw,4.25,.16,cx,2.12,bounds.z1,backMat);
-addBox(.16,4.25,rd,bounds.x0,2.12,cz,backMat);
-addBox(.16,4.25,rd,bounds.x1,2.12,cz,backMat);
-for(let i=0;i<6;i++){
-  const beam=addBox(rw-.5,.06,.08,cx,4.02,bounds.z0+.55+i*1.05,new THREE.MeshStandardMaterial({color:'#20292d',roughness:.48,metalness:.68}));
+addBox(rw,wallH,.34,cx,wallH/2,bounds.z1,backMat);
+addBox(.34,wallH,rd,bounds.x0,wallH/2,cz,backMat);
+addBox(.34,wallH,rd,bounds.x1,wallH/2,cz,backMat);
+const shellSteel=new THREE.MeshStandardMaterial({color:'#171d20',roughness:.56,metalness:.66});
+const smokedOak=new THREE.MeshStandardMaterial({color:'#26170f',roughness:.84,metalness:0});
+for(let i=0;i<9;i++){
+  const beam=addBox(rw-.7,.10,.16,cx,wallH-.24,bounds.z0+.72+i*((rd-1.44)/8),shellSteel);
   beam.castShadow=false;
 }
+for(const x of [bounds.x0+.72,bounds.x1-.72]){
+  addBox(.42,4.35,.72,x,2.18,cz,stone);
+  addBox(.18,3.55,rd-1.4,x+(x<0?.34:-.34),1.78,cz,smokedOak);
+}
+addBox(rw-2.2,.22,.62,cx,.18,bounds.z1-.62,stone);
+addBox(rw-3.0,.10,.34,cx,.36,bounds.z1-.66,smokedOak);
 const obstacles=[];
 const specimen=new THREE.Vector3(.55,Y,cz);
 const L=buildInstallation('norwegian',{group:room,bounds,elevation:Y,specimen,lite,obstacles,floorMat,seed:401});
@@ -87,16 +96,16 @@ async function mountCanonicalSpecimens(){
 mountCanonicalSpecimens();
 
 // Host lighting: restrained ambient, directional moon/cold key and warm/cool cross-light.
-scene.add(new THREE.HemisphereLight('#8fb7c3','#160c08',lite?.72:.58));
-const key=new THREE.DirectionalLight('#d3eef5',lite?1.15:1.52);key.position.set(-3.5,6,-4.5);key.castShadow=!lite;scene.add(key);
-const warm=new THREE.PointLight('#ff6a22',lite?6:10,10,1.8);warm.position.set(3.6,2.7,2.7);scene.add(warm);
-const rim=new THREE.PointLight('#6bc7da',lite?4.5:8,10,1.9);rim.position.set(-3.7,3.0,-2.6);scene.add(rim);
+scene.add(new THREE.HemisphereLight('#6f858d','#090705',lite?.42:.34));
+const key=new THREE.DirectionalLight('#d7e8ec',lite?1.35:1.85);key.position.set(-5.4,7.6,-6.4);key.castShadow=!lite;scene.add(key);
+const warm=new THREE.PointLight('#d45a25',lite?3.8:6.5,13,2.0);warm.position.set(5.0,3.2,4.2);scene.add(warm);
+const rim=new THREE.PointLight('#7fb9c5',lite?3.6:6.2,13,2.0);rim.position.set(-5.2,3.8,-4.0);scene.add(rim);
 const doorway=new THREE.SpotLight('#c7e8ef',lite?10:18,16,Math.PI*.20,.62,1.45);
-doorway.position.set(0,3.7,-5.8);doorway.target.position.set(0,1.0,.35);scene.add(doorway,doorway.target);
+doorway.position.set(0,4.8,-8.4);doorway.target.position.set(0,1.1,.25);scene.add(doorway,doorway.target);
 
 const views={
-  overview:{target:[-.15,1.24,.05],yaw:.02,pitch:-.05,distance:small?6.55:(lite?9.1:9.5),title:'NOR // 3',copy:'Three lanes. One system. Wet basalt, blackened steel, glass, timber and enough imperfection to feel inhabited.'},
-  lanes:{target:[-1.00,1.10,0],yaw:-.15,pitch:-.07,distance:small?5.05:6.65,title:'Three Rails',copy:'Three distinct athlete stations share one measured system. Each lane has a trainer, run deck, generic bike slot and traces of use.'},
+  overview:{target:[-.20,1.38,.10],yaw:.02,pitch:-.045,distance:small?11.8:(lite?13.2:14.4),title:'NOR // 3',copy:'Three lanes. One system. Wet basalt, blackened steel, glass, timber and enough imperfection to feel inhabited.'},
+  lanes:{target:[-1.00,1.18,0],yaw:-.12,pitch:-.065,distance:small?7.8:9.2,title:'Three Rails',copy:'Three distinct athlete stations share one measured system. Each lane has a trainer, run deck, generic bike slot and traces of use.'},
   protocol:{target:[2.25,1.38,.05],yaw:.68,pitch:-.06,distance:small?3.85:4.7,title:'Protocol Table',copy:'A working bench with analyzer, instanced samples, paper protocols and a physical data wall. No fake holograms.'},
   altitude:{target:[3.05,1.40,-1.90],yaw:.62,pitch:-.03,distance:4.25,title:'Environment Bay',copy:'Framed low-iron glass, internal haze, controls and cool reflections make the environmental chamber feel physically present.'},
   vault:{target:[2.35,2.35,2.78],yaw:.42,pitch:.02,distance:4.5,title:'Podium Vault',copy:'Abstract result objects sit inside a dark shadow-gap cabinet. Achievement is present without copying medals or trophies.'},
