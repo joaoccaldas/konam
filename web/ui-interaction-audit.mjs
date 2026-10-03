@@ -66,7 +66,7 @@ for(const id of selected){
       await enter();await inventory('landing');await click('#buildSelf');
       await p.waitForSelector('[data-onboarding-question]');await inventory('onboarding');
       await p.screenshot({path:path.join(out,prefix+'-onboarding.png')});
-      for(const answer of ['dreaming','never','ocean','seen','review'])await click('[data-onboarding-answer="'+answer+'"]');
+      for(const answer of ['dreaming','never'])await click('[data-onboarding-answer="'+answer+'"]');
       await p.waitForFunction(()=>document.querySelector('[data-onboarding-bike]')||document.querySelector('.registration-avatar'));
       if(await p.$('[data-onboarding-bike]'))await click('[data-onboarding-bike-skip]');
       await p.waitForSelector('.registration-avatar');
@@ -77,11 +77,11 @@ for(const id of selected){
       await p.waitForSelector('.registration-avatar');
       assert.equal(await p.$('[data-onboarding-question]'),null,'one-time onboarding cards must not replay');
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.cards.v1')),'seen');
-      assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),5);
+      assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),2);
     });
     await step('avatar registration persists, first Home stays calm, and manual tour can finish',async()=>{
       await click('[data-reg-archetype="aero"]');await click('[data-reg-trisuit="aero-panel"]');
-      await click('[data-reg-continue]');await p.waitForSelector('.onboarding-handoff');await inventory('install-rotate-handoff');await p.screenshot({path:path.join(out,prefix+'-handoff.png')});await click('[data-handoff-continue]');await waitHome();
+      await click('[data-reg-continue]');await waitHome();
       assert.equal(await p.$('.kona-tour'),null,'fresh Home must not auto-open the tutorial');
       assert.match(await text('#konaPanelBody'),/KONA NOW|YOUR RACE SELF/i,'fresh Home must explain the useful core immediately');
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),null,'manual tour must remain available until explicitly opened');
