@@ -2,15 +2,15 @@ const qs=(s,r=document)=>r.querySelector(s);
 const qsa=(s,r=document)=>[...r.querySelectorAll(s)];
 
 const worldData={
-  kona:{title:'Kona',body:'The emotional and geographic center of the experiment. Race week, equipment, memory, discovery and the question that started the whole thing.',href:'./'},
-  vegas:{title:'Las Vegas',body:'A deliberately excessive test bed for spatial UI, recognizable places and moving through a browser-built world.',href:'https://joaoccaldas.github.io/studio-kona/preview-v2/'},
-  stgeorge:{title:'St. George · 2022',body:'A race-week memory experiment: reconstructing place and atmosphere rather than treating an event as a static result.',href:'https://joaoccaldas.github.io/studio-kona/preview-v2/'},
-  nice:{title:'Nice',body:'A Mediterranean endurance world for route context, travel, race memory and future event experiences.',href:'https://joaoccaldas.github.io/studio-kona/preview-v2/'}
+  kona:{status:'NOW',statusClass:'status-now',label:'KONA WORLD',title:'Kona',body:'The emotional and geographic center of the consumer experience. Race week, equipment, memory, discovery and optional 3D are wired into Kona.m today.',href:'./'},
+  vegas:{status:'LAB',statusClass:'status-lab',label:'SPATIAL PROTOTYPE',title:'Las Vegas',body:'A separate prototype testing spatial UI, recognizable places and moving through a browser-built world. It is not yet a Kona.m consumer destination.',href:'https://joaoccaldas.github.io/studio-kona/preview-v2/'},
+  stgeorge:{status:'LAB',statusClass:'status-lab',label:'SPATIAL PROTOTYPE',title:'St. George · 2022',body:'A separate race-memory prototype reconstructing place and atmosphere. It informs the world engine; it is not yet wired into the main Kona.m journey.',href:'https://joaoccaldas.github.io/studio-kona/preview-v2/'},
+  nice:{status:'LAB',statusClass:'status-lab',label:'SPATIAL PROTOTYPE',title:'Nice',body:'A separate Mediterranean endurance-world prototype for route context, travel and race memory. It remains a lab rather than a live Kona.m world.',href:'https://joaoccaldas.github.io/studio-kona/preview-v2/'}
 };
 qsa('[data-world]').forEach(btn=>btn.addEventListener('click',()=>{
   qsa('[data-world]').forEach(x=>x.classList.remove('is-active')); btn.classList.add('is-active');
   const d=worldData[btn.dataset.world]; const box=qs('[data-world-info]'); if(!d||!box)return;
-  box.innerHTML='<p class="t-label">ACTIVE WORLD</p><h3>'+d.title+'</h3><p>'+d.body+'</p><a href="'+d.href+'" '+(d.href.startsWith('http')?'target="_blank" rel="noopener"':'')+'>Open world <span>↗</span></a>';
+  box.innerHTML='<p class="t-label"><span class="status-pill '+d.statusClass+'">'+d.status+'</span> '+d.label+'</p><h3>'+d.title+'</h3><p>'+d.body+'</p><a href="'+d.href+'" '+(d.href.startsWith('http')?'target="_blank" rel="noopener"':'')+'>'+(d.status==='NOW'?'Enter Kona.m':'Open prototype')+' <span>↗</span></a>';
 }));
 
 const archData={
