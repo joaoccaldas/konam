@@ -5,9 +5,9 @@ import { readFileSync } from 'node:fs';
 const root=new URL('../../',import.meta.url);
 const read=path=>readFileSync(new URL(path,root),'utf8');
 
-test('About route uses canonical brand authorities without inline styling',()=>{
+test('About route uses Field Guide brand authorities without inline styling',()=>{
   const html=read('about.html');
-  for(const href of ['brand/tokens.css','brand/themes.css','brand/artifacts.css','brand/typography.css','web/styles/components.css','web/styles/system.css','web/styles/about.css']) assert.ok(html.includes(href),`missing ${href}`);
+  for(const href of ['brand/tokens.css','brand/themes.css','brand/artifacts.css','brand/typography.css','web/styles/components.css','web/styles/system.css','web/styles/promo.css']) assert.ok(html.includes(href),`missing ${href}`);
   assert.equal(/<style\b/i.test(html),false);
   assert.equal(/style="/i.test(html),false);
 });
