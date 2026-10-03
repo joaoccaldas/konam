@@ -28,7 +28,7 @@ test('About separates live product from prototypes and roadmap',()=>{
   assert.match(promo,/full 141 are not yet all wired/);
   assert.match(promo,/fuller key, clue and occasional guessing-challenge system is a roadmap mechanic still being built/);
   assert.match(promo,/connected training and performance intelligence are a future layer/i);
-  assert.match(promo,/LAB \/ VISUAL REFERENCE/);
+  assert.match(promo,/status-lab">LAB<\/span> \/ VISUAL REFERENCE/);
   assert.match(promo,/separate studio-kona world prototype/);
   assert.match(promo,/not the current Kona\.m training layer/);
   assert.doesNotMatch(promo,/The collection is real: 14 founding rooms/);
