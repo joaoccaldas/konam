@@ -39,6 +39,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-trust{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;margin-top:15px;color:color-mix(in srgb,var(--brand-mist) 78%,transparent);font:650 10px/1.35 var(--brand-font-ui,var(--sans))}
 #intro.kona-entry .entry-trust>span{display:inline-flex;align-items:center;gap:7px}
 #intro.kona-entry .entry-trust>span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--brand-discovery)}
+#intro.kona-entry .entry-trust a{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 55%,transparent)}#intro.kona-entry .entry-trust a:hover{color:var(--brand-mist)}
 #intro.kona-entry .entry-trust #entryInstall{width:auto;min-height:36px;padding:0;border:0;border-bottom:1px solid rgba(255,255,255,.45);border-radius:0;background:transparent;color:var(--brand-mist)}
 #intro.kona-entry .entry-signin-note{margin:7px 0 0;color:var(--brand-faint);font:500 10px/1.4 var(--brand-font-ui,var(--sans))}
 #intro.kona-entry .entry-product{grid-area:product;position:relative;align-self:stretch;min-height:520px;display:flex;flex-direction:column;justify-content:center}
