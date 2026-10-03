@@ -1,6 +1,6 @@
 # Kona.m
 
-> **Race the version of yourself.**
+> **Race the version of yourself you haven't met yet.**
 
 Kona.m is a mobile-first triathlon companion for race identity, gear, race-week context, stories, challenges and optional immersive 3D exploration.
 
