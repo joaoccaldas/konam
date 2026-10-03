@@ -29,11 +29,11 @@ const historyHtml=`
       <div class="history-proof"><span>PUBLIC STORY</span><b>ANONYMOUS FRONTEND</b><small>personal voice · no founder identity required</small></div>
     </aside>
     <div class="history-timeline">
-      ${history.phases.map(p=>`<article class="history-phase" id="history-${esc(p.id)}"><span class="history-index">${esc(p.index)}</span><div><small>${esc(p.label)}</small><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p><b>${esc(p.truth)}</b></div></article>`).join('\n')}
+      ${history.phases.map(p=>`<article class="history-phase" id="history-${esc(p.id)}"><span class="history-index">${esc(p.index)}</span><div><small>${esc(p.label)}</small><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p><b>${esc(p.truth)}</b></div></article>`).join('\n      ')}
     </div>
   </div>
   <div class="history-principles">
-    ${history.principles.map((p,i)=>`<article><span>0${i+1}</span><h3>${esc(p.title)}</h3><p>${esc(p.body)}</p></article>`).join('\n')}
+    ${history.principles.map((p,i)=>`<article><span>0${i+1}</span><h3>${esc(p.title)}</h3><p>${esc(p.body)}</p></article>`).join('\n    ')}
   </div>
   <p class="history-note t-hand">a company history, except the company is still mostly a question with a very committed website.</p>
 </section>`;
@@ -49,7 +49,7 @@ const filmsHtml=`
     <span>OPTIONAL</span><span>SKIPPABLE</span><span>NO AUTOPLAY AUDIO</span><span>≤ 15 SEC / FILM</span><span>VALUE BEFORE TUTORIAL</span>
   </div>
   <div class="film-groups">
-    ${[...grouped.values()].map(g=>`<section class="film-group"><header><span>${esc(g.label)}</span><div><h3>${esc(g.title)}</h3><p>${esc(g.purpose)}</p></div></header><div class="film-grid">${g.videos.map(v=>`<article class="film-card" data-film-id="${esc(v.id)}"><div class="film-card-top"><b>0${v.index}</b><span>${Math.round(v.duration_seconds)}s</span></div><small>${esc(v.group).toUpperCase()}</small><h4>${esc(v.title)}</h4><p>${esc(v.hook)}</p><div class="film-beats">${v.beats.slice(0,4).map(x=>`<span>${esc(x)}</span>`).join('')}</div></article>`).join('')}</div></section>`).join('\n')}
+    ${[...grouped.values()].map(g=>`<section class="film-group"><header><span>${esc(g.label)}</span><div><h3>${esc(g.title)}</h3><p>${esc(g.purpose)}</p></div></header><div class="film-grid">${g.videos.map(v=>`<article class="film-card" data-film-id="${esc(v.id)}"><div class="film-card-top"><b>0${v.index}</b><span>${Math.round(v.duration_seconds)}s</span></div><small>${esc(v.group).toUpperCase()}</small><h4>${esc(v.title)}</h4><p>${esc(v.hook)}</p><div class="film-beats">${v.beats.slice(0,4).map(x=>`<span>${esc(x)}</span>`).join('')}</div></article>`).join('')}</div></section>`).join('\n    ')}
   </div>
   <div class="film-rule"><strong>Publication rule</strong><p>Playback appears only when a verified repository asset exists. No dead video controls, no local-file paths, no fake “watch” button.</p></div>
 </section>`;
