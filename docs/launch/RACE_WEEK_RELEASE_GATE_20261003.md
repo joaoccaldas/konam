@@ -39,7 +39,7 @@ PR #36 makes these boundaries enforceable in CI.
 - [x] Entry labelled **RACE WEEK BETA**.
 - [x] Unavailable public Sign in removed from entry.
 - [x] About link says **What is Kona.m?**
-- [x] About generated from the existing Field Guide source rather than a second story runtime.
+- [x] Why, About, Origin and Field Guide are separate editorial authorities: product thesis, product definition, optional origin, and usage guide.
 - [x] Questions → first level-unlocked bike → avatar → optional install → Home.
 - [x] First bike writes once to canonical UserEquipment; Collection projects the same record.
 - [x] Bike collection language does not assert physical ownership.
