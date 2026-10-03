@@ -2,7 +2,7 @@
 
 ## 2026-09-27 — photo-aligned museum exhibit
 
-Extended the existing `~/Developer/speedmax-cfr-3d` implementation. Preserved original source and Blend/GLB/HTML assets before edits. Discovery lead `d2b0dc9a2520aecf041c34df87572afebc7e28ff8f40d4ae777d9f70c9c30ded` concerned unrelated katana rendering; current source inspection, not that conversation, established the bike implementation. Project-scoped preflight found no indexed relevant failure, with the hub's coverage limitation retained.
+Extended the existing `<repo-root>` implementation. Preserved original source and Blend/GLB/HTML assets before edits. An earlier discovery lead concerned unrelated rendering work; current source inspection established the bike implementation. Project-scoped preflight found no indexed relevant failure, with the hub's coverage limitation retained.
 
 Fixed interrupted photo reconstruction (disconnected stay sampling, incorrect tube width floor, decal-biased edge fits, false motor-shaped hole, head/fork separation). Integrated photo frame/fork generation, original-graphic sampling, corrected seatpost/extension/cockpit profiles, dimensioned split-nose saddle, subtle Blender surface detail, wheel valves and mould seams. Added a reusable exhibition scene and five close-up/hero cameras.
 
