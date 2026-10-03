@@ -30,19 +30,18 @@ try{
  await page.click('[data-reg-continue]');
  await page.waitForSelector('.onboarding-handoff');await page.click('[data-handoff-continue]');
  await page.waitForFunction(()=>document.querySelector('.kona-bottom-nav')&&!document.querySelector('#konaPanel').hidden);
- assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Home/i,'first run lands directly on Home');
+ assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Now/i,'first run lands on the calm Now surface');
  assert.equal(museumHeavy().length,0,'Home must not request museum/world assets');
 
+ assert.equal(await page.$('.kona-tour'),null,'first Home must not ambush the user with a tutorial');
+ await page.evaluate(async()=>{await window.__konaShell.tour();});
  await page.waitForSelector('.kona-tour');
  assert.match(await page.$eval('.kona-tour',e=>e.textContent),/MAKE IT YOURS|Start with your athlete/i);
- for(let i=0;i<4;i++){
-   await page.click('[data-tour-next]');
-   if(i<3)await page.waitForSelector('[data-tour-next]');
- }
+ await page.click('[data-tour-skip]');
  await page.waitForFunction(()=>!document.querySelector('.kona-tour'));
  assert.equal(await page.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),'seen');
 
- await page.click('[data-tab="me"]');
+ await page.evaluate(async()=>{await window.__konaShell.me();});
  await page.waitForSelector('.race-self-experience');
  await page.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
  assert.ok(personal3D().some(u=>/race-self-stage\.js/i.test(u)),'personal 3D loads only after entering Me/User Studio');
@@ -54,11 +53,15 @@ try{
  assert.match(await page.$eval('#buildSelf',e=>e.textContent),/Continue your Kona/i);
  await page.click('#buildSelf');
  await page.waitForFunction(()=>!document.querySelector('#konaPanel').hidden);
- assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Home/i);
+ assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Now/i);
  assert.equal(await page.evaluate(()=>window.__konaProfile.get().avatarStyle.archetype),'renegade');
  assert.equal(await page.$('.kona-tour'),null);
 
- // Use the actual Discover button, not the removed Studio museum shortcut.
+ // Discover is earned through a meaningful first Find, not exposed by onboarding XP.
+ assert.equal(await page.$eval('[data-tab="discover"]',e=>e.hidden),true,'Discover starts hidden');
+ await page.click('[data-first-find]');
+ await page.waitForFunction(()=>document.querySelector('[data-first-find]')?.disabled);
+ await page.waitForFunction(()=>document.querySelector('[data-tab="discover"]')?.hidden===false);
  await page.click('[data-tab="discover"]');
  await page.waitForSelector('[data-enter-world]');
  await page.click('[data-enter-world]');
@@ -75,7 +78,7 @@ try{
  assert.notEqual(restored.heroPosition,'fixed');
  assert.match(restored.title||'',/Feed/i);
  await page.evaluate(()=>window.__konaShell.now());
- assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Home/i);
+ assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Now/i);
 
  const planPage=await browser.newPage();planPage.setDefaultTimeout(30000);
  await planPage.setViewport({width:390,height:844,isMobile:true,hasTouch:true,deviceScaleFactor:2});
@@ -95,26 +98,12 @@ try{
  await collectionPage.click('[data-compare="components"]');await collectionPage.waitForSelector('#comparison table');
  assert.deepEqual(collectionErrors,[]);await collectionPage.close();
 
- // OTP responses are test fixtures: this never sends real email.
+ // Public email sign-in is deliberately absent from the entry surface.
  const auth=await browser.newPage();auth.setDefaultTimeout(30000);
- await auth.setRequestInterception(true);let otpSeen=false;
- const authErrors=[];auth.on('pageerror',e=>authErrors.push(String(e?.stack||e)));
- auth.on('console',m=>{if(m.type()==='error')authErrors.push(m.text());});
- auth.on('request',req=>{
-   if(!/mtvpnoqwjpoqaiocrklq\.supabase\.co\/auth\/v1\/otp/.test(req.url()))return req.continue();
-   const headers={'access-control-allow-origin':new URL(base).origin,'access-control-allow-methods':'POST, OPTIONS','access-control-allow-headers':'apikey, content-type','content-type':'application/json'};
-   if(req.method()==='OPTIONS')return req.respond({status:204,headers,body:''});
-   otpSeen=true;return req.respond({status:200,headers,body:'{}'});
- });
  await auth.goto(base,{waitUntil:'domcontentloaded'});
- await auth.click('#entrySignIn');await auth.waitForSelector('#saveForm');
- assert.equal(await auth.$eval('#saveForm input[name="email"]',e=>e.disabled),true,'public sign-in must be held until sender and privacy support are ready');
- assert.equal(await auth.$eval('#saveForm button[type="submit"]',e=>e.disabled),true);
- assert.match(await auth.$eval('#saveNote',e=>e.textContent),/unavailable/);
- assert.equal(otpSeen,false,'held sign-in must not submit an email request');
- await auth.click('#continueLocal');
- await auth.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Home');
- assert.deepEqual(authErrors,[]);await auth.close();
+ assert.equal(await auth.$('#entrySignIn'),null,'unavailable sign-in must not be advertised');
+ assert.ok(await auth.$('#buildSelf'),'local-first build action remains available');
+ await auth.close();
 
  const installPage=await browser.newPage();installPage.setDefaultTimeout(30000);
  await installPage.setUserAgent('Mozilla/5.0 (Linux; Android 16; SM-S938B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Mobile Safari/537.36');
@@ -138,5 +127,5 @@ try{
  await installPage.click('#entryInstall');await installPage.waitForFunction(()=>!document.querySelector('[data-pwa-action]')?.hidden);
  assert.match(await installPage.$eval('[data-pwa-action]',e=>e.textContent),/Install KONA now/i);await installPage.close();
  assert.deepEqual(pageErrors,[],'P0 journey must produce zero uncaught page errors');
- console.log('P0 browser journey PASS: optional questions → avatar → Home → tour → Studio persistence → Discover → museum round trip + auth/install');
+ console.log('P0 browser journey PASS: optional questions → avatar → Now → optional tour → first Find unlocks Discover → museum round trip + local-first/install');
 } finally {await browser.close();}

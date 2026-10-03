@@ -4,7 +4,7 @@
 
 - **Live Service Location:** Serving on `http://127.0.0.1:8744/`
 - **Host Process:** Python 3.9 `http.server` (PID: 57589)
-- **Project Root:** `~/Developer/speedmax-cfr-3d`
+- **Project Root:** `<repo-root>`
 - **Key Accessible Endpoints:**
   - `http://127.0.0.1:8744/Canyon_Collection.html` — Chronological collection hub featuring all 6 modeled exhibits and historical cards (1999–2027).
   - `http://127.0.0.1:8744/Speedmax_Museum.html` — Flagship Speedmax CFR AXS (MY2027) 3D interactive exhibit (Aero Lab, Paint Studio, Rider Fit, Exploded view).

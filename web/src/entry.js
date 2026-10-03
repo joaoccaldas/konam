@@ -12,6 +12,7 @@ import { readStorage } from './engine/storage.js';
 import { decodeShare, questLabels } from './quest.js';
 import { renderAvatarRegistration } from './ui/avatar-registration.js';
 import { renderOnboardingQuestions } from './ui/onboarding-questions.js';
+import { renderOnboardingBike } from './ui/onboarding-bike.js';
 import { PRODUCT_NAME } from './product-meta.js';
 
 const intro = document.getElementById('intro');
@@ -158,7 +159,12 @@ function paintQuest(step) {
   if (!host) return;
   host.hidden = false;
   if(step==='questions'){
-    renderOnboardingQuestions(host,{onDone:()=>paintQuest('avatar'),onSkip:()=>paintQuest('avatar')});
+    renderOnboardingQuestions(host,{onDone:()=>paintQuest('bike'),onSkip:()=>paintQuest('avatar')});
+    return;
+  }
+  if(step==='bike'){
+    renderOnboardingBike(host,{onContinue:()=>paintQuest('avatar'),onSkip:()=>paintQuest('avatar')})
+      .catch(()=>paintQuest('avatar'));
     return;
   }
   if(step==='avatar'){

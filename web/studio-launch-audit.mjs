@@ -87,24 +87,24 @@ try{
  assert.equal(await page.evaluate(()=>window.__konaProfile.get().avatarStyle.items.skin.id),'sand');
  await page.click('[data-race-self-action="customize"]');await page.screenshot({path:new URL('avatar-editor-phone.png',out).pathname});await page.keyboard.press('Escape');
  await page.click('[data-race-self-action="progress"]');await page.waitForSelector('[data-hub-drawer]:not([hidden]) #konaAccount');await page.keyboard.press('Escape');
- await page.click('[data-studio-home]');await page.waitForSelector('[data-tab="plan"]',{visible:true});await page.click('[data-tab="plan"]');await page.waitForFunction(()=>document.querySelector('#konaPanelTitle').textContent==='Plan');await page.click('[data-tab="me"]');await page.waitForSelector('[data-race-self-stage]');
- await page.click('[data-studio-home]');await page.waitForSelector('[data-tab="discover"]',{visible:true});await page.click('[data-tab="discover"]');await page.waitForFunction(()=>document.querySelector('#konaPanelTitle').textContent==='Discover');await page.click('[data-tab="me"]');await page.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
- await page.click('[data-studio-home]');await page.waitForSelector('[data-tab="discover"]',{visible:true});await page.click('[data-tab="discover"]');await page.waitForSelector('[data-enter-world]');await page.click('[data-enter-world]');await page.waitForFunction(()=>!!window.__museum,{timeout:60000});
+ await page.click('[data-studio-home]');await page.evaluate(async()=>{await window.__konaShell.plan();});await page.waitForFunction(()=>document.querySelector('#konaPanelTitle').textContent==='Plan');await page.evaluate(async()=>{await window.__konaShell.me();});await page.waitForSelector('[data-race-self-stage]');
+ await page.click('[data-studio-home]');await page.evaluate(async()=>{await window.__konaShell.explore();});await page.waitForFunction(()=>document.querySelector('#konaPanelTitle').textContent==='Discover');await page.evaluate(async()=>{await window.__konaShell.me();});await page.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
+ await page.click('[data-studio-home]');await page.evaluate(async()=>{await window.__konaShell.explore();});await page.waitForSelector('[data-enter-world]');await page.click('[data-enter-world]');await page.waitForFunction(()=>!!window.__museum,{timeout:60000});
  await page.waitForFunction(()=>document.body.classList.contains('walking'),{timeout:60000});
  const hallLinks=await page.evaluate(()=>[...document.querySelectorAll('link[data-style-scope="museum"]')].map(l=>({href:l.getAttribute('href'),disabled:l.disabled})));
  assert.ok(hallLinks.length>=2&&hallLinks.every(x=>x.disabled===false),'museum styles must be enabled inside museum');
  await page.screenshot({path:new URL('museum-phone.png',out).pathname});
  await page.evaluate(()=>window.__konaShell.now());
- await page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Home');
+ await page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Now');
  const afterMuseum=await page.evaluate(()=>({
    overflow:document.documentElement.scrollWidth>innerWidth,
    hall:[...document.querySelectorAll('link[data-style-scope="museum"]')].map(l=>l.disabled),
    homeFont:getComputedStyle(document.querySelector('#konaPanelTitle')).fontFamily,
    homeColor:getComputedStyle(document.querySelector('#konaPanelTitle')).color
  }));
- assert.equal(afterMuseum.overflow,false,'Home after museum must not overflow');
+ assert.equal(afterMuseum.overflow,false,'Now after museum must not overflow');
  assert.ok(afterMuseum.hall.length>=2&&afterMuseum.hall.every(Boolean),'museum styles must be disabled on app surfaces');
- assert.match(afterMuseum.homeFont,/Instrument Serif|Georgia/i,'Home editorial typography must survive museum round trip');
+ assert.match(afterMuseum.homeFont,/Instrument Serif|Georgia/i,'Now editorial typography must survive museum round trip');
  assert.deepEqual(errors,[],'runtime errors');
  report.push({journeys:'avatar persistence, Escape/focus, Progress, Plan, Discover, 3D World',status:'PASS'});
  console.log(JSON.stringify(report,null,2));

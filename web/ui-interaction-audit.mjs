@@ -38,7 +38,7 @@ for(const id of selected){
     if(id==='desktop')await el.click();else await el.tap();
   };
   const text=selector=>p.$eval(selector,e=>e.textContent||'');
-  const waitHome=()=>p.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden&&document.querySelector('#konaPanelTitle')?.textContent==='Home');
+  const waitHome=()=>p.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden&&document.querySelector('#konaPanelTitle')?.textContent==='Now');
   const enter=async()=>{await p.goto(base,{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.__konaShell);};
   const inventory=async surface=>{
     const controls=await p.evaluate(()=>[...document.querySelectorAll('button,a[href],input,select,summary')].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=='hidden'&&!e.closest('[hidden]')).map(e=>{const r=e.getBoundingClientRect();return{tag:e.tagName,label:e.getAttribute('aria-label')||e.textContent?.trim().slice(0,100)||e.getAttribute('placeholder'),disabled:!!e.disabled,width:Math.round(r.width),height:Math.round(r.height),href:e.getAttribute('href')};}));
@@ -56,6 +56,8 @@ for(const id of selected){
       await p.waitForSelector('[data-onboarding-question]');await inventory('onboarding');
       await p.screenshot({path:path.join(out,prefix+'-onboarding.png')});
       for(const answer of ['dreaming','never','ocean','seen','review'])await click('[data-onboarding-answer="'+answer+'"]');
+      await p.waitForFunction(()=>document.querySelector('[data-onboarding-bike]')||document.querySelector('.registration-avatar'));
+      if(await p.$('[data-onboarding-bike]'))await click('[data-onboarding-bike-skip]');
       await p.waitForSelector('.registration-avatar');
       const data=await p.evaluate(()=>({answers:JSON.parse(localStorage.getItem('kona.entryIntent.v1')),progress:JSON.parse(localStorage.getItem('kona.progression.v1'))}));
       assert.equal(data.answers.answers['kona-intent'],'dreaming');assert.equal(data.answers.completed,true);
@@ -66,20 +68,33 @@ for(const id of selected){
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.cards.v1')),'seen');
       assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),75);
     });
-    await step('avatar registration choices persist and first-run tour can finish',async()=>{
+    await step('avatar registration persists, first Home stays calm, and manual tour can finish',async()=>{
       await click('[data-reg-archetype="aero"]');await click('[data-reg-trisuit="aero-panel"]');
       await click('[data-reg-continue]');await p.waitForSelector('.onboarding-handoff');await inventory('install-rotate-handoff');await p.screenshot({path:path.join(out,prefix+'-handoff.png')});await click('[data-handoff-continue]');await waitHome();
+      assert.equal(await p.$('.kona-tour'),null,'fresh Home must not auto-open the tutorial');
+      assert.match(await text('#konaPanelBody'),/KONA NOW|YOUR RACE SELF/i,'fresh Home must explain the useful core immediately');
+      assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),null,'manual tour must remain available until explicitly opened');
+      await p.evaluate(async()=>{await window.__konaShell.tour();});
       await p.waitForSelector('.kona-tour');
-      for(let i=0;i<4;i++){assert.equal(await p.$eval('.tour-target',e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'}),true,'tour must highlight a visible control');await click('[data-tour-next]');}
+      let tourStepsSeen=0;
+      while(await p.$('.kona-tour')){
+        assert.ok(tourStepsSeen<6,'manual tour must remain finite');
+        assert.equal(await p.$eval('.tour-target',e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'}),true,'tour must highlight a visible control');
+        tourStepsSeen+=1;await click('[data-tour-next]');
+      }
+      assert.ok(tourStepsSeen>=3,'progressive first-run tour should explain at least three visible hooks');
       await p.waitForFunction(()=>!document.querySelector('.kona-tour'));
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),'seen');
     });
-    await step('Home actions and five-tab navigation reach their declared surfaces',async()=>{
+    await step('Now actions and canonical routes reach their declared surfaces',async()=>{
       assert.equal(await p.$eval('.kona-user-menu',e=>getComputedStyle(e).display),'none','panel navigation must not be covered by the floating Studio shortcut');
-      for(const [selector,title] of [['[data-home-plan]','Plan'],['[data-home-garage]','Garage'],['[data-home-discover]','Discover']]){
+      for(const [selector,title] of [['[data-home-plan]','Plan'],['[data-home-garage]','Garage']]){
         await click(selector);await p.waitForFunction(t=>document.querySelector('#konaPanelTitle')?.textContent===t,{},title);
         await inventory(title);await click('[data-tab="home"]');await waitHome();
       }
+      await p.evaluate(async()=>{await window.__konaShell.explore();});
+      await p.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Discover');
+      await inventory('Discover');await click('[data-tab="home"]');await waitHome();
       await click('[data-home-self]');await p.waitForSelector('.race-self-experience');await inventory('User Studio');
     });
     let raceId;
@@ -105,7 +120,7 @@ for(const id of selected){
       assert.equal(rows.filter(r=>r.race_id===raceId).length,1);assert.equal(rows.find(r=>r.race_id===raceId).result.bib,'TEST-7');
     });
     await step('race state survives reload and Remove actually removes the saved card',async()=>{
-      await enter();await click('#buildSelf');await waitHome();await click('[data-tab="me"]');
+      await enter();await click('#buildSelf');await waitHome();await click('[data-home-self]');
       await click('[data-race-self-action="races"]');await p.waitForSelector('[data-race-badges] [data-remove-race]');
       assert.match(await text('[data-race-badges]'),/Registered/);
       await click('[data-race-badges] [data-remove-race]');
@@ -138,7 +153,7 @@ for(const id of selected){
       assert.match(await text('[data-hub-body]'),/Level road|LEVEL [23]/);await inventory('Progress');
       await click('[data-hub-close]');await click('[data-race-self-action="tour"]');
       await p.waitForSelector('.kona-tour');await click('[data-tour-skip]');await p.waitForFunction(()=>!document.querySelector('.kona-tour'));
-      await click('[data-tab="me"]');
+      await click('[data-home-self]');
     });
     await step('first Find earns once, all 100 slots and filters work, and Item Studio loads the actual model',async()=>{
       await click('[data-studio-home]');await waitHome();
@@ -157,7 +172,7 @@ for(const id of selected){
       await click('[data-finds-back]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);await click('[data-studio-home]');await waitHome();
       assert.equal(await p.$eval('[data-first-find]',e=>e.disabled),true);
       assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),earned.xp);
-      await click('[data-tab="me"]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
+      await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
     await step('countdown defaults to seconds, normal/timezone persist, and traveller brief has useful sourced links',async()=>{
       await click('[data-studio-home]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'seconds');
@@ -168,7 +183,7 @@ for(const id of selected){
       assert.match(await text('#konaPanelBody'),/Land at KOA|THE INTERN|Official websites & social/);
       assert.equal((await p.$$('.kona-brief-thumbnail')).length,2);assert.ok((await p.$$('a[href*="airports.hawaii.gov"]')).length>=3);await inventory('What matters most');
       await click('[data-tab="home"]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'normal');
-      await click('[data-tab="me"]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
+      await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
     await step('sharing exports a real PNG, handles cancellation, and preserves private data',async()=>{
       await click('[data-race-self-action="share"]');await p.waitForSelector('[data-hub-drawer]:not([hidden])');

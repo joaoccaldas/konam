@@ -5,10 +5,9 @@ const html=fs.readFileSync(new URL('../landing.template.html',import.meta.url),'
 const shell=fs.readFileSync(new URL('../src/ui/kona-shell.js',import.meta.url),'utf8');
 const system=fs.readFileSync(new URL('../styles/system.css',import.meta.url),'utf8');
 const studio=fs.readFileSync(new URL('../studio.template.html',import.meta.url),'utf8');
-const hardener=fs.readFileSync(new URL('../../tools/harden_pages.mjs',import.meta.url),'utf8');
 
-test('landing always exposes Enter, Sign in and Install',()=>{
-  assert.match(html,/id="buildSelf"/);assert.match(html,/id="entrySignIn"/);assert.match(html,/id="entryInstall"/);
+test('landing always exposes Enter and Install without advertising unavailable sign-in',()=>{
+  assert.match(html,/id="buildSelf"/);assert.match(html,/id="entryInstall"/);assert.doesNotMatch(html,/id="entrySignIn"/);
 });
 test('one helper leaves intro and supports canonical consumer routes',()=>{
   assert.match(entry,/function enterApp\(first = 'home'\)/);
@@ -28,7 +27,7 @@ test('avatar setup can be escaped and does not trap the visitor',()=>{
   assert.match(entry,/onContinue:\(\)=>paintQuest\('install'\)/);
   assert.match(entry,/data-handoff-continue[\s\S]*enterApp\('home'\)/);
 });
-test('sign in is optional and exposes Continue without account',()=>{
+test('local-first continuation remains available without an account',()=>{
   assert.match(entry,/Continue without account/);assert.match(entry,/continueLocal/);assert.match(entry,/enterApp\('home'\)/);
 });
 test('P0 entry uses canonical storage adapter, never raw localStorage',()=>{
@@ -36,7 +35,6 @@ test('P0 entry uses canonical storage adapter, never raw localStorage',()=>{
   assert.equal(/localStorage/.test(entry),false);
   assert.equal(/speedmax\.(?:entryIntent|konaSelf)/.test(entry),false);
 });
-
 test('User Studio is reachable from every primary surface',()=>{
   assert.match(shell,/data-user-studio/);
   assert.match(shell,/routeToUserStudio/);

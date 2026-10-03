@@ -23,8 +23,8 @@ test('equipment reveals Garage without pretending it is a world discovery',()=>{
 test('meaningful exploration reveals Discover',()=>{
   const byFind={progression_engine:progression({discoveries:['find:shore:lava']})};
   assert.deepEqual(navigationForState(byFind),['home','discover']);
-  const byLevel={progression_engine:progression({level:2})};
-  assert.deepEqual(navigationForState(byLevel),['home','discover']);
+  const byLevel={progression_engine:progression({level:5})};
+  assert.deepEqual(navigationForState(byLevel),['home'],'XP alone must not expose Discover before a real exploration event');
 });
 
 test('race context reveals Plan',()=>{

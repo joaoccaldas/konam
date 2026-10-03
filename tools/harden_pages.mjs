@@ -46,8 +46,8 @@ const PAGES = [
     title: 'Speedmax Nights & History Lane · Canyon Speedmax Museum',
     description: 'Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.', keepTitle: true },
   { file: 'about.html', type: 'AboutPage', image: 'assets/share/konam.png',
-    title: 'About this company · Kona.m',
-    description: 'Why Kona.m exists, told three ways: short, scenic and unfiltered.', keepTitle: true },
+    title: 'About Kona.m · the Field Guide to the world, the game & the lab',
+    description: 'What Kona.m is and how to play it: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain it all.' },
   { file: 'promo.html', type: 'WebPage', image: 'assets/share/konam.png',
     title: 'Kona.m Field Guide · how to play, worlds, bikes & experiments',
     description: 'A playful public guide to Kona.m: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain what this app actually is.', keepTitle: true },
@@ -142,6 +142,18 @@ function block(p) {
 <!--harden:end-->`;
 }
 
+
+// About is the Field Guide. promo.html is the single source; about.html is generated from it
+// so the two pages cannot drift. Only the page's own canonical/og:url and its head block differ.
+const MIRRORS = { 'about.html': 'promo.html' };
+for (const [target, source] of Object.entries(MIRRORS)) {
+  const html = fs.readFileSync(path.join(root, source), 'utf8')
+    .replace(/<!--harden:start-->[\s\S]*?<!--harden:end-->\n?/, '')
+    .replace(/(<link rel="canonical" href="[^"]*\/)promo\.html(")/g, `$1${target}$2`)
+    .replace(/(<meta property="og:url" content="[^"]*\/)promo\.html(")/g, `$1${target}$2`);
+  fs.writeFileSync(path.join(root, target), html);
+}
+
 for (const p of PAGES) {
   const f = path.join(root, p.file); if (!fs.existsSync(f)) continue;
   let html = fs.readFileSync(f, 'utf8').replace(/<!--harden:start-->[\s\S]*?<!--harden:end-->\n?/, '');
@@ -200,7 +212,7 @@ ${BRANDS.length ? `- Brand-room studies: ${BRANDS.join('; ')}.` : ''}
 - Photographs are openly licensed (Wikimedia Commons, CC BY / CC BY-SA); authors and licences are shown beside every image.
 
 ## Privacy
-No accounts, no analytics, no cookies, no tracking by default. The Passport and settings stay in the visitor's own browser (localStorage). Public email sign-in is currently unavailable. Existing signed-in users may explicitly back up, restore or delete their cloud backup. See privacy.html for the beta data notice and remaining account launch requirements.
+No account is required. The public web beta uses privacy-minimal first-party session analytics without advertising cookies, account IDs, precise location, raw feedback text or a persistent visitor identifier; the packaged native app does not enable that public-web analytics path. Passport and settings stay local-first. Public email sign-in is currently unavailable. Existing signed-in users may explicitly back up, restore or delete their cloud backup. See privacy.html for the beta data notice and remaining account launch requirements.
 `);
 const roomsMd = fs.existsSync(path.join(root, 'docs/ROOMS.md')) ? fs.readFileSync(path.join(root, 'docs/ROOMS.md'), 'utf8') : '';
 const islandGuide = fs.existsSync(path.join(root, 'museum/kona/island-guide.json')) ? JSON.parse(fs.readFileSync(path.join(root, 'museum/kona/island-guide.json'), 'utf8')) : null;
@@ -234,7 +246,7 @@ ${roomsMd}
 ${guideLines}
 
 ## Privacy and app behavior
-No account is required. No default analytics, ad trackers or background location tracking. Profile, Passport, finds and saved app state are local-first unless a future sync feature is explicitly enabled by the visitor.
+No account is required. No ad trackers or background location tracking. The public web beta uses privacy-minimal first-party session analytics; the packaged native app does not enable that public-web analytics path. Profile, Passport, finds and saved app state are local-first unless sync is explicitly enabled by the visitor.
 `);
 
 console.log('hardened', PAGES.map(p => p.file).join(', '));

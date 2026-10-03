@@ -275,7 +275,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 .handoff-mark{position:absolute;right:18px;top:12px;font:400 70px/.8 var(--brand-font-editorial);color:var(--brand-action);transform:rotate(7deg)}
 .phone-rotate{position:absolute;right:18px;top:18px;width:86px;height:74px}.phone-rotate i{position:absolute;left:5px;top:13px;width:32px;height:56px;border:2px solid currentColor;border-radius:9px;transform:rotate(-18deg);opacity:.7}.phone-rotate b{position:absolute;right:0;top:0;font:400 54px/1 var(--brand-font-editorial);color:var(--brand-action)}
 .rotate-tip.is-landscape .phone-rotate i{width:56px;height:32px;left:0;top:24px;transform:none}.rotate-tip.is-landscape .phone-rotate b{opacity:.35}
-.onboarding-handoff>.quest-nav{display:flex;justify-content:flex-end;padding:0}
+.onboarding-handoff>.quest-nav{display:flex;justify-content:flex-end;padding:0}.onboarding-handoff>.quest-nav .btn-primary{min-height:calc(var(--brand-touch) + 1px)}
 @media(max-width:620px){.onboarding-handoff{min-height:auto;padding:18px 0}.onboarding-handoff-grid{grid-template-columns:1fr}.onboarding-tip{min-height:220px}.onboarding-tip h3{font-size:30px}.onboarding-handoff>.quest-nav .btn-primary{width:100%}}
 @media(orientation:landscape) and (max-height:520px){.onboarding-handoff{min-height:auto;gap:10px}.onboarding-handoff-copy h2{font-size:38px}.onboarding-handoff-copy>p:last-child{display:none}.onboarding-handoff-grid{grid-template-columns:1fr 1fr}.onboarding-tip{min-height:190px;padding:14px}.onboarding-tip h3{font-size:26px}.onboarding-tip .btn-primary{left:14px;bottom:14px}.phone-rotate{transform:scale(.8);transform-origin:top right}}
 
