@@ -79,15 +79,17 @@ Additional locales belong behind complete runtime extraction, translated metadat
 
 A user must be able to understand, personalize and navigate the core app without loading the immersive world. High-fidelity 3D is used where it creates meaning, product understanding or memorable discovery, not as a default rendering tax.
 
-## About/company story
+## Public story surfaces
 
-The public About surface may explain the origin through three depths:
+**About / Field Guide** explains the product: what Kona.m is, how it unfolds, how to use it, and how the deeper world fits together.
+
+**Why Kona** owns the personal origin story through three continuous depths:
 
 - Short
 - Scenic Route
 - Unfiltered / ADHD
 
-The story stays anonymous on the frontend. It can be personal in voice without identifying the builder by name.
+About links to Why Kona but does not retell the origin story. Why Kona stays anonymous on the frontend: personal in voice without identifying the builder by name.
 
 ## Launch decision rule
 
