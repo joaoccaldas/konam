@@ -15,12 +15,12 @@ An independent, unofficial fan and research project. Not affiliated with, endors
 - [About Kona.m · what the product is and how it works](https://joaoccaldas.github.io/konam/about.html): What Kona.m is: an independent triathlon world for identity, 3D bikes, equipment, places, stories, collections, race context and playful exploration.
 - [Origin story · Kona.m](https://joaoccaldas.github.io/konam/origin.html): The optional origin story behind Kona.m: returning to triathlon, an Excel sheet, AI, bikes, 3D, rooms, side quests and an island.
 - [Kona.m Field Guide · how to play, worlds, bikes & experiments](https://joaoccaldas.github.io/konam/promo.html): A playful public guide to Kona.m: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain what this app actually is.
-- [Canyon Museum — SpeedMax 3.0 (2007)](https://joaoccaldas.github.io/konam/Speedmax_2007_Museum.html): 
-- [Canyon Museum — Speedmax AL 9.0 (2011)](https://joaoccaldas.github.io/konam/Speedmax_AL_2011_Museum.html): 
-- [Canyon Museum — Speedmax CF 9.0 Pro (2011)](https://joaoccaldas.github.io/konam/Speedmax_CF_2011_Museum.html): 
+- [Canyon Museum — SpeedMax 3.0 (2007)](https://joaoccaldas.github.io/konam/Speedmax_2007_Museum.html): Interactive 3D exhibit for Canyon Museum — SpeedMax 3.0 (2007), with sourced specifications, geometry notes, component details and documented model uncertainty.
+- [Canyon Museum — Speedmax AL 9.0 (2011)](https://joaoccaldas.github.io/konam/Speedmax_AL_2011_Museum.html): Interactive 3D exhibit for Canyon Museum — Speedmax AL 9.0 (2011), with sourced specifications, geometry notes, component details and documented model uncertainty.
+- [Canyon Museum — Speedmax CF 9.0 Pro (2011)](https://joaoccaldas.github.io/konam/Speedmax_CF_2011_Museum.html): Interactive 3D exhibit for Canyon Museum — Speedmax CF 9.0 Pro (2011), with sourced specifications, geometry notes, component details and documented model uncertainty.
 - [Canyon Museum — Speedmax CFR AXS (2027)](https://joaoccaldas.github.io/konam/Speedmax_Museum.html): Speedmax CFR AXS (2027) — an unofficial, fully procedural Blender model you can explode, ride, inspect and repaint in the browser.
 - [Canyon Museum — Speedmax CF SLX 8 Di2 (2027)](https://joaoccaldas.github.io/konam/Speedmax_SLX_Museum.html): Speedmax CF SLX 8 Di2 (2027) — an unofficial, fully procedural Blender model you can explode, ride, inspect and repaint in the browser.
-- [Canyon Museum — Speedmax Three (2005)](https://joaoccaldas.github.io/konam/Speedmax_Three_2005_Museum.html): 
+- [Canyon Museum — Speedmax Three (2005)](https://joaoccaldas.github.io/konam/Speedmax_Three_2005_Museum.html): Interactive 3D exhibit for Canyon Museum — Speedmax Three (2005), with sourced specifications, geometry notes, component details and documented model uncertainty.
 
 ## Facts and sources
 - Bikes are unofficial procedural Blender reconstructions calibrated against published photographs and geometry; each exhibit lists its sources and known uncertainties.
