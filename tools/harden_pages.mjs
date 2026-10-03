@@ -61,7 +61,8 @@ const PAGES = [
 for (const f of fs.readdirSync(root).filter(f => /^Speedmax_.*_?Museum\.html$/.test(f))) {
   const html = fs.readFileSync(path.join(root, f), 'utf8');
   const t = html.match(/<title>([^<]*)<\/title>/)?.[1] || f;
-  const d = html.match(/<meta name="description" content="([^"]*)"/)?.[1] || '';
+  const existingDescription = html.match(/<meta name="description" content="([^"]*)"/)?.[1]?.trim() || '';
+  const d = existingDescription || `Interactive 3D exhibit for ${t}, with sourced specifications, geometry notes, component details and documented model uncertainty.`;
   PAGES.push({ file: f, type: 'WebPage', image: 'assets/share/museum.jpg', title: t, description: d, keepTitle: true });
 }
 
