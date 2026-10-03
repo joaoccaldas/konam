@@ -180,8 +180,10 @@ for(const id of selected){
       await p.select('.home-today [aria-label="Countdown timezone"]','Europe/Stockholm');
       assert.match(await text('.home-today [data-clock-target]'),/Europe\/Stockholm/);
       await click('[data-home-plan]');await p.waitForSelector('[data-kona-weather]');
-      assert.match(await text('#konaPanelBody'),/Land at KOA|THE INTERN|Official websites & social/);
-      assert.equal((await p.$$('.kona-brief-thumbnail')).length,2);assert.ok((await p.$$('a[href*="airports.hawaii.gov"]')).length>=3);await inventory('What matters most');
+      assert.match(await text('#konaPanelBody'),/RACE WEEK|Arrival without drama|THE INTERN/);
+      assert.equal((await p.$$('.plan-priority-card')).length,3,'Plan should lead with three glanceable priorities');
+      assert.ok((await p.$$('.plan-day')).length>=1,'race-week timeline must be visual');
+      assert.ok((await p.$$('a[href*="airports.hawaii.gov"]')).length>=2);await inventory('Plan cockpit');
       await click('[data-tab="home"]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'normal');
       await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
