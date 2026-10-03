@@ -83,6 +83,19 @@ body.walking #rail{transform:none}
 .chip.zombie .n{background:radial-gradient(circle at 50% 55%,#d2e06a,#16180c 72%);color:#1a1c08}
 .chip.atlas .n{background:conic-gradient(#fbf9f5 0 83%,#c8161d 0 84%,#fbf9f5 0);box-shadow:inset 0 0 0 2px #12181d;color:#12181d}
 .chip.ghost .n{background:transparent;border:1px dashed rgba(18,24,29,.25);color:var(--faint)}
+/* room dock: floor tabs over one scrolling row (web/src/world/room-dock.js) */
+#rail.dock{flex-direction:column;align-items:center;gap:6px}
+.dock-tabs{display:flex;gap:2px;padding:4px;border-radius:999px;background:rgba(251,249,245,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);max-width:100%;overflow-x:auto;scrollbar-width:none}
+.dock-tabs::-webkit-scrollbar{display:none}
+.dock-tabs button{flex:0 0 auto;min-height:40px;padding:0 16px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--muted);transition:background .2s,color .2s}
+.dock-tabs button:hover{color:var(--ink)}
+.dock-tabs button[aria-selected=true]{background:var(--ink);color:var(--paper)}
+.dock-tabs i{font-style:normal;font-size:11px;margin-left:7px;opacity:.55}
+.dock-tabs button:focus-visible,.chip:focus-visible{outline:2px solid var(--brand-sunrise,#ff6a00);outline-offset:2px}
+.chip.brand-room .n{background:var(--swatch,#c9a13b);color:#fff}
+.chip.locked{opacity:.6}
+.chip.locked .n{filter:grayscale(.85)}
+#rail.dock .chip small{letter-spacing:.02em;font-weight:500}
 .chip span{display:flex;flex-direction:column;gap:2px}
 .chip small{font-size:10px;letter-spacing:.12em;color:var(--faint);font-weight:600}
 .chip.on small{color:#9fb0ba}

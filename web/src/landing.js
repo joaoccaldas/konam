@@ -20,6 +20,7 @@ import { buildWings } from './engine/wing.js';
 import { renderCard, bikeCard, paintingCard, sculptureCard, photoCard, roomCard } from './engine/card.js';
 import { initMap } from './map.js';
 import { roomOverview, withFutureLevels } from './world/map-model.js';
+import { dockEntries, mountRoomDock } from './world/room-dock.js';
 import { renderSettings } from './engine/profile.js';
 import { captureView, shareImage } from './engine/share.js';
 import { buildBrandRoom, loadBrandRoom, makeBrandLoader } from './engine/roomscene.js';
@@ -1119,7 +1120,7 @@ function visitChamp(c) {
   if (current && current.exT > 0) setExploded(current, false);
   closeCard(); champ = c;
   route(c.view, c.face, null); path.champ = c;
-  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === 'kona'));
+  dock?.setActive('room:kona');
 }
 function openChamp(c) {
   champ = c;
@@ -1135,6 +1136,7 @@ function openChamp(c) {
   $('cMedia').innerHTML = `<figure class="c-photo"><img src="${esc(c.photo.src)}" alt="${esc(c.athlete)} — ${esc(c.photoCaption)}" referrerpolicy="no-referrer"><figcaption>${esc(c.photoCaption)}<br><a href="${esc(c.photo.page)}" target="_blank" rel="noopener">© ${esc(c.photo.author)} · ${esc(c.photo.license)} ↗</a></figcaption></figure>`
     + (m ? `<p class="c-note" style="margin-top:14px"><b class="c-spec">${esc(m.name)}</b>${esc(m.text)} The size-M study of that generation stands in this room.</p>` : '')
     + `<a class="c-src" href="${esc(c.source)}" target="_blank" rel="noopener">Race record ↗</a>`;
+  dropBrokenPhotos($('cMedia'));
   const next = champs[(c.index + 1) % champs.length];
   $('cActions').innerHTML = `<button class="btn primary" id="cNextChamp">Next: ${esc(String(next.year))} <span aria-hidden="true">→</span></button><button class="btn ghost" id="cHall">Back to the hall</button>`;
   $('cNextChamp').onclick = () => visitChamp(next);
@@ -1149,7 +1151,7 @@ function visitWyld(v) {
   if (current && current.exT > 0) setExploded(current, false);
   closeCard(); champ = null;
   route(v.view, v.face, null); path.wyld = v;
-  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === 'wyld'));
+  dock?.setActive('room:wyld');
 }
 
 // A brand room product (Nike shoe today, any gear tomorrow): walk over, face it, open its card.
@@ -1158,7 +1160,7 @@ function visitBrand(p) {
   closeCard(); champ = null;
   loadBrand();
   route(p.view, p.face, null); path.brand = p;
-  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === p.room));
+  dock?.setActive('room:' + p.room);
 }
 function openBrand(p) {
   $('cYears').textContent = `${p.brand} · ${p.year || ''}`.trim();
@@ -1189,7 +1191,7 @@ function openWyld(v) {
   $('cMedia').innerHTML = `<div class="c-dyes">${Object.entries(P2).map(([k, c]) => `<span style="background:${c}" title="${k} ${c}"></span>`).join('')}</div>`
     + `<p class="c-view">Through the window: ${esc(V.caption)}. <a href="${esc(V.page)}" target="_blank" rel="noopener">© ${esc(V.author)} · ${esc(V.license)} ↗</a> (${esc(V.changes)})</p>`;
   const next = wyldBikes[(v.index + 1) % wyldBikes.length];
-  $('cActions').innerHTML = `<a class="btn primary" href="${esc(studioLink(v))}"><span class="long">Open in&nbsp;</span>3D studio <span aria-hidden="true">→</span></a><button class="btn ghost" id="cNextDye">Next<span class="long">:&nbsp;${esc(next.name.replace('WYLD ', ''))}</span> <span aria-hidden="true">→</span></button>`;
+  $('cActions').innerHTML = `<a class="btn primary" href="${esc(studioLink(v))}"><span><span class="long">Open in&nbsp;</span>3D studio</span> <span aria-hidden="true">→</span></a><button class="btn ghost" id="cNextDye">Next<span><span class="long">:&nbsp;${esc(next.name.replace('WYLD ', ''))}</span></span> <span aria-hidden="true">→</span></button>`;
   $('cNextDye').onclick = () => visitWyld(next);
   $('card').classList.add('on'); document.body.classList.add('card-open');
 }
@@ -1199,6 +1201,7 @@ function openInfo(n) {
   $('cYears').textContent = n.eyebrow; $('cName').textContent = n.title; $('cMat').textContent = n.sub; $('cNote').textContent = n.text;
   $('cStats').hidden = true;
   $('cMedia').innerHTML = n.photo ? `<figure class="c-photo"><img src="${esc(n.photo.src)}" alt="${esc(n.photo.caption)}" referrerpolicy="no-referrer"><figcaption>${esc(n.photo.caption)}<br><a href="${esc(n.photo.page)}" target="_blank" rel="noopener">© ${esc(n.photo.author)} · ${esc(n.photo.license)} ↗</a></figcaption></figure>` : '';
+  dropBrokenPhotos($('cMedia'));
   $('cActions').innerHTML = `<button class="btn ghost" id="cInfoClose">Keep walking</button>`;
   $('cInfoClose').onclick = () => closeCard();
   $('card').classList.add('on'); document.body.classList.add('card-open');
@@ -1209,7 +1212,7 @@ function visitPier(target) {                                          // target:
   if (current && current.exT > 0) setExploded(current, false);
   closeCard(); champ = null; pier.load(); loadPierBike();
   route(target.view, target.face, null); path.pier = target;
-  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === 'pier'));
+  dock?.setActive('room:pier');
 }
 const credit = c => `<a href="${esc(c.source.page)}" target="_blank" rel="noopener">© ${esc(c.source.author)} · ${esc(c.source.license)} ↗</a>`;
 const paintingFig = c => `<figure class="c-photo"><img src="assets/kona-years/${esc(c.id)}.jpg" alt="${esc(c.caption)}, as a painted canvas"><figcaption>${esc(c.caption)}<br>Painted from a Wikimedia Commons photograph: ${credit(c)} · the canvas carries the same licence</figcaption></figure>`;
@@ -1226,7 +1229,7 @@ function openYear(s) {
   $('cMedia').innerHTML = (s.canvasInfo ? paintingFig(s.canvasInfo) : '')
     + `<p class="c-view">${s.sources.map((u, i) => `<a href="${esc(u)}" target="_blank" rel="noopener">Source ${i + 1} ↗</a>`).join(' · ')}</p>`;
   const next = pier.stations[s.index + 1];
-  $('cActions').innerHTML = `<button class="btn primary" id="cNextYear">${next ? `Next: ${next.year}` : 'To the finish'} <span aria-hidden="true">→</span></button><button class="btn ghost" id="cHall">Back<span class="long"> to the hall</span></button>`;
+  $('cActions').innerHTML = `<button class="btn primary" id="cNextYear">${next ? `Next: ${next.year}` : 'To the finish'} <span aria-hidden="true">→</span></button><button class="btn ghost" id="cHall"><span>Back<span class="long"> to the hall</span></span></button>`;
   $('cNextYear').onclick = () => visitPier(next || pier.finale);
   $('cHall').onclick = () => { closeCard(); yearSel = null; route({ x: 0, z: -37.2 }, null, null); };
   $('card').classList.add('on'); document.body.classList.add('card-open');
@@ -1248,7 +1251,7 @@ function openFinale() {
   $('cNote').textContent = 'Twelve Octobers end here, under the arch: the current Speedmax CFR, turning slowly over Kailua Bay. Step into its studio to take it apart, paint it, or put it in the wind tunnel.';
   $('cStats').hidden = !cfr?.stats; if (cfr?.stats) $('cStats').innerHTML = cfr.stats.map(([b, s2]) => `<div><b>${esc(b)}</b><small>${esc(s2)}</small></div>`).join('');
   $('cMedia').innerHTML = '';
-  $('cActions').innerHTML = (cfr?.viewer ? `<a class="btn primary" href="${esc(cfr.viewer)}"><span class="long">Enter </span>3D studio <span aria-hidden="true">→</span></a>` : '') + `<button class="btn ghost" id="cBackYears">Back to 2014</button>`;
+  $('cActions').innerHTML = (cfr?.viewer ? `<a class="btn primary" href="${esc(cfr.viewer)}"><span><span class="long">Enter </span>3D studio</span> <span aria-hidden="true">→</span></a>` : '') + `<button class="btn ghost" id="cBackYears">Back to 2014</button>`;
   $('cBackYears').onclick = () => visitPier(pier.stations[0]);
   $('card').classList.add('on'); document.body.classList.add('card-open');
 }
@@ -1258,7 +1261,7 @@ function visitHween() {
   if (current && current.exT > 0) setExploded(current, false);
   closeCard(); champ = null; loadHweenBike();
   route(hween.piece.view, hween.piece.face, null); path.hween = true;
-  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === 'hween'));
+  dock?.setActive('room:hween');
 }
 function openHween() {
   current = null; champ = null;
@@ -1268,7 +1271,7 @@ function openHween() {
   $('cNote').textContent = 'Once a year the lava field under the museum wakes up. The lanterns are carved, the bats are out, and the MY2027 Speedmax CFR wears black and ember. The paint is ours, made for the night — not a Canyon colourway. The skeleton is still waiting for its finish line.';
   $('cStats').hidden = !cfr?.stats; if (cfr?.stats) $('cStats').innerHTML = cfr.stats.map(([b, s2]) => `<div><b>${esc(b)}</b><small>${esc(s2)}</small></div>`).join('');
   $('cMedia').innerHTML = '';
-  $('cActions').innerHTML = (cfr?.viewer ? `<a class="btn primary" href="${esc(cfr.viewer)}"><span class="long">Enter </span>3D studio <span aria-hidden="true">→</span></a>` : '') + `<button class="btn ghost" id="cHweenOut">Back<span class="long"> to the hall</span></button>`;
+  $('cActions').innerHTML = (cfr?.viewer ? `<a class="btn primary" href="${esc(cfr.viewer)}"><span><span class="long">Enter </span>3D studio</span> <span aria-hidden="true">→</span></a>` : '') + `<button class="btn ghost" id="cHweenOut"><span>Back<span class="long"> to the hall</span></span></button>`;
   $('cHweenOut').onclick = () => { closeCard(); route({ x: -1, z: 2.5 }, null, null); };
   $('card').classList.add('on'); document.body.classList.add('card-open');
 }
@@ -1278,7 +1281,7 @@ function visitSanctuary(film) {
   if (current && current.exT > 0) setExploded(current, false);
   closeCard(); champ = null;
   route(film.view, film.face, null); path.sanctuary = film;
-  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === 'sanctuary'));
+  dock?.setActive('room:sanctuary');
 }
 function openSanctuary(film) {
   current = null; champ = null;
@@ -1290,7 +1293,7 @@ function openSanctuary(film) {
   const dyes = film.stops.map(c => `<span style="background:${c}" title="${c}"></span>`).join('');
   $('cMedia').innerHTML = `<div class="c-dyes">${dyes}</div><p class="c-view">${esc(film.tagline)}</p>`;
   const next = sanctuary.films[(film.index + 1) % sanctuary.films.length];
-  $('cActions').innerHTML = `<a class="btn primary" href="https://joaoccaldas.github.io/ai/studio/wyld-store/bike-porn/#${esc(film.id)}">Watch the film <span aria-hidden="true">→</span></a><button class="btn ghost" id="cNextFilm">Next<span class="long">: ${esc(next.name)}</span></button>`;
+  $('cActions').innerHTML = `<a class="btn primary" href="https://joaoccaldas.github.io/ai/studio/wyld-store/bike-porn/#${esc(film.id)}">Watch the film <span aria-hidden="true">→</span></a><button class="btn ghost" id="cNextFilm"><span>Next<span class="long">: ${esc(next.name)}</span></span></button>`;
   $('cNextFilm').onclick = () => visitSanctuary(next);
   $('card').classList.add('on'); document.body.classList.add('card-open');
 }
@@ -1299,7 +1302,7 @@ function visitGallery(spot) {
   if (current && current.exT > 0) setExploded(current, false);
   closeCard(); champ = null;
   route(spot.view, spot.face, null); path.gallery = spot;
-  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === 'gallery'));
+  dock?.setActive('room:' + (spot.specimen ? 'room-' : 'bay-') + spot.id);
 }
 function openGallery(spot) {
   current = null; champ = null;
@@ -1313,7 +1316,7 @@ function visitAtlas(inst) {                                           // a bike 
   if (current && current.exT > 0) setExploded(current, false);
   closeCard(); champ = null;
   route(inst.view, inst.face, null); path.atlas = inst;
-  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === `wing-${inst.room?.wing}`));
+  dock?.setActive('room:' + `wing-${inst.room?.wing}`);
 }
 function visitArt(item) { closeCard(); champ = null; route(item.view, item.face, null); path.art = item; }
 function visitAtlasRoom(room) {
@@ -1437,16 +1440,7 @@ function enter() {
 if ($('enterBtn') && !document.getElementById('konaShell')) $('enterBtn').onclick = enter;
 
 // ------------------------------------------------------------------ UI: rail, card, toast, hover tag
-$('railInner').innerHTML = PIECES.map((p, i) => `<button class="chip${p.glb ? '' : ' ghost'}" data-i="${i}" aria-label="${esc(p.name)}, ${esc(p.years)}">
-  <span class="n">${p.thumb ? `<img src="${esc(p.thumb)}" alt="" loading="lazy">` : i + 1}</span><span><small>${esc(p.years)}</small><b>${esc(p.name.replace(/^Speed[Mm]ax /, ''))}</b></span></button>`).join('');
-if (KONA.titles.length) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip kona" data-room="kona" aria-label="Kona Champions room"><span class="n">K</span><span><small>${KONA.titles.length} TITLES</small><b>Kona Champions</b></span></button>`);
-if (WROOMDATA) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip wyld" data-room="wyld" aria-label="WYLD Room"><span class="n">W</span><span><small>4 DYES · MY2027</small><b>WYLD Room</b></span></button>`);
-if (pier) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip pier" data-room="pier" aria-label="The Kona Pier: Kona by Year"><span class="n"><img src="assets/kona-years/y2019.jpg" alt="" loading="lazy"></span><span><small>2014 — 2025</small><b>Kona by Year</b></span></button>`);
-$('railInner').insertAdjacentHTML('afterbegin', `<button class="chip hween" data-room="hween" aria-label="Lava Night, the Halloween room"><span class="n" aria-hidden="true">🎃</span><span><small>HALLOWEEN</small><b>Lava Night</b></span></button>`);
-for (const r of [...brandRooms].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip brand" data-room="${esc(r.desc.id)}" aria-label="${esc(r.desc.name)}"><span class="n" style="background:${esc(r.desc.theme?.accent || '#c9a13b')};-webkit-background-clip:text;background-clip:text;color:transparent">${esc(r.desc.name.slice(0, 1))}</span><span><small>${r.products.length} PRODUCT${r.products.length > 1 ? 'S' : ''}</small><b>${esc(r.desc.name)}</b></span></button>`);
-$('railInner').insertAdjacentHTML('afterbegin', `<button class="chip sanctuary" data-room="sanctuary" aria-label="Sanctuary chapel, eight films"><span class="n">S</span><span><small>8 FILMS</small><b>Sanctuary</b></span></button>`);
-for (const w of [...atlas.wings].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip atlas" data-room="wing-${esc(w.id)}" aria-label="${esc(w.name)}: ${esc(w.sub)}"><span class="n" aria-hidden="true">${w.features?.clock ? '⏱' : '✦'}</span><span><small>UPPER FLOOR · ${atlas.rooms.filter(r => r.wing === w.id).reduce((n, r) => n + r.bikes.length + r.art.length, 0)} WORKS</small><b>${esc(w.name)}</b></span></button>`);
-for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip ${r.id}" data-room="${r.id}" aria-label="${r.name}"><span class="n">${r.name.slice(0, 1)}</span><span><small>UPPER FLOOR</small><b>${r.name}</b></span></button>`);
+let dock = null;                                                     // world/room-dock.js, mounted with the map areas below
 // ------------------------------------------------------------------ museum map + canonical room-overview navigation
 {
   const WORDS = Object.fromEntries((window.__ROOMS?.areas || []).map(a => [a.id, a]));
@@ -1497,10 +1491,25 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     const face=new THREE.Vector3(ov.face.x,ov.face.y,ov.face.z);
     route(ov.to,face,null);
     path.roomOverview=id;
-    document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x.dataset.room===id));
+    dock?.setActive('room:'+id);
     toast(`${area.name} · room overview`);
   };
   window.__museumGo = go;
+  // Room dock: every chip resolves to a mapped area, so its id, name and floor come from the map itself.
+  const worksIn = w => atlas.rooms.filter(r => r.wing === w.id).reduce((n, r) => n + r.bikes.length + r.art.length, 0);
+  dock = mountRoomDock({ rail: $('rail'), inner: $('railInner'), entries: dockEntries({
+    areas: liveAreas, pieces: PIECES, access: accessForRoom,
+    rooms: [
+      ...(KONA.titles.length ? [{ area: 'kona', swatch: 'kona', sub: `${KONA.titles.length} titles` }] : []),
+      ...(pier ? [{ area: 'pier', swatch: 'pier', img: 'assets/kona-years/y2019.jpg', sub: '2014 – 2025' }] : []),
+      ...(WROOMDATA ? [{ area: 'wyld', swatch: 'wyld', sub: '4 dyes · MY2027' }] : []),
+      { area: 'hween', swatch: 'hween', sub: 'Halloween' },
+      { area: 'sanctuary', swatch: 'sanctuary', sub: '8 films' },
+      ...brandRooms.map(r => ({ area: r.desc.id, swatch: 'brand-room', color: r.desc.theme?.accent || '#c9a13b', sub: `${r.products.length} product${r.products.length > 1 ? 's' : ''}` })),
+      ...galleries.rooms.map(r => ({ area: 'room-' + r.id, swatch: r.id, sub: 'Gallery' })),
+      ...atlas.wings.map(w => ({ area: 'wing-' + w.id, swatch: 'atlas', glyph: w.features?.clock ? '⏱' : '✦', sub: `${worksIn(w)} works` })),
+    ],
+  }) });
   window.__map = initMap({ areas, go, access:accessForRoom, button: $('mapBtn'), pose: () => ({ x: P.x, z: P.z, yaw: P.yaw, floor: P.y > 3.3 ? 'upper' : 'ground' }) });
 
   const where = $('where'); let lastWhere = null, wingHinted = (() => { try { return localStorage.getItem('speedmax.atlas.hint') === '1'; } catch (_) { return false; } })();
@@ -1520,8 +1529,16 @@ $('railInner').addEventListener('click', e => {
   visit(PIECES[+b.dataset.i]);
 });
 function railActive(p) {
-  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', +c.dataset.i === p?.index));
-  document.querySelector(`.chip[data-i="${p?.index}"]`)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
+  const c = dock?.setActive(p ? 'piece:' + p.index : null);
+  if (p) c?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
+}
+// A photo the CSP blocks (or that 404s) is removed rather than left as a broken image with alt text.
+// Inline onerror handlers cannot run under script-src 'self', so this listens from script instead.
+function dropBrokenPhotos(root) {
+  root.querySelectorAll('figure.c-photo img').forEach(img => {
+    const drop = () => img.closest('figure')?.remove();
+    if (img.complete && !img.naturalWidth) drop(); else img.addEventListener('error', drop, { once: true });
+  });
 }
 function openCard(p) {
   $('cYears').textContent = `${p.years} · No. ${String(p.index + 1).padStart(2, '0')}`;
@@ -1532,16 +1549,17 @@ function openCard(p) {
   document.querySelectorAll('.plabel').forEach(b => b.classList.remove('on'));
   const exploded = p.exT > 0;
   $('cMedia').innerHTML = (exploded && p.anchors ? `<div class="c-parts"><small>Parts · tap to read</small><div>${p.anchors.map((a, i) => `<button data-part="${a.id}"><i>${i + 1}</i>${esc(p.parts[a.id].name)}</button>`).join('')}</div></div>` : '')
-    + (p.photo ? `<figure class="c-photo"><img src="${esc(p.photo.src)}" alt="${esc(p.name)}, ${esc(p.photo.credit)}" referrerpolicy="no-referrer" onerror="this.closest('figure').remove()"><figcaption><a href="${esc(p.photo.href)}" target="_blank" rel="noopener">${esc(p.photo.credit)} ↗</a></figcaption></figure>` : '')
+    + (p.photo ? `<figure class="c-photo"><img src="${esc(p.photo.src)}" alt="${esc(p.name)}, ${esc(p.photo.credit)}" referrerpolicy="no-referrer"><figcaption><a href="${esc(p.photo.href)}" target="_blank" rel="noopener">${esc(p.photo.credit)} ↗</a></figcaption></figure>` : '')
     + (p.uncertain?.length ? `<details class="c-unc"><summary>What is reconstructed</summary><ul>${p.uncertain.map(u => `<li>${esc(u)}</li>`).join('')}</ul></details>` : '');
   $('cMedia').querySelectorAll('.c-parts button').forEach(b => b.onclick = () => openPart(p, b.dataset.part));
+  dropBrokenPhotos($('cMedia'));
   const next = PIECES[(p.index + 1) % PIECES.length];
   $('cActions').innerHTML = (p.bike ? `<button class="btn ghost" id="cExplode" aria-pressed="${exploded}">${exploded ? 'Assemble' : 'Explode'}</button>` : '')
-    + (p.viewer ? `<a class="btn primary" href="${esc(p.viewer)}"><span class="long">Enter </span>3D studio <span aria-hidden="true">→</span></a>` : '')
-    + `<button class="btn ghost" id="cNext" aria-label="Next piece: ${esc(next.years)}">Next<span class="long">: ${esc(next.years)}</span> <span aria-hidden="true">→</span></button>`
+    + (p.viewer ? `<a class="btn primary" href="${esc(p.viewer)}"><span><span class="long">Enter </span>3D studio</span> <span aria-hidden="true">→</span></a>` : '')
+    + `<button class="btn ghost" id="cNext" aria-label="Next piece: ${esc(next.years)}"><span>Next<span class="long">: ${esc(next.years)}</span></span> <span aria-hidden="true">→</span></button>`
     + (p.source && !p.viewer ? `<a class="c-src" href="${esc(p.source)}" target="_blank" rel="noopener">Archive source ↗</a>` : '');
   $('cNext').onclick = () => visit(next);
-  if (p.glb && p.key) $('cActions').insertAdjacentHTML('beforeend', `<a class="btn ghost" href="Studio.html?p=canyon-${p.key === 'cfr' || p.key === 'slx' ? p.key + '-2027' : esc(p.key)}">Paint it<span class="long"> in the studio</span></a>`);
+  if (p.glb && p.key) $('cActions').insertAdjacentHTML('beforeend', `<a class="btn ghost" href="Studio.html?p=canyon-${p.key === 'cfr' || p.key === 'slx' ? p.key + '-2027' : esc(p.key)}"><span>Paint it<span class="long"> in the studio</span></span></a>`);
   if ($('cExplode')) $('cExplode').onclick = () => setExploded(p, !(p.exT > 0));
   $('card').classList.add('on'); document.body.classList.add('card-open');
 }
