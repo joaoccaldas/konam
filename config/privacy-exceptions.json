@@ -73,6 +73,14 @@
       "reason": "Fallback display for the dedicated public Kona.m project inbox in the Intern Dispatch UI; not a private personal address.",
       "approved_by": "owner (2026-10-03)",
       "added": "2026-10-03"
+    },
+    {
+      "file": "app/kona-core.js",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Generated consumer-shell bundle contains the dedicated public Kona.m project inbox used by the Intern Dispatch; not a private personal address.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
     }
   ]
 }
