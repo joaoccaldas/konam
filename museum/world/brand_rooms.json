@@ -191,13 +191,13 @@
     "exposure": 0.82,
     "hemi": 0.05,
     "sun": 0.03,
-    "fill": 1.2,
+    "fill": 0.8,
     "spots": [
      {
       "x": 30.5,
       "z": -24.0,
       "color": "#fff0e2",
-      "i": 75,
+      "i": 60,
       "angle": 0.3,
       "dist": 9,
       "shadow": true,
@@ -210,7 +210,7 @@
       "y": 5.15,
       "ty": 2.2,
       "color": "#cfdcff",
-      "i": 28,
+      "i": 14,
       "angle": 0.55,
       "dist": 8,
       "shaft": false
@@ -286,8 +286,8 @@
       }
      }
     ],
-    "env": 0.14,
-    "floor": "#1d1e22",
+    "env": 0.08,
+    "floor": "#0d0e11",
     "fog": {
      "near": 4,
      "far": 30,
