@@ -81,6 +81,14 @@
       "reason": "Generated consumer-shell bundle contains the dedicated public Kona.m project inbox used by the Intern Dispatch; not a private personal address.",
       "approved_by": "owner (2026-10-03)",
       "added": "2026-10-03"
+    },
+    {
+      "file": "web/test/public-trust-contract.test.mjs",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Test fixture asserts the dedicated public Kona.m project inbox exactly; not a private personal address.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
     }
   ]
 }
