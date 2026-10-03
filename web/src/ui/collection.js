@@ -35,7 +35,7 @@ export async function renderCollectionSurface(root,{admin=false,onBack}={}){
       '<nav class="finds-vault-filters" aria-label="Find acquisition method">'+tabs.map(([id,label])=>'<button type="button" data-find-filter="'+id+'" aria-pressed="'+(id===filter)+'">'+esc(label)+'</button>').join('')+'</nav>'+
       '<div class="finds-vault-grid" aria-label="KONA Finds collection">'+items.filter(x=>filter==='all'||x.acquisition===filter).map(item=>{
         const reveal=visible(item);
-        return '<button type="button" class="find-vault-cell '+(item.collected?'is-collected':'is-locked')+'" data-find="'+esc(item.id)+'" aria-label="Find '+number(item.number)+' · '+esc(reveal?item.name:'Not found yet')+'">'+
+        return '<button type="button" class="find-vault-cell find-card '+(item.collected?'is-collected':'is-locked')+'" data-find="'+esc(item.id)+'" aria-label="Find '+number(item.number)+' · '+esc(reveal?item.name:'Not found yet')+'">'+
           '<span class="find-vault-number">'+number(item.number)+'</span>'+
           '<i class="find-vault-ghost" aria-hidden="true">'+(item.model?mark:'◇')+'</i>'+
           '<span class="find-vault-status">'+esc(item.collected?'FOUND':admin?'ADMIN':'?')+'</span>'+
