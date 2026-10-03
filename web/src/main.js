@@ -22,6 +22,7 @@ import { createMachineInspection, blenderVectorToThree } from './engine/machine-
 
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const escHTML = s => String(s ?? '').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 // coarse comes from detect.js: pointer:coarse, narrow viewport, or a phone in
 // "Desktop view" reporting a ~980 px layout on a small physical screen.
@@ -75,7 +76,7 @@ function saveCfg() {
   set('hero-eyebrow', H.eyebrow || `Canyon collection · Exhibit ${B.exhibit || '01'}`);
   set('hero-lede', H.lede || (PROFILE.bike?.specs ? '' : ''));
   const t = document.getElementById('hero-title');
-  if (t && (H.title || H.titleSpan)) t.innerHTML = `${H.title || B.family}<br>${H.titleSpan || B.name}<span>${sub}</span>`;
+  if (t && (H.title || H.titleSpan)) t.innerHTML = `${escHTML(H.title || B.family)}<br>${escHTML(H.titleSpan || B.name)}<span>${escHTML(sub)}</span>`;
   else if (t) { const s = t.querySelector('span'); if (s) s.textContent = sub; }
   set('stat-weight-sub', `kg · size ${B.size || 'M'}`);
   set('bom-size', `Complete bike, size ${B.size || 'M'}`); set('bom-weight', B.weight ? `${B.weight} kg` : '—');
@@ -677,7 +678,7 @@ function buildUI() {
     el.disabled = true; el.checked = false;
     const lbl = el.closest('label'); if (lbl) lbl.hidden = true;           // not on this frame: don't offer a dead switch
   }
-  if (PROFILE.unavailableOptions?.length && !$('#setupNote')) $('#optShield')?.closest('label')?.insertAdjacentHTML('beforebegin', `<p class="note" id="setupNote">${PROFILE.unavailableNote || 'This frame predates AeroShield, AeroFuel storage and the disc-wheel option, so they are not offered here.'}</p>`);
+  if (PROFILE.unavailableOptions?.length && !$('#setupNote')) $('#optShield')?.closest('label')?.insertAdjacentHTML('beforebegin', `<p class="note" id="setupNote">${escHTML(PROFILE.unavailableNote || 'This frame predates AeroShield, AeroFuel storage and the disc-wheel option, so they are not offered here.')}</p>`);
   if(PROFILE.unavailableOptions?.includes('rearBottles') && !$('#optRear').disabled){$('#optRear').disabled=true;$('#optRear').closest('label').title='The standard SP102 seatpost has no modelled rear bottle carrier.';}
   $('#optRear').onchange = e => setCfg({ rearBottles: e.target.checked }, true);
   $('#optShield').onchange = e => setCfg({ shield: e.target.checked }, true);
