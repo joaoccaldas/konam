@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "id": "norwegian-engine-assets-v1",
+  "status": "candidate-unwired",
+  "room_installation": "norwegian-engine",
+  "truth_boundary": "Independent Kona.m editorial concept. Athlete, equipment and sponsor association must be sourced and rights-cleared before public release.",
+  "athletes": [
+    {
+      "id": "kristian-blummenfelt",
+      "display_name": "Kristian Blummenfelt",
+      "lane": "lane-01",
+      "role": "athlete-subject",
+      "public_release": "rights-review"
+    },
+    {
+      "id": "gustav-iden",
+      "display_name": "Gustav Iden",
+      "lane": "lane-02",
+      "role": "athlete-subject",
+      "public_release": "rights-review"
+    },
+    {
+      "id": "casper-stornes",
+      "display_name": "Casper Stornes",
+      "lane": "lane-03",
+      "role": "athlete-subject",
+      "public_release": "rights-review"
+    }
+  ],
+  "lanes": [
+    {
+      "id": "lane-01",
+      "index": 1,
+      "athlete": "kristian-blummenfelt",
+      "zone": "training-rail",
+      "specimen_slot": 0,
+      "accent": "cold-steel",
+      "items": [
+        "nor3-trainer",
+        "nor3-run-deck",
+        "nor3-towel-rail",
+        "nor3-bottle-set"
+      ],
+      "bike": {
+        "mode": "canonical-host-slot",
+        "asset_id": null,
+        "claim_status": "unverified-do-not-assign"
+      }
+    },
+    {
+      "id": "lane-02",
+      "index": 2,
+      "athlete": "gustav-iden",
+      "zone": "training-rail",
+      "specimen_slot": 1,
+      "accent": "smoked-oak",
+      "items": [
+        "nor3-trainer",
+        "nor3-run-deck",
+        "nor3-towel-rail",
+        "nor3-bottle-set"
+      ],
+      "bike": {
+        "mode": "canonical-host-slot",
+        "asset_id": null,
+        "claim_status": "unverified-do-not-assign"
+      }
+    },
+    {
+      "id": "lane-03",
+      "index": 3,
+      "athlete": "casper-stornes",
+      "zone": "training-rail",
+      "specimen_slot": 2,
+      "accent": "fjord-glass",
+      "items": [
+        "nor3-trainer",
+        "nor3-run-deck",
+        "nor3-towel-rail",
+        "nor3-bottle-set"
+      ],
+      "bike": {
+        "mode": "canonical-host-slot",
+        "asset_id": null,
+        "claim_status": "unverified-do-not-assign"
+      }
+    }
+  ],
+  "assets": [
+    {
+      "id": "nor3-lane-architecture",
+      "type": "architecture-module",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/lane-architecture.glb",
+      "reusable": true,
+      "material": "wet basalt / blackened steel / low-iron glass",
+      "lod": "required",
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-protocol-wall",
+      "type": "architecture-module",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/protocol-wall.glb",
+      "reusable": true,
+      "material": "basalt / chalk panel / brushed frame",
+      "lod": "required",
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-trainer",
+      "type": "equipment",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/direct-drive-trainer.glb",
+      "reusable": true,
+      "material": "powder-coated steel / machined alloy",
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-run-deck",
+      "type": "equipment",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/run-deck.glb",
+      "reusable": true,
+      "material": "matte rubber / anodised alloy",
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-protocol-table",
+      "type": "furniture",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/protocol-table.glb",
+      "reusable": true,
+      "material": "smoked oak / brushed steel",
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-analyser",
+      "type": "equipment",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/analyser.glb",
+      "reusable": true,
+      "material": "dark anodised alloy / glass",
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-vial-rack",
+      "type": "prop",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/vial-rack.glb",
+      "reusable": true,
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-towel-rail",
+      "type": "accessory",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/towel-rail.glb",
+      "reusable": true,
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-bottle-set",
+      "type": "accessory",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/bottle-set.glb",
+      "reusable": true,
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-environment-bay",
+      "type": "architecture",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/environment-bay.glb",
+      "reusable": true,
+      "material": "low-iron glass / steel",
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-fan",
+      "type": "equipment",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/fan.glb",
+      "reusable": true,
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-podium-vault",
+      "type": "art",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/podium-vault.glb",
+      "reusable": true,
+      "rights": "original abstract geometry; not a medal/trophy replica",
+      "status": "generator-defined"
+    },
+    {
+      "id": "nor3-fjord-relief",
+      "type": "art",
+      "format": "glb",
+      "source": "blender/norwegian_engine_assets.py",
+      "output": "assets/rooms/norwegian-engine/fjord-relief.glb",
+      "reusable": true,
+      "rights": "original geometry; no copied map or photography",
+      "status": "generator-defined"
+    }
+  ],
+  "image_policy": {
+    "photoreal_reference_allowed": true,
+    "generated_texture_policy": "non-logo environmental textures only; store provenance before production use",
+    "higgsfield_or_imagegen": "optional concept/reference generation only; generated images are not implementation evidence"
+  },
+  "runtime_budget": {
+    "mobile": {
+      "target_fps": 30,
+      "max_room_draw_calls": 95,
+      "max_room_triangles": 180000,
+      "max_texture_edge": 1024,
+      "max_dpr": 1.5,
+      "particles": 34,
+      "transmission": "reduced"
+    },
+    "tablet": {
+      "target_fps": 45,
+      "max_room_draw_calls": 130,
+      "max_room_triangles": 280000,
+      "max_texture_edge": 2048,
+      "max_dpr": 1.75,
+      "particles": 54,
+      "transmission": "medium"
+    },
+    "desktop": {
+      "target_fps": 60,
+      "max_room_draw_calls": 180,
+      "max_room_triangles": 450000,
+      "max_texture_edge": 2048,
+      "max_dpr": 2,
+      "particles": 78,
+      "transmission": "full"
+    },
+    "rules": [
+      "Instance repeated lane props and bottles.",
+      "One shared material set per semantic material wherever possible.",
+      "Bake subtle roughness/normal variation; do not use large uncompressed photo textures.",
+      "LOD0/LOD1 for architecture and hero props; mobile may omit micro-props.",
+      "No per-prop dynamic shadow lights; practical lights share the host lighting budget.",
+      "Prefer KTX2/Basis textures and Meshopt/Draco-compatible GLBs in production build."
+    ]
+  },
+  "visual_target": {
+    "reference": "2026-10-02 NOR // 3 cinematic concept board created in this project",
+    "translate_not_copy": [
+      "three monumental lane portals",
+      "wet reflective basalt floor",
+      "fjord/cold exterior suggestion",
+      "warm practical ceiling/wall light",
+      "glass environmental bay",
+      "working protocol table",
+      "museum-grade object vault"
+    ],
+    "avoid": [
+      "plastic PBR",
+      "neon nightclub",
+      "perfect sterile symmetry",
+      "fake hologram UI",
+      "huge mirrored surfaces",
+      "brand logos without approval"
+    ]
+  }
+}
