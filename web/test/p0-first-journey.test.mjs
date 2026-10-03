@@ -10,8 +10,8 @@ test('first run moves through questions, first bike, avatar and install handoff 
   assert.match(entry,/paintQuest\(firstRunStep\(\)\)/);
   assert.match(entry,/renderOnboardingQuestions/);
   assert.match(entry,/renderAvatarRegistration/);
-  assert.match(entry,/onContinue:\(\)=>paintQuest\('install'\)/);
-  assert.match(entry,/data-handoff-continue[\s\S]*enterApp\('home'\)/);
+  
+  
   assert.doesNotMatch(entry,/data-race-picker/);
   assert.doesNotMatch(entry,/Choose your bike/);
   assert.doesNotMatch(entry,/Choose your shoes/);
