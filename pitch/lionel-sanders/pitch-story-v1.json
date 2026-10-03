@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "room_id": "beast-cave",
+  "title": "Beast Cave",
+  "concept": "A room for the work nobody sees.",
+  "narrative_loop": [
+    "experiment",
+    "miss",
+    "inspect",
+    "adapt",
+    "return"
+  ],
+  "zones": [
+    "threshold",
+    "hero-trainer-station",
+    "training-screen",
+    "run-station",
+    "pain-cave-archive",
+    "gear-wall",
+    "recovery-corner",
+    "kona-horizon"
+  ],
+  "tone": [
+    "focused",
+    "obsessive",
+    "physical",
+    "imperfect",
+    "earned"
+  ],
+  "editorial_boundary": {
+    "independent_editorial_concept": true,
+    "athlete_endorsement_claim": false,
+    "zwift_partnership_claim": false,
+    "canyon_partnership_claim": false,
+    "exact_2026_equipment_claims": false
+  }
+}
