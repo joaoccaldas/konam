@@ -429,3 +429,18 @@ body.return-moment-open{overflow:hidden}
 .kona-note a,#konaAccount a,.garage-level-note a{min-height:48px;display:inline-flex;align-items:center}
 
 .finds-heading [data-finds-back]{min-height:52px;display:inline-flex;align-items:center}
+
+/* Desktop shell: promote navigation into a compact top dock instead of stretching mobile chrome. */
+@media(min-width:900px){
+  .kona-panel{--brand-panel-max:min(1120px,calc(100vw - 96px));padding-top:88px;padding-bottom:40px}
+  .kona-panel-open .kona-bottom-nav:not([hidden]){
+    display:grid;left:50%;right:auto;top:18px;bottom:auto;transform:translateX(-50%);
+    width:auto;min-width:min(620px,calc(100vw - 280px));height:52px;padding:4px 10px;
+    border:1px solid var(--brand-line);border-radius:999px;background:color-mix(in srgb,var(--brand-surface) 94%,transparent);
+    box-shadow:var(--artifact-shadow)
+  }
+  .kona-bottom-nav button,.kona-bottom-nav a{flex-direction:row;gap:8px;padding:0 13px;border-radius:999px;font-size:11px}
+  .kona-bottom-nav svg{width:18px;height:18px}
+  .kona-bottom-nav .on{background:color-mix(in srgb,var(--brand-action) 9%,var(--brand-surface));color:var(--brand-action)}
+  .kona-bottom-nav .on::before{display:none}
+}
