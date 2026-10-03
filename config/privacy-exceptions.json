@@ -11,10 +11,26 @@
       "added": "2026-10-03"
     },
     {
+      "file": "why.html",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Dedicated public Kona.m project contact address on why.html; not a private personal address.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
+    },
+    {
       "file": "about.html",
       "kind": "personal-email",
       "value": "konamundo@gmail.com",
-      "reason": "about.html is generated from the Field Guide and intentionally mirrors the same public project contact address.",
+      "reason": "Dedicated public Kona.m project contact address on about.html; not a private personal address.",
+      "approved_by": "owner (2026-10-03)",
+      "added": "2026-10-03"
+    },
+    {
+      "file": "origin.html",
+      "kind": "personal-email",
+      "value": "konamundo@gmail.com",
+      "reason": "Dedicated public Kona.m project contact address on origin.html; not a private personal address.",
       "approved_by": "owner (2026-10-03)",
       "added": "2026-10-03"
     }
