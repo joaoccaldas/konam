@@ -106,6 +106,87 @@
      "height": 1.1
     }
    ]
+  },
+  {
+   "id": "breitling",
+   "name": "Breitling \u00b7 Endurance Pro",
+   "kicker": "Independent chronograph study",
+   "story": "A monumental original chronograph, a 2021\u2192Kona-2026 timeline, and swim / bike / run portals. Independent study; not affiliated with or endorsed by Breitling. No logo, wordmark or product photograph is used.",
+   "kind": "brand",
+   "theme": {
+    "wall": "#0d0f13",
+    "wallRough": 0.9,
+    "floor": "basalt",
+    "accent": "#c8102e",
+    "ceil": "#101318",
+    "gloss": 0.75
+   },
+   "bounds": {
+    "x0": 24.5,
+    "x1": 36.5,
+    "z0": -18.0,
+    "z1": -30.0
+   },
+   "height": 5.4,
+   "door": {
+    "wall": "west",
+    "z0": -25.0,
+    "z1": -23.0,
+    "h": 3.6
+   },
+   "light": {
+    "fillI": 14,
+    "skyStrip": false,
+    "accents": [
+     {
+      "x": 30.5,
+      "y": 3.6,
+      "z": -24.0,
+      "color": "#ffd9c9",
+      "i": 8,
+      "dist": 15
+     }
+    ]
+   },
+   "products": [
+    {
+     "id": "multibrand-breitling-watch",
+     "brand": "Breitling",
+     "model": "Endurance-style Chronograph",
+     "type": "watch",
+     "year": 2026,
+     "glb": "assets/multibrand/breitling-watch/watch_web.glb",
+     "sub": "Chronograph study",
+     "text": "Original titanium chronograph: case, bezel, dial, hands and bracelet. Independent study; not affiliated with or endorsed by Breitling.",
+     "source": "Original geometry; the public partnership page is a reference for the story only.",
+     "legal": "Independent reconstructed study. Not affiliated with or endorsed by Breitling. No logo, wordmark or product photo.",
+     "stats": [
+      [
+       "~7 k",
+       "triangles"
+      ],
+      [
+       "titanium",
+       "case"
+      ],
+      [
+       "chronograph",
+       "type"
+      ]
+     ],
+     "station": {
+      "kind": "plinth",
+      "x": 30.5,
+      "z": -24.0,
+      "rotY": 0.0,
+      "top": 1.1
+     },
+     "capabilities": [
+      "inspect",
+      "share"
+     ]
+    }
+   ]
   }
  ]
 }

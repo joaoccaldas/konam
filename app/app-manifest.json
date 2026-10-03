@@ -1,5 +1,5 @@
 {
- "version": "2b9eb4adbc1f",
+ "version": "cdb5a6d9824d",
  "core": [
   "index.html",
   "about.html",
@@ -79,7 +79,7 @@
   "app/race-self-stage.js": "dqqjDCdxm7/qMivLJcAxFcJNpbh2rMz+TXxldLMZlPQ=",
   "app/collectible-stage.js": "F5VGh2eSuFqNJP27fNZP5Oa+X3E6NIWjk77Sb69y86Y=",
   "integrations/ironman-races-2016-2026.json": "P7vUgV+atNEkd1fjhGBhii8UZFqiskskE6hN0bbVE+Q=",
-  "app/museum-data.js": "495eufV6AZk7gVeWh8AKbc8CoiBy7YKy0LqY6oida48=",
+  "app/museum-data.js": "rS1lCjadSFqSMP5hPMitwCSOFrSqfv8JUE6UZ0JN+60=",
   "app/hall.js": "dnY96Wlo32p+zkTRWOt6+Oc0OS/SfSAUJoUf0E3znpA=",
   "app/studio.js": "F2fKbkoQ6wzyJKafN4MzVknbnyf4IaxLB5yLA4UA8b4=",
   "app/standalone-access.js": "0XflZjZNbdjzdLC6ow/4osPrnoT0H52ps87aBsPiJKA=",
@@ -239,6 +239,7 @@
   "assets/kona-years/y2018_n.jpg": "0IFWnACMveEItcn735QRhtRXvR/Gr8aitp1Pofc7dJA=",
   "assets/kona-years/y2019.jpg": "FYGU1964mqZ4yEwdxDmXqk8RwgVtb4RlMlrdE4sVDNM=",
   "assets/kona-years/y2019_n.jpg": "qhwpwI5NhS9TOxGelvCU/qLlpgEVVasho34SZVLKswA=",
+  "assets/multibrand/breitling-watch/watch_web.glb": "AxOYWjCJ2vCN38OfkxGsFo5D00X1FBTtQHOcn69f8dM=",
   "assets/museum/browser-checks.json": "5ugAtxqwpY2XLkpUSHyGDNHqzoDT6ms8HKbobEFCTaM=",
   "assets/museum/speedmax_web.glb": "0FYtHkRQmfYOeeJY+YDk/A0Jjv24UfL/E2U1HXGe0OA=",
   "assets/museum-slx/speedmax_web.glb": "8RHreSVxE5xg3jqSp8AvT+LlHDX2N05djFvUdfMqVWw=",
