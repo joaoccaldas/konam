@@ -49,7 +49,7 @@ const filmsHtml=`
     <span>OPTIONAL</span><span>SKIPPABLE</span><span>NO AUTOPLAY AUDIO</span><span>≤ 15 SEC / FILM</span><span>VALUE BEFORE TUTORIAL</span>
   </div>
   <div class="film-groups">
-    ${[...grouped.values()].map(g=>`<section class="film-group"><header><span>${esc(g.label)}</span><div><h3>${esc(g.title)}</h3><p>${esc(g.purpose)}</p></div></header><div class="film-grid">${g.videos.map(v=>`<article class="film-card" data-film-id="${esc(v.id)}"><div class="film-card-top"><b>0${v.index}</b><span>${v.duration_seconds}s</span></div><small>${esc(v.group).toUpperCase()}</small><h4>${esc(v.title)}</h4><p>${esc(v.hook)}</p><div class="film-beats">${v.beats.slice(0,4).map(x=>`<span>${esc(x)}</span>`).join('')}</div></article>`).join('')}</div></section>`).join('\n')}
+    ${[...grouped.values()].map(g=>`<section class="film-group"><header><span>${esc(g.label)}</span><div><h3>${esc(g.title)}</h3><p>${esc(g.purpose)}</p></div></header><div class="film-grid">${g.videos.map(v=>`<article class="film-card" data-film-id="${esc(v.id)}"><div class="film-card-top"><b>0${v.index}</b><span>${Math.round(v.duration_seconds)}s</span></div><small>${esc(v.group).toUpperCase()}</small><h4>${esc(v.title)}</h4><p>${esc(v.hook)}</p><div class="film-beats">${v.beats.slice(0,4).map(x=>`<span>${esc(x)}</span>`).join('')}</div></article>`).join('')}</div></section>`).join('\n')}
   </div>
   <div class="film-rule"><strong>Publication rule</strong><p>Playback appears only when a verified repository asset exists. No dead video controls, no local-file paths, no fake “watch” button.</p></div>
 </section>`;
