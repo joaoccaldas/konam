@@ -2,7 +2,7 @@
 // Uses entry-data + companion travel only. No museum globals or Three.js.
 import { loadCompanion, safeURL } from './companion-data.js';
 
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtDate=iso=>{const d=new Date(String(iso||'')+'T12:00:00');return Number.isNaN(d.valueOf())?String(iso||''):new Intl.DateTimeFormat('en',{month:'short',day:'numeric'}).format(d);};
 const daysUntil=iso=>{const t=Date.parse(String(iso||'')+'T12:00:00');return Number.isFinite(t)?Math.max(0,Math.ceil((t-Date.now())/86400000)):null;};
 const external=(url,label,cls='plan-link')=>safeURL(url)?'<a class="'+cls+'" href="'+esc(safeURL(url))+'" target="_blank" rel="noopener noreferrer">'+esc(label)+' <span aria-hidden="true">↗</span></a>':'';
