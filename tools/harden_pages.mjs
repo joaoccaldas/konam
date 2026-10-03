@@ -46,8 +46,8 @@ const PAGES = [
     title: 'Speedmax Nights & History Lane · Canyon Speedmax Museum',
     description: 'Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.', keepTitle: true },
   { file: 'about.html', type: 'AboutPage', image: 'assets/share/konam.png',
-    title: 'About this company · Kona.m',
-    description: 'Why Kona.m exists, told three ways: short, scenic and unfiltered.', keepTitle: true },
+    title: 'About Kona.m · the Field Guide to the world, the game & the lab',
+    description: 'What Kona.m is and how to play it: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain it all.' },
   { file: 'promo.html', type: 'WebPage', image: 'assets/share/konam.png',
     title: 'Kona.m Field Guide · how to play, worlds, bikes & experiments',
     description: 'A playful public guide to Kona.m: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain what this app actually is.', keepTitle: true },
@@ -140,6 +140,18 @@ function block(p) {
 <link rel="alternate" type="text/plain" href="${SITE}llms.txt" title="LLM summary">
 <script type="application/ld+json">${jsonld(ld)}</script>
 <!--harden:end-->`;
+}
+
+
+// About is the Field Guide. promo.html is the single source; about.html is generated from it
+// so the two pages cannot drift. Only the page's own canonical/og:url and its head block differ.
+const MIRRORS = { 'about.html': 'promo.html' };
+for (const [target, source] of Object.entries(MIRRORS)) {
+  const html = fs.readFileSync(path.join(root, source), 'utf8')
+    .replace(/<!--harden:start-->[\s\S]*?<!--harden:end-->\n?/, '')
+    .replace(/(<link rel="canonical" href="[^"]*\/)promo\.html(")/g, `$1${target}$2`)
+    .replace(/(<meta property="og:url" content="[^"]*\/)promo\.html(")/g, `$1${target}$2`);
+  fs.writeFileSync(path.join(root, target), html);
 }
 
 for (const p of PAGES) {
