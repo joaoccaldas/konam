@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "subject_id": "lionel-sanders",
+  "retrieved": "2026-10-03",
+  "editorial_note": "Published race results only. The loop labels (experiment, miss, inspect, adapt, return) are a KONA.m editorial reading of public results, not the athlete's words.",
+  "facts": [
+    {
+      "id": "first-ironman-2010",
+      "loop": "EXPERIMENT",
+      "year": 2010,
+      "headline": "IRONMAN Louisville",
+      "value": "10:14:31",
+      "line": "First full-distance finish.",
+      "sources": ["https://en.wikipedia.org/wiki/Lionel_Sanders"]
+    },
+    {
+      "id": "kona-2016",
+      "loop": "MISS",
+      "year": 2016,
+      "headline": "IRONMAN World Championship, Kona",
+      "value": "29th · 8:44:49",
+      "line": "The island answered back.",
+      "sources": ["https://en.wikipedia.org/wiki/Lionel_Sanders"]
+    },
+    {
+      "id": "arizona-2016",
+      "loop": "INSPECT",
+      "year": 2016,
+      "headline": "IRONMAN Arizona, 20 November",
+      "value": "7:44:29",
+      "line": "Six weeks after Kona, the full distance in under 7:45.",
+      "sources": ["https://en.wikipedia.org/wiki/Lionel_Sanders"]
+    },
+    {
+      "id": "kona-2017",
+      "loop": "ADAPT",
+      "year": 2017,
+      "headline": "IRONMAN World Championship, Kona",
+      "value": "2nd · 8:04:07",
+      "line": "40 minutes faster on the same course, one year on.",
+      "sources": ["https://en.wikipedia.org/wiki/2017_Ironman_World_Championship", "https://www.tri247.com/triathlon-news/elite/kona-2017-pro-men-report"]
+    },
+    {
+      "id": "hour-2020",
+      "loop": "RETURN",
+      "year": 2020,
+      "headline": "Canadian hour record, 23 October",
+      "value": "51.304 km",
+      "line": "One hour, one bike, nowhere to hide.",
+      "sources": ["https://en.wikipedia.org/wiki/Lionel_Sanders"]
+    }
+  ],
+  "gap": {
+    "id": "kona-2017-gap",
+    "year": 2017,
+    "value": "2:27",
+    "athlete_time": "8:04:07",
+    "winner": "Patrick Lange",
+    "winner_time": "8:01:40",
+    "line": "Kona 2017: second, 2 minutes 27 seconds behind the winner, who set a course record.",
+    "sources": ["https://en.wikipedia.org/wiki/2017_Ironman_World_Championship", "https://www.tri247.com/triathlon-news/elite/kona-2017-pro-men-report"]
+  },
+  "title": {
+    "id": "itu-ld-2017",
+    "year": 2017,
+    "headline": "ITU Long Distance Triathlon World Champion, Penticton",
+    "value": "5:20:36",
+    "sources": ["https://en.wikipedia.org/wiki/Lionel_Sanders", "https://www.tri247.com/triathlon-news/elite/sanders-crowley-penticton-long-distance"]
+  }
+}

@@ -222,3 +222,23 @@ export function motes({ n, box, color, size = .04, rise = .08, sway = .12, opaci
   step(0);
   return { points, mat, step };
 }
+
+// A visible shaft of light (stage spot through haze): an open cone, bright at the lamp and along
+// its axis, fading to nothing at the floor and at the rim. One draw call, no post-processing.
+export function lightShaft({ top = .12, bottom = 1.2, height = 4, color = '#ffd2a6', opacity = .16, segments = 40 }) {
+  const geo = new THREE.CylinderGeometry(top, bottom, height, segments, 12, true);
+  geo.translate(0, -height / 2, 0);                                   // origin at the lamp; aim with lookAt-style rotations
+  const mat = new THREE.ShaderMaterial({
+    uniforms: { color: { value: new THREE.Color(color) }, opacity: { value: opacity } },
+    vertexShader: `varying float vY; varying vec3 vN; varying vec3 vV;
+      void main(){ vY = -position.y / ${height.toFixed(3)}; vec4 mv = modelViewMatrix * vec4(position,1.);
+        vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }`,
+    fragmentShader: `uniform vec3 color; uniform float opacity; varying float vY; varying vec3 vN; varying vec3 vV;
+      void main(){ float rim = pow(abs(dot(normalize(vN), normalize(vV))), 1.6);
+        float fall = smoothstep(1., .05, vY) * (.35 + .65 * smoothstep(0., .12, vY));
+        gl_FragColor = vec4(color, opacity * rim * fall); }`,
+    transparent: true, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, fog: false,
+  });
+  const mesh = new THREE.Mesh(geo, mat); mesh.renderOrder = 2;
+  return mesh;
+}

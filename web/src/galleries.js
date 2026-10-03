@@ -192,11 +192,11 @@ export function buildGalleries(ctx) {
     if (inside) return [inside];
     return rooms.filter(r => Math.abs((r.z0 + r.z1) / 2 - visitor.z) < 11 || visitor.x > NAVE.x1 - 3);
   }
-  function update(t, visitor, reduce, scene, renderer, region = 'gallery') {
+  function update(t, visitor, reduce, scene, renderer, region = 'gallery', mood = null) {   // mood: a downstairs room's own exposure (Beast Cave, Breitling)
     const inside = roomAt(visitor.x, visitor.z);
     if (scene?.fog) scene.fog.color.copy(inside ? fogOf[inside.id] : baseFog);
     if (renderer) {
-      const want = inside ? inside.exposure : .96;
+      const want = inside ? inside.exposure : (mood?.exposure ?? .96);
       renderer.toneMappingExposure += (want - renderer.toneMappingExposure) * (reduce ? 1 : .08);
     }
     const seen = visibleRooms(visitor, region);

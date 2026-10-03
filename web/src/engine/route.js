@@ -3,8 +3,26 @@
 // gallery-to-gallery trip stays on the nave lane instead of cutting plinths.
 import { clamp } from './dom.js';
 
-export function planRoute({ x, z, to, fromRoom, toRoom, doors = {}, pierIn = [], naveLane = 13.6 }) {
+// east: rooms whose hall door is in the east wall (the default side room door is west).
+// links: rooms reached through another room, e.g. { breitling: { via: 'beast', pts: [inside, through] } }.
+export function planRoute(args) {
+  const { to, fromRoom, toRoom, links = {} } = args;
+  if (fromRoom !== toRoom && links[toRoom]) {
+    const L = links[toRoom];
+    const head = fromRoom === L.via ? [] : planRoute({ ...args, to: L.pts[0], toRoom: L.via });
+    return [...head, ...L.pts, { x: to.x, z: to.z }];
+  }
+  if (fromRoom !== toRoom && links[fromRoom]) {
+    const L = links[fromRoom], back = [...L.pts].reverse(), last = back[back.length - 1];
+    if (toRoom === L.via) return [...back, { x: to.x, z: to.z }];
+    return [...back, ...planRoute({ ...args, x: last.x, z: last.z, fromRoom: L.via })];
+  }
+  return planDirect(args);
+}
+
+function planDirect({ x, z, to, fromRoom, toRoom, doors = {}, east = new Set(), pierIn = [], naveLane = 13.6 }) {
   const pts = [];
+  const side = room => east.has(room) ? 1 : -1;
   const aisleX = v => clamp(v, -1.2, 1.2);
   const viaAisle = (from, zz) => {
     pts.push({ x: aisleX(from.x), z: from.z });
@@ -31,7 +49,7 @@ export function planRoute({ x, z, to, fromRoom, toRoom, doors = {}, pierIn = [],
     pts.push({ x: 10, z: 5.7 }, { x: 10, z: 1.5 }, { x: 8.8, z: 3.2 }, { x: 6.5, z: 3.7 }, { x: 0, z: 3.7 });
     from = { x: 0, z: 3.7 };
   } else if (fromRoom !== 'hall' && doors[fromRoom] != null) {
-    pts.push({ x: -9.2, z: doors[fromRoom] }, { x: -5.4, z: doors[fromRoom] });
+    pts.push({ x: 9.2 * side(fromRoom), z: doors[fromRoom] }, { x: 5.4 * side(fromRoom), z: doors[fromRoom] });
     from = pts[pts.length - 1];
   }
 
@@ -44,7 +62,7 @@ export function planRoute({ x, z, to, fromRoom, toRoom, doors = {}, pierIn = [],
   }
   if (toRoom !== 'hall' && doors[toRoom] != null) {
     viaAisle(from, doors[toRoom]);
-    pts.push({ x: -5.4, z: doors[toRoom] }, { x: -9.2, z: doors[toRoom] }, { x: to.x, z: to.z });
+    pts.push({ x: 5.4 * side(toRoom), z: doors[toRoom] }, { x: 9.2 * side(toRoom), z: doors[toRoom] }, { x: to.x, z: to.z });
     return pts;
   }
   viaAisle(from, to.z);
