@@ -135,8 +135,8 @@ function block(p) {
 <link rel="canonical" href="${url}">
 <meta property="og:type" content="website"><meta property="og:site_name" content="${NAME}"><meta property="og:locale" content="en_US">
 <meta property="og:title" content="${esc(p.title)}"><meta property="og:description" content="${esc(p.description)}">
-<meta property="og:url" content="${url}"><meta property="og:image" content="${img}"><meta property="og:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself. Explore, build and discover.':esc(p.title)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(p.title)}"><meta name="twitter:description" content="${esc(p.description)}"><meta name="twitter:image" content="${img}"><meta name="twitter:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself. Explore, build and discover.':esc(p.title)}">
+<meta property="og:url" content="${url}"><meta property="og:image" content="${img}"><meta property="og:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself you haven't met yet.':esc(p.title)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(p.title)}"><meta name="twitter:description" content="${esc(p.description)}"><meta name="twitter:image" content="${img}"><meta name="twitter:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself you haven't met yet.':esc(p.title)}">
 <link rel="alternate" type="text/plain" href="${SITE}llms.txt" title="LLM summary">
 <script type="application/ld+json">${jsonld(ld)}</script>
 <!--harden:end-->`;
