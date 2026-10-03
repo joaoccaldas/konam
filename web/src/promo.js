@@ -116,7 +116,8 @@ const setRailOpen=open=>{
   if(railState) railState.textContent=open?'OPEN / QUESTIONABLE DRAG':'CLOSED / AERODYNAMIC';
 };
 railToggle?.addEventListener('click',()=>setRailOpen(!rail?.classList.contains('is-open')));
-qsa('[data-rail-link]').forEach(link=>link.addEventListener('click',()=>{if(innerWidth<900)setRailOpen(false);}));
+const compactRail=()=>innerWidth<900||matchMedia('(pointer:coarse) and (orientation:landscape) and (max-height:700px)').matches;
+qsa('[data-rail-link]').forEach(link=>link.addEventListener('click',()=>{if(compactRail())setRailOpen(false);}));
 
 if(hero && rail){
   const heroObserver=new IntersectionObserver(entries=>{
@@ -258,3 +259,9 @@ if(guideButtons.length>1&&!matchMedia('(prefers-reduced-motion:reduce)').matches
   },6800);
   qs('[data-guide-theatre]')?.addEventListener('pointerenter',()=>{if(guideTimer){clearInterval(guideTimer);guideTimer=null;}},{once:true});
 }
+
+
+// Legacy Why-story query links now land inside the single continuous story.
+const legacyStory=new URLSearchParams(location.search).get('story');
+const legacyStoryTarget={short:'why-origin',scenic:'why-evolution',unfiltered:'why-sidequests'}[legacyStory];
+if(legacyStoryTarget&&!location.hash){requestAnimationFrame(()=>document.getElementById(legacyStoryTarget)?.scrollIntoView({block:'start'}));}
