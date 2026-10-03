@@ -9,7 +9,7 @@ placeholders in the first section. Nothing else needs editing.
 
 Build a 3D museum for **<BRAND>**, covering its **<CATEGORY, e.g. triathlon / time-trial>** bikes.
 Work in **<REPO PATH>**. If that folder is new, copy the pipeline from the reference
-implementation at `~/Developer/speedmax-cfr-3d`; don't start from scratch.
+implementation at `<repo-root>`; don't start from scratch.
 
 The museum has one collection page showing every generation in date order. Each modelled
 bike links to its own interactive 3D viewer page. Bikes you can't yet model still appear as
@@ -20,7 +20,7 @@ Work carefully and honestly. A museum that invents a bike is worse than a museum
 
 ## Reference implementation (read before writing anything)
 
-In `~/Developer/speedmax-cfr-3d`, read these completely:
+In `<repo-root>`, read these completely:
 
 - `docs/MUSEUM_WORKFLOW.md`: pipeline, contracts, confidence rules, checklist.
 - `museum/bike.schema.json`, `museum/catalog.json`, `museum/bikes/*.json`: manifest and catalog formats.
