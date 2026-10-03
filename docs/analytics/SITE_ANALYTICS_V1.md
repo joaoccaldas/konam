@@ -140,3 +140,5 @@ If the event vocabulary or stored analytics fields change, update together:
 Do not add raw text, identity, health, precise location, advertising IDs, user-agent collection or fingerprinting to this stream.
 
 Release candidate `d7fb3ea41325` is the first release sealed with the v2 analytics contract.
+
+The v2 branch was rebased on the discovery-first game-economy release before final validation.
