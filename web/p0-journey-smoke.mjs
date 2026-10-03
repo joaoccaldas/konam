@@ -85,7 +85,7 @@ try{
  const planErrors=[];planPage.on('pageerror',e=>planErrors.push(String(e?.stack||e)));planPage.on('console',m=>{if(m.type()==='error')planErrors.push(m.text())});
  await planPage.goto(new URL('?view=plan',base).href,{waitUntil:'domcontentloaded'});
  await planPage.waitForFunction(()=>/Plan/i.test(document.querySelector('#konaPanelTitle')?.textContent||''));
- await planPage.waitForFunction(()=>document.querySelectorAll('.kona-timeline article').length>0);
+ await planPage.waitForFunction(()=>document.querySelectorAll('.plan-day').length>0);
  const planText=await planPage.$eval('#konaPanelBody',e=>e.textContent);
  assert.doesNotMatch(planText,/details are being verified|Place notes are being prepared/i);
  assert.deepEqual(planErrors,[]);await planPage.close();

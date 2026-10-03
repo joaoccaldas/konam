@@ -5,6 +5,8 @@ import fs from 'node:fs';
 const plan=fs.readFileSync(new URL('../src/ui/plan.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../styles/plan.css',import.meta.url),'utf8');
 const shell=fs.readFileSync(new URL('../src/ui/kona-shell.js',import.meta.url),'utf8');
+const smoke=fs.readFileSync(new URL('../p0-journey-smoke.mjs',import.meta.url),'utf8');
+const audit=fs.readFileSync(new URL('../ui-interaction-audit.mjs',import.meta.url),'utf8');
 
 test('Plan is a visual cockpit, not a long briefing wall',()=>{
   for(const marker of ['plan-hero','plan-priority','plan-timeline','plan-arrival-grid','plan-places','plan-sources']) assert.match(plan,new RegExp(marker));
@@ -24,6 +26,13 @@ test('Plan remains lightweight and source-grounded',()=>{
   assert.match(plan,/api\.weather\.gov/);
   assert.match(plan,/loadCompanion\('travel'/);
   assert.doesNotMatch(plan,/from ['\"]three|hall\.js|museum-data\.js|__museum/i);
+});
+
+test('Plan browser checks read the cockpit markup',()=>{
+  assert.match(smoke,/querySelectorAll\('\.plan-day'\)/);
+  assert.doesNotMatch(smoke,/kona-timeline article/);
+  assert.match(audit,/\$\$\('\.plan-priority-card'\)/);
+  assert.match(audit,/\$\$\('\.plan-day'\)/);
 });
 
 test('Plan owns a dedicated on-demand visual layer',()=>{
