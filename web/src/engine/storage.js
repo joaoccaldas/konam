@@ -48,7 +48,7 @@ export function readStorage(name, storage = globalThis.localStorage) {
   const row = MAP[name];
   if (!row) throw new Error(`Unknown storage key: ${name}`);
   let current = null;
-  try { current = storage?.getItem?.(row.current) ?? null; } catch (_) {}
+  try { current = storage?.getItem?.(row.current) ?? null; } catch (_) { globalThis.__konaAnalytics?.trackRuntimeError?.('state_read',{subsystem:'storage'}); }
   if (current != null) return current;
   for (const legacy of row.legacy) {
     if (legacy === row.current) continue;
@@ -69,7 +69,7 @@ export function writeStorage(name, value, storage = globalThis.localStorage) {
     if (value == null) storage?.removeItem?.(row.current);
     else storage?.setItem?.(row.current, String(value));
     return true;
-  } catch (_) { return false; }
+  } catch (_) { globalThis.__konaAnalytics?.trackRuntimeError?.('state_write',{subsystem:'storage'}); return false; }
 }
 
 export function removeStorage(name, storage = globalThis.localStorage) {

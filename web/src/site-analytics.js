@@ -4,6 +4,11 @@
 const ENDPOINT='https://mtvpnoqwjpoqaiocrklq.supabase.co/functions/v1/site-analytics';
 const PUBLIC_KEY='sb_publishable_lVueu3GqNcPe4Z9KsChvJw_VfmnVi5u';
 const PROD=!globalThis.__NATIVE&&location.hostname==='joaoccaldas.github.io'&&location.pathname.startsWith('/konam');
+const RUNTIME_CODES=new Set(['uncaught_js','unhandled_promise','renderer_init','renderer_context_lost','renderer_context_restored','route_load','state_read','state_write','companion_load']);
+const RUNTIME_SUBSYSTEMS=new Set(['runtime','renderer','navigation','storage','companion']);
+const runtimeCounts=new Map();let runtimeTotal=0;
+const releaseIdPromise=PROD?fetch(new URL('app/app-manifest.json',location.href),{credentials:'omit',cache:'no-store'})
+  .then(r=>r.ok?r.json():null).then(m=>/^[0-9a-f]{12}$/.test(String(m?.version||''))?m.version:null).catch(()=>null):Promise.resolve(null);
 
 const uuid=()=>{
   if(globalThis.crypto?.randomUUID)return crypto.randomUUID();
@@ -29,7 +34,7 @@ const referrerHost=()=>{
 };
 const surfaceFromPath=()=>location.pathname.endsWith('/konam/')||location.pathname.endsWith('/konam/index.html')?'landing':location.pathname.split('/').pop()?.replace(/\.html$/,'')||'page';
 
-export function trackSiteEvent(event_type,{surface=surfaceFromPath()}={}){
+export function trackSiteEvent(event_type,{surface=surfaceFromPath(),eventCode=null,subsystem=null,releaseId=null,online=null}={}){
   if(!PROD)return Promise.resolve(false);
   const body={
     event_type,
@@ -41,6 +46,10 @@ export function trackSiteEvent(event_type,{surface=surfaceFromPath()}={}){
     campaign_source:param('utm_source',100),
     campaign_medium:param('utm_medium',100),
     campaign_name:param('utm_campaign',140),
+    event_code:eventCode,
+    subsystem,
+    release_id:releaseId,
+    online,
   };
   return fetch(ENDPOINT,{
     method:'POST',
@@ -51,7 +60,27 @@ export function trackSiteEvent(event_type,{surface=surfaceFromPath()}={}){
   }).then(r=>r.ok).catch(()=>false);
 }
 
+export async function trackRuntimeError(eventCode,{subsystem='runtime',surface=surfaceFromPath()}={}){
+  if(!PROD||!RUNTIME_CODES.has(eventCode)||!RUNTIME_SUBSYSTEMS.has(subsystem))return false;
+  const count=runtimeCounts.get(eventCode)||0;
+  if(count>=3||runtimeTotal>=12)return false;
+  runtimeCounts.set(eventCode,count+1);runtimeTotal+=1;
+  const releaseId=await releaseIdPromise;
+  return trackSiteEvent('runtime_error',{surface,eventCode,subsystem,releaseId,online:navigator.onLine});
+}
+
 trackSiteEvent('page_view');
+
+addEventListener('error',event=>{
+  if(!(event instanceof ErrorEvent))return;
+  try{
+    const filename=event.filename?new URL(event.filename,location.href):null;
+    if(filename&&filename.origin!==location.origin)return;
+  }catch{return;}
+  trackRuntimeError('uncaught_js',{subsystem:'runtime'});
+});
+
+addEventListener('unhandledrejection',()=>{trackRuntimeError('unhandled_promise',{subsystem:'runtime'});});
 
 const eventForTarget=target=>{
   if(target.closest('#buildSelf'))return ['entry_continue','landing'];
@@ -74,4 +103,4 @@ document.addEventListener('click',event=>{
   if(hit)trackSiteEvent(hit[0],{surface:hit[1]});
 },{capture:true});
 
-globalThis.__konaAnalytics={track:trackSiteEvent,sessionId,enabled:PROD};
+globalThis.__konaAnalytics={track:trackSiteEvent,trackRuntimeError,sessionId,enabled:PROD};
