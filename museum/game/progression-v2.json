@@ -14,7 +14,7 @@
       "repeat": "once"
     },
     "ONBOARDING_ANSWER": {
-      "xp": 15,
+      "xp": 1,
       "credits": 0,
       "repeat": "once-per-question"
     },
@@ -206,6 +206,12 @@
           "id": "pier",
           "label": "Kona by Year",
           "status": "live"
+        },
+        {
+          "type": "bike",
+          "id": "canyon-cfr-2027",
+          "label": "Speedmax CFR AXS · 2027",
+          "status": "live"
         }
       ]
     },
@@ -240,12 +246,6 @@
           "type": "garage-bay",
           "id": "garage:bay-1",
           "label": "First Garage bay",
-          "status": "live"
-        },
-        {
-          "type": "bike",
-          "id": "canyon-cfr-2027",
-          "label": "Speedmax CFR AXS · 2027",
           "status": "live"
         }
       ]
