@@ -4,9 +4,27 @@ import { findCollection, findSummary, FIND_METHODS, itemCollection } from '../en
 import { collectibleReward } from '../engine/progression.js';
 import { findAccess } from '../engine/access.js';
 import { getPublicProduct } from '../engine/catalog.js';
+import { STATE_CHANGE_EVENT } from '../engine/storage.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number=n=>String(n).padStart(3,'0');
 const mark='<svg viewBox="0 0 100 70" aria-hidden="true"><path d="M12 52 24 25 47 12 72 18 89 45 70 60 36 64Z" fill="currentColor"/></svg>';
+const thumbGlyph=item=>{
+  const text=(item.name+' '+item.category+' '+item.place).toLowerCase();
+  if(/flower|plumeria/.test(text))return '✦';
+  if(/shell|cowrie/.test(text))return '◒';
+  if(/bib|number|timing|clock|stopwatch/.test(text))return '09';
+  if(/rock|lava|basalt|stone|shard/.test(text))return '◆';
+  if(/coral|reef/.test(text))return '⌁';
+  if(/spoke|bearing|chain|valve|torx|carbon|aero|wind/.test(text))return '△';
+  if(/coffee|gel|bottle/.test(text))return '◉';
+  if(/pin|sticker|tag|chip|token/.test(text))return '◇';
+  return String(item.number||'').padStart(2,'0').slice(-2);
+};
+const thumbData=item=>{
+  const glyph=esc(thumbGlyph(item)),name=esc(item.name),rarity=esc(String(item.rarity||'find').toUpperCase());
+  const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><rect width="320" height="200" rx="24" fill="#f3eee5"/><circle cx="253" cy="41" r="72" fill="#e96a2818"/><path d="M0 160 C65 122 108 183 168 148 S269 101 320 131 V200 H0Z" fill="#0d7c8618"/><text x="24" y="96" font-family="Georgia,serif" font-size="64" fill="#182126">'+glyph+'</text><text x="24" y="151" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#182126">'+name.replace(/[&<>"']/g,'')+'</text><text x="24" y="176" font-family="Arial,sans-serif" font-size="11" letter-spacing="2" fill="#687277">'+rarity+'</text></svg>';
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+};
 let stageReady=null;
 function loadStage(){
   if(globalThis.__mountCollectibleStage)return Promise.resolve();
@@ -28,7 +46,7 @@ export async function renderCollectionSurface(root,{admin=false,onBack}={}){
       '<nav class="ui-cluster finds-filters" aria-label="Find acquisition method">'+tabs.map(([id,label])=>'<button type="button" class="btn-secondary" data-find-filter="'+id+'" aria-pressed="'+(id===filter)+'">'+esc(label)+'</button>').join('')+'</nav>'+
       '<div class="ui-grid finds-grid" aria-label="KONA Finds collection">'+items.filter(x=>filter==='all'||x.acquisition===filter).map(item=>{
         const reveal=visible(item);
-        return '<button type="button" class="kona-item-card artifact artifact--spec find-card '+(item.collected?'is-collected':'is-locked')+'" data-find="'+esc(item.id)+'" aria-label="Find '+number(item.number)+' · '+esc(reveal?item.name:'Not found yet')+'"><small>'+number(item.number)+' / 100</small><i class="find-mark">'+(item.model?mark:'◇')+'</i><b>'+esc(reveal?item.name:'Something to find')+'</b><span>'+esc(item.collected?'Collected · '+item.rarity:admin?'Admin preview · '+item.rarity:'Not found yet')+'</span><small>'+esc(FIND_METHODS[item.acquisition]?.label||item.acquisition)+'</small></button>';
+        return '<button type="button" class="kona-item-card artifact artifact--spec find-card '+(item.collected?'is-collected':'is-locked')+'" data-find="'+esc(item.id)+'" aria-label="Find '+number(item.number)+' · '+esc(reveal?item.name:'Not found yet')+'"><small>'+number(item.number)+' / 100</small>'+(item.collected?'<img class="find-thumb" src="'+thumbData(item)+'" alt="" loading="lazy" decoding="async">':'<i class="find-mark" aria-hidden="true">◇</i>')+'<b>'+esc(reveal?item.name:'Something to find')+'</b><span>'+esc(item.collected?'Collected · '+item.rarity:admin?'Admin preview · '+item.rarity:'Not found yet')+'</span><small>'+esc(FIND_METHODS[item.acquisition]?.label||item.acquisition)+'</small></button>';
       }).join('')+'</div><section class="kona-section artifact artifact--label" data-other-collection><h3>Your other stories</h3><div class="ui-grid" data-other-items></div></section>';
     root.querySelector('[data-finds-back]')?.addEventListener('click',()=>onBack?.());
     root.querySelectorAll('[data-find-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.findFilter;paint();root.querySelector('[data-find-filter="'+filter+'"]')?.focus({preventScroll:true});});
@@ -40,6 +58,9 @@ export async function renderCollectionSurface(root,{admin=false,onBack}={}){
     }
     if(!host.children.length)root.querySelector('[data-other-collection]').hidden=true;
   };
+  let repaintFrame=0;
+  const onStateChange=()=>{cancelAnimationFrame(repaintFrame);repaintFrame=requestAnimationFrame(()=>{if(!disposed)paint();});};
+  globalThis.addEventListener?.(STATE_CHANGE_EVENT,onStateChange);
   const detail=item=>{
     if(!item)return;disposeStage();selected=item.id;const reveal=visible(item),pay=collectibleReward(item);
     root.innerHTML='<article class="find-studio"><button type="button" class="btn-text" data-find-return>← KONA Finds</button><header><small class="t-data">FIND '+number(item.number)+' / 100 · '+esc(reveal?item.rarity:'UNDISCOVERED')+'</small><h3>'+esc(reveal?item.name:'A story still waiting.')+'</h3><p>'+esc(reveal?item.tagline:'Keep wandering. This slot will remember what you find.')+'</p></header>'+
@@ -60,5 +81,5 @@ export async function renderCollectionSurface(root,{admin=false,onBack}={}){
     root.querySelector('[data-find-return]').focus();
   };
   paint();
-  return()=>{disposed=true;disposeStage();};
+  return()=>{disposed=true;cancelAnimationFrame(repaintFrame);globalThis.removeEventListener?.(STATE_CHANGE_EVENT,onStateChange);disposeStage();};
 }
