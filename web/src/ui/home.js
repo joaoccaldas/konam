@@ -22,7 +22,7 @@ function avatarPreview(styleInput){
   '</div>';
 }
 
-export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage,openDiscover,openPlan,openCollection,openWorld,openFeed,openTravel,admin=false}={}){
+export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage,openDiscover,openPlan,openCollection,openWorld,openFeed,openTravel,onStateChange,admin=false}={}){
   const snapshot=readGameState();
   const identity=snapshot.race_identity||{};
   const collection=collectionSummary(snapshot);
@@ -86,6 +86,7 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
       const after=applyStoredEvent({type:'FIND_DISCOVERED',id:'first-find:lava',subject:'find:shore:lava'});
       if(!readProgression()?.discoveries.includes('find:shore:lava'))throw new Error('save-failed');
       button.disabled=true;status.textContent='Perfect Volcanic Rock saved in '+PRODUCT_NAME+' Finds. +'+(after.xp-before.xp)+' XP · +'+(after.credits-before.credits)+' KC';
+      onStateChange?.();
     }catch{status.textContent='Could not save your Find. Tap the rock to try again.';}
   });
   root.querySelector('[data-home-self]')?.addEventListener('click',()=>openRaceSelf?.());
