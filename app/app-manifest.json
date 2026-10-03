@@ -1,5 +1,5 @@
 {
- "version": "4727d61fc3e3",
+ "version": "cd79f7b90cc6",
  "core": [
   "index.html",
   "about.html",
@@ -69,7 +69,7 @@
   "integrations/companion/rss.xml": "53aSt5o5wWPaA6M0KgGvQgkYjNos7NdfWjHJErVWkis=",
   "integrations/companion/travel.json": "5pwgWGf/zUlADtAPhQjB/0cqaP7BypgqCRd9sMU0cnQ=",
   "app/world-shell.html": "8GKFuNhBIW6G4lkPOK+mLVjKkEXyLnSnpkOqpKMWzDw=",
-  "app/admin-assets.json": "UYnLbdyBKZpohjxymdekybD71xQDE8UTuPqBqtZqGsI=",
+  "app/admin-assets.json": "n/NqGL+U+VdeCs0ZCgV86l795TtsQwI7hdSMtATawec=",
   "app/admin-asset-preview.js": "M7xUJvAtQ4yOnFKybfxmp0dq7tlx1Z9BU/O1ES36Er8=",
   "web/styles/hall-web.css": "S5X8wp1+220hBftIu/D/FPECyASMAWLMmNheU0vdpjE=",
   "web/styles/hall-mobile.css": "mtNR4NbxJYeHlyS1RTj2XS3NV7a74wfs2AId6bjMtl8=",
@@ -85,7 +85,7 @@
   "app/standalone-access.js": "0XflZjZNbdjzdLC6ow/4osPrnoT0H52ps87aBsPiJKA=",
   "app/studio-catalog.js": "Xo4SaU/jvKZzOPxUlD0xTJ8pdJntzMSV8m1QhQP0/9w=",
   "Canyon_Collection.html": "VxY26QKnv4BQS91MBR+O7BsJ1YxuPXDq03mNVa4RwWI=",
-  "Experiences.html": "SduD4ac2LbLfQB0SdmLI8sQ5gpbKGRI162AO/Edb/ew=",
+  "Experiences.html": "TJ9/Wc+dQLPQpzgcBq/TjYSKyG+qaEYr2sKHQLZ9pqE=",
   "Speedmax_2007_Museum.html": "BgW9qSOSXpPI1ngkBV7kt/l2GnVAXrxA6Hl95hjYbfw=",
   "Speedmax_AL_2011_Museum.html": "2mPGN70r5n7hH/i6qv1YrigROlg4CAdEtX1dZdNZkEg=",
   "Speedmax_CF_2011_Museum.html": "3vXU+cLrIjAEaFfnNjzxECf9FT89VeabJZspdTcbBSM=",
