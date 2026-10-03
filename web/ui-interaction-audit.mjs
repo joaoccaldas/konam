@@ -76,7 +76,13 @@ for(const id of selected){
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),null,'manual tour must remain available until explicitly opened');
       await p.evaluate(async()=>{await window.__konaShell.tour();});
       await p.waitForSelector('.kona-tour');
-      for(let i=0;i<4;i++){assert.equal(await p.$eval('.tour-target',e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'}),true,'tour must highlight a visible control');await click('[data-tour-next]');}
+      let tourStepsSeen=0;
+      while(await p.$('.kona-tour')){
+        assert.ok(tourStepsSeen<6,'manual tour must remain finite');
+        assert.equal(await p.$eval('.tour-target',e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'}),true,'tour must highlight a visible control');
+        tourStepsSeen+=1;await click('[data-tour-next]');
+      }
+      assert.ok(tourStepsSeen>=3,'progressive first-run tour should explain at least three visible hooks');
       await p.waitForFunction(()=>!document.querySelector('.kona-tour'));
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),'seen');
     });
