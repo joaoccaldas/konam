@@ -47,7 +47,7 @@ Deno.serve(async(req:Request)=>{
   if(!eventTypes.has(eventType))return response(origin,{error:'Unknown event.'},400);
   if(!path.startsWith('/')||path.length>240)return response(origin,{error:'Invalid path.'},400);
   if(!uuid.test(sessionId))return response(origin,{error:'Invalid session.'},400);
-  if(!['phone','tablet','desktop'].includes(viewport))return response(origin,{error:'Invalid viewport.'},400);
+  if(!['compact','medium','wide'].includes(viewport))return response(origin,{error:'Invalid viewport.'},400);
 
   const url=Deno.env.get('SUPABASE_URL'),serviceKey=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
   if(!url||!serviceKey)return response(origin,{error:'Analytics unavailable.'},503);
