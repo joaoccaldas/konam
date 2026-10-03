@@ -27,7 +27,7 @@ scene.fog=new THREE.FogExp2('#081318',lite?.014:.018);
 const pmrem=new THREE.PMREMGenerator(renderer);
 scene.environment=pmrem.fromScene(new RoomEnvironment(),.04).texture;
 
-const camera=new THREE.PerspectiveCamera(lite?62:54,innerWidth/innerHeight,.08,100);
+const camera=new THREE.PerspectiveCamera(small?56:(lite?60:54),innerWidth/innerHeight,.08,100);
 const target=new THREE.Vector3(0,1.30,-.20);
 let yaw=.02,pitch=-.06,distance=lite?10.6:9.8;
 function updateCamera(drift=0){
@@ -73,9 +73,9 @@ const doorway=new THREE.SpotLight('#c7e8ef',lite?10:18,16,Math.PI*.20,.62,1.45);
 doorway.position.set(0,3.7,-5.8);doorway.target.position.set(0,1.0,.35);scene.add(doorway,doorway.target);
 
 const views={
-  overview:{target:[-.10,1.28,.05],yaw:.02,pitch:-.06,distance:lite?10.6:9.5,title:'NOR // 3',copy:'Three lanes. One system. Wet basalt, blackened steel, glass, timber and enough imperfection to feel inhabited.'},
-  lanes:{target:[-1.00,1.10,0],yaw:-.15,pitch:-.07,distance:6.65,title:'Three Rails',copy:'Three distinct athlete stations share one measured system. Each lane has a trainer, run deck, generic bike slot and traces of use.'},
-  protocol:{target:[2.25,1.38,.05],yaw:.68,pitch:-.06,distance:4.7,title:'Protocol Table',copy:'A working bench with analyzer, instanced samples, paper protocols and a physical data wall. No fake holograms.'},
+  overview:{target:[-.15,1.24,.05],yaw:.02,pitch:-.05,distance:small?6.55:(lite?9.1:9.5),title:'NOR // 3',copy:'Three lanes. One system. Wet basalt, blackened steel, glass, timber and enough imperfection to feel inhabited.'},
+  lanes:{target:[-1.00,1.10,0],yaw:-.15,pitch:-.07,distance:small?5.05:6.65,title:'Three Rails',copy:'Three distinct athlete stations share one measured system. Each lane has a trainer, run deck, generic bike slot and traces of use.'},
+  protocol:{target:[2.25,1.38,.05],yaw:.68,pitch:-.06,distance:small?3.85:4.7,title:'Protocol Table',copy:'A working bench with analyzer, instanced samples, paper protocols and a physical data wall. No fake holograms.'},
   altitude:{target:[3.05,1.40,-1.90],yaw:.62,pitch:-.03,distance:4.25,title:'Environment Bay',copy:'Framed low-iron glass, internal haze, controls and cool reflections make the environmental chamber feel physically present.'},
   vault:{target:[2.35,2.35,2.78],yaw:.42,pitch:.02,distance:4.5,title:'Podium Vault',copy:'Abstract result objects sit inside a dark shadow-gap cabinet. Achievement is present without copying medals or trophies.'},
   fjord:{target:[3.18,.95,.10],yaw:1.12,pitch:-.04,distance:4.25,title:'Fjord Relief',copy:'Twenty-five layered ridges turn the wall into a landscape memory, built as original geometry rather than borrowed imagery.'},
@@ -160,7 +160,7 @@ canvas.addEventListener('wheel',e=>{distance=Math.max(3.2,Math.min(14,distance+e
 
 addEventListener('resize',()=>{
   renderer.setPixelRatio(Math.min(devicePixelRatio,lite?1.45:2));renderer.setSize(innerWidth,innerHeight,false);
-  camera.aspect=innerWidth/innerHeight;camera.fov=innerHeight>innerWidth?(lite?67:61):(lite?59:52);camera.updateProjectionMatrix();
+  camera.aspect=innerWidth/innerHeight;camera.fov=innerHeight>innerWidth?(small?55:(lite?62:61)):(lite?54:52);camera.updateProjectionMatrix();
 });
 
 const clock=new THREE.Clock();
