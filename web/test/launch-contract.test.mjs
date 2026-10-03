@@ -49,3 +49,24 @@ test('local storage failure is observable instead of falsely reporting saved',as
  const profile=createProfile({load:()=>null,save:()=>false});profile.set({name:'Test athlete'});
  assert.equal(profile.saved,false);assert.equal(profile.get().name,'Test athlete','session remains usable');
 });
+
+
+test('Beast Cave review URL opens the canonical world runtime',()=>{
+ const entry=read('web/src/entry.js');
+ assert.match(entry,/q\.get\('reviewRoom'\) === 'beast-cave'\) openMuseum\(\)/);
+ const landing=read('web/src/landing.js');
+ assert.match(landing,/reviewRoom'\) === 'beast-cave'/);
+ assert.match(landing,/buildBeastCave/);
+});
+
+test('NOR3 review keeps the premium large-room envelope',()=>{
+ const review=read('web/src/room-review-norwegian.js');
+ const install=read('web/src/engine/room-installations.js');
+ assert.match(review,/bounds=\{x0:-6\.8,x1:6\.8,z0:-5\.4,z1:5\.4\}/);
+ assert.match(review,/rw=13\.6,rd=10\.8/);
+ assert.match(review,/wallH=5\.6/);
+ assert.match(review,/roughness:\.62/);
+ assert.match(review,/clearcoat:\.16/);
+ assert.match(install,/roughness:\.97/);
+ assert.match(install,/clearcoat:\.24/);
+});
