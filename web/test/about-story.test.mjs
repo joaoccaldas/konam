@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { readFileSync } from 'node:fs';
 
 const root=new URL('../../',import.meta.url);
