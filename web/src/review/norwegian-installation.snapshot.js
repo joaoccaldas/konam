@@ -1,5 +1,5 @@
 // Review-only generated snapshot of the NOR // 3 candidate implementation.
-// Source lineage: PR #15 feat/norwegian-engine-room @ 70e0efee80d0d16dcd6d7ef4fd8d35eb43b33a5a.
+// Source lineage: PR #15 feat/norwegian-engine-room @ 6e0c7d541ec2826c46bbe2ee9286c57200aa31c8.
 // This file is deliberately review-only until the candidate room implementation lands on main.
 // Geometry is original editorial interpretation; athlete-specific equipment remains unassigned.
 
@@ -10,6 +10,48 @@ function norwegian(ctx) {
   const {r,rg,put,box,seed,lite,cx,cz,Y,rw,rd,specimen,obstacles,L,bounds}=ctx;
   const rand=rng(seed+41);
   const reviewPickables=[];
+
+  const surfaceTexture=(kind,repeat=[2,2])=>{
+    const c=document.createElement('canvas');c.width=c.height=512;
+    const g=c.getContext('2d'),rr=rng(seed+(kind==='wood'?73:kind==='stone'?89:101));
+    if(kind==='wood'){
+      g.fillStyle='#2e1e14';g.fillRect(0,0,512,512);
+      for(let y=0;y<512;y+=5+Math.floor(rr()*9)){
+        g.strokeStyle='rgba(190,118,67,'+(.025+rr()*.055)+')';g.lineWidth=.8+rr()*1.4;
+        g.beginPath();g.moveTo(0,y+rr()*8);
+        for(let x=0;x<=512;x+=32)g.lineTo(x,y+Math.sin(x*.025+rr()*3)*5+rr()*5);
+        g.stroke();
+      }
+    }else{
+      g.fillStyle=kind==='stone'?'#171d20':'#0d1519';g.fillRect(0,0,512,512);
+      for(let i=0;i<4200;i++){
+        const v=kind==='stone'?50+rr()*55:25+rr()*55;
+        g.fillStyle='rgba('+v+','+(v+3)+','+(v+5)+','+(.025+rr()*.07)+')';
+        const z=.5+rr()*2.2;g.fillRect(rr()*512,rr()*512,z,z);
+      }
+      for(let i=0;i<32;i++){
+        g.strokeStyle='rgba(126,158,168,'+(.015+rr()*.025)+')';g.lineWidth=.5+rr()*1.2;
+        const y=rr()*512;g.beginPath();g.moveTo(0,y);g.lineTo(512,y+(rr()-.5)*20);g.stroke();
+      }
+    }
+    const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(...repeat);t.anisotropy=lite?2:6;return t;
+  };
+  const textPanel=(text,w=.72,h=.18,fg='#dbe9ed',bg='rgba(8,13,16,.72)')=>{
+    const c=document.createElement('canvas');c.width=768;c.height=192;const g=c.getContext('2d');
+    g.fillStyle=bg;g.fillRect(0,0,c.width,c.height);
+    g.fillStyle=fg;g.font='700 58px Manrope, sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(text,c.width/2,c.height/2);
+    const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;
+    return new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:t,transparent:true,depthWrite:false,toneMapped:false}));
+  };
+  const contactShadowTex=(()=>{
+    const c=document.createElement('canvas');c.width=256;c.height=128;const g=c.getContext('2d');
+    const grd=g.createRadialGradient(128,64,8,128,64,122);grd.addColorStop(0,'rgba(0,0,0,.52)');grd.addColorStop(.55,'rgba(0,0,0,.20)');grd.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle=grd;g.fillRect(0,0,256,128);return new THREE.CanvasTexture(c);
+  })();
+  const contactShadow=(x,z,w,d,opacity=.55)=>{
+    const m=new THREE.Mesh(new THREE.PlaneGeometry(w,d),new THREE.MeshBasicMaterial({map:contactShadowTex,transparent:true,opacity,depthWrite:false,fog:false}));
+    m.rotation.x=-Math.PI/2;m.position.set(x,Y+.022,z);rg.add(m);return m;
+  };
 
   const rubber=new THREE.MeshStandardMaterial({color:'#0b0f11',roughness:.94});
   const steel=new THREE.MeshStandardMaterial({color:'#2d363b',roughness:.30,metalness:.78});
@@ -25,6 +67,9 @@ function norwegian(ctx) {
   const warmDim=new THREE.MeshStandardMaterial({color:'#2b160d',roughness:.48,emissive:'#d74c14',emissiveIntensity:lite?.18:.42});
   const cold=new THREE.MeshStandardMaterial({color:'#10323d',roughness:.46,emissive:'#5bbdd0',emissiveIntensity:lite?.14:.34});
   const lime=new THREE.MeshStandardMaterial({color:'#25311c',roughness:.52,emissive:'#c7f300',emissiveIntensity:lite?.20:.48});
+  basalt.map=surfaceTexture('stone',[2.8,2.2]);basalt.needsUpdate=true;
+  wet.map=surfaceTexture('wet',[3.2,2.5]);wet.needsUpdate=true;
+  oak.map=surfaceTexture('wood',[2.0,1.3]);oak.needsUpdate=true;
 
   const mark=(obj,title,body)=>{
     obj.userData.review={title,body};
@@ -79,6 +124,8 @@ function norwegian(ctx) {
       box(.32,.012,.035,cx-2.95,Y+.045,z+dz,warm);
     }
 
+    contactShadow(cx-.20,z,4.3,.72,.42);
+
     // Trainer: flywheel, axle, feet, support.
     const fly=mark(new THREE.Mesh(new THREE.CylinderGeometry(.35,.35,.17,36),blackSteel),
       'Direct-drive trainer','Generic equipment study. No athlete-specific trainer claim is attached.');
@@ -117,6 +164,7 @@ function norwegian(ctx) {
     put(bottle,bx+.20,Y+.25,z-.34);
     const towel=box(.40,.025,.33,bx-.65,Y+.31,z+.34,linen);towel.rotation.y=.08*(i-1);
     const identity=ring(.11,.014,i===1?lime:warm,bx-1.10,Y+.16,z,Math.PI/2);
+    const plaque=textPanel('0'+(i+1),.36,.13,i===1?'#c7f300':'#ff8b55');plaque.position.set(left+.02,Y+2.70,z-.075);plaque.rotation.y=Math.PI/2;rg.add(plaque);
     mark(identity,['Lane 01','Lane 02','Lane 03'][i],
       ['Kristian Blummenfelt concept lane','Gustav Iden concept lane','Casper Stornes concept lane'][i]+'. Subject presence does not imply endorsement.');
 
@@ -138,6 +186,7 @@ function norwegian(ctx) {
     'Protocol analyser','A generic lab instrument study. Exact Norwegian-team hardware is not asserted.');
   const screen=box(.44,.018,.21,cx+1.82,Y+1.47,cz-.08,cold);screen.rotation.x=-.16;
   box(2.65,1.65,.08,cx+2.55,Y+2.18,r.z0-.14,basalt);
+  const protocolTitle=textPanel('MEASURE  /  ADAPT  /  REPEAT',2.20,.20,'#c8f2fb','rgba(6,12,15,.82)');protocolTitle.position.set(cx+2.55,Y+3.15,r.z0-.21);rg.add(protocolTitle);
   for(let i=0;i<4;i++){
     const bar=box(.08,.55+.12*i,.028,cx+1.75+i*.42,Y+2.05,r.z0-.19,i===3?warm:cold);
     bar.rotation.z=(i-1.5)*.025;
@@ -230,6 +279,7 @@ function norwegian(ctx) {
     'Fjord relief','Original layered geometry brings landscape memory into the room without copying maps or landscape photography.');
 
   // Recovery corner and the deliberately mundane objects that make a room feel inhabited.
+  contactShadow(cx+1.05,r.z1+.62,1.95,.78,.44);
   const bench=mark(box(1.65,.18,.52,cx+1.05,Y+.38,r.z1+.62,oak),
     'Recovery bench','A quiet recovery corner: practical, imperfect, and intentionally less ceremonial than the podium wall.');
   box(.10,.38,.46,cx+.42,Y+.19,r.z1+.62,steel);box(.10,.38,.46,cx+1.68,Y+.19,r.z1+.62,steel);
@@ -243,6 +293,7 @@ function norwegian(ctx) {
   }
 
   // Kona line: destination signal, not a second UI system.
+  const konaMark=textPanel('KONA  →',.88,.18,'#ff8a54','rgba(8,11,14,.62)');konaMark.position.set(bounds.x1-.17,Y+3.22,cz);konaMark.rotation.y=-Math.PI/2;rg.add(konaMark);
   const konaLine=mark(box(.035,.035,Math.min(3.7,rd*.86),bounds.x1-.12,Y+2.95,cz,warm),
     'Kona line','One thin warm destination line. Kona remains the destination, not the decoration theme.');
 
@@ -275,5 +326,5 @@ function norwegian(ctx) {
 }
 
 export function buildNorwegianReview(ctx){return norwegian(ctx);}
-export const REVIEW_SOURCE_SHA='70e0efee80d0d16dcd6d7ef4fd8d35eb43b33a5a';
-export const REVIEW_VARIANT='cinematic-production-v2';
+export const REVIEW_SOURCE_SHA='6e0c7d541ec2826c46bbe2ee9286c57200aa31c8';
+export const REVIEW_VARIANT='cinematic-production-v3';
