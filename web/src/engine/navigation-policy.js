@@ -27,7 +27,7 @@ const hasMeaningfulDiscovery=snapshot=>{
   // Equipment/onboarding events alone should not make the whole world navigation appear.
   const worldDiscovery=discoveries.some(id=>!/^bike:/.test(id));
   const explorationEvent=seen.some(id=>/^(?:FIND_|ROOM_|QUEST_|collection-complete:)/.test(id));
-  return worldDiscovery||explorationEvent||Number(p.level||1)>=2;
+  return worldDiscovery||explorationEvent;
 };
 
 export function navigationForState(snapshot={}, {admin=false}={}){

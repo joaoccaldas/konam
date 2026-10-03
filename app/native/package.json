@@ -8,7 +8,8 @@
     "build:web": "node scripts/build-www.mjs",
     "sync": "npm run build:web && cap sync android",
     "icons": "capacitor-assets generate --android --iconBackgroundColor '#12181d' --iconBackgroundColorDark '#12181d' --splashBackgroundColor '#12181d' --splashBackgroundColorDark '#12181d'",
-    "apk": "npm run sync && cd android && ./gradlew assembleRelease"
+    "apk": "npm run sync && cd android && ./gradlew assembleRelease",
+    "aab": "npm run sync && cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
     "@capacitor/android": "8.5.2",

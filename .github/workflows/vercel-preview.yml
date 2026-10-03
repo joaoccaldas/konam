@@ -73,7 +73,7 @@ jobs:
           vercel curl / --deployment "$URL" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" >/tmp/root.html
           vercel curl /about.html --deployment "$URL" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN" >/tmp/about.html
           grep -q "Kona.m" /tmp/root.html
-          grep -q "About this company" /tmp/about.html
+          grep -q "Kona.m Field Guide" /tmp/about.html
 
       - name: Deployment receipt
         run: |

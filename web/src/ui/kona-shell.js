@@ -11,6 +11,8 @@ import { renderPlanSurface } from './plan.js';
 import { renderFeed, renderTravel } from './companion.js';
 import { renderAdminAssets } from './admin-assets.js';
 import { currentUser, isAdminUser } from '../cloud/supabase-lite.js';
+import { readGameState } from '../engine/game-state.js';
+import { navigationForState } from '../engine/navigation-policy.js';
 import { readStorage, writeStorage } from '../engine/storage.js';
 import { initReturnJourney } from './return-journey.js';
 import { initSurpriseLayer } from './surprise.js';
@@ -39,7 +41,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       '<div id="konaPanelBody" class="kona-panel-body"></div>'+
     '</div>'+
     '<nav class="kona-bottom-nav" aria-label="Main navigation">'+
-      '<button type="button" data-tab="home">'+icon('now')+'<span>Home</span></button>'+
+      '<button type="button" data-tab="home">'+icon('now')+'<span>Now</span></button>'+
       '<button type="button" data-tab="discover">'+icon('explore')+'<span>Discover</span></button>'+
       '<button type="button" data-tab="garage">'+icon('setup')+'<span>Garage</span></button>'+
       '<button type="button" data-tab="plan">'+icon('plan')+'<span>Plan</span></button>'+
@@ -52,6 +54,19 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   const accessContext={admin:false};
   globalThis.__konaAccess=accessContext;
   const accessReady=currentUser().then(user=>{accessContext.admin=isAdminUser(user);return accessContext;}).catch(()=>accessContext);
+  const syncNavigation=()=>{
+    let visible=['home'];
+    try{visible=navigationForState(readGameState(),{admin:accessContext.admin});}catch(_){}
+    const shown=new Set(visible);
+    shell.querySelectorAll('[data-tab]').forEach(button=>{button.hidden=!shown.has(button.dataset.tab);});
+    const nav=shell.querySelector('.kona-bottom-nav');
+    nav?.style.setProperty('--nav-count',String(Math.max(1,visible.length)));
+    const studio=shell.querySelector('[data-user-studio]');
+    if(studio)studio.hidden=!shown.has('me')&&!accessContext.admin;
+    return visible;
+  };
+  accessReady.then(syncNavigation);
+  syncNavigation();
   let routeToken=0;
   const returnJourney=initReturnJourney({openProgress:async()=>{
     await raceSelf();
@@ -123,7 +138,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('home','web/styles/home.css');
     if(request!==studioRequest)return;
-    title.textContent='Home'; eyebrow.textContent=`${PRODUCT_NAME} · TODAY`;
+    title.textContent='Now'; eyebrow.textContent=`${PRODUCT_NAME} · TODAY`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('home');
     disposeStudio=renderHomeSurface(body,{
       event:facts().event,
@@ -133,10 +148,13 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openDiscover:explore,
       openPlan:plan,
       openCollection:collection,
+      openFeed:feed,
+      openTravel:travel,
       openWorld:()=>{close();enter?.();},
+      onStateChange:syncNavigation,
       admin:accessContext.admin,
     });
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(request===studioRequest)startTour();}));
+    syncNavigation();
     scheduleSurprise('home');
     setTimeout(()=>{
       if(!panel.hidden&&title.textContent==='Home'&&!document.querySelector('.kona-tour'))returnJourney.maybeShow();
@@ -166,6 +184,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openTravel:travel,
     });
     if(request===studioRequest) disposeStudio=cleanup; else cleanup?.();
+    syncNavigation();
     scheduleSurprise('studio');
   }
 
@@ -197,6 +216,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     title.textContent='Garage'; eyebrow.textContent=`${PRODUCT_NAME} · YOUR EQUIPMENT`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('garage');
     await renderGarageSurface(body,{admin:accessContext.admin});
+    syncNavigation();
     scheduleSurprise('garage');
   }
 
@@ -208,7 +228,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     const readyData = entryDataReady ? await entryDataReady.catch(()=>null) : null;
     if(request!==studioRequest)return;
     disposeStudio=renderPlanSurface(body,{data:readyData || window.__ENTRY_DATA || { event:facts().event }});
-    panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('plan');
+    panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('plan');syncNavigation();
   }
 
   async function me(){
@@ -237,6 +257,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     title.textContent='Discover'; eyebrow.textContent=`${PRODUCT_NAME} · INTERESTING THINGS`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('discover');
     await renderDiscoverSurface(body,{enter:()=>{close();enter?.();}});
+    syncNavigation();
     scheduleSurprise('discover');
   }
 
@@ -258,5 +279,5 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     }
   };
   syncUserMenu(profile?.get?.()); profile?.subscribe?.(syncUserMenu);
-  return { now, raceSelf, garage, plan, me, explore, collection, feed, travel, adminAssets, tour:replayTour, close, accessReady };
+  return { now, raceSelf, garage, plan, me, explore, collection, feed, travel, adminAssets, tour:replayTour, close, accessReady, syncNavigation };
 }
