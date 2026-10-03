@@ -427,3 +427,5 @@ body.return-moment-open{overflow:hidden}
 
 /* Release touch-target floor for contextual text links surfaced in account/progression/garage states. */
 .kona-note a,#konaAccount a,.garage-level-note a{min-height:48px;display:inline-flex;align-items:center}
+
+.finds-heading [data-finds-back]{min-height:52px;display:inline-flex;align-items:center}
