@@ -231,3 +231,5 @@
 @media(prefers-reduced-motion:reduce){
   .guide-scanline,.guide-pointer{animation:none}.field-rail.is-kicking .field-rail-toggle{animation:none}.guide-screen img,.promo-project-thumb img{transition:none}
 }
+
+.support-hours{margin:0 0 28px}
