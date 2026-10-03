@@ -46,7 +46,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       '<button type="button" data-desktop-tab="discover">Discover</button>'+
       '<button type="button" data-desktop-tab="garage">Garage</button>'+
       '<button type="button" data-desktop-tab="plan">Plan</button>'+
-      '<button type="button" data-desktop-tab="me">Studio</button>'+
+      '<button type="button" data-desktop-tab="me">Me</button>'+
     '</nav>'+
     '<nav class="kona-bottom-nav" aria-label="Main navigation">'+
       '<button type="button" data-tab="home">'+icon('now')+'<span>Now</span></button>'+
@@ -170,8 +170,8 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openDiscover:explore,
       openPlan:plan,
       openCollection:collection,
-      openFeed:feed,
-      openTravel:travel,
+      openFeed:()=>feed('home'),
+      openTravel:()=>travel('home'),
       openWorld:()=>{close();enter?.();},
       onStateChange:syncNavigation,
       admin:accessContext.admin,
@@ -202,24 +202,26 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openMuseum:()=>{ close(); enter?.(); },
       isAdmin:admin,
       openAssets:adminAssets,
-      openFeed:feed,
-      openTravel:travel,
+      openFeed:()=>feed('studio'),
+      openTravel:()=>travel('studio'),
     });
     if(request===studioRequest) disposeStudio=cleanup; else cleanup?.();
     syncNavigation();
     scheduleSurprise('studio');
   }
 
-  async function companion(view){
+  async function companion(view,origin='studio'){
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('companion','web/styles/companion.css');
     if(request!==studioRequest)return;
     title.textContent=view==='feed'?'The Feed':'Travel to Kona';eyebrow.textContent=`${PRODUCT_NAME} · EXPLORE MORE`;
     panel.hidden=false;panel.classList.add('companion-panel');panel.scrollTop=0;
     document.body.classList.add('kona-panel-open');setActive('discover');
-    disposeStudio=(view==='feed'?renderFeed:renderTravel)(body,{back:raceSelf});
+    const back=origin==='home'?now:raceSelf;
+    const backLabel=origin==='home'?'Now':'User Studio';
+    disposeStudio=(view==='feed'?renderFeed:renderTravel)(body,{back,backLabel});
   }
-  const feed=()=>companion('feed'),travel=()=>companion('travel');
+  const feed=(origin='studio')=>companion('feed',origin),travel=(origin='studio')=>companion('travel',origin);
 
   async function collection(){
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
@@ -302,7 +304,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     applyBrandMode(p?.appearance||'auto');
     if(userMenu){
       userMenu.style.setProperty('--user-accent',p?.avatar||'#e8471c');
-      userMenu.querySelector('span').textContent='Studio';
+      userMenu.querySelector('span').textContent='Me';
     }
   };
   syncUserMenu(profile?.get?.()); profile?.subscribe?.(syncUserMenu);
