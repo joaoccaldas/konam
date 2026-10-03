@@ -35,6 +35,8 @@ test('return feedback is one-tap, rewarded and never stores free text',()=>{
   assert.match(ui,/FEEDBACK_RESPONSE/);
   assert.match(ui,/feedback_useful_yes/);
   assert.match(ui,/feedback_useful_no/);
+  const shell=read('web/src/ui/kona-shell.js');
+  assert.match(shell,/title\.textContent==='Now'[^\n]*returnJourney\.maybeShow\(\)/,'return feedback must be reachable from the renamed Now surface');
   assert.doesNotMatch(ui,/<textarea|type="text"/);
   assert.equal(progression.events.FEEDBACK_RESPONSE.xp,10);
   assert.equal(progression.events.FEEDBACK_RESPONSE.repeat,'once-per-prompt');
