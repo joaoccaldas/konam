@@ -11,10 +11,10 @@ test('renderer authority inventory is unique, explicit and migration-bound',()=>
   const inventory=json('config/renderer-authority-v1.json');
   assert.equal(inventory.schema_version,1);
   assert.equal(inventory.first_pilot,'web/src/ui/collectible-stage.js');
-  assert.equal(inventory.counts.repo_source_constructors,13);
-  assert.equal(inventory.counts.browser_or_viewer_constructors,11);
-  assert.equal(inventory.counts.web_src_guarded_constructors,10);
-  assert.equal(inventory.counts.public_runtime_legacy_constructors,6);
+  assert.equal(inventory.counts.repo_source_constructors,12);
+  assert.equal(inventory.counts.browser_or_viewer_constructors,10);
+  assert.equal(inventory.counts.web_src_guarded_constructors,9);
+  assert.equal(inventory.counts.public_runtime_legacy_constructors,5);
   assert.equal(inventory.counts.canonical_kernel_constructors,1);
   assert.equal(inventory.counts.offline_tool_constructors,2);
   const paths=inventory.renderers.map(x=>x.path);
@@ -36,7 +36,7 @@ test('Collectible Stage is the bounded first migrated kernel consumer',()=>{
   const pilot=inventory.migrated_consumers?.find(x=>x.path===inventory.first_pilot);
   assert.ok(pilot);
   assert.equal(pilot.renderer_authority,'web/src/render/renderer.js');
-  assert.equal(pilot.status,'pilot-review');
+  assert.equal(pilot.status,'merged');
 });
 
 test('architecture hygiene consumes the renderer inventory instead of a second hardcoded allowlist',()=>{
