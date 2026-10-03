@@ -151,6 +151,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openFeed:feed,
       openTravel:travel,
       openWorld:()=>{close();enter?.();},
+      onStateChange:syncNavigation,
       admin:accessContext.admin,
     });
     syncNavigation();
