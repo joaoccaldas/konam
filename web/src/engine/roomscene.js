@@ -116,6 +116,7 @@ export function buildBrandRoom(desc, { lite = false, spinners = [], obstacles = 
     return rec;
   });
 
+  if (mood?.env != null) { floor.material.envMapIntensity = mood.env; wallMat.envMapIntensity = mood.env * .5; if (mood.floor) floor.material.color.set(mood.floor); }
   const living = mood ? cinematic(desc, mood, { group, lite, b, H, accent, obstacles, pickables }) : null;
 
   const inRoom = (x, z) => x > b.x0 + .5 && x < b.x1 - .4 && z < b.z0 - .5 && z > b.z1 + .5;
@@ -204,10 +205,10 @@ function cinematic(desc, mood, { group, lite, b, H, accent, obstacles, pickables
   for (const p of mood.portals || []) {
     const fr = new THREE.Group(); fr.position.set(p.x, 0, p.z); fr.rotation.y = p.rotY ?? 0; group.add(fr);
     const mat = new THREE.MeshBasicMaterial({ color: p.color || accent, toneMapped: false });
-    const w = p.w ?? 1.6, h = p.h ?? 3.4, t = .06;
+    const w = p.w ?? 1.6, h = p.h ?? 2.8, t = .06;
     for (const [sw, sh, x, y] of [[t, h, -w / 2, h / 2], [t, h, w / 2, h / 2], [w + t, t, 0, h]]) { const m = new THREE.Mesh(new THREE.BoxGeometry(sw, sh, t), mat); m.position.set(x, y, 0); fr.add(m); }
     const lab = lettering(w, .5, g => { g.fillStyle = '#eef0f3'; g.font = `800 .16px ${FONT}`; g.letterSpacing = '.08px'; g.fillText(p.label || '', .02, .2); g.fillStyle = 'rgba(238,240,243,.7)'; g.font = `500 .1px ${FONT}`; g.fillText(p.sub || '', .02, .4); }, 512);
-    lab.position.set(0, h + .4, 0); fr.add(lab);
+    lab.position.set(0, h + .32, 0); fr.add(lab);
     const pool = new THREE.Mesh(new THREE.PlaneGeometry(w, 1.2), new THREE.MeshBasicMaterial({ color: p.color || accent, transparent: true, opacity: lite ? .05 : .09, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
     pool.rotation.x = -Math.PI / 2; pool.position.set(0, .015, .6); fr.add(pool);
     if (p.info) for (const m of fr.children) if (m.isMesh) { m.userData.info = p.info; pickables.push(m); }

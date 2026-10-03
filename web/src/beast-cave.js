@@ -40,7 +40,7 @@ export function buildBeastCave(ctx) {
 
   // ---------------------------------------------------------------- shell: dark concrete, black ceiling
   const basalt = basaltTex.clone(); basalt.repeat.set(RW/2.4,RD/2.4); basalt.needsUpdate = true;
-  const floorMat = new THREE.MeshStandardMaterial({ map: basalt, color:'#1c1a1a', roughness:.62, metalness:.05, envMapIntensity:.18 });
+  const floorMat = new THREE.MeshStandardMaterial({ map: basalt, color:'#121010', roughness:.7, metalness:.05, envMapIntensity:.06 });
   const floor = new THREE.Mesh(new THREE.BoxGeometry(RW,.16,RD),floorMat);
   floor.position.set(CX,-.08,CZ); floor.receiveShadow=true; floor.userData.floor=true; group.add(floor); pickables.push(floor);
 
@@ -51,7 +51,7 @@ export function buildBeastCave(ctx) {
     g.strokeStyle='rgba(235,220,205,.03)';for(let y=90;y<h;y+=120){g.beginPath();g.moveTo(0,y);g.lineTo(w,y+8);g.stroke();}
     for(let i=0;i<9;i++){const x=r()*w;const gr=g.createLinearGradient(x,0,x,h);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,.18)');g.fillStyle=gr;g.fillRect(x,h*.4,6+r()*14,h*.6);}   // damp streaks
   },[6,3]);
-  const wallMat = new THREE.MeshStandardMaterial({map:concrete,color:'#4a423d',roughness:.93,envMapIntensity:.12});
+  const wallMat = new THREE.MeshStandardMaterial({map:concrete,color:'#3e3733',roughness:.93,envMapIntensity:.06});
   const dark = new THREE.MeshStandardMaterial({color:'#0f1012',roughness:.55,metalness:.25,envMapIntensity:.35});
   const steel = new THREE.MeshStandardMaterial({color:'#3a3d40',roughness:.3,metalness:.8,envMapIntensity:.5});
   const pale = new THREE.MeshStandardMaterial({color:'#bdb3a6',roughness:.86,envMapIntensity:.2});
@@ -234,7 +234,7 @@ export function buildBeastCave(ctx) {
   // ---------------------------------------------------------------- experiment wall: the loop, as published results
   const EXW=1.62,EXH=2.1,ex0=11.4;
   const panels=loopFacts.map((f,i)=>{
-    const x=ex0+i*(EXW+.22);
+    const x=ex0+(loopFacts.length-1-i)*(EXW+.22);                  // read left to right from inside the room (facing +z)
     const p=lettering(EXW,EXH,g=>{
       g.fillStyle='rgba(14,13,13,.92)';g.fillRect(0,0,EXW,EXH);
       g.fillStyle='#ff6a00';g.fillRect(.1,.1,.32,.025);
@@ -321,16 +321,16 @@ export function buildBeastCave(ctx) {
   obstacles.push({c:new THREE.Vector3(33.9,0,-16.75),r:.9});
   // the link door: a frame of ember light pulls you through to the next room
   const linkFrame=new THREE.Mesh(new THREE.BoxGeometry(BLINK.x1-BLINK.x0+.12,.04,.04),ember);linkFrame.position.set((BLINK.x0+BLINK.x1)/2,BLINK.h+.02,BROOM.z1+.02);group.add(linkFrame);
-  const linkSign=lettering(2.2,.34,g=>{g.fillStyle='#8b8178';g.font=`700 .09px ${FONT}`;g.letterSpacing='.06px';g.fillText('THROUGH HERE · BREITLING · ENDURANCE PRO',0,.2);},768);
+  const linkSign=lettering(2.2,.34,g=>{g.fillStyle='#8b8178';g.font=`700 .09px ${FONT}`;g.letterSpacing='.06px';fitText(g,'THROUGH HERE · BREITLING · ENDURANCE PRO',0,.2,2.18);},768);
   linkSign.position.set((BLINK.x0+BLINK.x1)/2,BLINK.h+.32,BROOM.z1+.03);group.add(linkSign);
 
   // ---------------------------------------------------------------- sculptures
   const stone=new THREE.MeshStandardMaterial({map:basaltTex,color:'#4a443f',roughness:.95,envMapIntensity:.2});
   const gap=new THREE.Group();gap.position.set(9.6,0,-13.7);gap.rotation.y=.75;group.add(gap);
   for(const x of [-.62,.62]){const s=new THREE.Mesh(new THREE.BoxGeometry(.95,3.1,.85),stone);s.position.set(x,1.55,0);s.rotation.z=x<0?.09:-.09;s.castShadow=!lite;gap.add(s);}
-  const slit=new THREE.Mesh(new THREE.BoxGeometry(.07,2.7,.05),ember);slit.position.set(0,1.48,.46);gap.add(slit);
+  const slit=new THREE.Mesh(new THREE.BoxGeometry(.07,2.3,.05),ember);slit.position.set(0,1.75,.46);gap.add(slit);
   const gapNum=lettering(1.0,.36,g=>{g.fillStyle='#ffb36b';g.font=`700 .3px ${FONT}`;g.textAlign='center';g.fillText(facts.gap.value,.5,.29);},512);
-  gapNum.position.set(0,.28,.44);gap.add(gapNum);
+  gapNum.position.set(0,.3,.44);gap.add(gapNum);
   const gapLight=new THREE.PointLight('#ff7a1a',lite?1.5:2.6,4,1.8);gapLight.position.set(0,1.4,.9);gap.add(gapLight);
   info([slit,...gap.children.filter(c=>c.isMesh&&c!==slit)],{eyebrow:`THE GAP · KONA ${facts.gap.year}`,title:'Almost is still information.',sub:`${facts.gap.athlete_time} · ${facts.gap.value} behind`,text:facts.gap.line,model:()=>gapCard()});
   obstacles.push({c:new THREE.Vector3(9.6,0,-13.7),r:1.25});
@@ -409,6 +409,7 @@ export function buildBeastCave(ctx) {
         const f=centre(front),r=centre(rear),dir=new THREE.Vector3(f.x-r.x,0,f.z-r.z);
         holder.rotation.y=Math.atan2(dir.z,dir.x);                  // wheelbase along +x: the rider faces the screen
         holder.updateMatrixWorld(true);
+        if(centre(front).x<centre(rear).x){holder.rotation.y+=Math.PI;holder.updateMatrixWorld(true);}   // GLB axes vary: check, don't assume
         const r2=centre(rear),f2=centre(front);
         holder.position.x+=heroX-(r2.x+f2.x)/2;holder.position.z+=heroZ-(r2.z+f2.z)/2;holder.updateMatrixWorld(true);
         const ra=centre(rear),fa=centre(front),fb=new THREE.Box3().setFromObject(front);
