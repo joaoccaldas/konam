@@ -58,4 +58,6 @@ jobs:
           git config user.email 'actions@users.noreply.github.com'
           git add Speedmax_*Museum.html app/app-manifest.json sw.js sitemap.xml llms.txt llms-full.txt
           git commit -m 'build: regenerate streamed direct viewers'
+          git fetch origin editorial/split-why-about-origin-field-guide
+          git rebase origin/editorial/split-why-about-origin-field-guide
           git push origin HEAD:editorial/split-why-about-origin-field-guide
