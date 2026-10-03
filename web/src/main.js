@@ -167,8 +167,8 @@ function tuneStock(m) {
 
 // ------------------------------------------------------------------ load
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-const b64 = s => { const bin = atob(s), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; };
-const GLB = b64(window.__SPEEDMAX_GLB);
+const GLB_URL = window.__SPEEDMAX_GLB_URL;
+if(!GLB_URL)throw new Error('Missing direct-viewer GLB URL');
 const bike = new THREE.Group(); scene.add(bike);
 const parts = {};            // part id -> node
 const meshesOf = {};         // part id -> meshes (nearest part ancestor)
@@ -178,8 +178,8 @@ let wheelF, wheelR, crankset, chainNode, chain = null, discMesh = null, zippMesh
 
 function progress(p, label) { $('#loadbar i').style.width = (p * 100).toFixed(0) + '%'; if (label) $('#loadlabel').textContent = label; }
 
-progress(.15, 'Unpacking carbon…');
-loader.parse(GLB.buffer, '', gltf => {
+progress(.08, 'Fetching carbon…');
+loader.load(GLB_URL, gltf => {
   progress(.6, 'Laying up materials…');
   const root = gltf.scene;
   bike.add(root);
@@ -228,6 +228,8 @@ loader.parse(GLB.buffer, '', gltf => {
   setTimeout(() => document.body.classList.add('ready'), 250);
   flyTo(coarse ? 'side' : 'hero', 0);
   requestAnimationFrame(tick);
+}, xhr => {
+  if(xhr.lengthComputable&&xhr.total)progress(.08 + .42 * (xhr.loaded / xhr.total), 'Streaming carbon…');
 }, err => { $('#loadlabel').textContent = 'Could not load the model: ' + err.message; console.error(err); });
 
 function mapMaterial(m, mesh) {
