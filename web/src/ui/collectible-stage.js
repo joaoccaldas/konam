@@ -4,14 +4,20 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { disposeObject3D } from '../world/disposal.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { createRendererContext } from '../render/renderer.js';
 
 export async function mountCollectibleStage(canvas,{model,motion='auto'}={}){
   if(!canvas||!model?.glb||!model?.node)throw new Error('Collectible has no modeled view');
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'low-power'});
-  renderer.outputColorSpace=THREE.SRGBColorSpace;
-  renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.1;
-  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.6));
+  const renderContext=createRendererContext({
+    canvas,
+    antialias:true,
+    alpha:true,
+    powerPreference:'low-power',
+    maxDpr:1.6,
+    toneMapping:'aces',
+    exposure:1.1,
+  });
+  const {renderer}=renderContext;
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(34,1,.01,50);
   camera.position.set(1.7,1.15,2.4);
@@ -38,8 +44,9 @@ export async function mountCollectibleStage(canvas,{model,motion='auto'}={}){
   let disposed=false,last=performance.now();
   const resize=()=>{const w=Math.max(1,canvas.clientWidth),h=Math.max(1,canvas.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();};
   const ro=new ResizeObserver(resize);ro.observe(canvas);resize();
-  renderer.setAnimationLoop(now=>{if(disposed)return;const dt=Math.min(.05,(now-last)/1000);last=now;controls.update();if(!reduced&&!controls.state?.active)root.rotation.y+=dt*.18;renderer.render(scene,camera);});
+  renderContext.setAnimationLoop(now=>{if(disposed)return;const dt=Math.min(.05,(now-last)/1000);last=now;controls.update();if(!reduced&&!controls.state?.active)root.rotation.y+=dt*.18;renderer.render(scene,camera);});
   canvas.__collectibleStage=true;
-  return{reset(){camera.position.set(radius*1.8,radius*.9,radius*2.25);controls.target.set(0,0,0);controls.update();},dispose(){disposed=true;renderer.setAnimationLoop(null);ro.disconnect();controls.dispose();renderer.dispose();canvas.__collectibleStage=false;scene.add(gltf.scene);disposeObject3D(scene,{removeFromParent:false});}};
-  }catch(error){controls.dispose();renderer.dispose();if(gltf?.scene)scene.add(gltf.scene);disposeObject3D(scene,{removeFromParent:false});throw error;}
+  canvas.__collectibleRendererAuthority='shared-r0';
+  return{reset(){camera.position.set(radius*1.8,radius*.9,radius*2.25);controls.target.set(0,0,0);controls.update();},dispose(){disposed=true;renderContext.setAnimationLoop(null);ro.disconnect();controls.dispose();renderContext.dispose();canvas.__collectibleStage=false;delete canvas.__collectibleRendererAuthority;scene.add(gltf.scene);disposeObject3D(scene,{removeFromParent:false});}};
+  }catch(error){controls.dispose();renderContext.dispose();if(gltf?.scene)scene.add(gltf.scene);disposeObject3D(scene,{removeFromParent:false});throw error;}
 }
