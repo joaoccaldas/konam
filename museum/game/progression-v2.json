@@ -14,7 +14,7 @@
       "repeat": "once"
     },
     "ONBOARDING_ANSWER": {
-      "xp": 15,
+      "xp": 5,
       "credits": 0,
       "repeat": "once-per-question"
     },
