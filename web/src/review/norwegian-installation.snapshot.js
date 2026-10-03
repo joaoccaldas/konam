@@ -327,4 +327,4 @@ function norwegian(ctx) {
 
 export function buildNorwegianReview(ctx){return norwegian(ctx);}
 export const REVIEW_SOURCE_SHA='6e0c7d541ec2826c46bbe2ee9286c57200aa31c8';
-export const REVIEW_VARIANT='cinematic-production-v2';
+export const REVIEW_VARIANT='cinematic-production-v3';
