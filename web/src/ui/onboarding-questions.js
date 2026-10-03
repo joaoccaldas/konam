@@ -29,32 +29,6 @@ const QUESTIONS=[
       ['undefined','TECHNICALLY…','Define “done”.'],
     ],
   },
-  {
-    id:'kona-energy',tone:'energy',mark:'03',
-    kicker:'IMPORTANT SCIENCE',
-    title:'Pick your Kona energy.',
-    note:'This may affect absolutely everything. Or a wallpaper. Science is developing.',
-    answers:[
-      ['lava','LAVA','Hot, fast, mildly unreasonable.'],
-      ['ocean','OCEAN','Calm until it very much isn’t.'],
-      ['garage','GARAGE','I came here for the machines.'],
-      ['mystery','MYSTERY','Please do not explain everything yet.'],
-    ],
-  },
-  {
-    id:'tucker-dale',tone:'credentials',mark:'04',
-    kicker:'CULTURAL BACKGROUND',
-    title:'Have you seen Tucker & Dale vs. Evil?',
-    note:'For the record.',
-    answers:[['seen','YES','Yes.'],['not-seen','NO','Not yet.'],['unsure','UNSURE','I may be thinking of something else.']],
-  },
-  {
-    id:'camp-miasma',tone:'arrival',mark:'05',
-    kicker:'ACCOMMODATION PREFERENCE',
-    title:'Would you accept a place at Camp Miasma?',
-    note:'Assume the booking is available.',
-    answers:[['accept','ACCEPT','Yes.'],['review','REVIEW','I would read the cancellation policy.'],['decline','DECLINE','I have made other arrangements.']],
-  },
 ];
 
 const load=()=>{
