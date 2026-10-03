@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "purpose": "Representative runtime budgets for adaptive Kona.m 3D scenes. Engineering targets, not claims about every scene on main.",
+  "tiers": {
+    "eco": {
+      "max_visible_triangles": 180000,
+      "max_draw_calls": 80,
+      "texture_gpu_target_mb": 100,
+      "dpr_min": 0.75,
+      "dpr_max": 1.0,
+      "ao": false
+    },
+    "balanced": {
+      "max_visible_triangles": 350000,
+      "max_draw_calls": 110,
+      "texture_gpu_target_mb": 160,
+      "dpr_min": 1.0,
+      "dpr_max": 1.35,
+      "shadow_map": 1024
+    },
+    "high": {
+      "max_visible_triangles": 650000,
+      "max_draw_calls": 160,
+      "texture_gpu_target_mb": 300,
+      "dpr_min": 1.25,
+      "dpr_max": 1.75,
+      "shadow_map": 2048
+    }
+  },
+  "quality_controller_ms": {
+    "raise_quality_below_for_sustained_window": 13,
+    "lower_dpr_above": 20,
+    "disable_expensive_ao_above": 24,
+    "reduce_shadows_or_lod_above": 28
+  },
+  "representative_scenes": [
+    "landing-hero",
+    "garage-hero",
+    "queen-k-hall",
+    "heavy-themed-room",
+    "machine-engineering-inspection"
+  ]
+}

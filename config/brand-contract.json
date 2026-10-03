@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "authority": "KONA.m Unified Master Brand Strategy + brand/tokens.css",
+  "product_line": "Race the version of yourself you haven't met yet.",
+  "principle": "Quiet interface. Dramatic moments. Rich world when chosen.",
+  "palette": {
+    "brand-sand": "#f4efe7",
+    "brand-mist": "#e6e9ed",
+    "brand-ocean": "#00a7c7",
+    "brand-sunrise": "#ff6a00",
+    "brand-ember": "#ff833d",
+    "brand-lava": "#080b0e",
+    "brand-basalt": "#282f36",
+    "brand-hibiscus": "#ff2d6d",
+    "brand-lilac": "#a876fa",
+    "brand-lime": "#c7f300"
+  },
+  "spacing_px": [4,8,12,16,24,32,48,64],
+  "radii_px": {
+    "control": 12,
+    "card": 20,
+    "sheet": 24,
+    "pill": 999
+  },
+  "minimum_touch_px": 48,
+  "fonts": {
+    "ui": "Manrope",
+    "editorial": "Instrument Serif",
+    "data": "ui-monospace",
+    "hand": "Caveat"
+  },
+  "rules": [
+    "Sunrise is the primary forward-action color.",
+    "Ocean is discovery/information.",
+    "Lime is progression.",
+    "Hibiscus is personality/social.",
+    "Lilac is mythic/special.",
+    "Do not use pure black or pure white as canonical surfaces.",
+    "No hover-only critical action.",
+    "3D is optional depth, not a first-use requirement."
+  ]
+}
