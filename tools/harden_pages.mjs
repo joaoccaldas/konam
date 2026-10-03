@@ -46,8 +46,8 @@ const PAGES = [
     title: 'Speedmax Nights & History Lane · Canyon Speedmax Museum',
     description: 'Three night experiences around one Canyon Speedmax (Lava Night, Camp 13 and the Ghost Tunnel) and History Lane, the story from Koblenz in 1985 to Kona. An independent study.', keepTitle: true },
   { file: 'about.html', type: 'AboutPage', image: 'assets/share/konam.png',
-    title: 'About Kona.m · the Field Guide to the world, the game & the lab',
-    description: 'What Kona.m is and how to play it: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain it all.' },
+    title: 'About Kona.m · race the version of yourself you haven\'t met yet',
+    description: 'What Kona.m is now, why it exists, what is live, what is still a lab, and what may come next: race identity, bikes, race week, discovery, 3D worlds and the Intern.' },
   { file: 'promo.html', type: 'WebPage', image: 'assets/share/konam.png',
     title: 'Kona.m Field Guide · how to play, worlds, bikes & experiments',
     description: 'A playful public guide to Kona.m: onboarding, tutorials, 3D bikes, worlds, collections, experiments, FAQs and the overworked Intern trying to explain what this app actually is.', keepTitle: true },
@@ -135,8 +135,8 @@ function block(p) {
 <link rel="canonical" href="${url}">
 <meta property="og:type" content="website"><meta property="og:site_name" content="${NAME}"><meta property="og:locale" content="en_US">
 <meta property="og:title" content="${esc(p.title)}"><meta property="og:description" content="${esc(p.description)}">
-<meta property="og:url" content="${url}"><meta property="og:image" content="${img}"><meta property="og:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself. Explore, build and discover.':esc(p.title)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(p.title)}"><meta name="twitter:description" content="${esc(p.description)}"><meta name="twitter:image" content="${img}"><meta name="twitter:image:alt" content="${p.image.endsWith('konam.png')?'Kona.m — race the version of yourself. Explore, build and discover.':esc(p.title)}">
+<meta property="og:url" content="${url}"><meta property="og:image" content="${img}"><meta property="og:image:alt" content="${p.image.endsWith('konam.png')?"Kona.m — race the version of yourself you haven't met yet.":esc(p.title)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(p.title)}"><meta name="twitter:description" content="${esc(p.description)}"><meta name="twitter:image" content="${img}"><meta name="twitter:image:alt" content="${p.image.endsWith('konam.png')?"Kona.m — race the version of yourself you haven't met yet.":esc(p.title)}">
 <link rel="alternate" type="text/plain" href="${SITE}llms.txt" title="LLM summary">
 <script type="application/ld+json">${jsonld(ld)}</script>
 <!--harden:end-->`;
