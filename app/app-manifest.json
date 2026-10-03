@@ -1,5 +1,5 @@
 {
- "version": "619960236b35",
+ "version": "81a33276b36b",
  "core": [
   "index.html",
   "about.html",
@@ -39,7 +39,7 @@
   "web/src/promo.js": "IB/RDbIYaaLrH//MZpZOccxPX1odHbhu4WThfi6ExkE=",
   "web/styles/promo.css": "R5KRXsy/n6eONDRGNVnitRm+g/tgp9ed+nfhLGSJSLY=",
   "app/viewport.js": "s84yeQXxX9xSWnlj+1xuK84iotaJzl1NKMWjShrB2F0=",
-  "app/kona-core.js": "SmMz2qjV1YpuIloQcqQIa0wdgkzO11qQtiIZWc/Ju1U=",
+  "app/kona-core.js": "KK6AD1HninApQfHOMQUJFDXLc/jpKQsPbUOnsiFPK3E=",
   "app/entry-data.json": "u70GqhCPsNX6TZI4LhPBmxQkdjHsA1534QN/mMdyufU=",
   "integrations/public-catalog.json": "W1xJL5pT+cwjQLj4y9Kg7X4JorCf+4XAF8AHKzF5CuU=",
   "manifest.webmanifest": "D80RDjSyU/ENx8num4CsbgCHG48x8J4k6F4pT2ANlUA=",
@@ -76,7 +76,7 @@
   "app/collectible-stage.js": "34Pk6a99P//IAALsWs2mwAxGeUJzVRIPnn0Cq0/WfjY=",
   "integrations/ironman-races-2016-2026.json": "P7vUgV+atNEkd1fjhGBhii8UZFqiskskE6hN0bbVE+Q=",
   "app/museum-data.js": "495eufV6AZk7gVeWh8AKbc8CoiBy7YKy0LqY6oida48=",
-  "app/hall.js": "nxrpyGfJPIRaWPpk8UcskGxd6cxtzVpXIFx1QjcJlpk=",
+  "app/hall.js": "HlpRhwHOjS2TcuHBvmurW40ZeOJPWG36T2q1MZ6wjDc=",
   "app/studio.js": "UgASDldFVqTtAzzWF1Jtt83/pnaTpbLvf1XM+XJbMD8=",
   "app/standalone-access.js": "IToKjU9EWenI92i2cEtfB2OE2X/XxW7I7+5JVBXRcOY=",
   "app/studio-catalog.js": "Xo4SaU/jvKZzOPxUlD0xTJ8pdJntzMSV8m1QhQP0/9w=",
