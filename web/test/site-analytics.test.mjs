@@ -27,8 +27,10 @@ test('race-week funnel includes bike, Kona Now and binary feedback without text 
   const src=read('web/src/site-analytics.js');
   for(const event of [
     'page_view','entry_continue','first_bike_collected','first_bike_skipped',
-    'kona_now_feed_opened','kona_now_travel_opened','feedback_useful_yes','feedback_useful_no'
+    'kona_now_feed_opened','kona_now_travel_opened'
   ]) assert.ok(src.includes("'"+event+"'"),event);
+  const feedback=read('web/src/ui/return-journey.js');
+  for(const event of ['feedback_useful_yes','feedback_useful_no']) assert.ok(feedback.includes("'"+event+"'"),event);
   const fn=read('supabase/functions/site-analytics/index.ts');
   for(const event of ['first_bike_shown','feedback_useful_yes','feedback_useful_no']) assert.ok(fn.includes("'"+event+"'"),event);
 });
