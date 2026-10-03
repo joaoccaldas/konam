@@ -1,6 +1,6 @@
 // ui/onboarding-questions.js
 import { readStorage, writeStorage } from '../engine/storage.js';
-import { applyStoredEvent, ensureProgression, LEVELS } from '../engine/progression.js';
+import { applyStoredEvent, ensureProgression, LEVELS, EVENTS } from '../engine/progression.js';
 import { PRODUCT_NAME } from '../product-meta.js';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -74,12 +74,13 @@ export function renderOnboardingQuestions(host,{onDone,onSkip}={}){
     const progress=Math.round((answered/QUESTIONS.length)*100);
     const state=ensureProgression();
     const next=LEVELS.find(x=>x.level===Math.min(10,state.level+1));
+    const answerXp=Math.max(0,Number(EVENTS.ONBOARDING_ANSWER?.xp)||0);
     host.innerHTML='<section class="onboarding-question" data-onboarding-question data-onboarding-tone="'+esc(q.tone)+'">'+
       '<div class="onboarding-progress" role="progressbar" aria-label="Onboarding progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+progress+'"><span style="width:'+progress+'%"></span></div>'+
       '<div class="onboarding-step-mark" aria-hidden="true"><strong>'+esc(q.mark)+'</strong><span>OF '+String(QUESTIONS.length).padStart(2,'0')+'</span></div>'+
-      '<div class="onboarding-question-copy"><p class="eyebrow">'+esc(q.kicker)+'</p><h2>'+esc(q.title)+'</h2><p>'+esc(q.note)+'</p>'+(index===0?'<p class="onboarding-story">Curious how this began? <a href="about.html" target="_blank" rel="noopener">Read our story ↗</a></p>':'')+'</div>'+
+      '<div class="onboarding-question-copy"><p class="eyebrow">'+esc(q.kicker)+'</p><h2>'+esc(q.title)+'</h2><p>'+esc(q.note)+'</p>'+(index===0?'<p class="onboarding-story">Curious how this began? <a href="why.html" target="_blank" rel="noopener">Read Why Kona ↗</a></p>':'')+'</div>'+
       '<div class="onboarding-answer-grid">'+q.answers.map(([id,tag,label])=>'<button type="button" data-onboarding-answer="'+esc(id)+'"><small>'+esc(tag)+'</small><b>'+esc(label)+'</b><i aria-hidden="true">→</i></button>').join('')+'</div>'+
-      '<div class="onboarding-reward"><small>YOUR COMPLETELY SERIOUS REWARD METER</small><b>+15 XP</b><span>'+(next?'Next: Level '+next.level+' · '+next.name:'You have become suspiciously powerful.')+'</span></div>'+
+      '<div class="onboarding-reward"><small>YOUR COMPLETELY SERIOUS REWARD METER</small><b>+'+answerXp+' XP</b><span>'+(next?'Next: Level '+next.level+' · '+next.name:'You have become suspiciously powerful.')+'</span></div>'+
       '<div class="onboarding-actions"><button type="button" class="btn-text" data-onboarding-skip>Skip the interrogation</button><span>'+(index+1)+' / '+QUESTIONS.length+'</span></div>'+
     '</section>';
     host.querySelectorAll('[data-onboarding-answer]').forEach(btn=>btn.onclick=()=>{
