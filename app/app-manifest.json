@@ -1,5 +1,5 @@
 {
- "version": "4c8cf0c6959d",
+ "version": "93662f6120e9",
  "core": [
   "index.html",
   "about.html",
@@ -41,12 +41,12 @@
   "web/src/site-analytics.js": "pzSG7M+mEc8nLM4/jgJprdzwvOtYeyfwt09adByLI0U=",
   "web/styles/promo.css": "R5KRXsy/n6eONDRGNVnitRm+g/tgp9ed+nfhLGSJSLY=",
   "app/viewport.js": "s84yeQXxX9xSWnlj+1xuK84iotaJzl1NKMWjShrB2F0=",
-  "app/kona-core.js": "hQlSeF8/2cHrVVKzMJgC8xmN6HBJVMtodnQk5dPWams=",
+  "app/kona-core.js": "jVYhVICFvTGT1dJRc1+LsD0XZa0RvO0eQW+v/JiS1RQ=",
   "app/entry-data.json": "u70GqhCPsNX6TZI4LhPBmxQkdjHsA1534QN/mMdyufU=",
   "integrations/public-catalog.json": "W1xJL5pT+cwjQLj4y9Kg7X4JorCf+4XAF8AHKzF5CuU=",
   "manifest.webmanifest": "D80RDjSyU/ENx8num4CsbgCHG48x8J4k6F4pT2ANlUA=",
   "web/styles/entry.css": "ruRfYRpMIViGzb8+nGKD6Q/gHqhhzTixNeZOsbTMEDk=",
-  "web/styles/system.css": "Ho1aTvpPZcvSjL1jtiCoV1c9xLYd5jQXCnFnm9jKZbM=",
+  "web/styles/system.css": "q6Ija3yndT7NwXz98jPVAUEZjzMkvQzeAT0JVOv4qk0=",
   "web/styles/shell-mobile.css": "kt5DBDeglxFiMu2rTibzPhjqMWwMJKLRIMP5DSw+/Sg=",
   "web/styles/home.css": "M2QUd913oyU1YuRybHiuaPh6VSJUEJninKnS85efSig=",
   "web/styles/garage.css": "wm+HmyfZlvpb01WwKcB91XvG88Q8exKaG0hW8k70Xss=",
