@@ -17,7 +17,7 @@
 export const STATION_KINDS = ['plinth', 'float', 'wall', 'vertical', 'ceiling', 'stand'];
 export const floorStyles = ['marble', 'travertine', 'basalt', 'wood'];
 
-export function validateBrandRoom(room, siblings = []) {
+export function validateBrandRoom(room, siblings = [], resolved = null) {
   const errs = [];
   const need = (k, t) => { if (room[k] == null) errs.push(`missing ${k}`); if (t && typeof room[k] !== t) errs.push(`${k} must be ${t}`); };
   need('id', 'string'); need('name', 'string'); need('bounds', 'object'); need('theme', 'object');
@@ -36,9 +36,15 @@ export function validateBrandRoom(room, siblings = []) {
     }
   }
   (room.products || []).forEach((p, i) => {
-    if (!p.id) errs.push(`products[${i}] missing id`);
-    if (!p.glb) errs.push(`products[${i}] (${p.id || i}) missing glb`);
-    if (p.glb && !/\.glb$/i.test(p.glb)) errs.push(`products[${i}].glb must end .glb`);
+    const id = p.id || p.product_id;
+    if (!id) errs.push(`products[${i}] missing id`);
+    const referenced = p.product_id && !p.glb;
+    const known = !referenced || (resolved != null && Object.prototype.hasOwnProperty.call(resolved, p.product_id));
+    if (referenced && !known) errs.push(`products[${i}] (${p.product_id}) unknown id`);
+    if (referenced && !p.station) errs.push(`products[${i}] (${id}) missing station`);
+    const glb = p.glb || (known && resolved ? resolved[p.product_id || p.id] : null);
+    if (!glb) errs.push(`products[${i}] (${id || i}) missing glb`);
+    if (glb && !/\.glb$/i.test(glb)) errs.push(`products[${i}].glb must end .glb`);
   });
   return errs;
 }
