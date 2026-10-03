@@ -34,3 +34,25 @@ test('Field Guide contact is the public Kona.m project inbox, never a private pe
 test('landing names the Field Guide by purpose',()=>{
   assert.match(read('web/landing.template.html'),/href="about\.html">What is Kona\.m\?<\/a>/);
 });
+
+
+test('Why Kona owns the personal story while About stays the Field Guide',()=>{
+  const about=read('about.html'),why=read('why.html'),story=read('web/src/about-story.js');
+  assert.match(about,/Field Guide/);
+  assert.match(about,/NOW → YOU → WORLD/);
+  assert.match(about,/href="why\.html"/);
+  assert.doesNotMatch(about,/One of my favourite people recently inspired me/);
+  assert.match(why,/web\/styles\/about\.css/);
+  assert.match(why,/web\/src\/about-story\.js/);
+  assert.match(why,/WHY KONA/);
+  assert.match(story,/home\(\)\+short\(\)\+scenic\(\)\+unfiltered\(\)\+final\(\)/);
+  assert.match(story,/why\.html\?story=/);
+});
+
+test('Field Guide compact layout has an explicit no-occlusion contract',()=>{
+  const css=read('web/styles/promo.css');
+  assert.match(css,/@media \(pointer:coarse\), \(max-height:560px\)/);
+  assert.match(css,/\.promo-header\{[\s\S]*position:sticky/);
+  assert.match(css,/\.field-rail-nav\{[\s\S]*position:fixed/);
+  assert.match(css,/bottom:calc\(68px \+ env\(safe-area-inset-bottom\)\)/);
+});
