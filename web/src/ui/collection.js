@@ -24,12 +24,29 @@ export async function renderCollectionSurface(root,{admin=false,onBack}={}){
     disposeStage();selected=null;
     const snapshot=readGameState(),items=findCollection(snapshot),summary=findSummary(snapshot);
     const tabs=[['all','All'],...Object.entries(FIND_METHODS).map(([id,row])=>[id,row.label])];
-    root.innerHTML='<section class="kona-section artifact artifact--label finds-heading"><small>KONA FINDS</small><h3>Small things. Long stories.</h3><p>'+summary.collected+' / '+summary.total+' collected</p><progress aria-label="KONA Finds collected" value="'+summary.collected+'" max="'+summary.total+'"></progress><p class="kona-source-note">Hidden in KONA. Kept here. Trade and Special Event slots preview future ways to collect.</p>'+(onBack?'<button type="button" class="btn-text" data-finds-back>← User Studio</button>':'')+(admin?'<p class="t-data">ADMIN · ALL 100 VISIBLE · PERSONAL OWNERSHIP UNCHANGED</p>':'')+'</section>'+
-      '<nav class="ui-cluster finds-filters" aria-label="Find acquisition method">'+tabs.map(([id,label])=>'<button type="button" class="btn-secondary" data-find-filter="'+id+'" aria-pressed="'+(id===filter)+'">'+esc(label)+'</button>').join('')+'</nav>'+
-      '<div class="ui-grid finds-grid" aria-label="KONA Finds collection">'+items.filter(x=>filter==='all'||x.acquisition===filter).map(item=>{
+    root.innerHTML='<section class="finds-vault" data-finds-vault>'+
+      '<div class="finds-vault-head">'+
+        '<div><small>LIVE FIND COLLECTION</small><strong>'+summary.collected+' / '+summary.total+'</strong><span>collected on this device</span></div>'+
+        '<div><small>LIVE SLOTS</small><strong>'+summary.total+'</strong><span>playable now</span></div>'+
+        '<div><small>FOUNDING COLLECTION</small><strong>141</strong><span>canonical · expanding</span></div>'+
+        '<div><small>SHOWN HERE</small><strong>NOT EVERYTHING</strong><span>obviously</span></div>'+
+      '</div>'+
+      '<div class="finds-vault-copy"><div><small>KONA FINDS</small><h3>Small things.<br><em>Long stories.</em></h3></div><p>Undiscovered slots stay deliberately vague. Collected finds sharpen, glow and remember where they came from. The Founding 141 is the larger world-scale collection still being wired behind this live 100-slot surface.</p></div>'+
+      '<nav class="finds-vault-filters" aria-label="Find acquisition method">'+tabs.map(([id,label])=>'<button type="button" data-find-filter="'+id+'" aria-pressed="'+(id===filter)+'">'+esc(label)+'</button>').join('')+'</nav>'+
+      '<div class="finds-vault-grid" aria-label="KONA Finds collection">'+items.filter(x=>filter==='all'||x.acquisition===filter).map(item=>{
         const reveal=visible(item);
-        return '<button type="button" class="kona-item-card artifact artifact--spec find-card '+(item.collected?'is-collected':'is-locked')+'" data-find="'+esc(item.id)+'" aria-label="Find '+number(item.number)+' · '+esc(reveal?item.name:'Not found yet')+'"><small>'+number(item.number)+' / 100</small><i class="find-mark">'+(item.model?mark:'◇')+'</i><b>'+esc(reveal?item.name:'Something to find')+'</b><span>'+esc(item.collected?'Collected · '+item.rarity:admin?'Admin preview · '+item.rarity:'Not found yet')+'</span><small>'+esc(FIND_METHODS[item.acquisition]?.label||item.acquisition)+'</small></button>';
-      }).join('')+'</div><section class="kona-section artifact artifact--label" data-other-collection><h3>Your other stories</h3><div class="ui-grid" data-other-items></div></section>';
+        return '<button type="button" class="find-vault-cell '+(item.collected?'is-collected':'is-locked')+'" data-find="'+esc(item.id)+'" aria-label="Find '+number(item.number)+' · '+esc(reveal?item.name:'Not found yet')+'">'+
+          '<span class="find-vault-number">'+number(item.number)+'</span>'+
+          '<i class="find-vault-ghost" aria-hidden="true">'+(item.model?mark:'◇')+'</i>'+
+          '<span class="find-vault-status">'+esc(item.collected?'FOUND':admin?'ADMIN':'?')+'</span>'+
+          (reveal?'<b>'+esc(item.name)+'</b>':'')+
+        '</button>';
+      }).join('')+'</div>'+
+      '<div class="finds-vault-foot"><p class="t-hand">the intern has obscured the remaining evidence for dramatic and performance-budget reasons.</p><span>'+summary.collected+' found · '+(summary.total-summary.collected)+' still suspicious</span></div>'+
+      (onBack?'<button type="button" class="btn-text finds-back" data-finds-back>← User Studio</button>':'')+
+      (admin?'<p class="t-data finds-admin">ADMIN · ALL 100 DETAILS VISIBLE · PERSONAL OWNERSHIP UNCHANGED</p>':'')+
+    '</section>'+
+    '<section class="kona-section artifact artifact--label" data-other-collection><h3>Your other stories</h3><div class="ui-grid" data-other-items></div></section>';
     root.querySelector('[data-finds-back]')?.addEventListener('click',()=>onBack?.());
     root.querySelectorAll('[data-find-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.findFilter;paint();root.querySelector('[data-find-filter="'+filter+'"]')?.focus({preventScroll:true});});
     root.querySelectorAll('[data-find]').forEach(b=>b.onclick=()=>detail(items.find(x=>x.id===b.dataset.find)));
