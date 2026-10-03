@@ -1,14 +1,12 @@
 // Privacy-minimal first-party analytics for Kona.m public web.
 // No cookies, account IDs, email, IP/user-agent storage, raw feedback text, or persistent visitor ID.
-// A random session ID lives only for the current browser-tab/session. Native builds no-op.
+// A random session ID and first-touch acquisition context live only for the current browser session. Native builds no-op.
 const ENDPOINT='https://mtvpnoqwjpoqaiocrklq.supabase.co/functions/v1/site-analytics';
 const PUBLIC_KEY='sb_publishable_lVueu3GqNcPe4Z9KsChvJw_VfmnVi5u';
 const PROD=!globalThis.__NATIVE&&location.hostname==='joaoccaldas.github.io'&&location.pathname.startsWith('/konam');
 const RUNTIME_CODES=new Set(['uncaught_js','unhandled_promise','renderer_init','renderer_context_lost','renderer_context_restored','route_load','state_read','state_write','companion_load']);
 const RUNTIME_SUBSYSTEMS=new Set(['runtime','renderer','navigation','storage','companion']);
 const runtimeCounts=new Map();let runtimeTotal=0;
-const releaseIdPromise=PROD?fetch(new URL('app/app-manifest.json',location.href),{credentials:'omit',cache:'no-store'})
-  .then(r=>r.ok?r.json():null).then(m=>/^[0-9a-f]{12}$/.test(String(m?.version||''))?m.version:null).catch(()=>null):Promise.resolve(null);
 
 const uuid=()=>{
   if(globalThis.crypto?.randomUUID)return crypto.randomUUID();
@@ -16,15 +14,8 @@ const uuid=()=>{
   const h=[...b].map(x=>x.toString(16).padStart(2,'0')).join('');
   return h.slice(0,8)+'-'+h.slice(8,12)+'-'+h.slice(12,16)+'-'+h.slice(16,20)+'-'+h.slice(20);
 };
-const sessionId=(()=>{
-  try{
-    const key='kona.analytics.session.v1';
-    let id=sessionStorage.getItem(key);
-    if(!id){id=uuid();sessionStorage.setItem(key,id);}
-    return id;
-  }catch(_){return uuid();}
-})();
-const viewport=()=>innerWidth<600?'compact':innerWidth<1024?'medium':'wide';
+const getSession=key=>{try{return sessionStorage.getItem(key)}catch(_){return null}};
+const setSession=(key,value)=>{try{sessionStorage.setItem(key,value)}catch(_){}};
 const param=(name,max)=>{
   const value=new URLSearchParams(location.search).get(name);
   return value?value.slice(0,max):null;
@@ -34,18 +25,61 @@ const referrerHost=()=>{
 };
 const surfaceFromPath=()=>location.pathname.endsWith('/konam/')||location.pathname.endsWith('/konam/index.html')?'landing':location.pathname.split('/').pop()?.replace(/\.html$/,'')||'page';
 
+const sessionId=(()=>{
+  const key='kona.analytics.session.v1';
+  let id=getSession(key);
+  if(!id){id=uuid();setSession(key,id);}
+  return id;
+})();
+
+const analyticsMode=(()=>{
+  const key='kona.analytics.mode.v2';
+  const requested=param('analytics_mode',20);
+  let mode=['public','qa','off'].includes(requested)?requested:getSession(key);
+  if(!['public','qa','automation','off'].includes(mode))mode=navigator.webdriver?'automation':'public';
+  if(mode==='public'&&navigator.webdriver)mode='automation';
+  setSession(key,mode);
+  return mode;
+})();
+const ENABLED=PROD&&analyticsMode!=='off';
+const trafficClass=analyticsMode==='qa'?'qa':analyticsMode==='automation'?'automation':'public';
+
+const acquisition=(()=>{
+  const key='kona.analytics.acquisition.v2';
+  try{
+    const existing=JSON.parse(getSession(key)||'null');
+    if(existing&&typeof existing==='object'&&String(existing.landing_path||'').startsWith('/'))return existing;
+  }catch(_){}
+  const currentRef=referrerHost();
+  const first={
+    landing_path:location.pathname.slice(0,240),
+    referrer_host:currentRef&&currentRef!==location.hostname?currentRef:null,
+    campaign_source:param('utm_source',100),
+    campaign_medium:param('utm_medium',100),
+    campaign_name:param('utm_campaign',140),
+  };
+  setSession(key,JSON.stringify(first));
+  return first;
+})();
+
+const viewport=()=>innerWidth<600?'compact':innerWidth<1024?'medium':'wide';
+const releaseIdPromise=ENABLED?fetch(new URL('app/app-manifest.json',location.href),{credentials:'omit',cache:'no-store'})
+  .then(r=>r.ok?r.json():null).then(m=>/^[0-9a-f]{12}$/.test(String(m?.version||''))?m.version:null).catch(()=>null):Promise.resolve(null);
+
 export function trackSiteEvent(event_type,{surface=surfaceFromPath(),eventCode=null,subsystem=null,releaseId=null,online=null}={}){
-  if(!PROD)return Promise.resolve(false);
+  if(!ENABLED)return Promise.resolve(false);
   const body={
     event_type,
     path:location.pathname.slice(0,240),
     surface:String(surface||'').slice(0,80)||null,
-    referrer_host:referrerHost(),
+    referrer_host:acquisition.referrer_host,
     session_id:sessionId,
     viewport:viewport(),
-    campaign_source:param('utm_source',100),
-    campaign_medium:param('utm_medium',100),
-    campaign_name:param('utm_campaign',140),
+    campaign_source:acquisition.campaign_source,
+    campaign_medium:acquisition.campaign_medium,
+    campaign_name:acquisition.campaign_name,
+    landing_path:acquisition.landing_path,
+    traffic_class:trafficClass,
     event_code:eventCode,
     subsystem,
     release_id:releaseId,
@@ -61,7 +95,7 @@ export function trackSiteEvent(event_type,{surface=surfaceFromPath(),eventCode=n
 }
 
 export async function trackRuntimeError(eventCode,{subsystem='runtime',surface=surfaceFromPath()}={}){
-  if(!PROD||!RUNTIME_CODES.has(eventCode)||!RUNTIME_SUBSYSTEMS.has(subsystem))return false;
+  if(!ENABLED||!RUNTIME_CODES.has(eventCode)||!RUNTIME_SUBSYSTEMS.has(subsystem))return false;
   const count=runtimeCounts.get(eventCode)||0;
   if(count>=3||runtimeTotal>=12)return false;
   runtimeCounts.set(eventCode,count+1);runtimeTotal+=1;
@@ -70,6 +104,29 @@ export async function trackRuntimeError(eventCode,{subsystem='runtime',surface=s
 }
 
 trackSiteEvent('page_view');
+
+(()=>{
+  if(!ENABLED||getSession('kona.analytics.engaged15.v1'))return;
+  const targetMs=15000;
+  let accrued=0,visibleAt=document.visibilityState==='visible'?performance.now():null,timer=null;
+  const arm=()=>{
+    if(visibleAt===null||getSession('kona.analytics.engaged15.v1'))return;
+    clearTimeout(timer);
+    timer=setTimeout(()=>{
+      if(document.visibilityState!=='visible')return;
+      accrued+=performance.now()-visibleAt;visibleAt=performance.now();
+      if(accrued<targetMs){arm();return;}
+      setSession('kona.analytics.engaged15.v1','1');
+      trackSiteEvent('session_engaged_15s',{surface:surfaceFromPath()});
+    },Math.max(0,targetMs-accrued));
+  };
+  addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible'){visibleAt=performance.now();arm();return;}
+    if(visibleAt!==null){accrued+=performance.now()-visibleAt;visibleAt=null;}
+    clearTimeout(timer);
+  });
+  arm();
+})();
 
 addEventListener('error',event=>{
   if(!(event instanceof ErrorEvent))return;
@@ -103,4 +160,4 @@ document.addEventListener('click',event=>{
   if(hit)trackSiteEvent(hit[0],{surface:hit[1]});
 },{capture:true});
 
-globalThis.__konaAnalytics={track:trackSiteEvent,trackRuntimeError,sessionId,enabled:PROD};
+globalThis.__konaAnalytics={track:trackSiteEvent,trackRuntimeError,sessionId,enabled:ENABLED,trafficClass};

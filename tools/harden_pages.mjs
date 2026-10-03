@@ -77,6 +77,7 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&fami
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const jsonld = o => JSON.stringify(o).replace(/</g, '\\u003c');
 const GLOBAL_USER_STUDIO = '<!--global-user-studio:start--><a class="global-user-studio" href="index.html?view=me" aria-label="Open User Studio">USER STUDIO</a><!--global-user-studio:end-->';
+const ANALYTICS_SCRIPT = '<script type="module" src="web/src/site-analytics.js"></script>';
 
 function block(p) {
   const url = SITE + (p.file === 'index.html' ? '' : p.file), img = SITE + p.image;
@@ -179,6 +180,13 @@ for (const p of PAGES) {
   }
   html=html.replace(/<script src="app\/standalone-access.js"><\/script>\n?/g,'');
   if(/^Speedmax_.*Museum\.html$/.test(p.file))html=html.replace(/<\/head>/i,'<script src="app/standalone-access.js"></script>\n</head>');
+  const analyticsCount=(html.match(/<script type="module" src="web\/src\/site-analytics\.js"><\/script>/g)||[]).length;
+  const analyticsViaStandalone=/^Speedmax_.*Museum\.html$/.test(p.file);
+  if(analyticsCount>1)throw new Error('duplicate analytics module in '+p.file);
+  if(!analyticsViaStandalone&&!analyticsCount){
+    if(!/<\/body>/i.test(html))throw new Error('no </body> in '+p.file);
+    html=html.replace(/<\/body>/i, ANALYTICS_SCRIPT+'\n</body>');
+  }
   html=html.replace(/\n{3,}(?=<!--design-system:start-->)/g,'\n\n');
   fs.writeFileSync(f, html);
 }
