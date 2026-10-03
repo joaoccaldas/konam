@@ -294,3 +294,8 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-global-note{max-width:36rem;margin:14px 0 0;color:color-mix(in srgb,var(--brand-mist) 88%,transparent);font:550 11px/1.55 var(--brand-font-ui,var(--sans))}
 #intro.kona-entry .entry-global-note strong{color:var(--brand-mist)}
 #intro.kona-entry .entry-legal-note{max-width:38rem;margin:8px 0 0;color:color-mix(in srgb,var(--brand-mist) 62%,transparent);font:500 9px/1.45 var(--brand-font-ui,var(--sans))}
+
+/* Launch link contrast: never fall back to browser-blue on the photographic entry surface. */
+#intro.kona-entry .entry-actions .btn.ghost{color:var(--brand-mist);border-color:color-mix(in srgb,var(--brand-mist) 42%,transparent);background:color-mix(in srgb,var(--brand-lava) 32%,transparent);text-decoration:none}
+#intro.kona-entry .entry-actions .btn.ghost:is(:hover,:focus-visible){border-color:var(--brand-mist);background:color-mix(in srgb,var(--brand-lava) 58%,transparent)}
+#intro.kona-entry .entry-trust a{color:var(--brand-mist);text-decoration:underline;text-underline-offset:4px;text-decoration-color:color-mix(in srgb,var(--brand-mist) 62%,transparent)}
