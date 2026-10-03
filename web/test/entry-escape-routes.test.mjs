@@ -28,7 +28,7 @@ test('avatar setup can be escaped and does not trap the visitor',()=>{
   assert.match(entry,/onContinue:\(\)=>paintQuest\('install'\)/);
   assert.match(entry,/data-handoff-continue[\s\S]*enterApp\('home'\)/);
 });
-test('invite is optional and exposes Continue without account',()=>{
+test('account save flow is optional and exposes Continue without account',()=>{
   assert.match(entry,/Continue without account/);assert.match(entry,/continueLocal/);assert.match(entry,/enterApp\('home'\)/);
 });
 test('P0 entry uses canonical storage adapter, never raw localStorage',()=>{
