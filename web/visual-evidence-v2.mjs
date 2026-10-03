@@ -6,7 +6,7 @@ const out=process.argv[3]||'visual-evidence-v2';fs.mkdirSync(out,{recursive:true
 const chrome=process.env.CHROME_PATH;if(!chrome)throw new Error('CHROME_PATH required');
 const browser=await puppeteer.launch({executablePath:chrome,timeout:90000,headless:'new',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const viewports=[{id:'320',width:320,height:720},{id:'360',width:360,height:780},{id:'390',width:390,height:844},{id:'430',width:430,height:932},{id:'landscape-phone',width:844,height:390},{id:'desktop',width:1440,height:900}];
-const states=['landing','sign-in','onboarding-profile','avatar-registration','install-handoff','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','collection','find-studio','bike-studio'];const report=[];
+const states=['landing','onboarding-profile','avatar-registration','install-handoff','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','collection','find-studio','bike-studio'];const report=[];
 fs.writeFileSync(path.join(out,'candidate.json'),JSON.stringify({source_sha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),source_dirty:!!execFileSync('git',['status','--porcelain'],{encoding:'utf8'}).trim(),bundle_sha256:createHash('sha256').update(fs.readFileSync('app/kona-core.js')).digest('hex'),generated_at:new Date().toISOString()},null,2)+'\n');
 // deterministic storage per capture: seed after origin exists, then reload exactly once.
 async function capture(vp,state,theme){
@@ -17,7 +17,7 @@ async function capture(vp,state,theme){
    localStorage.clear();
    if(state==='bike-studio')localStorage.setItem('kona.progression.v1',JSON.stringify({schema:'progression-v1',xp:40,level:2,access_tier:'visitor',streak:0,discoveries:[],badges:[],unlocks:[],seen:[],ledger:[],credits:0,history:[],acquisitions:[]}));
    localStorage.setItem('kona.profile.v1',JSON.stringify({v:1,appearance:theme,quality:'low',motion:'reduced',travel:'teleport'}));
-   if(!['landing','sign-in','onboarding-profile','avatar-registration','install-handoff','onboarding-tour'].includes(state)){
+   if(!['landing','onboarding-profile','avatar-registration','install-handoff','onboarding-tour'].includes(state)){
      localStorage.setItem('kona.raceIdentity.v1',JSON.stringify({entity_type:'race-identity',event_id:'kona-2026',goal:{label:'Race the version of yourself'}}));
      localStorage.setItem('kona.onboarding.v1','seen');
    }
@@ -46,9 +46,7 @@ async function capture(vp,state,theme){
    },{},selector);
    if(vp.id==='desktop')await element.click();else await element.tap();
  };
- if(state==='sign-in'){
-   await p.click('#entrySignIn');await p.waitForSelector('#saveForm');
- }else if(state==='onboarding-profile'){
+ if(state==='onboarding-profile'){
    await p.click('#buildSelf');await p.waitForSelector('[data-onboarding-question]');
  }else if(state==='avatar-registration'){
    await p.click('#buildSelf');await p.waitForSelector('[data-onboarding-question]');await p.click('[data-onboarding-skip]');await p.waitForSelector('.registration-avatar');
@@ -147,8 +145,9 @@ for(const r of report){
  if(r.state==='landing'&&r.heavyRequests.length)violations.push(`${r.viewport}/${r.theme}: heavy 3D requested on landing`);
  if(r.state==='landing'&&r.viewport!=='desktop'&&r.metrics.landing){const l=r.metrics.landing;if(l.ctaTop<0||l.ctaBottom>l.viewportH)violations.push(`${r.viewport}/${r.theme}: Enter KONA is not fully visible in first viewport`);if(l.ctaW<160)violations.push(`${r.viewport}/${r.theme}: Enter KONA is too narrow`);if(l.productTop!=null&&l.productBottom!=null&&l.productLeft!=null&&l.productRight!=null){const overlapX=Math.min(l.ctaRight,l.productRight)-Math.max(l.ctaLeft,l.productLeft),overlapY=Math.min(l.ctaBottom,l.productBottom)-Math.max(l.ctaTop,l.productTop);if(overlapX>1&&overlapY>1)violations.push(`${r.viewport}/${r.theme}: product teaser overlaps primary decision`);}}
  if(r.errors.length)violations.push(`${r.viewport}/${r.theme}/${r.state}: JS errors ${r.errors.join('; ')}`);
- if(!['landing','sign-in','onboarding-profile','avatar-registration','install-handoff'].includes(r.state)&&r.metrics.introVisible)violations.push(`${r.viewport}/${r.theme}/${r.state}: landing intro still visible after state transition`);
- if(r.state==='sign-in'&&!/Sign in or create your account/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: sign-in form missing`);
+ if(!['landing','onboarding-profile','avatar-registration','install-handoff'].includes(r.state)&&r.metrics.introVisible)violations.push(`${r.viewport}/${r.theme}/${r.state}: landing intro still visible after state transition`);
+ // Public sign-in is held; the landing must not offer a button that leads nowhere.
+ if(r.state==='landing'&&/\bSign in\b/.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: unavailable sign-in still offered on landing`);
  if(r.state==='onboarding-profile'&&!/What brings you to Kona|WHY ARE YOU HERE/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: onboarding question missing`);
  if(r.state==='avatar-registration'&&!/TRISUIT LAYOUT|Who are we sending into the lava/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: avatar registration missing`);
  if(r.state==='avatar-registration'&&r.viewport==='desktop'&&r.metrics.registration){

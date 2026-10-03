@@ -107,13 +107,11 @@ try{
    otpSeen=true;return req.respond({status:200,headers,body:'{}'});
  });
  await auth.goto(base,{waitUntil:'domcontentloaded'});
- await auth.click('#entrySignIn');await auth.waitForSelector('#saveForm');
- assert.equal(await auth.$eval('#saveForm input[name="email"]',e=>e.disabled),true,'public sign-in must be held until sender and privacy support are ready');
- assert.equal(await auth.$eval('#saveForm button[type="submit"]',e=>e.disabled),true);
- assert.match(await auth.$eval('#saveNote',e=>e.textContent),/unavailable/);
+ // Public sign-in is held until sender and privacy support are ready: the landing offers no
+ // sign-in entry at all, and nothing on it may send an email (OTP) request.
+ assert.equal(await auth.$('#entrySignIn'),null,'unavailable sign-in must not be offered on the landing');
+ assert.doesNotMatch(await auth.$eval('body',b=>b.innerText),/\bSign in\b/);
  assert.equal(otpSeen,false,'held sign-in must not submit an email request');
- await auth.click('#continueLocal');
- await auth.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Home');
  assert.deepEqual(authErrors,[]);await auth.close();
 
  const installPage=await browser.newPage();installPage.setDefaultTimeout(30000);
