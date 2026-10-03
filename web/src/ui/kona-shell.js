@@ -228,7 +228,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
 
   async function plan(){
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
-    await featureStyle('',null);
+    await featureStyle('plan','web/styles/plan.css');
     if(request!==studioRequest)return;
     title.textContent='Plan'; eyebrow.textContent=`${PRODUCT_NAME} · SOURCE-GROUNDED`;
     const readyData = entryDataReady ? await entryDataReady.catch(()=>null) : null;
