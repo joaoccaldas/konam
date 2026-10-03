@@ -98,28 +98,34 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     tourNode?.remove();tourNode=null;
   };
   const tourSteps=[
-    {target:'[data-home-self]',kicker:'01 · MAKE IT YOURS',title:'Start with your athlete',copy:'Your Race Self is the anchor. Change the character, trisuit and attitude whenever you want.'},
-    {target:'[data-home-discover]',kicker:'02 · GET CURIOUS',title:'Kona rewards wandering',copy:'Discover surfaces places, stories and small race-week details without making you enter the 3D world first.'},
-    {target:'[data-home-garage]',kicker:'03 · BUILD THE MACHINE',title:'Your setup lives here',copy:'The Garage remembers what is yours. Bike Studio is where you inspect, paint and choose in 3D.'},
-    {target:'[data-tab="me"]',kicker:'04 · YOUR UNIVERSE',title:'Me opens User Studio',copy:'Avatar, bike, races, collection, progress and settings live here. The wider world stays in the main navigation.'}
+    {target:'[data-home-self]',kicker:'01 · MAKE IT YOURS',title:'Start with your athlete',copy:'Your Race Self is the anchor. Character, races, equipment and progress grow from here.'},
+    {target:'[data-home-feed]',kicker:'02 · KONA NOW',title:'Come back for what changed',copy:'The Feed keeps athlete videos, triathlon headlines and island updates close, with source and freshness visible.'},
+    {target:'[data-first-find]',kicker:'03 · GET CURIOUS',title:'Kona rewards looking around',copy:'Finds turn small race-week details into things you can keep. Your first one is already hiding on Home.'},
+    {target:'[data-tab="me"]',kicker:'04 · YOUR UNIVERSE',title:'Me opens User Studio',copy:'Avatar, bike, races, collection, progress and settings live here. Deeper destinations reveal as your Kona grows.'}
   ];
   function startTour({force=false}={}){
     if(tourNode)return;
     if(!force){try{if(readStorage('onboarding')==='seen')return;}catch(_){}}
     try{writeStorage('onboarding','seen')}catch(_){}
     const card=document.createElement('aside');card.className='kona-tour';card.setAttribute('role','dialog');card.setAttribute('aria-label',`${PRODUCT_NAME} quick tour`);card.addEventListener('keydown',e=>{if(e.key==='Escape'){dismissTour();e.stopPropagation();}});
+    const visibleTarget=selector=>{
+      const el=document.querySelector(selector);if(!el)return null;
+      const rect=el.getBoundingClientRect(),style=getComputedStyle(el);
+      return !el.hidden&&style.display!=='none'&&style.visibility!=='hidden'&&+style.opacity>.02&&rect.width>0&&rect.height>0?el:null;
+    };
+    const steps=tourSteps.map(step=>({...step,element:visibleTarget(step.target)})).filter(step=>step.element);
+    if(!steps.length){card.remove();tourNode=null;return;}
     document.body.append(card);tourNode=card;let index=0;
     const paint=()=>{
       tourTarget?.classList.remove('tour-target');
-      const step=tourSteps[index];tourTarget=document.querySelector(step.target);
-      if(!tourTarget&&index<tourSteps.length-1){index+=1;paint();return;}
-      tourTarget?.classList.add('tour-target');tourTarget?.scrollIntoView?.({block:'center',behavior:'instant'});
-      card.innerHTML='<small>'+step.kicker+'</small><h3>'+step.title+'</h3><p>'+step.copy+'</p><p class="tour-instruction">Tap the highlighted button, or try it below.</p><div class="kona-tour-actions"><button type="button" class="btn-text" data-tour-skip>Skip</button><button type="button" class="btn-text" data-tour-open>Try it ↗</button><button type="button" class="btn-primary" data-tour-next>'+(index===tourSteps.length-1?'Go explore':'Next')+' <span>→</span></button></div>';
+      const step=steps[index];tourTarget=step.element;
+      tourTarget.classList.add('tour-target');tourTarget.scrollIntoView?.({block:'center',behavior:'instant'});
+      card.innerHTML='<small>'+step.kicker+'</small><h3>'+step.title+'</h3><p>'+step.copy+'</p><p class="tour-instruction">Tap the highlighted button, or try it below.</p><div class="kona-tour-actions"><button type="button" class="btn-text" data-tour-skip>Skip</button><button type="button" class="btn-text" data-tour-open>Try it ↗</button><button type="button" class="btn-primary" data-tour-next>'+(index===steps.length-1?'Go explore':'Next')+' <span>→</span></button></div>';
       card.querySelector('[data-tour-skip]').onclick=dismissTour;
       card.querySelector('[data-tour-open]').onclick=()=>tourTarget?.click();
       scheduleTourPosition();
       card.querySelector('[data-tour-next]').focus({preventScroll:true});
-      card.querySelector('[data-tour-next]').onclick=()=>{if(index===tourSteps.length-1)dismissTour();else{index+=1;paint();}};
+      card.querySelector('[data-tour-next]').onclick=()=>{if(index===steps.length-1)dismissTour();else{index+=1;paint();}};
     };
     paint();
   }
