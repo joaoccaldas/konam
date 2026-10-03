@@ -76,3 +76,40 @@ test('three onboarding answers reach level 2 exactly once',()=>{
   assert.equal(duplicate.duplicate,true);
   assert.equal(duplicate.state.xp,45);
 });
+
+
+test('early economy makes discovery outrank onboarding questionnaires',()=>{
+  let state=emptyProgression();
+  for(const id of ['kona-intent','tri-history','kona-energy','tucker-dale','camp-miasma']){
+    state=applyEvent(state,{type:'ONBOARDING_ANSWER',id:'onboarding:'+id,subject:id}).state;
+  }
+  assert.equal(state.xp,25);
+  assert.equal(state.level,1,'questionnaire alone must not unlock Explorer');
+
+  state=applyEvent(state,{type:'EQUIPMENT_ADDED',id:'onboarding-bike:canyon-cfr-2027:dream',subject:'canyon-cfr-2027',relationship:'dream'}).state;
+  assert.equal(state.xp,35);
+  assert.equal(state.level,1,'questionnaire + dream bike must still leave discovery meaningful');
+
+  state=applyEvent(state,{type:'FIND_DISCOVERED',id:'first-find:lava',subject:'find:shore:lava'}).state;
+  assert.equal(state.xp,85);
+  assert.equal(state.level,2,'first common Find should create the Explorer level-up moment');
+});
+
+test('meaningful exploration offers an alternate route to Explorer',()=>{
+  let state=emptyProgression();
+  state=applyEvent(state,{type:'PRODUCT_VIEWED',id:'view:first-bike',subject:'canyon-cfr-2027'}).state;
+  state=applyEvent(state,{type:'PRODUCT_EXPLODED',id:'explode:first-bike',subject:'canyon-cfr-2027'}).state;
+  state=applyEvent(state,{type:'ROOM_COMPLETED',id:'room:hall:complete',subject:'hall'}).state;
+  assert.equal(state.xp,40);
+  assert.equal(state.level,2);
+});
+
+test('existing earned XP is grandfathered when reward values change',()=>{
+  const old=emptyProgression();
+  old.xp=75;
+  old.level=levelFor(old.xp).level;
+  old.level_name=levelFor(old.xp).name;
+  const next=applyEvent(old,{type:'PRODUCT_VIEWED',id:'grandfather:view',subject:'canyon-cfr-2027'}).state;
+  assert.equal(next.xp,80,'existing XP must never be recalculated downward');
+  assert.equal(next.level,2);
+});
