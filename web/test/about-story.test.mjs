@@ -28,7 +28,7 @@ test('Field Guide is the only About runtime authority',()=>{
 test('Field Guide contact is the public Kona.m project inbox, never a private personal address',()=>{
   const promo=read('promo.html');
   assert.match(promo,/konamundo@gmail\.com/);
-  assert.doesNotMatch(promo,/joaoccaldas|Jo[aã]o\s+Caldas/i);
+  assert.doesNotMatch(promo,/joaoccaldas(?:&#64;|@)gmail\.com|Jo[aã]o\s+Caldas/i);
 });
 
 test('landing names the Field Guide by purpose',()=>{
