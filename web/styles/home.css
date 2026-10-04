@@ -49,3 +49,30 @@
   .home-purpose{font-size:12.5px;line-height:1.4}
   .home-today .kona-primary{width:100%;justify-content:space-between}
 }
+
+
+/* Mobile Home: one clear decision per block, less ornamental weight. */
+@media(max-width:520px){
+  .home-today{min-height:150px;padding:16px}
+  .home-purpose{font-size:12px;line-height:1.38}
+  .home-race-self{
+    grid-template-columns:76px minmax(0,1fr);
+    gap:10px;
+    padding:12px;
+    box-shadow:none;
+  }
+  .home-race-self-visual{min-height:108px;border-radius:14px}
+  .home-avatar{transform:scale(.78)}
+  .home-race-self-copy h3{font-size:clamp(24px,7vw,30px);line-height:.98}
+  .home-race-self-copy p{margin:5px 0 0}
+  .home-race-self-actions{margin-top:8px}
+  .home-race-self-actions .kona-primary{width:100%;justify-content:space-between}
+  .home-kona-now .kona-list article{padding-block:9px}
+  .home-first-find h3{font-size:28px;line-height:1}
+  .home-horizon{gap:12px}
+  .home-horizon-head h3{font-size:30px}
+  .home-horizon-grid{grid-template-columns:1fr}
+  .home-horizon-card{min-height:126px;padding:11px}
+  .home-horizon-card h4{font-size:20px}
+  .home-horizon-silhouette{height:58px;margin-bottom:8px}
+}

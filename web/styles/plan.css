@@ -46,3 +46,24 @@
 @media(max-width:620px){.plan-hero{min-height:240px}.plan-hero-copy{min-height:240px;padding:19px}.plan-priority{grid-template-columns:1fr 1fr}.plan-priority-card:first-child{grid-column:1/-1;min-height:138px}.plan-priority-card{min-height:150px}.plan-arrival-grid,.plan-source-grid{grid-template-columns:1fr}.plan-places{grid-template-columns:1fr 1fr}.plan-timeline{margin-right:calc(-1 * var(--brand-mobile-gutter));padding-right:var(--brand-mobile-gutter)}}
 @media(max-width:360px){.plan-priority{grid-template-columns:1fr}.plan-priority-card:first-child{grid-column:auto}.plan-places{grid-template-columns:1fr}}
 @media(orientation:landscape) and (max-height:520px){.plan-hero{min-height:220px}.plan-hero-copy{min-height:220px}.plan-priority{grid-template-columns:repeat(3,minmax(0,1fr))}.plan-priority-card,.plan-priority-card:first-child{min-height:145px;grid-column:auto}.plan-places{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+
+/* Mobile Plan: utility first, fewer compressed side-by-side cards. */
+@media(max-width:520px){
+  .plan-hero,.plan-hero-copy{min-height:190px}
+  .plan-hero-copy{padding:16px}
+  .plan-priority{grid-template-columns:1fr;gap:7px}
+  .plan-priority-card,.plan-priority-card:first-child{
+    min-height:112px;
+    grid-column:auto;
+    padding:13px;
+  }
+  .plan-priority-card>b{margin:9px 0 4px;font-size:26px}
+  .plan-weather>b{font-size:42px}
+  .plan-priority-card>span{min-height:0}
+  .plan-block,.plan-arrival{padding:16px 0}
+  .plan-block-head{margin-bottom:10px}
+  .plan-block-head h3{font-size:30px}
+  .plan-places{grid-template-columns:1fr}
+  .plan-place{min-height:112px}
+}
