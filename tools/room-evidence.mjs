@@ -56,6 +56,7 @@ if (pick.length && !flag('metrics-only')) {
   for (const name of pick) {
     const s = allShots[name]; if (!s) { console.warn('no shot', name); continue; }
     await place(page, s);
+    if (typeof s[6] === 'string') await page.evaluate(m => window.__museum.beast?.[m]?.(), s[6]);   // optional 7th field: a room method to call before the shot (e.g. 'explode')
     for (let i = 0; i < 4; i++) await page.evaluate(async () => { const m = window.__museum, md = m.beast?.mood; if (md) { m.renderer.toneMappingExposure = md.exposure; m.scene.fog.near = md.fog.near; m.scene.fog.far = md.fog.far; md.fogColor && m.scene.fog.color.copy(md.fogColor); }
       window.__vt += 40; await new Promise(r => window.__raf(() => window.__raf(r))); });
     const b64 = await page.evaluate(async () => { window.__vt += 40; return await new Promise(r => window.__raf(() => window.__raf(() => r(document.getElementById('hall').toDataURL('image/png').split(',')[1])))); });

@@ -1,0 +1,28 @@
+{
+  "review": "breitling-kona",
+  "measured_at": "2026-10-04T14:24:37.285Z",
+  "desktop": {
+    "scene_calls": 322,
+    "scene_triangles": 870632,
+    "room_meshes": 102,
+    "room_triangles": 63054,
+    "errors": 0,
+    "budget": {
+      "calls": 190,
+      "triangles": 450000
+    },
+    "within_budget": true
+  },
+  "phone": {
+    "scene_calls": 73,
+    "scene_triangles": 49744,
+    "room_meshes": 86,
+    "room_triangles": 48810,
+    "errors": 0,
+    "budget": {
+      "calls": 110,
+      "triangles": 220000
+    },
+    "within_budget": true
+  }
+}

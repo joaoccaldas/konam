@@ -38,7 +38,7 @@ node tools/room-evidence.mjs --review <id> [--shots a,b] --metrics --out docs/ev
 
 1. REUSE: `decor.mjs find`, `assets/`, other rooms' manifests (the NOR fans are the Beast Cave fans).
 2. Procedural in the room module when it is architecture or needs a shader (floors, glass, fire, water, snow).
-3. Blender generator for bikes (`konam-bike-forge`); deterministic Blender scripts for other hero objects.
+3. Blender generator for bikes (`konam-bike-forge`); deterministic Blender scripts for other hero objects. Template: `blender/watch_build.py` (a part-tagged, explodable product study: every object gets `part` + `explode`, printable faces get planar UVs, a hero LOD with internals plus a lite LOD; pack with `tools/pack-glb.mjs`; explode at runtime with `machine-inspection.js` `indexMachine`/`applyExplosion`; print per-variant faces over `instanceColor` so one GLB serves a whole collection).
 4. Higgsfield: image (`gpt_image_2_5`) for plates/art; image → `generate_3d` (Meshy) for generic props, then `gltf-transform optimize --texture-size 1024 --texture-compress webp --compress meshopt`. Prompt for "no text, no logos, no people". Record job id, hash, rights `generated-unbranded-rights-review`.
 5. Never runtime-load concept art as evidence; never ship a third-party mark or a likeness without a source and approval.
 
