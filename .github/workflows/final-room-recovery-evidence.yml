@@ -55,7 +55,7 @@ jobs:
             bk-hero.jpg bk-monument.jpg bk-low.jpg bk-vitrine.jpg bk-window.jpg bk-clock.jpg bk-exploded2.jpg \
             beast-hero.jpg beast-wide.jpg beast-ride.jpg beast-tv.jpg beast-gap.jpg beast-gallery.jpg beast-loopwall.jpg beast-poster.jpg beast-stencil.jpg
           do
-            gh api "repos/${GITHUB_REPOSITORY}/contents/docs/booklet/stills/${f}?ref=${REF}" --jq .content | tr -d '\\n' | base64 -d > "$OUT/$f"
+            gh api "repos/${GITHUB_REPOSITORY}/contents/docs/booklet/stills/${f}?ref=${REF}" --jq .content | base64 -d > "$OUT/$f"
             test -s "$OUT/$f"
           done
       - name: Capture recovered final rooms
