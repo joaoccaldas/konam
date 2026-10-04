@@ -32,7 +32,8 @@ test('every governed CSS file must be explicitly classified',()=>{
   assert.deepEqual(classified,discovered);
 });
 
-test('Passport is the only grandfathered JavaScript stylesheet injector',()=>{
+test('JavaScript stylesheet exceptions stay empty after Passport convergence',()=>{
   const cfg=JSON.parse(read('config/style-governance.json'));
-  assert.deepEqual(cfg.allowed_js_style_injectors,['web/src/passport.js']);
+  assert.equal(cfg.limits.js_style_injectors,0);
+  assert.deepEqual(cfg.allowed_js_style_injectors,[]);
 });

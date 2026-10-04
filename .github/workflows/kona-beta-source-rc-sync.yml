@@ -8,6 +8,7 @@ on:
       - 'product/**'
       - 'refactor/**'
       - 'design/**'
+      - 'architecture/**'
     paths-ignore:
       - 'sw.js'
       - 'app/app-manifest.json'

@@ -41,31 +41,6 @@ function load() {
 function save(s) { try { Object.assign(s, savePassportState(s)); } catch (_) { } }
 export const levelOf = xp => { let i = 0; while (i + 1 < LEVELS.length && xp >= LEVELS[i + 1][0]) i++; return { i, name: LEVELS[i][1], from: LEVELS[i][0], to: LEVELS[i + 1]?.[0] ?? null }; };
 
-const CSS = `
-.pp-btn{display:inline-flex;align-items:center;gap:6px}.pp-btn i{font-style:normal}
-#ppToast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;z-index:60;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 12px;border-radius:16px;background:#12181d;color:#fbf9f5;font:600 13px Manrope,system-ui,sans-serif;box-shadow:0 18px 40px -16px rgba(0,0,0,.6);transition:.45s cubic-bezier(.2,.8,.2,1);pointer-events:none;max-width:calc(100vw - 32px)}
-#ppToast.on{opacity:1;transform:translate(-50%,0)}#ppToast b{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#ff3d8e,#5fd8d3);font-size:18px}#ppToast small{display:block;color:#9fb0ba;font-weight:500;font-size:11.5px}
-#ppSheet{position:fixed;inset:0;z-index:70;background:rgba(18,24,29,.45);display:flex;align-items:flex-end;justify-content:center;padding:12px 12px calc(12px + env(safe-area-inset-bottom));font-family:Manrope,system-ui,sans-serif;color:#12181d}
-#ppSheet[hidden]{display:none}
-#ppSheet .pp{position:relative;width:min(560px,100%);max-height:88dvh;overflow:auto;background:#fbf9f5;border-radius:28px;padding:22px 20px 20px;box-shadow:0 30px 70px -20px rgba(0,0,0,.55)}
-@media (min-width:900px){#ppSheet{align-items:center}}
-.pp h3{font:400 32px/1 'Instrument Serif',Georgia,serif;margin:0 44px 4px 0}.pp .x{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(18,24,29,.12);background:none;font-size:20px;cursor:pointer}
-.pp .who{display:flex;align-items:center;gap:14px;margin:6px 0 16px}.pp .av{display:grid;place-items:center;width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#ff3d8e,#e9cde8 50%,#5fd8d3);font-size:30px}
-.pp .who small{display:block;color:#5f6a72;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}.pp .who b{font-size:19px}
-.pp .bar{height:10px;border-radius:99px;background:rgba(18,24,29,.08);overflow:hidden;margin:6px 0 4px}.pp .bar i{display:block;height:100%;background:linear-gradient(90deg,#ff3d8e,#5fd8d3);border-radius:99px}
-.pp .row{display:flex;justify-content:space-between;font-size:12px;color:#5f6a72;font-weight:600}
-.pp .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.pp .tiles div{padding:12px;border-radius:16px;background:#f1ece4;text-align:center}.pp .tiles b{display:block;font-size:22px}.pp .tiles small{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#5f6a72;font-weight:700}
-.pp h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#138a8f;margin:18px 0 8px}
-.pp .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}.pp .badge{padding:12px 8px;border-radius:16px;border:1px solid rgba(18,24,29,.1);text-align:center;font-size:11.5px;font-weight:700}.pp .badge i{display:block;font-style:normal;font-size:26px;margin-bottom:4px}.pp .badge small{display:block;font-weight:500;color:#8e979d;font-size:10.5px;margin-top:2px}.pp .badge.off{opacity:.42;filter:grayscale(1)}
-.pp .fact{padding:14px 16px;border-radius:16px;background:#12181d;color:#fbf9f5;font-size:13.5px;line-height:1.55}.pp .fact small{display:block;color:#5fd8d3;font-weight:700;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:4px}
-.pp form{display:grid;gap:10px}.pp input,.pp select{font:inherit;font-size:16px;padding:12px 14px;border-radius:14px;border:1px solid rgba(18,24,29,.18);background:#fff;width:100%}
-.pp .emo{display:flex;gap:6px;flex-wrap:wrap}.pp .emo button{width:44px;height:44px;border-radius:12px;border:1px solid rgba(18,24,29,.14);background:#fff;font-size:22px;cursor:pointer}.pp .emo button[aria-pressed=true]{border-color:#12181d;box-shadow:0 0 0 2px #12181d inset}
-.pp .go{height:50px;border-radius:99px;border:0;background:#12181d;color:#fbf9f5;font:700 14px Manrope,system-ui,sans-serif;cursor:pointer}.pp .ghost{background:none;border:1px solid rgba(18,24,29,.2);color:#12181d}
-.pp .stamps{display:flex;flex-wrap:wrap;gap:6px}.pp .stamps span{padding:6px 10px;border-radius:99px;background:#f1ece4;font-size:11.5px;font-weight:600}
-.pp .note{font-size:11.5px;color:#8e979d;line-height:1.5;margin-top:10px}.pp details{margin-top:14px}.pp summary{cursor:pointer;font-weight:700;font-size:13px}
-.pp textarea{width:100%;min-height:70px;font:12px ui-monospace,monospace;padding:10px;border-radius:12px;border:1px solid rgba(18,24,29,.18)}
-`;
-
 export function createPassport() {
   let s = load();
   ensureProgression();
@@ -77,7 +52,6 @@ export function createPassport() {
     s.streak = d === 1 ? s.streak + 1 : 1; s.best = Math.max(s.best, s.streak); s.last = t;
     s.xp += 5; s.newDay = true; save(s);
   }
-  if (!document.getElementById('ppStyle')) { const st = document.createElement('style'); st.id = 'ppStyle'; st.textContent = CSS; document.head.appendChild(st); }
   const toastEl = document.createElement('div'); toastEl.id = 'ppToast'; toastEl.setAttribute('role', 'status'); document.body.appendChild(toastEl);
   let tt; const toast = (icon, title, sub) => { toastEl.innerHTML = `<b>${icon}</b><span>${title}<small>${sub || ''}</small></span>`; toastEl.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => toastEl.classList.remove('on'), 3600); };
 
@@ -124,25 +98,25 @@ export function createPassport() {
   function render() {
     const lv = levelOf(s.xp), pct = lv.to ? (s.xp - lv.from) / (lv.to - lv.from) * 100 : 100;
     const reg = !s.profile;
-    sheet.innerHTML = `<div class="pp"><button class="x" aria-label="Close">×</button>
+    sheet.innerHTML = `<div class="pp ui-sheet"><button class="x btn-icon" aria-label="Close">×</button>
       <h3>Museum Passport</h3>
-      ${reg ? `<p class="note" style="font-size:13.5px;color:#5f6a72;margin:6px 0 14px">Collect stamps for every bike, Kona year and room you visit. Keep a daily streak, earn badges, find the hidden objects in the night experiences.</p>
-        <form id="ppForm"><input name="name" maxlength="40" required placeholder="Your name or nickname" autocomplete="nickname">
+      ${reg ? `<p class="note pp-intro-note">Collect stamps for every bike, Kona year and room you visit. Keep a daily streak, earn badges, find the hidden objects in the night experiences.</p>
+        <form id="ppForm"><input class="ui-input" name="name" maxlength="40" required placeholder="Your name or nickname" autocomplete="nickname">
         <div class="emo" role="group" aria-label="Avatar">${['🚴', '🏊', '🏃', '🌺', '🌋', '🐢', '🦈', '⚡'].map(e => `<button type="button" data-e="${e}" aria-pressed="${e === pick}">${e}</button>`).join('')}</div>
-        <input name="country" maxlength="40" placeholder="Home country (optional)" autocomplete="country-name">
-        <button class="go" type="submit">Issue my passport · +25 XP</button></form>
+        <input class="ui-input" name="country" maxlength="40" placeholder="Home country (optional)" autocomplete="country-name">
+        <button class="btn-primary pp-go" type="submit">Issue my passport · +25 XP</button></form>
         <p class="note">Your passport lives on this device only — no account, no email, nothing uploaded. Move it with a passport code.</p>`
       : `<div class="who"><span class="av">${esc(s.profile.emoji)}</span><span><small>${esc(lv.name)}${s.profile.country ? ' · ' + esc(s.profile.country) : ''}</small><b>${esc(s.profile.name)}</b></span></div>`}
-      <div class="bar"><i style="width:${pct.toFixed(1)}%"></i></div>
+      <div class="bar"><i style="--pp-progress:${pct.toFixed(1)}%"></i></div>
       <div class="row"><span>${s.xp} XP · ${esc(lv.name)}</span><span>${lv.to ? `${lv.to - s.xp} XP to ${esc(LEVELS[lv.i + 1][1])}` : 'Top level'}</span></div>
       <div class="tiles"><div><b>🔥 ${s.streak}</b><small>day streak</small></div><div><b>${Object.keys(s.stamps).length}</b><small>stamps</small></div><div><b>${Object.keys(s.badges).length}/${BADGES.length}</b><small>badges</small></div></div>
       <div class="fact"><small>Kona fact of the day</small>${esc(api.fact())}</div>
       <h4>Badges</h4><div class="badges">${BADGES.map(b => `<div class="badge${s.badges[b.id] ? '' : ' off'}"><i>${b.icon}</i>${esc(b.name)}<small>${esc(b.hint)}</small></div>`).join('')}</div>
-      <h4>Collections</h4><div class="row" style="flex-wrap:wrap;gap:8px 16px;justify-content:flex-start">
+      <h4>Collections</h4><div class="row pp-collections">
         <span>Bikes ${count(s, 'bike:')}/9</span><span>Kona years ${count(s, 'kona:')}/12</span><span>Night experiences ${count(s, 'night:')}/3</span><span>Hidden objects ${count(s, 'find:')}/9</span><span>History ${count(s, 'history:')}/15</span><span>Parts ${count(s, 'part:')}</span></div>
       ${Object.keys(s.stamps).length ? `<h4>Latest stamps</h4><div class="stamps">${Object.entries(s.stamps).sort((a, b) => b[1].at - a[1].at).slice(0, 14).map(([, v]) => `<span>${esc(v.label)}</span>`).join('')}</div>` : ''}
       <details><summary>Passport code — move to another device</summary><p class="note">Copy this code on one device and paste it on another. It contains only what you see here.</p>
-        <textarea id="ppCode" readonly>${api.exportCode()}</textarea><textarea id="ppIn" placeholder="Paste a passport code"></textarea><button class="go ghost" id="ppImport" style="width:100%;margin-top:6px">Load this passport</button></details>
+        <textarea class="pp-code" id="ppCode" readonly>${api.exportCode()}</textarea><textarea class="pp-code" id="ppIn" placeholder="Paste a passport code"></textarea><button class="btn-secondary pp-go pp-import" id="ppImport">Load this passport</button></details>
     </div>`;
     sheet.querySelector('.x').onclick = () => { sheet.hidden = true; };
     sheet.querySelectorAll('.emo button').forEach(b => b.onclick = () => { pick = b.dataset.e; sheet.querySelectorAll('.emo button').forEach(x => x.setAttribute('aria-pressed', x === b)); });

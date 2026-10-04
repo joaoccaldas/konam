@@ -33,6 +33,14 @@ test('feature styles are route-loaded but still staged and precached',()=>{
  for(const name of ['home.css','garage.css','race-self.css','companion.css','admin-assets.css'])assert.match(shell,new RegExp(name.replace('.','\\.')));
 });
 
+test('Passport presentation is page-scoped, staged and integrity sealed',()=>{
+ const rel='web/styles/passport.css';
+ assert.ok(!landing.includes('href="'+rel+'"'),rel+' must stay off the consumer landing');
+ assert.ok(stage.includes(rel),rel+' missing from staged-site allowlist');
+ assert.ok(build.includes("'"+rel+"'"),rel+' missing from offline/integrity cache');
+ assert.ok(read('web/experience.template.html').includes('href="'+rel+'"'),rel+' missing from Experiences');
+});
+
 test('museum styles remain lazy and integrity sealed',()=>{
  for(const rel of ['web/styles/hall-web.css','web/styles/hall-mobile.css']){
   assert.ok(!landing.includes('href="'+rel+'"'),rel+' must stay out of initial landing');

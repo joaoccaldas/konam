@@ -66,8 +66,35 @@ try{
  assert.deepEqual(nav.errors,[]);report.push({journey:'latest navigation wins delayed Studio stylesheet',status:'PASS'});await nav.context.close();
  // Existing world passport must boot Experiences, keep stamps on return, and preserve discovery history.
  const {context,page,errors}=await pageFor();
- await page.evaluateOnNewDocument(()=>localStorage.setItem('speedmax.passport.v1',JSON.stringify({v:1,discoveries:['cfr'],visits:3,pose:{x:0,z:3}})));
+ await page.evaluateOnNewDocument(()=>{
+  localStorage.setItem('speedmax.passport.v1',JSON.stringify({v:1,discoveries:['cfr'],visits:3,pose:{x:0,z:3}}));
+  localStorage.setItem('speedmax.exp.tut.v1','1');
+  localStorage.setItem('speedmax.hist.tut.v1','1');
+ });
  await page.goto(new URL('Experiences.html',base).href,{waitUntil:'networkidle0'});await page.waitForFunction(()=>window.__exp?.passport);
+ await page.waitForFunction(()=>document.getElementById('loading')?.classList.contains('off'),{timeout:60000});
+ if(await page.$eval('#card',e=>e.classList.contains('on')))await page.click('#cClose');
+ assert.ok(await page.$('link[href="web/styles/passport.css"]'),'Passport stylesheet must be external and page-scoped');
+ assert.equal(await page.$('#ppStyle'),null,'Passport must not inject a runtime stylesheet');
+ await page.evaluate(()=>window.__exp.passport.open());
+ await page.waitForFunction(()=>{const sheet=document.querySelector('#ppSheet');return !!sheet&&!sheet.hidden;});
+ const passportUi=await page.evaluate(()=>({
+   sheet:(()=>{const r=document.querySelector('#ppSheet .pp')?.getBoundingClientRect();return r&&{width:r.width,height:r.height,left:r.left,right:r.right,top:r.top,bottom:r.bottom};})(),
+   close:(()=>{const r=document.querySelector('#ppSheet .x')?.getBoundingClientRect();return r&&{width:r.width,height:r.height};})(),
+   choices:[...document.querySelectorAll('#ppSheet .emo button')].map(e=>{const r=e.getBoundingClientRect();return {width:r.width,height:r.height};}),
+   font:getComputedStyle(document.querySelector('#ppSheet')).fontFamily,
+ }));
+ assert.ok(passportUi.sheet&&passportUi.sheet.left>=0&&passportUi.sheet.right<=390&&passportUi.sheet.top>=0&&passportUi.sheet.bottom<=844,'Passport sheet must fit the phone');
+ assert.ok(passportUi.close.width>=48&&passportUi.close.height>=48,'Passport close target must be at least 48px');
+ assert.ok(passportUi.choices.length&&passportUi.choices.every(r=>r.width>=48&&r.height>=48),'Passport avatar choices must be at least 48px');
+ assert.match(passportUi.font,/Manrope/i);
+ await page.click('#ppSheet .x');
+ await page.waitForFunction(()=>document.querySelector('#ppSheet')?.hidden===true);
+ const hit=await page.$eval('#ppBtn',e=>{const r=e.getBoundingClientRect(),top=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return {id:top?.id||'',tag:top?.tagName||'',cls:String(top?.className||''),same:top===e};});
+ assert.ok(hit.same,'Passport button is occluded: '+JSON.stringify(hit));
+ await page.click('#ppBtn');
+ await page.waitForFunction(()=>document.querySelector('#ppSheet')?.hidden===false);
+ await page.click('#ppSheet .x');
  const experience=await page.evaluate(()=>{window.__exp.passport.stamp('part:launch-regression','Inspected component',5);return window.__exp.passport.state;});
  assert.ok(experience.discoveries.includes('cfr'));assert.ok(experience.stamps['part:launch-regression']);
  await page.goto(base,{waitUntil:'networkidle0'});await page.click('#buildSelf');await page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Now');await page.evaluate(async()=>{await window.__konaShell.explore();});await page.click('[data-enter-world]');
