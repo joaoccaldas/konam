@@ -95,10 +95,14 @@ export function buildBrandRoom(desc, { lite = false, spinners = [], obstacles = 
   const products = (desc.products || []).map((p, i) => {
     const st = p.station;
     const holder = new THREE.Group(); holder.position.set(st.x, 0, st.z); group.add(holder);
-    const plinth = new THREE.Mesh(new THREE.CylinderGeometry(.5, .56, .14, 48), wallMat);
-    plinth.position.y = .07; plinth.receiveShadow = plinth.castShadow = true; holder.add(plinth);
-    holder.add(lightPool(1.8, 1.8, '#ffffff', lite ? .1 : .16).translateY(.01));
-    const cs = contactShadow(1.1, .6); cs.position.y = .012; holder.add(cs);
+    // station.top is the intended display-surface height in metres. Historically the
+    // descriptor carried this value but the generic room builder ignored it, so hero
+    // products such as watches were seated on the same 14 cm base as shoes.
+    const stationTop = Number.isFinite(st.top) && st.top > 0 ? st.top : .14;
+    const plinth = new THREE.Mesh(new THREE.CylinderGeometry(.5, .56, stationTop, 48), wallMat);
+    plinth.position.y = stationTop / 2; plinth.receiveShadow = plinth.castShadow = true; holder.add(plinth);
+    holder.add(lightPool(1.8, 1.8, '#ffffff', lite ? .1 : .16).translateY(stationTop + .002));
+    const cs = contactShadow(1.1, .6); cs.position.y = stationTop + .004; holder.add(cs);
     const rec = { ...p, index: i, kind: 'brandRoom', room: desc.id, holder, station: st, pos: new THREE.Vector3(st.x, 0, st.z), rotY: st.rotY ?? 0 };
     holder.traverse(o => { if (o.isMesh) { o.userData.brandProduct = rec; pickables.push(o); } });
     if (st.kind === 'plinth' || !st.kind) obstacles.push({ c: rec.pos, r: .9 });
@@ -133,7 +137,8 @@ export async function loadBrandRoom(built, loader) {
       const s = target / Math.max(size.x, size.y, size.z, .001);
       root.scale.setScalar(s);
       const b2 = new THREE.Box3().setFromObject(root), c = b2.getCenter(new THREE.Vector3());
-      root.position.set(-c.x, .15 - b2.min.y, -c.z);
+      const stationTop = Number.isFinite(p.station?.top) && p.station.top > 0 ? p.station.top : .14;
+      root.position.set(-c.x, stationTop + .01 - b2.min.y, -c.z);
       const holder = new THREE.Group(); holder.add(root); holder.rotation.y = p.rotY; holder.position.set(p.pos.x, 0, p.pos.z);
       holder.traverse(o => { if (o.isMesh && !o.userData.brandProduct) { o.userData.brandProduct = p; } });
       built.group.add(holder); p.model = holder;
