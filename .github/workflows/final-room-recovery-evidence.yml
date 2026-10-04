@@ -44,14 +44,19 @@ jobs:
           node tools/build_app.mjs
           git diff --exit-code -- app sw.js index.html web/dist
       - name: Materialize preserved final reference stills
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git fetch origin claude/sharp-ritchie-lycv70 --depth=1
           REF=cc80c48ada08a634c642561a64ef928f06c626be
           OUT=docs/evidence/final-room-recovery-20261004/reference-stills
           mkdir -p "$OUT"
-          for f in             nor-hero.jpg nor-lanes.jpg nor-bike1.jpg nor-bike3.jpg nor-window.jpg nor-painting.jpg nor-fire.jpg nor-plunge.jpg             bk-hero.jpg bk-monument.jpg bk-low.jpg bk-vitrine.jpg bk-window.jpg bk-clock.jpg bk-exploded2.jpg             beast-hero.jpg beast-wide.jpg beast-ride.jpg beast-tv.jpg beast-gap.jpg beast-gallery.jpg beast-loopwall.jpg beast-poster.jpg beast-stencil.jpg
+          for f in \
+            nor-hero.jpg nor-lanes.jpg nor-bike1.jpg nor-bike3.jpg nor-window.jpg nor-painting.jpg nor-fire.jpg nor-plunge.jpg \
+            bk-hero.jpg bk-monument.jpg bk-low.jpg bk-vitrine.jpg bk-window.jpg bk-clock.jpg bk-exploded2.jpg \
+            beast-hero.jpg beast-wide.jpg beast-ride.jpg beast-tv.jpg beast-gap.jpg beast-gallery.jpg beast-loopwall.jpg beast-poster.jpg beast-stencil.jpg
           do
-            git show "$REF:docs/booklet/stills/$f" > "$OUT/$f"
+            gh api "repos/${GITHUB_REPOSITORY}/contents/docs/booklet/stills/${f}?ref=${REF}" --jq .content | tr -d '\\n' | base64 -d > "$OUT/$f"
+            test -s "$OUT/$f"
           done
       - name: Capture recovered final rooms
         env:
