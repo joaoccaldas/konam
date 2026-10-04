@@ -63,7 +63,8 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 .hub-drawer :focus-visible{outline-color:var(--brand-ink)}
 @media(max-width:599px){
  .race-self-experience{height:auto;min-height:100dvh;grid-template-rows:auto auto auto auto}
- .studio-canvas-frame{min-height:clamp(300px,45dvh,390px)}
+ .studio-canvas-frame{min-height:clamp(300px,48dvh,410px)}
+ .race-self-identity{padding-top:12px}.race-self-identity small,.race-self-identity p{display:none}.race-self-identity h1{margin:0 0 8px;font-size:clamp(28px,8vw,34px);line-height:1}
  .studio-save-state{font-size:0}.studio-save-state::after{content:'● Local save';font-size:11px}
  .studio-wordmark{gap:8px}.studio-wordmark span{display:none}
  .studio-install{padding-inline:10px}
@@ -109,7 +110,7 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 
 @media(max-width:379px){
  .studio-install{font-size:0;padding-inline:10px}.studio-install::after{content:'Install';font-size:11px}
- .studio-wordmark{gap:8px}.studio-wordmark span{display:block;padding-left:8px;font-size:8px;letter-spacing:.11em}
+ .studio-wordmark{gap:8px}.studio-wordmark span{display:none}
 }
 
 /* RC8 customization containment */
