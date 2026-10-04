@@ -23,6 +23,8 @@ test('Why Kona is globally reachable without replacing the five primary tabs',()
   assert.match(css,/\.kona-panel-why\{/);
   assert.match(css,/\.global-kona-links\{/);
   assert.match(css,/\.global-user-studio,\.global-why-kona\{/);
+  const experience=read('web/styles/experience.css');
+  assert.match(experience,/\.global-kona-links\{top:calc\(70px \+ env\(safe-area-inset-top\)\);z-index:8\}/);
 });
 
 // Source-sync branch: global Why route is release-certified through deterministic generation.
