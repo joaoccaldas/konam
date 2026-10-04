@@ -66,7 +66,11 @@ try{
  assert.deepEqual(nav.errors,[]);report.push({journey:'latest navigation wins delayed Studio stylesheet',status:'PASS'});await nav.context.close();
  // Existing world passport must boot Experiences, keep stamps on return, and preserve discovery history.
  const {context,page,errors}=await pageFor();
- await page.evaluateOnNewDocument(()=>localStorage.setItem('speedmax.passport.v1',JSON.stringify({v:1,discoveries:['cfr'],visits:3,pose:{x:0,z:3}})));
+ await page.evaluateOnNewDocument(()=>{
+  localStorage.setItem('speedmax.passport.v1',JSON.stringify({v:1,discoveries:['cfr'],visits:3,pose:{x:0,z:3}}));
+  localStorage.setItem('speedmax.exp.tut.v1','1');
+  localStorage.setItem('speedmax.hist.tut.v1','1');
+ });
  await page.goto(new URL('Experiences.html',base).href,{waitUntil:'networkidle0'});await page.waitForFunction(()=>window.__exp?.passport);
  await page.waitForFunction(()=>document.getElementById('loading')?.classList.contains('off'),{timeout:60000});
  if(await page.$eval('#card',e=>e.classList.contains('on')))await page.click('#cClose');
