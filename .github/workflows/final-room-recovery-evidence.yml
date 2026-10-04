@@ -1,0 +1,74 @@
+name: Final room recovery evidence
+
+on:
+  push:
+    branches:
+      - recovery/final-rooms-20261004
+    paths:
+      - 'web/final-room-recovery-evidence.mjs'
+      - 'web/src/beast-cave.js'
+      - 'web/src/nor3-winter.js'
+      - 'web/src/breitling-kona.js'
+      - 'web/src/landing.js'
+      - 'web/src/roomSound.js'
+      - 'web/src/roomkit.js'
+      - 'web/styles/hall-web.css'
+      - 'web/styles/hall-mobile.css'
+      - 'world/konam/rooms/nor3-winter.decor.json'
+      - 'world/konam/rooms/breitling-kona.decor.json'
+      - '.github/workflows/final-room-recovery-evidence.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: recovery/final-rooms-20261004
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install
+        run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Verify deterministic generated state
+        run: |
+          node tools/build_pages.mjs
+          node tools/build_app.mjs
+          git diff --exit-code -- app sw.js index.html web/dist
+      - name: Materialize preserved final reference stills
+        run: |
+          git fetch origin claude/sharp-ritchie-lycv70 --depth=1
+          REF=cc80c48ada08a634c642561a64ef928f06c626be
+          OUT=docs/evidence/final-room-recovery-20261004/reference-stills
+          mkdir -p "$OUT"
+          for f in             nor-hero.jpg nor-lanes.jpg nor-bike1.jpg nor-bike3.jpg nor-window.jpg nor-painting.jpg nor-fire.jpg nor-plunge.jpg             bk-hero.jpg bk-monument.jpg bk-low.jpg bk-vitrine.jpg bk-window.jpg bk-clock.jpg bk-exploded2.jpg             beast-hero.jpg beast-wide.jpg beast-ride.jpg beast-tv.jpg beast-gap.jpg beast-gallery.jpg beast-loopwall.jpg beast-poster.jpg beast-stencil.jpg
+          do
+            git show "$REF:docs/booklet/stills/$f" > "$OUT/$f"
+          done
+      - name: Capture recovered final rooms
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          GIT_SHA: ${{ github.sha }}
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/final-room-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..30}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep 1; done
+          node web/final-room-recovery-evidence.mjs             http://127.0.0.1:8765/index.html             docs/evidence/final-room-recovery-20261004/runtime             docs/evidence/final-room-recovery-20261004/reference-stills
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-room-recovery-evidence-${{ github.sha }}
+          path: |
+            docs/evidence/final-room-recovery-20261004/runtime/
+            docs/evidence/final-room-recovery-20261004/reference-stills/
+          if-no-files-found: error
+          retention-days: 14
