@@ -18,7 +18,7 @@ export const BROOM = { x0: 7.35, x1: 35.35, z0: -4.0, z1: -17.7, h: 5.4 };
 export const BDOOR = { z0: -9.6, z1: -6.4, h: 3.4 };
 // v3: no door to any neighbouring room and no third-party brand inside the athlete room.
 // cinematic mood the host applies while the visitor is inside (exposure + global light dimming)
-export const BEAST_MOOD = Object.freeze({ exposure: .78, hemi: .06, sun: .03, fog: { near: 5, far: 34 }, fogColor: new THREE.Color('#0b0908') });
+export const BEAST_MOOD = Object.freeze({ exposure: .78, hemi: .06, sun: .03, fog: { near: 3.5, far: 26 }, fogColor: new THREE.Color('#0b0908') });
 // generated equipment (Higgsfield → Meshy image-to-3D, optimised with gltf-transform); procedural stand-ins until loaded
 const TRAINER_YAW = 0;                                              // orientation of the generated trainer mesh in trainer space (x = bike forward)
 export const BEAST_ASSETS = Object.freeze({ trainer: 'assets/rooms/beast-cave/hf-trainer.glb', fan: 'assets/rooms/beast-cave/hf-drum-fan.glb', treadmill: 'assets/rooms/beast-cave/hf-curved-treadmill.glb' });
@@ -38,6 +38,11 @@ export function buildBeastCave(ctx) {
   const group = new THREE.Group(); group.name = 'beastCaveRoom'; scene.add(group);
   const RW = BROOM.x1 - BROOM.x0, RD = BROOM.z0 - BROOM.z1;
   const CX = (BROOM.x0 + BROOM.x1) / 2, CZ = (BROOM.z0 + BROOM.z1) / 2;
+  // v4: the footprint is a tall approach gallery (career wall, the Gap) and, behind a doorway, the cave itself:
+  // low ceiling, close walls, the bike near a TV-sized screen. Intimacy is the point.
+  const CAVE = { x0: 21.0, x1: BROOM.x1, z0: -6.2, z1: -15.5, h: 3.0 };
+  const CDOOR = { z0: -12.45, z1: -9.25, h: 2.5 };
+  const heroX = 29.0, heroZ = (CAVE.z0 + CAVE.z1) / 2;                 // the bike faces east, into the screen
   const at = (o,x,y,z) => { o.position.set(x,y,z); group.add(o); return o; };
   const infos=[];
   const info=(mesh,rec)=>{ for(const m of [].concat(mesh)){m.userData.info=rec;pickables.push(m);} infos.push(rec); return rec; };
@@ -68,6 +73,20 @@ export function buildBeastCave(ctx) {
   wall(RW,BROOM.h,.28,CX,BROOM.h/2,BROOM.z0+.14);                                  // north
   wall(.28,BROOM.h,RD,BROOM.x1+.14,BROOM.h/2,CZ);                                    // east (screen wall)
   wall(RW,BROOM.h,.28,CX,BROOM.h/2,BROOM.z1-.14);                                  // south: solid party wall
+  // the cave: west partition (full height, with the doorway), north/south partitions and a low ceiling
+  wall(.2,BROOM.h,BROOM.z0-CDOOR.z1,CAVE.x0,BROOM.h/2,(BROOM.z0+CDOOR.z1)/2);
+  wall(.2,BROOM.h,CDOOR.z0-BROOM.z1,CAVE.x0,BROOM.h/2,(CDOOR.z0+BROOM.z1)/2);
+  wall(.2,BROOM.h-CDOOR.h,CDOOR.z1-CDOOR.z0,CAVE.x0,CDOOR.h+(BROOM.h-CDOOR.h)/2,(CDOOR.z0+CDOOR.z1)/2);
+  wall(CAVE.x1-CAVE.x0,CAVE.h+.1,.2,(CAVE.x0+CAVE.x1)/2,(CAVE.h+.1)/2,CAVE.z0);
+  wall(CAVE.x1-CAVE.x0,CAVE.h+.1,.2,(CAVE.x0+CAVE.x1)/2,(CAVE.h+.1)/2,CAVE.z1);
+  obstacles.push({box:[CAVE.x0-.35,CAVE.x0+.35,BROOM.z1,CDOOR.z0+.1]},{box:[CAVE.x0-.35,CAVE.x0+.35,CDOOR.z1-.1,BROOM.z0]},
+    {box:[CAVE.x0,CAVE.x1,CAVE.z0-.3,BROOM.z0]},{box:[CAVE.x0,CAVE.x1,BROOM.z1,CAVE.z1+.3]});
+  { const cc=new THREE.Mesh(new THREE.BoxGeometry(CAVE.x1-CAVE.x0,.1,CAVE.z0-CAVE.z1),new THREE.MeshStandardMaterial({color:'#2a2522',roughness:.95,envMapIntensity:.05}));
+    cc.position.set((CAVE.x0+CAVE.x1)/2,CAVE.h+.05,heroZ);cc.castShadow=true;cc.receiveShadow=true;group.add(cc);
+    const joist=new THREE.MeshStandardMaterial({color:'#4a3a2c',roughness:.85,envMapIntensity:.05});
+    const jI=new THREE.InstancedMesh(new THREE.BoxGeometry(.06,.2,CAVE.z0-CAVE.z1-.1),joist,Math.floor((CAVE.x1-CAVE.x0)/.6)),jd=new THREE.Object3D();
+    for(let k=0;k<jI.count;k++){jd.position.set(CAVE.x0+.3+k*.6,CAVE.h-.1,heroZ);jd.updateMatrix();jI.setMatrixAt(k,jd.matrix);}jI.castShadow=!lite;group.add(jI);
+    const lintel=new THREE.Mesh(new THREE.BoxGeometry(.24,.06,CDOOR.z1-CDOOR.z0+.1),new THREE.MeshBasicMaterial({color:'#ff6a00',toneMapped:false}));lintel.position.set(CAVE.x0-.12,CDOOR.h+.03,(CDOOR.z0+CDOOR.z1)/2);group.add(lintel); }
   // west wall, sharing the hall glass line, with the doorway cut out
   wall(.28,BROOM.h,BROOM.z0-BDOOR.z1,BROOM.x0-.14,BROOM.h/2,(BROOM.z0+BDOOR.z1)/2);
   wall(.28,BROOM.h,BDOOR.z0-BROOM.z1,BROOM.x0-.14,BROOM.h/2,(BDOOR.z0+BROOM.z1)/2);
@@ -83,10 +102,10 @@ export function buildBeastCave(ctx) {
   const foamRuns=[];                                                  // [origin, along, normal, length, y0, y1, holes]
   const addRun=(o,along,normal,len,y0,y1)=>foamRuns.push({o,along,normal,len,y0,y1});
   // east wall behind the screen (the cinema backdrop), north wall east of the mirrors, west wall interior
-  addRun(new THREE.Vector3(BROOM.x1-.01,0,BROOM.z0-.05),new THREE.Vector3(0,0,-1),new THREE.Vector3(-1,0,0),RD-.1,.25,BROOM.h-.45);
-  addRun(new THREE.Vector3(BROOM.x0+.01,0,BROOM.z0-.05),new THREE.Vector3(0,0,-1),new THREE.Vector3(1,0,0),RD-.1,1.0,BROOM.h-.45);
-  const screenHole=(r,u,y)=>r.normal.x<0&&Math.abs((BROOM.z0-.05-u)-CZ)<3.75&&y>.6&&y<4.9;
-  const doorHole=(r,u,y)=>r.normal.x>0&&(BROOM.z0-.05-u)<BDOOR.z1+.2&&(BROOM.z0-.05-u)>BDOOR.z0-.2&&y<BDOOR.h+.25;
+  addRun(new THREE.Vector3(BROOM.x1-.01,0,CAVE.z0-.12),new THREE.Vector3(0,0,-1),new THREE.Vector3(-1,0,0),CAVE.z0-CAVE.z1-.24,.2,CAVE.h-.25);
+  addRun(new THREE.Vector3(CAVE.x0+.11,0,CAVE.z0-.12),new THREE.Vector3(0,0,-1),new THREE.Vector3(1,0,0),CAVE.z0-CAVE.z1-.24,.2,CAVE.h-.25);
+  const screenHole=(r,u,y)=>r.normal.x<0&&Math.abs((CAVE.z0-.12-u)-heroZ)<2.4&&y>.38&&y<3.1;
+  const doorHole=(r,u,y)=>r.normal.x>0&&(CAVE.z0-.12-u)<CDOOR.z1+.15&&(CAVE.z0-.12-u)>CDOOR.z0-.15&&y<CDOOR.h+.2;
   const tired=(i)=>((i*2654435761)>>>0)%100<9;                       // ~9% of panels fell off or were never replaced
   const P=.15,cells=[];
   for(const r of foamRuns)for(let u=P/2;u<r.len;u+=P)for(let y=r.y0+P/2;y<r.y1;y+=P){if(screenHole(r,u,y)||doorHole(r,u,y))continue;const tile=Math.floor(u/.6)*97+Math.floor(y/.6);if(tired(tile))continue;cells.push([r,u,y]);}
@@ -98,7 +117,7 @@ export function buildBeastCave(ctx) {
 
   // ---------------------------------------------------------------- painted block wall: a stencil someone sprayed at 6 a.m.
   if(!rectLib){RectAreaLightUniformsLib.init();rectLib=true;}
-  const bwX0=27.3,bwX1=BROOM.x1-.02,bwW=bwX1-bwX0,bwH=BROOM.h;
+  const bwX0=CAVE.x0+.12,bwX1=CAVE.x1-.02,bwW=bwX1-bwX0,bwH=CAVE.h;
   const blockTex=canvasTex(2048,1408,(g,w,h)=>{
     const r=seededRandom(0xB10C);g.fillStyle='#3b3734';g.fillRect(0,0,w,h);
     const bw=w/(bwW/.4),bh=h/(bwH/.2);                                 // 400×200 mm blocks
@@ -118,27 +137,27 @@ export function buildBeastCave(ctx) {
     g.fillStyle='rgba(220,210,180,.55)';g.fillRect(w*.72,h*.6,90,26);g.fillRect(w*.8,h*.62,70,24);
   });
   const blockMat=new THREE.MeshStandardMaterial({map:blockTex,roughness:.95,envMapIntensity:.05});
-  const blockWall=new THREE.Mesh(new THREE.PlaneGeometry(bwW,bwH),blockMat);blockWall.rotation.y=Math.PI;blockWall.position.set((bwX0+bwX1)/2,bwH/2,BROOM.z0-.015);blockWall.receiveShadow=true;group.add(blockWall);
+  const blockWall=new THREE.Mesh(new THREE.PlaneGeometry(bwW,bwH),blockMat);blockWall.rotation.y=Math.PI;blockWall.position.set((bwX0+bwX1)/2,bwH/2,CAVE.z0-.115);blockWall.receiveShadow=true;group.add(blockWall);
   // printed sheets taped to the blocks: generic sessions, a calendar crossed off (no dates claimed)
   const sheetTex=(kind)=>canvasTex(256,340,(g,w,h)=>{g.fillStyle='#ece8df';g.fillRect(0,0,w,h);g.fillStyle='#2a2a2a';g.font=`600 16px ${FONT}`;
     if(kind==='cal'){g.fillText('THIS MONTH',16,28);for(let d=0;d<35;d++){const x=16+(d%7)*32,y=48+Math.floor(d/7)*52;g.strokeStyle='#9a958c';g.strokeRect(x,y,30,48);if(d<26){g.strokeStyle='#c0392b';g.lineWidth=3;g.beginPath();g.moveTo(x+4,y+6);g.lineTo(x+26,y+42);g.moveTo(x+26,y+6);g.lineTo(x+4,y+42);g.stroke();g.lineWidth=1;}}}
     else{g.fillText(kind==='a'?'SESSION A':'SESSION B',16,30);g.font=`500 13px ${FONT}`;const L=kind==='a'?['10′ easy','4 × 10′ steady','  3′ easy','10′ easy']:['15′ easy','6 × 4′ hard','  4′ easy','tempo run off the bike'];L.forEach((t,i)=>g.fillText(t,16,62+i*24));g.fillStyle='#8a847c';g.font=`500 10px ${FONT}`;g.fillText('example sessions · not an athlete plan',16,h-14);}
     g.fillStyle='rgba(225,215,170,.8)';g.fillRect(w*.35,0,w*.3,14);});
-  [['a',28.4,2.35,.04],['b',29.05,2.3,-.05],['cal',34.2,2.4,.02]].forEach(([k,x,y,rot])=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(.42,.56),new THREE.MeshStandardMaterial({map:sheetTex(k),roughness:.9}));m.rotation.set(0,Math.PI,rot);m.position.set(x,y,BROOM.z0-.03);group.add(m);});
+  [['a',32.4,1.85,.04],['b',33.05,1.8,-.05],['cal',22.6,1.9,.02]].forEach(([k,x,y,rot])=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(.42,.56),new THREE.MeshStandardMaterial({map:sheetTex(k),roughness:.9}));m.rotation.set(0,Math.PI,rot);m.position.set(x,y,CAVE.z0-.13);group.add(m);});
   info(blockWall,{eyebrow:'THE WALL',title:'The work nobody sees.',sub:'Sprayed stencil · chalk tally · taped sessions',text:'Every mark on this wall is the kind a training room collects: a tally of sessions, plans taped up and torn down. The sessions are generic examples, not anyone’s real plan.'});
   // bare bulbs on cords: the only "design" in the room
   const bulbs=[];
-  for(const [bx,bz,len] of [[31.0,BROOM.z0-1.4,1.6],[22.6,-10.9,1.3],[13.0,-9.0,1.5]]){
-    const cord=new THREE.Mesh(new THREE.CylinderGeometry(.006,.006,len,6),new THREE.MeshBasicMaterial({color:'#0b0b0b'}));cord.position.set(bx,BROOM.h-len/2,bz);group.add(cord);
-    const bulb=new THREE.Mesh(new THREE.SphereGeometry(.06,16,12),new THREE.MeshBasicMaterial({color:'#ffd7a0',toneMapped:false}));bulb.position.set(bx,BROOM.h-len-.06,bz);group.add(bulb);
+  for(const [bx,bz,len,top] of [[heroX+1.7,heroZ-.5,.55,CAVE.h],[heroX-3.6,heroZ+.6,.5,CAVE.h],[23.2,CAVE.z1+1.4,.45,CAVE.h],[13.0,-9.0,1.5,BROOM.h]]){
+    const cord=new THREE.Mesh(new THREE.CylinderGeometry(.006,.006,len,6),new THREE.MeshBasicMaterial({color:'#0b0b0b'}));cord.position.set(bx,top-len/2,bz);group.add(cord);
+    const bulb=new THREE.Mesh(new THREE.SphereGeometry(.06,16,12),new THREE.MeshBasicMaterial({color:'#ffd7a0',toneMapped:false}));bulb.position.set(bx,top-len-.06,bz);group.add(bulb);
     const glow=new THREE.Mesh(new THREE.PlaneGeometry(.7,.7),new THREE.MeshBasicMaterial({map:canvasTex(128,128,(g,w,h)=>{const gr=g.createRadialGradient(w/2,h/2,2,w/2,h/2,w/2);gr.addColorStop(0,'rgba(255,214,160,.9)');gr.addColorStop(1,'rgba(255,190,120,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);}),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,toneMapped:false}));
     glow.position.copy(bulb.position);group.add(glow);bulbs.push(glow);
     const pl=new THREE.PointLight('#ffc98f',lite?3:5,7,1.8);pl.position.copy(bulb.position);group.add(pl);
   }
   // exposed ducts and pipes along the ceiling
   const duct=new THREE.MeshStandardMaterial({color:'#5d5f60',roughness:.45,metalness:.7,envMapIntensity:.3});
-  {const d=new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,RW-1,20),duct);d.rotation.z=Math.PI/2;d.position.set(CX,BROOM.h-.55,BROOM.z0-1.0);group.add(d);
-   for(const [z,r,y] of [[-15.9,.035,BROOM.h-.3],[-16.1,.025,BROOM.h-.42],[-5.2,.03,BROOM.h-.35]]){const pp=new THREE.Mesh(new THREE.CylinderGeometry(r,r,RW-.6,10),new THREE.MeshStandardMaterial({color:'#7a3e22',roughness:.5,metalness:.6}));pp.rotation.z=Math.PI/2;pp.position.set(CX,y,z);group.add(pp);}}
+  {const d=new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,RW-1,20),duct);d.rotation.z=Math.PI/2;d.scale.set(.75,(CAVE.x1-CAVE.x0-.6)/(RW-1),.75);d.position.set((CAVE.x0+CAVE.x1)/2,CAVE.h-.32,CAVE.z0-.55);group.add(d);
+   for(const [z,r,y] of [[CAVE.z1+.35,.035,CAVE.h-.14],[CAVE.z1+.5,.025,CAVE.h-.22],[CAVE.z0-1.1,.03,CAVE.h-.16]]){const pp=new THREE.Mesh(new THREE.CylinderGeometry(r,r,RW-.6,10),new THREE.MeshStandardMaterial({color:'#7a3e22',roughness:.5,metalness:.6}));pp.rotation.z=Math.PI/2;pp.scale.y=(CAVE.x1-CAVE.x0-.3)/(RW-.6);pp.position.set((CAVE.x0+CAVE.x1)/2,y,z);group.add(pp);}}
 
   const coveMat = new THREE.MeshBasicMaterial({color:'#ff6a00',transparent:true,opacity:lite?.35:.6,toneMapped:false,fog:false});
   for(const z of [BROOM.z0-.01,BROOM.z1+.01]){const p=new THREE.Mesh(new THREE.PlaneGeometry(RW-1.2,.04),coveMat);p.position.set(CX,.12,z);p.rotation.y=z===BROOM.z0?Math.PI:0;group.add(p);}   // floor-line ember
@@ -152,15 +171,14 @@ export function buildBeastCave(ctx) {
 
 
   // ---------------------------------------------------------------- lights: almost nothing, placed with intent
-  const fill=new THREE.PointLight('#c9b7a8',lite?3:1.4,26,1.4);fill.position.set(CX-4,BROOM.h-.6,CZ);group.add(fill);
-  const heroX=25.2, heroZ=CZ;                                         // the bike faces east, into the screen
-  const spot=new THREE.SpotLight('#ffd8b0',lite?60:85,9,.42,.65,1.3);
-  spot.position.set(heroX-.4,BROOM.h-.25,heroZ);spot.target.position.set(heroX-.2,.6,heroZ);
+  const fill=new THREE.PointLight('#c9b7a8',lite?3:1.6,18,1.4);fill.position.set(14.5,BROOM.h-.6,CZ);group.add(fill);
+  const spot=new THREE.SpotLight('#ffd8b0',lite?34:46,5,.62,.6,1.3);
+  spot.position.set(heroX-.4,CAVE.h-.06,heroZ);spot.target.position.set(heroX-.2,.6,heroZ);
   spot.castShadow=!lite;spot.shadow.mapSize.set(1024,1024);spot.shadow.bias=-.0004;group.add(spot,spot.target);
-  const shaft=lightShaft({top:.14,bottom:1.55,height:BROOM.h-.3,color:'#ffcf9e',opacity:lite?.10:.16});
-  shaft.position.set(heroX-.4,BROOM.h-.25,heroZ);shaft.rotation.z=-.03;group.add(shaft);
+  const shaft=lightShaft({top:.14,bottom:1.75,height:CAVE.h-.1,color:'#ffcf9e',opacity:lite?.12:.2});
+  shaft.position.set(heroX-.4,CAVE.h-.06,heroZ);shaft.rotation.z=-.03;group.add(shaft);
   const screenGlow=new THREE.PointLight('#6f9bd8',lite?7:10,14,1.6);screenGlow.position.set(BROOM.x1-1.6,2.4,heroZ);group.add(screenGlow);
-  const rim=new THREE.SpotLight('#ff8a3a',lite?0:55,8,.5,.7,1.4);rim.position.set(heroX-2.6,3.6,heroZ+1.9);rim.target.position.set(heroX+.2,.9,heroZ);if(!lite)group.add(rim,rim.target);   // ember rim from behind the rider
+  const rim=new THREE.SpotLight('#ff8a3a',lite?0:38,6,.55,.7,1.4);rim.position.set(heroX-2.6,CAVE.h-.15,heroZ+1.9);rim.target.position.set(heroX+.2,.9,heroZ);if(!lite)group.add(rim,rim.target);   // ember rim from behind the rider
   const rimL=new THREE.PointLight('#ff7a2a',lite?0:3.2,7,1.8);rimL.position.set(heroX-3.4,.6,heroZ+2.2);group.add(rimL);   // low ember kicker from behind
 
   // ---------------------------------------------------------------- hero: empty saddle on a direct-drive trainer
@@ -194,7 +212,7 @@ export function buildBeastCave(ctx) {
   const bikeSpot={kind:'beast',pos:new THREE.Vector3(heroX,0,heroZ),rotY:0,bike:null};
   const portrait=coarse&&innerHeight>innerWidth;
   // three-quarter rear: the bike silhouetted against the screen
-  bikeSpot.view=portrait?new THREE.Vector3(heroX-3.3,0,heroZ+1.7):new THREE.Vector3(heroX-4.6,0,heroZ+2.3);
+  bikeSpot.view=portrait?new THREE.Vector3(heroX-3.3,0,heroZ+.5):new THREE.Vector3(heroX-4.6,0,heroZ+.35);   // straight in through the cave doorway
   bikeSpot.face=new THREE.Vector3(heroX+1.1,1.05,heroZ-.2);
   bikeSpot.info=trainerInfo;
   bikeSpot.cockpit={x:heroX-.35,z:heroZ,yaw:-Math.PI/2,pitch:-.12,drop:-.42};
@@ -202,12 +220,12 @@ export function buildBeastCave(ctx) {
   // ---------------------------------------------------------------- screen: original Queen K / Energy Lab route study
   const SW=1024,SH=576,scr=document.createElement('canvas');scr.width=SW;scr.height=SH;const sg=scr.getContext('2d');
   const screenTex=new THREE.CanvasTexture(scr);screenTex.colorSpace=THREE.SRGBColorSpace;screenTex.anisotropy=4;
-  const screenW=7.2,screenH=4.05;
-  const bezel=new THREE.Mesh(new THREE.BoxGeometry(.08,screenH+.18,screenW+.18),dark);at(bezel,BROOM.x1-.06,2.75,heroZ);
+  const screenW=4.4,screenH=2.48,screenY=1.72;
+  const bezel=new THREE.Mesh(new THREE.BoxGeometry(.08,screenH+.18,screenW+.18),dark);at(bezel,BROOM.x1-.06,screenY,heroZ);
   const screen=new THREE.Mesh(new THREE.PlaneGeometry(screenW,screenH),new THREE.MeshBasicMaterial({map:screenTex,toneMapped:false,fog:false}));
-  screen.rotation.y=-Math.PI/2;at(screen,BROOM.x1-.11,2.75,heroZ);
-  const screenPool=lightPool(5.5,7.5,'#7aa7e0',lite?.05:.09);screenPool.position.set(BROOM.x1-3,.02,heroZ);group.add(screenPool);
-  const screenRect=new THREE.RectAreaLight('#9fb6e8',lite?1.6:2.4,screenW,screenH);screenRect.position.set(BROOM.x1-.2,2.75,heroZ);screenRect.lookAt(BROOM.x1-5,2.2,heroZ);group.add(screenRect);
+  screen.rotation.y=-Math.PI/2;at(screen,BROOM.x1-.11,screenY,heroZ);
+  const screenPool=lightPool(4.0,5.2,'#7aa7e0',lite?.06:.11);screenPool.position.set(BROOM.x1-2.2,.02,heroZ);group.add(screenPool);
+  const screenRect=new THREE.RectAreaLight('#9fb6e8',lite?1.6:2.4,screenW,screenH);screenRect.position.set(BROOM.x1-.2,screenY,heroZ);screenRect.lookAt(BROOM.x1-5,1.4,heroZ);group.add(screenRect);
   // the screen in the polished floor: the same live texture, mirrored and fading away from the wall
   const reflect=new THREE.Mesh(new THREE.PlaneGeometry(screenH*1.1,screenW),new THREE.ShaderMaterial({uniforms:{map:{value:screenTex},strength:{value:lite?.16:.24}},
     vertexShader:'varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }',
@@ -349,7 +367,7 @@ export function buildBeastCave(ctx) {
   story.position.set(14.2,3.1,BROOM.z1+.03);group.add(story);
 
   // ---------------------------------------------------------------- run station: curved-slat treadmill, south side
-  const treadmill=new THREE.Group();treadmill.position.set(19.6,0,-15.9);group.add(treadmill);
+  const treadmill=new THREE.Group();treadmill.position.set(24.2,0,-14.05);group.add(treadmill);
   const slatGeo=new THREE.BoxGeometry(.105,.07,.78),slatCount=28;
   const slats=new THREE.InstancedMesh(slatGeo,rubber,slatCount),slatDummy=new THREE.Object3D();
   for(let i=0;i<slatCount;i++){
@@ -361,14 +379,14 @@ export function buildBeastCave(ctx) {
   const runConsole=new THREE.Mesh(new THREE.BoxGeometry(.60,.36,.74),dark);runConsole.position.set(.80,1.58,0);treadmill.add(runConsole);
   const treadDisplay=new THREE.Mesh(new THREE.PlaneGeometry(.42,.20),ember);treadDisplay.position.set(.49,1.61,0);treadDisplay.rotation.y=Math.PI/2;treadmill.add(treadDisplay);
   info([runConsole,slats],{eyebrow:'RUN LAB',title:'Same cave, different suffering.',sub:'Run · form · repeat',text:'An original KONA.m curved-slat treadmill study. No motor: you move the belt or nothing moves.'});
-  obstacles.push({c:new THREE.Vector3(19.6,0,-15.9),r:1.6});
-  const runPool=lightPool(3.6,1.8,'#ffb36b',lite?.03:.06);runPool.position.set(19.6,.02,-15.9);group.add(runPool);
+  obstacles.push({c:new THREE.Vector3(24.2,0,-14.05),r:1.5});
+  const runPool=lightPool(3.6,1.8,'#ffb36b',lite?.03:.06);runPool.position.set(24.2,.02,-14.05);group.add(runPool);
 
   // ---------------------------------------------------------------- gear wall: a slatwall that has been used for years
-  const gx0=22.4,gx1=28.8,gz=BROOM.z1+.02,gcx=(gx0+gx1)/2;
+  const gx0=26.2,gx1=32.4,gz=CAVE.z1+.1,gcx=(gx0+gx1)/2;
   const slatM=new THREE.MeshStandardMaterial({color:'#24211f',roughness:.7,metalness:.15,envMapIntensity:.1});
-  const slatI=new THREE.InstancedMesh(new THREE.BoxGeometry(gx1-gx0,.07,.05),slatM,22),sd=new THREE.Object3D();
-  for(let k=0;k<22;k++){sd.position.set(gcx,.35+k*.16,gz+.03);sd.updateMatrix();slatI.setMatrixAt(k,sd.matrix);}slatI.receiveShadow=true;group.add(slatI);
+  const slatI=new THREE.InstancedMesh(new THREE.BoxGeometry(gx1-gx0,.07,.05),slatM,16),sd=new THREE.Object3D();
+  for(let k=0;k<16;k++){sd.position.set(gcx,.35+k*.16,gz+.03);sd.updateMatrix();slatI.setMatrixAt(k,sd.matrix);}slatI.receiveShadow=true;group.add(slatI);
   const shelf=(y,w=1.6,x=gcx)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,.035,.3),dark);m.position.set(x,y,gz+.2);m.castShadow=!lite;group.add(m);return m;};
   shelf(1.9,2.2,gx0+1.3);shelf(1.9,2.2,gx1-1.3);shelf(1.1,6.0);
   const shell=new THREE.MeshPhysicalMaterial({color:'#121315',roughness:.25,metalness:.2,clearcoat:1,clearcoatRoughness:.1,envMapIntensity:.6});
@@ -383,25 +401,25 @@ export function buildBeastCave(ctx) {
   const shoeM=[new THREE.MeshStandardMaterial({color:'#e8e2d6',roughness:.7}),new THREE.MeshStandardMaterial({color:'#ff5a1f',roughness:.6}),dark];
   for(let k=0;k<4;k++)for(const side of [-.07,.07]){const sh=new THREE.Mesh(new THREE.CapsuleGeometry(.05,.2,4,10),shoeM[k%3]);sh.rotation.z=Math.PI/2;sh.scale.set(1,1,.8);sh.position.set(gx0+.7+k*.55+side,.06,gz+.32);group.add(sh);}
   const ribbonM=[ember,new THREE.MeshBasicMaterial({color:'#1d6fb8'}),new THREE.MeshBasicMaterial({color:'#e8e2d6'})];
-  for(let k=0;k<7;k++){const x=gx0+.5+k*.82;const rib=new THREE.Mesh(new THREE.BoxGeometry(.035,.62,.006),ribbonM[k%3]);rib.position.set(x,3.12,gz+.1);rib.rotation.z=(k%2?.05:-.05);group.add(rib);
-    const med=new THREE.Mesh(new THREE.CylinderGeometry(.075,.075,.012,28),new THREE.MeshStandardMaterial({color:k%2?'#b08d57':'#9aa0a6',metalness:1,roughness:.25,envMapIntensity:1.2}));med.rotation.x=Math.PI/2;med.position.set(x+(k%2?.015:-.015),2.76,gz+.11);group.add(med);}
+  for(let k=0;k<5;k++){const x=gx0+.45+k*.6;const rib=new THREE.Mesh(new THREE.BoxGeometry(.035,.62,.006),ribbonM[k%3]);rib.position.set(x,2.42,gz+.1);rib.rotation.z=(k%2?.05:-.05);group.add(rib);
+    const med=new THREE.Mesh(new THREE.CylinderGeometry(.075,.075,.012,28),new THREE.MeshStandardMaterial({color:k%2?'#b08d57':'#9aa0a6',metalness:1,roughness:.25,envMapIntensity:1.2}));med.rotation.x=Math.PI/2;med.position.set(x+(k%2?.015:-.015),2.06,gz+.11);group.add(med);}
   const bibTex=canvasTex(256,192,(g,w,h)=>{g.fillStyle='#f2efe8';g.fillRect(0,0,w,h);g.fillStyle='#d64a1a';g.fillRect(0,0,w,26);g.fillStyle='#1a1a1a';g.font=`800 92px ${FONT}`;g.textAlign='center';g.fillText('— —',w/2,128);g.fillStyle='#8a847c';g.font=`600 14px ${FONT}`;g.fillText('RACE BIB · NUMBER LEFT BLANK',w/2,170);});
-  for(let k=0;k<3;k++){const bib=new THREE.Mesh(new THREE.PlaneGeometry(.32,.24),new THREE.MeshStandardMaterial({map:bibTex,roughness:.8}));bib.position.set(gx1-.6-k*.42,2.5+(k%2)*.08,gz+.09);bib.rotation.z=(k-1)*.06;group.add(bib);}
+  for(let k=0;k<3;k++){const bib=new THREE.Mesh(new THREE.PlaneGeometry(.32,.24),new THREE.MeshStandardMaterial({map:bibTex,roughness:.8}));bib.position.set(gx1-.5-k*.42,2.35+(k%2)*.06,gz+.09);bib.rotation.z=(k-1)*.06;group.add(bib);}
   const hangTowel=new THREE.Mesh(new THREE.PlaneGeometry(.38,.9,4,10),towelMat);{const p=hangTowel.geometry.attributes.position;for(let k=0;k<p.count;k++)p.setZ(k,Math.sin(p.getY(k)*7)*.02);hangTowel.geometry.computeVertexNormals();}
   hangTowel.position.set(gx1-.2,1.45,gz+.12);group.add(hangTowel);
-  const gearSpot=new THREE.SpotLight('#ffd2a6',lite?0:22,6,.55,.8,1.5);gearSpot.position.set(gcx,BROOM.h-.4,gz+1.6);gearSpot.target.position.set(gcx,1.6,gz);if(!lite)group.add(gearSpot,gearSpot.target);
+  const gearSpot=new THREE.SpotLight('#ffd2a6',lite?0:22,6,.55,.8,1.5);gearSpot.position.set(gcx,CAVE.h-.08,gz+1.4);gearSpot.target.position.set(gcx,1.6,gz);if(!lite)group.add(gearSpot,gearSpot.target);
   info([helmet.children[0],helmet2.children[0]],{eyebrow:'GEAR WALL',title:'Objects remember work.',sub:'Equipment · race objects · memory',text:'A working wall, not a shop wall: helmets, bottles, shoes, blank bibs, medals on tired ribbons. Nothing here is labelled as any athlete’s own equipment — that stays unlabelled until it is sourced.'});
 
   // ---------------------------------------------------------------- clutter: what a training room collects (no labels, no brands)
   const cardboard=new THREE.MeshStandardMaterial({color:'#7d6044',roughness:.95});
-  const pile=new THREE.Group();pile.position.set(21.2,0,-7.6);pile.rotation.y=-.35;group.add(pile);
+  const pile=new THREE.Group();pile.position.set(32.4,0,-7.1);pile.rotation.y=-.35;group.add(pile);
   [[.7,.45,.5,0,0],[.5,.32,.42,.05,.45],[.42,.26,.34,-.4,0]].forEach(([w,h,d,x,y],i)=>{const b=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),cardboard);b.position.set(x,y+h/2,i===2?.45:0);b.rotation.y=i*.3;b.castShadow=!lite;pile.add(b);});
-  const pump=new THREE.Group();pump.position.set(22.0,0,-16.9);group.add(pump);
+  const pump=new THREE.Group();pump.position.set(25.6,0,-15.0);group.add(pump);
   {const barrel=new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.62,12),new THREE.MeshStandardMaterial({color:'#b02a1a',roughness:.4}));barrel.position.y=.36;pump.add(barrel);
    const handle=new THREE.Mesh(new THREE.BoxGeometry(.24,.03,.03),dark);handle.position.y=.7;pump.add(handle);
    const foot=new THREE.Mesh(new THREE.BoxGeometry(.22,.025,.08),dark);foot.position.y=.012;pump.add(foot);}
-  for(let k=0;k<3;k++){const tube=new THREE.Mesh(new THREE.TorusGeometry(.16,.012,8,32),dark);tube.position.set(22.6+k*.12,2.25-k*.03,BROOM.z1+.08);tube.rotation.y=.1*k;group.add(tube);}   // spare tubes on a nail
-  const fridge=new THREE.Group();fridge.position.set(33.6,0,-6.9);fridge.rotation.y=-Math.PI/2;group.add(fridge);
+  for(let k=0;k<3;k++){const tube=new THREE.Mesh(new THREE.TorusGeometry(.16,.012,8,32),dark);tube.position.set(25.6+k*.12,2.25-k*.03,CAVE.z1+.18);tube.rotation.y=.1*k;group.add(tube);}   // spare tubes on a nail
+  const fridge=new THREE.Group();fridge.position.set(34.6,0,-7.3);fridge.rotation.y=-Math.PI/2;group.add(fridge);
   {const body=new THREE.Mesh(new THREE.BoxGeometry(.5,.85,.52),new THREE.MeshStandardMaterial({color:'#cfcac0',roughness:.55,metalness:.1,envMapIntensity:.2}));body.position.y=.425;body.castShadow=!lite;fridge.add(body);
    const handleF=new THREE.Mesh(new THREE.BoxGeometry(.02,.3,.03),steel);handleF.position.set(.18,.55,.27);fridge.add(handleF);
    for(let k=0;k<3;k++){const b=new THREE.Mesh(new THREE.CylinderGeometry(.036,.036,.21,14),k%2?bottleM:new THREE.MeshStandardMaterial({color:'#1a1a1c',roughness:.4}));b.position.set(-.12+k*.11,.955,0);fridge.add(b);}}
@@ -413,25 +431,24 @@ export function buildBeastCave(ctx) {
    const back=new THREE.Mesh(new THREE.BoxGeometry(.44,.36,.03),dark);back.position.set(0,.66,-.2);back.rotation.x=-.12;chair.add(back);}
   obstacles.push({c:chair.position.clone(),r:.4});
   // extension cord from the trainer to the wall
-  {const pts=[new THREE.Vector3(heroX-.6,.02,heroZ+.2),new THREE.Vector3(heroX-1.4,.015,heroZ+1.3),new THREE.Vector3(heroX-.6,.015,heroZ+2.6),new THREE.Vector3(heroX+1.4,.015,BROOM.z0-.6),new THREE.Vector3(heroX+2.0,.25,BROOM.z0-.06)];
+  {const pts=[new THREE.Vector3(heroX-.6,.02,heroZ+.2),new THREE.Vector3(heroX-1.4,.015,heroZ+1.3),new THREE.Vector3(heroX-.6,.015,heroZ+2.6),new THREE.Vector3(heroX+1.4,.015,CAVE.z0-.6),new THREE.Vector3(heroX+2.0,.25,CAVE.z0-.12)];
    const cable=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),60,.008,6),new THREE.MeshStandardMaterial({color:'#e8a12a',roughness:.6}));group.add(cable);}
 
   // ---------------------------------------------------------------- archive: mirrors + swim erg (north-east)
   const mirrorMat=new THREE.MeshPhysicalMaterial({color:'#3a3f44',metalness:.95,roughness:.12,envMapIntensity:.25,clearcoat:1,clearcoatRoughness:.08});
-  for(let i=0;i<3;i++){const p=new THREE.Mesh(new THREE.PlaneGeometry(1.5,2.4),mirrorMat);p.rotation.y=Math.PI;p.position.set(22.8+i*1.7,1.6,BROOM.z0-.03);group.add(p);}
-  const erg=new THREE.Group();erg.position.set(31.6,0,-6.0);group.add(erg);
+  const erg=new THREE.Group();erg.position.set(24.4,0,-7.45);group.add(erg);
   const bench=new THREE.Mesh(new THREE.BoxGeometry(2.5,.2,.55),pale);bench.position.set(0,.68,0);erg.add(bench);
   const rail=new THREE.Mesh(new THREE.BoxGeometry(2.85,.10,.14),steel);rail.position.set(-.05,.45,0);erg.add(rail);
   const mast=new THREE.Mesh(new THREE.BoxGeometry(.15,1.75,.15),steel);mast.position.set(1.18,1.3,0);mast.rotation.z=-.08;erg.add(mast);
   const efly=new THREE.Mesh(new THREE.CylinderGeometry(.42,.42,.18,40),dark);efly.position.set(1.06,1.86,0);efly.rotation.x=Math.PI/2;erg.add(efly);
   info(efly,{eyebrow:'PAIN CAVE ARCHIVE',title:'The laboratory came first.',sub:'Archive · mirrors · swim erg',text:'Mirrors for form checks and a swim erg: the kind of indoor work a pain cave is known for. History of the idea, not a claim about any athlete’s current setup.'});
-  obstacles.push({c:new THREE.Vector3(31.6,0,-6.0),r:1.5});
+  obstacles.push({c:new THREE.Vector3(24.4,0,-7.45),r:1.4});
 
   // ---------------------------------------------------------------- recovery (south-east corner)
-  wall(2.4,.42,1.4,33.9,.21,-16.75,new THREE.MeshStandardMaterial({color:'#24201e',roughness:.96}));
-  const roller=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.72,24),dark);roller.rotation.z=Math.PI/2;roller.position.set(33.6,.16,-15.6);group.add(roller);
+  wall(2.0,.42,1.2,34.2,.21,-14.6,new THREE.MeshStandardMaterial({color:'#24201e',roughness:.96}));
+  const roller=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.72,24),dark);roller.rotation.z=Math.PI/2;roller.position.set(33.7,.16,-13.6);group.add(roller);
   info(roller,{eyebrow:'RESET',title:'Recovery is part of the work.',sub:'Reset · restore · return',text:'A quiet corner keeps recovery inside the same story rather than treating it as the opposite of training.'});
-  obstacles.push({c:new THREE.Vector3(33.9,0,-16.75),r:.9});
+  obstacles.push({c:new THREE.Vector3(34.2,0,-14.6),r:.9});
   // ---------------------------------------------------------------- sculptures
   const stone=new THREE.MeshStandardMaterial({map:basaltTex,color:'#4a443f',roughness:.95,envMapIntensity:.2});
   const gap=new THREE.Group();gap.position.set(9.6,0,-13.7);gap.rotation.y=.75;group.add(gap);
@@ -449,9 +466,9 @@ export function buildBeastCave(ctx) {
   obstacles.push({c:new THREE.Vector3(14.9,0,-12.7),r:1.1});
 
   // ---------------------------------------------------------------- haze in the light
-  const dust=motes({n:lite?60:180,box:[heroX-2.2,heroX+1.6,.3,BROOM.h-.4,heroZ-1.4,heroZ+1.4],color:'#ffd9b0',size:.022,rise:.02,sway:.25,opacity:.6,seed:71});
+  const dust=motes({n:lite?60:180,box:[heroX-2.2,heroX+1.6,.3,CAVE.h-.2,heroZ-1.4,heroZ+1.4],color:'#ffd9b0',size:.022,rise:.02,sway:.25,opacity:.6,seed:71});
   group.add(dust.points);
-  const screenDust=motes({n:lite?30:90,box:[BROOM.x1-4,BROOM.x1-.6,.6,4.4,heroZ-3.4,heroZ+3.4],color:'#a9c6ff',size:.02,rise:.015,sway:.3,opacity:.45,seed:73});
+  const screenDust=motes({n:lite?30:90,box:[BROOM.x1-3.4,BROOM.x1-.6,.4,2.8,heroZ-2.6,heroZ+2.6],color:'#a9c6ff',size:.02,rise:.015,sway:.3,opacity:.45,seed:73});
   group.add(screenDust.points);
 
   // ---------------------------------------------------------------- cards (models rendered by the host's card engine)
@@ -528,7 +545,7 @@ export function buildBeastCave(ctx) {
       const [fanG,treadG,trainerG]=await Promise.all([load(BEAST_ASSETS.fan),load(BEAST_ASSETS.treadmill),load(BEAST_ASSETS.trainer)]);
       if(fanG){
         fanGroups.forEach((old,k)=>{
-          const f=seat(k?fanG.clone(true):fanG,.52);f.position.copy(old.position);
+          const f=seat(k?fanG.clone(true):fanG,.52);f.traverse(o=>{if(o.isMesh&&o.material){o.material=o.material.clone();o.material.color?.multiplyScalar(.55);o.material.envMapIntensity=.2;}});f.position.copy(old.position);
           const d=new THREE.Vector3(heroX-.3-old.position.x,0,heroZ-old.position.z);f.rotation.y=Math.atan2(d.x,d.z);   // the grille (+z) looks at the saddle
           const blur=new THREE.Mesh(new THREE.CircleGeometry(.2,40),fanBlurMat);blur.position.set(0,.28,.12);f.add(blur);fanRotors[k]=blur;
           group.add(f);old.visible=false;f.traverse(o=>{if(o.isMesh&&o!==blur){o.userData.info=old.userData.info;pickables.push(o);}});
