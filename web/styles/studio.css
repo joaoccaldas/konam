@@ -60,9 +60,12 @@ body.light-scene .hero{color:var(--brand-ink);text-shadow:none}
 .seg{display:inline-flex;gap:3px;padding:3px;border-radius:999px;background:var(--sand)}
 .seg button{padding:7px 13px;border-radius:999px;font-size:12px;font-weight:600}.seg button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--brand-touch);padding:0 18px;border-radius:var(--brand-pill-radius);font:700 13px/1 var(--brand-font-ui)}
-.btn.primary{background:var(--brand-action);color:var(--brand-on-action)}.btn.ghost{border:1px solid rgba(18,24,29,.22)}
-.btn.lava{background:var(--brand-sunrise);color:var(--brand-on-action)}
+/* Studio-owned actions use components.css. Feature CSS only composes local geometry. */
+.studio-action.btn-primary,.studio-action.btn-secondary{gap:8px;padding-inline:18px}
+/* Shared museum card markup still emits legacy "btn primary/ghost"; quarantine that bridge to #card only. */
+#card .btn{padding-inline:18px}
+#card .btn.primary{background:var(--brand-action);color:var(--brand-on-action)}
+#card .btn.ghost{border:1px solid var(--brand-line);background:transparent;color:var(--brand-ink)}
 /* floating actions */
 .fab{position:fixed;right:max(12px,env(safe-area-inset-right));z-index:16;display:flex;flex-direction:column;gap:8px;bottom:calc(var(--sheet) + 12px);transition:bottom .45s}
 body.dock-min .fab{bottom:calc(76px + var(--safe-b))}
@@ -105,7 +108,7 @@ body.dreaming #dreamTitle.on{opacity:1}
 /* My Kona Setup V0 */
 .setup-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:4px 0 14px}.setup-head small{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--reef);font-weight:700}.setup-head h3{font:400 30px/1 var(--serif);margin-top:4px}.setup-score{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
 .setup-scroll{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-bottom:8px}.setup-grid{display:grid;gap:8px}.setup-slot{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:10px;min-height:62px;padding:10px 12px;border:1px solid var(--line);border-radius:15px;background:var(--brand-surface)}.setup-slot i{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--sand);font-style:normal;font-size:17px}.setup-slot b{display:block;font-size:12.5px}.setup-slot small{display:block;font-size:10.5px;color:var(--faint);margin-top:2px}.setup-slot .status{font-size:11px;font-weight:700;color:var(--reef)}.setup-slot.soon{opacity:.68}.setup-slot.soon .status{color:var(--faint)}
-.setup-actions{flex:0 0 auto;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px -4px -4px;padding:10px 4px 6px;border-top:1px solid var(--line);background:var(--paper)}.setup-actions .btn{min-height:48px;width:100%;padding:0 10px;background:var(--paper);white-space:nowrap}.setup-actions .btn:only-child{grid-column:1/-1}.setup-actions .btn.primary{background:var(--ink)}.setup-note{font-size:11px;line-height:1.55;color:var(--faint);margin-top:12px;padding-bottom:2px}
+.setup-actions{flex:0 0 auto;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px -4px -4px;padding:10px 4px 6px;border-top:1px solid var(--line);background:var(--paper)}.setup-actions .studio-action{width:100%;padding-inline:10px;white-space:nowrap}.setup-actions .studio-action:only-child{grid-column:1/-1}.setup-note{font-size:11px;line-height:1.55;color:var(--faint);margin-top:12px;padding-bottom:2px}
 /* desktop: the sheet becomes a side panel */
 @media (min-width:900px){
   :root{--sheet:100dvh}
@@ -128,7 +131,7 @@ body.dreaming #dreamTitle.on{opacity:1}
 .prod,.slot,.chips button,.search{border-radius:var(--brand-control-radius,12px);border-color:var(--brand-line)}
 .prod,.slot,.chips button,.search{background:var(--brand-surface,#fbf9f5)}
 .setup-slot{border-radius:var(--brand-card-radius,20px);background:var(--brand-surface,#fbf9f5)}
-.btn{min-height:var(--brand-touch,48px);height:auto;padding-block:10px}
+.studio-action{height:auto;padding-block:10px}
 @media(max-width:899px){
   :root{--sheet:min(44dvh,430px)}
   .dock{max-height:var(--sheet)}
