@@ -1,6 +1,10 @@
 {
   "version": 1,
-  "coverage_roots": ["brand", "web/styles", "web/heritage"],
+  "coverage_roots": [
+    "brand",
+    "web/styles",
+    "web/heritage"
+  ],
   "classes": {
     "brand": [
       "brand/artifacts.css",
@@ -9,16 +13,17 @@
       "brand/typography.css"
     ],
     "canonical": [
+      "web/styles/admin-assets.css",
+      "web/styles/companion.css",
       "web/styles/components.css",
-      "web/styles/system.css",
-      "web/styles/shell-mobile.css",
-      "web/styles/home.css",
+      "web/styles/entry.css",
       "web/styles/garage.css",
+      "web/styles/home.css",
+      "web/styles/passport.css",
       "web/styles/plan.css",
       "web/styles/race-self.css",
-      "web/styles/entry.css",
-      "web/styles/companion.css",
-      "web/styles/admin-assets.css"
+      "web/styles/shell-mobile.css",
+      "web/styles/system.css"
     ],
     "immersive": [
       "web/styles/studio.css",
@@ -38,15 +43,19 @@
       "web/styles/room-review.css"
     ]
   },
-  "strict_classes": ["canonical", "immersive"],
-  "debt_scope_roots": ["brand", "web/styles"],
+  "strict_classes": [
+    "canonical",
+    "immersive"
+  ],
+  "debt_scope_roots": [
+    "brand",
+    "web/styles"
+  ],
   "limits": {
     "consumer_important": 12,
     "all_important": 166,
     "all_raw_hex": 440,
-    "js_style_injectors": 1
+    "js_style_injectors": 0
   },
-  "allowed_js_style_injectors": [
-    "web/src/passport.js"
-  ]
-}
+  "allowed_js_style_injectors": []
+}\n
