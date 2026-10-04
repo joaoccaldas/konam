@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "recovery-candidate",
+  "source_commit": "cc80c48ada08a634c642561a64ef928f06c626be",
+  "target_base": "02a35d2f33daaeb214094caf315d9918577b4b1b",
+  "rule": "Exact source blobs only for final room payloads; host hooks are minimal current-main adaptations.",
+  "rooms": {
+    "room:konam:beast-cave": {
+      "runtime": "?reviewRoom=beast-cave",
+      "files": {
+        "web/src/beast-cave.js": "1b2374adf749edc7d80b39e01a55bb11004d55c0",
+        "web/src/beast-interval.js": "180d72bba7658c2bf0e1698dcb8580575052411a",
+        "pitch/lionel-sanders/career-facts-v1.json": "9c6aca23fca56c34345c86c72b03793a3cef6f5e",
+        "assets/rooms/beast-cave/hf-trainer.glb": "1d6d63abc52bead454e236e125d1c760851c088c",
+        "assets/rooms/beast-cave/hf-drum-fan.glb": "f21ac3cf166390000918eb881565cc911708b18e",
+        "assets/rooms/beast-cave/hf-curved-treadmill.glb": "440ad478e5baa2bb993e86bbd583e8b03fc69eff"
+      }
+    },
+    "room:konam:nor3-winter": {
+      "runtime": "?reviewRoom=nor3-winter",
+      "files": {
+        "web/src/nor3-winter.js": "fca99df6cd235d13b7d6f7ec93c534731f89eaf7",
+        "pitch/norwegian-trio/trio-facts-v1.json": "801bd231a0a4cfaf28a7e310c3235e6745551739",
+        "web/src/engine/decor.js": "2fd5ca96f22b670c83070b5dccb059b8a1bc2dc0",
+        "web/src/engine/env-capture.js": "d2eebbd9bd5d3cca0b5a37f0d9ed04e66106fc45",
+        "world/konam/rooms/nor3-winter.decor.json": "802a9aa26cb5e7d4cafdc2032222aa48e566e4fb",
+        "assets/rooms/nor3-winter/kona-winter-plate-2048.webp": "e1ba63c820a0b9bf780e04f81d713edbb1903a6c",
+        "assets/rooms/nor3-winter/kona-winter-plate-1024.webp": "fec6b1c456c76a22332c13b539c7460c0df6feee",
+        "assets/atlas/studio-nor3-disc-tri/bike.glb": "fbc953326445b02cb978d60b11d06db66f6ad2b5",
+        "assets/atlas/studio-nor3-disc-tri/bike-lite.glb": "22a8e16402ccda08dcdb6ddf1a50194291eabb5c"
+      }
+    },
+    "room:konam:breitling-kona": {
+      "runtime": "?reviewRoom=breitling-kona",
+      "files": {
+        "web/src/breitling-kona.js": "aadace92636519b02bc1b85dcb05cdde0c51d1b3",
+        "pitch/breitling-kona/collection-v1.json": "c138a117a9c7005737f8eba6d4f4e49f8bcc620e",
+        "assets/watches/endurance-pro-study/watch.glb": "4ca21c606d4a9e658d8cf57cb24ca72aefe6fc04",
+        "assets/watches/endurance-pro-study/watch-lite.glb": "8d31cafcf054c086458fe746f732e5bbccb9d0b7"
+      }
+    }
+  }
+}
