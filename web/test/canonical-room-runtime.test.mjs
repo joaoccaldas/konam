@@ -33,3 +33,17 @@ test('Discover consumes canonical room truth without a second styling authority'
   assert.match(source,/btn-text/);
   assert.doesNotMatch(source,/<style|stylesheet|style=/i);
 });
+
+test('Founding 141 is one canonical lazy public projection, not a duplicated UI registry',()=>{
+  const collection=json('collections/kona-141-v1.json');
+  assert.equal(collection.items.length,141);
+  const discover=read('web/src/ui/discover.js');
+  const stage=read('tools/stage_site.sh');
+  const app=read('tools/build_app.mjs');
+  assert.match(discover,/fetch\('collections\/kona-141-v1\.json'/);
+  assert.match(discover,/item\.room_id===room\.id/);
+  assert.match(discover,/canonical catalog, not a second ownership system/i);
+  assert.match(stage,/collections\/kona-141-v1\.json/);
+  assert.match(app,/collections\/kona-141-v1\.json/);
+  assert.doesNotMatch(discover,/const\s+FOUNDING_141\s*=/);
+});
