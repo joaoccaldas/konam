@@ -150,3 +150,22 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 
 .studio-home{color:var(--stage-ink);min-width:48px;white-space:nowrap}
 @media(max-width:340px){.studio-wordmark span{display:none}.studio-heading{gap:8px}}
+
+
+/* Mobile User Studio: readable two-column destinations, shorter stage, calmer hierarchy. */
+@media(max-width:599px){
+  .race-self-experience{grid-template-rows:56px auto auto auto;padding-inline:max(12px,env(safe-area-inset-left),env(safe-area-inset-right))}
+  .studio-wordmark{font-size:18px;letter-spacing:.11em}
+  .studio-wordmark span{font-size:9px}
+  .race-self-identity{padding-top:10px}
+  .race-self-identity h1{font-size:clamp(26px,8vw,32px);line-height:.98;margin:4px 0 6px}
+  .race-self-identity p{font-size:11.5px;line-height:1.4}
+  .studio-canvas-frame{min-height:190px}
+  .studio-stage-caption{padding-bottom:6px}
+  .studio-destinations{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding-block:8px}
+  .studio-destinations>button{min-height:58px;padding:8px}
+  .studio-destinations b{font-size:12px}
+  .race-self-controls{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding-block:8px}
+  .race-self-controls>button,.race-self-controls>a{min-height:54px}
+  .hub-drawer{max-height:88dvh}
+}
