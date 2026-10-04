@@ -1,19 +1,25 @@
 import { photoCredit } from './photo-credit.js';
 import previews from '../../../museum/entry-catalog.json' with {type:'json'};
-import roomRegistry from '../../../world/konam/rooms-v1.json' with {type:'json'};
-import roomRuntime from '../../../world/konam/founding-runtime-v1.json' with {type:'json'};
 import { loadPublicCatalog } from '../engine/catalog.js';
 // ui/discover.js — lightweight editorial discovery. Loads public JSON only on intent.
 // Canonical founding-room identity comes from world/konam/rooms-v1.json.
 // 3D remains explicit optional depth; this surface must never create a second room or style authority.
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const category=(name,sub)=>'<article class="discover-category artifact artifact--label"><small>'+esc(name)+'</small><b>'+esc(sub)+'</b></article>';
-const routeByRoom=new Map((roomRuntime.routes||[]).map(route=>[route.room_id,route]));
-const foundingRooms=(roomRegistry.rooms||[]).filter(room=>room.group==='foundation'&&room.launch_visible===true).map((room,index)=>({
-  ...room,
-  ordinal:String(index+1).padStart(2,'0'),
-  route:routeByRoom.get(room.id)||null,
-}));
+let foundingRoomsPromise=null;
+const loadFoundingRooms=()=>foundingRoomsPromise||(foundingRoomsPromise=Promise.all([
+  fetch('world/konam/rooms-v1.json',{credentials:'omit'}).then(response=>{if(!response.ok)throw new Error('Room registry unavailable');return response.json();}),
+  fetch('world/konam/founding-runtime-v1.json',{credentials:'omit'}).then(response=>{if(!response.ok)throw new Error('Room bridge unavailable');return response.json();}),
+]).then(([roomRegistry,roomRuntime])=>{
+  const routeByRoom=new Map((roomRuntime.routes||[]).map(route=>[route.room_id,route]));
+  const rooms=(roomRegistry.rooms||[]).filter(room=>room.group==='foundation'&&room.launch_visible===true).map((room,index)=>({
+    ...room,
+    ordinal:String(index+1).padStart(2,'0'),
+    route:routeByRoom.get(room.id)||null,
+  }));
+  if(rooms.length!==14||rooms.some(room=>!room.route))throw new Error('Canonical founding rooms are incomplete');
+  return rooms;
+}).catch(error=>{foundingRoomsPromise=null;throw error;}));
 const themeLabel=theme=>String(theme||'world').replaceAll('-',' ');
 let foundingCollectionPromise=null;
 const loadFoundingCollection=()=>foundingCollectionPromise||(foundingCollectionPromise=fetch('collections/kona-141-v1.json',{credentials:'omit'})
@@ -22,6 +28,7 @@ const loadFoundingCollection=()=>foundingCollectionPromise||(foundingCollectionP
   .catch(error=>{foundingCollectionPromise=null;throw error;}));
 
 export async function renderDiscoverSurface(root,{enter,openSurface}={}){
+  const foundingRooms=await loadFoundingRooms();
   const roomRows=foundingRooms.map(room=>
     '<article data-canonical-room="'+esc(room.id)+'"><i>'+esc(room.ordinal)+'</i><div><b>'+esc(room.name)+'</b><span>'+esc(themeLabel(room.theme))+' · '+esc(room.founding_slots)+' founding items</span></div><button class="btn-text" type="button" data-open-canonical-room="'+esc(room.id)+'">Open room →</button></article>'
   ).join('');
