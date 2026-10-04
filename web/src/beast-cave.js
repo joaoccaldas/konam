@@ -5,7 +5,7 @@
 // v3 (2026-10-04): an athlete room with no third-party brands in it and no door to any other room.
 // Lived-in rather than designed: block wall with a sprayed stencil and a chalk tally, bare bulbs,
 // worn rug, patchy foam. The 60-second interval is the product: a result you can share, a personal
-// best, and an empty slot for the athlete's own line that stays empty until he rides it.
+// best, and an empty slot for the athlete's own line that stays empty until the athlete rides it.
 import * as THREE from 'three';
 import { motes, lightShaft } from './roomkit.js';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
@@ -31,6 +31,12 @@ export function beastCaveWalkable(x, z, WALK) {
 }
 
 const SOURCE = 'Published race result';
+const Z = facts.zwift;                                               // Lionel on Zwift: public Zwift pages only, no partnership claimed
+// The TV can play a licensed clip (for example real Zwift footage supplied by Zwift or by Lionel's team).
+// Leave clip null until the rights exist; record the approval reference in the asset manifest.
+export const BEAST_TV = Object.freeze({ clip: null, rightsRef: null });
+const eventUpcoming = (now = Date.now()) => now < Date.parse(Z.event.starts) + 3 * 3600e3;
+const eventWhen = () => { const d = new Date(Z.event.starts); return `${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'}).toUpperCase()} · ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')} UTC`; };
 const loopFacts = facts.facts;
 
 export function buildBeastCave(ctx) {
@@ -132,11 +138,14 @@ export function buildBeastCave(ctx) {
       for(let k=0;k<14;k++){g.fillStyle=`rgba(0,0,0,${.05+r()*.08})`;g.fillRect(x+r()*bw,y+r()*bh,2+r()*5,2+r()*5);}}
     for(let k=0;k<7;k++){const x=r()*w,gr=g.createLinearGradient(0,h*.55,0,h);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(20,14,10,.35)');g.fillStyle=gr;g.fillRect(x,h*.55,20+r()*60,h*.45);}   // damp
     // stencil, sprayed: overspray halo, then the letters, then drips
-    g.save();g.translate(w*.5,h*.33);g.rotate(-.012);g.textAlign='center';g.textBaseline='middle';g.font=`900 ${h*.105}px ${FONT}`;g.letterSpacing=`${h*.012}px`;
+    g.save();g.translate(w*.6,h*.33);g.rotate(-.012);g.textAlign='center';g.textBaseline='middle';g.font=`900 ${h*.105}px ${FONT}`;g.letterSpacing=`${h*.012}px`;
     g.shadowColor='rgba(255,106,0,.55)';g.shadowBlur=h*.02;g.fillStyle='rgba(255,106,0,.88)';g.fillText('THE WORK',0,-h*.07);g.fillText('NOBODY SEES',0,h*.07);
     g.shadowBlur=0;for(let k=0;k<900;k++){g.fillStyle=`rgba(255,110,10,${r()*.25})`;g.fillRect((r()-.5)*w*.62,(r()-.5)*h*.36,1+r()*2,1+r()*2);}
     for(let k=0;k<11;k++){const x=(r()-.5)*w*.55,y=h*.11+r()*h*.02,len=h*(.02+r()*.07);g.fillStyle='rgba(230,95,10,.7)';g.fillRect(x,y,2.5,len);}
     g.restore();
+    // Lionel's hour, in white spray: 412 W held for sixty minutes in a Zwift race (Zwift, 2017)
+    g.save();g.translate(w*.17,h*.3);g.rotate(.02);g.textAlign='center';g.textBaseline='middle';g.shadowColor='rgba(240,236,228,.5)';g.shadowBlur=h*.015;g.fillStyle='rgba(240,236,228,.9)';
+    g.font=`900 ${h*.2}px ${FONT}`;g.fillText('412',0,-h*.02);g.font=`800 ${h*.055}px ${FONT}`;g.letterSpacing=`${h*.01}px`;g.fillText('WATTS · ONE HOUR',0,h*.13);g.restore();
     // chalk tally of sessions, grouped in fives, and a strip of tape holding nothing any more
     g.strokeStyle='rgba(235,230,220,.65)';g.lineWidth=4;g.lineCap='round';
     for(let grp=0;grp<9;grp++){const x0=w*.08+grp*w*.042,y0=h*.66;for(let k=0;k<4;k++){g.beginPath();g.moveTo(x0+k*16+r()*3,y0+r()*4);g.lineTo(x0+k*16+r()*3,y0+80+r()*5);g.stroke();}if(grp<8){g.beginPath();g.moveTo(x0-8,y0+64);g.lineTo(x0+60,y0+12);g.stroke();}}
@@ -146,11 +155,13 @@ export function buildBeastCave(ctx) {
   const blockWall=new THREE.Mesh(new THREE.PlaneGeometry(bwW,bwH),blockMat);blockWall.rotation.y=Math.PI;blockWall.position.set((bwX0+bwX1)/2,bwH/2,CAVE.z0-.115);blockWall.receiveShadow=true;group.add(blockWall);
   // printed sheets taped to the blocks: generic sessions, a calendar crossed off (no dates claimed)
   const sheetTex=(kind)=>canvasTex(256,340,(g,w,h)=>{g.fillStyle='#ece8df';g.fillRect(0,0,w,h);g.fillStyle='#2a2a2a';g.font=`600 16px ${FONT}`;
-    if(kind==='cal'){g.fillText('THIS MONTH',16,28);for(let d=0;d<35;d++){const x=16+(d%7)*32,y=48+Math.floor(d/7)*52;g.strokeStyle='#9a958c';g.strokeRect(x,y,30,48);if(d<26){g.strokeStyle='#c0392b';g.lineWidth=3;g.beginPath();g.moveTo(x+4,y+6);g.lineTo(x+26,y+42);g.moveTo(x+26,y+6);g.lineTo(x+4,y+42);g.stroke();g.lineWidth=1;}}}
+    if(kind==='quote'){g.fillStyle='#1d1d1d';g.font=`italic 400 24px ${SERIF}`;['“more like I was','outside than I did','when I was riding','outdoors”'].forEach((t,i)=>g.fillText(t,16,60+i*32));
+      g.font=`600 12px ${FONT}`;g.fillStyle='#555';g.fillText('— Lionel Sanders, on riding Zwift',16,212);g.fillText('Zwift interview, 2017',16,230);}
+    else if(kind==='cal'){g.fillText('THIS MONTH',16,28);for(let d=0;d<35;d++){const x=16+(d%7)*32,y=48+Math.floor(d/7)*52;g.strokeStyle='#9a958c';g.strokeRect(x,y,30,48);if(d<26){g.strokeStyle='#c0392b';g.lineWidth=3;g.beginPath();g.moveTo(x+4,y+6);g.lineTo(x+26,y+42);g.moveTo(x+26,y+6);g.lineTo(x+4,y+42);g.stroke();g.lineWidth=1;}}}
     else{g.fillText(kind==='a'?'SESSION A':'SESSION B',16,30);g.font=`500 13px ${FONT}`;const L=kind==='a'?['10′ easy','4 × 10′ steady','  3′ easy','10′ easy']:['15′ easy','6 × 4′ hard','  4′ easy','tempo run off the bike'];L.forEach((t,i)=>g.fillText(t,16,62+i*24));g.fillStyle='#8a847c';g.font=`500 10px ${FONT}`;g.fillText('example sessions · not an athlete plan',16,h-14);}
     g.fillStyle='rgba(225,215,170,.8)';g.fillRect(w*.35,0,w*.3,14);});
-  [['a',32.4,1.85,.04],['b',33.05,1.8,-.05],['cal',22.6,1.9,.02]].forEach(([k,x,y,rot])=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(.42,.56),new THREE.MeshStandardMaterial({map:sheetTex(k),roughness:.9}));m.rotation.set(0,Math.PI,rot);m.position.set(x,y,CAVE.z0-.13);group.add(m);});
-  info(blockWall,{eyebrow:'THE WALL',title:'The work nobody sees.',sub:'Sprayed stencil · chalk tally · taped sessions',text:'Every mark on this wall is the kind a training room collects: a tally of sessions, plans taped up and torn down. The sessions are generic examples, not anyone’s real plan.'});
+  [['a',32.4,1.85,.04],['b',33.05,1.8,-.05],['cal',22.6,1.9,.02],['quote',23.3,1.8,-.03]].forEach(([k,x,y,rot])=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(.42,.56),new THREE.MeshStandardMaterial({map:sheetTex(k),roughness:.9}));m.rotation.set(0,Math.PI,rot);m.position.set(x,y,CAVE.z0-.13);group.add(m);});
+  info(blockWall,{model:()=>wallCard(),eyebrow:'THE WALL',title:'The work nobody sees.',sub:'Sprayed stencil · chalk tally · taped sessions',text:'Every mark on this wall is the kind a training room collects: a tally of sessions, plans taped up and torn down. The sessions are generic examples, not anyone’s real plan.'});
   // bare bulbs on cords: the only "design" in the room
   const bulbs=[];
   for(const [bx,bz,len,top] of [[heroX+1.7,heroZ-.5,.55,CAVE.h],[heroX-3.6,heroZ+.6,.5,CAVE.h],[23.2,CAVE.z1+1.4,.45,CAVE.h],[13.0,-9.0,1.5,BROOM.h]]){
@@ -230,6 +241,9 @@ export function buildBeastCave(ctx) {
   const bezel=new THREE.Mesh(new THREE.BoxGeometry(.08,screenH+.18,screenW+.18),dark);at(bezel,BROOM.x1-.06,screenY,heroZ);
   const screen=new THREE.Mesh(new THREE.PlaneGeometry(screenW,screenH),new THREE.MeshBasicMaterial({map:screenTex,toneMapped:false,fog:false}));
   screen.rotation.y=-Math.PI/2;at(screen,BROOM.x1-.11,screenY,heroZ);
+  let tvVideo=null,tvVideoTex=null;
+  if(BEAST_TV.clip){ tvVideo=Object.assign(document.createElement('video'),{src:BEAST_TV.clip,muted:true,loop:true,playsInline:true,crossOrigin:'anonymous'});
+    tvVideoTex=new THREE.VideoTexture(tvVideo);tvVideoTex.colorSpace=THREE.SRGBColorSpace;tvVideo.play?.().catch(()=>{}); }
   const screenPool=lightPool(4.0,5.2,'#7aa7e0',lite?.06:.11);screenPool.position.set(BROOM.x1-2.2,.02,heroZ);group.add(screenPool);
   const screenRect=new THREE.RectAreaLight('#9fb6e8',lite?1.6:2.4,screenW,screenH);screenRect.position.set(BROOM.x1-.2,screenY,heroZ);screenRect.lookAt(BROOM.x1-5,1.4,heroZ);group.add(screenRect);
   // the screen in the polished floor: the same live texture, mirrored and fading away from the wall
@@ -268,11 +282,16 @@ export function buildBeastCave(ctx) {
     g.textAlign='right';g.fillStyle='#ff7a1a';g.font='700 30px Arial';g.fillText('QUEEN K → ENERGY LAB',w-36,62);
     g.fillStyle='rgba(235,230,220,.7)';g.font='500 20px Arial';g.fillText('KONA.M ORIGINAL ROUTE STUDY',w-36,92);
     if(band){g.fillStyle='#fff';g.font='700 34px Arial';g.fillText(`${band.label.toUpperCase()} · ${band.lo}–${band.hi} W`,w-36,138);}
+    else{const up=eventUpcoming();g.fillStyle='rgba(6,8,10,.72)';g.fillRect(w-470,116,434,up?96:66);g.fillStyle='#ff7a1a';g.font='800 26px Arial';
+      g.fillText(up?'RIDE WITH LIONEL ON ZWIFT':'LIONEL ON ZWIFT',w-52,152);g.fillStyle='#eee';g.font='600 20px Arial';
+      g.fillText(up?eventWhen():Z.level.value.toUpperCase()+' · WATOPIA',w-52,182);if(up){g.fillStyle='rgba(235,230,220,.7)';g.font='500 16px Arial';g.fillText("ZWIFT'S BIG WEEKEND · TAP THE SCREEN",w-52,204);}}
     g.textAlign='left';
     // power trace with the target band
     const gx=26,gy=h-150,gw=w-52,gh=96;g.fillStyle='rgba(6,8,10,.62)';g.fillRect(gx,gy,gw,gh);
     const tr=ride?ride.iv.state.trace:ghost.trace,Wmax=480,Y=v=>gy+gh-(Math.min(Wmax,v)/Wmax)*gh;
     if(ride){for(const b of [0,1,2,3]){const bb=[[0,15,240,280],[15,30,280,320],[30,45,310,350],[45,60,340,385]][b];g.fillStyle='rgba(255,122,26,.18)';g.fillRect(gx+bb[0]/INTERVAL_SECONDS*gw,Y(bb[3]),(bb[1]-bb[0])/INTERVAL_SECONDS*gw,Y(bb[2])-Y(bb[3]));}}
+    g.setLineDash([10,8]);g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=2;g.beginPath();g.moveTo(gx,Y(412));g.lineTo(gx+gw,Y(412));g.stroke();g.setLineDash([]);
+    g.fillStyle='rgba(255,255,255,.85)';g.font='700 16px Arial';g.fillText("412 W · LIONEL'S HOUR, ZWIFT RACE 2017",gx+8,Y(412)-6);
     g.strokeStyle='#ff7a1a';g.lineWidth=3;g.beginPath();
     tr.forEach((p,i)=>{const x=ride?gx+p.t/INTERVAL_SECONDS*gw:gx+i/Math.max(1,tr.length-1)*gw,y=Y(p.w);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();
     // elevation strip with position
@@ -494,16 +513,25 @@ export function buildBeastCave(ctx) {
       actions:src(g.sources)};
   }
   function screenCard(act){
-    return {kind:'beast',eyebrow:'SCIENCE LAB',title:'Queen K, on loop.',kicker:'Original route study · live power trace',
-      lede:'Out along the Queen K toward the Energy Lab: ocean on one side, lava on the other, one road. The trace is whatever the person in the saddle is doing right now.',
-      facts:[{cls:'G',text:'Route art, HUD and terrain are drawn by KONA.m. No third-party training-app screens, routes or marks are reproduced.'}],
-      actions:[{label:'Ride it →',primary:true,onClick:()=>act.ride()},{label:'Keep walking',onClick:()=>act.close()}]};
+    const up=eventUpcoming();
+    return {kind:'beast',eyebrow:'THE SCREEN · WHERE THE MILES HAPPEN',title:up?'Ride with Lionel on Zwift.':'Lionel on Zwift.',kicker:up?`${Z.event.title} · ${eventWhen()}`:`${Z.level.value} · favourite world: Watopia`,
+      lede:'Lionel trains indoors on Zwift. Riding Watopia, Lionel recognised Kona’s volcanic landscape before racing there. The screen here runs an original Queen K route study with a live power trace — and the dashed line is Lionel’s hour: 412 W.',
+      stats:[{value:Z.hour.value,label:'Lionel’s hour · 2017'},{value:Z.level.value.replace('Level ','L'),label:'Zwift level'},{value:'Watopia',label:'favourite world'}],
+      facts:[{cls:'P',text:`${Z.hour.line} (Zwift, ${Z.hour.year})`},{cls:'P',text:`${Z.watopia.line} (Zwift, ${Z.watopia.year})`},{cls:'P',text:`${Z.level.line} (Zwift)`},
+        {cls:'G',text:'The screen graphics are drawn by KONA.m; no Zwift footage or UI is reproduced. A licensed clip can be shown here once rights exist.'},{cls:'I',text:Z.note}],
+      actions:[{label:up?'Join the ride on Zwift ↗':'Lionel on Zwift ↗',primary:true,href:up?Z.event.url:Z.hour.sources[0]},{label:'Ride the interval here →',onClick:()=>act.ride()},{label:'Lionel’s channel ↗',href:Z.channel.url}]};
+  }
+  function wallCard(){
+    return {kind:'beast',eyebrow:'THE WALL',title:'412 watts. One hour.',kicker:'Sprayed in white, next to the work nobody sees',
+      lede:'The number on the block wall is Lionel’s: 412 watts held for an hour in a Zwift race. The taped sheet beside the TV is in Lionel’s words.',
+      facts:[{cls:'P',text:`${Z.hour.line} (Zwift, ${Z.hour.year})`},{cls:'P',text:`“${Z.quote.text}.” — ${Z.quote.context} (Zwift, ${Z.quote.year})`},{cls:'G',text:'Stencils, tally and generic session sheets are KONA.m set dressing, not Lionel’s plans.'}],
+      actions:[...Z.hour.sources.map(u=>({label:'Source ↗',href:u}))]};
   }
   function machineCard(act){
     return {kind:'beast',eyebrow:'THE MACHINE · EMPTY SADDLE',title:'The place where excuses get boring.',kicker:'Speedmax CFR · direct-drive trainer · two fans',
       lede:'Nobody is here. That is the point: the saddle is open. Climb on and hold one 60-second interval inside a moving power band — tap or hold to push.',
       stats:[{value:'60 s',label:'interval'},{value:'4',label:'power bands'},{value:'240–385',label:'watts'}],
-      facts:[{cls:'I',text:'The bike is the KONA.m Speedmax CFR study — not presented as Lionel Sanders’ race build.'},{cls:'G',text:'Trainer, fans and room are original KONA.m geometry.'}],
+      facts:[{cls:'P',text:`${Z.music.line} (Zwift, ${Z.music.year}) — so the ride here has a pulse: an original synth beat, not any artist’s track.`},{cls:'I',text:'The bike is the KONA.m Speedmax CFR study — not presented as Lionel Sanders’ race build.'},{cls:'G',text:'Trainer, fans and room are original KONA.m geometry.'}],
       actions:[{label:'Ride →',primary:true,onClick:()=>act.ride()},{label:'Keep walking',onClick:()=>act.close()}]};
   }
   // ---------------------------------------------------------------- the visitor in the saddle
@@ -513,8 +541,8 @@ export function buildBeastCave(ctx) {
   function introCard(act){
     return {kind:'beast',eyebrow:'AN INDEPENDENT ROOM · LIONEL SANDERS',title:'The work nobody sees.',kicker:'Not a trophy room.',
       lede:'A training room with nobody in it. Five published results on the wall, one empty saddle, one 60-second interval. Take the saddle, or walk the room first.',
-      facts:[{cls:'G',text:'An independent KONA.m editorial room. Not affiliated with, endorsed by or sponsored by Lionel Sanders or any brand.'},{cls:'P',text:'Every result on the wall is published and linked to its source.'}],
-      actions:[{label:'Take the saddle →',primary:true,onClick:()=>act.ride()},{label:'Walk the room',onClick:()=>act.close()}]};
+      facts:[{cls:'P',text:`Lionel trains indoors on Zwift and has reached ${Z.level.value.toLowerCase()} (Zwift).`},{cls:'G',text:'An independent KONA.m editorial room. Not affiliated with, endorsed by or sponsored by Lionel Sanders, Zwift or any brand.'},{cls:'P',text:'Every result on the wall is published and linked to its source.'}],
+      actions:[{label:'Take the saddle →',primary:true,onClick:()=>act.ride()},{label:'Walk the room',onClick:()=>act.close()},{label:'Lionel’s channel ↗',href:Z.channel.url}]};
   }
   // a 1080×1350 card of the interval just ridden, for the share sheet
   function resultImage(res,best){
@@ -529,6 +557,7 @@ export function buildBeastCave(ctx) {
     const gx=90,gy=650,gw=W-180,gh=300,Y=v=>gy+gh-(Math.min(480,v)/480)*gh;
     g.fillStyle='rgba(255,255,255,.04)';g.fillRect(gx,gy,gw,gh);
     for(const [a,b,lo,hi] of [[0,15,240,280],[15,30,280,320],[30,45,310,350],[45,60,340,385]]){g.fillStyle='rgba(255,122,26,.2)';g.fillRect(gx+a/60*gw,Y(hi),(b-a)/60*gw,Y(lo)-Y(hi));}
+    g.setLineDash([16,12]);g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=3;g.beginPath();g.moveTo(gx,Y(412));g.lineTo(gx+gw,Y(412));g.stroke();g.setLineDash([]);g.fillStyle='rgba(255,255,255,.8)';g.font=`700 24px ${FONT}`;g.fillText("412 W · LIONEL'S HOUR (ZWIFT RACE, 2017)",gx+10,Y(412)-10);
     g.strokeStyle='#ff7a1a';g.lineWidth=6;g.lineJoin='round';g.beginPath();lastTrace.forEach((p,i)=>{const x=gx+p.t/60*gw,y=Y(p.w);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();
     g.fillStyle='#eee5d9';g.font=`700 44px ${FONT}`;
     [[`${res.avgWatts} W`,'average'],[`${res.bestStreak} s`,'best streak'],[`${best} s`,'personal best']].forEach(([v,l],i)=>{const x=90+i*320;g.fillText(v,x,1050);g.fillStyle='#8b8178';g.font=`600 26px ${FONT}`;g.fillText(l.toUpperCase(),x,1090);g.fillStyle='#eee5d9';g.font=`700 44px ${FONT}`;});
@@ -605,6 +634,7 @@ export function buildBeastCave(ctx) {
       rimL.intensity=(lite?0:3.2)*(1+heat*1.5);
       screenGlow.color.setRGB(.44+.5*heat,.6-.1*heat,.85-.5*heat);
       if(band&&!reduce) gapLight.intensity=(lite?1.5:2.6)*(1+.2*Math.sin(t*3));
+      if(tvVideoTex){const want=ride?screenTex:tvVideoTex;if(screen.material.map!==want){screen.material.map=want;screen.material.needsUpdate=true;}}
       if(!this._sc||t-this._sc>(ride?.08:.15)){this._sc=t;drawScreen(t);}
       return { power:p, heat, riding:!!ride };
     }

@@ -67,3 +67,16 @@ test('Beast Cave facts are sourced and the Zwift card stays unofficial',()=>{
   assert.equal(facts.gap.value,'2:27');
   assert.doesNotMatch(room,/affiliate[^']*href|impact\.com/i);
 });
+
+test('Lionel-on-Zwift content is sourced from public Zwift pages and claims no partnership',async()=>{
+  const facts=JSON.parse(fs.readFileSync(new URL('../../pitch/lionel-sanders/career-facts-v1.json',import.meta.url),'utf8'));
+  const z=facts.zwift;
+  for(const k of ['hour','quote','watopia','level','event','channel','music']) assert.ok(z[k]?.sources?.length&&z[k].sources.every(u=>/^https:\/\//.test(u)),k);
+  assert.match(z.note,/no sponsorship or partnership is claimed/);
+  assert.match(room,/Not affiliated with, endorsed by or sponsored by Lionel Sanders, Zwift or any brand/);
+});
+
+test('the TV only plays a clip when a rights reference is recorded',async()=>{
+  const { BEAST_TV }=await import('../src/beast-cave.js');
+  assert.ok(BEAST_TV.clip===null||!!BEAST_TV.rightsRef,'a TV clip needs a rights reference');
+});

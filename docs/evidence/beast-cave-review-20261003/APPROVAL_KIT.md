@@ -17,6 +17,8 @@
 | "Lionel's line" stays empty until you ride it | The result card says so in plain words. No ghost or estimate is ever invented |
 | The bike is not presented as yours | Speedmax CFR study, labelled "not presented as Lionel Sanders' race build" |
 | No copied training-app UI or route art | Original route study, drawn in code |
+| No Zwift footage on the TV without a licence | `BEAST_TV.clip` stays `null` unless it ships with a `rightsRef`; a test enforces this |
+| No claimed partnership with Zwift | Zwift appears only as Lionel's public training platform, with sourced facts and links out |
 
 ---
 
@@ -30,6 +32,20 @@
 | ADAPT · 2017 | IRONMAN World Championship, Kona · 2nd · 8:04:07 | "40 minutes faster on the same course, one year on." | Wikipedia: 2017 IRONMAN WC; TRI247 race report |
 | RETURN · 2020 | Canadian hour record, 23 October · 51.304 km | "One hour, as far as possible." | Wikipedia: Lionel Sanders |
 | THE GAP (sculpture) | Kona 2017: 8:04:07 vs Patrick Lange 8:01:40 → **2:27** | "Almost is still information." | Wikipedia: 2017 IRONMAN WC; TRI247 |
+
+### Lionel on Zwift (screen, block wall, taped sheet)
+
+| Where | On-screen line | Source |
+|---|---|---|
+| Block wall stencil + dashed line on the TV | "412 / WATTS · ONE HOUR", "412 W · LIONEL'S HOUR, ZWIFT RACE 2017" | Zwift news, 2017: *Zwifters at Kona: Lionel Sanders* |
+| Taped sheet by the TV | "more like I was outside than I did when I was riding outdoors" (Lionel Sanders, on riding Zwift) | Same Zwift feature, 2017 |
+| Screen card | Zwift level 100, favourite world Watopia (the volcanic landscape recognised before Kona) | Same Zwift feature |
+| TV banner (until the event ends) | "RIDE WITH LIONEL ON ZWIFT · TUE 6 OCT · 23:00 UTC · ZWIFT'S BIG WEEKEND", with a link to the official event page | zwift.com/events/tag/zwiftsbigweekend/view/5127842 |
+| TV banner (after the event) | "LIONEL ON ZWIFT · LEVEL 100 · WATOPIA" | As above |
+
+**Real Zwift animation on the TV.** The screen has a video slot ready (`BEAST_TV`). It plays only a clip supplied or licensed by Zwift or by your team, and it records the licence reference. Until then, the TV shows KONA.m's own drawn route study.
+
+**Please confirm:** the 412 W figure and the quote, and whether you want the Zwift event link.
 
 The loop labels (EXPERIMENT → MISS → INSPECT → ADAPT → RETURN) are our editorial reading, and the wall says so: *"A KONA.m reading, not the athlete's words."*
 
@@ -48,7 +64,8 @@ The loop labels (EXPERIMENT → MISS → INSPECT → ADAPT → RETURN) are our e
 
 **Object cards** (title / line):
 - **The machine:** "The place where excuses get boring." The bike is the KONA.m Speedmax CFR study, not presented as your race build.
-- **Screen:** "Queen K, on loop." Original route study, with no third-party training-app screens.
+- **Screen:** "Ride with Lionel on Zwift." / "Lionel on Zwift." Original route study with a live power trace and the 412 W line. No Zwift footage or UI is reproduced.
+- **Block wall:** "412 watts. One hour."
 - **Fans:** "Wind you have to bring yourself."
 - **Whiteboard:** "Written down, then done." Generic session, *"not an athlete's actual plan."*
 - **Taped sheets and calendar:** generic sessions, *"example sessions · not an athlete plan"*, no dates claimed.
@@ -92,3 +109,4 @@ The full machine-extracted list lives in `web/src/beast-cave.js`. Every string t
 2. Your edits to the five captions and the Gap.
 3. Optional: one ride for "Lionel's line".
 4. Optional: one link out (channel or site).
+5. Optional: a Zwift clip for the TV, or an introduction to Zwift if you want it there.
