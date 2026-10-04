@@ -251,3 +251,13 @@ html.phone-fit #card{left:8px;right:auto;width:calc((100vw - 16px)/var(--fit))!i
   .world-more-menu{top:max(60px,calc(48px + env(safe-area-inset-top)));right:max(10px,env(safe-area-inset-right));left:auto;width:min(220px,calc(100dvw - 20px))}
   .world-more-menu button{min-height:48px}
 }
+
+@media (max-width:760px), (max-height:480px){
+  .ride-hud{bottom:calc(10px + var(--safe-b));padding:10px 12px}
+  .ride-hud__hint{display:none}
+}
+@media (max-height:480px){
+  .ride-hud{left:auto;right:max(12px,env(safe-area-inset-right));transform:none;width:min(340px,46vw)}
+  .btn.ride-hud__push{min-height:46px}
+  .btn.ride-hud__quit{min-height:34px}
+}
