@@ -41,5 +41,5 @@ test('Beast Cave candidate is canonical Athlete Rooms child with local implement
 test('Beast Cave procedural material is deterministic and avoids copied UI',()=>{
   assert.match(room,/seededRandom/);
   assert.doesNotMatch(room,/Math\.random/);
-  assert.match(room,/original KONA\.m training visualization, not a copied Zwift screen/);
+  assert.match(room,/original KONA\.m route study[\\s\\S]*No third-party training-app screens or route art are reproduced/);
 });
