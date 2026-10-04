@@ -335,3 +335,21 @@ body.map-open #joy{opacity:0;pointer-events:none}
 .world-more-menu[hidden]{display:none}
 .world-more-menu button{min-height:44px;padding:0 12px;border:0;border-radius:10px;background:transparent;color:#12181d;text-align:left;font:600 13px var(--brand-font-ui,system-ui);cursor:pointer}
 .world-more-menu button:is(:hover,:focus-visible){background:rgba(18,24,29,.08)}
+
+/* Beast Cave review: the 60-second interval HUD */
+.ride-hud{position:fixed;left:50%;bottom:calc(22px + var(--safe-b));transform:translateX(-50%);z-index:16;width:min(520px,calc(100vw - 32px));padding:14px 16px 12px;border-radius:18px;background:rgba(10,9,9,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--paper);font-family:var(--sans);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.ride-hud[hidden]{display:none}
+.ride-hud__top{display:flex;align-items:baseline;gap:12px}
+.ride-hud__top small{flex:1;font:700 10px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#ffb36b}
+.ride-hud__top b{font:700 30px/1 var(--sans);font-variant-numeric:tabular-nums}
+.ride-hud__top span{min-width:2.2em;text-align:right;font:600 16px/1 var(--sans);font-variant-numeric:tabular-nums;opacity:.7}
+.ride-hud__bar{position:relative;height:12px;margin:10px 0 12px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden}
+.ride-hud__bar i{position:absolute;top:0;bottom:0}
+#rideTarget{background:rgba(255,122,26,.45);transition:left .4s ease,width .4s ease}
+#rideNeedle{width:4px;margin-left:-2px;background:#fff;border-radius:2px}
+.ride-hud.in #rideNeedle{background:#ff7a1a;box-shadow:0 0 12px #ff7a1a}
+.btn.ride-hud__push,.btn.ride-hud__push:hover{width:100%;min-height:56px;font-size:15px;touch-action:none;user-select:none;-webkit-user-select:none;background:var(--brand-sunrise,#ff6a00);color:#140c06}
+.btn.ride-hud__push.on{transform:scale(.98);background:#ff8a33}
+.btn.ride-hud__quit,.btn.ride-hud__quit:hover{width:100%;margin-top:8px;min-height:40px;color:var(--paper);background:transparent;border-color:rgba(255,255,255,.18)}
+.ride-hud__hint{margin:8px 0 0;font-size:11px;line-height:1.4;opacity:.62;text-align:center}
+body.riding #rail,body.riding #joy,body.riding #nearby{display:none}
