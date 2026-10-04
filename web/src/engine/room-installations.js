@@ -389,25 +389,31 @@ function norwegian(ctx) {
     [.16,.08,1.00,cx+.93,Y+.055,z]
   ]),blackSteel);
   const runRollers=new THREE.InstancedMesh(new THREE.CylinderGeometry(.055,.055,.46,18),steel,laneZ.length*2);
+  const flywheels=new THREE.InstancedMesh(new THREE.CylinderGeometry(.35,.35,.17,36),blackSteel,laneZ.length);
+  const trainerAxles=new THREE.InstancedMesh(new THREE.CylinderGeometry(.065,.065,.34,14),steel,laneZ.length);
+  const laneBottles=new THREE.InstancedMesh(new THREE.CylinderGeometry(.045,.052,.34,16),glass,laneZ.length);
   {
     const d=new THREE.Object3D();let n=0;
     for(const z of laneZ)for(const dx of [-.68,.68]){
       d.position.set(cx-2.35+dx,Y+.13,z);d.rotation.set(Math.PI/2,0,0);d.updateMatrix();
       runRollers.setMatrixAt(n++,d.matrix);
     }
-    runRollers.instanceMatrix.needsUpdate=true;rg.add(runRollers);
+    laneZ.forEach((z,i)=>{
+      d.position.set(cx+.68,Y+.43,z);d.rotation.set(0,0,Math.PI/2);d.updateMatrix();flywheels.setMatrixAt(i,d.matrix);
+      d.position.set(cx+.68,Y+.43,z);d.rotation.set(0,0,Math.PI/2);d.updateMatrix();trainerAxles.setMatrixAt(i,d.matrix);
+      d.position.set(cx-.02,Y+.25,z-.34);d.rotation.set(0,0,0);d.updateMatrix();laneBottles.setMatrixAt(i,d.matrix);
+    });
+    runRollers.instanceMatrix.needsUpdate=flywheels.instanceMatrix.needsUpdate=trainerAxles.instanceMatrix.needsUpdate=laneBottles.instanceMatrix.needsUpdate=true;
+    rg.add(runRollers,flywheels,trainerAxles,laneBottles);
+    mark(flywheels,'Direct-drive trainers','Generic equipment studies. No athlete-specific trainer claim is attached.');
   }
+  mergedBoxes(laneZ.map((z,i)=>[.40,.025,.33,cx-.87,Y+.31,z+.34,0,.08*(i-1),0]),linen);
 
   laneZ.forEach((z,i)=>{
 
     contactShadow(cx-.20,z,4.3,.72,.42);
 
-    // Trainer: flywheel, axle, feet, support.
-    const fly=mark(new THREE.Mesh(new THREE.CylinderGeometry(.35,.35,.17,36),blackSteel),
-      'Direct-drive trainer','Generic equipment study. No athlete-specific trainer claim is attached.');
-    fly.rotation.z=Math.PI/2;put(fly,cx+.68,Y+.43,z);
-    const axle=new THREE.Mesh(new THREE.CylinderGeometry(.065,.065,.34,14),steel);
-    axle.rotation.z=Math.PI/2;put(axle,cx+.68,Y+.43,z);
+    // Trainer flywheels/axles are shared instanced hardware; lane supports stay batched.
     // Compact run deck with shared instanced rollers and an individual inspectable deck.
     const deck=mark(box(1.62,.10,.54,cx-2.35,Y+.09,z,rubber),
       'Run deck','Compact treadmill-style deck: the lane reads as a complete training station rather than a bike pedestal.');
@@ -432,10 +438,7 @@ function norwegian(ctx) {
     mark(fallbackSteel,'Canonical bike slot','The room reserves a canonical bike position, but no athlete-specific bike or livery is assigned without a verified source.');
     [fallbackSteel,fallbackFrame].forEach(o=>{o.userData.nor3BikeFallback=true;});
 
-    // Accessories and signs of use.
-    const bottle=new THREE.Mesh(new THREE.CylinderGeometry(.045,.052,.34,16),glass);
-    put(bottle,bx+.20,Y+.25,z-.34);
-    const towel=box(.40,.025,.33,bx-.65,Y+.31,z+.34,linen);towel.rotation.y=.08*(i-1);
+    // Accessories and signs of use. Bottles and towels are shared/merged above.
     const identity=ring(.11,.014,i===1?lime:warm,bx-1.10,Y+.16,z,Math.PI/2);
     const plaque=textPanel('0'+(i+1),.36,.13,i===1?'#c7f300':'#ff8b55');plaque.position.set(left+.02,Y+2.70,z-.075);plaque.rotation.y=Math.PI/2;rg.add(plaque);
     mark(identity,['Lane 01','Lane 02','Lane 03'][i],
