@@ -68,6 +68,20 @@ try{
  const {context,page,errors}=await pageFor();
  await page.evaluateOnNewDocument(()=>localStorage.setItem('speedmax.passport.v1',JSON.stringify({v:1,discoveries:['cfr'],visits:3,pose:{x:0,z:3}})));
  await page.goto(new URL('Experiences.html',base).href,{waitUntil:'networkidle0'});await page.waitForFunction(()=>window.__exp?.passport);
+ assert.ok(await page.$('link[href="web/styles/passport.css"]'),'Passport stylesheet must be external and page-scoped');
+ assert.equal(await page.$('#ppStyle'),null,'Passport must not inject a runtime stylesheet');
+ await page.click('#ppBtn');await page.waitForFunction(()=>!document.querySelector('#ppSheet')?.hidden);
+ const passportUi=await page.evaluate(()=>({
+   sheet:(()=>{const r=document.querySelector('#ppSheet .pp')?.getBoundingClientRect();return r&&{width:r.width,height:r.height,left:r.left,right:r.right,top:r.top,bottom:r.bottom};})(),
+   close:(()=>{const r=document.querySelector('#ppSheet .x')?.getBoundingClientRect();return r&&{width:r.width,height:r.height};})(),
+   choices:[...document.querySelectorAll('#ppSheet .emo button')].map(e=>{const r=e.getBoundingClientRect();return {width:r.width,height:r.height};}),
+   font:getComputedStyle(document.querySelector('#ppSheet')).fontFamily,
+ }));
+ assert.ok(passportUi.sheet&&passportUi.sheet.left>=0&&passportUi.sheet.right<=390&&passportUi.sheet.top>=0&&passportUi.sheet.bottom<=844,'Passport sheet must fit the phone');
+ assert.ok(passportUi.close.width>=48&&passportUi.close.height>=48,'Passport close target must be at least 48px');
+ assert.ok(passportUi.choices.length&&passportUi.choices.every(r=>r.width>=48&&r.height>=48),'Passport avatar choices must be at least 48px');
+ assert.match(passportUi.font,/Manrope/i);
+ await page.click('#ppSheet .x');
  const experience=await page.evaluate(()=>{window.__exp.passport.stamp('part:launch-regression','Inspected component',5);return window.__exp.passport.state;});
  assert.ok(experience.discoveries.includes('cfr'));assert.ok(experience.stamps['part:launch-regression']);
  await page.goto(base,{waitUntil:'networkidle0'});await page.click('#buildSelf');await page.waitForFunction(()=>document.querySelector('#konaPanelTitle')?.textContent==='Now');await page.evaluate(async()=>{await window.__konaShell.explore();});await page.click('[data-enter-world]');
