@@ -113,8 +113,8 @@ const views={
   protocol:{target:[2.25,1.38,.05],yaw:.68,pitch:-.06,distance:small?3.85:4.7,title:'Protocol Table',copy:'A working bench with analyzer, instanced samples, paper protocols and a physical data wall. No fake holograms.'},
   altitude:{target:[3.05,1.40,-1.90],yaw:.62,pitch:-.03,distance:4.25,title:'Environment Bay',copy:'Framed low-iron glass, internal haze, controls and cool reflections make the environmental chamber feel physically present.'},
   vault:{target:[2.35,2.35,2.78],yaw:.42,pitch:.02,distance:4.5,title:'Podium Vault',copy:'Abstract result objects sit inside a dark shadow-gap cabinet. Achievement is present without copying medals or trophies.'},
-  fjord:{target:[3.18,.88,.10],yaw:-1.04,pitch:-.055,distance:4.65,title:'Fjord Relief',copy:'Layered ridges catch a cold grazing light so the Norwegian landscape reads as physical memory, not borrowed imagery.'},
-  kona:{target:[5.74,2.48,.02],yaw:-1.22,pitch:-.015,distance:4.85,title:'Kona Line',copy:'The cold performance room resolves into one warm destination signal: Kona ahead, never wallpaper.'},
+  fjord:{target:[6.10,1.55,.02],yaw:-.66,pitch:-.035,distance:4.25,title:'Fjord Relief',copy:'Wall-mounted contour ribs catch a cold grazing light so the Norwegian landscape reads as physical memory, not borrowed imagery.'},
+  kona:{target:[6.34,2.96,.02],yaw:-.52,pitch:-.020,distance:3.75,title:'Kona Line',copy:'The cold performance room resolves into one warm physical route: Kona ahead, never wallpaper.'},
   recovery:{target:[.95,.70,-2.55],yaw:-.58,pitch:-.10,distance:4.75,title:'Recovery Corner',copy:'Bench, rollers and bottles are intentionally ordinary. Tiny signs of use are what stop the room feeling like a sterile render.'}
 };
 const trailerOrder=['overview','lanes','protocol','altitude','vault','fjord','recovery','kona'];
