@@ -3,6 +3,7 @@ import config from './public-config.json' with {type:'json'};
 const cache=new Map<string,{at:number,value:any}>(),rates=new Map<string,{at:number,count:number}>();
 let active=0;
 const cors={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'apikey, content-type','Access-Control-Allow-Methods':'GET, POST, OPTIONS'};
+const safeId=(value:any)=>/^[a-z0-9-]{1,64}$/.test(String(value||''))?String(value):'unknown';
 export async function handler(req:Request){
  const url=new URL(req.url);
  const json=(value:any,status=200)=>new Response(JSON.stringify(value),{status,headers:{...cors,'Content-Type':'application/json','Cache-Control':'no-store'}});
@@ -27,13 +28,20 @@ export async function handler(req:Request){
   // Bounded groups: slow publishers cannot fan out unbounded network work.
   for(let n=0;n<input.sources.length;n+=3){
    results.push(...await Promise.all(input.sources.slice(n,n+3).map(async(entry:any)=>{
-    const value=typeof entry==='string'?entry:entry?.url,kind=entry?.kind==='kona'?'kona':'news';let saved:any=null;
+    const value=typeof entry==='string'?entry:entry?.url;
+    const kind=entry?.kind==='kona'?'kona':entry?.kind==='video'?'video':'news';
+    const requestedId=safeId(entry?.id);
+    let saved:any=null;
     try{
      const resolved=await resolveFeed(value),key=resolved+'|'+kind,hit=cache.get(key);
      saved=hit?.value;let result=hit&&now-hit.at<10*60000?hit.value:null;
      if(!result){result=parseFeed(await fetchPublic(resolved),resolved,kind);cache.set(key,{at:now,value:result});if(cache.size>128)cache.delete(cache.keys().next().value!);}
-     return {...result,requested_url:value};
-    }catch(error:any){if(saved)return {...saved,source:{...saved.source,status:'stale'},requested_url:value};console.warn('companion provider failed',error.name,String(error.message).replace(/https?:\/\/\S+/g,'[url]').slice(0,150));return {requested_url:value,error:error.message?.startsWith('This publisher')?error.message:'Could not read this source. Check the public RSS or YouTube channel URL and try again.'};}
+     return {...result,requested_id:requestedId,requested_url:value};
+    }catch(error:any){
+     if(saved)return {...saved,source:{...saved.source,status:'stale'},requested_id:requestedId,requested_url:value};
+     console.warn('companion provider failed',requestedId,error.name,String(error.message).replace(/https?:\/\/\S+/g,'[url]').slice(0,150));
+     return {requested_id:requestedId,requested_url:value,error:error.message?.startsWith('This publisher')?error.message:'Could not read this source. Check the public RSS or YouTube channel URL and try again.'};
+    }
    })));
   }
   const sources=results.filter(r=>r.source).map(r=>r.source),items=[...new Map(results.flatMap(r=>r.items||[]).map(i=>[i.url,i])).values()].sort((a:any,b:any)=>Date.parse(b.published_at)-Date.parse(a.published_at));
