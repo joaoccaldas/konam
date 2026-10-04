@@ -86,6 +86,12 @@ export function buildBeastCave(ctx) {
     const joist=new THREE.MeshStandardMaterial({color:'#4a3a2c',roughness:.85,envMapIntensity:.05});
     const jI=new THREE.InstancedMesh(new THREE.BoxGeometry(.06,.2,CAVE.z0-CAVE.z1-.1),joist,Math.floor((CAVE.x1-CAVE.x0)/.6)),jd=new THREE.Object3D();
     for(let k=0;k<jI.count;k++){jd.position.set(CAVE.x0+.3+k*.6,CAVE.h-.1,heroZ);jd.updateMatrix();jI.setMatrixAt(k,jd.matrix);}jI.castShadow=!lite;group.add(jI);
+    // gallery side of the cave wall: two warm washes either side of the doorway so the reveal has a frame
+    const washTex=canvasTex(128,512,(g,w,h)=>{const gr=g.createLinearGradient(0,h,0,0);gr.addColorStop(0,'rgba(255,170,100,.9)');gr.addColorStop(.6,'rgba(255,150,80,.25)');gr.addColorStop(1,'rgba(255,140,70,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);});
+    for(const z of [CDOOR.z1+1.1,CDOOR.z0-1.1]){const wsh=new THREE.Mesh(new THREE.PlaneGeometry(1.6,3.6),new THREE.MeshBasicMaterial({map:washTex,transparent:true,opacity:lite?.18:.26,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false}));
+      wsh.rotation.y=-Math.PI/2;wsh.position.set(CAVE.x0-.11,1.8,z);group.add(wsh);
+      const up=new THREE.PointLight('#ffb070',lite?2:3.5,5,1.8);up.position.set(CAVE.x0-.6,.25,z);group.add(up);
+      const can=new THREE.Mesh(new THREE.CylinderGeometry(.08,.1,.12,16),dark);can.position.set(CAVE.x0-.4,.06,z);group.add(can);}
     const lintel=new THREE.Mesh(new THREE.BoxGeometry(.24,.06,CDOOR.z1-CDOOR.z0+.1),new THREE.MeshBasicMaterial({color:'#ff6a00',toneMapped:false}));lintel.position.set(CAVE.x0-.12,CDOOR.h+.03,(CDOOR.z0+CDOOR.z1)/2);group.add(lintel); }
   // west wall, sharing the hall glass line, with the doorway cut out
   wall(.28,BROOM.h,BROOM.z0-BDOOR.z1,BROOM.x0-.14,BROOM.h/2,(BROOM.z0+BDOOR.z1)/2);

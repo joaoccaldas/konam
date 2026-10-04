@@ -115,3 +115,21 @@ Trainer, drum fan and curved treadmill were generated with Higgsfield (gpt_image
 - Fronds from the hall palm at (6.1, −11.8) poke through the west wall near the Gap.
 - The artworld Secret Collection room (x 35–55, z −15.5…−44) overlaps Breitling's east glass strip (x 35–36.5). This was there before this work; Breitling's footprint is unchanged.
 - Public URL: GitHub Pages publishes `main` only after certification, so the room needs a merge to be public.
+
+---
+
+# v3 → v4: athlete-safe, lived-in, then intimate (2026-10-04)
+
+Evidence: `v4/before-after.png`, `v4/progression.png`, `v4/{approach,reveal,hero,wall,gear,phone-arrival}.png`.
+
+- **v3**: removed the Breitling link door and the Zwift price card (tests now forbid them). Replaced the neon with a painted block wall (sprayed stencil, chalk tally, taped generic sessions). Added bare bulbs, duct, a worn rug, patchy foam and clutter. Added a calm arrival card, a shareable result image, a personal best through `storage.js`, an explicit empty "Lionel's line" slot, and `APPROVAL_KIT.md`.
+- **v4**: the 28×14 m, 5.4 m-high box became a tall approach gallery (career wall, the Gap, story wall). A lit doorway with an ember lintel leads into a 14×9 m cave with a 3 m joisted ceiling, foam-lined walls and the bike 6 m from a 4.4 m screen. Everything else is within reach.
+- **Bug caught by the render pipeline, not by unit tests**: in v3 a helper was used before it was defined, which crashed the 3D world on the review link. Fixed in `fix(beast-cave): declare info()…`.
+
+## Why it is still not a definite yes
+
+1. **Consent.** The room uses his name and career. Only Lionel and his team can turn this into a yes, by approving or replacing the name and the five captions (see `APPROVAL_KIT.md`).
+2. **Reach.** It is unmerged and review-only. The public app gates 3D behind onboarding and progression, so a pitch link would need to land straight in the room after merge.
+3. **It is not his cave.** The room is a convincing *pain cave*, not *his*. Real authenticity needs his input (what the real room looks like, what is on the wall) or it stays generic.
+4. **"Lionel's line" is empty by design.** The strongest hook, racing his actual interval, needs one ride from him.
+5. **Fidelity.** The generated trainer, fans and treadmill are good at room distance and soft up close. The bike is a Speedmax study, not his machine. The phone frame rate is unmeasured on real devices (all evidence here was rendered in software).
