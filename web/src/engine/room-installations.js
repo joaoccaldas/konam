@@ -282,8 +282,10 @@ function norwegian(ctx) {
   const oak=new THREE.MeshStandardMaterial({color:'#2b190f',roughness:.84});
   const paper=new THREE.MeshStandardMaterial({color:'#d8d0c3',roughness:.92});
   const linen=new THREE.MeshStandardMaterial({color:'#a8a29a',roughness:.98});
-  const glass=new THREE.MeshPhysicalMaterial({color:'#8fb2bb',roughness:.22,transmission:lite?.12:.34,transparent:true,opacity:lite?.28:.42,depthWrite:false,envMapIntensity:.72});
-  const frost=new THREE.MeshPhysicalMaterial({color:'#749ca7',roughness:.48,transmission:lite?.06:.16,transparent:true,opacity:lite?.20:.30,depthWrite:false});
+  // Mobile avoids Three.js' transmissive pre-pass entirely. Alpha + roughness keeps the
+  // chamber readable without paying an extra scene render on constrained devices.
+  const glass=new THREE.MeshPhysicalMaterial({color:'#8fb2bb',roughness:.22,transmission:lite?0:.34,transparent:true,opacity:lite?.24:.42,depthWrite:false,envMapIntensity:.72});
+  const frost=new THREE.MeshPhysicalMaterial({color:'#749ca7',roughness:.48,transmission:lite?0:.16,transparent:true,opacity:lite?.18:.30,depthWrite:false});
   const warm=new THREE.MeshStandardMaterial({color:'#3b1605',roughness:.38,emissive:'#ff6a00',emissiveIntensity:lite?.48:1.05});
   const warmDim=new THREE.MeshStandardMaterial({color:'#2b160d',roughness:.48,emissive:'#d74c14',emissiveIntensity:lite?.18:.42});
   const cold=new THREE.MeshStandardMaterial({color:'#10323d',roughness:.46,emissive:'#5bbdd0',emissiveIntensity:lite?.14:.34});
@@ -309,41 +311,63 @@ function norwegian(ctx) {
     const m=new THREE.Mesh(new THREE.TorusGeometry(radius,tube,10,36),material);
     m.position.set(x,y,z);m.rotation.x=rx;rg.add(m);return m;
   };
+  // Merge repeated static box primitives by material. The room keeps semantic/pickable
+  // hero objects separate, but architecture does not need one draw call per beam or rail.
+  const mergedBoxes=(specs,material)=>{
+    if(!specs.length)return null;
+    const geos=specs.map(([w,h,d,x,y,z,rx=0,ry=0,rz=0])=>{
+      const geo=new THREE.BoxGeometry(w,h,d);
+      const matrix=new THREE.Matrix4().compose(
+        new THREE.Vector3(x,y,z),
+        new THREE.Quaternion().setFromEuler(new THREE.Euler(rx,ry,rz)),
+        new THREE.Vector3(1,1,1)
+      );
+      geo.applyMatrix4(matrix);
+      return geo;
+    });
+    const merged=mergeGeometries(geos,false);
+    geos.forEach(g=>g.dispose());
+    const mesh=new THREE.Mesh(merged,material);
+    rg.add(mesh);
+    return mesh;
+  };
 
   // Architectural depth inside the host shell: overhead ribs, wet floor, service spine.
-  for(let i=0;i<(lite?5:8);i++){
-    const z=r.z1+.45+i*((rd-.9)/((lite?5:8)-1));
-    box(rw-.55,.09,.11,cx,Y+3.88,z,blackSteel);
-    if(i%2===0) box(rw*.62,.025,.035,cx-.30,Y+3.72,z,warmDim);
+  const ribCount=lite?5:8;
+  const ribs=[],ribWarm=[];
+  for(let i=0;i<ribCount;i++){
+    const z=r.z1+.45+i*((rd-.9)/(ribCount-1));
+    ribs.push([rw-.55,.09,.11,cx,Y+3.88,z]);
+    if(i%2===0)ribWarm.push([rw*.62,.025,.035,cx-.30,Y+3.72,z]);
   }
+  mergedBoxes(ribs,blackSteel);
+  mergedBoxes(ribWarm,warmDim);
   box(.18,3.3,rd-.55,bounds.x0+.25,Y+1.65,cz,blackSteel);
   box(.07,3.0,rd-.75,bounds.x0+.39,Y+1.52,cz,cold);
 
   // Wet floor fields: subtle reflection zones rather than mirror slabs.
-  [
-    [cx-1.65,cz-rd*.29,2.35,.58],
-    [cx-1.35,cz,2.65,.66],
-    [cx-1.05,cz+rd*.29,2.45,.58],
-    [cx+2.4,cz-.15,1.25,.74]
-  ].forEach(([x,z,w,d])=>box(w,.012,d,x,Y+.014,z,wet));
+  mergedBoxes([
+    [2.35,.012,.58,cx-1.65,Y+.014,cz-rd*.29],
+    [2.65,.012,.66,cx-1.35,Y+.014,cz],
+    [2.45,.012,.58,cx-1.05,Y+.014,cz+rd*.29],
+    [1.25,.012,.74,cx+2.4,Y+.014,cz-.15]
+  ],wet);
 
   const laneZ=[cz-rd*.28,cz,cz+rd*.28];
   const specimenSlots=[];
+  const left=cx-3.35,right=cx+1.30,headY=3.23;
+  mergedBoxes(laneZ.flatMap(z=>[
+    [.10,3.05,.12,left,Y+1.53,z],
+    [.10,3.05,.12,right,Y+1.53,z],
+    [right-left+.10,.10,.12,(left+right)/2,Y+headY,z]
+  ]),blackSteel);
+  mergedBoxes(laneZ.map(z=>[right-left-.55,.025,.05,(left+right)/2,Y+headY-.22,z]),warmDim);
+  mergedBoxes(laneZ.map(z=>[rw*.55,.025,Math.min(.92,rd*.20),cx-.85,Y+.018,z]),rubber);
+  mergedBoxes(laneZ.flatMap(z=>[-.27,.27].map(dz=>[3.85,.016,.018,cx-1.0,Y+.037,z+dz])),steel);
+  mergedBoxes(laneZ.flatMap(z=>[-.27,.27].map(dz=>[.32,.012,.035,cx-2.95,Y+.045,z+dz])),warm);
+  mergedBoxes(laneZ.map(z=>[.24,.74,.48,cx-1.54,Y+.74,z]),blackSteel);
 
   laneZ.forEach((z,i)=>{
-    // Monumental lane portal.
-    const left=cx-3.35,right=cx+1.30,headY=3.23;
-    box(.10,3.05,.12,left,Y+1.53,z,blackSteel);
-    box(.10,3.05,.12,right,Y+1.53,z,blackSteel);
-    box(right-left+.10,.10,.12,(left+right)/2,Y+headY,z,blackSteel);
-    box(right-left-.55,.025,.05,(left+right)/2,Y+headY-.22,z,warmDim);
-
-    // Twin rails and lane pad.
-    box(rw*.55,.025,Math.min(.92,rd*.20),cx-.85,Y+.018,z,rubber);
-    for(const dz of [-.27,.27]){
-      box(3.85,.016,.018,cx-1.0,Y+.037,z+dz,steel);
-      box(.32,.012,.035,cx-2.95,Y+.045,z+dz,warm);
-    }
 
     contactShadow(cx-.20,z,4.3,.72,.42);
 
@@ -364,7 +388,6 @@ function norwegian(ctx) {
       const roller=new THREE.Mesh(new THREE.CylinderGeometry(.055,.055,.46,18),steel);
       roller.rotation.x=Math.PI/2;put(roller,cx-2.35+dx,Y+.13,z);
     }
-    box(.24,.74,.48,cx-1.54,Y+.74,z,blackSteel);
     const console=mark(box(.30,.20,.42,cx-1.48,Y+1.35,z,cold),
       'Lane console','Environmental and session information lives here. It is editorial UI, not an athlete data claim.');
     console.rotation.z=-.05;
@@ -414,10 +437,8 @@ function norwegian(ctx) {
   const screen=box(.44,.018,.21,cx+1.82,Y+1.47,cz-.08,cold);screen.rotation.x=-.16;
   box(2.65,1.65,.08,cx+2.55,Y+2.18,r.z0-.14,basalt);
   const protocolTitle=textPanel('MEASURE  /  ADAPT  /  REPEAT',2.20,.20,'#c8f2fb','rgba(6,12,15,.82)');protocolTitle.position.set(cx+2.55,Y+3.15,r.z0-.21);rg.add(protocolTitle);
-  for(let i=0;i<4;i++){
-    const bar=box(.08,.55+.12*i,.028,cx+1.75+i*.42,Y+2.05,r.z0-.19,i===3?warm:cold);
-    bar.rotation.z=(i-1.5)*.025;
-  }
+  mergedBoxes([0,1,2].map(i=>[.08,.55+.12*i,.028,cx+1.75+i*.42,Y+2.05,r.z0-.19,0,0,(i-1.5)*.025]),cold);
+  mergedBoxes([[.08,.91,.028,cx+3.01,Y+2.05,r.z0-.19,0,0,(3-1.5)*.025]],warm);
   const vialGeo=new THREE.CylinderGeometry(.025,.025,.18,12);
   const vials=new THREE.InstancedMesh(vialGeo,glass,lite?8:16);
   const dummy=new THREE.Object3D();
@@ -427,10 +448,9 @@ function norwegian(ctx) {
     dummy.updateMatrix();vials.setMatrixAt(i,dummy.matrix);
   }
   rg.add(vials);mark(vials,'Sample rack','Repeated lab props are instanced to keep the room visually dense without multiplying draw calls.');
-  for(let i=0;i<(lite?3:6);i++){
-    const card=box(.34,.010,.23,cx+1.95+i*.31,Y+1.15,cz+.38,paper);
-    card.rotation.y=(rand()-.5)*.12;
-  }
+  mergedBoxes(Array.from({length:lite?3:6},(_,i)=>[
+    .34,.010,.23,cx+1.95+i*.31,Y+1.15,cz+.38,0,(rand()-.5)*.12,0
+  ]),paper);
   const protocolLight=new THREE.PointLight('#ffd0a6',lite?1.4:3.2,4.8,2);
   protocolLight.position.set(cx+2.5,Y+2.65,cz-.2);rg.add(protocolLight);
   obstacles.push({box:[cx+1.15,cx+3.95,cz-.76,cz+.76]});
@@ -492,18 +512,24 @@ function norwegian(ctx) {
     box(.52,.035,.26,cx+2.35+k*.82,Y+2.25,r.z0-.31,steel);
   });
 
-  // Fjord relief: layered topographic memory, denser in high quality.
-  const nRidges=lite?13:25;
+  // Fjord relief: layered topographic memory. Batched ridges keep the silhouette dense
+  // while a cold grazing practical reveals contour and physical depth.
+  const nRidges=lite?13:25,steelRidges=[],darkRidges=[];
   for(let i=0;i<nRidges;i++){
     const z=cz-rd*.44+i*(rd*.88/(nRidges-1));
     const phase=i*.71;
     const x=cx+3.77-Math.abs(Math.sin(phase))*1.46-(Math.sin(i*.31)*.10);
     const h=.22+.22*(1+Math.sin(i*.93))+.05*Math.sin(i*.33);
-    const ridge=box(.045,h,.15,x,Y+.30+h/2,z,i%4===0?steel:blackSteel);
-    ridge.rotation.z=.03*Math.sin(i*.7);
+    (i%4===0?steelRidges:darkRidges).push([.045,h,.15,x,Y+.30+h/2,z,0,0,.03*Math.sin(i*.7)]);
   }
+  mergedBoxes(steelRidges,steel);
+  mergedBoxes(darkRidges,blackSteel);
   const fjordBase=mark(box(.72,.20,Math.min(2.9,rd*.70),cx+3.55,Y+.20,cz,oak),
     'Fjord relief','Original layered geometry brings landscape memory into the room without copying maps or landscape photography.');
+  const fjordLight=new THREE.SpotLight('#9ed9e7',lite?3.2:6.4,6.5,Math.PI*.22,.72,1.7);
+  fjordLight.position.set(cx+1.15,Y+1.35,cz-rd*.05);
+  fjordLight.target.position.set(cx+3.35,Y+.72,cz);
+  rg.add(fjordLight,fjordLight.target);
 
   // Recovery corner and the deliberately mundane objects that make a room feel inhabited.
   contactShadow(cx+1.05,r.z1+.62,1.95,.78,.44);
@@ -547,7 +573,7 @@ function norwegian(ctx) {
   vaultLight.position.set(cx+2.35,Y+3.25,r.z0-.50);rg.add(vaultLight);
 
   Object.assign(L,{
-    specimenSlots,fanRotors,analyser,protocolScreen:screen,coolLight,konaLight,
+    specimenSlots,fanRotors,analyser,protocolScreen:screen,coolLight,konaLight,fjordLight,
     reviewPickables,environmentBay:backPane,fjordBase,bench,konaLine
   });
 }
