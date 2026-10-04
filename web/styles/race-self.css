@@ -66,7 +66,7 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
  .studio-canvas-frame{min-height:clamp(300px,45dvh,390px)}
  .studio-save-state{font-size:0}.studio-save-state::after{content:'● Local save';font-size:11px}
  .studio-wordmark{gap:8px}.studio-wordmark span{display:none}
- .studio-install{font-size:0;padding-inline:10px}.studio-install::after{content:'Install';font-size:11px}
+ .studio-install{padding-inline:10px}
  .studio-destinations{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
  .studio-destinations>button{padding:8px;gap:6px;min-height:56px}.studio-destinations i{flex-basis:20px;font-size:18px}.studio-destinations em{display:none}.studio-destinations b{font-size:12px}
  .race-self-controls{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
