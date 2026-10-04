@@ -27,7 +27,7 @@ Reproduce: `node tools/room-evidence.mjs --review world --room hall --areas [--a
 | Wing · Kona Light view: triangles | 6.47 M | 2.73 M | **−58 %** (display-bike LOD) |
 | Wing · Kona Light view: render time | 16.2 s | 8.0 s | **−50 %** |
 | Hall view: draw calls | 1,482 | 1,342 | −9 % (palm crowns merged, 11 → 1 per palm) |
-| Shadow-map renders | every frame | on demand / ≤ 4 Hz | see *Shadows* below |
+| Shadow-map renders, 30 idle frames at 60 fps (desktop, shadows on) | 30 | 1 | **−97 %** (static sun: re-rendered only while something moves, else ≤ 4 Hz) |
 
 ### Better quality — yes, with one correction
 
