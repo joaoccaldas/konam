@@ -19,6 +19,13 @@ test('Passport CSS consumes canonical KONA semantics',()=>{
   assert.match(css,/\.emo button\{[\s\S]*width:var\(--brand-touch\);height:var\(--brand-touch\)/);
 });
 
+test('Experiences supplies canonical controls without occluding native Passport chrome',()=>{
+  const template=read('web/experience.template.html'),css=read('web/styles/experience.css');
+  assert.match(template,/web\/styles\/components\.css/);
+  assert.match(template,/<body class="experience-page">/);
+  assert.match(css,/\.experience-page \.global-kona-links\{top:calc\(max\(14px,env\(safe-area-inset-top\)\) \+ 58px\)\}/);
+});
+
 test('Passport is staged and integrity sealed but not landing-critical',()=>{
   const template=read('web/experience.template.html'),stage=read('tools/stage_site.sh'),build=read('tools/build_app.mjs'),landing=read('web/landing.template.html');
   assert.match(template,/web\/styles\/passport\.css/);
