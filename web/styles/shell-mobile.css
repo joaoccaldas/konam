@@ -53,3 +53,53 @@ html.phone-fit #appSheet>div{zoom:var(--fit);width:min(420px,calc((100vw - 24px)
   .kona-panel-open .kona-bottom-nav{display:none}
   .kona-panel{padding-bottom:max(var(--brand-space-4),env(safe-area-inset-bottom))}
 }
+
+
+/* Mobile composition authority: reduce chrome and repeated-card weight without changing component semantics. */
+@media(max-width:899px){
+  .kona-panel{
+    padding-top:max(8px,env(safe-area-inset-top));
+    padding-bottom:calc(76px + env(safe-area-inset-bottom));
+  }
+  .kona-panel-head{
+    min-height:48px;
+    align-items:center;
+    margin-bottom:8px;
+    gap:10px;
+  }
+  .kona-panel-head small{display:none}
+  .kona-panel-head h2{
+    margin:0;
+    font-size:clamp(28px,8vw,36px);
+    line-height:1;
+  }
+  .kona-panel-actions{gap:6px}
+  .kona-panel-why{padding-inline:10px}
+  .kona-panel-body{gap:8px}
+  .kona-hero-card{
+    min-height:150px;
+    padding:16px;
+    border-radius:16px;
+    box-shadow:none;
+  }
+  .kona-hero-card h3{
+    margin:6px 0;
+    font-size:clamp(30px,8vw,40px);
+    line-height:.98;
+  }
+  .kona-hero-card p{font-size:13px;line-height:1.42}
+  .kona-section{
+    padding:14px;
+    border-radius:16px;
+    box-shadow:none;
+  }
+  .kona-section-head{margin-bottom:10px}
+  .kona-section-head h3{font-size:24px}
+  .kona-list article,.kona-timeline article{padding-block:10px}
+  .kona-bottom-nav{
+    height:calc(64px + env(safe-area-inset-bottom));
+    padding:4px 8px env(safe-area-inset-bottom);
+  }
+  .kona-bottom-nav svg{width:21px;height:21px}
+  .kona-bottom-nav button,.kona-bottom-nav a{font-size:9.5px}
+}
