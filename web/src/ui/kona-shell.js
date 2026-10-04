@@ -221,8 +221,8 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     title.textContent=view==='feed'?'The Feed':'Travel to Kona';eyebrow.textContent=`${PRODUCT_NAME} · EXPLORE MORE`;
     panel.hidden=false;panel.classList.add('companion-panel');panel.scrollTop=0;
     document.body.classList.add('kona-panel-open');setActive(view==='feed'?'home':'plan');
-    const back=origin==='home'?now:raceSelf;
-    const backLabel=origin==='home'?'Now':'User Studio';
+    const back=origin==='home'?now:origin==='discover'?explore:raceSelf;
+    const backLabel=origin==='home'?'Now':origin==='discover'?'Discover':'User Studio';
     companionReturn=back;
     disposeStudio=(view==='feed'?renderFeed:renderTravel)(body,{back,backLabel});
   }
@@ -285,7 +285,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(request!==studioRequest)return;
     title.textContent='Discover'; eyebrow.textContent=`${PRODUCT_NAME} · INTERESTING THINGS`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('discover');
-    await renderDiscoverSurface(body,{enter:()=>{close();enter?.();}});
+    await renderDiscoverSurface(body,{enter:room=>{if(room)return walkTo(room);close();enter?.();},openSurface:target=>({garage,plan,collection,feed:()=>feed('discover'),travel:()=>travel('discover')}[target]?.())});
     syncNavigation();
     scheduleSurprise('discover');
   }
