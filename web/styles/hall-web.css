@@ -6,9 +6,10 @@
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
 :root{
-  --sand:#f4efe7;--paper:#fbf9f5;--ink:#12181d;--muted:#5f6a72;--faint:#8e979d;--line:rgba(18,24,29,.11);
+  /* aliases: brand/tokens.css owns the values; --serif/--sans come from system.css */
+  --sand:var(--brand-sand);--paper:var(--brand-surface);--ink:var(--brand-ink);--muted:var(--brand-muted);--faint:var(--brand-faint);--line:var(--brand-line);
+  /* hall-only accents (room identities, not brand roles) */
   --reef:#138a8f;--wyld:#ff3d8e;--wyld-aqua:#5fd8d3;--wyld-lilac:#e9cde8;--reef-soft:#d5ecea;--lava:#e8471c;--basalt:#1c1d20;--sun:#f3b64f;
-  --serif:'Instrument Serif',Georgia,serif;--sans:'Manrope',system-ui,-apple-system,sans-serif;
   --safe-b:env(safe-area-inset-bottom);
 }
 html,body{height:100%;background:var(--sand);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow:hidden}

@@ -31,8 +31,7 @@ code,kbd,pre,samp{font-family:var(--mono)}
 .card-media figcaption{font-size:var(--fs-caption)}
 /* one eyebrow / title / body everywhere */
 .t-eyebrow{font:700 var(--fs-eyebrow)/1.3 var(--sans);letter-spacing:var(--ls-eyebrow);text-transform:uppercase}
-.t-title{font-family:var(--serif);font-weight:400;font-size:var(--fs-title);line-height:1}
-.t-body{font-size:var(--fs-body);line-height:var(--lh-body)}
+/* .t-title / .t-body: brand/typography.css owns them (a copy here overrode the brand scale on About/Promo) */
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 
 /* The story is the front door. The hall canvas stays out of the first paint. */

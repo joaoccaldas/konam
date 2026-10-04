@@ -1,0 +1,223 @@
+{
+  "measured_at": "2026-10-04T16:06:26.475Z",
+  "rows": [
+    {
+      "id": "hall",
+      "name": "Main hall",
+      "calls": 2647,
+      "triangles": 12829116,
+      "lights": 36
+    },
+    {
+      "id": "sanctuary",
+      "name": "Sanctuary",
+      "calls": 2078,
+      "triangles": 8385822,
+      "lights": 36
+    },
+    {
+      "id": "hween",
+      "name": "Lava Night",
+      "calls": 1793,
+      "triangles": 6272500,
+      "lights": 36
+    },
+    {
+      "id": "kona",
+      "name": "Champions",
+      "calls": 3271,
+      "triangles": 14508648,
+      "lights": 36
+    },
+    {
+      "id": "pier",
+      "name": "The pier",
+      "calls": 146,
+      "triangles": 568348,
+      "lights": 36
+    },
+    {
+      "id": "stair",
+      "name": "Stair",
+      "calls": 1201,
+      "triangles": 935952,
+      "lights": 36
+    },
+    {
+      "id": "nave",
+      "name": "Galleries",
+      "calls": 1743,
+      "triangles": 1457064,
+      "lights": 36
+    },
+    {
+      "id": "nike-running",
+      "name": "Nike Running Lab",
+      "calls": 798,
+      "triangles": 4070592,
+      "lights": 36
+    },
+    {
+      "id": "breitling",
+      "name": "Breitling · Endurance Pro",
+      "calls": 1065,
+      "triangles": 5431984,
+      "lights": 36
+    },
+    {
+      "id": "bay-st-george",
+      "name": "St. George",
+      "calls": 977,
+      "triangles": 4133318,
+      "lights": 36
+    },
+    {
+      "id": "bay-las-vegas",
+      "name": "Las Vegas",
+      "calls": 1083,
+      "triangles": 4875678,
+      "lights": 36
+    },
+    {
+      "id": "bay-nice",
+      "name": "Nice",
+      "calls": 1098,
+      "triangles": 4984924,
+      "lights": 36
+    },
+    {
+      "id": "bay-kona",
+      "name": "Kona",
+      "calls": 916,
+      "triangles": 3098908,
+      "lights": 36
+    },
+    {
+      "id": "room-bio",
+      "name": "Bio",
+      "calls": 470,
+      "triangles": 1392692,
+      "lights": 36
+    },
+    {
+      "id": "room-horror",
+      "name": "Horror",
+      "calls": 1418,
+      "triangles": 1177194,
+      "lights": 36
+    },
+    {
+      "id": "room-alien",
+      "name": "Alien",
+      "calls": 576,
+      "triangles": 1946088,
+      "lights": 36
+    },
+    {
+      "id": "room-zombie",
+      "name": "Zombie",
+      "calls": 485,
+      "triangles": 1383698,
+      "lights": 36
+    },
+    {
+      "id": "wing-against-the-clock",
+      "name": "Against the Clock",
+      "calls": 2995,
+      "triangles": 7133540,
+      "lights": 36
+    },
+    {
+      "id": "wing-kona-light",
+      "name": "Kona Light",
+      "calls": 3609,
+      "triangles": 7316754,
+      "lights": 36
+    },
+    {
+      "id": "atlas-against-the-clock-hour",
+      "name": "The Hour",
+      "calls": 435,
+      "triangles": 852220,
+      "lights": 36
+    },
+    {
+      "id": "atlas-against-the-clock-mono",
+      "name": "Monocoque",
+      "calls": 436,
+      "triangles": 852998,
+      "lights": 36
+    },
+    {
+      "id": "atlas-against-the-clock-tri",
+      "name": "Long course",
+      "calls": 437,
+      "triangles": 852422,
+      "lights": 36
+    },
+    {
+      "id": "atlas-against-the-clock-types",
+      "name": "Types",
+      "calls": 794,
+      "triangles": 946107,
+      "lights": 36
+    },
+    {
+      "id": "atlas-against-the-clock-paint",
+      "name": "Paint shop",
+      "calls": 573,
+      "triangles": 889656,
+      "lights": 36
+    },
+    {
+      "id": "atlas-against-the-clock-refs",
+      "name": "References",
+      "calls": 576,
+      "triangles": 893347,
+      "lights": 36
+    },
+    {
+      "id": "atlas-kona-light-queen-k",
+      "name": "The Queen K",
+      "calls": 414,
+      "triangles": 854509,
+      "lights": 36
+    },
+    {
+      "id": "atlas-kona-light-clipon",
+      "name": "Clip-ons",
+      "calls": 429,
+      "triangles": 852670,
+      "lights": 36
+    },
+    {
+      "id": "atlas-kona-light-velodrome",
+      "name": "Velodrome",
+      "calls": 421,
+      "triangles": 852826,
+      "lights": 36
+    },
+    {
+      "id": "atlas-kona-light-bay",
+      "name": "The Bay",
+      "calls": 574,
+      "triangles": 912382,
+      "lights": 36
+    },
+    {
+      "id": "atlas-kona-light-after-dark",
+      "name": "After dark",
+      "calls": 544,
+      "triangles": 908982,
+      "lights": 36
+    },
+    {
+      "id": "atlas-kona-light-tunnel",
+      "name": "Workshop & tunnel",
+      "calls": 497,
+      "triangles": 865016,
+      "lights": 36
+    }
+  ],
+  "errors": []
+}
