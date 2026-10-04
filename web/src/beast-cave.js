@@ -2,22 +2,21 @@
 // Same architecture as Lava Night / Sanctuary: one room module built into landing.js,
 // shared renderer, camera, cards, pickables, obstacles, map, route, quality and loading.
 //
-// v2 (2026-10-03): the room shares its old footprint with the Breitling brand room — Beast Cave
-// is the north half, Breitling the south, joined by one door in the party wall. The look is
-// cinematic: dark room, one stage spot on an empty saddle, a glowing Queen K screen, haze.
+// v3 (2026-10-04): an athlete room with no third-party brands in it and no door to any other room.
+// Lived-in rather than designed: block wall with a sprayed stencil and a chalk tally, bare bulbs,
+// worn rug, patchy foam. The 60-second interval is the product: a result you can share, a personal
+// best, and an empty slot for the athlete's own line that stays empty until he rides it.
 import * as THREE from 'three';
 import { motes, lightShaft } from './roomkit.js';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { createInterval, bandAt, INTERVAL_SECONDS } from './beast-interval.js';
 import facts from '../../pitch/lionel-sanders/career-facts-v1.json' with { type: 'json' };
-import zwiftRoom from '../../integrations/sources/zwift-room-v0.json' with { type: 'json' };
 
 const seededRandom=(seed=0xB34C)=>()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};
 
 export const BROOM = { x0: 7.35, x1: 35.35, z0: -4.0, z1: -17.7, h: 5.4 };
 export const BDOOR = { z0: -9.6, z1: -6.4, h: 3.4 };
-// door in the south party wall into the Breitling room (museum/world/brand_rooms.json bounds z0 -18)
-export const BLINK = { x0: 29.4, x1: 31.6, h: 3.0, z: -17.85, toRoom: 'breitling' };
+// v3: no door to any neighbouring room and no third-party brand inside the athlete room.
 // cinematic mood the host applies while the visitor is inside (exposure + global light dimming)
 export const BEAST_MOOD = Object.freeze({ exposure: .78, hemi: .06, sun: .03, fog: { near: 5, far: 34 }, fogColor: new THREE.Color('#0b0908') });
 // generated equipment (Higgsfield → Meshy image-to-3D, optimised with gltf-transform); procedural stand-ins until loaded
@@ -28,8 +27,7 @@ let rectLib = false;
 export function beastCaveWalkable(x, z, WALK) {
   const inDoor = x > WALK.x1 - .1 && x < BROOM.x0 + .75 && z < BDOOR.z1 - .35 && z > BDOOR.z0 + .35;
   const inRoom = x > BROOM.x0 + .55 && x < BROOM.x1 - .55 && z < BROOM.z0 - .55 && z > BROOM.z1 + .55;
-  const inLink = x > BLINK.x0 + .3 && x < BLINK.x1 - .3 && z <= BROOM.z1 + .6 && z > BROOM.z1 - .95;
-  return inDoor || inRoom || inLink;
+  return inDoor || inRoom;
 }
 
 const SOURCE = 'Published race result';
@@ -67,10 +65,7 @@ export function buildBeastCave(ctx) {
 
   wall(RW,BROOM.h,.28,CX,BROOM.h/2,BROOM.z0+.14);                                  // north
   wall(.28,BROOM.h,RD,BROOM.x1+.14,BROOM.h/2,CZ);                                    // east (screen wall)
-  // south party wall with the Breitling link door
-  wall(BLINK.x0-BROOM.x0,BROOM.h,.28,(BROOM.x0+BLINK.x0)/2,BROOM.h/2,BROOM.z1-.14);
-  wall(BROOM.x1-BLINK.x1,BROOM.h,.28,(BLINK.x1+BROOM.x1)/2,BROOM.h/2,BROOM.z1-.14);
-  wall(BLINK.x1-BLINK.x0,BROOM.h-BLINK.h,.28,(BLINK.x0+BLINK.x1)/2,BLINK.h+(BROOM.h-BLINK.h)/2,BROOM.z1-.14);
+  wall(RW,BROOM.h,.28,CX,BROOM.h/2,BROOM.z1-.14);                                  // south: solid party wall
   // west wall, sharing the hall glass line, with the doorway cut out
   wall(.28,BROOM.h,BROOM.z0-BDOOR.z1,BROOM.x0-.14,BROOM.h/2,(BROOM.z0+BDOOR.z1)/2);
   wall(.28,BROOM.h,BDOOR.z0-BROOM.z1,BROOM.x0-.14,BROOM.h/2,(BDOOR.z0+BROOM.z1)/2);
@@ -87,40 +82,61 @@ export function buildBeastCave(ctx) {
   const addRun=(o,along,normal,len,y0,y1)=>foamRuns.push({o,along,normal,len,y0,y1});
   // east wall behind the screen (the cinema backdrop), north wall east of the mirrors, west wall interior
   addRun(new THREE.Vector3(BROOM.x1-.01,0,BROOM.z0-.05),new THREE.Vector3(0,0,-1),new THREE.Vector3(-1,0,0),RD-.1,.25,BROOM.h-.45);
-  addRun(new THREE.Vector3(27.4,0,BROOM.z0-.01),new THREE.Vector3(1,0,0),new THREE.Vector3(0,0,-1),BROOM.x1-27.5,.25,BROOM.h-.45);
   addRun(new THREE.Vector3(BROOM.x0+.01,0,BROOM.z0-.05),new THREE.Vector3(0,0,-1),new THREE.Vector3(1,0,0),RD-.1,1.0,BROOM.h-.45);
   const screenHole=(r,u,y)=>r.normal.x<0&&Math.abs((BROOM.z0-.05-u)-CZ)<3.75&&y>.6&&y<4.9;
   const doorHole=(r,u,y)=>r.normal.x>0&&(BROOM.z0-.05-u)<BDOOR.z1+.2&&(BROOM.z0-.05-u)>BDOOR.z0-.2&&y<BDOOR.h+.25;
-  const neonHole=(r,u,y)=>r.normal.z<0&&Math.abs(r.o.x+u-31.0)<3.0&&Math.abs(y-3.95)<1.0;   // the neon sign hangs here
+  const tired=(i)=>((i*2654435761)>>>0)%100<9;                       // ~9% of panels fell off or were never replaced
   const P=.15,cells=[];
-  for(const r of foamRuns)for(let u=P/2;u<r.len;u+=P)for(let y=r.y0+P/2;y<r.y1;y+=P){if(screenHole(r,u,y)||doorHole(r,u,y)||neonHole(r,u,y))continue;cells.push([r,u,y]);}
+  for(const r of foamRuns)for(let u=P/2;u<r.len;u+=P)for(let y=r.y0+P/2;y<r.y1;y+=P){if(screenHole(r,u,y)||doorHole(r,u,y))continue;const tile=Math.floor(u/.6)*97+Math.floor(y/.6);if(tired(tile))continue;cells.push([r,u,y]);}
   const foam=new THREE.InstancedMesh(foamGeo,foamMat,cells.length),fd=new THREE.Object3D(),fc=new THREE.Color();
   cells.forEach(([r,u,y],i)=>{fd.position.copy(r.o).addScaledVector(r.along,u);fd.position.y=y;fd.lookAt(fd.position.clone().add(r.normal));
     const tile=(Math.floor(u/.6)+Math.floor(y/.6))%2;fd.rotateZ(tile?Math.PI/4:0);fd.scale.set(1,1,.8+((i*7919)%13)/40);fd.updateMatrix();foam.setMatrixAt(i,fd.matrix);
-    fc.setScalar(.85+((i*104729)%17)/80);foam.setColorAt(i,fc);});
+    const panel=Math.floor(u/.6)*97+Math.floor(y/.6),odd=((panel*40503)>>>0)%100;fc.setScalar(odd<7?1.9:odd<15?1.35:.8+((i*104729)%17)/70);foam.setColorAt(i,fc);});   // mismatched replacement panels
   foam.instanceMatrix.needsUpdate=true;foam.receiveShadow=true;group.add(foam);
 
-  // ---------------------------------------------------------------- neon: amber tubes, painted halo (bloom without a post pass), real area light
+  // ---------------------------------------------------------------- painted block wall: a stencil someone sprayed at 6 a.m.
   if(!rectLib){RectAreaLightUniformsLib.init();rectLib=true;}
-  const neonW=5.2,neonH=1.5,neonX=31.0,neonY=3.95;
-  const neonTex=(blur,core)=>canvasTex(1536,444,(g,w,h)=>{
-    g.clearRect(0,0,w,h);g.textAlign='center';g.textBaseline='middle';
-    g.font=`800 190px ${FONT}`;g.letterSpacing='18px';
-    g.lineJoin='round';g.lineCap='round';
-    g.shadowColor='rgba(255,120,30,1)';g.shadowBlur=blur;g.strokeStyle=core?'#ffd7a3':'rgba(255,110,20,.9)';g.lineWidth=core?7:16;
-    for(let i=0;i<(core?2:4);i++)g.strokeText('BEAST CAVE',w/2,h*.42);
-    g.font=`italic 400 60px ${SERIF}`;g.letterSpacing='2px';g.lineWidth=core?2.5:7;g.strokeText('the work nobody sees',w/2,h*.83);
+  const bwX0=27.3,bwX1=BROOM.x1-.02,bwW=bwX1-bwX0,bwH=BROOM.h;
+  const blockTex=canvasTex(2048,1408,(g,w,h)=>{
+    const r=seededRandom(0xB10C);g.fillStyle='#3b3734';g.fillRect(0,0,w,h);
+    const bw=w/(bwW/.4),bh=h/(bwH/.2);                                 // 400×200 mm blocks
+    for(let row=0;row*bh<h;row++)for(let col=-1;col*bw<w;col++){const x=col*bw+(row%2?bw/2:0),y=row*bh,v=50+r()*18;
+      g.fillStyle=`rgb(${v},${v-3},${v-6})`;g.fillRect(x+3,y+3,bw-6,bh-6);
+      for(let k=0;k<14;k++){g.fillStyle=`rgba(0,0,0,${.05+r()*.08})`;g.fillRect(x+r()*bw,y+r()*bh,2+r()*5,2+r()*5);}}
+    for(let k=0;k<7;k++){const x=r()*w,gr=g.createLinearGradient(0,h*.55,0,h);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(20,14,10,.35)');g.fillStyle=gr;g.fillRect(x,h*.55,20+r()*60,h*.45);}   // damp
+    // stencil, sprayed: overspray halo, then the letters, then drips
+    g.save();g.translate(w*.5,h*.33);g.rotate(-.012);g.textAlign='center';g.textBaseline='middle';g.font=`900 ${h*.105}px ${FONT}`;g.letterSpacing=`${h*.012}px`;
+    g.shadowColor='rgba(255,106,0,.55)';g.shadowBlur=h*.02;g.fillStyle='rgba(255,106,0,.88)';g.fillText('THE WORK',0,-h*.07);g.fillText('NOBODY SEES',0,h*.07);
+    g.shadowBlur=0;for(let k=0;k<900;k++){g.fillStyle=`rgba(255,110,10,${r()*.25})`;g.fillRect((r()-.5)*w*.62,(r()-.5)*h*.36,1+r()*2,1+r()*2);}
+    for(let k=0;k<11;k++){const x=(r()-.5)*w*.55,y=h*.11+r()*h*.02,len=h*(.02+r()*.07);g.fillStyle='rgba(230,95,10,.7)';g.fillRect(x,y,2.5,len);}
+    g.restore();
+    // chalk tally of sessions, grouped in fives, and a strip of tape holding nothing any more
+    g.strokeStyle='rgba(235,230,220,.65)';g.lineWidth=4;g.lineCap='round';
+    for(let grp=0;grp<9;grp++){const x0=w*.08+grp*w*.042,y0=h*.66;for(let k=0;k<4;k++){g.beginPath();g.moveTo(x0+k*16+r()*3,y0+r()*4);g.lineTo(x0+k*16+r()*3,y0+80+r()*5);g.stroke();}if(grp<8){g.beginPath();g.moveTo(x0-8,y0+64);g.lineTo(x0+60,y0+12);g.stroke();}}
+    g.fillStyle='rgba(220,210,180,.55)';g.fillRect(w*.72,h*.6,90,26);g.fillRect(w*.8,h*.62,70,24);
   });
-  const neonCore=new THREE.Mesh(new THREE.PlaneGeometry(neonW,neonH),new THREE.MeshBasicMaterial({map:neonTex(18,true),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,fog:false}));
-  const neonHalo=new THREE.Mesh(new THREE.PlaneGeometry(neonW,neonH),new THREE.MeshBasicMaterial({map:neonTex(70,false),transparent:true,opacity:.85,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,fog:false}));
-  for(const m of [neonHalo,neonCore]){m.rotation.y=Math.PI;m.position.set(neonX,neonY,BROOM.z0-.12);group.add(m);}
-  neonCore.position.z-=.02;
-  const neonBack=new THREE.Mesh(new THREE.PlaneGeometry(neonW+.5,neonH+.3),new THREE.MeshStandardMaterial({color:'#0a0909',roughness:.4,metalness:.6}));neonBack.rotation.y=Math.PI;neonBack.position.set(neonX,neonY,BROOM.z0-.06);group.add(neonBack);
-  const neonLight=new THREE.RectAreaLight('#ff7a22',lite?6:9,neonW,neonH*.6);neonLight.position.set(neonX,neonY,BROOM.z0-.2);neonLight.lookAt(neonX,neonY-.6,BROOM.z0-5);group.add(neonLight);
-  // wet-floor reflection under the neon: a smeared, flipped glow
-  const smear=canvasTex(256,512,(g,w,h)=>{const gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,'rgba(255,120,40,.9)');gr.addColorStop(.35,'rgba(255,100,30,.35)');gr.addColorStop(1,'rgba(255,90,20,0)');g.fillStyle=gr;for(let i=0;i<9;i++){g.globalAlpha=.25+.08*(i%3);g.fillRect(w*.05+i*w*.1,0,w*.07,h*(.6+.4*((i*37)%5)/5));}});
-  const neonFloor=new THREE.Mesh(new THREE.PlaneGeometry(neonW*.9,3.2),new THREE.MeshBasicMaterial({map:smear,transparent:true,opacity:lite?.18:.28,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false}));
-  neonFloor.rotation.x=-Math.PI/2;neonFloor.position.set(neonX,.012,BROOM.z0-1.7);group.add(neonFloor);
+  const blockMat=new THREE.MeshStandardMaterial({map:blockTex,roughness:.95,envMapIntensity:.05});
+  const blockWall=new THREE.Mesh(new THREE.PlaneGeometry(bwW,bwH),blockMat);blockWall.rotation.y=Math.PI;blockWall.position.set((bwX0+bwX1)/2,bwH/2,BROOM.z0-.015);blockWall.receiveShadow=true;group.add(blockWall);
+  // printed sheets taped to the blocks: generic sessions, a calendar crossed off (no dates claimed)
+  const sheetTex=(kind)=>canvasTex(256,340,(g,w,h)=>{g.fillStyle='#ece8df';g.fillRect(0,0,w,h);g.fillStyle='#2a2a2a';g.font=`600 16px ${FONT}`;
+    if(kind==='cal'){g.fillText('THIS MONTH',16,28);for(let d=0;d<35;d++){const x=16+(d%7)*32,y=48+Math.floor(d/7)*52;g.strokeStyle='#9a958c';g.strokeRect(x,y,30,48);if(d<26){g.strokeStyle='#c0392b';g.lineWidth=3;g.beginPath();g.moveTo(x+4,y+6);g.lineTo(x+26,y+42);g.moveTo(x+26,y+6);g.lineTo(x+4,y+42);g.stroke();g.lineWidth=1;}}}
+    else{g.fillText(kind==='a'?'SESSION A':'SESSION B',16,30);g.font=`500 13px ${FONT}`;const L=kind==='a'?['10′ easy','4 × 10′ steady','  3′ easy','10′ easy']:['15′ easy','6 × 4′ hard','  4′ easy','tempo run off the bike'];L.forEach((t,i)=>g.fillText(t,16,62+i*24));g.fillStyle='#8a847c';g.font=`500 10px ${FONT}`;g.fillText('example sessions · not an athlete plan',16,h-14);}
+    g.fillStyle='rgba(225,215,170,.8)';g.fillRect(w*.35,0,w*.3,14);});
+  [['a',28.4,2.35,.04],['b',29.05,2.3,-.05],['cal',34.2,2.4,.02]].forEach(([k,x,y,rot])=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(.42,.56),new THREE.MeshStandardMaterial({map:sheetTex(k),roughness:.9}));m.rotation.set(0,Math.PI,rot);m.position.set(x,y,BROOM.z0-.03);group.add(m);});
+  info(blockWall,{eyebrow:'THE WALL',title:'The work nobody sees.',sub:'Sprayed stencil · chalk tally · taped sessions',text:'Every mark on this wall is the kind a training room collects: a tally of sessions, plans taped up and torn down. The sessions are generic examples, not anyone’s real plan.'});
+  // bare bulbs on cords: the only "design" in the room
+  const bulbs=[];
+  for(const [bx,bz,len] of [[31.0,BROOM.z0-1.4,1.6],[22.6,-10.9,1.3],[13.0,-9.0,1.5]]){
+    const cord=new THREE.Mesh(new THREE.CylinderGeometry(.006,.006,len,6),new THREE.MeshBasicMaterial({color:'#0b0b0b'}));cord.position.set(bx,BROOM.h-len/2,bz);group.add(cord);
+    const bulb=new THREE.Mesh(new THREE.SphereGeometry(.06,16,12),new THREE.MeshBasicMaterial({color:'#ffd7a0',toneMapped:false}));bulb.position.set(bx,BROOM.h-len-.06,bz);group.add(bulb);
+    const glow=new THREE.Mesh(new THREE.PlaneGeometry(.7,.7),new THREE.MeshBasicMaterial({map:canvasTex(128,128,(g,w,h)=>{const gr=g.createRadialGradient(w/2,h/2,2,w/2,h/2,w/2);gr.addColorStop(0,'rgba(255,214,160,.9)');gr.addColorStop(1,'rgba(255,190,120,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);}),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,toneMapped:false}));
+    glow.position.copy(bulb.position);group.add(glow);bulbs.push(glow);
+    const pl=new THREE.PointLight('#ffc98f',lite?3:5,7,1.8);pl.position.copy(bulb.position);group.add(pl);
+  }
+  // exposed ducts and pipes along the ceiling
+  const duct=new THREE.MeshStandardMaterial({color:'#5d5f60',roughness:.45,metalness:.7,envMapIntensity:.3});
+  {const d=new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,RW-1,20),duct);d.rotation.z=Math.PI/2;d.position.set(CX,BROOM.h-.55,BROOM.z0-1.0);group.add(d);
+   for(const [z,r,y] of [[-15.9,.035,BROOM.h-.3],[-16.1,.025,BROOM.h-.42],[-5.2,.03,BROOM.h-.35]]){const pp=new THREE.Mesh(new THREE.CylinderGeometry(r,r,RW-.6,10),new THREE.MeshStandardMaterial({color:'#7a3e22',roughness:.5,metalness:.6}));pp.rotation.z=Math.PI/2;pp.position.set(CX,y,z);group.add(pp);}}
 
   const coveMat = new THREE.MeshBasicMaterial({color:'#ff6a00',transparent:true,opacity:lite?.35:.6,toneMapped:false,fog:false});
   for(const z of [BROOM.z0-.01,BROOM.z1+.01]){const p=new THREE.Mesh(new THREE.PlaneGeometry(RW-1.2,.04),coveMat);p.position.set(CX,.12,z);p.rotation.y=z===BROOM.z0?Math.PI:0;group.add(p);}   // floor-line ember
@@ -148,10 +164,16 @@ export function buildBeastCave(ctx) {
   const rimL=new THREE.PointLight('#ff7a2a',lite?0:3.2,7,1.8);rimL.position.set(heroX-3.4,.6,heroZ+2.2);group.add(rimL);   // low ember kicker from behind
 
   // ---------------------------------------------------------------- hero: empty saddle on a direct-drive trainer
-  const matPad=new THREE.Mesh(new THREE.BoxGeometry(5.2,.03,2.4),new THREE.MeshStandardMaterial({color:'#08090a',roughness:.75,metalness:.1,envMapIntensity:.4}));
-  at(matPad,heroX,.015,heroZ);
-  const sweat=new THREE.MeshPhysicalMaterial({color:'#050506',roughness:.04,metalness:0,clearcoat:1,clearcoatRoughness:.02,envMapIntensity:1.4});
-  for(let i=0;i<7;i++){const d=new THREE.Mesh(new THREE.CircleGeometry(.05+rand()*.11,20),sweat);d.rotation.x=-Math.PI/2;d.scale.set(1,.6+rand()*.6,1);at(d,heroX+.15+rand()*.9,.033,heroZ-.35+rand()*.7);}
+  const rugTex=canvasTex(512,340,(g,w,h)=>{const r=seededRandom(0x5A6);g.fillStyle='#4a2f2a';g.fillRect(0,0,w,h);
+    for(let i=0;i<9;i++){g.fillStyle=i%2?'rgba(170,120,80,.35)':'rgba(40,55,70,.35)';g.fillRect(0,18+i*36,w,14);}
+    g.strokeStyle='rgba(220,190,150,.35)';g.lineWidth=6;g.strokeRect(10,10,w-20,h-20);
+    const gr=g.createRadialGradient(w*.55,h*.5,10,w*.55,h*.5,w*.45);gr.addColorStop(0,'rgba(15,10,8,.55)');gr.addColorStop(1,'rgba(15,10,8,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);   // worn where the bike lives
+    for(let i=0;i<3000;i++){g.fillStyle=`rgba(0,0,0,${r()*.12})`;g.fillRect(r()*w,r()*h,2,2);}});
+  const rug=new THREE.Mesh(new THREE.PlaneGeometry(4.6,3.0),new THREE.MeshStandardMaterial({map:rugTex,roughness:1,envMapIntensity:.02}));rug.rotation.x=-Math.PI/2;rug.rotation.z=.04;at(rug,heroX-.2,.009,heroZ);rug.receiveShadow=true;
+  const matPad=new THREE.Mesh(new THREE.BoxGeometry(2.1,.012,1.0),new THREE.MeshStandardMaterial({color:'#0a0b0c',roughness:.8,envMapIntensity:.1}));
+  at(matPad,heroX,.014,heroZ);
+  const sweat=new THREE.MeshPhysicalMaterial({color:'#050506',roughness:.15,metalness:0,clearcoat:.6,clearcoatRoughness:.2,envMapIntensity:.25,transparent:true,opacity:.8});
+  for(let i=0;i<7;i++){const d=new THREE.Mesh(new THREE.CircleGeometry(.03+rand()*.07,20),sweat);d.rotation.x=-Math.PI/2;d.scale.set(1,.6+rand()*.6,1);at(d,heroX+.15+rand()*.6,.022,heroZ-.25+rand()*.5);}
   const trainer=new THREE.Group();trainer.name='beast-trainer';group.add(trainer);
   const tbox=(n,s,p,m=dark,r=[0,0,0])=>{const o=new THREE.Mesh(new THREE.BoxGeometry(...s),m);o.name=n;o.position.set(...p);o.rotation.set(...r);o.castShadow=!lite;trainer.add(o);return o;};
   // geometry in trainer space: origin on the floor under the rear axle, x = bike forward, z = across
@@ -193,7 +215,7 @@ export function buildBeastCave(ctx) {
     transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));
   reflect.rotation.x=-Math.PI/2;reflect.position.set(BROOM.x1-.1-screenH*.55,.013,heroZ);group.add(reflect);
   info(screen,{eyebrow:'SCIENCE LAB',title:'Queen K, on loop.',sub:'Route study · power · repeatability',
-    text:'An original KONA.m route study of the Queen K out to the Energy Lab, with a live power trace. It is not a copied Zwift screen and uses no Zwift route art.',model:act=>screenCard(act)});
+    text:'An original KONA.m route study of the Queen K out to the Energy Lab, with a live power trace. No third-party training-app screens or route art are reproduced.',model:act=>screenCard(act)});
   const elev=[];for(let i=0;i<=120;i++){const u=i/120;elev.push(.5+.22*Math.sin(u*9.2)+.12*Math.sin(u*23+1)+(u>.7&&u<.82?-.25*Math.sin((u-.7)/.12*Math.PI):0));}
   const ghost={t:0,w:0,trace:[]};
   let ride=null;                                                      // { iv, holding } while a visitor is in the saddle
@@ -311,13 +333,13 @@ export function buildBeastCave(ctx) {
   const string=new THREE.Mesh(new THREE.BoxGeometry(5*(EXW+.22)-.22-EXW,.008,.008),ember);string.position.set(ex0+EXW/2+2*(EXW+.22),1.75+EXH/2-.06,BROOM.z0-.05);group.add(string);
   const loopTitle=lettering(9.2,.9,g=>{
     g.fillStyle='#eee5d9';g.font=`700 .2px ${FONT}`;g.letterSpacing='.05px';fitText(g,'EXPERIMENT → MISS → INSPECT → ADAPT → RETURN',0,.34,9.1);
-    g.fillStyle='#8b8178';g.letterSpacing='0px';g.font=`italic 400 .17px ${SERIF}`;fitText(g,'Five published results, read as one loop. A KONA.m reading, not his words.',0,.72,9.1);
+    g.fillStyle='#8b8178';g.letterSpacing='0px';g.font=`italic 400 .17px ${SERIF}`;fitText(g,'Five published results, read as one loop. A KONA.m reading, not the athlete’s words.',0,.72,9.1);
   },1536);
   loopTitle.position.set(ex0+4.6,3.4,BROOM.z0-.03);loopTitle.rotation.y=Math.PI;group.add(loopTitle);
   const exWash=lightPool(9.6,1.6,'#ffd2a6',lite?.05:.08);exWash.position.set(ex0+4.6,.02,BROOM.z0-.9);group.add(exWash);
   const exSpot=new THREE.SpotLight('#ffe0c0',lite?0:26,7,.75,.8,1.4);exSpot.position.set(ex0+4.6,BROOM.h-.4,BROOM.z0-2.2);exSpot.target.position.set(ex0+4.6,1.8,BROOM.z0);if(!lite)group.add(exSpot,exSpot.target);
 
-  // ---------------------------------------------------------------- story wall (south, west of the link door)
+  // ---------------------------------------------------------------- story wall (south)
   const story=lettering(8.2,2.4,g=>{
     g.fillStyle='#ff6a00';g.fillRect(.1,.12,.45,.035);
     g.fillStyle='#eee5d9';g.font=`italic 400 .5px ${SERIF}`;fitText(g,'Not a trophy room.',.1,.82,8);
@@ -370,15 +392,29 @@ export function buildBeastCave(ctx) {
   const gearSpot=new THREE.SpotLight('#ffd2a6',lite?0:22,6,.55,.8,1.5);gearSpot.position.set(gcx,BROOM.h-.4,gz+1.6);gearSpot.target.position.set(gcx,1.6,gz);if(!lite)group.add(gearSpot,gearSpot.target);
   info([helmet.children[0],helmet2.children[0]],{eyebrow:'GEAR WALL',title:'Objects remember work.',sub:'Equipment · race objects · memory',text:'A working wall, not a shop wall: helmets, bottles, shoes, blank bibs, medals on tired ribbons. Nothing here is labelled as any athlete’s own equipment — that stays unlabelled until it is sourced.'});
 
-  // ---------------------------------------------------------------- Zwift: "build this cave" (sourced, unofficial)
-  const crate=new THREE.Group();crate.position.set(21.5,0,-8.0);crate.rotation.y=-.35;group.add(crate);
-  const cardboard=new THREE.MeshStandardMaterial({color:'#8a6a48',roughness:.95});
-  const box1=new THREE.Mesh(new THREE.BoxGeometry(.78,.5,.52),cardboard);box1.position.y=.25;crate.add(box1);
-  const box2=new THREE.Mesh(new THREE.BoxGeometry(.5,.3,.4),cardboard);box2.position.set(.06,.65,.02);box2.rotation.y=.25;crate.add(box2);
-  const label=lettering(.7,.3,g=>{g.fillStyle='#efe6d6';g.fillRect(0,0,.7,.3);g.fillStyle='#16181a';g.font=`800 .07px ${FONT}`;g.fillText('BUILD THIS CAVE',.04,.12);g.font=`500 .035px ${FONT}`;g.fillText('trainer · frame · controls',.04,.19);g.fillStyle='#b4541f';g.fillText('UNOFFICIAL · SOURCED 2026-09',.04,.25);},512);
-  label.material.toneMapped=true;label.position.set(0,.3,.265);crate.add(label);
-  info([box1,box2,label],{eyebrow:'BUILD THIS CAVE',title:'The hardware behind a room like this.',sub:'Zwift hardware · unofficial',text:'',model:()=>zwiftCard()});
-  obstacles.push({c:crate.position.clone(),r:.6});
+  // ---------------------------------------------------------------- clutter: what a training room collects (no labels, no brands)
+  const cardboard=new THREE.MeshStandardMaterial({color:'#7d6044',roughness:.95});
+  const pile=new THREE.Group();pile.position.set(21.2,0,-7.6);pile.rotation.y=-.35;group.add(pile);
+  [[.7,.45,.5,0,0],[.5,.32,.42,.05,.45],[.42,.26,.34,-.4,0]].forEach(([w,h,d,x,y],i)=>{const b=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),cardboard);b.position.set(x,y+h/2,i===2?.45:0);b.rotation.y=i*.3;b.castShadow=!lite;pile.add(b);});
+  const pump=new THREE.Group();pump.position.set(22.0,0,-16.9);group.add(pump);
+  {const barrel=new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.62,12),new THREE.MeshStandardMaterial({color:'#b02a1a',roughness:.4}));barrel.position.y=.36;pump.add(barrel);
+   const handle=new THREE.Mesh(new THREE.BoxGeometry(.24,.03,.03),dark);handle.position.y=.7;pump.add(handle);
+   const foot=new THREE.Mesh(new THREE.BoxGeometry(.22,.025,.08),dark);foot.position.y=.012;pump.add(foot);}
+  for(let k=0;k<3;k++){const tube=new THREE.Mesh(new THREE.TorusGeometry(.16,.012,8,32),dark);tube.position.set(22.6+k*.12,2.25-k*.03,BROOM.z1+.08);tube.rotation.y=.1*k;group.add(tube);}   // spare tubes on a nail
+  const fridge=new THREE.Group();fridge.position.set(33.6,0,-6.9);fridge.rotation.y=-Math.PI/2;group.add(fridge);
+  {const body=new THREE.Mesh(new THREE.BoxGeometry(.5,.85,.52),new THREE.MeshStandardMaterial({color:'#cfcac0',roughness:.55,metalness:.1,envMapIntensity:.2}));body.position.y=.425;body.castShadow=!lite;fridge.add(body);
+   const handleF=new THREE.Mesh(new THREE.BoxGeometry(.02,.3,.03),steel);handleF.position.set(.18,.55,.27);fridge.add(handleF);
+   for(let k=0;k<3;k++){const b=new THREE.Mesh(new THREE.CylinderGeometry(.036,.036,.21,14),k%2?bottleM:new THREE.MeshStandardMaterial({color:'#1a1a1c',roughness:.4}));b.position.set(-.12+k*.11,.955,0);fridge.add(b);}}
+  info(fridge.children[0],{eyebrow:'FUEL',title:'Within arm’s reach of the bike.',sub:'Bottles · a fridge that hums',text:'Long indoor sessions run on whatever is closest. Generic props, no products shown.'});
+  obstacles.push({c:fridge.position.clone(),r:.45});
+  const chair=new THREE.Group();chair.position.set(heroX-2.3,0,heroZ-1.7);chair.rotation.y=.7;group.add(chair);
+  {const legM=steel;for(const [x,z] of [[-.2,-.2],[.2,-.2],[-.2,.2],[.2,.2]]){const l=new THREE.Mesh(new THREE.CylinderGeometry(.012,.012,.45,6),legM);l.position.set(x,.225,z);chair.add(l);}
+   const seat=new THREE.Mesh(new THREE.BoxGeometry(.44,.03,.42),dark);seat.position.y=.46;chair.add(seat);
+   const back=new THREE.Mesh(new THREE.BoxGeometry(.44,.36,.03),dark);back.position.set(0,.66,-.2);back.rotation.x=-.12;chair.add(back);}
+  obstacles.push({c:chair.position.clone(),r:.4});
+  // extension cord from the trainer to the wall
+  {const pts=[new THREE.Vector3(heroX-.6,.02,heroZ+.2),new THREE.Vector3(heroX-1.4,.015,heroZ+1.3),new THREE.Vector3(heroX-.6,.015,heroZ+2.6),new THREE.Vector3(heroX+1.4,.015,BROOM.z0-.6),new THREE.Vector3(heroX+2.0,.25,BROOM.z0-.06)];
+   const cable=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),60,.008,6),new THREE.MeshStandardMaterial({color:'#e8a12a',roughness:.6}));group.add(cable);}
 
   // ---------------------------------------------------------------- archive: mirrors + swim erg (north-east)
   const mirrorMat=new THREE.MeshPhysicalMaterial({color:'#3a3f44',metalness:.95,roughness:.12,envMapIntensity:.25,clearcoat:1,clearcoatRoughness:.08});
@@ -391,16 +427,11 @@ export function buildBeastCave(ctx) {
   info(efly,{eyebrow:'PAIN CAVE ARCHIVE',title:'The laboratory came first.',sub:'Archive · mirrors · swim erg',text:'Mirrors for form checks and a swim erg: the kind of indoor work a pain cave is known for. History of the idea, not a claim about any athlete’s current setup.'});
   obstacles.push({c:new THREE.Vector3(31.6,0,-6.0),r:1.5});
 
-  // ---------------------------------------------------------------- recovery (south-east corner, by the link door)
+  // ---------------------------------------------------------------- recovery (south-east corner)
   wall(2.4,.42,1.4,33.9,.21,-16.75,new THREE.MeshStandardMaterial({color:'#24201e',roughness:.96}));
   const roller=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.72,24),dark);roller.rotation.z=Math.PI/2;roller.position.set(33.6,.16,-15.6);group.add(roller);
   info(roller,{eyebrow:'RESET',title:'Recovery is part of the work.',sub:'Reset · restore · return',text:'A quiet corner keeps recovery inside the same story rather than treating it as the opposite of training.'});
   obstacles.push({c:new THREE.Vector3(33.9,0,-16.75),r:.9});
-  // the link door: a frame of ember light pulls you through to the next room
-  const linkFrame=new THREE.Mesh(new THREE.BoxGeometry(BLINK.x1-BLINK.x0+.12,.04,.04),ember);linkFrame.position.set((BLINK.x0+BLINK.x1)/2,BLINK.h+.02,BROOM.z1+.02);group.add(linkFrame);
-  const linkSign=lettering(2.2,.34,g=>{g.fillStyle='#8b8178';g.font=`700 .09px ${FONT}`;g.letterSpacing='.06px';fitText(g,'THROUGH HERE · BREITLING · ENDURANCE PRO',0,.2,2.18);},768);
-  linkSign.position.set((BLINK.x0+BLINK.x1)/2,BLINK.h+.32,BROOM.z1+.03);group.add(linkSign);
-
   // ---------------------------------------------------------------- sculptures
   const stone=new THREE.MeshStandardMaterial({map:basaltTex,color:'#4a443f',roughness:.95,envMapIntensity:.2});
   const gap=new THREE.Group();gap.position.set(9.6,0,-13.7);gap.rotation.y=.75;group.add(gap);
@@ -442,7 +473,7 @@ export function buildBeastCave(ctx) {
   function screenCard(act){
     return {kind:'beast',eyebrow:'SCIENCE LAB',title:'Queen K, on loop.',kicker:'Original route study · live power trace',
       lede:'Out along the Queen K toward the Energy Lab: ocean on one side, lava on the other, one road. The trace is whatever the person in the saddle is doing right now.',
-      facts:[{cls:'G',text:'Route art, HUD and terrain are drawn by KONA.m. No Zwift screens, routes or marks are reproduced.'}],
+      facts:[{cls:'G',text:'Route art, HUD and terrain are drawn by KONA.m. No third-party training-app screens, routes or marks are reproduced.'}],
       actions:[{label:'Ride it →',primary:true,onClick:()=>act.ride()},{label:'Keep walking',onClick:()=>act.close()}]};
   }
   function machineCard(act){
@@ -452,20 +483,36 @@ export function buildBeastCave(ctx) {
       facts:[{cls:'I',text:'The bike is the KONA.m Speedmax CFR study — not presented as Lionel Sanders’ race build.'},{cls:'G',text:'Trainer, fans and room are original KONA.m geometry.'}],
       actions:[{label:'Ride →',primary:true,onClick:()=>act.ride()},{label:'Keep walking',onClick:()=>act.close()}]};
   }
-  function zwiftCard(){
-    const items=zwiftRoom.products.slice(0,4);
-    return {kind:'beast',eyebrow:'BUILD THIS CAVE · UNOFFICIAL',title:'The hardware behind a room like this.',kicker:'Zwift hardware · prices source-dated',
-      lede:'A smart trainer, a frame or bundle, and a way to steer and shift. Prices are from Zwift’s EU store on the date shown and change; check before you buy.',
-      stats:items.slice(0,3).map(p=>({value:`€${Math.round(p.current_eu_price_eur)}`,label:p.name.replace(/^Wahoo /,'')})),
-      facts:[...items.map(p=>({cls:'P',text:`${p.name} — €${p.current_eu_price_eur} (EU store, ${p.freshness}).`})),
-        {cls:'I',text:zwiftRoom.disclaimer}],
-      notes:[{summary:'No affiliate links',text:'The Zwift affiliate programme exists but is not approved for KONA.m, so these links go to Zwift’s own pages and earn nothing.'}],
-      actions:items.slice(0,2).map(p=>({label:`${p.name.split(' with ')[0]} ↗`,href:p.source}))};
-  }
-
   // ---------------------------------------------------------------- the visitor in the saddle
   function startRide(){ ride={iv:createInterval(),holding:false}; return ride; }
-  function stopRide(){ const r=ride; ride=null; return r?r.iv.result():null; }
+  let lastTrace=[];
+  function stopRide(){ const r=ride; ride=null; if(!r) return null; lastTrace=r.iv.state.trace.slice(); return r.iv.result(); }
+  function introCard(act){
+    return {kind:'beast',eyebrow:'AN INDEPENDENT ROOM · LIONEL SANDERS',title:'The work nobody sees.',kicker:'Not a trophy room.',
+      lede:'A training room with nobody in it. Five published results on the wall, one empty saddle, one 60-second interval. Take the saddle, or walk the room first.',
+      facts:[{cls:'G',text:'An independent KONA.m editorial room. Not affiliated with, endorsed by or sponsored by Lionel Sanders or any brand.'},{cls:'P',text:'Every result on the wall is published and linked to its source.'}],
+      actions:[{label:'Take the saddle →',primary:true,onClick:()=>act.ride()},{label:'Walk the room',onClick:()=>act.close()}]};
+  }
+  // a 1080×1350 card of the interval just ridden, for the share sheet
+  function resultImage(res,best){
+    const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');
+    const bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#14100e');bg.addColorStop(1,'#060505');g.fillStyle=bg;g.fillRect(0,0,W,H);
+    const glow=g.createRadialGradient(W*.5,H*.42,10,W*.5,H*.42,W*.7);glow.addColorStop(0,'rgba(255,106,0,.22)');glow.addColorStop(1,'rgba(255,106,0,0)');g.fillStyle=glow;g.fillRect(0,0,W,H);
+    g.fillStyle='#ff6a00';g.fillRect(90,120,90,8);
+    g.fillStyle='#eee5d9';g.font=`800 34px ${FONT}`;g.letterSpacing='6px';g.fillText('BEAST INTERVAL · 60 S',90,190);g.letterSpacing='0px';
+    g.font=`italic 400 300px ${SERIF}`;g.fillText(`${res.inBand}s`,80,500);
+    g.fillStyle='#bdb3a6';g.font=`600 40px ${FONT}`;g.fillText('inside a moving power band',90,575);
+    // trace with the four bands
+    const gx=90,gy=650,gw=W-180,gh=300,Y=v=>gy+gh-(Math.min(480,v)/480)*gh;
+    g.fillStyle='rgba(255,255,255,.04)';g.fillRect(gx,gy,gw,gh);
+    for(const [a,b,lo,hi] of [[0,15,240,280],[15,30,280,320],[30,45,310,350],[45,60,340,385]]){g.fillStyle='rgba(255,122,26,.2)';g.fillRect(gx+a/60*gw,Y(hi),(b-a)/60*gw,Y(lo)-Y(hi));}
+    g.strokeStyle='#ff7a1a';g.lineWidth=6;g.lineJoin='round';g.beginPath();lastTrace.forEach((p,i)=>{const x=gx+p.t/60*gw,y=Y(p.w);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();
+    g.fillStyle='#eee5d9';g.font=`700 44px ${FONT}`;
+    [[`${res.avgWatts} W`,'average'],[`${res.bestStreak} s`,'best streak'],[`${best} s`,'personal best']].forEach(([v,l],i)=>{const x=90+i*320;g.fillText(v,x,1050);g.fillStyle='#8b8178';g.font=`600 26px ${FONT}`;g.fillText(l.toUpperCase(),x,1090);g.fillStyle='#eee5d9';g.font=`700 44px ${FONT}`;});
+    g.fillStyle='#8b8178';g.font=`italic 400 40px ${SERIF}`;g.fillText('The work nobody sees.',90,1200);
+    g.font=`600 22px ${FONT}`;g.fillText('KONA.M · AN INDEPENDENT ROOM · SIMULATED POWER FROM TAPS',90,1250);
+    return new Promise(r=>c.toBlob(b=>r(b),'image/jpeg',.92));
+  }
 
   return {
     group,floor,sign,bikeSpot,infos,mood:BEAST_MOOD,
@@ -490,7 +537,7 @@ export function buildBeastCave(ctx) {
       if(treadG){const t=seat(treadG,1.45,Math.PI/2);t.position.copy(treadmill.position);group.add(t);treadmill.visible=false;t.traverse(o=>{if(o.isMesh){o.userData.info=runConsole.userData.info;pickables.push(o);}});}
       if(trainerG){const t=seat(trainerG,.56,TRAINER_YAW);t.name='beast-trainer-glb';trainer.add(t);for(const c of trainer.children)if(c!==t)c.visible=false;t.traverse(o=>{if(o.isMesh){o.userData.info=trainerInfo;pickables.push(o);}});}
     },
-    startRide,stopRide,
+    startRide,stopRide,introCard,resultImage,
     hold(on){ if(ride) ride.holding=!!on; },
     setBike(bike,dress){
       bike.traverse(o=>{if(!o.isMesh)return;o.material=Array.isArray(o.material)?o.material.map(m=>m.clone()):o.material.clone();o.userData.info=bikeSpot.info;o.castShadow=!lite;delete o.userData.piece;pickables.push(o);});

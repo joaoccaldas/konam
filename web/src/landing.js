@@ -12,7 +12,8 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { buildPier, pierWalkable, PIER, ordinal } from './pier.js';
 import { initAppShell } from './app-shell.js';
 import { buildHalloween, hweenWalkable, HDOOR, HROOM } from './halloween.js';
-import { buildBeastCave, beastCaveWalkable, BDOOR, BROOM, BLINK } from './beast-cave.js';
+import { buildBeastCave, beastCaveWalkable, BDOOR, BROOM } from './beast-cave.js';
+import { readStorage, writeStorage } from './engine/storage.js';
 import { buildSanctuary, sanctuaryWalkable, SDOOR, SROOM } from './sanctuary.js';
 import { buildGalleries, galleryWalkable, galleryFloorY, EDOOR, UPPER } from './galleries.js';
 import { createRoomSound } from './roomSound.js';
@@ -883,8 +884,7 @@ const atlas = buildWings({ scene, lettering, FONT, SERIF, lite, pickables, obsta
   { wings: window.__WINGS || [], bikes: window.__ATLAS?.bikes || [], extraRefs: window.__ATLAS?.extra_refs || [], paintings: window.__ART?.paintings || [], sculptures: window.__ART?.sculptures || [] });
 
 // Brand rooms built from data (museum/world/brand_rooms.json) — Nike first, others just add data.
-// in review, the Beast Cave shares a party wall with Breitling: one door between them
-const brandRooms = BRANDROOMS.map(d => { const openings = beast && d.id === BLINK.toRoom ? [{ wall: 'north', x0: BLINK.x0, x1: BLINK.x1, h: BLINK.h }] : []; const r = buildBrandRoom(d, { lite, spinners, obstacles, pickables, openings }); scene.add(r.group); return r; });
+const brandRooms = BRANDROOMS.map(d => { const r = buildBrandRoom(d, { lite, spinners, obstacles, pickables }); scene.add(r.group); return r; });
 const brandProducts = brandRooms.flatMap(r => r.products);
 let brandLoaded = false;
 window.__brandRooms = brandRooms;
@@ -1110,7 +1110,7 @@ const roomOf = (x, z) => {
 };
 const DOORZ = { champ: DZ, wyld: WZ, pier: -46.5, hween: (HDOOR.z0 + HDOOR.z1) / 2, beast: (BDOOR.z0 + BDOOR.z1) / 2, ...Object.fromEntries(brandRooms.map(r => [r.desc.id, r.desc.door ? (r.desc.door.z0 + r.desc.door.z1) / 2 : (r.bounds.z0 + r.bounds.z1) / 2])) };
 const EAST_DOORS = new Set(['beast']);                              // rooms whose hall door is in the east glass wall
-const ROOM_LINKS = beast ? { [BLINK.toRoom]: { via: 'beast', pts: [{ x: (BLINK.x0 + BLINK.x1) / 2, z: BROOM.z1 + 1.1 }, { x: (BLINK.x0 + BLINK.x1) / 2, z: BROOM.z1 - 1.3 }] } } : {};
+const ROOM_LINKS = {};                                              // rooms reached through another room (none today)
 const PIER_IN = [{ x: 1.2, z: -38.6 }, { x: 5.6, z: -38.6 }, { x: 5.4, z: -44.6 }, { x: 5.4, z: -48.4 }];   // round the apse plinth, through the glass door
 const NAVE_LANE = 13.6;                                             // upstairs walking lane: east of the bay plinths (x 11.15), west of the room openings
 const fader = document.getElementById('fade');
@@ -1312,14 +1312,19 @@ function endRide(finished) {
   const res = beast.stopRide(); beast.hold(false);
   $('rideHud').hidden = true; document.body.classList.remove('riding');
   if (finished && res) {
-    let earned = '';
+    let earned = '', bests = {};
+    try { bests = JSON.parse(readStorage('athleteRoomBests') || '{}') || {}; } catch (_) { bests = {}; }
+    const prevBest = +bests.beastInterval || 0, best = Math.max(prevBest, res.inBand), isBest = res.inBand > prevBest;
+    if (isBest) { bests.beastInterval = res.inBand; writeStorage('athleteRoomBests', JSON.stringify(bests)); }
     if (res.rewarded) { try { applyStoredEvent({ type: 'CHALLENGE_COMPLETED', id: 'CHALLENGE_COMPLETED:beast-interval', subject: 'beast-interval' }); earned = ' Interval logged to your progress.'; } catch (_) { } }
     renderCard({ kind: 'beast', eyebrow: 'BEAST INTERVAL · 60 S', title: res.rewarded ? 'You held it.' : 'Almost is still information.',
       kicker: `${res.inBand} s in the band · best streak ${res.bestStreak} s`,
       lede: (res.rewarded ? 'Half the minute or more inside a moving power band. Now imagine the session is not one minute.' : 'Under 30 seconds in the band. The loop is the same as on the wall: inspect, adapt, return.') + earned,
-      stats: [{ value: `${res.inBand} s`, label: 'in the band' }, { value: `${res.avgWatts} W`, label: 'average' }, { value: `${res.bestStreak} s`, label: 'best streak' }],
+      stats: [{ value: `${res.inBand} s`, label: 'in the band' }, { value: `${res.avgWatts} W`, label: 'average' }, { value: `${best} s`, label: isBest ? 'new personal best' : 'personal best' }],
       facts: [{ cls: 'G', text: 'Simulated power from your taps — not a real trainer reading.' }],
-      actions: [{ label: 'Ride again', primary: true, onClick: () => startRide() }, { label: 'Leave saddle', onClick: () => leaveSaddle() }] });
+      notes: [{ summary: 'Lionel’s line', text: 'Not recorded. This slot stays empty until Lionel Sanders chooses to ride the interval — nothing here is invented on Lionel’s behalf.' }],
+      actions: [{ label: 'Share result', primary: true, onClick: () => beast.resultImage(res, best).then(b => shareImage(b, { title: 'Beast Interval', text: `I held ${res.inBand} s of the Beast Interval in the KONA.m Beast Cave.`, filename: 'beast-interval.jpg' })) },
+        { label: 'Ride again', onClick: () => startRide() }, { label: 'Leave saddle', onClick: () => leaveSaddle() }] });
   } else leaveSaddle();
 }
 function leaveSaddle() {
@@ -1846,7 +1851,7 @@ function frame(now) {
     const want = Math.atan2(-fx, -fz), dyaw = ((want - P.yaw + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
     const wantPitch = Math.atan2(path.face.y - (P.y + EYE), Math.hypot(fx, fz));
     P.yaw += dyaw * (1 - Math.exp(-dt * 5.6)); P.pitch += (wantPitch - P.pitch) * (1 - Math.exp(-dt * 4.8));
-    if (!path.length && Math.abs(dyaw) < .02) { const pc = path.piece, ch = path.champ, wy = path.wyld, pr = path.pier, hw = path.hween, sa = path.sanctuary, gy = path.gallery, kn = path.kona, ax = path.atlas, ar = path.art, br = path.brand, bs = path.beast; path = null; if (bs) { if (small) toast('Tap the bike to take the saddle'); else openInfo(beast.bikeSpot.info); } if (ax) openAtlas(ax); if (ar) openArt(ar); if (hw) openHween(); if (sa) openSanctuary(sa); if (gy) openGallery(gy); if (kn) openKona(kn); if (pc) openCard(pc); if (ch) openChamp(ch); if (wy) openWyld(wy); if (br) openBrand(br); if (pr) pr.kind === 'finale' ? openFinale() : openYear(pr); }
+    if (!path.length && Math.abs(dyaw) < .02) { const pc = path.piece, ch = path.champ, wy = path.wyld, pr = path.pier, hw = path.hween, sa = path.sanctuary, gy = path.gallery, kn = path.kona, ax = path.atlas, ar = path.art, br = path.brand, bs = path.beast; path = null; if (bs) renderCard(beast.introCard({ ride: startRide, close: () => closeCard() })); if (ax) openAtlas(ax); if (ar) openArt(ar); if (hw) openHween(); if (sa) openSanctuary(sa); if (gy) openGallery(gy); if (kn) openKona(kn); if (pc) openCard(pc); if (ch) openChamp(ch); if (wy) openWyld(wy); if (br) openBrand(br); if (pr) pr.kind === 'finale' ? openFinale() : openYear(pr); }
   } else if (path && !path.length) path = null;
   const k = 1 - Math.exp(-dt * 15); P.vx += (wx - P.vx) * k; P.vz += (wz - P.vz) * k;
   const nx = P.x + P.vx * dt, nz = P.z + P.vz * dt;
@@ -1934,7 +1939,7 @@ function frame(now) {
     for (const p of PIECES) if (p.bike) p.bike.visible = reg !== 'gallery' && (DOORZ[reg] == null || reg === 'pier' || Math.abs(p.pos.z - DOORZ[reg]) < 7);
     for (const b of wyldBikes) if (b.bike) b.bike.visible = reg === 'wyld' || (reg !== 'gallery' && reg !== 'champ' && P.z < -14);
     const upstairs = reg === 'gallery' || reg === 'stair';
-    const beastVisible = !!beast && (reg === 'beast' || reg === BLINK.toRoom || (reg === 'hall' && P.z < BDOOR.z1 + 5 && P.z > BDOOR.z0 - 5));
+    const beastVisible = !!beast && (reg === 'beast' || (reg === 'hall' && P.z < BDOOR.z1 + 5 && P.z > BDOOR.z0 - 5));
     if (beast) beast.group.visible = beastVisible;
     const beastNow = beastVisible ? beast.update(t, reduce, dt) : null;
     if (riding && beast?.ride) {

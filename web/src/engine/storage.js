@@ -26,6 +26,7 @@ const MAP = Object.freeze({
   companionSources: { current: 'kona.companion.sources.v1', legacy: [] },
   companionTravel: { current: 'kona.companion.travel.v1', legacy: [] },
   companionCache: { current: 'kona.companion.cache.v1', legacy: [] },
+  athleteRoomBests: { current: 'kona.athleteRoomBests.v1', legacy: [] },
 });
 
 export function storageKey(name) {
