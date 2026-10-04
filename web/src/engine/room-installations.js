@@ -282,8 +282,10 @@ function norwegian(ctx) {
   const oak=new THREE.MeshStandardMaterial({color:'#2b190f',roughness:.84});
   const paper=new THREE.MeshStandardMaterial({color:'#d8d0c3',roughness:.92});
   const linen=new THREE.MeshStandardMaterial({color:'#a8a29a',roughness:.98});
-  const glass=new THREE.MeshPhysicalMaterial({color:'#8fb2bb',roughness:.22,transmission:lite?.12:.34,transparent:true,opacity:lite?.28:.42,depthWrite:false,envMapIntensity:.72});
-  const frost=new THREE.MeshPhysicalMaterial({color:'#749ca7',roughness:.48,transmission:lite?.06:.16,transparent:true,opacity:lite?.20:.30,depthWrite:false});
+  // Alpha, roughness and PMREM carry the chamber glass. Transmission is intentionally
+  // disabled on every tier because Three.js' transmissive pre-pass almost doubles room calls.
+  const glass=new THREE.MeshPhysicalMaterial({color:'#8fb2bb',roughness:.22,transmission:0,transparent:true,opacity:lite?.24:.42,depthWrite:false,envMapIntensity:.72});
+  const frost=new THREE.MeshPhysicalMaterial({color:'#749ca7',roughness:.48,transmission:0,transparent:true,opacity:lite?.18:.30,depthWrite:false});
   const warm=new THREE.MeshStandardMaterial({color:'#3b1605',roughness:.38,emissive:'#ff6a00',emissiveIntensity:lite?.48:1.05});
   const warmDim=new THREE.MeshStandardMaterial({color:'#2b160d',roughness:.48,emissive:'#d74c14',emissiveIntensity:lite?.18:.42});
   const cold=new THREE.MeshStandardMaterial({color:'#10323d',roughness:.46,emissive:'#5bbdd0',emissiveIntensity:lite?.14:.34});
@@ -309,62 +311,113 @@ function norwegian(ctx) {
     const m=new THREE.Mesh(new THREE.TorusGeometry(radius,tube,10,36),material);
     m.position.set(x,y,z);m.rotation.x=rx;rg.add(m);return m;
   };
+  // Merge repeated static box primitives by material. The room keeps semantic/pickable
+  // hero objects separate, but architecture does not need one draw call per beam or rail.
+  const mergedMesh=(geos,material)=>{
+    if(!geos.length)return null;
+    const merged=mergeGeometries(geos,false);
+    geos.forEach(g=>g.dispose());
+    const mesh=new THREE.Mesh(merged,material);rg.add(mesh);return mesh;
+  };
+  const mergedBoxes=(specs,material)=>{
+    const geos=specs.map(([w,h,d,x,y,z,rx=0,ry=0,rz=0])=>{
+      const geo=new THREE.BoxGeometry(w,h,d);
+      geo.applyMatrix4(new THREE.Matrix4().compose(
+        new THREE.Vector3(x,y,z),
+        new THREE.Quaternion().setFromEuler(new THREE.Euler(rx,ry,rz)),
+        new THREE.Vector3(1,1,1)
+      ));
+      return geo;
+    });
+    return mergedMesh(geos,material);
+  };
+  const rodGeo=(a,b,radius,segments=10)=>{
+    const mid=a.clone().add(b).multiplyScalar(.5),dir=b.clone().sub(a),len=dir.length();
+    const geo=new THREE.CylinderGeometry(radius,radius,len,segments);
+    geo.applyMatrix4(new THREE.Matrix4().compose(
+      mid,
+      new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),dir.normalize()),
+      new THREE.Vector3(1,1,1)
+    ));
+    return geo;
+  };
+  const torusGeo=(radius,tube,x,y,z)=>{
+    const geo=new THREE.TorusGeometry(radius,tube,10,36);
+    geo.rotateX(Math.PI/2);geo.translate(x,y,z);return geo;
+  };
+  const boxGeo=(w,h,d,x,y,z)=>{
+    const geo=new THREE.BoxGeometry(w,h,d);geo.translate(x,y,z);return geo;
+  };
 
   // Architectural depth inside the host shell: overhead ribs, wet floor, service spine.
-  for(let i=0;i<(lite?5:8);i++){
-    const z=r.z1+.45+i*((rd-.9)/((lite?5:8)-1));
-    box(rw-.55,.09,.11,cx,Y+3.88,z,blackSteel);
-    if(i%2===0) box(rw*.62,.025,.035,cx-.30,Y+3.72,z,warmDim);
+  const ribCount=lite?5:8;
+  const ribs=[],ribWarm=[];
+  for(let i=0;i<ribCount;i++){
+    const z=r.z1+.45+i*((rd-.9)/(ribCount-1));
+    ribs.push([rw-.55,.09,.11,cx,Y+3.88,z]);
+    if(i%2===0)ribWarm.push([rw*.62,.025,.035,cx-.30,Y+3.72,z]);
   }
+  mergedBoxes(ribs,blackSteel);
+  mergedBoxes(ribWarm,warmDim);
   box(.18,3.3,rd-.55,bounds.x0+.25,Y+1.65,cz,blackSteel);
   box(.07,3.0,rd-.75,bounds.x0+.39,Y+1.52,cz,cold);
 
   // Wet floor fields: subtle reflection zones rather than mirror slabs.
-  [
-    [cx-1.65,cz-rd*.29,2.35,.58],
-    [cx-1.35,cz,2.65,.66],
-    [cx-1.05,cz+rd*.29,2.45,.58],
-    [cx+2.4,cz-.15,1.25,.74]
-  ].forEach(([x,z,w,d])=>box(w,.012,d,x,Y+.014,z,wet));
+  mergedBoxes([
+    [2.35,.012,.58,cx-1.65,Y+.014,cz-rd*.29],
+    [2.65,.012,.66,cx-1.35,Y+.014,cz],
+    [2.45,.012,.58,cx-1.05,Y+.014,cz+rd*.29],
+    [1.25,.012,.74,cx+2.4,Y+.014,cz-.15]
+  ],wet);
 
   const laneZ=[cz-rd*.28,cz,cz+rd*.28];
   const specimenSlots=[];
+  const left=cx-3.35,right=cx+1.30,headY=3.23;
+  mergedBoxes(laneZ.flatMap(z=>[
+    [.10,3.05,.12,left,Y+1.53,z],
+    [.10,3.05,.12,right,Y+1.53,z],
+    [right-left+.10,.10,.12,(left+right)/2,Y+headY,z]
+  ]),blackSteel);
+  mergedBoxes(laneZ.map(z=>[right-left-.55,.025,.05,(left+right)/2,Y+headY-.22,z]),warmDim);
+  mergedBoxes(laneZ.map(z=>[rw*.55,.025,Math.min(.92,rd*.20),cx-.85,Y+.018,z]),rubber);
+  mergedBoxes(laneZ.flatMap(z=>[-.27,.27].map(dz=>[3.85,.016,.018,cx-1.0,Y+.037,z+dz])),steel);
+  mergedBoxes(laneZ.flatMap(z=>[-.27,.27].map(dz=>[.32,.012,.035,cx-2.95,Y+.045,z+dz])),warm);
+  mergedBoxes(laneZ.map(z=>[.24,.74,.48,cx-1.54,Y+.74,z]),blackSteel);
+  mergedBoxes(laneZ.map(z=>[.98,.10,.42,cx+.68,Y+.08,z]),steel);
+  mergedBoxes(laneZ.flatMap(z=>[
+    [.16,.08,1.00,cx+.44,Y+.055,z],
+    [.16,.08,1.00,cx+.93,Y+.055,z]
+  ]),blackSteel);
+  const runRollers=new THREE.InstancedMesh(new THREE.CylinderGeometry(.055,.055,.46,18),steel,laneZ.length*2);
+  const flywheels=new THREE.InstancedMesh(new THREE.CylinderGeometry(.35,.35,.17,36),blackSteel,laneZ.length);
+  const trainerAxles=new THREE.InstancedMesh(new THREE.CylinderGeometry(.065,.065,.34,14),steel,laneZ.length);
+  const laneBottles=new THREE.InstancedMesh(new THREE.CylinderGeometry(.045,.052,.34,16),glass,laneZ.length);
+  {
+    const d=new THREE.Object3D();let n=0;
+    for(const z of laneZ)for(const dx of [-.68,.68]){
+      d.position.set(cx-2.35+dx,Y+.13,z);d.rotation.set(Math.PI/2,0,0);d.updateMatrix();
+      runRollers.setMatrixAt(n++,d.matrix);
+    }
+    laneZ.forEach((z,i)=>{
+      d.position.set(cx+.68,Y+.43,z);d.rotation.set(0,0,Math.PI/2);d.updateMatrix();flywheels.setMatrixAt(i,d.matrix);
+      d.position.set(cx+.68,Y+.43,z);d.rotation.set(0,0,Math.PI/2);d.updateMatrix();trainerAxles.setMatrixAt(i,d.matrix);
+      d.position.set(cx-.02,Y+.25,z-.34);d.rotation.set(0,0,0);d.updateMatrix();laneBottles.setMatrixAt(i,d.matrix);
+    });
+    runRollers.instanceMatrix.needsUpdate=flywheels.instanceMatrix.needsUpdate=trainerAxles.instanceMatrix.needsUpdate=laneBottles.instanceMatrix.needsUpdate=true;
+    rg.add(runRollers,flywheels,trainerAxles,laneBottles);
+    mark(flywheels,'Direct-drive trainers','Generic equipment studies. No athlete-specific trainer claim is attached.');
+  }
+  mergedBoxes(laneZ.map((z,i)=>[.40,.025,.33,cx-.87,Y+.31,z+.34,0,.08*(i-1),0]),linen);
+  const laneRubberClutter=[],lanePaperClutter=[],laneMetalClutter=[];
 
   laneZ.forEach((z,i)=>{
-    // Monumental lane portal.
-    const left=cx-3.35,right=cx+1.30,headY=3.23;
-    box(.10,3.05,.12,left,Y+1.53,z,blackSteel);
-    box(.10,3.05,.12,right,Y+1.53,z,blackSteel);
-    box(right-left+.10,.10,.12,(left+right)/2,Y+headY,z,blackSteel);
-    box(right-left-.55,.025,.05,(left+right)/2,Y+headY-.22,z,warmDim);
-
-    // Twin rails and lane pad.
-    box(rw*.55,.025,Math.min(.92,rd*.20),cx-.85,Y+.018,z,rubber);
-    for(const dz of [-.27,.27]){
-      box(3.85,.016,.018,cx-1.0,Y+.037,z+dz,steel);
-      box(.32,.012,.035,cx-2.95,Y+.045,z+dz,warm);
-    }
 
     contactShadow(cx-.20,z,4.3,.72,.42);
 
-    // Trainer: flywheel, axle, feet, support.
-    const fly=mark(new THREE.Mesh(new THREE.CylinderGeometry(.35,.35,.17,36),blackSteel),
-      'Direct-drive trainer','Generic equipment study. No athlete-specific trainer claim is attached.');
-    fly.rotation.z=Math.PI/2;put(fly,cx+.68,Y+.43,z);
-    const axle=new THREE.Mesh(new THREE.CylinderGeometry(.065,.065,.34,14),steel);
-    axle.rotation.z=Math.PI/2;put(axle,cx+.68,Y+.43,z);
-    box(.98,.10,.42,cx+.68,Y+.08,z,steel);
-    box(.16,.08,1.00,cx+.44,Y+.055,z,blackSteel);
-    box(.16,.08,1.00,cx+.93,Y+.055,z,blackSteel);
-
-    // Compact run deck with rollers and console.
+    // Trainer flywheels/axles are shared instanced hardware; lane supports stay batched.
+    // Compact run deck with shared instanced rollers and an individual inspectable deck.
     const deck=mark(box(1.62,.10,.54,cx-2.35,Y+.09,z,rubber),
       'Run deck','Compact treadmill-style deck: the lane reads as a complete training station rather than a bike pedestal.');
-    for(const dx of [-.68,.68]){
-      const roller=new THREE.Mesh(new THREE.CylinderGeometry(.055,.055,.46,18),steel);
-      roller.rotation.x=Math.PI/2;put(roller,cx-2.35+dx,Y+.13,z);
-    }
-    box(.24,.74,.48,cx-1.54,Y+.74,z,blackSteel);
     const console=mark(box(.30,.20,.42,cx-1.48,Y+1.35,z,cold),
       'Lane console','Environmental and session information lives here. It is editorial UI, not an athlete data claim.');
     console.rotation.z=-.05;
@@ -373,27 +426,37 @@ function norwegian(ctx) {
     // supplies the canonical CFR model. It is tagged so review/host code can hide it without
     // knowing mesh names or reimplementing the room.
     const bx=cx-.22,by=Y+.66;
-    const fallback=[];
-    const wf=ring(.42,.026,steel,bx-.55,by,z,Math.PI/2);fallback.push(wf);
-    const wr=ring(.42,.026,steel,bx+.55,by,z,Math.PI/2);fallback.push(wr);
-    mark(wf,'Canonical bike slot','The room reserves a canonical bike position, but no athlete-specific bike or livery is assigned without a verified source.');
     const pBB=new THREE.Vector3(bx,by-.05,z),pSeat=new THREE.Vector3(bx-.10,by+.54,z),pHead=new THREE.Vector3(bx+.42,by+.30,z);
-    fallback.push(
-      rod(pBB,pSeat,.026,blackSteel),rod(pSeat,pHead,.026,blackSteel),rod(pHead,pBB,.026,blackSteel),
-      rod(pSeat,new THREE.Vector3(bx-.55,by,z),.022,blackSteel),rod(pHead,new THREE.Vector3(bx+.55,by,z),.022,blackSteel),
-      rod(new THREE.Vector3(bx+.40,by+.34,z),new THREE.Vector3(bx+.70,by+.42,z),.018,steel),
-      box(.34,.035,.10,bx-.14,by+.61,z,blackSteel)
-    );
-    fallback.filter(Boolean).forEach(o=>{o.userData.nor3BikeFallback=true;});
+    const fallbackSteel=mergedMesh([
+      torusGeo(.42,.026,bx-.55,by,z),torusGeo(.42,.026,bx+.55,by,z),
+      rodGeo(new THREE.Vector3(bx+.40,by+.34,z),new THREE.Vector3(bx+.70,by+.42,z),.018,10)
+    ],steel);
+    const fallbackFrame=mergedMesh([
+      rodGeo(pBB,pSeat,.026),rodGeo(pSeat,pHead,.026),rodGeo(pHead,pBB,.026),
+      rodGeo(pSeat,new THREE.Vector3(bx-.55,by,z),.022),rodGeo(pHead,new THREE.Vector3(bx+.55,by,z),.022),
+      boxGeo(.34,.035,.10,bx-.14,by+.61,z)
+    ],blackSteel);
+    mark(fallbackSteel,'Canonical bike slot','The room reserves a canonical bike position, but no athlete-specific bike or livery is assigned without a verified source.');
+    [fallbackSteel,fallbackFrame].forEach(o=>{o.userData.nor3BikeFallback=true;});
 
-    // Accessories and signs of use.
-    const bottle=new THREE.Mesh(new THREE.CylinderGeometry(.045,.052,.34,16),glass);
-    put(bottle,bx+.20,Y+.25,z-.34);
-    const towel=box(.40,.025,.33,bx-.65,Y+.31,z+.34,linen);towel.rotation.y=.08*(i-1);
+    // Accessories and signs of use. Bottles and towels are shared/merged above.
     const identity=ring(.11,.014,i===1?lime:warm,bx-1.10,Y+.16,z,Math.PI/2);
     const plaque=textPanel('0'+(i+1),.36,.13,i===1?'#c7f300':'#ff8b55');plaque.position.set(left+.02,Y+2.70,z-.075);plaque.rotation.y=Math.PI/2;rg.add(plaque);
     mark(identity,['Lane 01','Lane 02','Lane 03'][i],
       ['Kristian Blummenfelt concept lane','Gustav Iden concept lane','Casper Stornes concept lane'][i]+'. Subject presence does not imply endorsement.');
+
+    // Each rail carries a different trace of use. These are intentionally generic,
+    // rights-safe objects, merged later so human entropy costs only three draw calls.
+    if(i===0){
+      laneRubberClutter.push([.30,.065,.13,bx-1.02,Y+.075,z-.37,0,.18,.04],[.28,.060,.12,bx-.72,Y+.073,z-.39,0,-.10,-.03]);
+      lanePaperClutter.push([.24,.008,.16,bx+.30,Y+.055,z+.36,0,.22,0]);
+    }else if(i===1){
+      lanePaperClutter.push([.30,.008,.20,bx-1.02,Y+.052,z+.37,0,-.16,0],[.18,.008,.12,bx-.76,Y+.055,z+.34,0,.09,0]);
+      laneMetalClutter.push([.20,.07,.11,bx+.38,Y+.07,z+.36,0,.28,0]);
+    }else{
+      laneRubberClutter.push([.42,.16,.20,bx-.96,Y+.10,z-.35,0,-.12,.03]);
+      laneMetalClutter.push([.34,.045,.11,bx+.36,Y+.055,z+.37,0,-.20,0]);
+    }
 
     // Small lane practical light.
     if(!lite||i===1){
@@ -404,6 +467,9 @@ function norwegian(ctx) {
     specimenSlots.push(new THREE.Vector3(bx,Y,z));
     obstacles.push({box:[left-.12,right+.12,z-.46,z+.46]});
   });
+  mergedBoxes(laneRubberClutter,rubber);
+  mergedBoxes(lanePaperClutter,paper);
+  mergedBoxes(laneMetalClutter,steel);
 
   // Protocol table and wall: a working bench, not a sci-fi hologram.
   box(2.75,.13,1.16,cx+2.55,Y+1.02,cz,oak);
@@ -414,10 +480,9 @@ function norwegian(ctx) {
   const screen=box(.44,.018,.21,cx+1.82,Y+1.47,cz-.08,cold);screen.rotation.x=-.16;
   box(2.65,1.65,.08,cx+2.55,Y+2.18,r.z0-.14,basalt);
   const protocolTitle=textPanel('MEASURE  /  ADAPT  /  REPEAT',2.20,.20,'#c8f2fb','rgba(6,12,15,.82)');protocolTitle.position.set(cx+2.55,Y+3.15,r.z0-.21);rg.add(protocolTitle);
-  for(let i=0;i<4;i++){
-    const bar=box(.08,.55+.12*i,.028,cx+1.75+i*.42,Y+2.05,r.z0-.19,i===3?warm:cold);
-    bar.rotation.z=(i-1.5)*.025;
-  }
+  const again=textPanel('AGAIN.',.42,.12,'#c7f300','rgba(6,12,15,.66)');again.position.set(cx+3.27,Y+1.64,r.z0-.205);again.rotation.z=-.025;rg.add(again);
+  mergedBoxes([0,1,2].map(i=>[.08,.55+.12*i,.028,cx+1.75+i*.42,Y+2.05,r.z0-.19,0,0,(i-1.5)*.025]),cold);
+  mergedBoxes([[.08,.91,.028,cx+3.01,Y+2.05,r.z0-.19,0,0,(3-1.5)*.025]],warm);
   const vialGeo=new THREE.CylinderGeometry(.025,.025,.18,12);
   const vials=new THREE.InstancedMesh(vialGeo,glass,lite?8:16);
   const dummy=new THREE.Object3D();
@@ -427,10 +492,9 @@ function norwegian(ctx) {
     dummy.updateMatrix();vials.setMatrixAt(i,dummy.matrix);
   }
   rg.add(vials);mark(vials,'Sample rack','Repeated lab props are instanced to keep the room visually dense without multiplying draw calls.');
-  for(let i=0;i<(lite?3:6);i++){
-    const card=box(.34,.010,.23,cx+1.95+i*.31,Y+1.15,cz+.38,paper);
-    card.rotation.y=(rand()-.5)*.12;
-  }
+  mergedBoxes(Array.from({length:lite?3:6},(_,i)=>[
+    .34,.010,.23,cx+1.95+i*.31,Y+1.15,cz+.38,0,(rand()-.5)*.12,0
+  ]),paper);
   const protocolLight=new THREE.PointLight('#ffd0a6',lite?1.4:3.2,4.8,2);
   protocolLight.position.set(cx+2.5,Y+2.65,cz-.2);rg.add(protocolLight);
   obstacles.push({box:[cx+1.15,cx+3.95,cz-.76,cz+.76]});
@@ -445,18 +509,16 @@ function norwegian(ctx) {
     'Environment bay','A controlled-environment chamber for heat, cold and altitude storytelling. It is an original room device, not a replica of a specific facility.');
   pane(gd,gh,ax-gw/2,Y+gh/2,az,Math.PI/2,glass);
   pane(gd,gh,ax+gw/2,Y+gh/2,az,Math.PI/2,glass);
-  for(const px of [ax-gw/2,ax+gw/2]){
-    box(.035,gh,.035,px,Y+gh/2,az-gd/2,steel);
-    box(.035,gh,.035,px,Y+gh/2,az+gd/2,steel);
-  }
-  box(gw,.035,.035,ax,Y+gh,az-gd/2,steel);
-  box(gw,.035,.035,ax,Y+gh,az+gd/2,steel);
+  mergedBoxes([
+    [ .035,gh,.035,ax-gw/2,Y+gh/2,az-gd/2],[ .035,gh,.035,ax-gw/2,Y+gh/2,az+gd/2],
+    [ .035,gh,.035,ax+gw/2,Y+gh/2,az-gd/2],[ .035,gh,.035,ax+gw/2,Y+gh/2,az+gd/2],
+    [ gw,.035,.035,ax,Y+gh,az-gd/2],[ gw,.035,.035,ax,Y+gh,az+gd/2]
+  ],steel);
   box(.62,.82,.20,ax+.46,Y+.87,az-gd/2+.13,blackSteel);
   box(.42,.26,.025,ax+.46,Y+1.10,az-gd/2-.01,cold);
-  for(let i=0;i<5;i++){
-    const strip=box(.018,.52,.02,ax-gw*.34+i*(gw*.17),Y+1.6,az-gd/2-.02,frost);
-    strip.rotation.z=(i-2)*.025;
-  }
+  mergedBoxes(Array.from({length:5},(_,i)=>[
+    .018,.52,.02,ax-gw*.34+i*(gw*.17),Y+1.6,az-gd/2-.02,0,0,(i-2)*.025
+  ]),frost);
 
   // Heat/cool wall and moving fans.
   const fanRotors=[];
@@ -467,10 +529,12 @@ function norwegian(ctx) {
     const hub=new THREE.Mesh(new THREE.CylinderGeometry(.08,.08,.14,16),steel);
     hub.rotation.z=Math.PI/2;put(hub,cx+3.13,Y+1.22,z);
     const rotor=new THREE.Group();rotor.position.set(cx+3.10,Y+1.22,z);rg.add(rotor);
+    const blades=new THREE.InstancedMesh(new THREE.BoxGeometry(.035,.22,.08),steel,5);
+    const d=new THREE.Object3D();
     for(let b=0;b<5;b++){
-      const blade=new THREE.Mesh(new THREE.BoxGeometry(.035,.22,.08),steel);
-      const a=b*Math.PI*2/5;blade.position.set(0,Math.cos(a)*.18,Math.sin(a)*.18);blade.rotation.x=a;rotor.add(blade);
+      const a=b*Math.PI*2/5;d.position.set(0,Math.cos(a)*.18,Math.sin(a)*.18);d.rotation.set(a,0,0);d.updateMatrix();blades.setMatrixAt(b,d.matrix);
     }
+    blades.instanceMatrix.needsUpdate=true;rotor.add(blades);
     fanRotors.push({o:rotor,ph:i});
   });
   const heat=mark(box(.10,.80,.55,cx+3.72,Y+2.62,cz+rd*.34,warm),
@@ -489,21 +553,46 @@ function norwegian(ctx) {
     const disc=mark(new THREE.Mesh(new THREE.CylinderGeometry(.34,.34,.07,48),metals[i]),
       'Abstract result object','Original geometry evokes achievement without copying a medal, trophy or protected object.');
     disc.rotation.x=Math.PI/2;put(disc,cx+2.35+k*.82,Y+2.72,r.z0-.39);
-    box(.52,.035,.26,cx+2.35+k*.82,Y+2.25,r.z0-.31,steel);
   });
+  mergedBoxes([-1,0,1].map(k=>[.52,.035,.26,cx+2.35+k*.82,Y+2.25,r.z0-.31]),steel);
 
-  // Fjord relief: layered topographic memory, denser in high quality.
-  const nRidges=lite?13:25;
+  // Fjord relief: mount on the room-facing side of the smoked-oak service wall.
+  // The outer shell sits behind that wall, so placing content on the shell made it invisible.
+  const featureWallX=bounds.x1-1.18;
+  const nRidges=lite?7:9,steelRidges=[],darkRidges=[];
   for(let i=0;i<nRidges;i++){
-    const z=cz-rd*.44+i*(rd*.88/(nRidges-1));
-    const phase=i*.71;
-    const x=cx+3.77-Math.abs(Math.sin(phase))*1.46-(Math.sin(i*.31)*.10);
-    const h=.22+.22*(1+Math.sin(i*.93))+.05*Math.sin(i*.33);
-    const ridge=box(.045,h,.15,x,Y+.30+h/2,z,i%4===0?steel:blackSteel);
-    ridge.rotation.z=.03*Math.sin(i*.7);
+    const u=i/(nRidges-1),z=cz-rd*.32+u*(rd*.64);
+    const mountain=.58+1.02*Math.abs(Math.sin(u*Math.PI*2.1+.24))+.38*Math.abs(Math.sin(u*Math.PI*4.7));
+    const h=Math.min(2.12,mountain);
+    const depth=.10+.24*Math.abs(Math.sin(i*.83));
+    const x=featureWallX-depth*.52;
+    (i%3===0?steelRidges:darkRidges).push([depth,h,.30,x,Y+.72+h/2,z,0,0,.022*Math.sin(i*.9)]);
   }
-  const fjordBase=mark(box(.72,.20,Math.min(2.9,rd*.70),cx+3.55,Y+.20,cz,oak),
+  mergedBoxes(steelRidges,steel);
+  mergedBoxes(darkRidges,blackSteel);
+  // Sinuous contour lines turn the fins from "bar chart" into terrain memory while
+  // remaining one merged mesh and entirely original geometry.
+  const reliefLineMat=new THREE.MeshStandardMaterial({color:'#5d737b',roughness:.52,metalness:.48,emissive:'#17333b',emissiveIntensity:lite?.08:.18});
+  const contourGeos=[],contours=lite?7:11;
+  for(let i=0;i<contours;i++){
+    const pts=[];
+    for(let j=0;j<7;j++){
+      const u=j/6;
+      pts.push(new THREE.Vector3(
+        featureWallX-.20-.025*Math.sin(i*.6+j*.8),
+        Y+.94+i*.115+.10*Math.sin(u*Math.PI*2.0+i*.52)+.035*Math.sin(u*Math.PI*5.0+i),
+        cz-rd*.31+u*(rd*.62)
+      ));
+    }
+    contourGeos.push(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),lite?22:34,.0105,4,false));
+  }
+  mergedMesh(contourGeos,reliefLineMat);
+  const fjordBase=mark(box(.24,.16,Math.min(6.1,rd*.72),featureWallX-.07,Y+.68,cz,oak),
     'Fjord relief','Original layered geometry brings landscape memory into the room without copying maps or landscape photography.');
+  const fjordLight=new THREE.SpotLight('#9ed9e7',lite?3.6:7.2,7.5,Math.PI*.24,.68,1.55);
+  fjordLight.position.set(featureWallX-2.35,Y+2.15,cz-rd*.20);
+  fjordLight.target.position.set(featureWallX-.12,Y+1.55,cz);
+  rg.add(fjordLight,fjordLight.target);
 
   // Recovery corner and the deliberately mundane objects that make a room feel inhabited.
   contactShadow(cx+1.05,r.z1+.62,1.95,.78,.44);
@@ -519,10 +608,12 @@ function norwegian(ctx) {
     put(bottle,cx+1.55+i*.13,Y+.27,r.z1+.22);
   }
 
-  // Kona line: destination signal, not a second UI system.
-  const konaMark=textPanel('KONA  →',.88,.18,'#ff8a54','rgba(8,11,14,.62)');konaMark.position.set(bounds.x1-.17,Y+3.22,cz);konaMark.rotation.y=-Math.PI/2;rg.add(konaMark);
-  const konaLine=mark(box(.035,.035,Math.min(3.7,rd*.86),bounds.x1-.12,Y+2.95,cz,warm),
+  // Kona line shares that room-facing surface, then turns onto the floor as a route.
+  const konaSignal=new THREE.MeshBasicMaterial({color:'#ff6a22',toneMapped:false});
+  const konaMark=textPanel('KONA  →',.88,.18,'#ff8a54','rgba(8,11,14,.62)');konaMark.position.set(featureWallX-.14,Y+3.22,cz);konaMark.rotation.y=-Math.PI/2;rg.add(konaMark);
+  const konaLine=mark(box(.045,.055,Math.min(4.8,rd*.86),featureWallX-.13,Y+2.95,cz,konaSignal),
     'Kona line','One thin warm destination line. Kona remains the destination, not the decoration theme.');
+  box(Math.min(3.2,rw*.26),.016,.045,featureWallX-1.60,Y+.026,cz,konaSignal);
 
   // Atmosphere and air movement.
   const moisture=motes({
@@ -547,7 +638,7 @@ function norwegian(ctx) {
   vaultLight.position.set(cx+2.35,Y+3.25,r.z0-.50);rg.add(vaultLight);
 
   Object.assign(L,{
-    specimenSlots,fanRotors,analyser,protocolScreen:screen,coolLight,konaLight,
+    specimenSlots,fanRotors,analyser,protocolScreen:screen,coolLight,konaLight,fjordLight,
     reviewPickables,environmentBay:backPane,fjordBase,bench,konaLine
   });
 }
