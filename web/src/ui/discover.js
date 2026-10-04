@@ -5,7 +5,6 @@ import { loadPublicCatalog } from '../engine/catalog.js';
 // Canonical founding-room identity comes from world/konam/rooms-v1.json.
 // 3D remains explicit optional depth; this surface must never create a second room or style authority.
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const category=(name,sub)=>'<article class="discover-category artifact artifact--label"><small>'+esc(name)+'</small><b>'+esc(sub)+'</b></article>';
 let foundingRoomsPromise=null;
 const loadFoundingRooms=()=>foundingRoomsPromise||(foundingRoomsPromise=Promise.all([
   fetch('world/konam/rooms-v1.json',{credentials:'omit'}).then(response=>{if(!response.ok)throw new Error('Room registry unavailable');return response.json();}),
@@ -20,7 +19,6 @@ const loadFoundingRooms=()=>foundingRoomsPromise||(foundingRoomsPromise=Promise.
   if(rooms.length!==14||rooms.some(room=>!room.route))throw new Error('Canonical founding rooms are incomplete');
   return rooms;
 }).catch(error=>{foundingRoomsPromise=null;throw error;}));
-const themeLabel=theme=>String(theme||'world').replaceAll('-',' ');
 let foundingCollectionPromise=null;
 const loadFoundingCollection=()=>foundingCollectionPromise||(foundingCollectionPromise=fetch('collections/kona-141-v1.json',{credentials:'omit'})
   .then(response=>{if(!response.ok)throw new Error('Founding collection unavailable');return response.json();})
@@ -29,64 +27,63 @@ const loadFoundingCollection=()=>foundingCollectionPromise||(foundingCollectionP
 
 export async function renderDiscoverSurface(root,{enter,openSurface}={}){
   const foundingRooms=await loadFoundingRooms();
-  const roomRows=foundingRooms.map(room=>
-    '<article data-canonical-room="'+esc(room.id)+'"><i>'+esc(room.ordinal)+'</i><div><b>'+esc(room.name)+'</b><span>'+esc(themeLabel(room.theme))+' · '+esc(room.founding_slots)+' founding items</span></div><button class="btn-text" type="button" data-open-canonical-room="'+esc(room.id)+'">Open room →</button></article>'
-  ).join('');
+  const roomOptions=foundingRooms.map(room=>'<option data-canonical-room-option value="'+esc(room.id)+'">'+esc(room.ordinal)+' · '+esc(room.name)+'</option>').join('');
   root.innerHTML=
-    '<section class="kona-hero-card artifact artifact--hero"><small>DISCOVER</small><h3>Interesting things.<br>Not a floor plan.</h3>'+
-    '<p>Machines, people, stories, places and rooms. The 3D world is one way deeper, not the front door.</p></section>'+
-    '<section class="kona-discover-categories">'+
-      category('Machines','How things are made and raced.')+
-      category('People','The humans behind the equipment.')+
-      category('Stories','What changed, failed, won or mattered.')+
-      category('Places','Where the sport becomes real.')+
-      category('Rooms','Fourteen founding rooms. Open from launch; deeper contents reveal over time.')+
-    '</section>'+
-    '<section class="kona-section artifact artifact--label" data-discover-feed><div class="kona-section-head"><h3>Loading the interesting bits</h3><small>PUBLIC DATA</small></div></section>'+
-    '<section class="kona-section artifact artifact--label" data-discover-live><div class="kona-section-head"><div><small>PEOPLE + STORIES</small><h3>Current humans. Current signals.</h3></div><span class="t-data">SOURCE-GROUNDED</span></div>'+
-      '<p>Athlete channels, triathlon reporting and island updates stay in The Feed. Kona places and practical local context stay in Travel. Discover links to those authorities instead of cloning their content.</p>'+
-      '<div class="ui-cluster"><button class="btn-secondary" type="button" data-discover-surface="feed">People & stories →</button><button class="btn-secondary" type="button" data-discover-surface="travel">Places & island →</button></div></section>'+
+    '<section class="kona-hero-card artifact artifact--hero"><small>DISCOVER</small><h3>Pick a thread.<br>Go as deep as you want.</h3>'+
+      '<p>Rooms, machines, people, stories and places. Useful in 2D. Immersive when you choose 3D.</p></section>'+
+    '<section class="kona-section artifact artifact--label" aria-label="Discover lanes"><div class="kona-section-head"><h3>Where to?</h3><small>FOUR LANES</small></div>'+
+      '<div class="ui-cluster"><button class="btn-secondary" type="button" data-discover-jump="rooms">Rooms</button><button class="btn-secondary" type="button" data-discover-jump="machines">Machines</button><button class="btn-secondary" type="button" data-discover-surface="feed">People & stories</button><button class="btn-secondary" type="button" data-discover-surface="travel">Places</button></div></section>'+
     '<section class="kona-section artifact artifact--label" data-canonical-rooms><div class="kona-section-head"><div><small>THE FOUNDING WORLD</small><h3>14 rooms. All open.</h3></div><span class="t-data">14/14 OPEN</span></div>'+
-      '<p>Room identity is canonical. Some rooms already have immersive depth; others use the useful 2D surface while their spatial version matures. You never need 3D to understand where you are.</p>'+
-      '<div class="kona-list">'+roomRows+'</div></section>'+
-    '<section class="kona-section artifact artifact--label" data-canonical-room-detail hidden aria-live="polite"></section>'+
-    '<section class="kona-section artifact artifact--label"><div class="kona-section-head"><h3>Go deeper</h3><small>OPTIONAL 3D</small></div>'+
-      '<button class="kona-primary" type="button" data-enter-world>Enter the world <span>→</span></button></section>';
+      '<p>Choose one room. Its identity is canonical; deeper spatial versions reuse the existing world instead of creating a second room system.</p>'+
+      '<label class="ui-field"><span>Choose a founding room</span><select class="ui-select" data-canonical-room-select>'+roomOptions+'</select></label>'+
+      '<div data-canonical-room-focus aria-live="polite"></div></section>'+
+    '<section class="kona-section artifact artifact--label" data-discover-feed><div class="kona-section-head"><h3>Loading machines</h3><small>PUBLIC DATA</small></div></section>'+
+    '<section class="kona-section artifact artifact--label"><div class="kona-section-head"><h3>Whole world</h3><small>OPTIONAL 3D</small></div>'+
+      '<p>Enter the spatial world when you want to wander. Discover remains useful without it.</p><button class="kona-primary" type="button" data-enter-world>Enter the world <span>→</span></button></section>';
   root.querySelector('[data-enter-world]')?.addEventListener('click',()=>enter?.());
+  root.querySelector('[data-discover-surface="feed"]')?.addEventListener('click',()=>openSurface?.('feed'));
+  root.querySelector('[data-discover-surface="travel"]')?.addEventListener('click',()=>openSurface?.('travel'));
+  root.querySelector('[data-discover-jump="rooms"]')?.addEventListener('click',()=>root.querySelector('[data-canonical-rooms]')?.scrollIntoView({block:'start',behavior:'smooth'}));
+  root.querySelector('[data-discover-jump="machines"]')?.addEventListener('click',()=>root.querySelector('[data-discover-feed]')?.scrollIntoView({block:'start',behavior:'smooth'}));
 
-  const detail=root.querySelector('[data-canonical-room-detail]');
-  const openRoom=id=>{
-    const room=foundingRooms.find(item=>item.id===id),route=room?.route;
-    if(!room||!route||!detail)return;
-    detail.hidden=false;
-    detail.dataset.roomId=room.id;
-    detail.innerHTML=
-      '<button class="btn-text" type="button" data-close-canonical-room>← All 14 rooms</button>'+
+  const select=root.querySelector('[data-canonical-room-select]');
+  const focus=root.querySelector('[data-canonical-room-focus]');
+  const renderRoom=id=>{
+    const room=foundingRooms.find(item=>item.id===id)||foundingRooms[0],route=room?.route;
+    if(!room||!route||!focus)return;
+    focus.dataset.roomId=room.id;
+    focus.innerHTML=
       '<div class="kona-section-head"><div><small>ROOM '+esc(room.ordinal)+' · FOUNDING</small><h3>'+esc(room.name)+'</h3></div><span class="t-data">OPEN</span></div>'+
       '<p>'+esc(route.description)+'</p>'+
-      '<p class="kona-source-note">Open from launch. Its discoveries and deeper states can reveal progressively. The optional depth below reuses the existing runtime instead of duplicating a room or renderer.</p>'+
-      '<div data-founding-items><p class="kona-source-note">Opening this room’s ten founding items…</p></div>'+
-      '<button class="kona-primary" type="button" data-canonical-room-depth="'+esc(room.id)+'">'+esc(route.action.label)+' <span>→</span></button>';
-    detail.querySelector('[data-close-canonical-room]')?.addEventListener('click',()=>{
-      detail.hidden=true;delete detail.dataset.roomId;
-      root.querySelector('[data-canonical-rooms]')?.scrollIntoView({block:'start',behavior:'smooth'});
-    });
-    detail.querySelector('[data-canonical-room-depth]')?.addEventListener('click',()=>{
+      '<p class="kona-source-note">Open from launch. Discoveries can reveal progressively, but the room itself is never XP-gated.</p>'+
+      '<div class="ui-cluster"><button class="kona-primary" type="button" data-canonical-room-depth="'+esc(room.id)+'">'+esc(route.action.label)+' <span>→</span></button><button class="btn-secondary" type="button" aria-expanded="false" data-toggle-founding-items>Preview 10 founding items</button></div>'+
+      '<div data-founding-items hidden></div>';
+    focus.querySelector('[data-canonical-room-depth]')?.addEventListener('click',()=>{
       if(route.action.kind==='world')enter?.(route.action.target);
       else openSurface?.(route.action.target);
     });
-    const itemHost=detail.querySelector('[data-founding-items]');
-    loadFoundingCollection().then(collection=>{
-      if(detail.dataset.roomId!==room.id||!itemHost?.isConnected)return;
-      const items=(collection.items||[]).filter(item=>item.room_id===room.id).sort((a,b)=>a.number-b.number);
-      itemHost.innerHTML='<div class="kona-section-head"><h3>Founding items</h3><small>'+items.length+' / 10 · CANONICAL 141</small></div>'+
-        '<div class="kona-list">'+items.map(item=>'<article><i>'+esc(String(item.number).padStart(3,'0'))+'</i><div><b>'+esc(item.name)+'</b><span>'+esc(item.acquisition?.method||'discover')+' · '+esc(item.rarity||'find')+'</span></div></article>').join('')+'</div>'+
-        '<p class="kona-source-note">This is the canonical catalog, not a second ownership system. What you have actually found still comes from personal progression.</p>';
-    }).catch(()=>{if(itemHost?.isConnected)itemHost.innerHTML='<p class="kona-source-note">The room is open. Its founding-item catalog is temporarily unavailable; no personal progress was changed.</p>';});
-    detail.scrollIntoView({block:'start',behavior:'smooth'});
+    const toggle=focus.querySelector('[data-toggle-founding-items]');
+    const itemHost=focus.querySelector('[data-founding-items]');
+    let loaded=false;
+    toggle?.addEventListener('click',()=>{
+      const opening=itemHost.hidden;
+      itemHost.hidden=!opening;
+      toggle.setAttribute('aria-expanded',String(opening));
+      toggle.textContent=opening?'Hide founding items':'Preview 10 founding items';
+      if(!opening||loaded)return;
+      loaded=true;
+      itemHost.innerHTML='<p class="kona-source-note">Loading the room’s canonical items…</p>';
+      loadFoundingCollection().then(collection=>{
+        if(focus.dataset.roomId!==room.id||!itemHost?.isConnected)return;
+        const items=(collection.items||[]).filter(item=>item.room_id===room.id).sort((a,b)=>a.number-b.number);
+        itemHost.innerHTML='<div class="kona-section-head"><h3>Founding items</h3><small>'+items.length+' / 10 · CANONICAL 141</small></div>'+
+          '<div class="kona-list">'+items.map(item=>'<article><i>'+esc(String(item.number).padStart(3,'0'))+'</i><div><b>'+esc(item.name)+'</b><span>'+esc(item.acquisition?.method||'discover')+' · '+esc(item.rarity||'find')+'</span></div></article>').join('')+'</div>'+
+          '<p class="kona-source-note">Canonical catalog only. Personal ownership still comes from your progression state.</p>';
+      }).catch(()=>{if(itemHost?.isConnected)itemHost.innerHTML='<p class="kona-source-note">The room is open. Its item preview is temporarily unavailable; your progress was not changed.</p>';});
+    });
   };
-  root.querySelectorAll('[data-open-canonical-room]').forEach(button=>button.addEventListener('click',()=>openRoom(button.dataset.openCanonicalRoom)));
-  root.querySelectorAll('[data-discover-surface]').forEach(button=>button.addEventListener('click',()=>openSurface?.(button.dataset.discoverSurface)));
+  select?.addEventListener('change',()=>renderRoom(select.value));
+  renderRoom(select?.value||foundingRooms[0]?.id);
 
   const data=await loadPublicCatalog();
   const products=(data.products||[]).filter(x=>x.public!==false).slice(0,4);
@@ -98,6 +95,6 @@ export async function renderDiscoverSurface(root,{enter,openSurface}={}){
     ...products.map(p=>({kicker:p.product_type||'Machine',title:[p.brand,p.label||p.model].filter(Boolean).join(' '),sub:p.year?String(p.year):p.representation||'',image:previews.bikes.find(x=>x.id===p.id)?.image,href:'Studio.html?p='+encodeURIComponent(p.id),action:'Inspect the machine'})),
     ...places.map(p=>({kicker:'Place',title:p.label||p.name,sub:p.region||p.purpose||'',image:'assets/kona-years/kailua-bay.jpg',href:(p.source_records||[]).find(x=>/^https:\/\//.test(x)),action:'Read the source'}))
   ];
-  feed.innerHTML='<div class="kona-section-head"><h3>Start anywhere</h3><small>'+items.length+' THINGS</small></div>'+
+  feed.innerHTML='<div class="kona-section-head"><h3>Machines + places</h3><small>'+items.length+' THINGS</small></div>'+
     '<div class="kona-discover-feed">'+items.map(x=>'<article class="artifact artifact--label">'+(x.image?'<img class="discover-thumb" loading="lazy" src="'+esc(x.image)+'" alt="">':'')+'<small>'+esc(x.kicker)+'</small><b>'+esc(x.title)+'</b><span>'+esc(x.sub)+'</span>'+(x.href?'<a class="btn-secondary" href="'+esc(x.href)+'">'+esc(x.action)+' →</a>':'')+'</article>').join('')+'</div>';
 }
