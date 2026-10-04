@@ -68,7 +68,10 @@ addBox(rw-3.0,.10,.34,cx,.36,bounds.z1-.66,smokedOak);
 const obstacles=[];
 const specimen=new THREE.Vector3(.55,Y,cz);
 const L=buildInstallation('norwegian',{group:room,bounds,elevation:Y,specimen,lite,obstacles,floorMat,seed:401});
-room.traverse(o=>{if(o.isMesh){o.castShadow=!lite;o.receiveShadow=true}});
+// The installation uses explicit contact shadows and reflected light for most grounding.
+ // Per-mesh shadow casting turns a ~200-mesh room into hundreds of extra shadow draw calls.
+ // Keep the review physically legible while reserving real-time shadow work for future hero assets.
+room.traverse(o=>{if(o.isMesh){o.castShadow=false;o.receiveShadow=true}});
 
 // The room owns only the three specimen anchors. Bike identity/loading remains canonical.
 // One neutral CFR study is cloned into all lanes; athlete-specific equipment/liveries stay
@@ -86,6 +89,7 @@ async function mountCanonicalSpecimens(){
       holder.position.copy(slot);
       holder.position.y+=.02;
       holder.userData.nor3CanonicalSpecimen=true;
+      holder.traverse(o=>{if(o.isMesh){o.castShadow=false;o.receiveShadow=true}});
       room.add(holder);
     }
     room.traverse(o=>{if(o.userData?.nor3BikeFallback)o.visible=false;});
@@ -97,20 +101,20 @@ mountCanonicalSpecimens();
 
 // Host lighting: restrained ambient, directional moon/cold key and warm/cool cross-light.
 scene.add(new THREE.HemisphereLight('#6f858d','#090705',lite?.42:.34));
-const key=new THREE.DirectionalLight('#d7e8ec',lite?1.35:1.85);key.position.set(-5.4,7.6,-6.4);key.castShadow=!lite;scene.add(key);
+const key=new THREE.DirectionalLight('#d7e8ec',lite?1.35:1.85);key.position.set(-5.4,7.6,-6.4);key.castShadow=false;scene.add(key);
 const warm=new THREE.PointLight('#d45a25',lite?3.8:6.5,13,2.0);warm.position.set(5.0,3.2,4.2);scene.add(warm);
 const rim=new THREE.PointLight('#7fb9c5',lite?3.6:6.2,13,2.0);rim.position.set(-5.2,3.8,-4.0);scene.add(rim);
 const doorway=new THREE.SpotLight('#c7e8ef',lite?10:18,16,Math.PI*.20,.62,1.45);
 doorway.position.set(0,4.8,-8.4);doorway.target.position.set(0,1.1,.25);scene.add(doorway,doorway.target);
 
 const views={
-  overview:{target:[-.20,1.38,.10],yaw:.02,pitch:-.045,distance:small?11.8:(lite?13.2:14.4),title:'NOR // 3',copy:'Three lanes. One system. Wet basalt, blackened steel, glass, timber and enough imperfection to feel inhabited.'},
-  lanes:{target:[-1.00,1.18,0],yaw:-.12,pitch:-.065,distance:small?7.8:9.2,title:'Three Rails',copy:'Three distinct athlete stations share one measured system. Each lane has a trainer, run deck, generic bike slot and traces of use.'},
+  overview:{target:[-.10,1.34,.05],yaw:.02,pitch:-.060,distance:small?10.8:(lite?11.8:12.35),title:'NOR // 3',copy:'Three lanes. One system. Wet basalt, blackened steel, glass, timber and enough imperfection to feel inhabited.'},
+  lanes:{target:[-1.00,1.18,0],yaw:-.10,pitch:-.070,distance:small?7.25:8.35,title:'Three Rails',copy:'Three distinct athlete stations share one measured system. Each lane has a trainer, run deck, generic bike slot and traces of use.'},
   protocol:{target:[2.25,1.38,.05],yaw:.68,pitch:-.06,distance:small?3.85:4.7,title:'Protocol Table',copy:'A working bench with analyzer, instanced samples, paper protocols and a physical data wall. No fake holograms.'},
   altitude:{target:[3.05,1.40,-1.90],yaw:.62,pitch:-.03,distance:4.25,title:'Environment Bay',copy:'Framed low-iron glass, internal haze, controls and cool reflections make the environmental chamber feel physically present.'},
   vault:{target:[2.35,2.35,2.78],yaw:.42,pitch:.02,distance:4.5,title:'Podium Vault',copy:'Abstract result objects sit inside a dark shadow-gap cabinet. Achievement is present without copying medals or trophies.'},
-  fjord:{target:[3.18,.95,.10],yaw:1.12,pitch:-.04,distance:4.25,title:'Fjord Relief',copy:'Twenty-five layered ridges turn the wall into a landscape memory, built as original geometry rather than borrowed imagery.'},
-  kona:{target:[3.55,2.42,.05],yaw:1.05,pitch:.01,distance:4.55,title:'Kona Line',copy:'One thin warm line remains the destination signal. The room stays Nordic, physical and restrained.'},
+  fjord:{target:[3.18,.88,.10],yaw:-1.04,pitch:-.055,distance:4.65,title:'Fjord Relief',copy:'Layered ridges catch a cold grazing light so the Norwegian landscape reads as physical memory, not borrowed imagery.'},
+  kona:{target:[5.74,2.48,.02],yaw:-1.22,pitch:-.015,distance:4.85,title:'Kona Line',copy:'The cold performance room resolves into one warm destination signal: Kona ahead, never wallpaper.'},
   recovery:{target:[.95,.70,-2.55],yaw:-.58,pitch:-.10,distance:4.75,title:'Recovery Corner',copy:'Bench, rollers and bottles are intentionally ordinary. Tiny signs of use are what stop the room feeling like a sterile render.'}
 };
 const trailerOrder=['overview','lanes','protocol','altitude','vault','fjord','recovery','kona'];
