@@ -926,7 +926,7 @@ function chainOf(node) {                                            // instanced
   for (let i = 0; i < N; i++) { at(i * pitch, P); at(i * pitch + pitch, Q); q.setFromAxisAngle(Z, Math.atan2(Q.y - P.y, Q.x - P.x)); P.add(Q).multiplyScalar(.5); m4.compose(P, q, one); inst[i % 2].setMatrixAt(i >> 1, m4); }
 }
 function dressBike(root, p) {
-  upgradeBikeMaterials(root);                                        // tyre sheen, carbon clearcoat, saddle/tape sheen (engine/bike-materials.js)
+  upgradeBikeMaterials(root, { lite });                              // carbon clearcoat (not lite), matte tyres/saddle/tape (engine/bike-materials.js)
   root.traverse(o => {
     if (o.userData?.optional_accessory || (p.key === 'slx' && o.name === 'aerofuel_front')) o.visible = false;
     if (o.name === 'chain') chainOf(o);
