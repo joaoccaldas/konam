@@ -31,6 +31,9 @@ export async function renderDiscoverSurface(root,{enter,openSurface}={}){
       category('Rooms','Fourteen founding rooms. Open from launch; deeper contents reveal over time.')+
     '</section>'+
     '<section class="kona-section artifact artifact--label" data-discover-feed><div class="kona-section-head"><h3>Loading the interesting bits</h3><small>PUBLIC DATA</small></div></section>'+
+    '<section class="kona-section artifact artifact--label" data-discover-live><div class="kona-section-head"><div><small>PEOPLE + STORIES</small><h3>Current humans. Current signals.</h3></div><span class="t-data">SOURCE-GROUNDED</span></div>'+
+      '<p>Athlete channels, triathlon reporting and island updates stay in The Feed. Kona places and practical local context stay in Travel. Discover links to those authorities instead of cloning their content.</p>'+
+      '<div class="ui-cluster"><button class="btn-secondary" type="button" data-discover-surface="feed">People & stories →</button><button class="btn-secondary" type="button" data-discover-surface="travel">Places & island →</button></div></section>'+
     '<section class="kona-section artifact artifact--label" data-canonical-rooms><div class="kona-section-head"><div><small>THE FOUNDING WORLD</small><h3>14 rooms. All open.</h3></div><span class="t-data">14/14 OPEN</span></div>'+
       '<p>Room identity is canonical. Some rooms already have immersive depth; others use the useful 2D surface while their spatial version matures. You never need 3D to understand where you are.</p>'+
       '<div class="kona-list">'+roomRows+'</div></section>'+
@@ -62,6 +65,7 @@ export async function renderDiscoverSurface(root,{enter,openSurface}={}){
     detail.scrollIntoView({block:'start',behavior:'smooth'});
   };
   root.querySelectorAll('[data-open-canonical-room]').forEach(button=>button.addEventListener('click',()=>openRoom(button.dataset.openCanonicalRoom)));
+  root.querySelectorAll('[data-discover-surface]').forEach(button=>button.addEventListener('click',()=>openSurface?.(button.dataset.discoverSurface)));
 
   const data=await loadPublicCatalog();
   const products=(data.products||[]).filter(x=>x.public!==false).slice(0,4);
