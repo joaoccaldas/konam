@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {pageDesignLinks} from '../../tools/design-system-manifest.mjs';
 
 const read=rel=>fs.readFileSync(new URL('../../'+rel,import.meta.url),'utf8');
 const landing=read('web/landing.template.html');
@@ -10,16 +11,13 @@ const build=read('tools/build_app.mjs');
 const entry=read('web/src/entry.js');
 const shell=read('web/src/ui/kona-shell.js');
 
-const core=[
- 'brand/tokens.css','brand/themes.css','brand/artifacts.css','brand/typography.css',
- 'web/styles/components.css','web/styles/system.css','web/styles/shell-mobile.css','web/styles/entry.css'
-];
+const core=[...pageDesignLinks('index.html')];
 const feature=['web/styles/home.css','web/styles/garage.css','web/styles/race-self.css','web/styles/admin-assets.css','web/styles/companion.css'];
 
-test('core styles are in landing, hardener, staging and PWA cache',()=>{
+test('core styles are in landing, shared design manifest, staging and PWA cache',()=>{
+ assert.match(harden,/design-system-manifest\.mjs/);
  for(const rel of core){
   assert.ok(landing.includes('href="'+rel+'"'),rel+' missing from landing template');
-  assert.ok(harden.includes("'"+rel+"'"),rel+' missing from hardener design registry');
   assert.ok(stage.includes(rel),rel+' missing from staged-site allowlist');
   assert.ok(build.includes("'"+rel+"'"),rel+' missing from PWA manifest builder');
  }

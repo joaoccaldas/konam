@@ -4,6 +4,7 @@
 //   node tools/harden_pages.mjs
 import fs from 'node:fs';
 import path from 'node:path';
+import {COMMON_DESIGN_LINKS,pageDesignLinks} from './design-system-manifest.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const productMeta = JSON.parse(fs.readFileSync(path.join(root,'config/product-meta.json'),'utf8'));
@@ -62,17 +63,6 @@ for (const f of fs.readdirSync(root).filter(f => /^Speedmax_.*_?Museum\.html$/.t
   PAGES.push({ file: f, type: 'WebPage', image: 'assets/share/museum.jpg', title: t, description: d, keepTitle: true });
 }
 
-const COMMON_DESIGN_LINKS = [
-  'brand/tokens.css',
-  'brand/themes.css',
-  'brand/artifacts.css',
-  'brand/typography.css',
-  'web/styles/system.css',
-  'web/styles/components.css',
-];
-const pageDesignLinks = file => file === 'index.html'
-  ? [...COMMON_DESIGN_LINKS, 'web/styles/shell-mobile.css', 'web/styles/entry.css']
-  : COMMON_DESIGN_LINKS;
 const FONTS = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300..800&display=swap';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const jsonld = o => JSON.stringify(o).replace(/</g, '\\u003c');

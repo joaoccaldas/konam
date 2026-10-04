@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "coverage_roots": ["brand", "web/styles", "web/heritage"],
+  "classes": {
+    "brand": [
+      "brand/artifacts.css",
+      "brand/themes.css",
+      "brand/tokens.css",
+      "brand/typography.css"
+    ],
+    "canonical": [
+      "web/styles/components.css",
+      "web/styles/system.css",
+      "web/styles/shell-mobile.css",
+      "web/styles/home.css",
+      "web/styles/garage.css",
+      "web/styles/plan.css",
+      "web/styles/race-self.css",
+      "web/styles/entry.css",
+      "web/styles/companion.css",
+      "web/styles/admin-assets.css"
+    ],
+    "immersive": [
+      "web/styles/studio.css",
+      "web/styles/collection.css",
+      "web/styles/experience.css"
+    ],
+    "editorial": [
+      "web/styles/promo.css",
+      "web/styles/about.css"
+    ],
+    "legacy_compat": [
+      "web/styles/hall-web.css",
+      "web/styles/hall-mobile.css",
+      "web/heritage/style.css"
+    ],
+    "proof_only": [
+      "web/styles/room-review.css"
+    ]
+  },
+  "strict_classes": ["canonical", "immersive"],
+  "debt_scope_roots": ["brand", "web/styles"],
+  "limits": {
+    "consumer_important": 12,
+    "all_important": 166,
+    "all_raw_hex": 440,
+    "js_style_injectors": 1
+  },
+  "allowed_js_style_injectors": [
+    "web/src/passport.js"
+  ]
+}
