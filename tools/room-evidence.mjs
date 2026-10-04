@@ -33,7 +33,7 @@ const types = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/ja
 const server = http.createServer((q, r) => { const p = path.join(root, decodeURIComponent(q.url.split('?')[0])); if (!p.startsWith(root) || !fs.existsSync(p) || fs.statSync(p).isDirectory()) { r.writeHead(404); r.end(); return; }
   r.writeHead(200, { 'content-type': types[path.extname(p)] || 'application/octet-stream' }); fs.createReadStream(p).pipe(r); });
 await new Promise(r => server.listen(0, '127.0.0.1', r));
-const base = `http://127.0.0.1:${server.address().port}/index.html?reviewRoom=${review}`;
+const base = `http://127.0.0.1:${server.address().port}/index.html?${review === 'world' ? 'room=' + arg('room', 'breitling') : 'reviewRoom=' + review}`;
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader'] });
 let failed = false;
 
@@ -42,7 +42,8 @@ async function open(viewport, mobile = false, clock = false) {
   const errors = []; page.on('pageerror', e => errors.push(e.message)); page.on('console', m => { if (m.type() === 'error' && !/CERT|vibrate|net::ERR/.test(m.text())) errors.push(m.text().slice(0, 200)); });
   if (clock) await page.addInitScript(() => { window.__vt = performance.now(); const raf = window.requestAnimationFrame.bind(window); window.__raf = raf; window.requestAnimationFrame = cb => raf(() => cb(window.__vt)); performance.now = () => window.__vt; });
   await page.goto(base, { waitUntil: 'load' });
-  await page.waitForFunction(() => window.__museum?.beast?.group && (window.__museum.beast.bikeSpot?.bike || window.__museum.beast.ownBikes === undefined), null, { timeout: 600000 });
+  if (review === 'world') await page.waitForFunction(() => window.__museum?.scene, null, { timeout: 600000 });   // --review world: any place in the public world
+  else await page.waitForFunction(() => window.__museum?.beast?.group && (window.__museum.beast.bikeSpot?.bike || window.__museum.beast.ownBikes === undefined), null, { timeout: 600000 });
   await page.waitForTimeout(6000);
   return { page, errors };
 }
@@ -55,7 +56,7 @@ if (pick.length && !flag('metrics-only')) {
   for (const name of pick) {
     const s = allShots[name]; if (!s) { console.warn('no shot', name); continue; }
     await place(page, s);
-    for (let i = 0; i < 4; i++) await page.evaluate(async () => { const m = window.__museum, md = m.beast.mood; if (md) { m.renderer.toneMappingExposure = md.exposure; m.scene.fog.near = md.fog.near; m.scene.fog.far = md.fog.far; md.fogColor && m.scene.fog.color.copy(md.fogColor); }
+    for (let i = 0; i < 4; i++) await page.evaluate(async () => { const m = window.__museum, md = m.beast?.mood; if (md) { m.renderer.toneMappingExposure = md.exposure; m.scene.fog.near = md.fog.near; m.scene.fog.far = md.fog.far; md.fogColor && m.scene.fog.color.copy(md.fogColor); }
       window.__vt += 40; await new Promise(r => window.__raf(() => window.__raf(r))); });
     const b64 = await page.evaluate(async () => { window.__vt += 40; return await new Promise(r => window.__raf(() => window.__raf(() => r(document.getElementById('hall').toDataURL('image/png').split(',')[1])))); });
     fs.writeFileSync(path.join(out, `${name}.png`), Buffer.from(b64, 'base64')); console.log('shot', name);
