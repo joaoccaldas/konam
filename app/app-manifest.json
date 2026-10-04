@@ -1,5 +1,5 @@
 {
- "version": "30fdf290a180",
+ "version": "d832eb5dc33a",
  "core": [
   "index.html",
   "about.html",
@@ -48,7 +48,7 @@
   "manifest.webmanifest": "D80RDjSyU/ENx8num4CsbgCHG48x8J4k6F4pT2ANlUA=",
   "web/styles/entry.css": "ZiiZvpIExlpp26ZyYYUgrBbjYMmyYryND7odGwBvJUk=",
   "web/styles/system.css": "r6474H3lVeel6mP98zhEgK7Y9ItggVEvNKa0A5RWAXk=",
-  "web/styles/shell-mobile.css": "JLm7dzpOxM7L6+E88rUzMVOLdyTviRcH13ctybD980A=",
+  "web/styles/shell-mobile.css": "vxjlGAnPjO5qyGPcX7ZlXU5qXVFSfaR6U8M4f1W5xA4=",
   "web/styles/home.css": "M2QUd913oyU1YuRybHiuaPh6VSJUEJninKnS85efSig=",
   "web/styles/garage.css": "wm+HmyfZlvpb01WwKcB91XvG88Q8exKaG0hW8k70Xss=",
   "web/styles/plan.css": "8TDh2TPLeHb9PaXIbM7Xv11mBx28mP7PFo3xeKYNiKc=",
