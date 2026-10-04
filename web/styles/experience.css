@@ -45,3 +45,6 @@ body:not([data-theme=history]) #prog{display:none}
 /* RC5 shared KONA brand convergence */
 
 button,a,[role="button"]{min-height:var(--brand-touch,48px)}
+
+/* Standalone global escape routes stay reachable without covering native experience chrome. */
+.experience-page .global-kona-links{top:calc(max(14px,env(safe-area-inset-top)) + 58px)}
