@@ -285,7 +285,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(request!==studioRequest)return;
     title.textContent='Discover'; eyebrow.textContent=`${PRODUCT_NAME} · INTERESTING THINGS`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('discover');
-    await renderDiscoverSurface(body,{enter:()=>{close();enter?.();}});
+    await renderDiscoverSurface(body,{enter:room=>{if(room)return walkTo(room);close();enter?.();},openSurface:target=>({garage,plan,collection}[target]?.())});
     syncNavigation();
     scheduleSurprise('discover');
   }
