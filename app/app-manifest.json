@@ -1,5 +1,5 @@
 {
- "version": "87d7c052e806",
+ "version": "e4ac59e8d7c2",
  "core": [
   "index.html",
   "about.html",
@@ -42,7 +42,7 @@
   "web/src/site-analytics.js": "um8gdUVb8bv/j31gUxOe8RP9bxMdoeKjIHoISnpYvqY=",
   "web/styles/promo.css": "ZzWBYuRKEtbNPYteP2tHQxi0sdR2byYOJw4TIbhcWqg=",
   "app/viewport.js": "s84yeQXxX9xSWnlj+1xuK84iotaJzl1NKMWjShrB2F0=",
-  "app/kona-core.js": "E1Qe9qXLSMPqZZxzr8CrW1Ei/7XXEV2BwKqDN48n4Z0=",
+  "app/kona-core.js": "QZmXnOuy/AEm9SqxSTSoKQC9NlcCsyHzrzRxb1vzKE4=",
   "app/entry-data.json": "u70GqhCPsNX6TZI4LhPBmxQkdjHsA1534QN/mMdyufU=",
   "integrations/public-catalog.json": "W1xJL5pT+cwjQLj4y9Kg7X4JorCf+4XAF8AHKzF5CuU=",
   "manifest.webmanifest": "D80RDjSyU/ENx8num4CsbgCHG48x8J4k6F4pT2ANlUA=",
@@ -73,8 +73,8 @@
   "app/world-shell.html": "8GKFuNhBIW6G4lkPOK+mLVjKkEXyLnSnpkOqpKMWzDw=",
   "app/admin-assets.json": "n/NqGL+U+VdeCs0ZCgV86l795TtsQwI7hdSMtATawec=",
   "app/admin-asset-preview.js": "M7xUJvAtQ4yOnFKybfxmp0dq7tlx1Z9BU/O1ES36Er8=",
-  "web/styles/hall-web.css": "S5X8wp1+220hBftIu/D/FPECyASMAWLMmNheU0vdpjE=",
-  "web/styles/hall-mobile.css": "mtNR4NbxJYeHlyS1RTj2XS3NV7a74wfs2AId6bjMtl8=",
+  "web/styles/hall-web.css": "VkJ8N5UYmM8m7nTVZCcMjl+aKspkE9gW5lhkuTqPi28=",
+  "web/styles/hall-mobile.css": "cuRuvrhUUueTK3x0spycCnA6YD8kcHc1LNwc8KWTBJk=",
   "web/styles/studio.css": "/dTfP9s7cAT0e7RYmTKYNCDcqs8oQ8Ty6n/ZdWtF09I=",
   "web/styles/experience.css": "XzMAJ6DZaaJ1HnqAF7VlEu476cTbGTehqqHHYpCcYCw=",
   "web/styles/passport.css": "02f2kJD85BRFc4WfbNJ2Me4WrCbS03sv574LIG3NWxA=",
@@ -83,7 +83,7 @@
   "app/collectible-stage.js": "ar4iHwPCgujYnEvlz4YPRzkxL5iS/Zz1Mf8wulX3L7k=",
   "integrations/ironman-races-2016-2026.json": "P7vUgV+atNEkd1fjhGBhii8UZFqiskskE6hN0bbVE+Q=",
   "app/museum-data.js": "rS1lCjadSFqSMP5hPMitwCSOFrSqfv8JUE6UZ0JN+60=",
-  "app/hall.js": "y1L4tq5gwpMH+ge0kzZlkTUY+EvtxKDLI2H8+KHtj5E=",
+  "app/hall.js": "WFmprINL8pcxagMSgTGAcjw5dxAvPPSBhm1ZSD4AgK4=",
   "app/studio.js": "Z2DFKSE7wYrOHnFzX3HcTlEVC83Y0SqqvJNXrCHgH5I=",
   "app/standalone-access.js": "cVI6YY7atOLkWX0x9IDlUg46ylQer3XmtS/GxtYOKDA=",
   "app/studio-catalog.js": "Xo4SaU/jvKZzOPxUlD0xTJ8pdJntzMSV8m1QhQP0/9w=",
@@ -132,6 +132,8 @@
   "assets/atlas/studio-beam-2020s/bike.glb": "BSZOvgCg9QIXDnisBFIwkYr0mWCZrxcUd+BAc0TuOaw=",
   "assets/atlas/studio-gravel-aero/bike.glb": "nM1HQ7gv0c77/YhiM/OyGOOZtSJ70nV28TFFr/Y47Vk=",
   "assets/atlas/studio-kona-2030/bike.glb": "HvSTQ2nOgsbqI6nOx9UVYLvlpQUysAkqsQZgoG0ob4w=",
+  "assets/atlas/studio-nor3-disc-tri/bike-lite.glb": "Zwht7sdF4QweQ1sHyvuhQEMDt92wh+B8LvmwRsYMTDA=",
+  "assets/atlas/studio-nor3-disc-tri/bike.glb": "vki4rALxK1bWyM9hH/jf4F0gNskCs+FAONX8M8enjLo=",
   "assets/atlas/studio-small-650c/bike.glb": "s4MaxteKgAp9x9BsI/h1PWKeSBu7Wujv+7qVH1ysF2s=",
   "assets/atlas/studio-sprint-track/bike.glb": "nLidpcdDnv3BKegRDuoUX8fvphKOsvOgC8SGecaGkLE=",
   "assets/atlas/studio-wing-road/bike.glb": "VkD3eR27CuCtRDkr9VCkSfjADOvpodXelxEBginWyQg=",
@@ -257,8 +259,15 @@
   "assets/reference/paintings/speedmax-al-2011.jpg": "jafZorbdKW0MuZmMBrtuiHOCC1wMNM89nTP8gYI0+GU=",
   "assets/reference/paintings/speedmax-cf-2011.jpg": "9K8r7r3eZhJsvyL9zdLKfOxiL/IoCg1fYhyxcTS+fbM=",
   "assets/reference/paintings/speedmax-three-2005.jpg": "7aHIi/BnX+O+QmSh1Bi8mgKnIBhMB1WE4N0sjLq1/aM=",
+  "assets/rooms/beast-cave/hf-curved-treadmill.glb": "2epPj2RgFOQgSGipgC3YFR7yo25rKnYQoI2CaBqLCno=",
+  "assets/rooms/beast-cave/hf-drum-fan.glb": "dRfK0uKYNDbCy04EufVxXzliLogCfJ2BwLGotQVqLv0=",
+  "assets/rooms/beast-cave/hf-trainer.glb": "UwHa8QhI6kcXL9eJROGzIfFdSDyFc1WpNSZZi7omVk8=",
+  "assets/rooms/nor3-winter/kona-winter-plate-1024.webp": "zKc0SX0W2kB7IHEtHph3zdtZpjL6Pksy1WXMzMzr1no=",
+  "assets/rooms/nor3-winter/kona-winter-plate-2048.webp": "i91bvukRsqdyHjWMNf7lIBLjgd0ZBii6tY27IubR2pY=",
   "assets/share/collection.jpg": "W6lRq4vdhYr3rNejeGLQnYbIlPXgnmvRBkAD6wN8+vo=",
   "assets/share/konam.png": "F8UvxFJ1beRZ1VXDtciBTpmcDKbeDwv1niH675TWHlE=",
-  "assets/share/museum.jpg": "MR9MD9E1O+efqEOc6xucgpUDOD9++PbpLjoyrd0S2PU="
+  "assets/share/museum.jpg": "MR9MD9E1O+efqEOc6xucgpUDOD9++PbpLjoyrd0S2PU=",
+  "assets/watches/endurance-pro-study/watch-lite.glb": "7Sf7p6OabO8DJhHpLYNgHkDzkJEPxyUJNKqXmOJNuXo=",
+  "assets/watches/endurance-pro-study/watch.glb": "v4kbUYuskHsFuHoBRY0+8njcXXmIyNiqiSULdH8wK3E="
  }
 }
