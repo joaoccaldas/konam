@@ -6,6 +6,8 @@ html,body{height:100%;background:var(--brand-lava);color:var(--experience-ink);f
 body[data-theme=history]{--experience-ink:var(--brand-ink);--glass:color-mix(in srgb,var(--brand-surface) 84%,transparent);--line:var(--brand-line);background:var(--brand-sand)}
 a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 #stage{position:fixed;inset:0;width:100vw;height:100vh;display:block;touch-action:none}
+/* Standalone global escape links stay reachable without stealing the experience header hit-area. */
+.global-kona-links{top:calc(70px + env(safe-area-inset-top));z-index:8}
 .glass{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line)}
 header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:10px;padding:max(12px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 0 max(14px,env(safe-area-inset-left));pointer-events:none}
 header>*{pointer-events:auto}
