@@ -18,12 +18,13 @@ test('portrait framing increases distance and reserves room around the object',(
  }
 });
 test('entry and routes have one stylesheet owner and feature CSS is not preloaded',()=>{
- const system=read('web/styles/system.css'),shell=read('web/styles/shell-mobile.css'),tpl=read('web/landing.template.html'),entrySrc=read('web/src/entry.js'),konaShell=read('web/src/ui/kona-shell.js');
+ const system=read('web/styles/system.css'),shell=read('web/styles/shell-mobile.css'),tpl=read('web/landing.template.html'),entrySrc=read('web/src/entry.js'),konaShell=read('web/src/ui/kona-shell.js'),designManifest=read('tools/design-system-manifest.mjs');
  assert.doesNotMatch(system,/#intro\.kona-entry|--kona-bg\s*:/);
  assert.doesNotMatch(shell,/\.home-|\.garage-/);
  assert.match(read('web/styles/home.css'),/\.home-race-self/);
  assert.match(read('web/styles/garage.css'),/\.garage-setup-hero/);
- assert.match(read('tools/harden_pages.mjs'),/entry\.css/);
+ assert.match(read('tools/harden_pages.mjs'),/design-system-manifest\.mjs/);
+ assert.match(designManifest,/entry\.css/);
  assert.doesNotMatch(system,/body:not\(\.museum-open\) > header/,'consumer chrome must not hide standalone headers');
  for(const rel of ['home.css','garage.css','race-self.css','companion.css','admin-assets.css']) assert.doesNotMatch(tpl,new RegExp(rel.replace('.','\\.')),rel+' must load only with its feature');
  assert.match(entrySrc,/featureStyle/);assert.match(konaShell,/featureStyle/);
