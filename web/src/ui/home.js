@@ -46,9 +46,10 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
 
   root.innerHTML=
     '<section class="kona-hero-card artifact artifact--hero home-today">'+
-      '<small>'+esc(event.name||PRODUCT_NAME+' · TODAY')+'</small>'+
-      '<h3 data-countdown-value>'+esc(headline)+'</h3><p>'+esc(note)+'</p>'+
-      '<button class="kona-primary" type="button" data-home-plan>What matters next <span>→</span></button>'+
+      '<small>YOUR KONA · TODAY</small>'+
+      '<h3 data-countdown-value>'+esc(headline)+'</h3>'+
+      '<p class="home-purpose"><strong>Your race-week cockpit.</strong> '+esc(note)+' Live Kona, your athlete and your setup stay one tap away.</p>'+
+      '<button class="kona-primary" type="button" data-home-plan>Open today\'s plan <span>→</span></button>'+
     '</section>'+
     '<section class="kona-section artifact artifact--label home-kona-now">'+
       '<div class="kona-section-head"><div><small>KONA NOW · RACE WEEK</small><h3>What is happening?</h3></div><span class="t-data">LIVE + LOCAL</span></div>'+
