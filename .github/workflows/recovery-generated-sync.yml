@@ -1,0 +1,44 @@
+name: Recovery generated-output sync
+
+on:
+  push:
+    branches:
+      - recovery/final-rooms-20261004
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: recovery/final-rooms-20261004
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install deterministic web dependencies
+        run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Generate pages and sealed app
+        run: |
+          node tools/build_pages.mjs
+          node tools/build_app.mjs
+      - name: Verify exact recovered payloads did not drift
+        run: node --test web/test/final-room-recovery.test.mjs
+      - name: Commit generated outputs and retire this one-shot workflow
+        run: |
+          rm .github/workflows/recovery-generated-sync.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -u
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit"
+            exit 0
+          fi
+          git commit -m "Recovery: sync generated outputs after token cleanup"
+          git push origin HEAD:recovery/final-rooms-20261004
