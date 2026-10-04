@@ -13,6 +13,7 @@ import { buildPier, pierWalkable, PIER, ordinal } from './pier.js';
 import { initAppShell } from './app-shell.js';
 import { buildHalloween, hweenWalkable, HDOOR, HROOM } from './halloween.js';
 import { buildBeastCave, beastCaveWalkable, BDOOR, BROOM, beastEvent, eventWhen } from './beast-cave.js';
+import { buildNor3Winter } from './nor3-winter.js';
 import { readStorage, writeStorage } from './engine/storage.js';
 import { buildSanctuary, sanctuaryWalkable, SDOOR, SROOM } from './sanctuary.js';
 import { buildGalleries, galleryWalkable, galleryFloorY, EDOOR, UPPER } from './galleries.js';
@@ -46,7 +47,8 @@ const WROOMDATA = eventEnabled('wyld') ? window.__WYLDROOM || null : null;
 const BRANDROOMS = window.__BRANDROOMS?.rooms || [];
 const KY = window.__KONAYEARS || null;                                // Kona by Year: the pier
 const WYLD = { pink: '#ff3d8e', blush: '#ff8fbf', lilac: '#e9cde8', mint: '#8fe7dc', aqua: '#5fd8d3' };
-const BEAST_CAVE_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'beast-cave';
+const NOR3_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'nor3-winter';   // NOR // 3 · Kona Winter builds on the same review footprint
+const BEAST_CAVE_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'beast-cave' || NOR3_REVIEW;
 // Phone detection must survive a browser's "Desktop view", where pointer and
 // viewport width both lie; detect.js adds the physical-screen signal.
 const coarse = dc;
@@ -786,6 +788,7 @@ const birds = [];
 
 // ------------------------------------------------------------------ light
 const hemi = new THREE.HemisphereLight('#ffe3c2', '#b09572', lite ? 1.3 : .9); scene.add(hemi);
+let sealedRoom = false;
 const hemiBase = hemi.intensity;                                    // rooms with a mood (Beast Cave, Breitling) dim these while you are inside
 const sun = new THREE.DirectionalLight('#ffddad', lite ? 2 : 2.45);
 const sunBase = sun.intensity;
@@ -873,7 +876,8 @@ const pier = KY ? buildPier({ scene, data: KY, lettering, canvasTex, M, WYLD, FO
 // ------------------------------------------------------------------ Lava Night: the Halloween room by the entrance
 const hween = buildHalloween({ scene, canvasTex, lettering, lightPool, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x0 });
 hall.add(hween.sign);
-const beast = BEAST_CAVE_REVIEW ? buildBeastCave({ scene, canvasTex, lettering, lightPool, contactShadow, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 }) : null;
+const reviewCtx = { scene, renderer, renderCard: m => renderCard(m), canvasTex, lettering, lightPool, contactShadow, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 };
+const beast = BEAST_CAVE_REVIEW ? (NOR3_REVIEW ? buildNor3Winter(reviewCtx) : buildBeastCave(reviewCtx)) : null;
 if (beast) hall.add(beast.sign);
 const sanctuary = buildSanctuary({ scene, lettering, lightPool, FONT, SERIF, lite, coarse, pickables, obstacles });
 sanctuary.sign.position.set(0, SDOOR.h + .7, HALL.z0 - .04); sanctuary.sign.rotation.y = Math.PI; hall.add(sanctuary.sign);
@@ -1040,6 +1044,7 @@ async function loadHweenBike() {
   hween.piece.bike.traverse(o => { if (o.isMesh) { o.userData.hween = hween.piece; delete o.userData.piece; } });
 }
 async function loadBeastBike() {
+  if (beast?.ownBikes) { beast.useAssets(loader); return; }
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!beast || !cfr?.glb || beast.bikeSpot.bike) return;
   const gltf = await loader.loadAsync(cfr.glb);
   beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
@@ -1299,7 +1304,7 @@ function rideHud() {
   return hud;
 }
 function startRide() {
-  if (!beast) return;
+  if (!beast?.startRide) return;
   closeCard(); tourEnd(false); loadBeastBike(); path = null; P.vx = P.vz = 0;
   const c = beast.bikeSpot.cockpit;
   riding = riding || { back: { x: beast.bikeSpot.view.x, z: beast.bikeSpot.view.z } };
@@ -1524,7 +1529,7 @@ if (KONA.titles.length) $('railInner').insertAdjacentHTML('afterbegin', `<button
 if (WROOMDATA) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip wyld" data-room="wyld" aria-label="WYLD Room"><span class="n">W</span><span><small>4 DYES · MY2027</small><b>WYLD Room</b></span></button>`);
 if (pier) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip pier" data-room="pier" aria-label="The Kona Pier: Kona by Year"><span class="n"><img src="assets/kona-years/y2019.jpg" alt="" loading="lazy"></span><span><small>2014 — 2025</small><b>Kona by Year</b></span></button>`);
 $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip hween" data-room="hween" aria-label="Lava Night, the Halloween room"><span class="n" aria-hidden="true">🎃</span><span><small>HALLOWEEN</small><b>Lava Night</b></span></button>`);
-if (BEAST_CAVE_REVIEW) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip beast" data-room="beast" aria-label="Lionel Sanders Beast Cave review"><span class="n">B</span><span><small>REVIEW · ATHLETE ROOM</small><b>Beast Cave</b></span></button>`);
+if (BEAST_CAVE_REVIEW) $('railInner').insertAdjacentHTML('afterbegin', `${NOR3_REVIEW ? '<button class="chip beast" data-room="beast" aria-label="NOR 3 Kona Winter review"><span class="n">N</span><span><small>REVIEW · ATHLETE ROOM</small><b>NOR // 3</b></span></button>' : '<button class="chip beast" data-room="beast" aria-label="Lionel Sanders Beast Cave review"><span class="n">B</span><span><small>REVIEW · ATHLETE ROOM</small><b>Beast Cave</b></span></button>'}`);
 for (const r of [...brandRooms].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip brand" data-room="${esc(r.desc.id)}" aria-label="${esc(r.desc.name)}"><span class="n" style="background:${esc(r.desc.theme?.accent || '#c9a13b')};-webkit-background-clip:text;background-clip:text;color:transparent">${esc(r.desc.name.slice(0, 1))}</span><span><small>${r.products.length} PRODUCT${r.products.length > 1 ? 'S' : ''}</small><b>${esc(r.desc.name)}</b></span></button>`);
 $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip sanctuary" data-room="sanctuary" aria-label="Sanctuary chapel, eight films"><span class="n">S</span><span><small>8 FILMS</small><b>Sanctuary</b></span></button>`);
 for (const w of [...atlas.wings].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip atlas" data-room="wing-${esc(w.id)}" aria-label="${esc(w.name)}: ${esc(w.sub)}"><span class="n" aria-hidden="true">${w.features?.clock ? '⏱' : '✦'}</span><span><small>UPPER FLOOR · ${atlas.rooms.filter(r => r.wing === w.id).reduce((n, r) => n + r.bikes.length + r.art.length, 0)} WORKS</small><b>${esc(w.name)}</b></span></button>`);
@@ -1537,7 +1542,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
   const liveAreas = [
     ...['hall', 'sanctuary', 'hween', ...(BEAST_CAVE_REVIEW?['beast']:[]), 'kona', ...(WROOMDATA?['wyld']:[]), ...(pier ? ['pier'] : []), 'stair', 'nave'].map(id => {
       const w = WORDS[id], rect = { hall: HALL, sanctuary: SROOM, hween: HROOM, beast: BROOM, kona: ROOM, wyld: WROOM, pier: pier && { x0: PIER.x0, x1: PIER.x1, z0: PIER.z0, z1: PIER.z1 }, stair: { x0: 7.35, x1: 12.3, z0: .75, z1: 6.55 }, nave: { x0: 7.5, x1: 16.5, z0: 5.55, z1: 27.2 } }[id];
-      return R(id, w?.short || ({ beast: 'Beast Cave' })[id] || id, w?.sub || ({ beast: 'Lionel Sanders · athlete room review' })[id] || '', rect, w?.floor || 'ground', AREA_COLOR[id], id === 'stair' || id === 'nave' ? { layer: 0 } : {});
+      return R(id, w?.short || ({ beast: NOR3_REVIEW ? 'NOR // 3' : 'Beast Cave' })[id] || id, w?.sub || ({ beast: NOR3_REVIEW ? 'Kona Winter · athlete room review' : 'Lionel Sanders · athlete room review' })[id] || '', rect, w?.floor || 'ground', AREA_COLOR[id], id === 'stair' || id === 'nave' ? { layer: 0 } : {});
     }),
     ...brandRooms.map(r => R(r.desc.id, r.desc.name, r.desc.kicker || '', r.bounds, 'ground', r.desc.theme?.accent || '#c9a13b')),
     ...galleries.bays.map(b => R('bay-' + b.id, b.title, b.sub, { x0: 8.4, x1: 14.8, z0: b.z - 1.8, z1: b.z + 1.8 }, 'upper', b.floor, { layer: 1, ink: /^#(1|0)/.test(b.floor) ? '#fbf9f5' : '#12181d', kind: 'bay' })),
@@ -1576,7 +1581,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     if(!gate.unlocked){toast(`Level ${gate.requiredLevel} · keep exploring to unlock ${area.name}`);return;}
     if (!started) enter();
     tourEnd(false); closeCard(); prepareRoom(id);
-    if (id === 'beast' && beast) { visitBeast(); toast(`${area.name} · the empty saddle`); return; }
+    if (id === 'beast' && beast) { visitBeast(); toast(`${area.name} · ${NOR3_REVIEW ? 'three lanes' : 'the empty saddle'}`); return; }
     const ov=safeOverview(area); if(!ov) return;
     const face=new THREE.Vector3(ov.face.x,ov.face.y,ov.face.z);
     route(ov.to,face,null);
@@ -1962,7 +1967,7 @@ function frame(now) {
     const themeRoom = galleries.update(t, P, reduce, scene, renderer, reg, moodRoom);
     atlas.update(t, dt, P, upstairs, reduce);
     if (audio) {                                                      // the sea fades upstairs; each room brings its own bed
-      roomSound.set(themeRoom?.id || (reg === 'beast' ? 'beast' : reg === 'breitling' ? 'breitling' : null));
+      roomSound.set(themeRoom?.id || (reg === 'beast' ? (NOR3_REVIEW ? 'nor3' : 'beast') : reg === 'breitling' ? 'breitling' : null));
       roomSound.drive?.('beast', beastNow?.power || 0);
       const sea = audioOn ? (upstairs ? .05 : .2) : 0;
       if (sea !== audio.sea) { audio.sea = sea; audio.gain.gain.setTargetAtTime(sea, audio.ctx.currentTime, .8); }
@@ -1977,6 +1982,14 @@ function frame(now) {
       if (P.z < -26 && reg !== 'champ' && reg !== 'wyld' && started) { pier.load(); loadPierBike(); }
       pier.update(dt, reduce);
     }
+    // deep inside a review room the only opening is the hall door behind you: draw the hall and the room, nothing else
+    const sealed = !!beast && reg === 'beast' && P.x > BROOM.x0 + 4;
+    if (sealed || sealedRoom) for (const o of scene.children) {
+      if (o === beast?.group || o === hall || o.isLight || o.isCamera) continue;
+      if (sealed) { if (o.userData.sealedVis === undefined) o.userData.sealedVis = o.visible; o.visible = false; }
+      else if (o.userData.sealedVis !== undefined) { o.visible = o.userData.sealedVis; delete o.userData.sealedVis; }
+    }
+    sealedRoom = sealed;
   }
   tourTick(dt);
   if (!reduce) for (const s2 of spinners) s2.o.rotation[s2.axis] += dt * s2.speed;

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "status": "verify-before-outreach",
+  "note": "Only widely published results, each with a public source. Taglines on the room's athlete panels are KONA.m editorial copy, not the athletes' words. No endorsement, partnership or equipment claim is made.",
+  "athletes": [
+    {
+      "id": "kristian-blummenfelt",
+      "lane": "01",
+      "name": "Kristian Blummenfelt",
+      "panel": ["BIG GOALS", "COLD MINDS", "WARM PLACES"],
+      "icon": "mountain",
+      "facts": [
+        { "year": 2021, "line": "Olympic champion, men's triathlon, Tokyo 2020 (raced 2021).", "sources": ["https://en.wikipedia.org/wiki/Kristian_Blummenfelt"] },
+        { "year": 2022, "line": "Won the 2021 IRONMAN World Championship, held in St. George, Utah, in May 2022.", "sources": ["https://en.wikipedia.org/wiki/Kristian_Blummenfelt"] },
+        { "year": 2022, "line": "Third at the IRONMAN World Championship in Kona, October 2022.", "sources": ["https://en.wikipedia.org/wiki/2022_Ironman_World_Championship"] }
+      ]
+    },
+    {
+      "id": "gustav-iden",
+      "lane": "02",
+      "name": "Gustav Iden",
+      "panel": ["CONTROL", "ADAPT", "PERFORM"],
+      "icon": "wave",
+      "facts": [
+        { "year": 2022, "line": "Won the IRONMAN World Championship in Kona in October 2022, in a course-record 7:40:24.", "sources": ["https://en.wikipedia.org/wiki/2022_Ironman_World_Championship", "https://en.wikipedia.org/wiki/Gustav_Iden"] },
+        { "year": 2019, "line": "IRONMAN 70.3 World Champion, Nice 2019.", "sources": ["https://en.wikipedia.org/wiki/Gustav_Iden"] }
+      ]
+    },
+    {
+      "id": "casper-stornes",
+      "lane": "03",
+      "name": "Casper Stornes",
+      "panel": ["PATIENT", "PRECISE", "STILL AERO"],
+      "icon": "glasses",
+      "facts": [
+        { "year": null, "line": "Norwegian triathlete in the same national programme as Blummenfelt and Iden.", "sources": ["https://en.wikipedia.org/wiki/Casper_Stornes"] }
+      ],
+      "open": "This lane deliberately carries no results yet. What belongs here is Casper's call."
+    }
+  ],
+  "kona_2022": { "line": "Kona 2022: Iden first in 7:40:24, Blummenfelt third.", "sources": ["https://en.wikipedia.org/wiki/2022_Ironman_World_Championship"] }
+}

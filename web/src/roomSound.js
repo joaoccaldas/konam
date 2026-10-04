@@ -58,6 +58,16 @@ export function createRoomSound(ctx, out) {
     const g = bed('breitling');
     for (const [f, v] of [[65.4, .05], [98, .025]]) { const o = osc('sine', f), og = gain(v); lfo(.05, .01, og.gain); o.connect(og).connect(g); }
   }
+  { // NOR // 3 · Kona Winter: wind against the glass, a warm low drone, and the fire's crackle (below)
+    const g = bed('nor3');
+    const wind = noise(), wl = filt('lowpass', 420, .8), wg = gain(.05); lfo(.07, 160, wl.frequency); lfo(.11, .025, wg.gain); wind.connect(wl).connect(wg).connect(g);
+    for (const [f, v] of [[55, .03], [82.4, .015]]) { const o = osc('sine', f), og = gain(v); lfo(.04, .008, og.gain); o.connect(og).connect(g); }
+  }
+  const crackle = setInterval(() => {
+    if (ctx.state !== 'running' || active !== 'nor3' || Math.random() < .45) return;
+    const t = now() + Math.random() * .2, h = noise(.05), bp = filt('bandpass', 1800 + Math.random() * 2600, 2), e = gain(0);
+    e.gain.setValueAtTime(0, t); e.gain.linearRampToValueAtTime(.03 + Math.random() * .03, t + .003); e.gain.exponentialRampToValueAtTime(.0001, t + .04); h.connect(bp).connect(e).connect(beds.nor3);
+  }, 180);
   const tick = g => {
     const o = osc('square', 3200), bp = filt('bandpass', 3200, 12), e = gain(0), t = now();
     e.gain.setValueAtTime(0, t); e.gain.linearRampToValueAtTime(.05, t + .002); e.gain.exponentialRampToValueAtTime(.0001, t + .04);
@@ -107,12 +117,12 @@ export function createRoomSound(ctx, out) {
   }, 280);
 
   return {
-    set(id) {                                                         // id: 'bio' | 'horror' | 'alien' | 'zombie' | 'beast' | 'breitling' | null
+    set(id) {                                                         // id: 'bio' | 'horror' | 'alien' | 'zombie' | 'beast' | 'breitling' | 'nor3' | null
       if (id === active) return;
       active = id;
       for (const [k, g] of Object.entries(beds)) g.gain.setTargetAtTime(k === id ? 1 : 0, now(), .8);
     },
     drive(id, value) { drives[id]?.(value); },
-    stop() { clearInterval(timer); clearInterval(ticker); clearInterval(pulse); },
+    stop() { clearInterval(timer); clearInterval(ticker); clearInterval(pulse); clearInterval(crackle); },
   };
 }
