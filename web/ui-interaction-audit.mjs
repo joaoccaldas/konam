@@ -215,20 +215,24 @@ for(const id of selected){
       await p.evaluate(()=>window.__shareCancelled=true);await click('[data-share-progress]');await p.waitForFunction(()=>document.querySelector('[data-share-status]').textContent.includes('Not shared'));
       assert.equal(await p.$eval('[data-share-progress]',e=>e.disabled),false);await click('[data-hub-close]');
     });
-    await step('Feed shortcut, category buttons, search and RSS affordance work',async()=>{
-      await click('[data-race-self-action="feed"]');await p.waitForSelector('.companion-page');
+    await step('Home Feed route, category buttons, RSS and return-to-Now provenance work',async()=>{
+      await click('[data-studio-home]');await waitHome();
+      await click('[data-home-feed]');await p.waitForSelector('.companion-page');
+      assert.equal(await p.$eval('[data-tab="home"]',e=>e.getAttribute('aria-current')),'page');
       await p.waitForSelector('[data-kind]',{timeout:45000});
-      const kinds=await p.$$eval('[data-kind]',els=>els.map(e=>e.dataset.kind));
+      const kinds=await p.$eval('[data-kind]',els=>els.map(e=>e.dataset.kind));
       for(const kind of kinds){await click('[data-kind="'+kind+'"]');assert.equal(await p.$eval('[data-kind="'+kind+'"]',e=>e.getAttribute('aria-pressed')),'true');}
       await inventory('The Feed');await p.screenshot({path:path.join(out,prefix+'-feed.png')});
       const rss=await p.$('[data-personal-rss]');assert.ok(rss,'RSS affordance missing');
       const href=await rss.evaluate(e=>e.getAttribute('href'));assert.ok(href&&!href.startsWith('javascript:'));
-      await click('.companion-page [data-back]');await p.waitForSelector('.race-self-experience');
+      await click('.companion-page [data-back]');await waitHome();
     });
-    await step('Travel shortcut, place filters and return to User Studio work',async()=>{
-      await click('[data-race-self-action="travel"]');await p.waitForSelector('.companion-arrival');
+    await step('Home Travel route, Plan nav authority, place filters and return-to-Now provenance work',async()=>{
+      await click('[data-home-travel]');await p.waitForSelector('.companion-arrival');
+      assert.equal(await p.$eval('[data-tab="plan"]',e=>e.getAttribute('aria-current')),'page');
       for(const filter of ['bike-service','coffee','ocean','all']){await click('[data-place-filter="'+filter+'"]');assert.equal(await p.$eval('[data-place-filter="'+filter+'"]',e=>e.getAttribute('aria-pressed')),'true');}
-      await inventory('Travel');await click('.companion-page > [data-back]');await p.waitForSelector('.race-self-experience');
+      await inventory('Travel');await click('.companion-page > [data-back]');await waitHome();
+      await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
     await step('Settings opens and closes without breaking subsequent Studio actions',async()=>{
       await click('[data-race-self-action="settings"]');await p.waitForSelector('#settings:not([hidden])');
