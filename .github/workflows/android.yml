@@ -154,19 +154,52 @@ jobs:
           arch: x86_64
           disable-animations: true
           script: |
+            set -euo pipefail
+            PACKAGE=com.caldasstudio.speedmaxmuseum
+            ACTIVITY="$PACKAGE/.MainActivity"
             adb install -r KONA.apk
-            adb shell am start -W -n com.caldasstudio.speedmaxmuseum/.MainActivity
-            sleep 25
-            adb shell pidof com.caldasstudio.speedmaxmuseum
-            adb exec-out screencap -p > launch.png
-            adb logcat -d | grep -iE "AndroidRuntime|FATAL|Capacitor|chromium" | tail -80 > logcat.txt || true
+
+            # Cold portrait launch.
+            adb shell settings put system accelerometer_rotation 0
+            adb shell settings put system user_rotation 0
+            adb shell am start -W -n "$ACTIVITY"
+            sleep 20
+            adb shell pidof "$PACKAGE"
+            adb exec-out screencap -p > launch-portrait.png
+
+            # Real Activity recreation path in landscape.
+            adb shell settings put system user_rotation 1
+            sleep 8
+            adb shell pidof "$PACKAGE"
+            adb exec-out screencap -p > launch-landscape.png
+
+            # Background / foreground lifecycle.
+            adb shell input keyevent KEYCODE_HOME
+            sleep 3
+            adb shell am start -W -n "$ACTIVITY"
+            sleep 6
+            adb shell pidof "$PACKAGE"
+            adb exec-out screencap -p > resume-after-background.png
+
+            # OS-style process termination and clean relaunch.
+            adb shell am force-stop "$PACKAGE"
+            sleep 2
+            adb shell am start -W -n "$ACTIVITY"
+            sleep 8
+            adb shell pidof "$PACKAGE"
+            adb exec-out screencap -p > relaunch-after-kill.png
+
+            adb logcat -d | grep -iE "AndroidRuntime|FATAL|Capacitor|chromium" | tail -160 > logcat.txt || true
             ! grep -q "FATAL EXCEPTION" logcat.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: KONA-smoke-test
           path: |
-            launch.png
+            launch-portrait.png
+            launch-landscape.png
+            resume-after-background.png
+            relaunch-after-kill.png
             logcat.txt
 
   publish:
