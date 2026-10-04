@@ -39,6 +39,23 @@ on:
       - 'manifest.webmanifest'
       - 'app/native/**'
       - '.github/workflows/android.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - '*_Museum.html'
+      - 'Canyon_Collection.html'
+      - 'assets/**'
+      - 'app/**'
+      - 'web/src/**'
+      - 'web/styles/**'
+      - 'web/package.json'
+      - 'web/package-lock.json'
+      - 'tools/build_app.mjs'
+      - 'tools/build_pages.mjs'
+      - 'brand/**'
+      - 'integrations/**'
+      - 'manifest.webmanifest'
+      - '.github/workflows/android.yml'
   workflow_dispatch:
 
 permissions:
@@ -84,15 +101,18 @@ jobs:
         id: signing
         env:
           KEYSTORE_B64: ${{ secrets.SPEEDMAX_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.SPEEDMAX_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.SPEEDMAX_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.SPEEDMAX_KEY_PASSWORD }}
         run: |
-          if [ -n "$KEYSTORE_B64" ]; then
+          if [ -n "$KEYSTORE_B64" ] && [ -n "$KEYSTORE_PASSWORD" ] && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
             echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/speedmax.keystore"
             echo "SPEEDMAX_KEYSTORE_FILE=$RUNNER_TEMP/speedmax.keystore" >> "$GITHUB_ENV"
             echo "signed=true" >> "$GITHUB_OUTPUT"
-            echo "release signing key configured"
+            echo "release signing identity fully configured"
           else
             echo "signed=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::No stable release key configured. A debug APK may be smoke-tested, but it will not be published to users."
+            echo "::warning::Stable release signing is incomplete. The APK may be smoke-tested, but public publishing remains fail-closed."
           fi
       - name: Build APK
         env:
@@ -105,7 +125,12 @@ jobs:
           npm run sync
           (cd android && ./gradlew assembleRelease --no-daemon)
           cp android/app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/KONA.apk"
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs "$GITHUB_WORKSPACE/KONA.apk"
+          certs=$("$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs "$GITHUB_WORKSPACE/KONA.apk")
+          printf '%s\n' "$certs"
+          if [ "${{ steps.signing.outputs.signed }}" = "true" ] && printf '%s\n' "$certs" | grep -q "CN=Android Debug"; then
+            echo "::error::Release signing was declared configured but the APK is still debug-signed."
+            exit 1
+          fi
           if [ "${{ steps.signing.outputs.signed }}" = "true" ]; then
             (cd android && ./gradlew bundleRelease --no-daemon)
             cp android/app/build/outputs/bundle/release/app-release.aab "$GITHUB_WORKSPACE/KONA.aab"
@@ -146,19 +171,51 @@ jobs:
           arch: x86_64
           disable-animations: true
           script: |
+            set -eu
             adb install -r KONA.apk
+
+            # Cold portrait launch. Keep package/activity literal because the emulator runner
+            # executes script lines independently and does not preserve shell variables.
+            adb shell settings put system accelerometer_rotation 0
+            adb shell settings put system user_rotation 0
             adb shell am start -W -n com.caldasstudio.speedmaxmuseum/.MainActivity
-            sleep 25
+            sleep 20
             adb shell pidof com.caldasstudio.speedmaxmuseum
-            adb exec-out screencap -p > launch.png
-            adb logcat -d | grep -iE "AndroidRuntime|FATAL|Capacitor|chromium" | tail -80 > logcat.txt || true
+            adb exec-out screencap -p > launch-portrait.png
+
+            # Real Activity recreation path in landscape.
+            adb shell settings put system user_rotation 1
+            sleep 8
+            adb shell pidof com.caldasstudio.speedmaxmuseum
+            adb exec-out screencap -p > launch-landscape.png
+
+            # Background / foreground lifecycle.
+            adb shell input keyevent KEYCODE_HOME
+            sleep 3
+            adb shell am start -W -n com.caldasstudio.speedmaxmuseum/.MainActivity
+            sleep 6
+            adb shell pidof com.caldasstudio.speedmaxmuseum
+            adb exec-out screencap -p > resume-after-background.png
+
+            # OS-style process termination and clean relaunch.
+            adb shell am force-stop com.caldasstudio.speedmaxmuseum
+            sleep 2
+            adb shell am start -W -n com.caldasstudio.speedmaxmuseum/.MainActivity
+            sleep 8
+            adb shell pidof com.caldasstudio.speedmaxmuseum
+            adb exec-out screencap -p > relaunch-after-kill.png
+
+            adb logcat -d | grep -iE "AndroidRuntime|FATAL|Capacitor|chromium" | tail -160 > logcat.txt || true
             ! grep -q "FATAL EXCEPTION" logcat.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: KONA-smoke-test
           path: |
-            launch.png
+            launch-portrait.png
+            launch-landscape.png
+            resume-after-background.png
+            relaunch-after-kill.png
             logcat.txt
 
   publish:

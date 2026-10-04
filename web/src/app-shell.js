@@ -1,4 +1,4 @@
-import { PRODUCT_NAME } from './product-meta.js';
+import { PRODUCT_META, PRODUCT_NAME } from './product-meta.js';
 import { initInstall } from './ui/install.js';
 // The museum as an installable app.
 //  - Web (Android Chrome, desktop, iOS Safari): a service worker (sw.js) keeps the museum offline and
@@ -7,7 +7,7 @@ import { initInstall } from './ui/install.js';
 //  - Android app (Capacitor build, see app/native): the museum ships inside the APK. On launch it asks
 //    the museum's HTTPS site for app/android-version.json and offers the newer APK when there is one;
 //    Android only installs it over this one if it carries the same signing key.
-const SITE = 'https://joaoccaldas.github.io/canyonmuseum/';
+const SITE = String(PRODUCT_META.canonical_site || new URL('./', location.href).href);
 const $ = id => document.getElementById(id);
 function ensureUpdateBar(){
  let el=$('updateBar');if(el)return el;
