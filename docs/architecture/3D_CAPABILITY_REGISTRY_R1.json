@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "status": "research-draft",
+  "updated_at": "2026-10-04",
+  "principle": "Centralize proven capabilities, not experiences.",
+  "capabilities": [
+    {
+      "id": "renderer-lifecycle",
+      "seed": "konam",
+      "state": "candidate-shared",
+      "evidence": [
+        "web/src/render/renderer.js"
+      ],
+      "consumers": [
+        "konam",
+        "studio-kona"
+      ],
+      "gate": "bounded consumer migration + benchmark parity"
+    },
+    {
+      "id": "env-capture",
+      "seed": "konam",
+      "state": "candidate-shared",
+      "evidence": [
+        "web/src/engine/env-capture.js"
+      ],
+      "consumers": [
+        "NOR",
+        "Beast Cave",
+        "Breitling"
+      ],
+      "gate": "reuse in >=2 benchmark scenes"
+    },
+    {
+      "id": "asset-pack-unpack",
+      "seed": "konam",
+      "state": "candidate-shared",
+      "evidence": [
+        "Meshopt-packed runtime assets + Blender decode path"
+      ],
+      "consumers": [
+        "konam",
+        "canyonmuseum",
+        "studio-kona"
+      ],
+      "gate": "documented deterministic pack/unpack roundtrip"
+    },
+    {
+      "id": "room-manifest",
+      "seed": "konam",
+      "state": "shared-in-repo",
+      "evidence": [
+        "world/konam/rooms/*.room.json"
+      ],
+      "consumers": [
+        "NOR",
+        "Beast Cave"
+      ],
+      "gate": "retain canonical room authority"
+    },
+    {
+      "id": "product-provenance",
+      "seed": "canyonmuseum",
+      "state": "candidate-shared",
+      "evidence": [
+        "museum/bike.schema.json",
+        "museum/schemas/asset-manifest.schema.json"
+      ],
+      "consumers": [
+        "konam",
+        "Breitling",
+        "studio-kona"
+      ],
+      "gate": "AssetSpec v1 compatibility mapping"
+    },
+    {
+      "id": "movement-locomotion",
+      "seed": "studio-kona",
+      "state": "project-specific-until-proven",
+      "evidence": [
+        "walk/bike/swim/drone"
+      ],
+      "consumers": [
+        "studio-kona"
+      ],
+      "gate": "outdoor benchmark + adapter experiment"
+    },
+    {
+      "id": "procedural-installations",
+      "seed": "NOR",
+      "state": "candidate-shared-pattern",
+      "evidence": [
+        "web/src/engine/room-installations.js"
+      ],
+      "consumers": [
+        "NOR"
+      ],
+      "gate": "extract only after second consumer"
+    },
+    {
+      "id": "hero-product-rendering",
+      "seed": "Breitling",
+      "state": "experiment",
+      "evidence": [
+        "issue #116"
+      ],
+      "consumers": [
+        "Breitling",
+        "Canyon Museum",
+        "Garage"
+      ],
+      "gate": "HERO ladder passes visual + runtime gates"
+    },
+    {
+      "id": "form-finding",
+      "seed": "Gaudi",
+      "state": "experiment",
+      "evidence": [
+        "issue #117"
+      ],
+      "consumers": [
+        "Gaudi",
+        "future architecture/worlds"
+      ],
+      "gate": "isolated operator produces useful geometry"
+    },
+    {
+      "id": "world-partition-streaming",
+      "seed": "studio-kona",
+      "state": "not-proven",
+      "evidence": [],
+      "consumers": [
+        "studio-kona",
+        "future outdoor worlds"
+      ],
+      "gate": "scale benchmark"
+    },
+    {
+      "id": "gameplay-persistence",
+      "seed": "rawdogging",
+      "state": "project-pattern",
+      "evidence": [
+        "quests",
+        "equipment",
+        "save"
+      ],
+      "consumers": [
+        "future athlete worlds"
+      ],
+      "gate": "selective reuse only"
+    },
+    {
+      "id": "reconstruction-pipeline",
+      "seed": "bellagio",
+      "state": "research",
+      "evidence": [],
+      "consumers": [
+        "digital twins",
+        "real venues"
+      ],
+      "gate": "mesh vs splat vs hybrid benchmark"
+    }
+  ]
+}
