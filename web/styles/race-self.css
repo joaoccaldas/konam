@@ -78,7 +78,7 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 @media(max-height:550px) and (min-width:600px){
  .race-self-experience{grid-template-columns:180px minmax(0,1fr) 190px;grid-template-rows:52px minmax(280px,1fr);gap:0 12px;min-height:380px}
  .studio-heading{grid-column:1/-1}.studio-destinations{grid-column:1;grid-row:2}.race-self-stage-wrap{grid-column:2;grid-row:2}.race-self-controls{grid-column:3;grid-row:2}
- .studio-destinations,.race-self-controls{grid-template-columns:1fr;gap:4px;border:0;overflow:auto;align-content:start}
+ .studio-destinations,.race-self-controls{grid-template-columns:1fr;gap:4px;border:0;overflow-y:auto;overflow-x:hidden;align-content:start}
  .studio-destinations>button,.race-self-controls>button,.race-self-controls>a{flex-direction:row;text-align:left;min-height:48px;padding:6px;gap:8px}
  .studio-menu-label{margin:0}.studio-menu-note,.race-self-identity p,.race-self-identity small,.studio-stage-caption small{display:none}
  .race-self-identity{padding-top:12px}.race-self-identity h1{font-size:28px}.studio-stage-caption{padding:0}.race-self-controls mark{display:inline-block;margin:0 0 0 4px}
