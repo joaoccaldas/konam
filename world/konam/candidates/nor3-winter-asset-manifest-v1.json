@@ -7,28 +7,24 @@
   "policy": "reuse-first",
   "assets": [
     {
-      "asset_id": "lane-bike-speedmax-cfr-lod1",
-      "kind": "bike-lod",
+      "asset_id": "lane-bike-studio-nor3-disc-tri",
+      "kind": "bike",
       "decision": "ADAPT",
-      "source": "canonical-product-pipeline",
-      "source_ref": "assets/museum/speedmax_web.glb",
-      "runtime_ref": "assets/rooms/nor3-winter/speedmax-cfr-lod1.glb",
-      "derivation": "gltf-transform simplify --ratio 0.14 --error 0.0008; join; meshopt (509,624 → 108,865 triangles, 52 → 20 meshes)",
-      "sha256": "e46d9a5caac4e8fedd9f965e2e4fa6c44fbdf99eaf961df1f12b1661d533e872",
-      "runtime_notes": "decal meshes are not drawn in this room (no third-party marks beside athletes' names); instanced ×3, lane colour via instanceColor",
-      "rights": "existing-canonical",
-      "lifecycle": "candidate"
-    },
-    {
-      "asset_id": "lane-bike-speedmax-cfr-lod2",
-      "kind": "bike-lod",
-      "decision": "ADAPT",
-      "source": "canonical-product-pipeline",
-      "source_ref": "assets/museum/speedmax_web.glb",
-      "runtime_ref": "assets/rooms/nor3-winter/speedmax-cfr-lod2.glb",
-      "derivation": "gltf-transform simplify --ratio 0.05 --error 0.003; join; meshopt (→ 52,688 triangles, 20 meshes) — phones",
-      "sha256": "be426a4bae523f8a193bfe273bc2ee6fa95a63019175148fab24f0b09806ae48",
-      "rights": "existing-canonical",
+      "why": "The athletes do not ride Canyon (Giant Trinity for Blummenfelt and Iden, Pinarello for Stornes — sourced in the facts file). Replicating a sponsor's bike needs that brand's approval, so the lanes use an unbranded KONA.m study built by the existing parametric generator.",
+      "source": "museum/atlas/bikes.json#studio-nor3-disc-tri",
+      "generator": "blender/atlas_build.py (detail: hero) + tools/pack-glb.mjs",
+      "runtime_ref": [
+        "assets/atlas/studio-nor3-disc-tri/bike.glb",
+        "assets/atlas/studio-nor3-disc-tri/bike-lite.glb"
+      ],
+      "sha256": "be48b8ac02f12b56d6c8cf611ff8dfe05d2036c902b3e14038d5fc33c7a78cba",
+      "tris": {
+        "hero": 39348,
+        "lite": 8472
+      },
+      "runtime_notes": "parts merged per material and instanced ×3 (one draw per material for the trio); Kona × Norway liveries painted in the shader, selected per instance",
+      "rights": "original-kona-m",
+      "representation": "concept",
       "lifecycle": "candidate"
     },
     {
@@ -38,9 +34,15 @@
       "why_not_reuse": "no existing panorama combines a Norwegian winter with a Kona coast; the room's concept is that transition",
       "source": "generated",
       "generator": "Higgsfield gpt_image_2_5, 21:9, job b9dd1bab-017c-4a3a-86e3-8a3b8889b613 (no people, no text, no logos)",
-      "runtime_ref": ["assets/rooms/nor3-winter/kona-winter-plate-2048.webp", "assets/rooms/nor3-winter/kona-winter-plate-1024.webp"],
+      "runtime_ref": [
+        "assets/rooms/nor3-winter/kona-winter-plate-2048.webp",
+        "assets/rooms/nor3-winter/kona-winter-plate-1024.webp"
+      ],
       "derivation": "1344×576 source, Lanczos resize to 2048 / 1024, WebP q86 / q82",
-      "sha256": { "2048": "8bdd5bbee911b2a7721e358c35fee52012e381dd190628bab58dbb22e6d1da96", "1024": "cca734497d16da407b20712d1e9877cddb59a632fa3e4b32d565ccccccebd67a" },
+      "sha256": {
+        "2048": "8bdd5bbee911b2a7721e358c35fee52012e381dd190628bab58dbb22e6d1da96",
+        "1024": "cca734497d16da407b20712d1e9877cddb59a632fa3e4b32d565ccccccebd67a"
+      },
       "rights": "generated-unbranded-rights-review",
       "truth": "imagined landscape (snow on palms is deliberate); not a photograph of any real place",
       "lifecycle": "candidate"
@@ -66,8 +68,18 @@
   },
   "facts": "pitch/norwegian-trio/trio-facts-v1.json (verify-before-outreach)",
   "performance_measured_20261004": {
-    "desktop_1440x900": { "room_meshes": 95, "room_triangles": 312189, "scene_calls": 355, "errors": 0 },
-    "phone_390x844": { "room_meshes": 95, "room_triangles": 168673, "scene_calls": 101, "errors": 0 },
+    "desktop_1440x900": {
+      "room_meshes": 90,
+      "room_triangles": 161250,
+      "scene_calls": 336,
+      "errors": 0
+    },
+    "phone_390x844": {
+      "room_meshes": 89,
+      "room_triangles": 62722,
+      "scene_calls": 91,
+      "errors": 0
+    },
     "budget": "world/konam/rooms/norwegian-engine.room.json → mobile ≤ 95 calls / 180k triangles; desktop ≤ 180 calls / 450k triangles"
   }
 }

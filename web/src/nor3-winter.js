@@ -5,7 +5,7 @@
 // Norwegian winter turns into a Kona sunset. Cold plunge on the left, fire on the right, a sofa to land on.
 //
 // Truth / rights: results come only from pitch/norwegian-trio/trio-facts-v1.json (sourced). Panel taglines are
-// KONA.m editorial copy. The bikes are KONA.m's own Speedmax CFR study (an LOD of the canonical asset), never
+// KONA.m editorial copy. The bikes are KONA.m's own unbranded tri study (blender/atlas_build.py), never
 // presented as the athletes' equipment; no brand marks, no likeness. The window plate is generated imagery,
 // recorded with provenance in world/konam/candidates/nor3-winter-asset-manifest-v1.json.
 //
@@ -23,8 +23,8 @@ export const NOR3_MOOD = Object.freeze({ exposure: 1.0, hemi: .14, sun: .04, fog
 export const NOR3_ASSETS = Object.freeze({
   plate: 'assets/rooms/nor3-winter/kona-winter-plate-2048.webp',
   plateLite: 'assets/rooms/nor3-winter/kona-winter-plate-1024.webp',
-  bike: 'assets/rooms/nor3-winter/speedmax-cfr-lod1.glb',
-  bikeLite: 'assets/rooms/nor3-winter/speedmax-cfr-lod2.glb',
+  bike: 'assets/atlas/studio-nor3-disc-tri/bike.glb',            // KONA.m studio tri bike, blender/atlas_build.py (hero detail)
+  bikeLite: 'assets/atlas/studio-nor3-disc-tri/bike-lite.glb',   // same skeleton, standard detail, for phones
   fan: 'assets/rooms/beast-cave/hf-drum-fan.glb',                    // reused, not regenerated
 });
 export const NOR3_LANES = Object.freeze(trio.athletes.map(a => a.lane));
@@ -305,6 +305,53 @@ export function buildNor3Winter(ctx) {
   const hff = lettering(.8, .9, g => { g.fillStyle = '#111317'; g.fillRect(0, 0, .8, .9); g.fillStyle = 'rgba(225,231,240,.8)'; g.font = `600 .085px ${FONT}`; g.letterSpacing = '.02px'; ['HIGHER', 'FASTER', 'FURTHER'].forEach((t, k) => g.fillText(t, .08, .28 + k * .17)); }, 512);
   hff.material.transparent = false; hff.position.set(19.75, 2.15, R.z1 + .03); group.add(hff);
 
+  // ------------------------------------------------------------ the painting: front-page news, in oils, in a gold frame
+  // Data-driven from trio.social (an unverified snapshot until a person confirms both profiles): the headline flips
+  // between "overtakes" and "closing in" with the numbers, so the joke never states something the numbers don't.
+  { const S = trio.social, k = S.kristian.followers, f = S.frodeno.followers, ahead = k > f, K = v => `${Math.round(v / 1000)}K`, gap = Math.abs(k - f);
+    const PW2 = 4.2, PH2 = 2.55, px = 24.9, py = 2.75, pz = R.z1 + .05;
+    const c = canvas(2048, 1244, (g, w, h) => {
+      g.fillStyle = '#e9e1cf'; g.fillRect(0, 0, w, h);                 // primed canvas
+      const r = rng(77); for (let i = 0; i < 9000; i++) { const x = r() * w, y = r() * h, l = 6 + r() * 26; g.strokeStyle = `rgba(${120 + r() * 60},${100 + r() * 50},${70 + r() * 40},${.03 + r() * .05})`; g.lineWidth = 1 + r() * 3; g.beginPath(); g.moveTo(x, y); g.lineTo(x + l, y + (r() - .5) * 6); g.stroke(); }
+      g.fillStyle = '#1b1a18'; g.textAlign = 'center';
+      g.font = `italic 700 64px ${SERIF}`; g.fillText('The Fjord Times', w / 2, 112);
+      g.font = `600 22px ${FONT}`; g.letterSpacing = '6px'; g.fillText(`SPECIAL EDITION · ${S.as_of.split('-').reverse().join(' · ')} · PRICE: ONE NEGATIVE SPLIT`, w / 2, 160); g.letterSpacing = '0px';
+      g.fillRect(90, 182, w - 180, 4); g.fillRect(90, 192, w - 180, 1.5);
+      g.fillStyle = '#b3122e'; g.font = `800 34px ${FONT}`; g.letterSpacing = '10px'; g.fillText('BREAKING', w / 2, 262); g.letterSpacing = '0px';
+      g.fillStyle = '#141311'; g.font = `900 ${ahead ? 132 : 118}px ${SERIF}`;
+      g.fillText(ahead ? 'BLUMMENFELT OVERTAKES' : 'BLUMMENFELT CLOSING IN', w / 2, 400); g.fillText(ahead ? 'FRODENO' : 'ON FRODENO', w / 2, 530);
+      g.font = `italic 400 54px ${SERIF}`; g.fillText(ahead ? 'Not on the run. On Instagram.' : 'Not on the run. On Instagram. Gap to the leader: ' + K(gap) + '.', w / 2, 610);
+      // the race graphic: two followers bars, a tiny bike riding each
+      const bx = 230, bw = w - 460, top = 690, max = Math.max(k, f) * 1.08;
+      [[S.kristian.handle, k, '#0b2a5c'], [S.frodeno.handle, f, '#3a3631']].forEach(([hd, v, col], i) => { const y = top + i * 120;
+        g.fillStyle = 'rgba(20,20,18,.08)'; g.fillRect(bx, y, bw, 64); g.fillStyle = col; g.fillRect(bx, y, bw * v / max, 64);
+        g.fillStyle = '#141311'; g.textAlign = 'left'; g.font = `700 40px ${FONT}`; g.fillText(hd, bx, y - 14); g.textAlign = 'right'; g.fillText(K(v), bx + bw, y - 14);
+        const tx = bx + bw * v / max + 18, ty = y + 32; g.strokeStyle = col; g.lineWidth = 5; g.beginPath(); g.arc(tx, ty + 14, 14, 0, 7); g.arc(tx + 58, ty + 14, 14, 0, 7); g.moveTo(tx, ty + 14); g.lineTo(tx + 24, ty - 10); g.lineTo(tx + 58, ty + 14); g.moveTo(tx + 24, ty - 10); g.lineTo(tx + 48, ty - 12); g.stroke(); });
+      g.textAlign = 'center'; g.fillStyle = '#1b1a18'; g.font = `400 36px ${SERIF}`;
+      g.fillText(ahead ? 'Experts confirm: the follower count has no draft-legal rule.' : 'Experts expect a negative split. Frodeno is said to be “calmly watching the bike leg”.', w / 2, 1000);
+      g.font = `italic 400 30px ${SERIF}`; g.fillText('Meanwhile in Norway: the Instagram was done before breakfast, and then the second session.', w / 2, 1050);
+      g.fillStyle = 'rgba(27,26,24,.6)'; g.font = `500 20px ${FONT}`; g.letterSpacing = '2px';
+      g.fillText(`A KONA.M JOKE, NOT NEWS · FOLLOWER COUNTS: PUBLIC-PROFILE SNAPSHOT, ${S.as_of}, ${S.status === 'verified' ? 'VERIFIED' : 'TO BE CONFIRMED'} · NO QUOTES ARE THE ATHLETES’`, w / 2, h - 60);
+    });
+    const pm2 = new THREE.MeshStandardMaterial({ map: tex(c), roughness: .78, emissiveMap: tex(c), emissive: '#ffffff', emissiveIntensity: .05, bumpMap: tex(c, false), bumpScale: .4 });
+    const pt = new THREE.Mesh(new THREE.PlaneGeometry(PW2, PH2), pm2); pt.position.set(px, py, pz + .06); group.add(pt);
+    // gold frame: four bevelled mouldings (merged) and a picture light
+    const gold = E(new THREE.MeshPhysicalMaterial({ color: '#b08a43', roughness: .32, metalness: .9, clearcoat: .3 }));
+    const fw = .16; for (const [w2, h2, x2, y2] of [[PW2 + 2 * fw, fw, px, py + PH2 / 2 + fw / 2], [PW2 + 2 * fw, fw, px, py - PH2 / 2 - fw / 2], [fw, PH2, px - PW2 / 2 - fw / 2, py], [fw, PH2, px + PW2 / 2 + fw / 2, py]]) {
+      put(gold, new RoundedBoxGeometry(w2, h2, .09, 3, .03), x2, y2, pz + .05); put(gold, new RoundedBoxGeometry(Math.max(.04, w2 - (w2 > h2 ? .06 : 0)), Math.max(.04, h2 - (h2 > w2 ? .06 : 0)), .03, 2, .01), x2, y2, pz + .1); }
+    put(steel, new THREE.CylinderGeometry(.025, .025, 1.4, 12), px, py + PH2 / 2 + .32, pz + .32, 0, 0, Math.PI / 2);
+    put(steel, new THREE.CylinderGeometry(.012, .012, .32, 8), px, py + PH2 / 2 + .24, pz + .18, Math.PI / 2.6, 0, 0);
+    put(ledWarm, new THREE.BoxGeometry(1.3, .01, .03), px, py + PH2 / 2 + .3, pz + .33);
+    const plight = new THREE.MeshBasicMaterial({ map: tex(canvas(256, 256, (g, w, h) => { const gr = g.createRadialGradient(w / 2, 0, 8, w / 2, 40, h * .95); gr.addColorStop(0, 'rgba(255,214,160,.85)'); gr.addColorStop(.55, 'rgba(255,200,140,.22)'); gr.addColorStop(1, 'rgba(255,190,130,0)'); g.fillStyle = gr; g.fillRect(0, 0, w, h); })), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: .32 });
+    put(plight, new THREE.PlaneGeometry(PW2 + 1.0, PH2 + 1.0), px, py + .2, pz + .075, 0, 0, 0);
+    info(pt, { model: act => newsCard(act), eyebrow: 'THE FJORD TIMES', title: ahead ? 'Blummenfelt overtakes Frodeno.' : 'Blummenfelt closing in on Frodeno.', sub: 'On Instagram', text: 'A KONA.m joke, not news.' });
+    var newsCard = act => ({ kind: 'beast', eyebrow: 'THE FJORD TIMES · A KONA.M JOKE', title: ahead ? 'Blummenfelt overtakes Frodeno (on Instagram).' : 'Blummenfelt closing in on Frodeno (on Instagram).',
+      kicker: `${S.kristian.handle} ${K(k)} · ${S.frodeno.handle} ${K(f)}`,
+      lede: ahead ? 'The only race where nobody checks the drafting.' : `Gap to the leader: ${K(gap)}. Same tactic as always: patience, then a negative split.`,
+      facts: [{ cls: S.status === 'verified' ? 'P' : 'I', text: `Follower counts from public-profile snapshots on ${S.as_of}. ${S.method}` }, { cls: 'G', text: 'An affectionate KONA.m joke. No quotes are the athletes’ words; no rivalry is claimed.' }, disclaimer],
+      actions: [{ label: 'Back to the room', primary: true, onClick: () => act.close() }] });
+  }
+
   // ------------------------------------------------------------ right: fire, the kit, the monolith, the cabinet
   const fire = { x: 21.1, z: -5.7 };
   put(stoneTop, new THREE.CylinderGeometry(.98, 1.04, .06, 40), fire.x, .03, fire.z);
@@ -429,7 +476,7 @@ export function buildNor3Winter(ctx) {
   for (const [x, z, s] of [[GX - .6, -6.2, 1.6], [GX - .5, -16.4, 1.4], [GX - .7, -12.75, 1.0], [tub.x + .2, tub.z + 1.15, 1.2]]) put(driftMat, new THREE.PlaneGeometry(s, s * .7), x, .008, z, -Math.PI / 2, 0, 0);
 
   // smoked-oak slats on both side walls through the lounge and lanes, and a warm painted wash under each downlight
-  const slatAt = []; for (let x = 13.5; x < 31.5; x += .14) { if (x > 20.4) slatAt.push([x, R.z1 + .03]); if (x < 23.2 || x > 25.6) slatAt.push([x, R.z0 - .03]); }   // clear of the TV, creed and kit niche
+  const slatAt = []; for (let x = 13.5; x < 31.5; x += .14) { if (x > 20.4 && (x < 22.4 || x > 27.4)) slatAt.push([x, R.z1 + .03]); if (x < 23.2 || x > 25.6) slatAt.push([x, R.z0 - .03]); }   // clear of the TV, creed and kit niche
   const slat = new THREE.InstancedMesh(new THREE.BoxGeometry(.06, R.h - .5, .05), oak, slatAt.length);
   slatAt.forEach(([x, z], k) => { M4.makeTranslation(x, (R.h - .5) / 2, z); slat.setMatrixAt(k, M4); }); slat.receiveShadow = true; group.add(slat);
   const washT = tex(canvas(128, 256, (g, w, h) => { const gr = g.createRadialGradient(w / 2, 0, 4, w / 2, 30, h); gr.addColorStop(0, 'rgba(255,190,130,.9)'); gr.addColorStop(.5, 'rgba(255,170,110,.25)'); gr.addColorStop(1, 'rgba(255,160,100,0)'); g.fillStyle = gr; g.fillRect(0, 0, w, h); }));
@@ -455,7 +502,7 @@ export function buildNor3Winter(ctx) {
   if (!lite) { const key = new THREE.SpotLight('#eef2ff', 18, 14, .78, .4, 1.1); key.position.set(LANE_X - 1.2, R.h - .1, CZ); key.target.position.set(LANE_X, 0, CZ);
     key.castShadow = true; key.shadow.mapSize.set(2048, 2048); key.shadow.bias = -.0002; key.shadow.normalBias = .02; key.shadow.camera.near = 2; key.shadow.camera.far = 9; group.add(key, key.target); }
 
-  // ------------------------------------------------------------ bikes: KONA.m's Speedmax CFR study, LOD, instanced ×3
+  // ------------------------------------------------------------ bikes: KONA.m's winter-lane tri study (Blender), instanced ×3
   const bikeSpot = { kind: 'beast', pos: new THREE.Vector3(LANE_X, 0, LANES[1]), rotY: 0, bike: null };
   const portrait = coarse && innerHeight > innerWidth;
   bikeSpot.view = portrait ? new THREE.Vector3(20.6, 0, CZ - 1.6) : new THREE.Vector3(15.0, 0, CZ);   // just past the table, the whole room in frame
@@ -463,43 +510,75 @@ export function buildNor3Winter(ctx) {
   bikeSpot.info = infos[0];
   let pickBoxes = [];
   LANES.forEach((z, i) => { const pb = new THREE.Mesh(new THREE.BoxGeometry(.7, 1.2, 1.9), new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false }));   // the host skips invisible picks, so this draws nothing instead pb.position.set(LANE_X, .7, z); group.add(pb);
-    info(pb, { model: act => laneCard(i, act), eyebrow: `LANE ${trio.athletes[i].lane}`, title: trio.athletes[i].name, sub: 'KONA.m Speedmax CFR study · not the athlete’s bike', text: 'An empty lane.' }); pickBoxes.push(pb); });
-  const LANE_PAINT = ['#141518', '#e9eaec', '#2a2d33'];
+    info(pb, { model: act => laneCard(i, act), eyebrow: `LANE ${trio.athletes[i].lane}`, title: trio.athletes[i].name, sub: 'KONA.m winter-lane tri study · not the athlete’s bike', text: 'An empty lane.' }); pickBoxes.push(pb); });
+  // Kona × Norway liveries, painted in the shader along the bike (no UVs needed): one material, three designs,
+  // selected per instance through instanceColor.r (0 / .5 / 1).
+  //  01 Fjord → Lava: navy fjord at the nose, a flag band across the down tube, lava cracks glowing at the tail.
+  //  02 Snow → Sunset: pearl snow up front, a Kona sunset fading over the rear, flag pinstripes.
+  //  03 Aurora: black with aurora ribbons flowing along the frame and a flag pinstripe.
+  const livery = m => { m.onBeforeCompile = sh => {
+      sh.uniforms.uLen = { value: bikeLen };
+      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vBikePos;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvBikePos = position;');
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
+        varying vec3 vBikePos; uniform float uLen;
+        float hsh(vec3 p){return fract(sin(dot(p,vec3(12.9898,78.233,37.719)))*43758.5453);}
+        float vn(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);
+          return mix(mix(mix(hsh(i),hsh(i+vec3(1,0,0)),f.x),mix(hsh(i+vec3(0,1,0)),hsh(i+vec3(1,1,0)),f.x),f.y),mix(mix(hsh(i+vec3(0,0,1)),hsh(i+vec3(1,0,1)),f.x),mix(hsh(i+vec3(0,1,1)),hsh(i+vec3(1,1,1)),f.x),f.y),f.z);}
+        vec3 flagBand(float d, vec3 base){ // red | white | blue | white | red, across the tube
+          float a=abs(d); return a<.012?vec3(.0,.13,.36):a<.02?vec3(.95):a<.045?vec3(.73,.05,.18):base; }
+        float laneGlow=0.;`).replace('#include <color_fragment>', `
+        { float lane=vColor.r; float u=clamp(vBikePos.z/uLen+.5,0.,1.); float y=vBikePos.y; vec3 c;
+          float n=vn(vBikePos*18.), flake=step(.93,hsh(floor(vBikePos*900.)))*.12;
+          if(lane<.25){ c=mix(vec3(.10,.03,.02),vec3(.02,.07,.16),smoothstep(.15,.7,u)); c=mix(c,vec3(.04,.14,.30),smoothstep(.75,1.,u)*.6);
+            float crack=smoothstep(.035,.0,abs(vn(vBikePos*vec3(7.,11.,7.))-.5))*smoothstep(.42,.05,u);   // thin lava veins toward the tail c=mix(c,vec3(1.,.36,.06),crack); laneGlow=crack*1.6;
+            c=flagBand(vBikePos.z+y*.55-.05, c); }
+          else if(lane<.75){ vec3 sun=mix(vec3(.98,.42,.18),vec3(.85,.30,.42),smoothstep(.0,.35,y)); c=mix(sun,vec3(.92,.93,.95),smoothstep(.2,.62,u));
+            float ps=abs(fract((vBikePos.z+y*.55)*6.)-.5); c=mix(c,vec3(.73,.05,.18),smoothstep(.02,.0,abs(ps-.25))*.9*step(.55,u)); c=mix(c,vec3(0.,.13,.36),smoothstep(.02,.0,abs(ps-.3))*.9*step(.55,u)); }
+          else { c=vec3(.015,.018,.025); float w=sin(vBikePos.z*9.+sin(y*7.)*1.6)*.5+.5, w2=sin(vBikePos.z*5.-y*11.+1.7)*.5+.5;
+            c+=vec3(.05,.85,.55)*pow(w,12.)*.38+vec3(.25,.35,.95)*pow(w2,14.)*.32; laneGlow=pow(w,14.)*.25;
+            c=mix(c,vec3(.73,.05,.18),smoothstep(.006,.0,abs(y-.62+vBikePos.z*.08))); }
+          diffuseColor.rgb=c*(.92+n*.16)+flake; }`).replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+        totalEmissiveRadiance += (vColor.r<.25 ? vec3(1.,.36,.06) : vec3(.1,.9,.6)) * laneGlow;`);
+    }; m.customProgramCacheKey = () => 'nor3-livery'; return m; };
+  let bikeLen = 1.75;
   function mountBikes(root) {
     root.updateMatrixWorld(true);
+    const deq = g => { for (const n of Object.keys(g.attributes)) { const a = g.attributes[n]; if (a.array instanceof Float32Array && !a.isInterleavedBufferAttribute) continue;   // quantized → float
+        const f = new Float32Array(a.count * a.itemSize); for (let i = 0; i < a.count; i++) for (let c = 0; c < a.itemSize; c++) f[i * a.itemSize + c] = a.getComponent(i, c); g.setAttribute(n, new THREE.BufferAttribute(f, a.itemSize)); }
+      for (const n of Object.keys(g.attributes)) if (!['position', 'normal'].includes(n)) g.deleteAttribute(n); return g.index ? g.toNonIndexed() : g; };
     const parts = []; root.traverse(o => { if (o.isMesh) parts.push(o); });
-    const deq = g => { for (const n of Object.keys(g.attributes)) { const a = g.attributes[n]; if (a.array instanceof Float32Array && !a.isInterleavedBufferAttribute) continue;   // quantized (KHR_mesh_quantization) → float
-        const f = new Float32Array(a.count * a.itemSize); for (let i = 0; i < a.count; i++) for (let c = 0; c < a.itemSize; c++) f[i * a.itemSize + c] = a.getComponent(i, c); g.setAttribute(n, new THREE.BufferAttribute(f, a.itemSize)); } return g; };
     const geos = parts.map(o => deq(o.geometry.clone()).applyMatrix4(o.matrixWorld));
+    const named = k => { const i = parts.findIndex(o => o.name.includes(k)); return i >= 0 ? (geos[i].computeBoundingBox(), geos[i].boundingBox.getCenter(new THREE.Vector3())) : null; };
     const bb = new THREE.Box3(); geos.forEach(g => { g.computeBoundingBox(); bb.union(g.boundingBox); });
-    const cas = parts.findIndex(o => /cassette/.test(o.material?.name || '')), c = bb.getCenter(new THREE.Vector3());
-    const rear = cas >= 0 ? geos[cas].boundingBox.getCenter(new THREE.Vector3()) : new THREE.Vector3(bb.min.x, 0, c.z);
-    const fwd = new THREE.Vector3(c.x - rear.x, 0, c.z - rear.z).normalize(), ang = -Math.atan2(fwd.x, fwd.z);
+    const c = bb.getCenter(new THREE.Vector3()), rear = named('wheel_rear_hub') || new THREE.Vector3(bb.min.x + .35, .35, c.z), frontHub = named('wheel_front_hub') || new THREE.Vector3(bb.max.x - .35, .35, c.z);
+    const fwd = new THREE.Vector3(frontHub.x - rear.x, 0, frontHub.z - rear.z).normalize(), ang = -Math.atan2(fwd.x, fwd.z);
     const rot = new THREE.Matrix4().makeRotationY(ang); geos.forEach(g => g.applyMatrix4(rot));
     const bb2 = new THREE.Box3(); geos.forEach(g => { g.computeBoundingBox(); bb2.union(g.boundingBox); }); const c2 = bb2.getCenter(new THREE.Vector3());
-    const shift = new THREE.Matrix4().makeTranslation(-c2.x, -bb2.min.y, -c2.z); geos.forEach(g => { g.applyMatrix4(shift); g.computeBoundingSphere(); });
-    const axle = rear.clone().applyMatrix4(rot).applyMatrix4(shift), lift = .035;
-    parts.forEach((o, k) => {
-      const src = o.material, name = src.name || '';
-      if (/decal/.test(name)) return;                                 // no third-party marks next to athletes' names: the lane bikes are unbranded
-      let m = src.clone();
-      if (/paint_frame/.test(name)) m = new THREE.MeshPhysicalMaterial({ name, color: '#ffffff', roughness: .32, metalness: .15, clearcoat: 1, clearcoatRoughness: .05 });
-      else if (/carbon/.test(name)) m = new THREE.MeshPhysicalMaterial({ name, color: '#121316', roughness: .38, metalness: .2, clearcoat: .9, clearcoatRoughness: .12 });
-      else if (/rubber_tyre/.test(name)) m = new THREE.MeshPhysicalMaterial({ name, color: '#161616', roughness: .85, sheen: .35, sheenRoughness: .7, sheenColor: new THREE.Color('#3a3a3a') });
-      else if (/alu|steel/.test(name)) { m.metalness = 1; m.roughness = /chain|cassette/.test(name) ? .32 : .26; }
+    const shift = new THREE.Matrix4().makeTranslation(-c2.x, -bb2.min.y, -c2.z); geos.forEach(g => g.applyMatrix4(shift));
+    bikeLen = bb2.max.z - bb2.min.z;
+    const axle = rear.clone().applyMatrix4(rot).applyMatrix4(shift), front = frontHub.clone().applyMatrix4(rot).applyMatrix4(shift), lift = .035;
+    // one draw per material for all three bikes: merge parts by material, instance ×3
+    const byMat = new Map(); parts.forEach((o, k) => { const n = o.material?.name || 'm'; (byMat.get(n) || byMat.set(n, []).get(n)).push(geos[k]); });
+    const LANE_SEL = [0, .5, 1];
+    for (const [name, list] of byMat) {
+      let m;
+      if (/paint|disc_face/.test(name)) m = livery(new THREE.MeshPhysicalMaterial({ name, color: '#ffffff', roughness: .3, metalness: .35, clearcoat: 1, clearcoatRoughness: .04 }));
+      else if (/carbon|rim/.test(name)) m = new THREE.MeshPhysicalMaterial({ name, color: '#0f1013', roughness: .34, metalness: .25, clearcoat: .9, clearcoatRoughness: .1 });
+      else if (/rubber/.test(name)) m = new THREE.MeshPhysicalMaterial({ name, color: '#151515', roughness: .86, sheen: .35, sheenRoughness: .7, sheenColor: new THREE.Color('#3a3a3a') });
+      else if (/saddle|tape/.test(name)) m = new THREE.MeshPhysicalMaterial({ name, color: '#121212', roughness: .7, sheen: .5, sheenColor: new THREE.Color('#444') });
+      else if (/chrome/.test(name)) m = new THREE.MeshStandardMaterial({ name, color: '#d9dce0', roughness: .1, metalness: 1 });
+      else m = new THREE.MeshStandardMaterial({ name, color: /steel/.test(name) ? '#a7acb2' : '#7d838a', roughness: /steel/.test(name) ? .28 : .34, metalness: 1 });
       E(m); m.envMapIntensity = 1;
-      const im = new THREE.InstancedMesh(geos[k], m, LANES.length); im.castShadow = !lite; im.receiveShadow = true;
-      LANES.forEach((z, i) => { M4.makeTranslation(LANE_X, PY + lift, z); im.setMatrixAt(i, M4); if (/paint_frame/.test(name)) im.setColorAt(i, new THREE.Color(LANE_PAINT[i])); });
-      if (im.instanceColor) im.instanceColor.needsUpdate = true;
-      group.add(im);
-    });
+      const im = new THREE.InstancedMesh(mergeGeometries(list), m, LANES.length); im.castShadow = !lite; im.receiveShadow = true;
+      LANES.forEach((z, i) => { M4.makeTranslation(LANE_X, PY + lift, z); im.setMatrixAt(i, M4); im.setColorAt(i, new THREE.Color(LANE_SEL[i], LANE_SEL[i], LANE_SEL[i])); });
+      if (!/paint|disc_face/.test(name)) { for (let i = 0; i < LANES.length; i++) im.setColorAt(i, new THREE.Color(1, 1, 1)); }
+      im.instanceColor.needsUpdate = true; group.add(im);
+    }
     // a wheel-on trainer at each rear axle and a riser under each front wheel
-    const front = new THREE.Vector3(0, 0, bb2.max.z - c2.z - .34);
     LANES.forEach(z => {
       const ax = LANE_X + axle.x, az = z + axle.z, ay = PY + lift + axle.y;
       for (const s of [-1, 1]) { put(steel, new THREE.CylinderGeometry(.018, .018, .62, 10), ax + s * .1, PY + .2, az, s * .55, 0, 0); put(steel, new THREE.CylinderGeometry(.012, .012, ay - PY, 8), ax + s * .085, (ay + PY) / 2, az); }
       put(steel, new THREE.CylinderGeometry(.075, .075, .07, 28), ax, PY + .075, az - .36, 0, 0, Math.PI / 2);
-      put(steel, new THREE.CylinderGeometry(.03, .03, .08, 16), ax, PY + .045, az - .36 + .04, 0, 0, Math.PI / 2);
       put(new THREE.MeshStandardMaterial({ color: '#16181b', roughness: .7 }), new RoundedBoxGeometry(.26, .05, .34, 2, .02), LANE_X + front.x, PY + .025, z + front.z);
     });
     flush(true);
@@ -527,14 +606,14 @@ export function buildNor3Winter(ctx) {
   function introCard(act) {
     return { kind: 'beast', eyebrow: 'AN INDEPENDENT ROOM · NOR // 3', title: 'Kona winter.', kicker: 'Three lanes. One island.',
       lede: 'A winter training room for three Norwegian triathletes: cold on one side, fire on the other, Kona through the glass. Three lanes stand ready with nobody on them yet.',
-      facts: [{ cls: 'P', text: src(trio.kona_2022) }, disclaimer, { cls: 'G', text: 'The bikes are KONA.m’s Speedmax CFR study, not the athletes’ bikes. No likeness is used.' }],
+      facts: [{ cls: 'P', text: src(trio.kona_2022) }, disclaimer, { cls: 'G', text: 'The bikes are unbranded KONA.m tri studies in Kona × Norway liveries, not the athletes’ bikes. No likeness is used.' }],
       actions: [{ label: 'Walk to the lanes →', primary: true, onClick: () => act.close() }, ...A.map((a, i) => ({ label: `${a.lane} · ${a.name}`, onClick: () => ctx.renderCard?.(laneCard(i, act)) }))] };
   }
   function laneCard(i, act) {
     const a = A[i];
     return { kind: 'beast', eyebrow: `LANE ${a.lane} · NOR // 3`, title: a.name, kicker: a.panel.join(' · '),
-      lede: a.open || 'Same room, same tools, a different athlete. The lane stays empty until the athlete chooses what belongs in it.',
-      facts: [...a.facts.map(f => ({ cls: 'P', text: src(f) })), { cls: 'G', text: 'Panel taglines are a KONA.m reading, not the athlete’s words. The bike is KONA.m’s Speedmax CFR study.' }, disclaimer],
+      lede: ['Fjord to lava: navy at the nose, the flag across the down tube, Kona glowing at the tail.', 'Snow to sunset: pearl at the front, the Kona sky over the rear.', 'Aurora: northern lights running the length of the frame.'][i] + ' Same room, same tools, a different athlete.',
+      facts: [...a.facts.map(f => ({ cls: 'P', text: src(f) })), ...(a.equipment ? [{ cls: 'P', text: `${src(a.equipment)} The bike in this lane is an unbranded KONA.m study in a Kona × Norway livery, not their bike.` }] : []), { cls: 'G', text: 'Panel taglines are a KONA.m reading, not the athlete’s words.' }, disclaimer],
       actions: [{ label: 'Back to the room', primary: true, onClick: () => act.close() }, ...A.filter((_, k) => k !== i).map(b => ({ label: `Lane ${b.lane} · ${b.name}`, onClick: () => ctx.renderCard?.(laneCard(A.indexOf(b), act)) }))] };
   }
   const simple = (eyebrow, title, lede) => act => ({ kind: 'beast', eyebrow, title, lede, facts: [disclaimer], actions: [{ label: 'Back to the room', primary: true, onClick: () => act.close() }] });

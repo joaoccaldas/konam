@@ -7,36 +7,149 @@
       "id": "kristian-blummenfelt",
       "lane": "01",
       "name": "Kristian Blummenfelt",
-      "panel": ["BIG GOALS", "COLD MINDS", "WARM PLACES"],
+      "panel": [
+        "BIG GOALS",
+        "COLD MINDS",
+        "WARM PLACES"
+      ],
       "icon": "mountain",
       "facts": [
-        { "year": 2021, "line": "Olympic champion, men's triathlon, Tokyo 2020 (raced 2021).", "sources": ["https://en.wikipedia.org/wiki/Kristian_Blummenfelt"] },
-        { "year": 2022, "line": "Won the 2021 IRONMAN World Championship, held in St. George, Utah, in May 2022.", "sources": ["https://en.wikipedia.org/wiki/Kristian_Blummenfelt"] },
-        { "year": 2022, "line": "Third at the IRONMAN World Championship in Kona, October 2022.", "sources": ["https://en.wikipedia.org/wiki/2022_Ironman_World_Championship"] }
-      ]
+        {
+          "year": 2021,
+          "line": "Olympic champion, men's triathlon, Tokyo 2020 (raced 2021).",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Kristian_Blummenfelt"
+          ]
+        },
+        {
+          "year": 2022,
+          "line": "Won the 2021 IRONMAN World Championship, held in St. George, Utah, in May 2022.",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Kristian_Blummenfelt"
+          ]
+        },
+        {
+          "year": 2022,
+          "line": "Third at the IRONMAN World Championship in Kona, October 2022.",
+          "sources": [
+            "https://en.wikipedia.org/wiki/2022_Ironman_World_Championship"
+          ]
+        },
+        {
+          "year": 2026,
+          "line": "Second at the IRONMAN 70.3 World Championship in Nice, 2026.",
+          "sources": [
+            "https://www.giant-bicycles.com/int/news/blummenfelt-charges-to-podium-at-ironman-70-3-world-championship/30898"
+          ]
+        }
+      ],
+      "equipment": {
+        "line": "Races a Giant Trinity Advanced SL (2026).",
+        "sources": [
+          "https://www.giant-bicycles.com/int/news/blummenfelt-charges-to-podium-at-ironman-70-3-world-championship/30898"
+        ]
+      }
     },
     {
       "id": "gustav-iden",
       "lane": "02",
       "name": "Gustav Iden",
-      "panel": ["CONTROL", "ADAPT", "PERFORM"],
+      "panel": [
+        "CONTROL",
+        "ADAPT",
+        "PERFORM"
+      ],
       "icon": "wave",
       "facts": [
-        { "year": 2022, "line": "Won the IRONMAN World Championship in Kona in October 2022, in a course-record 7:40:24.", "sources": ["https://en.wikipedia.org/wiki/2022_Ironman_World_Championship", "https://en.wikipedia.org/wiki/Gustav_Iden"] },
-        { "year": 2019, "line": "IRONMAN 70.3 World Champion, Nice 2019.", "sources": ["https://en.wikipedia.org/wiki/Gustav_Iden"] }
-      ]
+        {
+          "year": 2022,
+          "line": "Won the IRONMAN World Championship in Kona in October 2022, in a course-record 7:40:24.",
+          "sources": [
+            "https://en.wikipedia.org/wiki/2022_Ironman_World_Championship",
+            "https://en.wikipedia.org/wiki/Gustav_Iden"
+          ]
+        },
+        {
+          "year": 2019,
+          "line": "IRONMAN 70.3 World Champion, Nice 2019.",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Gustav_Iden"
+          ]
+        },
+        {
+          "year": 2026,
+          "line": "Fastest bike split at the IRONMAN 70.3 World Championship in Nice, 2026, finishing fourth.",
+          "sources": [
+            "https://www.giant-bicycles.com/int/news/blummenfelt-charges-to-podium-at-ironman-70-3-world-championship/30898"
+          ]
+        }
+      ],
+      "equipment": {
+        "line": "Races a Giant Trinity Advanced SL (2026).",
+        "sources": [
+          "https://www.giant-bicycles.com/int/news/blummenfelt-charges-to-podium-at-ironman-70-3-world-championship/30898"
+        ]
+      }
     },
     {
       "id": "casper-stornes",
       "lane": "03",
       "name": "Casper Stornes",
-      "panel": ["PATIENT", "PRECISE", "STILL AERO"],
+      "panel": [
+        "PATIENT",
+        "PRECISE",
+        "STILL AERO"
+      ],
       "icon": "glasses",
       "facts": [
-        { "year": null, "line": "Norwegian triathlete in the same national programme as Blummenfelt and Iden.", "sources": ["https://en.wikipedia.org/wiki/Casper_Stornes"] }
+        {
+          "year": 2025,
+          "line": "IRONMAN World Champion, Nice 2025, in 7:51:36.",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Casper_Stornes",
+            "https://pinarello.com/global/en/news/ironman-world-champion"
+          ]
+        },
+        {
+          "year": 2018,
+          "line": "Won WTCS Bermuda in 2018, ahead of Blummenfelt and Iden.",
+          "sources": [
+            "https://en.wikipedia.org/wiki/Casper_Stornes"
+          ]
+        }
       ],
-      "open": "This lane deliberately carries no results yet. What belongs here is Casper's call."
+      "equipment": {
+        "line": "Won the 2025 World Championship on a Pinarello.",
+        "sources": [
+          "https://pinarello.com/global/en/news/ironman-world-champion"
+        ]
+      }
     }
   ],
-  "kona_2022": { "line": "Kona 2022: Iden first in 7:40:24, Blummenfelt third.", "sources": ["https://en.wikipedia.org/wiki/2022_Ironman_World_Championship"] }
+  "kona_2022": {
+    "line": "Kona 2022: Iden first in 7:40:24, Blummenfelt third.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/2022_Ironman_World_Championship"
+    ]
+  },
+  "equipment_policy": "Equipment appears as sourced text only. The lane bikes are unbranded KONA.m studies (assets/atlas/studio-nor3-disc-tri), never replicas or logos of a sponsor's bike.",
+  "social": {
+    "status": "unverified-snapshot",
+    "as_of": "2026-10-04",
+    "method": "Search-engine snapshots of the public Instagram profiles; Instagram blocks automated reads, so a person must confirm both counts on the profiles before outreach.",
+    "kristian": {
+      "handle": "@kristianblu",
+      "followers": 504000,
+      "sources": [
+        "https://www.instagram.com/kristianblu/"
+      ]
+    },
+    "frodeno": {
+      "handle": "@janfrodeno",
+      "followers": 560000,
+      "sources": [
+        "https://www.instagram.com/janfrodeno/"
+      ]
+    }
+  }
 }

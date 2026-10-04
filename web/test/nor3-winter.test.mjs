@@ -33,10 +33,18 @@ test('every result on screen comes from the sourced trio facts file', () => {
 test('truth and rights boundaries: no brands, no likeness, no mocking copy, disclaimers present', () => {
   assert.doesNotMatch(room, /canyon|cervel|cadex|giant|zwift|dt swiss|shimano|sram/i);
   assert.doesNotMatch(read('pitch/norwegian-trio/trio-facts-v1.json'), /non-start|DNS|DNF/i);
-  assert.match(room, /if \(\/decal\/\.test\(name\)\) return;/, 'bike decals are not drawn beside athletes’ names');
+  const meta = JSON.parse(read('assets/atlas/studio-nor3-disc-tri/build-meta.json'));
+  assert.equal(meta.generator, 'blender'); assert.match(meta.notes, /Unbranded/);
+  for (const p of ['frame', 'rim', 'tyre', 'saddle', 'chain', 'cassette', 'brake']) assert.ok(meta.semantic_parts.includes(p), p);
   assert.match(room, /Not affiliated with, endorsed by or sponsored by the athletes/);
   assert.match(room, /A KONA\.M READING · NOT THE ATHLETE’S WORDS/);
   assert.match(room, /not the athletes’ bikes/);
+  // the Instagram painting never states more than the numbers: headline follows the data, flagged until verified
+  assert.match(room, /ahead \? 'BLUMMENFELT OVERTAKES' : 'BLUMMENFELT CLOSING IN'/);
+  assert.match(room, /A KONA\.M JOKE, NOT NEWS/);
+  assert.ok(['unverified-snapshot', 'verified'].includes(facts.social.status));
+  for (const a of ['kristian', 'frodeno']) assert.ok(Number.isFinite(facts.social[a].followers) && facts.social[a].sources.length);
+  for (const a of facts.athletes) if (a.equipment) assert.ok(a.equipment.sources.every(u => /^https:\/\//.test(u)));
 });
 
 test('assets are recorded with provenance and match their hashes', () => {
@@ -52,7 +60,8 @@ test('assets are recorded with provenance and match their hashes', () => {
 });
 
 test('efficiency: instanced trio, merged statics, one shadow pass, GPU particles', () => {
-  assert.match(room, /new THREE\.InstancedMesh\(geos\[k\], m, LANES\.length\)/);
+  assert.match(room, /new THREE\.InstancedMesh\(mergeGeometries\(list\), m, LANES\.length\)/);
+  assert.match(room, /assets\/atlas\/studio-nor3-disc-tri\/bike\.glb/);
   assert.match(room, /mergeGeometries\(list\)/);
   assert.equal((room.match(/castShadow = true/g) || []).length, 2, 'one shadow-casting light (plus the fan instances casting)');
   assert.match(room, /gl_PointSize/);

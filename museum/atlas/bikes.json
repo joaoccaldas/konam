@@ -1929,6 +1929,88 @@
    ],
    "museum": false,
    "studio": true
+  },
+  {
+   "key": "studio-nor3-disc-tri",
+   "room": null,
+   "kind": "type",
+   "name": "Winter lane tri study",
+   "maker": "Studio design",
+   "year": 2026,
+   "facts": [
+    [
+     "I",
+     "A KONA.m studio design for the NOR // 3 room: a generic disc-brake triathlon superbike. Not any athlete's or brand's bike."
+    ]
+   ],
+   "text": "An unbranded long-course bike: deep kamm tubes, a disc behind, a deep front, everything integrated.",
+   "ref": null,
+   "arch": "superbike",
+   "bars": "aero",
+   "bento": true,
+   "bottle_between_arms": true,
+   "rear_bottles": false,
+   "tubes": {
+    "section": "kamm",
+    "seat_chord": 0.1,
+    "seat_width": 0.032,
+    "top_chord": 0.06,
+    "top_width": 0.03,
+    "down_chord": 0.115,
+    "down_width": 0.042,
+    "head_chord": 0.115,
+    "head_width": 0.042,
+    "cs_chord": 0.032,
+    "ss_chord": 0.03,
+    "fork_chord": 0.065,
+    "stay_drop": 0.2,
+    "hug": true,
+    "fork_paint": true
+   },
+   "wheels": {
+    "front": "spoked",
+    "rear": "disc",
+    "front_depth": 0.085,
+    "rear_depth": 0.02,
+    "spokes": 24
+   },
+   "geometry": {
+    "wheel_front": 0.668,
+    "wheel_rear": 0.668,
+    "bb_drop": 0.07,
+    "chainstay": 0.41,
+    "stack": 0.5,
+    "reach": 0.45,
+    "head_angle": 73,
+    "seat_angle": 81,
+    "head_tube": 0.13,
+    "seat_tube": 0.49,
+    "saddle_height": 0.72,
+    "stem": 0.06,
+    "stem_rise": 0.0,
+    "bar_width": 0.4,
+    "ext_width": 0.075,
+    "crank": 0.165,
+    "fork_length": 0.37,
+    "rake": 0.05
+   },
+   "skins": [
+    {
+     "id": "winter",
+     "name": "Winter",
+     "kind": "studio",
+     "frame": "#16181b",
+     "accent": "#2a2e34",
+     "rim": "#141518",
+     "disc": "#18191c"
+    }
+   ],
+   "museum": false,
+   "studio": false,
+   "detail": "hero",
+   "representation": "concept",
+   "chainring_teeth": 54,
+   "chainring_r": 0.108
   }
  ],
  "extra_refs": [
