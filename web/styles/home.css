@@ -39,3 +39,13 @@
 .home-horizon>.t-hand{margin:0;color:var(--brand-personality);transform:rotate(-1deg)}
 @media(min-width:900px){.home-horizon-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:430px){.home-horizon-grid{grid-template-columns:1fr 1fr}.home-horizon-card{min-height:158px;padding:12px}.home-horizon-card h4{font-size:21px}}
+
+/* Mobile purpose hierarchy: Now is a cockpit, not a directory. */
+.home-purpose{max-width:34rem;margin:0;color:var(--kona-muted);font:550 14px/1.5 var(--brand-font-ui)}
+.home-purpose strong{color:var(--kona-text);font-weight:800}
+@media(max-width:520px){
+  .home-today{min-height:180px;padding:20px}
+  .home-today h3{margin-bottom:8px}
+  .home-purpose{font-size:12.5px;line-height:1.4}
+  .home-today .kona-primary{width:100%;justify-content:space-between}
+}

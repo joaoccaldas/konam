@@ -17,7 +17,8 @@ function loadStage(){
   }));
 }
 export async function renderCollectionSurface(root,{admin=false,onBack}={}){
-  let filter='all',selected=null,disposed=false,stage=null,request=0;
+  let filter='all',selected=null,disposed=false,stage=null,request=0,listScrollTop=0;
+  const panel=root.closest('#konaPanel');
   const disposeStage=()=>{request++;stage?.dispose?.();stage=null;};
   const visible=item=>findAccess(item,{collected:item.collected,admin}).detailsVisible;
   const paint=()=>{
@@ -32,7 +33,7 @@ export async function renderCollectionSurface(root,{admin=false,onBack}={}){
       }).join('')+'</div><section class="kona-section artifact artifact--label" data-other-collection><h3>Your other stories</h3><div class="ui-grid" data-other-items></div></section>';
     root.querySelector('[data-finds-back]')?.addEventListener('click',()=>onBack?.());
     root.querySelectorAll('[data-find-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.findFilter;paint();root.querySelector('[data-find-filter="'+filter+'"]')?.focus({preventScroll:true});});
-    root.querySelectorAll('[data-find]').forEach(b=>b.onclick=()=>detail(items.find(x=>x.id===b.dataset.find)));
+    root.querySelectorAll('[data-find]').forEach(b=>b.onclick=()=>{listScrollTop=panel?.scrollTop||0;detail(items.find(x=>x.id===b.dataset.find));});
     const host=root.querySelector('[data-other-items]');
     for(const item of itemCollection(snapshot).filter(x=>x.kind!=='find')){
       const card=document.createElement('article');card.className='kona-item-card artifact artifact--label';card.innerHTML='<small>'+esc(item.kind)+'</small><b>'+esc(item.label)+'</b><span>'+esc(item.relationship)+'</span>';host.append(card);
@@ -47,7 +48,8 @@ export async function renderCollectionSurface(root,{admin=false,onBack}={}){
       (reveal?'<section class="kona-section artifact artifact--label"><h3>Its story</h3><p>'+esc(item.lore)+'</p></section>':'')+
       '<dl class="find-facts artifact artifact--spec"><div><dt>Collection position</dt><dd>'+number(item.number)+' / 100</dd></div><div><dt>Acquisition</dt><dd>'+esc(FIND_METHODS[item.acquired?.method||item.acquisition]?.label||item.acquisition)+'</dd></div><div><dt>Status</dt><dd>'+esc(item.collected?'Collected on this device':admin?'Admin preview. Not owned.':'Not collected')+'</dd></div>'+(reveal?'<div><dt>Discovery reward</dt><dd>'+pay.xp+' XP · '+pay.credits+' KC</dd></div><div><dt>Place</dt><dd>'+esc(item.place)+'</dd></div>':'')+'</dl>'+
       '<p class="kona-source-note">'+esc(item.acquisition==='trade'?'Trading is planned. No exchange is available yet.':item.acquisition==='event'?'Event distribution is planned. This is not an active reward.':item.tradeable?'Trading is planned. For now, this Find stays in your collection.':'This Find stays in your collection.')+'</p></article>';
-    root.querySelector('[data-find-return]').onclick=()=>{paint();root.querySelector('[data-find="'+CSS.escape(item.id)+'"]')?.focus({preventScroll:true});};
+    if(panel)panel.scrollTop=0;
+    root.querySelector('[data-find-return]').onclick=()=>{paint();if(panel)panel.scrollTop=listScrollTop;root.querySelector('[data-find="'+CSS.escape(item.id)+'"]')?.focus({preventScroll:true});};
     root.querySelector('[data-view-find]')?.addEventListener('click',async e=>{
       const button=e.currentTarget,token=++request,status=root.querySelector('[data-find-stage-status]');button.disabled=true;status.textContent='Preparing the real collectible…';
       try{

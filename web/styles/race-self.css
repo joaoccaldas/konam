@@ -20,7 +20,7 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 .studio-stage-caption button{border:0;background:transparent;color:var(--stage-muted);min-height:48px;padding:6px 10px;font:500 12px/1 var(--sans);cursor:pointer}
 .studio-destinations,.race-self-controls{min-width:0;display:grid;align-content:center;gap:8px;padding:12px 0;border-top:1px solid var(--stage-line)}
 .studio-destinations{grid-template-columns:repeat(2,minmax(0,1fr))}
-.race-self-controls{grid-template-columns:repeat(5,minmax(0,1fr))}
+.race-self-controls{grid-template-columns:repeat(4,minmax(0,1fr))}
 .studio-menu-label{grid-column:1/-1;color:var(--stage-muted);font:700 10px/1.5 var(--sans);letter-spacing:.16em;margin-bottom:3px}
 .studio-destinations>button,.race-self-controls>button,.race-self-controls>a{display:flex;align-items:center;gap:12px;min-width:0;min-height:56px;padding:10px;border:1px solid transparent;border-radius:12px;background:color-mix(in srgb,var(--brand-mist) 3%,transparent);color:inherit;text-decoration:none;text-align:left;font:500 13px/1.4 var(--sans);cursor:pointer;transition:background .15s,border-color .15s,transform .15s}
 .studio-destinations>button:first-of-type{background:color-mix(in srgb,var(--brand-progress) 22%,var(--brand-surface));color:var(--brand-ink);border-color:color-mix(in srgb,var(--brand-progress) 30%,var(--brand-line))}
@@ -61,7 +61,11 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 .avatar-options button.on,.avatar-archetype.on{border-color:var(--brand-ink);box-shadow:inset 0 0 0 1px var(--brand-ink)}
 .avatar-options i{flex:0 0 24px;height:24px;border-radius:4px;background:var(--slot-color)}
 .hub-drawer :focus-visible{outline-color:var(--brand-ink)}
-@media(max-width:599px){.studio-save-state{font-size:0}.studio-save-state::after{content:'● Local save';font-size:11px}.studio-wordmark{gap:10px}.studio-wordmark span{padding-left:10px;font-size:10px}.studio-destinations>button{padding:10px 8px;gap:6px}.studio-destinations i{flex-basis:20px;font-size:18px}.studio-destinations em{display:none}.studio-destinations b{font-size:12px}}
+@media(max-width:599px){
+ .race-self-experience{height:auto;min-height:100dvh}
+ .studio-canvas-frame{min-height:220px}
+ .studio-save-state{font-size:0}.studio-save-state::after{content:'● Local save';font-size:11px}.studio-wordmark{gap:10px}.studio-wordmark span{padding-left:10px;font-size:10px}.studio-destinations>button{padding:10px 8px;gap:6px}.studio-destinations i{flex-basis:20px;font-size:18px}.studio-destinations em{display:none}.studio-destinations b{font-size:12px}
+}
 @media(min-width:900px){
  .race-self-experience{grid-template-columns:clamp(200px,19vw,280px) minmax(0,1fr) clamp(210px,20vw,290px);grid-template-rows:88px minmax(0,1fr);padding-inline:32px;column-gap:24px}
  .studio-heading{grid-column:1/-1}.studio-wordmark{font-size:28px}
@@ -78,7 +82,7 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 @media(max-height:550px) and (min-width:600px){
  .race-self-experience{grid-template-columns:180px minmax(0,1fr) 190px;grid-template-rows:52px minmax(280px,1fr);gap:0 12px;min-height:380px}
  .studio-heading{grid-column:1/-1}.studio-destinations{grid-column:1;grid-row:2}.race-self-stage-wrap{grid-column:2;grid-row:2}.race-self-controls{grid-column:3;grid-row:2}
- .studio-destinations,.race-self-controls{grid-template-columns:1fr;gap:4px;border:0;overflow:auto;align-content:start}
+ .studio-destinations,.race-self-controls{grid-template-columns:1fr;gap:4px;border:0;overflow-y:auto;overflow-x:hidden;align-content:start}
  .studio-destinations>button,.race-self-controls>button,.race-self-controls>a{flex-direction:row;text-align:left;min-height:48px;padding:6px;gap:8px}
  .studio-menu-label{margin:0}.studio-menu-note,.race-self-identity p,.race-self-identity small,.studio-stage-caption small{display:none}
  .race-self-identity{padding-top:12px}.race-self-identity h1{font-size:28px}.studio-stage-caption{padding:0}.race-self-controls mark{display:inline-block;margin:0 0 0 4px}
@@ -120,28 +124,22 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
   .avatar-upload{grid-column:auto}
 }
 
-/* RC8 mobile exploration strip: new destinations must not steal the Race Self stage. */
+/* User Studio mobile menu: all personal destinations remain visible without sideways discovery. */
 @media(max-width:899px){
   .studio-destinations{
-    position:relative;display:flex;align-items:stretch;gap:8px;overflow-x:auto;overflow-y:hidden;
-    padding:10px 36px 12px 0;scroll-padding-inline:0 36px;scroll-snap-type:x proximity;overscroll-behavior-inline:contain;
-    box-sizing:border-box;scrollbar-width:none;border-top:1px solid var(--stage-line)
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+    padding:10px 0 12px;overflow:visible;box-sizing:border-box;border-top:1px solid var(--stage-line);
+    mask-image:none;-webkit-mask-image:none
   }
-  .studio-destinations::-webkit-scrollbar{display:none}
-  .studio-destinations{mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent)}
-  .studio-destinations>.studio-menu-label{display:none}
+  .studio-destinations>.studio-menu-label{display:block}
   .studio-destinations>button{
-    flex:0 0 min(42vw,168px);min-width:132px;max-width:168px;min-height:68px;
-    scroll-snap-align:start;align-items:flex-start
+    width:100%;min-width:0;max-width:none;min-height:68px;
+    align-items:center;scroll-snap-align:none
   }
   .studio-destinations>button span{min-width:0}
   .studio-destinations>button b{white-space:normal;overflow-wrap:anywhere}
   .studio-destinations>.studio-menu-note{display:none}
 }
-@media(max-width:380px){
-  .studio-destinations>button{flex-basis:146px;min-width:146px}
-}
-
 @media(max-width:340px){
  .race-self-identity{padding-top:8px}
  .race-self-identity small,.race-self-identity p{display:none}

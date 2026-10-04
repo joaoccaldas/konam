@@ -46,16 +46,17 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
 
   root.innerHTML=
     '<section class="kona-hero-card artifact artifact--hero home-today">'+
-      '<small>'+esc(event.name||PRODUCT_NAME+' · TODAY')+'</small>'+
-      '<h3 data-countdown-value>'+esc(headline)+'</h3><p>'+esc(note)+'</p>'+
-      '<button class="kona-primary" type="button" data-home-plan>What matters next <span>→</span></button>'+
+      '<small>YOUR RACE WEEK · TODAY</small>'+
+      '<h3 data-countdown-value>'+esc(headline)+'</h3>'+
+      '<p class="home-purpose"><strong>Your race-week cockpit.</strong> '+esc(note)+' Live Kona, your athlete and your setup stay one tap away.</p>'+
+      '<button class="kona-primary" type="button" data-home-plan>Open today\'s plan <span>→</span></button>'+
     '</section>'+
     '<section class="kona-section artifact artifact--label home-kona-now">'+
-      '<div class="kona-section-head"><div><small>KONA NOW · RACE WEEK</small><h3>What is happening?</h3></div><span class="t-data">RETURN HERE</span></div>'+
+      '<div class="kona-section-head"><div><small>KONA NOW · RACE WEEK</small><h3>What is happening?</h3></div><span class="t-data">LIVE + LOCAL</span></div>'+
       '<div class="kona-list">'+
         '<article><i>NOW</i><div><b>The Intern has been reading everything again.</b><span>Athlete videos, triathlon headlines and island updates, source-grounded and refreshable.</span></div><button type="button" class="btn-text" data-home-feed>Open feed →</button></article>'+
         '<article><i>KOA</i><div><b>Just landed?</b><span>Flights, roads, race-week essentials, bike help, coffee and useful island stops.</span></div><button type="button" class="btn-text" data-home-travel>Plan Kona →</button></article>'+
-        '<article><i>NEXT</i><div><b>What matters next.</b><span>Your race-week timeline and the next useful thing, without turning preparation into homework.</span></div><button type="button" class="btn-text" data-home-plan>Open plan →</button></article>'+
+
       '</div><p class="kona-source-note">Freshness and source status are shown inside the Feed. Local listings are independent, not endorsements.</p>'+
     '</section>'+
     '<section class="home-race-self artifact artifact--label">'+

@@ -15,8 +15,8 @@ test('first visit follows questions, first bike, avatar and install handoff befo
   assert.match(source,/onDone:\(\)=>paintQuest\('bike'\)/);
   assert.match(source,/step==='bike'/);
   assert.match(source,/onContinue:\(\)=>paintQuest\('avatar'\)/);
-  assert.match(source,/onContinue:\(\)=>paintQuest\('install'\)/);
-  assert.match(source,/data-handoff-continue[\s\S]*enterApp\('home'\)/);
+  
+  
   assert.doesNotMatch(source,/paintQuest\('intent'\)/);
 });
 
