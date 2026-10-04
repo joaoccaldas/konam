@@ -35,8 +35,26 @@ const Z = facts.zwift;                                               // Lionel o
 // The TV can play a licensed clip (for example real Zwift footage supplied by Zwift or by Lionel's team).
 // Leave clip null until the rights exist; record the approval reference in the asset manifest.
 export const BEAST_TV = Object.freeze({ clip: null, rightsRef: null });
-const eventUpcoming = (now = Date.now()) => now < Date.parse(Z.event.starts) + 3 * 3600e3;
-const eventWhen = () => { const d = new Date(Z.event.starts); return `${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'}).toUpperCase()} · ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')} UTC`; };
+const eventUpcoming = (now = Date.now()) => beastEvent(now).active;
+// The room promotes the ride while it is upcoming or live, then falls back to the facts.
+// (Zwift lists a start time only; the room treats the ride as live for three hours after it.)
+export function beastEvent(now = Date.now()) {
+  const start = Date.parse(Z.event.starts), left = start - now, live = left <= 0 && now < start + 3 * 3600e3;
+  const d = Math.floor(left / 864e5), h = Math.floor(left % 864e5 / 36e5), m = Math.floor(left % 36e5 / 6e4);
+  const countdown = live ? 'LIVE NOW' : left > 0 ? (d > 0 ? `STARTS IN ${d} D ${h} H` : h > 0 ? `STARTS IN ${h} H ${m} MIN` : `STARTS IN ${Math.max(1, m)} MIN`) : '';
+  return { upcoming: left > 0, live, active: left > 0 || live, countdown, title: Z.event.title, url: Z.event.url, starts: Z.event.starts };
+}
+// a calendar entry for the ride: title, time and the official link only
+export function beastEventIcs() {
+  const t = new Date(Z.event.starts), f = x => x.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//KONA.m//Beast Cave//EN','BEGIN:VEVENT',`UID:beast-cave-${f(t)}@konam`,`DTSTAMP:${f(t)}`,`DTSTART:${f(t)}`,`DTEND:${f(new Date(+t + 3600e3))}`,
+    `SUMMARY:${Z.event.title} (Zwift)`,`URL:${Z.event.url}`,`DESCRIPTION:Join on Zwift: ${Z.event.url}`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+}
+function saveIcs() {
+  const a = document.createElement('a'), url = URL.createObjectURL(new Blob([beastEventIcs()], { type: 'text/calendar' }));
+  a.href = url; a.download = 'ride-with-lionel-on-zwift.ics'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+export const eventWhen = () => { const d = new Date(Z.event.starts); return `${d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'}).toUpperCase()} · ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')} UTC`; };
 const loopFacts = facts.facts;
 
 export function buildBeastCave(ctx) {
@@ -282,9 +300,11 @@ export function buildBeastCave(ctx) {
     g.textAlign='right';g.fillStyle='#ff7a1a';g.font='700 30px Arial';g.fillText('QUEEN K → ENERGY LAB',w-36,62);
     g.fillStyle='rgba(235,230,220,.7)';g.font='500 20px Arial';g.fillText('KONA.M ORIGINAL ROUTE STUDY',w-36,92);
     if(band){g.fillStyle='#fff';g.font='700 34px Arial';g.fillText(`${band.label.toUpperCase()} · ${band.lo}–${band.hi} W`,w-36,138);}
-    else{const up=eventUpcoming();g.fillStyle='rgba(6,8,10,.72)';g.fillRect(w-470,116,434,up?96:66);g.fillStyle='#ff7a1a';g.font='800 26px Arial';
-      g.fillText(up?'RIDE WITH LIONEL ON ZWIFT':'LIONEL ON ZWIFT',w-52,152);g.fillStyle='#eee';g.font='600 20px Arial';
-      g.fillText(up?eventWhen():Z.level.value.toUpperCase()+' · WATOPIA',w-52,182);if(up){g.fillStyle='rgba(235,230,220,.7)';g.font='500 16px Arial';g.fillText("ZWIFT'S BIG WEEKEND · TAP THE SCREEN",w-52,204);}}
+    else{const ev=beastEvent(),up=ev.active;g.fillStyle='rgba(6,8,10,.78)';g.fillRect(w-490,112,454,up?132:66);if(up){g.fillStyle='#ff6a00';g.fillRect(w-490,112,6,132);}g.fillStyle='#ff7a1a';g.font='800 28px Arial';
+      g.fillText(up?'RIDE WITH LIONEL ON ZWIFT':'LIONEL ON ZWIFT',w-52,150);g.fillStyle='#eee';g.font='600 21px Arial';
+      g.fillText(up?eventWhen():Z.level.value.toUpperCase()+' · WATOPIA',w-52,180);
+      if(up){const blink=ev.live&&Math.sin(t*5)>0;g.fillStyle=ev.live?(blink?'#ff3b1f':'#ffb36b'):'#ffd2a8';g.font='800 22px Arial';g.fillText(ev.countdown,w-52,210);
+        g.fillStyle='rgba(235,230,220,.7)';g.font='500 15px Arial';g.fillText("ZWIFT'S BIG WEEKEND · TAP THE SCREEN TO JOIN",w-52,234);}}
     g.textAlign='left';
     // power trace with the target band
     const gx=26,gy=h-150,gw=w-52,gh=96;g.fillStyle='rgba(6,8,10,.62)';g.fillRect(gx,gy,gw,gh);
@@ -320,7 +340,25 @@ export function buildBeastCave(ctx) {
   }
 
   const fanBlurMat=new THREE.MeshBasicMaterial({map:canvasTex(256,256,(g,w,h)=>{g.translate(w/2,h/2);for(let k=0;k<5;k++){g.rotate(Math.PI*2/5);const gr=g.createLinearGradient(0,0,w*.45,0);gr.addColorStop(0,'rgba(10,10,12,.55)');gr.addColorStop(1,'rgba(10,10,12,0)');g.fillStyle=gr;g.beginPath();g.moveTo(0,0);g.arc(0,0,w*.46,-.5,.25);g.fill();}}),transparent:true,depthWrite:false,side:THREE.DoubleSide});
-  // ---------------------------------------------------------------- mess: bottles, towel (draped once the bike arrives), whiteboard
+  // ---------------------------------------------------------------- the ride poster: gallery side of the cave door, in the wash
+  // Text only: Zwift's name as the platform, no logo, no UI. After the ride it becomes Lionel's 412 W hour.
+  { const ev=beastEvent(),PW=1.05,PH=1.48;
+    const tex=canvasTex(420,592,(g,w,h)=>{g.fillStyle='#0f0c0a';g.fillRect(0,0,w,h);
+      const gl=g.createRadialGradient(w*.5,h*.38,10,w*.5,h*.38,w*.8);gl.addColorStop(0,'rgba(255,106,0,.35)');gl.addColorStop(1,'rgba(255,106,0,0)');g.fillStyle=gl;g.fillRect(0,0,w,h);
+      g.fillStyle='#ff6a00';g.fillRect(28,34,64,6);g.textAlign='left';g.fillStyle='#eee5d9';g.font=`800 17px ${FONT}`;g.letterSpacing='4px';
+      g.fillText(ev.active?(ev.live?'LIVE NOW ON ZWIFT':'ON ZWIFT · THIS WEEK'):'LIONEL ON ZWIFT',28,72);g.letterSpacing='0px';
+      g.fillStyle='#fff';g.font=`900 ${ev.active?62:96}px ${FONT}`;
+      if(ev.active){['RIDE','WITH','LIONEL'].forEach((t,k)=>g.fillText(t,26,160+k*64));}else{g.fillText('412 W',24,190);g.font=`800 26px ${FONT}`;g.fillText('ONE HOUR · ZWIFT RACE 2017',28,232);}
+      g.fillStyle='#ff7a1a';g.font=`800 ${ev.active?25:30}px ${FONT}`;g.fillText(ev.active?eventWhen():Z.level.value.toUpperCase()+' · WATOPIA',28,ev.active?380:300);
+      g.fillStyle='rgba(238,229,217,.75)';g.font=`600 18px ${FONT}`;g.fillText(ev.active?Z.event.title.toUpperCase().replace(' WITH LIONEL SANDERS',''):'LIONEL SANDERS',28,ev.active?414:334);
+      g.strokeStyle='rgba(255,106,0,.85)';g.lineWidth=3;g.strokeRect(28,h-118,w-56,64);g.fillStyle='#ff9a4d';g.font=`800 22px ${FONT}`;g.textAlign='center';
+      g.fillText(ev.active?'TAP TO JOIN ON ZWIFT ↗':'TAP FOR THE STORY',w/2,h-78);
+      g.fillStyle='rgba(238,229,217,.45)';g.font=`500 11px ${FONT}`;g.fillText('INDEPENDENT KONA.M ROOM · NOT AFFILIATED WITH ZWIFT',w/2,h-22);});
+    const pm=new THREE.MeshStandardMaterial({map:tex,emissiveMap:tex,emissive:new THREE.Color('#ffffff'),emissiveIntensity:lite?.5:.42,roughness:.85});
+    const poster=new THREE.Mesh(new THREE.PlaneGeometry(PW,PH),pm);poster.rotation.y=-Math.PI/2;poster.position.set(CAVE.x0-.115,1.62,CDOOR.z0-1.1);group.add(poster);
+    for(const dy of [PH/2-.02,-PH/2+.02]){const tp=new THREE.Mesh(new THREE.PlaneGeometry(.06,.16),new THREE.MeshStandardMaterial({color:'#d8ccb0',roughness:.9,transparent:true,opacity:.8}));tp.rotation.set(0,-Math.PI/2,.6);tp.position.set(CAVE.x0-.118,1.62+dy,CDOOR.z0-1.1-PW/2+.04);group.add(tp);}
+    info(poster,{model:act=>screenCard(act),eyebrow:'THE RIDE',title:'Ride with Lionel on Zwift.',sub:Z.event.title,text:'Listed on Zwift’s official events page.'}); }
+  // ---------------------------------------------------------------- mess: bottles, towels, whiteboard
   const bottleM=new THREE.MeshPhysicalMaterial({color:'#e9e5dc',roughness:.3,clearcoat:.6,envMapIntensity:.6,transparent:true,opacity:.92});
   const capM=new THREE.MeshStandardMaterial({color:'#ff6a00',roughness:.5});
   const bottle=(x,z,lying)=>{const b=new THREE.Group();const body=new THREE.Mesh(new THREE.CylinderGeometry(.037,.037,.21,18),bottleM);body.position.y=.105;b.add(body);const cap=new THREE.Mesh(new THREE.CylinderGeometry(.022,.03,.04,12),capM);cap.position.y=.23;b.add(cap);
@@ -329,8 +367,6 @@ export function buildBeastCave(ctx) {
   const gels=new THREE.MeshStandardMaterial({color:'#d9c9a3',roughness:.6});
   for(let i=0;i<5;i++){const p=new THREE.Mesh(new THREE.BoxGeometry(.11,.006,.05),gels);p.rotation.y=rand()*3;at(p,heroX-1.6+rand()*.4,.035,heroZ+.8+rand()*.3);}
   const towelMat=new THREE.MeshStandardMaterial({map:canvasTex(128,128,(g,w,h)=>{g.fillStyle='#6f6862';g.fillRect(0,0,w,h);g.fillStyle='rgba(255,255,255,.06)';for(let y=0;y<h;y+=3)g.fillRect(0,y,w,1);g.fillStyle='#b4541f';g.fillRect(0,h*.86,w,h*.05);}),roughness:1,side:THREE.DoubleSide,envMapIntensity:.05});
-  const towelGeo=new THREE.PlaneGeometry(.3,.56,6,16);{const p=towelGeo.attributes.position;for(let i=0;i<p.count;i++){const y=p.getY(i),x=p.getX(i);p.setZ(i,-Math.pow(Math.abs(y)/.39,1.7)*.32+Math.sin(x*14+y*6)*.012);}towelGeo.computeVertexNormals();}
-  const towel=new THREE.Mesh(towelGeo,towelMat);towel.rotation.x=-Math.PI/2;towel.castShadow=!lite;
   // a second towel, thrown on the floor
   const floorTowel=new THREE.Mesh(new THREE.PlaneGeometry(.5,.8,4,8),towelMat);{const p=floorTowel.geometry.attributes.position;for(let i=0;i<p.count;i++)p.setZ(i,Math.abs(Math.sin(p.getY(i)*9))*.03);floorTowel.geometry.computeVertexNormals();}
   floorTowel.rotation.set(-Math.PI/2,0,.6);at(floorTowel,heroX-1.7,.05,heroZ+.95);
@@ -519,7 +555,7 @@ export function buildBeastCave(ctx) {
       stats:[{value:Z.hour.value,label:'Lionel’s hour · 2017'},{value:Z.level.value.replace('Level ','L'),label:'Zwift level'},{value:'Watopia',label:'favourite world'}],
       facts:[{cls:'P',text:`${Z.hour.line} (Zwift, ${Z.hour.year})`},{cls:'P',text:`${Z.watopia.line} (Zwift, ${Z.watopia.year})`},{cls:'P',text:`${Z.level.line} (Zwift)`},
         {cls:'G',text:'The screen graphics are drawn by KONA.m; no Zwift footage or UI is reproduced. A licensed clip can be shown here once rights exist.'},{cls:'I',text:Z.note}],
-      actions:[{label:up?'Join the ride on Zwift ↗':'Lionel on Zwift ↗',primary:true,href:up?Z.event.url:Z.hour.sources[0]},{label:'Ride the interval here →',onClick:()=>act.ride()},{label:'Lionel’s channel ↗',href:Z.channel.url}]};
+      actions:[{label:up?'Join the ride on Zwift ↗':'Lionel on Zwift ↗',primary:true,href:up?Z.event.url:Z.hour.sources[0]},...(up?[{label:'Add to calendar',onClick:saveIcs}]:[]),{label:'Ride the interval here →',onClick:()=>act.ride()},{label:'Lionel’s channel ↗',href:Z.channel.url}]};
   }
   function wallCard(){
     return {kind:'beast',eyebrow:'THE WALL',title:'412 watts. One hour.',kicker:'Sprayed in white, next to the work nobody sees',
@@ -539,10 +575,15 @@ export function buildBeastCave(ctx) {
   let lastTrace=[];
   function stopRide(){ const r=ride; ride=null; if(!r) return null; lastTrace=r.iv.state.trace.slice(); return r.iv.result(); }
   function introCard(act){
-    return {kind:'beast',eyebrow:'AN INDEPENDENT ROOM · LIONEL SANDERS',title:'The work nobody sees.',kicker:'Not a trophy room.',
+    const card={kind:'beast',eyebrow:'AN INDEPENDENT ROOM · LIONEL SANDERS',title:'The work nobody sees.',kicker:'Not a trophy room.',
       lede:'A training room with nobody in it. Five published results on the wall, one empty saddle, one 60-second interval. Take the saddle, or walk the room first.',
       facts:[{cls:'P',text:`Lionel trains indoors on Zwift and has reached ${Z.level.value.toLowerCase()} (Zwift).`},{cls:'G',text:'An independent KONA.m editorial room. Not affiliated with, endorsed by or sponsored by Lionel Sanders, Zwift or any brand.'},{cls:'P',text:'Every result on the wall is published and linked to its source.'}],
       actions:[{label:'Take the saddle →',primary:true,onClick:()=>act.ride()},{label:'Walk the room',onClick:()=>act.close()},{label:'Lionel’s channel ↗',href:Z.channel.url}]};
+    const ev=beastEvent();
+    if(ev.active){card.facts.unshift({cls:'P',text:`${ev.live?'Live now':'Upcoming'}: ${Z.event.title}, ${eventWhen()}. Listed on Zwift’s official events page.`});
+      card.actions=[{label:ev.live?'Join Lionel on Zwift now ↗':'Join Lionel’s ride on Zwift ↗',primary:true,href:Z.event.url},{label:'Add to calendar',onClick:saveIcs},{label:'Warm up here: take the saddle →',onClick:()=>act.ride()},{label:'Walk the room',onClick:()=>act.close()}];
+      card.kicker=`${ev.countdown.charAt(0)+ev.countdown.slice(1).toLowerCase()} · ride with Lionel on Zwift, ${eventWhen()}`;}
+    return card;
   }
   // a 1080×1350 card of the interval just ridden, for the share sheet
   function resultImage(res,best){
@@ -561,7 +602,7 @@ export function buildBeastCave(ctx) {
     g.strokeStyle='#ff7a1a';g.lineWidth=6;g.lineJoin='round';g.beginPath();lastTrace.forEach((p,i)=>{const x=gx+p.t/60*gw,y=Y(p.w);i?g.lineTo(x,y):g.moveTo(x,y);});g.stroke();
     g.fillStyle='#eee5d9';g.font=`700 44px ${FONT}`;
     [[`${res.avgWatts} W`,'average'],[`${res.bestStreak} s`,'best streak'],[`${best} s`,'personal best']].forEach(([v,l],i)=>{const x=90+i*320;g.fillText(v,x,1050);g.fillStyle='#8b8178';g.font=`600 26px ${FONT}`;g.fillText(l.toUpperCase(),x,1090);g.fillStyle='#eee5d9';g.font=`700 44px ${FONT}`;});
-    g.fillStyle='#8b8178';g.font=`italic 400 40px ${SERIF}`;g.fillText('The work nobody sees.',90,1200);
+    {const ev=beastEvent();if(ev.active){g.fillStyle='#ff7a1a';g.font=`800 30px ${FONT}`;g.fillText(`NEXT: RIDE WITH LIONEL ON ZWIFT · ${eventWhen()}`,90,1170);}else{g.fillStyle='#8b8178';g.font=`italic 400 40px ${SERIF}`;g.fillText('The work nobody sees.',90,1200);}}
     g.font=`600 22px ${FONT}`;g.fillText('KONA.M · AN INDEPENDENT ROOM · SIMULATED POWER FROM TAPS',90,1250);
     return new Promise(r=>c.toBlob(b=>r(b),'image/jpeg',.92));
   }
@@ -613,9 +654,6 @@ export function buildBeastCave(ctx) {
         trainer.position.set(ra.x,0,ra.z);trainer.scale.setScalar(Math.max(.8,Math.min(1.25,ra.y/.34)));
         riser.position.set(fa.x,.025,fa.z);
         bikeSpot.cockpit.x=ra.x+.5;
-        const bars=node('basebar')||node('base_bar')||node('extensions');
-        if(bars){const bb=new THREE.Box3().setFromObject(bars),bc=bb.getCenter(new THREE.Vector3());towel.position.set(bc.x-.04,bb.max.y+.02,bc.z);towel.rotation.set(-Math.PI/2,0,Math.PI/2);group.add(towel);}
-        else{towel.position.set(fb.max.x-.35,1.0,heroZ);group.add(towel);}
       }else if(rear) rear.visible=false;
     },
     update(t,reduce,dt=1/60){

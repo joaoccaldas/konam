@@ -80,3 +80,18 @@ test('the TV only plays a clip when a rights reference is recorded',async()=>{
   const { BEAST_TV }=await import('../src/beast-cave.js');
   assert.ok(BEAST_TV.clip===null||!!BEAST_TV.rightsRef,'a TV clip needs a rights reference');
 });
+
+test('the room promotes Lionel’s Zwift ride only while it is upcoming or live, linking the official page', async () => {
+  const src = fs.readFileSync(new URL('../src/beast-cave.js', import.meta.url), 'utf8');
+  const facts = JSON.parse(fs.readFileSync(new URL('../../pitch/lionel-sanders/career-facts-v1.json', import.meta.url), 'utf8'));
+  const start = Date.parse(facts.zwift.event.starts);
+  assert.match(facts.zwift.event.url, /^https:\/\/www\.zwift\.com\/events\//);
+  assert.ok(facts.zwift.event.sources.includes(facts.zwift.event.url));
+  // countdown logic, mirrored from the source so the test needs no DOM or Three.js
+  const body = src.slice(src.indexOf('export function beastEvent'), src.indexOf('// a calendar entry'));
+  const beastEvent = new Function('Z', body.replace('export function beastEvent', 'return function beastEvent'))({ event: facts.zwift.event });
+  assert.deepEqual([beastEvent(start - 2 * 864e5 - 5 * 36e5).countdown, beastEvent(start - 90 * 6e4).countdown, beastEvent(start + 60e3).countdown], ['STARTS IN 2 D 5 H', 'STARTS IN 1 H 30 MIN', 'LIVE NOW']);
+  assert.equal(beastEvent(start + 4 * 36e5).active, false, 'promotion stops after the ride');
+  assert.match(src, /NOT AFFILIATED WITH ZWIFT/);
+  assert.doesNotMatch(src, /zwift[-_ ]?logo|\.svg['"].*zwift/i, 'no Zwift logo is drawn or loaded');
+});

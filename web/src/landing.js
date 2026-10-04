@@ -12,7 +12,7 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { buildPier, pierWalkable, PIER, ordinal } from './pier.js';
 import { initAppShell } from './app-shell.js';
 import { buildHalloween, hweenWalkable, HDOOR, HROOM } from './halloween.js';
-import { buildBeastCave, beastCaveWalkable, BDOOR, BROOM } from './beast-cave.js';
+import { buildBeastCave, beastCaveWalkable, BDOOR, BROOM, beastEvent, eventWhen } from './beast-cave.js';
 import { readStorage, writeStorage } from './engine/storage.js';
 import { buildSanctuary, sanctuaryWalkable, SDOOR, SROOM } from './sanctuary.js';
 import { buildGalleries, galleryWalkable, galleryFloorY, EDOOR, UPPER } from './galleries.js';
@@ -1323,7 +1323,8 @@ function endRide(finished) {
       stats: [{ value: `${res.inBand} s`, label: 'in the band' }, { value: `${res.avgWatts} W`, label: 'average' }, { value: `${best} s`, label: isBest ? 'new personal best' : 'personal best' }],
       facts: [{ cls: 'G', text: 'Simulated power from your taps — not a real trainer reading.' }],
       notes: [{ summary: 'Lionel’s line', text: 'Not recorded. This slot stays empty until Lionel Sanders chooses to ride the interval — nothing here is invented on Lionel’s behalf.' }],
-      actions: [{ label: 'Share result', primary: true, onClick: () => beast.resultImage(res, best).then(b => shareImage(b, { title: 'Beast Interval', text: `I held ${res.inBand} s of the Beast Interval in the KONA.m Beast Cave.`, filename: 'beast-interval.jpg' })) },
+      actions: [{ label: 'Share result', primary: true, onClick: () => beast.resultImage(res, best).then(b => shareImage(b, { title: 'Beast Interval', text: `I held ${res.inBand} s of the Beast Interval in the KONA.m Beast Cave.` + (beastEvent().active ? ` Next: riding with Lionel on Zwift, ${eventWhen()}.` : ''), filename: 'beast-interval.jpg' })) },
+        ...(beastEvent().active ? [{ label: beastEvent().live ? 'Now ride with Lionel on Zwift ↗' : `Ride with Lionel on Zwift · ${eventWhen()} ↗`, href: beastEvent().url }] : []),
         { label: 'Ride again', onClick: () => startRide() }, { label: 'Leave saddle', onClick: () => leaveSaddle() }] });
   } else leaveSaddle();
 }

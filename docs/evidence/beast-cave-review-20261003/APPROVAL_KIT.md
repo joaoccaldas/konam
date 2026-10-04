@@ -43,6 +43,13 @@
 | TV banner (until the event ends) | "RIDE WITH LIONEL ON ZWIFT · TUE 6 OCT · 23:00 UTC · ZWIFT'S BIG WEEKEND", with a link to the official event page | zwift.com/events/tag/zwiftsbigweekend/view/5127842 |
 | TV banner (after the event) | "LIONEL ON ZWIFT · LEVEL 100 · WATOPIA" | As above |
 
+**Promoting your ride (only until it ends, then automatically back to the facts):**
+- The TV counts down ("STARTS IN 2 D 5 H", then "LIVE NOW").
+- A text-only poster by the cave door reads "RIDE WITH LIONEL · TUE 6 OCT · 23:00 UTC · TAP TO JOIN ON ZWIFT ↗ · Not affiliated with Zwift".
+- The arrival card's main button is "Join Lionel's ride on Zwift ↗", with "Add to calendar" (an .ics file with the title, time and official link).
+- The interval result card and share image both say "Next: ride with Lionel on Zwift".
+- No Zwift logo or UI appears anywhere.
+
 **Real Zwift animation on the TV.** The screen has a video slot ready (`BEAST_TV`). It plays only a clip supplied or licensed by Zwift or by your team, and it records the licence reference. Until then, the TV shows KONA.m's own drawn route study.
 
 **Please confirm:** the 412 W figure and the quote, and whether you want the Zwift event link.
