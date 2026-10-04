@@ -15,6 +15,11 @@ const foundingRooms=(roomRegistry.rooms||[]).filter(room=>room.group==='foundati
   route:routeByRoom.get(room.id)||null,
 }));
 const themeLabel=theme=>String(theme||'world').replaceAll('-',' ');
+let foundingCollectionPromise=null;
+const loadFoundingCollection=()=>foundingCollectionPromise||(foundingCollectionPromise=fetch('collections/kona-141-v1.json',{credentials:'omit'})
+  .then(response=>{if(!response.ok)throw new Error('Founding collection unavailable');return response.json();})
+  .then(data=>{if(data?.items?.length!==141)throw new Error('Founding collection is incomplete');return data;})
+  .catch(error=>{foundingCollectionPromise=null;throw error;}));
 
 export async function renderDiscoverSurface(root,{enter,openSurface}={}){
   const roomRows=foundingRooms.map(room=>
@@ -53,6 +58,7 @@ export async function renderDiscoverSurface(root,{enter,openSurface}={}){
       '<div class="kona-section-head"><div><small>ROOM '+esc(room.ordinal)+' · FOUNDING</small><h3>'+esc(room.name)+'</h3></div><span class="t-data">OPEN</span></div>'+
       '<p>'+esc(route.description)+'</p>'+
       '<p class="kona-source-note">Open from launch. Its discoveries and deeper states can reveal progressively. The optional depth below reuses the existing runtime instead of duplicating a room or renderer.</p>'+
+      '<div data-founding-items><p class="kona-source-note">Opening this room’s ten founding items…</p></div>'+
       '<button class="kona-primary" type="button" data-canonical-room-depth="'+esc(room.id)+'">'+esc(route.action.label)+' <span>→</span></button>';
     detail.querySelector('[data-close-canonical-room]')?.addEventListener('click',()=>{
       detail.hidden=true;delete detail.dataset.roomId;
@@ -62,6 +68,14 @@ export async function renderDiscoverSurface(root,{enter,openSurface}={}){
       if(route.action.kind==='world')enter?.(route.action.target);
       else openSurface?.(route.action.target);
     });
+    const itemHost=detail.querySelector('[data-founding-items]');
+    loadFoundingCollection().then(collection=>{
+      if(detail.dataset.roomId!==room.id||!itemHost?.isConnected)return;
+      const items=(collection.items||[]).filter(item=>item.room_id===room.id).sort((a,b)=>a.number-b.number);
+      itemHost.innerHTML='<div class="kona-section-head"><h3>Founding items</h3><small>'+items.length+' / 10 · CANONICAL 141</small></div>'+
+        '<div class="kona-list">'+items.map(item=>'<article><i>'+esc(String(item.number).padStart(3,'0'))+'</i><div><b>'+esc(item.name)+'</b><span>'+esc(item.acquisition?.method||'discover')+' · '+esc(item.rarity||'find')+'</span></div></article>').join('')+'</div>'+
+        '<p class="kona-source-note">This is the canonical catalog, not a second ownership system. What you have actually found still comes from personal progression.</p>';
+    }).catch(()=>{if(itemHost?.isConnected)itemHost.innerHTML='<p class="kona-source-note">The room is open. Its founding-item catalog is temporarily unavailable; no personal progress was changed.</p>';});
     detail.scrollIntoView({block:'start',behavior:'smooth'});
   };
   root.querySelectorAll('[data-open-canonical-room]').forEach(button=>button.addEventListener('click',()=>openRoom(button.dataset.openCanonicalRoom)));
