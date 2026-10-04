@@ -4,7 +4,7 @@
 // Usage:
 //   CHROME_PATH=/path/to/chrome node web/3d-benchmark-r1.mjs nor [base] [out]
 //   CHROME_PATH=/path/to/chrome node web/3d-benchmark-r1.mjs beast [base] [out]
-//   CHROME_PATH=/path/to/chrome node web/3d-benchmark-r1.mjs museum [base] [out]
+//   CHROME_PATH=/path/to/chrome node web/3d-benchmark-r1.mjs museum [base] [out]\n//   CHROME_PATH=/path/to/chrome node web/3d-benchmark-r1.mjs breitling [base] [out]
 //
 // The harness intentionally reuses existing review/runtime surfaces.
 // It does not create a renderer, room implementation, or product authority.
@@ -68,6 +68,17 @@ async function enter(page) {
   }
   await page.goto(url.href, { waitUntil: 'domcontentloaded', timeout: 180000 });
   await page.waitForFunction(() => window.__museum, { timeout: 180000 });
+
+  if (mode === 'breitling') {
+    await page.waitForFunction(() => window.__museumGo && window.__BRANDROOMS?.rooms?.some?.(r => r.id === 'breitling'), { timeout: 180000 });
+    await page.evaluate(() => {
+      try { localStorage.setItem('speedmax.coach.v1', '1'); } catch {}
+      window.__museum.enter?.();
+      window.__museumGo('breitling');
+    });
+    await new Promise(r => setTimeout(r, 7000));
+    return;
+  }
 
   if (mode === 'museum') {
     await page.evaluate(() => {
