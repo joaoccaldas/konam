@@ -512,23 +512,24 @@ function norwegian(ctx) {
     box(.52,.035,.26,cx+2.35+k*.82,Y+2.25,r.z0-.31,steel);
   });
 
-  // Fjord relief: layered topographic memory. Batched ridges keep the silhouette dense
-  // while a cold grazing practical reveals contour and physical depth.
-  const nRidges=lite?13:25,steelRidges=[],darkRidges=[];
+  // Fjord relief: a wall-mounted contour field. Varied depth and height catch grazing
+  // light like carved terrain, so the landscape memory reads at room scale.
+  const nRidges=lite?15:29,steelRidges=[],darkRidges=[];
   for(let i=0;i<nRidges;i++){
-    const z=cz-rd*.44+i*(rd*.88/(nRidges-1));
-    const phase=i*.71;
-    const x=cx+3.77-Math.abs(Math.sin(phase))*1.46-(Math.sin(i*.31)*.10);
-    const h=.22+.22*(1+Math.sin(i*.93))+.05*Math.sin(i*.33);
-    (i%4===0?steelRidges:darkRidges).push([.045,h,.15,x,Y+.30+h/2,z,0,0,.03*Math.sin(i*.7)]);
+    const u=i/(nRidges-1),z=cz-rd*.34+u*(rd*.68);
+    const mountain=.42+.92*Math.abs(Math.sin(u*Math.PI*2.25+.35))+.34*Math.abs(Math.sin(u*Math.PI*5.1));
+    const h=Math.min(1.92,mountain);
+    const depth=.07+.18*Math.abs(Math.sin(i*.71));
+    const x=bounds.x1-.31-depth*.52;
+    (i%5===0?steelRidges:darkRidges).push([depth,h,.20,x,Y+.72+h/2,z,0,0,.015*Math.sin(i*.7)]);
   }
   mergedBoxes(steelRidges,steel);
   mergedBoxes(darkRidges,blackSteel);
-  const fjordBase=mark(box(.72,.20,Math.min(2.9,rd*.70),cx+3.55,Y+.20,cz,oak),
+  const fjordBase=mark(box(.28,.16,Math.min(6.1,rd*.72),bounds.x1-.39,Y+.68,cz,oak),
     'Fjord relief','Original layered geometry brings landscape memory into the room without copying maps or landscape photography.');
-  const fjordLight=new THREE.SpotLight('#9ed9e7',lite?3.2:6.4,6.5,Math.PI*.22,.72,1.7);
-  fjordLight.position.set(cx+1.15,Y+1.35,cz-rd*.05);
-  fjordLight.target.position.set(cx+3.35,Y+.72,cz);
+  const fjordLight=new THREE.SpotLight('#9ed9e7',lite?3.6:7.2,7.5,Math.PI*.24,.68,1.55);
+  fjordLight.position.set(bounds.x1-2.55,Y+2.15,cz-rd*.20);
+  fjordLight.target.position.set(bounds.x1-.48,Y+1.55,cz);
   rg.add(fjordLight,fjordLight.target);
 
   // Recovery corner and the deliberately mundane objects that make a room feel inhabited.
@@ -545,10 +546,13 @@ function norwegian(ctx) {
     put(bottle,cx+1.55+i*.13,Y+.27,r.z1+.22);
   }
 
-  // Kona line: destination signal, not a second UI system.
-  const konaMark=textPanel('KONA  →',.88,.18,'#ff8a54','rgba(8,11,14,.62)');konaMark.position.set(bounds.x1-.17,Y+3.22,cz);konaMark.rotation.y=-Math.PI/2;rg.add(konaMark);
-  const konaLine=mark(box(.035,.035,Math.min(3.7,rd*.86),bounds.x1-.12,Y+2.95,cz,warm),
+  // Kona line: one physical destination signal, mounted proud of the wall and turning
+  // onto the floor so the route is legible from an oblique cinematic camera.
+  const konaSignal=new THREE.MeshBasicMaterial({color:'#ff6a22',toneMapped:false});
+  const konaMark=textPanel('KONA  →',.88,.18,'#ff8a54','rgba(8,11,14,.62)');konaMark.position.set(bounds.x1-.255,Y+3.22,cz);konaMark.rotation.y=-Math.PI/2;rg.add(konaMark);
+  const konaLine=mark(box(.045,.055,Math.min(4.8,rd*.86),bounds.x1-.245,Y+2.95,cz,konaSignal),
     'Kona line','One thin warm destination line. Kona remains the destination, not the decoration theme.');
+  box(Math.min(3.2,rw*.26),.016,.045,bounds.x1-1.84,Y+.026,cz,konaSignal);
 
   // Atmosphere and air movement.
   const moisture=motes({
