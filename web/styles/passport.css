@@ -1,0 +1,40 @@
+/* Passport presentation authority.
+   Behavior/state stays in web/src/passport.js. UI semantics come from KONA brand tokens/components. */
+.pp-btn{display:inline-flex;align-items:center;gap:6px}.pp-btn i{font-style:normal}
+#ppToast{
+  position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;z-index:60;
+  display:flex;align-items:center;gap:10px;padding:10px 16px 10px 12px;border-radius:var(--brand-control-radius);
+  background:var(--brand-ink);color:var(--brand-surface);font:600 13px var(--brand-font-ui);
+  box-shadow:var(--artifact-shadow);transition:.45s cubic-bezier(.2,.8,.2,1);pointer-events:none;max-width:calc(100vw - 32px)
+}
+#ppToast.on{opacity:1;transform:translate(-50%,0)}
+#ppToast b{display:grid;place-items:center;width:34px;height:34px;border-radius:var(--brand-control-radius);background:linear-gradient(135deg,var(--brand-personality),var(--brand-discovery));font-size:18px}
+#ppToast small{display:block;color:color-mix(in srgb,var(--brand-surface) 68%,var(--brand-muted));font-weight:500;font-size:11.5px}
+#ppSheet{position:fixed;inset:0;z-index:70;background:color-mix(in srgb,var(--brand-ink) 45%,transparent);display:flex;align-items:flex-end;justify-content:center;padding:12px 12px calc(12px + env(safe-area-inset-bottom));font-family:var(--brand-font-ui);color:var(--brand-ink)}
+#ppSheet[hidden]{display:none}
+#ppSheet .pp{position:relative;width:min(560px,100%);max-height:88dvh;overflow:auto;padding:22px 20px 20px;background:var(--brand-surface);color:var(--brand-ink)}
+.pp h3{font:400 32px/1 var(--brand-font-editorial);margin:0 52px 4px 0}
+.pp .x{position:absolute;top:14px;right:14px}
+.pp .who{display:flex;align-items:center;gap:14px;margin:6px 0 16px}
+.pp .av{display:grid;place-items:center;width:58px;height:58px;border-radius:var(--brand-card-radius);background:linear-gradient(135deg,var(--brand-personality),color-mix(in srgb,var(--brand-personality) 22%,var(--brand-surface)) 50%,var(--brand-discovery));font-size:30px}
+.pp .who small{display:block;color:var(--brand-muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}.pp .who b{font-size:19px}
+.pp .bar{height:10px;border-radius:var(--brand-pill-radius);background:color-mix(in srgb,var(--brand-ink) 8%,transparent);overflow:hidden;margin:6px 0 4px}
+.pp .bar i{display:block;width:var(--pp-progress,0%);height:100%;background:linear-gradient(90deg,var(--brand-personality),var(--brand-discovery));border-radius:var(--brand-pill-radius)}
+.pp .row{display:flex;justify-content:space-between;font-size:12px;color:var(--brand-muted);font-weight:600}
+.pp .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.pp .tiles div{padding:12px;border-radius:var(--brand-card-radius);background:color-mix(in srgb,var(--brand-surface) 82%,var(--brand-bg));text-align:center}
+.pp .tiles b{display:block;font-size:22px}.pp .tiles small{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-muted);font-weight:700}
+.pp h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brand-discovery);margin:18px 0 8px}
+.pp .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}.pp .badge{padding:12px 8px;border-radius:var(--brand-card-radius);border:1px solid var(--brand-line);text-align:center;font-size:11.5px;font-weight:700}
+.pp .badge i{display:block;font-style:normal;font-size:26px;margin-bottom:4px}.pp .badge small{display:block;font-weight:500;color:var(--brand-faint);font-size:10.5px;margin-top:2px}.pp .badge.off{opacity:.42;filter:grayscale(1)}
+.pp .fact{padding:14px 16px;border-radius:var(--brand-card-radius);background:var(--brand-ink);color:var(--brand-surface);font-size:13.5px;line-height:1.55}.pp .fact small{display:block;color:var(--brand-discovery);font-weight:700;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:4px}
+.pp form{display:grid;gap:10px}.pp .ui-input{font-size:16px}
+.pp .emo{display:flex;gap:6px;flex-wrap:wrap}.pp .emo button{width:var(--brand-touch);height:var(--brand-touch);border-radius:var(--brand-control-radius);border:1px solid var(--brand-line);background:var(--brand-surface);color:var(--brand-ink);font-size:22px;cursor:pointer}
+.pp .emo button[aria-pressed=true]{border-color:var(--brand-ink);box-shadow:0 0 0 2px var(--brand-ink) inset}
+.pp .pp-go{width:100%;min-height:var(--brand-touch)}
+.pp .stamps{display:flex;flex-wrap:wrap;gap:6px}.pp .stamps span{padding:6px 10px;border-radius:var(--brand-pill-radius);background:color-mix(in srgb,var(--brand-surface) 82%,var(--brand-bg));font-size:11.5px;font-weight:600}
+.pp .note{font-size:11.5px;color:var(--brand-faint);line-height:1.5;margin-top:10px}.pp .pp-intro-note{font-size:13.5px;color:var(--brand-muted);margin:6px 0 14px}
+.pp details{margin-top:14px}.pp summary{cursor:pointer;font-weight:700;font-size:13px}
+.pp .pp-code{width:100%;min-height:70px;padding:10px;border-radius:var(--brand-control-radius);border:1px solid var(--brand-line);background:var(--brand-surface);color:var(--brand-ink);font:12px var(--brand-font-data)}
+.pp .pp-collections{flex-wrap:wrap;gap:8px 16px;justify-content:flex-start}.pp .pp-import{margin-top:6px}
+@media(min-width:900px){#ppSheet{align-items:center}}
+@media(prefers-reduced-motion:reduce){#ppToast{transition:none}}
