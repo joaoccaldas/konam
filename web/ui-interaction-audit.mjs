@@ -220,7 +220,7 @@ for(const id of selected){
       await click('[data-home-feed]');await p.waitForSelector('.companion-page');
       assert.equal(await p.$eval('[data-tab="home"]',e=>e.getAttribute('aria-current')),'page');
       await p.waitForSelector('[data-kind]',{timeout:45000});
-      const kinds=await p.$eval('[data-kind]',els=>els.map(e=>e.dataset.kind));
+      const kinds=await p.$$eval('[data-kind]',els=>els.map(e=>e.dataset.kind));
       for(const kind of kinds){await click('[data-kind="'+kind+'"]');assert.equal(await p.$eval('[data-kind="'+kind+'"]',e=>e.getAttribute('aria-pressed')),'true');}
       await inventory('The Feed');await p.screenshot({path:path.join(out,prefix+'-feed.png')});
       const rss=await p.$('[data-personal-rss]');assert.ok(rss,'RSS affordance missing');
