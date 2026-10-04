@@ -52,11 +52,8 @@ try{
   for(const t of layout.targets){
     assert.ok(t.w>=44&&t.h>=44,`${width}: small control ${t.name}`);
     assert.ok(t.y>=0&&t.bottom<=height+1,`${width}: menu vertically outside viewport: ${t.name}`);
-    if(t.scrollable){
-      assert.ok(t.offsetLeft>=0&&t.offsetLeft+t.offsetWidth<=t.scrollWidth+1,`${width}: unreachable scroll-strip item: ${t.name}`);
-    }else{
-      assert.ok(t.x>=0&&t.right<=width+1,`${width}: menu outside viewport: ${t.name}`);
-    }
+    assert.ok(!t.scrollable,`${width}: personal menu must not require sideways scrolling: ${t.name}`);
+    assert.ok(t.x>=0&&t.right<=width+1,`${width}: menu outside viewport: ${t.name}`);
   }
   for(const m of layout.menus){const s=layout.stage;assert.ok(Math.min(s.right,m.right)-Math.max(s.x,m.x)<=0||Math.min(s.bottom,m.bottom)-Math.max(s.y,m.y)<=0,`${width}: stage covered by menu`);}
   await page.screenshot({path:new URL(`studio-${width}.png`,out).pathname});
