@@ -59,6 +59,13 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
         '<div class="studio-canvas-frame"><canvas class="race-self-stage" data-race-self-stage aria-label="Interactive 3D User Studio"></canvas><p class="studio-stage-status" role="status">Preparing your athlete…</p></div>'+
         '<div class="studio-stage-caption"><span>'+esc(p.name||'Your athlete')+'</span><button type="button" data-stage-reset aria-label="Reset athlete view">↺ Reset view</button><small>Drag to rotate · Scroll or pinch to zoom</small></div>'+
       '</div>'+
+      '<nav class="race-self-controls" aria-label="Your athlete"><small class="studio-menu-label">YOUR ATHLETE</small>'+
+        menuItem('customize','●','Avatar','Build your character')+
+        '<a href="'+studioHref+'"><i aria-hidden="true">△</i><span><b>Bike Studio</b><small>Choose & customize in 3D</small></span><em aria-hidden="true">↗</em></a>'+
+        '<button type="button" disabled aria-label="Gear customization, coming soon"><i aria-hidden="true">◇</i><span><b>Gear <mark>Soon</mark></b><small>Shoes, helmet & race kit</small></span></button>'+
+        menuItem('settings','⚙','Settings','Profile, appearance & privacy')+
+        '<p class="studio-menu-note">Build your Race Self here.<br>Explore from the main navigation.</p>'+
+      '</nav>'+
       '<nav class="studio-destinations" aria-label="Your journey"><small class="studio-menu-label">YOUR JOURNEY</small>'+
         menuItem('races','◉','Races',raceCount+' race badges')+
         menuItem('collection','◇','Finds',summary.total+' things found')+
@@ -67,13 +74,6 @@ export async function renderAvatarHome(root,{profile,settings,onBack,openGarage,
         menuItem('tour','?','Quick tour','Replay the 30-second '+PRODUCT_NAME+' intro')+
         (isAdmin?menuItem('assets','▦','Asset Library','Bikes, gear, rooms, art & world assets'):'')+
         '<p class="studio-menu-note">Your history lives here.<br>The world stays out there.</p>'+
-      '</nav>'+
-      '<nav class="race-self-controls" aria-label="Your athlete"><small class="studio-menu-label">YOUR ATHLETE</small>'+
-        menuItem('customize','●','Avatar','Build your character')+
-        '<a href="'+studioHref+'"><i aria-hidden="true">△</i><span><b>Bike Studio</b><small>Choose & customize in 3D</small></span><em aria-hidden="true">↗</em></a>'+
-        '<button type="button" disabled aria-label="Gear customization, coming soon"><i aria-hidden="true">◇</i><span><b>Gear <mark>Soon</mark></b><small>Shoes, helmet & race kit</small></span></button>'+
-        menuItem('settings','⚙','Settings','Profile, appearance & privacy')+
-        '<p class="studio-menu-note">Build your Race Self here.<br>Explore from the main navigation.</p>'+
       '</nav>'+
       '<section class="hub-drawer" data-hub-drawer hidden role="dialog" aria-modal="true" aria-labelledby="studioDrawerTitle"><div class="hub-drawer-head"><div><small data-hub-kicker>USER STUDIO</small><h2 id="studioDrawerTitle" data-hub-title>Your athlete</h2></div><button type="button" data-hub-close aria-label="Close customization">×</button></div><div data-hub-body></div></section>'+
     '</section>';
