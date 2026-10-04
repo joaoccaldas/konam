@@ -19,12 +19,6 @@ const loadFoundingRooms=()=>foundingRoomsPromise||(foundingRoomsPromise=Promise.
   if(rooms.length!==14||rooms.some(room=>!room.route))throw new Error('Canonical founding rooms are incomplete');
   return rooms;
 }).catch(error=>{foundingRoomsPromise=null;throw error;}));
-let foundingCollectionPromise=null;
-const loadFoundingCollection=()=>foundingCollectionPromise||(foundingCollectionPromise=fetch('collections/kona-141-v1.json',{credentials:'omit'})
-  .then(response=>{if(!response.ok)throw new Error('Founding collection unavailable');return response.json();})
-  .then(data=>{if(data?.items?.length!==141)throw new Error('Founding collection is incomplete');return data;})
-  .catch(error=>{foundingCollectionPromise=null;throw error;}));
-
 export async function renderDiscoverSurface(root,{enter,openSurface}={}){
   const foundingRooms=await loadFoundingRooms();
   const roomOptions=foundingRooms.map(room=>'<option data-canonical-room-option value="'+esc(room.id)+'">'+esc(room.ordinal)+' · '+esc(room.name)+'</option>').join('');
@@ -56,30 +50,10 @@ export async function renderDiscoverSurface(root,{enter,openSurface}={}){
       '<div class="kona-section-head"><div><small>ROOM '+esc(room.ordinal)+' · FOUNDING</small><h3>'+esc(room.name)+'</h3></div><span class="t-data">OPEN</span></div>'+
       '<p>'+esc(route.description)+'</p>'+
       '<p class="kona-source-note">Open from launch. Discoveries can reveal progressively, but the room itself is never XP-gated.</p>'+
-      '<div class="ui-cluster"><button class="kona-primary" type="button" data-canonical-room-depth="'+esc(room.id)+'">'+esc(route.action.label)+' <span>→</span></button><button class="btn-secondary" type="button" aria-expanded="false" data-toggle-founding-items>Preview 10 founding items</button></div>'+
-      '<div data-founding-items hidden></div>';
+      '<button class="kona-primary" type="button" data-canonical-room-depth="'+esc(room.id)+'">'+esc(route.action.label)+' <span>→</span></button>';
     focus.querySelector('[data-canonical-room-depth]')?.addEventListener('click',()=>{
       if(route.action.kind==='world')enter?.(route.action.target);
       else openSurface?.(route.action.target);
-    });
-    const toggle=focus.querySelector('[data-toggle-founding-items]');
-    const itemHost=focus.querySelector('[data-founding-items]');
-    let loaded=false;
-    toggle?.addEventListener('click',()=>{
-      const opening=itemHost.hidden;
-      itemHost.hidden=!opening;
-      toggle.setAttribute('aria-expanded',String(opening));
-      toggle.textContent=opening?'Hide founding items':'Preview 10 founding items';
-      if(!opening||loaded)return;
-      loaded=true;
-      itemHost.innerHTML='<p class="kona-source-note">Loading the room’s canonical items…</p>';
-      loadFoundingCollection().then(collection=>{
-        if(focus.dataset.roomId!==room.id||!itemHost?.isConnected)return;
-        const items=(collection.items||[]).filter(item=>item.room_id===room.id).sort((a,b)=>a.number-b.number);
-        itemHost.innerHTML='<div class="kona-section-head"><h3>Founding items</h3><small>'+items.length+' / 10 · CANONICAL 141</small></div>'+
-          '<div class="kona-list">'+items.map(item=>'<article><i>'+esc(String(item.number).padStart(3,'0'))+'</i><div><b>'+esc(item.name)+'</b><span>'+esc(item.acquisition?.method||'discover')+' · '+esc(item.rarity||'find')+'</span></div></article>').join('')+'</div>'+
-          '<p class="kona-source-note">Canonical catalog only. Personal ownership still comes from your progression state.</p>';
-      }).catch(()=>{if(itemHost?.isConnected)itemHost.innerHTML='<p class="kona-source-note">The room is open. Its item preview is temporarily unavailable; your progress was not changed.</p>';});
     });
   };
   select?.addEventListener('change',()=>renderRoom(select.value));
