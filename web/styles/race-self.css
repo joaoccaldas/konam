@@ -61,7 +61,11 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 .avatar-options button.on,.avatar-archetype.on{border-color:var(--brand-ink);box-shadow:inset 0 0 0 1px var(--brand-ink)}
 .avatar-options i{flex:0 0 24px;height:24px;border-radius:4px;background:var(--slot-color)}
 .hub-drawer :focus-visible{outline-color:var(--brand-ink)}
-@media(max-width:599px){.studio-save-state{font-size:0}.studio-save-state::after{content:'● Local save';font-size:11px}.studio-wordmark{gap:10px}.studio-wordmark span{padding-left:10px;font-size:10px}.studio-destinations>button{padding:10px 8px;gap:6px}.studio-destinations i{flex-basis:20px;font-size:18px}.studio-destinations em{display:none}.studio-destinations b{font-size:12px}}
+@media(max-width:599px){
+ .race-self-experience{height:auto;min-height:100dvh}
+ .studio-canvas-frame{min-height:220px}
+ .studio-save-state{font-size:0}.studio-save-state::after{content:'● Local save';font-size:11px}.studio-wordmark{gap:10px}.studio-wordmark span{padding-left:10px;font-size:10px}.studio-destinations>button{padding:10px 8px;gap:6px}.studio-destinations i{flex-basis:20px;font-size:18px}.studio-destinations em{display:none}.studio-destinations b{font-size:12px}
+}
 @media(min-width:900px){
  .race-self-experience{grid-template-columns:clamp(200px,19vw,280px) minmax(0,1fr) clamp(210px,20vw,290px);grid-template-rows:88px minmax(0,1fr);padding-inline:32px;column-gap:24px}
  .studio-heading{grid-column:1/-1}.studio-wordmark{font-size:28px}
