@@ -32,8 +32,12 @@ test('Discover consumes canonical room truth without a second styling authority'
   assert.match(source,/14\/14 OPEN/);
   assert.match(source,/artifact artifact--label/);
   assert.match(source,/kona-primary/);
-  assert.match(source,/btn-text/);
+  assert.match(source,/ui-select/);
+  assert.match(source,/ui-cluster/);
+  assert.match(source,/btn-secondary/);
   assert.doesNotMatch(source,/<style|stylesheet|style=/i);
+  assert.doesNotMatch(source,/kona-discover-categories/);
+  assert.match(source,/Preview 10 founding items/);
 });
 
 test('Founding 141 is one canonical lazy public projection, not a duplicated UI registry',()=>{
