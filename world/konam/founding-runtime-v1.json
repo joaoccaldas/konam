@@ -107,9 +107,9 @@
       "room_id": "room-012",
       "description": "Place, geology, wind, coffee and respectful context beyond the course.",
       "action": {
-        "kind": "world",
-        "target": "bay-kona",
-        "label": "Enter island depth"
+        "kind": "surface",
+        "target": "travel",
+        "label": "Open Island Stories"
       }
     },
     {
