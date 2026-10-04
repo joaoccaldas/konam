@@ -39,6 +39,8 @@ export function buildBeastCave(ctx) {
   const RW = BROOM.x1 - BROOM.x0, RD = BROOM.z0 - BROOM.z1;
   const CX = (BROOM.x0 + BROOM.x1) / 2, CZ = (BROOM.z0 + BROOM.z1) / 2;
   const at = (o,x,y,z) => { o.position.set(x,y,z); group.add(o); return o; };
+  const infos=[];
+  const info=(mesh,rec)=>{ for(const m of [].concat(mesh)){m.userData.info=rec;pickables.push(m);} infos.push(rec); return rec; };
   const rand = seededRandom(0xBEA57);
 
   // ---------------------------------------------------------------- shell: dark concrete, black ceiling
@@ -148,8 +150,6 @@ export function buildBeastCave(ctx) {
   },1024);
   sign.position.set(hallWallX+.02,BDOOR.h+.75,(BDOOR.z0+BDOOR.z1)/2+.2);sign.rotation.y=-Math.PI/2;
 
-  const infos=[];
-  const info=(mesh,rec)=>{ for(const m of [].concat(mesh)){m.userData.info=rec;pickables.push(m);} infos.push(rec); return rec; };
 
   // ---------------------------------------------------------------- lights: almost nothing, placed with intent
   const fill=new THREE.PointLight('#c9b7a8',lite?3:1.4,26,1.4);fill.position.set(CX-4,BROOM.h-.6,CZ);group.add(fill);
