@@ -62,9 +62,16 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 .avatar-options i{flex:0 0 24px;height:24px;border-radius:4px;background:var(--slot-color)}
 .hub-drawer :focus-visible{outline-color:var(--brand-ink)}
 @media(max-width:599px){
- .race-self-experience{height:auto;min-height:100dvh}
- .studio-canvas-frame{min-height:220px}
- .studio-save-state{font-size:0}.studio-save-state::after{content:'● Local save';font-size:11px}.studio-wordmark{gap:10px}.studio-wordmark span{padding-left:10px;font-size:10px}.studio-destinations>button{padding:10px 8px;gap:6px}.studio-destinations i{flex-basis:20px;font-size:18px}.studio-destinations em{display:none}.studio-destinations b{font-size:12px}
+ .race-self-experience{height:auto;min-height:100dvh;grid-template-rows:auto auto auto auto}
+ .studio-canvas-frame{min-height:clamp(300px,45dvh,390px)}
+ .studio-save-state{font-size:0}.studio-save-state::after{content:'● Local save';font-size:11px}
+ .studio-wordmark{gap:8px}.studio-wordmark span{display:none}
+ .studio-install{font-size:0;padding-inline:10px}.studio-install::after{content:'Install';font-size:11px}
+ .studio-destinations{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .studio-destinations>button{padding:8px;gap:6px;min-height:56px}.studio-destinations i{flex-basis:20px;font-size:18px}.studio-destinations em{display:none}.studio-destinations b{font-size:12px}
+ .race-self-controls{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .race-self-controls>button,.race-self-controls>a{flex-direction:row;justify-content:flex-start;text-align:left;gap:8px;min-height:56px;padding:8px}
+ .race-self-controls i{flex-basis:22px;font-size:19px}.race-self-controls mark{display:inline-block;margin:0 0 0 4px}
 }
 @media(min-width:900px){
  .race-self-experience{grid-template-columns:clamp(200px,19vw,280px) minmax(0,1fr) clamp(210px,20vw,290px);grid-template-rows:88px minmax(0,1fr);padding-inline:32px;column-gap:24px}
@@ -125,7 +132,7 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 }
 
 /* User Studio mobile menu: all personal destinations remain visible without sideways discovery. */
-@media(max-width:899px){
+@media(min-width:600px) and (max-width:899px){
   .studio-destinations{
     display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
     padding:10px 0 12px;overflow:visible;box-sizing:border-box;border-top:1px solid var(--stage-line);
