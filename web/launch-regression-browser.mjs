@@ -69,6 +69,7 @@ try{
  await page.evaluateOnNewDocument(()=>localStorage.setItem('speedmax.passport.v1',JSON.stringify({v:1,discoveries:['cfr'],visits:3,pose:{x:0,z:3}})));
  await page.goto(new URL('Experiences.html',base).href,{waitUntil:'networkidle0'});await page.waitForFunction(()=>window.__exp?.passport);
  await page.waitForFunction(()=>document.getElementById('loading')?.classList.contains('off'),{timeout:60000});
+ if(await page.$eval('#card',e=>e.classList.contains('on')))await page.click('#cClose');
  assert.ok(await page.$('link[href="web/styles/passport.css"]'),'Passport stylesheet must be external and page-scoped');
  assert.equal(await page.$('#ppStyle'),null,'Passport must not inject a runtime stylesheet');
  await page.click('#ppBtn');await page.waitForFunction(()=>{const sheet=document.querySelector('#ppSheet');return !!sheet&&!sheet.hidden;});
