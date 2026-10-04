@@ -53,6 +53,7 @@ test('Home is lightweight while User Studio owns personal depth and tour replay'
   assert.match(raceCards,/Search IRONMAN races/);
 });
 
+// Mobile composition is a product contract: phones prioritize the athlete; tablets expand context.
 test('User Studio composes for phone, tablet and desktop without a sideways discovery rail',()=>{
   const raceSelfCss=fs.readFileSync(new URL('../styles/race-self.css',import.meta.url),'utf8');
   assert.match(raceSelfCss,/\.race-self-controls\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)\}/,'wide/base control grammar stays four-up');
