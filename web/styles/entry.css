@@ -140,7 +140,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
   #intro.kona-entry .entry-actions{margin-top:9px}
   #intro.kona-entry .entry-actions .btn{min-height:50px}
   #intro.kona-entry .entry-trust{margin-top:5px;font-size:9px}
-  #intro.kona-entry .entry-trust #entryInstall{min-height:44px}
+  #intro.kona-entry .entry-trust #entryInstall{min-height:48px}
   #intro.kona-entry .entry-product{margin-top:14px;padding-top:14px}
 }
 
