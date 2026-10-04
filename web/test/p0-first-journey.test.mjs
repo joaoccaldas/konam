@@ -6,7 +6,7 @@ const home=fs.readFileSync(new URL('../src/ui/home.js',import.meta.url),'utf8');
 const harden=fs.readFileSync(new URL('../../tools/harden_pages.mjs',import.meta.url),'utf8');
 
 test('landing exposes purpose and build without requiring 3D or unavailable sign-in',()=>{assert.match(html,/id="buildSelf"/);assert.match(html,/race-week cockpit/i);assert.match(html,/YOUR RACE-WEEK COMPANION/i);assert.doesNotMatch(html,/id="entrySignIn"/);});
-test('Now has one explicit race-week cockpit purpose and primary plan action',()=>{assert.match(home,/YOUR KONA · TODAY/);assert.match(home,/Your race-week cockpit/);assert.match(home,/Open today\\'s plan/);});
+test('Now has one explicit race-week cockpit purpose and primary plan action',()=>{assert.match(home,/YOUR RACE WEEK · TODAY/);assert.match(home,/Your race-week cockpit/);assert.match(home,/Open today\\'s plan/);});
 test('first run moves through questions, first bike, avatar and install handoff without a gear wall',()=>{
   assert.match(entry,/step==='questions'/);
   assert.match(entry,/paintQuest\(firstRunStep\(\)\)/);
