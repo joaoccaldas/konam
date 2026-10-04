@@ -84,15 +84,18 @@ jobs:
         id: signing
         env:
           KEYSTORE_B64: ${{ secrets.SPEEDMAX_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.SPEEDMAX_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.SPEEDMAX_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.SPEEDMAX_KEY_PASSWORD }}
         run: |
-          if [ -n "$KEYSTORE_B64" ]; then
+          if [ -n "$KEYSTORE_B64" ] && [ -n "$KEYSTORE_PASSWORD" ] && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
             echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/speedmax.keystore"
             echo "SPEEDMAX_KEYSTORE_FILE=$RUNNER_TEMP/speedmax.keystore" >> "$GITHUB_ENV"
             echo "signed=true" >> "$GITHUB_OUTPUT"
-            echo "release signing key configured"
+            echo "release signing identity fully configured"
           else
             echo "signed=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::No stable release key configured. A debug APK may be smoke-tested, but it will not be published to users."
+            echo "::warning::Stable release signing is incomplete. The APK may be smoke-tested, but public publishing remains fail-closed."
           fi
       - name: Build APK
         env:
@@ -105,7 +108,12 @@ jobs:
           npm run sync
           (cd android && ./gradlew assembleRelease --no-daemon)
           cp android/app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/KONA.apk"
-          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs "$GITHUB_WORKSPACE/KONA.apk"
+          certs=$("$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --print-certs "$GITHUB_WORKSPACE/KONA.apk")
+          printf '%s\n' "$certs"
+          if [ "${{ steps.signing.outputs.signed }}" = "true" ] && printf '%s\n' "$certs" | grep -q "CN=Android Debug"; then
+            echo "::error::Release signing was declared configured but the APK is still debug-signed."
+            exit 1
+          fi
           if [ "${{ steps.signing.outputs.signed }}" = "true" ]; then
             (cd android && ./gradlew bundleRelease --no-daemon)
             cp android/app/build/outputs/bundle/release/app-release.aab "$GITHUB_WORKSPACE/KONA.aab"
