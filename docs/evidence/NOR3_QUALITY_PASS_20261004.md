@@ -121,6 +121,8 @@ Those remain the highest-leverage candidates because they dominate close-up silh
 
 PR: #107 · `design/nor3-quality-pass-20261004`.
 
+Deterministic generated outputs were synchronized by commit `160397e5789b9879aab745adb86622ed877509ec`; this owner-authored evidence commit is the exact-head certification trigger.
+
 Remain **candidate / unwired**.
 
 Do not promote to approved-unwired until the full visual rubric is rescored on desktop, portrait phone and short landscape after authored-asset testing.
