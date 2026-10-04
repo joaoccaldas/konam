@@ -39,6 +39,23 @@ on:
       - 'manifest.webmanifest'
       - 'app/native/**'
       - '.github/workflows/android.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - '*_Museum.html'
+      - 'Canyon_Collection.html'
+      - 'assets/**'
+      - 'app/**'
+      - 'web/src/**'
+      - 'web/styles/**'
+      - 'web/package.json'
+      - 'web/package-lock.json'
+      - 'tools/build_app.mjs'
+      - 'tools/build_pages.mjs'
+      - 'brand/**'
+      - 'integrations/**'
+      - 'manifest.webmanifest'
+      - '.github/workflows/android.yml'
   workflow_dispatch:
 
 permissions:
