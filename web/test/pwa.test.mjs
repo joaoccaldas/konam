@@ -83,11 +83,18 @@ test('installed apps pick up verified new versions and every public icon exists'
   }
 });
 
-test('Experiences and app Passport share canonical storage', () => {
+test('Experiences and app Passport share canonical storage and external presentation', () => {
   const passport=fs.readFileSync(path.join(root,'web/src/passport.js'),'utf8');
+  const template=fs.readFileSync(path.join(root,'web/experience.template.html'),'utf8');
+  const css=fs.readFileSync(path.join(root,'web/styles/passport.css'),'utf8');
   assert.match(passport,/readPassportState\(\)/);
   assert.match(passport,/savePassportState\(s\)/);
   assert.doesNotMatch(passport,/localStorage\.(?:getItem|setItem)\(['"]speedmax\.passport/);
+  assert.doesNotMatch(passport,/createElement\(\s*['"]style['"]\s*\)|const CSS\s*=/);
+  assert.match(template,/web\/styles\/passport\.css/);
+  assert.match(css,/--brand-touch/);
+  assert.match(css,/--brand-font-ui/);
+  assert.doesNotMatch(css,/font-family\s*:\s*['"]?(?:Manrope|Instrument Serif)/i);
 });
 
 test('Three.js runtime does not use the removed PCFSoftShadowMap constant', () => {
