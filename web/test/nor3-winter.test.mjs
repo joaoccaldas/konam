@@ -60,10 +60,13 @@ test('assets are recorded with provenance and match their hashes', () => {
 });
 
 test('efficiency: instanced trio, merged statics, one shadow pass, GPU particles', () => {
-  assert.match(room, /new THREE\.InstancedMesh\(mergeGeometries\(list\), m, LANES\.length\)/);
-  assert.match(room, /assets\/atlas\/studio-nor3-disc-tri\/bike\.glb/);
+  assert.match(read('web/src/engine/decor.js'), /new THREE\.InstancedMesh\(mergeGeometries\(list\), mat, placements\.length\)/);
+  const dec = JSON.parse(read('world/konam/rooms/nor3-winter.decor.json'));
+  assert.equal(dec.items.find(d => d.id === 'lane-bikes').ref, 'studio-nor3-disc-tri');
+  assert.match(room, /loadDecor\(decor/);
   assert.match(room, /mergeGeometries\(list\)/);
-  assert.equal((room.match(/castShadow = true/g) || []).length, 2, 'one shadow-casting light (plus the fan instances casting)');
+  assert.equal((room.match(/key\.castShadow = true/g) || []).length, 1, 'one shadow-casting light for the whole trio');
+  assert.doesNotMatch(room, /s\.castShadow = !lite/, 'lane spots do not cast shadows');
   assert.match(room, /gl_PointSize/);
   assert.match(landing, /const sealed = !!beast && reg === 'beast'/);
 });

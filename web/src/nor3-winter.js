@@ -18,14 +18,13 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import trio from '../../pitch/norwegian-trio/trio-facts-v1.json' with { type: 'json' };
 import { BROOM, BDOOR } from './beast-cave.js';
+import { loadDecor } from './engine/decor.js';
+import decor from '../../world/konam/rooms/nor3-winter.decor.json' with { type: 'json' };
 
 export const NOR3_MOOD = Object.freeze({ exposure: 1.0, hemi: .14, sun: .04, fog: { near: 10, far: 48 }, fogColor: new THREE.Color('#0a0d12') });
-export const NOR3_ASSETS = Object.freeze({
+export const NOR3_ASSETS = Object.freeze({                             // bikes and props live in world/konam/rooms/nor3-winter.decor.json
   plate: 'assets/rooms/nor3-winter/kona-winter-plate-2048.webp',
   plateLite: 'assets/rooms/nor3-winter/kona-winter-plate-1024.webp',
-  bike: 'assets/atlas/studio-nor3-disc-tri/bike.glb',            // KONA.m studio tri bike, blender/atlas_build.py (hero detail)
-  bikeLite: 'assets/atlas/studio-nor3-disc-tri/bike-lite.glb',   // same skeleton, standard detail, for phones
-  fan: 'assets/rooms/beast-cave/hf-drum-fan.glb',                    // reused, not regenerated
 });
 export const NOR3_LANES = Object.freeze(trio.athletes.map(a => a.lane));
 
@@ -51,7 +50,8 @@ export function buildNor3Winter(ctx) {
   const group = new THREE.Group(); group.name = 'beastCaveRoom'; scene.add(group);       // shares the review footprint's culling slot
   const R = BROOM, RW = R.x1 - R.x0, RD = R.z0 - R.z1, CX = (R.x0 + R.x1) / 2, CZ = (R.z0 + R.z1) / 2;
   const GX = 33.0;                                                     // the glass wall; a snowy terrace lies beyond it
-  const LANE_X = 25.9, LANES = [-14.7, -10.85, -7.0];                  // lane 01 on the left as you walk in                  // three stations across the room, bikes side-on
+  const laneItem = decor.items.find(d => d.id === 'lane-bikes');        // lanes live in the decor manifest (lane 01 on the left as you walk in)
+  const LANE_X = laneItem.at[0][0], LANES = laneItem.at.map(a => a[2]);                  // three stations across the room, bikes side-on
   const rand = rng();
   const infos = [], info = (mesh, rec) => { for (const m of [].concat(mesh)) { m.userData.info = rec; pickables.push(m); } infos.push(rec); return rec; };
   const envMats = [];                                                  // materials that take the local reflection capture
@@ -541,49 +541,34 @@ export function buildNor3Winter(ctx) {
         totalEmissiveRadiance += (vColor.r<.25 ? vec3(1.,.36,.06) : vec3(.1,.9,.6)) * laneGlow;`);
     }; m.customProgramCacheKey = () => 'nor3-livery'; return m; };
   let bikeLen = 1.75;
-  function mountBikes(root) {
-    root.updateMatrixWorld(true);
-    const deq = g => { for (const n of Object.keys(g.attributes)) { const a = g.attributes[n]; if (a.array instanceof Float32Array && !a.isInterleavedBufferAttribute) continue;   // quantized → float
-        const f = new Float32Array(a.count * a.itemSize); for (let i = 0; i < a.count; i++) for (let c = 0; c < a.itemSize; c++) f[i * a.itemSize + c] = a.getComponent(i, c); g.setAttribute(n, new THREE.BufferAttribute(f, a.itemSize)); }
-      for (const n of Object.keys(g.attributes)) if (!['position', 'normal'].includes(n)) g.deleteAttribute(n); return g.index ? g.toNonIndexed() : g; };
-    const parts = []; root.traverse(o => { if (o.isMesh) parts.push(o); });
-    const geos = parts.map(o => deq(o.geometry.clone()).applyMatrix4(o.matrixWorld));
-    const named = k => { const i = parts.findIndex(o => o.name.includes(k)); return i >= 0 ? (geos[i].computeBoundingBox(), geos[i].boundingBox.getCenter(new THREE.Vector3())) : null; };
-    const bb = new THREE.Box3(); geos.forEach(g => { g.computeBoundingBox(); bb.union(g.boundingBox); });
-    const c = bb.getCenter(new THREE.Vector3()), rear = named('wheel_rear_hub') || new THREE.Vector3(bb.min.x + .35, .35, c.z), frontHub = named('wheel_front_hub') || new THREE.Vector3(bb.max.x - .35, .35, c.z);
-    const fwd = new THREE.Vector3(frontHub.x - rear.x, 0, frontHub.z - rear.z).normalize(), ang = -Math.atan2(fwd.x, fwd.z);
-    const rot = new THREE.Matrix4().makeRotationY(ang); geos.forEach(g => g.applyMatrix4(rot));
-    const bb2 = new THREE.Box3(); geos.forEach(g => { g.computeBoundingBox(); bb2.union(g.boundingBox); }); const c2 = bb2.getCenter(new THREE.Vector3());
-    const shift = new THREE.Matrix4().makeTranslation(-c2.x, -bb2.min.y, -c2.z); geos.forEach(g => g.applyMatrix4(shift));
-    bikeLen = bb2.max.z - bb2.min.z;
-    const axle = rear.clone().applyMatrix4(rot).applyMatrix4(shift), front = frontHub.clone().applyMatrix4(rot).applyMatrix4(shift), lift = .035;
-    // one draw per material for all three bikes: merge parts by material, instance ×3
-    const byMat = new Map(); parts.forEach((o, k) => { const n = o.material?.name || 'm'; (byMat.get(n) || byMat.set(n, []).get(n)).push(geos[k]); });
-    const LANE_SEL = [0, .5, 1];
-    for (const [name, list] of byMat) {
+  const LANE_SEL = [0, .5, 1];
+  const decorHooks = {
+    materialFor(item, src, name) {
       let m;
-      if (/paint|disc_face/.test(name)) m = livery(new THREE.MeshPhysicalMaterial({ name, color: '#ffffff', roughness: .3, metalness: .35, clearcoat: 1, clearcoatRoughness: .04 }));
+      if (item.kind === 'glb') { m = src.clone(); if (item.tint) m.color?.multiplyScalar(item.tint); }
+      else if (/paint|disc_face/.test(name)) m = livery(new THREE.MeshPhysicalMaterial({ name, color: '#ffffff', roughness: .3, metalness: .35, clearcoat: 1, clearcoatRoughness: .04 }));
       else if (/carbon|rim/.test(name)) m = new THREE.MeshPhysicalMaterial({ name, color: '#0f1013', roughness: .34, metalness: .25, clearcoat: .9, clearcoatRoughness: .1 });
       else if (/rubber/.test(name)) m = new THREE.MeshPhysicalMaterial({ name, color: '#151515', roughness: .86, sheen: .35, sheenRoughness: .7, sheenColor: new THREE.Color('#3a3a3a') });
       else if (/saddle|tape/.test(name)) m = new THREE.MeshPhysicalMaterial({ name, color: '#121212', roughness: .7, sheen: .5, sheenColor: new THREE.Color('#444') });
       else if (/chrome/.test(name)) m = new THREE.MeshStandardMaterial({ name, color: '#d9dce0', roughness: .1, metalness: 1 });
       else m = new THREE.MeshStandardMaterial({ name, color: /steel/.test(name) ? '#a7acb2' : '#7d838a', roughness: /steel/.test(name) ? .28 : .34, metalness: 1 });
-      E(m); m.envMapIntensity = 1;
-      const im = new THREE.InstancedMesh(mergeGeometries(list), m, LANES.length); im.castShadow = !lite; im.receiveShadow = true;
-      LANES.forEach((z, i) => { M4.makeTranslation(LANE_X, PY + lift, z); im.setMatrixAt(i, M4); im.setColorAt(i, new THREE.Color(LANE_SEL[i], LANE_SEL[i], LANE_SEL[i])); });
-      if (!/paint|disc_face/.test(name)) { for (let i = 0; i < LANES.length; i++) im.setColorAt(i, new THREE.Color(1, 1, 1)); }
-      im.instanceColor.needsUpdate = true; group.add(im);
-    }
-    // a wheel-on trainer at each rear axle and a riser under each front wheel
-    LANES.forEach(z => {
-      const ax = LANE_X + axle.x, az = z + axle.z, ay = PY + lift + axle.y;
-      for (const s of [-1, 1]) { put(steel, new THREE.CylinderGeometry(.018, .018, .62, 10), ax + s * .1, PY + .2, az, s * .55, 0, 0); put(steel, new THREE.CylinderGeometry(.012, .012, ay - PY, 8), ax + s * .085, (ay + PY) / 2, az); }
-      put(steel, new THREE.CylinderGeometry(.075, .075, .07, 28), ax, PY + .075, az - .36, 0, 0, Math.PI / 2);
-      put(new THREE.MeshStandardMaterial({ color: '#16181b', roughness: .7 }), new RoundedBoxGeometry(.26, .05, .34, 2, .02), LANE_X + front.x, PY + .025, z + front.z);
-    });
-    flush(true);
-    envDirty = 2; bikeSpot.bike = group;
-  }
+      E(m); m.envMapIntensity = 1; return m;
+    },
+    colors(item) { return item.kind === 'bike' ? (i, name) => /paint|disc_face/.test(name) ? new THREE.Color(LANE_SEL[i], LANE_SEL[i], LANE_SEL[i]) : new THREE.Color(1, 1, 1) : null; },
+    placed(item, { info }) {
+      envDirty = 2;
+      if (item.kind !== 'bike') return;
+      bikeLen = info.length; bikeSpot.bike = group;
+      // a wheel-on trainer at each rear axle and a riser under each front wheel
+      item.at.forEach(([x, y, z]) => {
+        const ax = x + info.rear.x, az = z + info.rear.z, ay = y + info.rear.y;
+        for (const s of [-1, 1]) { put(steel, new THREE.CylinderGeometry(.018, .018, .62, 10), ax + s * .1, PY + .2, az, s * .55, 0, 0); put(steel, new THREE.CylinderGeometry(.012, .012, ay - PY, 8), ax + s * .085, (ay + PY) / 2, az); }
+        put(steel, new THREE.CylinderGeometry(.075, .075, .07, 28), ax, PY + .075, az - .36, 0, 0, Math.PI / 2);
+        put(new THREE.MeshStandardMaterial({ color: '#16181b', roughness: .7 }), new RoundedBoxGeometry(.26, .05, .34, 2, .02), x + info.front.x, PY + .025, z + info.front.z);
+      });
+      flush(true);
+    },
+  };
 
   // ------------------------------------------------------------ local reflections: one cube capture of this room
   let envDirty = 1, cubeRT = null, cubeCam = null, pmrem = null, envTex = null;
@@ -632,16 +617,7 @@ export function buildNor3Winter(ctx) {
       new THREE.TextureLoader().load(lite ? NOR3_ASSETS.plateLite : NOR3_ASSETS.plate, t => {
         t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; plateMat.map = t; plateMat.needsUpdate = true; reflMat.map = t; reflMat.needsUpdate = true;
         const tvt = t.clone(); tvt.repeat.set(.36, .6); tvt.offset.set(.04, .3); tvt.needsUpdate = true; tvMat.map = tvt; tvMat.needsUpdate = true; plateSet = true; envDirty = 2; });
-      try { mountBikes((await loader.loadAsync(lite ? NOR3_ASSETS.bikeLite : NOR3_ASSETS.bike)).scene); } catch (e) { console.warn('nor3 bike', e?.message || e); }
-      if (!lite) try {                                                 // phones skip the fans (13k triangles each) to stay inside the room budget
-        const fan = (await loader.loadAsync(NOR3_ASSETS.fan)).scene;
-        const fb = new THREE.Box3().setFromObject(fan), sc = .55 / fb.getSize(new THREE.Vector3()).y;
-        fan.scale.setScalar(sc); fan.updateMatrixWorld(true); const fb2 = new THREE.Box3().setFromObject(fan), fc = fb2.getCenter(new THREE.Vector3());
-        fan.traverse(o => { if (!o.isMesh) return; const m = o.material.clone(); m.color?.multiplyScalar(.5); E(m);
-          const g = o.geometry.clone().applyMatrix4(o.matrixWorld).translate(-fc.x, -fb2.min.y, -fc.z).rotateY(Math.PI);
-          const im = new THREE.InstancedMesh(g, m, LANES.length); im.castShadow = true; LANES.forEach((z, i) => { M4.makeTranslation(LANE_X + .15, PY, z + 1.3); im.setMatrixAt(i, M4); }); group.add(im); });
-        envDirty = 2;
-      } catch (e) { console.warn('nor3 fan', e?.message || e); }
+      await loadDecor(decor, { group, loader, lite, hooks: decorHooks });   // bikes + fans from world/konam/rooms/nor3-winter.decor.json
     },
     setBike() { /* this room mounts its own LOD trio in useAssets; the canonical full bike is not loaded here */ },
     update(t, reduce, dt = 1 / 60) {

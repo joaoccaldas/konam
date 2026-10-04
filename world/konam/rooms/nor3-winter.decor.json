@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "room_id": "norwegian-engine",
+  "variant": "nor3-winter",
+  "runtime": "web/src/nor3-winter.js",
+  "coordinates": "host world metres; at = [x, y, z, yawDeg, scale?]; bikes face +z at yaw 0",
+  "items": [
+    {
+      "id": "lane-bikes",
+      "kind": "bike",
+      "ref": "studio-nor3-disc-tri",
+      "material": "nor3-livery",
+      "at": [[25.9, 0.115, -14.7, 0], [25.9, 0.115, -10.85, 0], [25.9, 0.115, -7.0, 0]],
+      "rights_ref": "world/konam/candidates/nor3-winter-asset-manifest-v1.json",
+      "note": "Lane order = athlete order in pitch/norwegian-trio/trio-facts-v1.json. Moving a lane here moves its platform, panel, towel and kit."
+    },
+    {
+      "id": "drum-fans",
+      "kind": "glb",
+      "ref": "assets/rooms/beast-cave/hf-drum-fan.glb",
+      "height": 0.55,
+      "tint": 0.5,
+      "lite": "skip",
+      "at": [[26.05, 0.08, -13.4, 180], [26.05, 0.08, -9.55, 180], [26.05, 0.08, -5.7, 180]],
+      "rights_ref": "world/konam/candidates/beast-cave-asset-manifest-v1.json"
+    }
+  ],
+  "shots": {
+    "hero": [14.4, -12.6, 0.1, 30, 1.35, -10.1],
+    "lanes": [20.2, -8.6, -0.15, 26.5, 1.0, -11.6],
+    "bike1": [24.1, -13.4, -0.6, 25.9, 0.65, -14.7],
+    "bike3": [24.0, -5.7, -0.6, 25.9, 0.6, -7.0],
+    "window": [27.4, -12.3, -0.1, 33, 1.9, -10.2],
+    "painting": [24.9, -12.6, -0.1, 24.9, 2.6, -17.6],
+    "fire": [18.0, -8.6, -0.35, 21.4, 0.6, -5.0],
+    "plunge": [18.0, -12.6, -0.25, 21.8, 0.7, -15.9]
+  }
+}
