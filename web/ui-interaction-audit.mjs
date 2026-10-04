@@ -185,9 +185,9 @@ for(const id of selected){
       assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),earned.xp);
       await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
-    await step('countdown defaults to seconds, normal/timezone persist, and traveller brief has useful sourced links',async()=>{
-      await click('[data-studio-home]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'seconds');
-      await click('.home-today .kona-countdown-options summary');await click('.home-today [data-clock-mode="normal"]');
+    await step('countdown defaults to normal, optional seconds/timezone persist, and traveller brief has useful sourced links',async()=>{
+      await click('[data-studio-home]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'normal');
+      await click('.home-today .kona-countdown-options summary');await click('.home-today [data-clock-mode="seconds"]');
       await p.select('.home-today [aria-label="Countdown timezone"]','Europe/Stockholm');
       assert.match(await text('.home-today [data-clock-target]'),/Europe\/Stockholm/);
       await click('[data-home-plan]');await p.waitForSelector('[data-kona-weather]');
@@ -195,7 +195,7 @@ for(const id of selected){
       assert.equal((await p.$$('.plan-priority-card')).length,3,'Plan should lead with three glanceable priorities');
       assert.ok((await p.$$('.plan-day')).length>=1,'race-week timeline must be visual');
       assert.ok((await p.$$('a[href*="airports.hawaii.gov"]')).length>=2);await inventory('Plan cockpit');
-      await goHome();await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'normal');
+      await goHome();await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'seconds');
       await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
     await step('sharing exports a real PNG, handles cancellation, and preserves private data',async()=>{
