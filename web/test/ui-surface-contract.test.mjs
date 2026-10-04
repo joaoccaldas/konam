@@ -87,6 +87,15 @@ test('entry has questions, avatar, install handoff and replayable contextual onb
   assert.match(registration,/data-reg-overlay/);
 });
 
+test('mobile shell keeps the canonical five-tab menu and only shows Close when a 3D world is open',()=>{
+  const mobile=fs.readFileSync(new URL('../styles/shell-mobile.css',import.meta.url),'utf8');
+  for(const tab of ['home','discover','garage','plan','me']) assert.match(shell,new RegExp('data-tab="'+tab+'"'));
+  assert.match(shell,/aria-label="Main navigation"/);
+  assert.match(mobile,/body:not\(\.museum-open\) #konaPanelClose\{display:none!important\}/);
+  assert.match(mobile,/body\.museum-open #konaPanelClose\{display:grid\}/);
+  assert.doesNotMatch(mobile,/\.kona-panel-head>button/);
+});
+
 test('Now tab routes to Home behavior and Admin Assets stays a generated, Me-only capability',()=>{
   assert.match(shell,/\[data-tab=home\]'\)\.onclick=now/);
   assert.match(shell,/renderAdminAssets/);
