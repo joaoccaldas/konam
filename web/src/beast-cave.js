@@ -160,7 +160,7 @@ export function buildBeastCave(ctx) {
     else if(kind==='cal'){g.fillText('THIS MONTH',16,28);for(let d=0;d<35;d++){const x=16+(d%7)*32,y=48+Math.floor(d/7)*52;g.strokeStyle='#9a958c';g.strokeRect(x,y,30,48);if(d<26){g.strokeStyle='#c0392b';g.lineWidth=3;g.beginPath();g.moveTo(x+4,y+6);g.lineTo(x+26,y+42);g.moveTo(x+26,y+6);g.lineTo(x+4,y+42);g.stroke();g.lineWidth=1;}}}
     else{g.fillText(kind==='a'?'SESSION A':'SESSION B',16,30);g.font=`500 13px ${FONT}`;const L=kind==='a'?['10′ easy','4 × 10′ steady','  3′ easy','10′ easy']:['15′ easy','6 × 4′ hard','  4′ easy','tempo run off the bike'];L.forEach((t,i)=>g.fillText(t,16,62+i*24));g.fillStyle='#8a847c';g.font=`500 10px ${FONT}`;g.fillText('example sessions · not an athlete plan',16,h-14);}
     g.fillStyle='rgba(225,215,170,.8)';g.fillRect(w*.35,0,w*.3,14);});
-  [['a',32.4,1.85,.04],['b',33.05,1.8,-.05],['cal',22.6,1.9,.02],['quote',23.3,1.8,-.03]].forEach(([k,x,y,rot])=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(.42,.56),new THREE.MeshStandardMaterial({map:sheetTex(k),roughness:.9}));m.rotation.set(0,Math.PI,rot);m.position.set(x,y,CAVE.z0-.13);group.add(m);});
+  [['a',28.0,1.05,.04],['b',27.4,1.0,-.05],['cal',22.6,1.9,.02],['quote',23.3,1.8,-.03]].forEach(([k,x,y,rot])=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(.42,.56),new THREE.MeshStandardMaterial({map:sheetTex(k),roughness:.9}));m.rotation.set(0,Math.PI,rot);m.position.set(x,y,CAVE.z0-.13);group.add(m);});
   info(blockWall,{model:()=>wallCard(),eyebrow:'THE WALL',title:'The work nobody sees.',sub:'Sprayed stencil · chalk tally · taped sessions',text:'Every mark on this wall is the kind a training room collects: a tally of sessions, plans taped up and torn down. The sessions are generic examples, not anyone’s real plan.'});
   // bare bulbs on cords: the only "design" in the room
   const bulbs=[];
@@ -523,7 +523,7 @@ export function buildBeastCave(ctx) {
   }
   function wallCard(){
     return {kind:'beast',eyebrow:'THE WALL',title:'412 watts. One hour.',kicker:'Sprayed in white, next to the work nobody sees',
-      lede:'The number on the block wall is Lionel’s: 412 watts held for an hour in a Zwift race. The taped sheet beside the TV is in Lionel’s words.',
+      lede:'The number on the block wall is Lionel’s: 412 watts held for an hour in a Zwift race. The taped quote on the block wall is in Lionel’s words.',
       facts:[{cls:'P',text:`${Z.hour.line} (Zwift, ${Z.hour.year})`},{cls:'P',text:`“${Z.quote.text}.” — ${Z.quote.context} (Zwift, ${Z.quote.year})`},{cls:'G',text:'Stencils, tally and generic session sheets are KONA.m set dressing, not Lionel’s plans.'}],
       actions:[...Z.hour.sources.map(u=>({label:'Source ↗',href:u}))]};
   }
