@@ -2,6 +2,11 @@
 // New code must use kona.* keys. Legacy speedmax.* keys are read/migrated for compatibility.
 
 export const STORAGE_VERSION = 1;
+export const STATE_CHANGE_EVENT = 'kona:statechange';
+
+const announceStateChange = (name, action='write') => {
+  try { globalThis.dispatchEvent?.(new CustomEvent(STATE_CHANGE_EVENT,{detail:{name,action}})); } catch (_) {}
+};
 
 const MAP = Object.freeze({
   profile: { current: 'kona.profile.v1', legacy: ['speedmax.profile.v1'] },
@@ -68,6 +73,7 @@ export function writeStorage(name, value, storage = globalThis.localStorage) {
   try {
     if (value == null) storage?.removeItem?.(row.current);
     else storage?.setItem?.(row.current, String(value));
+    announceStateChange(name,value==null?'remove':'write');
     return true;
   } catch (_) { globalThis.__konaAnalytics?.trackRuntimeError?.('state_write',{subsystem:'storage'}); return false; }
 }
@@ -75,11 +81,13 @@ export function writeStorage(name, value, storage = globalThis.localStorage) {
 export function removeStorage(name, storage = globalThis.localStorage) {
   const row = MAP[name];
   if (!row) throw new Error(`Unknown storage key: ${name}`);
-  try { storage?.removeItem?.(row.current); } catch (_) {}
+  let changed=false;
+  try { if(storage?.getItem?.(row.current)!=null)changed=true; storage?.removeItem?.(row.current); } catch (_) {}
   for (const legacy of row.legacy) {
     if (legacy === row.current) continue;
-    try { storage?.removeItem?.(legacy); } catch (_) {}
+    try { if(storage?.getItem?.(legacy)!=null)changed=true; storage?.removeItem?.(legacy); } catch (_) {}
   }
+  if(changed)announceStateChange(name,'remove');
 }
 
 export function migrateStorage(storage = globalThis.localStorage) {
