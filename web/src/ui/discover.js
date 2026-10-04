@@ -1,12 +1,25 @@
 import { photoCredit } from './photo-credit.js';
 import previews from '../../../museum/entry-catalog.json' with {type:'json'};
+import roomRegistry from '../../../world/konam/rooms-v1.json' with {type:'json'};
+import roomRuntime from '../../../world/konam/founding-runtime-v1.json' with {type:'json'};
 import { loadPublicCatalog } from '../engine/catalog.js';
 // ui/discover.js — lightweight editorial discovery. Loads public JSON only on intent.
-// 3D remains an explicit deeper action.
+// Canonical founding-room identity comes from world/konam/rooms-v1.json.
+// 3D remains explicit optional depth; this surface must never create a second room or style authority.
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const category=(name,sub)=>'<article class="discover-category artifact artifact--label"><small>'+esc(name)+'</small><b>'+esc(sub)+'</b></article>';
+const routeByRoom=new Map((roomRuntime.routes||[]).map(route=>[route.room_id,route]));
+const foundingRooms=(roomRegistry.rooms||[]).filter(room=>room.group==='foundation'&&room.launch_visible===true).map((room,index)=>({
+  ...room,
+  ordinal:String(index+1).padStart(2,'0'),
+  route:routeByRoom.get(room.id)||null,
+}));
+const themeLabel=theme=>String(theme||'world').replaceAll('-',' ');
 
-export async function renderDiscoverSurface(root,{enter}={}){
+export async function renderDiscoverSurface(root,{enter,openSurface}={}){
+  const roomRows=foundingRooms.map(room=>
+    '<article data-canonical-room="'+esc(room.id)+'"><i>'+esc(room.ordinal)+'</i><div><b>'+esc(room.name)+'</b><span>'+esc(themeLabel(room.theme))+' · '+esc(room.founding_slots)+' founding items</span></div><button class="btn-text" type="button" data-open-canonical-room="'+esc(room.id)+'">Open room →</button></article>'
+  ).join('');
   root.innerHTML=
     '<section class="kona-hero-card artifact artifact--hero"><small>DISCOVER</small><h3>Interesting things.<br>Not a floor plan.</h3>'+
     '<p>Machines, people, stories, places and rooms. The 3D world is one way deeper, not the front door.</p></section>'+
@@ -15,12 +28,40 @@ export async function renderDiscoverSurface(root,{enter}={}){
       category('People','The humans behind the equipment.')+
       category('Stories','What changed, failed, won or mattered.')+
       category('Places','Where the sport becomes real.')+
-      category('Rooms','Enter the immersive world when you want it.')+
+      category('Rooms','Fourteen founding rooms. Open from launch; deeper contents reveal over time.')+
     '</section>'+
     '<section class="kona-section artifact artifact--label" data-discover-feed><div class="kona-section-head"><h3>Loading the interesting bits</h3><small>PUBLIC DATA</small></div></section>'+
+    '<section class="kona-section artifact artifact--label" data-canonical-rooms><div class="kona-section-head"><div><small>THE FOUNDING WORLD</small><h3>14 rooms. All open.</h3></div><span class="t-data">14/14 OPEN</span></div>'+
+      '<p>Room identity is canonical. Some rooms already have immersive depth; others use the useful 2D surface while their spatial version matures. You never need 3D to understand where you are.</p>'+
+      '<div class="kona-list">'+roomRows+'</div></section>'+
+    '<section class="kona-section artifact artifact--label" data-canonical-room-detail hidden aria-live="polite"></section>'+
     '<section class="kona-section artifact artifact--label"><div class="kona-section-head"><h3>Go deeper</h3><small>OPTIONAL 3D</small></div>'+
       '<button class="kona-primary" type="button" data-enter-world>Enter the world <span>→</span></button></section>';
   root.querySelector('[data-enter-world]')?.addEventListener('click',()=>enter?.());
+
+  const detail=root.querySelector('[data-canonical-room-detail]');
+  const openRoom=id=>{
+    const room=foundingRooms.find(item=>item.id===id),route=room?.route;
+    if(!room||!route||!detail)return;
+    detail.hidden=false;
+    detail.dataset.roomId=room.id;
+    detail.innerHTML=
+      '<button class="btn-text" type="button" data-close-canonical-room>← All 14 rooms</button>'+
+      '<div class="kona-section-head"><div><small>ROOM '+esc(room.ordinal)+' · FOUNDING</small><h3>'+esc(room.name)+'</h3></div><span class="t-data">OPEN</span></div>'+
+      '<p>'+esc(route.description)+'</p>'+
+      '<p class="kona-source-note">Open from launch. Its discoveries and deeper states can reveal progressively. The optional depth below reuses the existing runtime instead of duplicating a room or renderer.</p>'+
+      '<button class="kona-primary" type="button" data-canonical-room-depth="'+esc(room.id)+'">'+esc(route.action.label)+' <span>→</span></button>';
+    detail.querySelector('[data-close-canonical-room]')?.addEventListener('click',()=>{
+      detail.hidden=true;delete detail.dataset.roomId;
+      root.querySelector('[data-canonical-rooms]')?.scrollIntoView({block:'start',behavior:'smooth'});
+    });
+    detail.querySelector('[data-canonical-room-depth]')?.addEventListener('click',()=>{
+      if(route.action.kind==='world')enter?.(route.action.target);
+      else openSurface?.(route.action.target);
+    });
+    detail.scrollIntoView({block:'start',behavior:'smooth'});
+  };
+  root.querySelectorAll('[data-open-canonical-room]').forEach(button=>button.addEventListener('click',()=>openRoom(button.dataset.openCanonicalRoom)));
 
   const data=await loadPublicCatalog();
   const products=(data.products||[]).filter(x=>x.public!==false).slice(0,4);
