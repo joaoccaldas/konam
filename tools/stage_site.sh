@@ -17,6 +17,8 @@ mkdir -p _site/integrations
 cp integrations/public-catalog.json integrations/ironman-races-2016-2026.json _site/integrations/
 mkdir -p _site/collections
 cp collections/kona-141-v1.json _site/collections/
+mkdir -p _site/world/konam
+cp world/konam/rooms-v1.json world/konam/founding-runtime-v1.json _site/world/konam/
 mkdir -p _site/web/styles _site/web/src _site/brand
 cp web/styles/hall-web.css web/styles/hall-mobile.css web/styles/studio.css web/styles/experience.css web/styles/passport.css web/styles/collection.css web/styles/entry.css web/styles/system.css web/styles/components.css web/styles/admin-assets.css web/styles/shell-mobile.css web/styles/race-self.css web/styles/companion.css web/styles/home.css web/styles/garage.css web/styles/plan.css web/styles/promo.css web/styles/about.css web/styles/room-review.css _site/web/styles/
 cp web/src/promo.js web/src/about-story.js web/src/site-analytics.js web/src/room-review-norwegian.js web/src/roomkit.js _site/web/src/
@@ -35,6 +37,7 @@ test -f _site/app/viewport.js && test -f _site/app/kona-core.js && test -f _site
 test -f _site/integrations/companion/feed.json && test -f _site/integrations/companion/travel.json && test -f _site/web/styles/companion.css && test -f _site/web/styles/plan.css
 test -f _site/integrations/public-catalog.json && test -f _site/integrations/ironman-races-2016-2026.json
 test -f _site/collections/kona-141-v1.json
+test -f _site/world/konam/rooms-v1.json && test -f _site/world/konam/founding-runtime-v1.json
 test -f _site/web/src/promo.js && test -f _site/web/src/about-story.js && test -f _site/web/src/site-analytics.js && test -f _site/web/src/room-review-norwegian.js && test -f _site/web/src/roomkit.js && test -f _site/web/styles/promo.css && test -f _site/web/styles/about.css && test -f _site/web/styles/room-review.css && test -f _site/norwegian-engine-review.html
 test -f _site/web/styles/shell-mobile.css && test -f _site/web/styles/components.css && test -f _site/web/styles/admin-assets.css && test -f _site/web/styles/studio.css && test -f _site/web/styles/experience.css && test -f _site/web/styles/passport.css && test -f _site/web/styles/collection.css && test -f _site/brand/tokens.css && test -f _site/brand/typography.css
 test -f _site/app/museum-data.js && test -f _site/app/hall.js && test -f _site/app/studio.js && test -f _site/app/studio-catalog.js
