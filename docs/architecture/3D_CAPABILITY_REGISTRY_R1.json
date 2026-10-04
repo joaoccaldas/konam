@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "research-draft",
-  "updated_at": "2026-10-04",
+  "updated_at": "2026-10-04T18:38:05Z",
   "principle": "Centralize proven capabilities, not experiences.",
   "capabilities": [
     {
@@ -54,9 +54,10 @@
       ],
       "consumers": [
         "NOR",
-        "Beast Cave"
+        "Beast Cave",
+        "Breitling"
       ],
-      "gate": "retain canonical room authority"
+      "gate": "retain canonical room authority and exact scene variant identity"
     },
     {
       "id": "product-provenance",
@@ -86,6 +87,21 @@
       "gate": "outdoor benchmark + adapter experiment"
     },
     {
+      "id": "visibility-residency-lifecycle",
+      "seed": "studio-kona",
+      "state": "evidence-backed-candidate",
+      "evidence": [
+        "studio-kona PR #54: lazy build + distance-based unload while semantic state remains resident",
+        "konam issue #115: EXP-001 visibility / room graph / HLOD"
+      ],
+      "consumers": [
+        "studio-kona",
+        "konam",
+        "future outdoor worlds"
+      ],
+      "gate": "EXP-001 controlled baseline + identical visual evidence + retained-state regression checks"
+    },
+    {
       "id": "procedural-installations",
       "seed": "NOR",
       "state": "candidate-shared-pattern",
@@ -102,19 +118,20 @@
       "seed": "Breitling",
       "state": "experiment",
       "evidence": [
-        "issue #116"
+        "issue #116",
+        "research branch generic station.top presentation fix"
       ],
       "consumers": [
         "Breitling",
         "Canyon Museum",
         "Garage"
       ],
-      "gate": "HERO ladder passes visual + runtime gates"
+      "gate": "HERO ladder passes visual + runtime gates on correct final Breitling scene"
     },
     {
       "id": "form-finding",
       "seed": "Gaudi",
-      "state": "experiment",
+      "state": "experiment-blocked-on-research-prerequisites",
       "evidence": [
         "issue #117"
       ],
@@ -122,18 +139,36 @@
         "Gaudi",
         "future architecture/worlds"
       ],
-      "gate": "isolated operator produces useful geometry"
+      "gate": "primary/near-primary evidence map + isolated operator useful against design criteria"
     },
     {
       "id": "world-partition-streaming",
       "seed": "studio-kona",
-      "state": "not-proven",
-      "evidence": [],
+      "state": "candidate-pattern-baseline-missing",
+      "evidence": [
+        "studio-kona PR #54 unload cold streamed world geometry",
+        "studio-kona PR #55 research baseline contract"
+      ],
       "consumers": [
         "studio-kona",
         "future outdoor worlds"
       ],
-      "gate": "scale benchmark"
+      "gate": "deterministic outdoor scale baseline before optimization claim"
+    },
+    {
+      "id": "cross-world-canonical-embed",
+      "seed": "bellagio",
+      "state": "proven-adapter-pattern-stale-targets",
+      "evidence": [
+        "bellagio main worlds/vegas/lab/index.html",
+        "bellagio main worlds/vegas/world.json",
+        "konam PR #123 identifies newer final room routes"
+      ],
+      "consumers": [
+        "bellagio",
+        "konam"
+      ],
+      "gate": "reconcile to current canonical scene variants on a research branch; do not call iframe embed shared runtime"
     },
     {
       "id": "gameplay-persistence",
@@ -147,18 +182,32 @@
       "consumers": [
         "future athlete worlds"
       ],
-      "gate": "selective reuse only"
+      "gate": "selective reuse only; verify concrete default-branch paths before extraction"
     },
     {
       "id": "reconstruction-pipeline",
       "seed": "bellagio",
       "state": "research",
-      "evidence": [],
+      "evidence": [
+        "Bellagio PR #4 reconstruction benchmark scaffolding"
+      ],
       "consumers": [
         "digital twins",
         "real venues"
       ],
       "gate": "mesh vs splat vs hybrid benchmark"
+    },
+    {
+      "id": "deterministic-benchmark-preflight",
+      "seed": "konam",
+      "state": "required-contract",
+      "evidence": [
+        "PR #114 four evidence/runtime gates blocked before measurement by stale generated outputs"
+      ],
+      "consumers": [
+        "all 3D benchmarks"
+      ],
+      "gate": "classify blocked-preflight separately from measured-fail and measured-pass"
     }
   ]
 }
