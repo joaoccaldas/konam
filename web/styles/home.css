@@ -16,8 +16,10 @@
 .home-postcard{position:relative;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);min-height:210px;border-radius:24px;overflow:hidden;border:1px solid var(--brand-line);background:var(--brand-surface);box-shadow:var(--artifact-shadow)}
 .home-postcard-photo{min-height:210px}.home-postcard-photo img{width:100%;height:100%;object-fit:cover;display:block}.home-postcard-copy{padding:18px;display:flex;flex-direction:column;justify-content:end}
 @media(max-width:430px){
-  .home-race-self{grid-template-columns:92px minmax(0,1fr);padding:14px;gap:12px}.home-race-self-visual{min-height:132px}.home-avatar{transform:scale(.9)}
-  .home-postcard{grid-template-columns:1fr;min-height:0}.home-postcard-photo{height:155px;min-height:155px}.home-postcard-copy{padding:16px}
+  .home-race-self{grid-template-columns:78px minmax(0,1fr);padding:12px;gap:10px}.home-race-self-visual{min-height:118px}.home-avatar{transform:scale(.8)}
+  .home-race-self-copy h3{font-size:clamp(24px,7vw,30px)}
+  .home-race-self-actions{gap:4px}.home-race-self-actions .kona-primary{width:100%;justify-content:space-between}.kona-link-btn{padding-inline:4px}
+  .home-postcard{grid-template-columns:1fr;min-height:0}.home-postcard-photo{height:140px;min-height:140px}.home-postcard-copy{padding:14px}
 }
 
 .home-horizon{display:grid;gap:18px;padding:8px 0 22px;border-top:1px solid var(--brand-line)}
@@ -38,14 +40,17 @@
 .home-horizon-card.is-revealed{border-color:color-mix(in srgb,var(--brand-action) 45%,var(--brand-line))}
 .home-horizon>.t-hand{margin:0;color:var(--brand-personality);transform:rotate(-1deg)}
 @media(min-width:900px){.home-horizon-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:430px){.home-horizon-grid{grid-template-columns:1fr 1fr}.home-horizon-card{min-height:158px;padding:12px}.home-horizon-card h4{font-size:21px}}
+@media(max-width:430px){.home-horizon-grid{grid-template-columns:1fr}.home-horizon-card{min-height:126px;padding:12px}.home-horizon-silhouette{height:58px}.home-horizon-card h4{font-size:21px}}
 
 /* Mobile purpose hierarchy: Now is a cockpit, not a directory. */
 .home-purpose{max-width:34rem;margin:0;color:var(--kona-muted);font:550 14px/1.5 var(--brand-font-ui)}
 .home-purpose strong{color:var(--kona-text);font-weight:800}
 @media(max-width:520px){
-  .home-today{min-height:180px;padding:20px}
-  .home-today h3{margin-bottom:8px}
+  .home-today{min-height:158px;padding:16px}
+  .home-today h3{margin-bottom:6px}
   .home-purpose{font-size:12.5px;line-height:1.4}
-  .home-today .kona-primary{width:100%;justify-content:space-between}
+  .home-today .kona-primary{width:100%;justify-content:space-between;margin-top:14px}
+  .home-kona-now .kona-list article{display:grid;grid-template-columns:44px minmax(0,1fr);align-items:start;gap:8px 10px;padding:11px 0}
+  .home-kona-now .kona-list article>i{grid-row:1/3}
+  .home-kona-now .kona-list article>button{grid-column:2;justify-self:start;min-height:44px;padding:0}
 }
