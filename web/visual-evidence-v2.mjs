@@ -139,7 +139,8 @@ await browser.close();
 fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2)+'\n');
 const violations=[];
 for(const r of report){
- if(r.metrics.panelBackCovered)violations.push(`${r.viewport}/${r.theme}/${r.state}: panel back is covered`);
+ // The quick tour is a modal dialog with its own Next/Skip controls, so it intentionally owns the interaction layer while open.
+ if(r.metrics.panelBackCovered&&r.state!=='onboarding-tour')violations.push(`${r.viewport}/${r.theme}/${r.state}: panel back is covered`);
  if(r.state==='collection'&&r.metrics.panelScrollTop!==0)violations.push(`${r.viewport}/${r.theme}: new collection route retained old scroll position`);
  if(r.metrics.overflowX)violations.push(`${r.viewport}/${r.theme}/${r.state}: horizontal overflow`);
  if(r.state==='landing'&&r.heavyRequests.length)violations.push(`${r.viewport}/${r.theme}: heavy 3D requested on landing`);
@@ -169,7 +170,6 @@ for(const r of report){
  if(r.viewport!=='desktop'&&r.metrics.smallTargets.length)violations.push(`${r.viewport}/${r.theme}/${r.state}: touch targets below 48px: ${r.metrics.smallTargets.map(x=>x.text||x.tag).join(', ')}`);
  if(r.state==='plan'&&!/Plan|race week|Expo|October/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: no Plan content detected`);
  if(r.state==='progress'&&!/Progress|XP|Credits|milestones/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: no Progress content detected`);
- if(r.metrics.panelBackCovered)violations.push(`${r.viewport}/${r.theme}/${r.state}: panel back is covered`);
  if(r.state==='collection'&&(!r.metrics.collectionGrid||r.metrics.collectionGrid.display!=='grid'||r.metrics.collectionGrid.columns!==(r.viewport==='desktop'?4:2)||!r.metrics.collectionGrid.sameFirstRow))violations.push(`${r.viewport}/${r.theme}: Finds cards are not arranged in the canonical responsive grid`);
  if(r.state==='bike-studio'&&!/Speedmax|Bikes/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: Bike Studio missing`);
 }
