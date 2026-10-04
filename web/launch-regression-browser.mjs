@@ -70,7 +70,7 @@ try{
  await page.goto(new URL('Experiences.html',base).href,{waitUntil:'networkidle0'});await page.waitForFunction(()=>window.__exp?.passport);
  assert.ok(await page.$('link[href="web/styles/passport.css"]'),'Passport stylesheet must be external and page-scoped');
  assert.equal(await page.$('#ppStyle'),null,'Passport must not inject a runtime stylesheet');
- await page.click('#ppBtn');await page.waitForFunction(()=>!document.querySelector('#ppSheet')?.hidden);
+ await page.click('#ppBtn');await page.waitForFunction(()=>{const sheet=document.querySelector('#ppSheet');return !!sheet&&!sheet.hidden;});
  const passportUi=await page.evaluate(()=>({
    sheet:(()=>{const r=document.querySelector('#ppSheet .pp')?.getBoundingClientRect();return r&&{width:r.width,height:r.height,left:r.left,right:r.right,top:r.top,bottom:r.bottom};})(),
    close:(()=>{const r=document.querySelector('#ppSheet .x')?.getBoundingClientRect();return r&&{width:r.width,height:r.height};})(),
