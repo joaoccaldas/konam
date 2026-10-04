@@ -1,5 +1,5 @@
 {
- "version": "e4ac59e8d7c2",
+ "version": "e8305a553f42",
  "core": [
   "index.html",
   "about.html",
@@ -73,7 +73,7 @@
   "app/world-shell.html": "8GKFuNhBIW6G4lkPOK+mLVjKkEXyLnSnpkOqpKMWzDw=",
   "app/admin-assets.json": "n/NqGL+U+VdeCs0ZCgV86l795TtsQwI7hdSMtATawec=",
   "app/admin-asset-preview.js": "M7xUJvAtQ4yOnFKybfxmp0dq7tlx1Z9BU/O1ES36Er8=",
-  "web/styles/hall-web.css": "VkJ8N5UYmM8m7nTVZCcMjl+aKspkE9gW5lhkuTqPi28=",
+  "web/styles/hall-web.css": "gJpV5fLmNQikp7wkFPOVbYClmmBJlkHvU+PZsqXQBH8=",
   "web/styles/hall-mobile.css": "cuRuvrhUUueTK3x0spycCnA6YD8kcHc1LNwc8KWTBJk=",
   "web/styles/studio.css": "/dTfP9s7cAT0e7RYmTKYNCDcqs8oQ8Ty6n/ZdWtF09I=",
   "web/styles/experience.css": "XzMAJ6DZaaJ1HnqAF7VlEu476cTbGTehqqHHYpCcYCw=",
