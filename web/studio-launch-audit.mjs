@@ -41,8 +41,9 @@ try{
    const rect=e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height,right:r.right,bottom:r.bottom};};
    const stage=rect(canvas), menuEls=[...document.querySelectorAll('.studio-destinations,.race-self-controls')],menus=menuEls.map(rect);
    const targets=[...document.querySelectorAll('.studio-destinations>button,.race-self-controls>button,.race-self-controls>a')].map(e=>{
-     const parent=e.parentElement,r=rect(e),pr=rect(parent);
-     return {name:e.textContent.trim(),...r,scrollable:parent.scrollWidth>parent.clientWidth+1,parentRight:pr.right,parentBottom:pr.bottom,scrollLeft:parent.scrollLeft,scrollWidth:parent.scrollWidth,clientWidth:parent.clientWidth,offsetLeft:e.offsetLeft,offsetWidth:e.offsetWidth};
+     const parent=e.parentElement,r=rect(e),pr=rect(parent),ps=getComputedStyle(parent);
+     const xScrollable=['auto','scroll'].includes(ps.overflowX)&&parent.scrollWidth>parent.clientWidth+1;
+     return {name:e.textContent.trim(),...r,xScrollable,parentLeft:pr.x,parentRight:pr.right,parentBottom:pr.bottom,scrollLeft:parent.scrollLeft,scrollWidth:parent.scrollWidth,clientWidth:parent.clientWidth,offsetLeft:e.offsetLeft,offsetWidth:e.offsetWidth};
    });
    return {stage,menus,targets,projected,overflow:document.documentElement.scrollWidth>innerWidth,quest:!!document.querySelector('#konaQuest')};
   });
@@ -52,7 +53,8 @@ try{
   for(const t of layout.targets){
     assert.ok(t.w>=44&&t.h>=44,`${width}: small control ${t.name}`);
     assert.ok(t.y>=0&&t.bottom<=height+1,`${width}: menu vertically outside viewport: ${t.name}`);
-    assert.ok(!t.scrollable,`${width}: personal menu must not require sideways scrolling: ${t.name}`);
+    assert.ok(!t.xScrollable,`${width}: personal menu must not require sideways scrolling: ${t.name}`);
+    assert.ok(t.x>=t.parentLeft-1&&t.right<=t.parentRight+1,`${width}: personal menu item is clipped by its grid: ${t.name}`);
     assert.ok(t.x>=0&&t.right<=width+1,`${width}: menu outside viewport: ${t.name}`);
   }
   for(const m of layout.menus){const s=layout.stage;assert.ok(Math.min(s.right,m.right)-Math.max(s.x,m.x)<=0||Math.min(s.bottom,m.bottom)-Math.max(s.y,m.y)<=0,`${width}: stage covered by menu`);}
