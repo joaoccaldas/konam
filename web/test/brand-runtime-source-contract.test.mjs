@@ -18,6 +18,7 @@ const landingTemplate = read('web/landing.template.html');
 const landingBuild = read('web/build_landing.mjs');
 const entry = read('web/src/entry.js');
 const harden = read('tools/harden_pages.mjs');
+const designManifest = read('tools/design-system-manifest.mjs');
 const sync = read('.github/workflows/kona-beta-source-rc-sync.yml');
 
 test('BRAND_SYSTEM is the canonical Light Dark Random contract', () => {
@@ -55,7 +56,8 @@ test('landing index stays a thin consumer shell and world styles remain lazy', (
   assert.match(entry, /kona-panel-open/);
   assert.doesNotMatch(landingBuild, /packCss/);
   assert.doesNotMatch(harden, /<style id="design-system">/);
-  assert.match(harden, /brand\/themes\.css/);
+  assert.match(harden, /design-system-manifest\.mjs/);
+  assert.match(designManifest, /brand\/themes\.css/);
   assert.match(system, /#appSheet\{[^}]*env\(safe-area-inset-bottom\)/s);
   assert.doesNotMatch(system, /#appSheet[^\n]*var\(--safe-b\)/);
 });
