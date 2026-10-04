@@ -1,5 +1,5 @@
 {
- "version": "d832eb5dc33a",
+ "version": "54c9d185ecde",
  "core": [
   "index.html",
   "about.html",
@@ -34,7 +34,7 @@
   "assets/pwa/apple-touch-icon-v3.png"
  ],
  "files": {
-  "index.html": "GsnDDkc/+hcnX5T/nNzY/wpPDl099mzosj4xhhaRBX0=",
+  "index.html": "EOwomr9cAyDBbeJSRfAUSJHrU2oODBqlrC76aj1qg7U=",
   "about.html": "F8ZfEwVMp7Xy0vwU0tXC1F30yqSGJ2q37GXaVg2NvWU=",
   "credits.html": "T27nrZYOUiKqGC75f21qDV3j4SQLf9DtMIuZLzLloHI=",
   "privacy.html": "LYrIaFxuvgBlr7TAoq142R7aOmFCTNijX0bX18DM/hw=",
@@ -42,14 +42,14 @@
   "web/src/site-analytics.js": "um8gdUVb8bv/j31gUxOe8RP9bxMdoeKjIHoISnpYvqY=",
   "web/styles/promo.css": "ZzWBYuRKEtbNPYteP2tHQxi0sdR2byYOJw4TIbhcWqg=",
   "app/viewport.js": "s84yeQXxX9xSWnlj+1xuK84iotaJzl1NKMWjShrB2F0=",
-  "app/kona-core.js": "AdPkhoWGdfPmkF2ZRpuGxQ5cfO9SSzgRgN3Q+/UXdlI=",
+  "app/kona-core.js": "XN9gjCc+dyQerbWVOMUkZtUIhmPwo9RkMmRn+fl0yMs=",
   "app/entry-data.json": "u70GqhCPsNX6TZI4LhPBmxQkdjHsA1534QN/mMdyufU=",
   "integrations/public-catalog.json": "W1xJL5pT+cwjQLj4y9Kg7X4JorCf+4XAF8AHKzF5CuU=",
   "manifest.webmanifest": "D80RDjSyU/ENx8num4CsbgCHG48x8J4k6F4pT2ANlUA=",
-  "web/styles/entry.css": "ZiiZvpIExlpp26ZyYYUgrBbjYMmyYryND7odGwBvJUk=",
+  "web/styles/entry.css": "ByWr/uM2QnF9ar+BYpLByrrp3H6ssiZS/IhYL4VHBTE=",
   "web/styles/system.css": "r6474H3lVeel6mP98zhEgK7Y9ItggVEvNKa0A5RWAXk=",
   "web/styles/shell-mobile.css": "vxjlGAnPjO5qyGPcX7ZlXU5qXVFSfaR6U8M4f1W5xA4=",
-  "web/styles/home.css": "M2QUd913oyU1YuRybHiuaPh6VSJUEJninKnS85efSig=",
+  "web/styles/home.css": "CskfbiAn4tr9b0SUecmds6veJ1ORBSK/dpur0MSt7jA=",
   "web/styles/garage.css": "wm+HmyfZlvpb01WwKcB91XvG88Q8exKaG0hW8k70Xss=",
   "web/styles/plan.css": "8TDh2TPLeHb9PaXIbM7Xv11mBx28mP7PFo3xeKYNiKc=",
   "web/styles/race-self.css": "JxPCghbOItwYTKLRv8/Ch/CoThKNBW4Ew8JLJf6BQKI=",
