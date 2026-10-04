@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "authority": "founding-room-runtime-bridge-v1",
+  "note": "Migration bridge only. Canonical room identity stays in world/konam/rooms-v1.json. This file maps each launch-visible founding room to existing runtime depth or an existing app surface without creating duplicate room, state, navigation or styling authorities.",
+  "routes": [
+    {
+      "room_id": "room-001",
+      "description": "The highway, heat, crosswind and lava.",
+      "action": {
+        "kind": "world",
+        "target": "hall",
+        "label": "Enter Queen K depth"
+      }
+    },
+    {
+      "room_id": "room-002",
+      "description": "Kailua Bay, the swim start, Pacific water and race-morning calm.",
+      "action": {
+        "kind": "world",
+        "target": "bay-kona",
+        "label": "Enter Bay depth"
+      }
+    },
+    {
+      "room_id": "room-003",
+      "description": "Transition racks, timing, race history and the pier where the day begins.",
+      "action": {
+        "kind": "world",
+        "target": "pier",
+        "label": "Enter Pier depth"
+      }
+    },
+    {
+      "room_id": "room-004",
+      "description": "The run home, Aliʻi Drive, the finish and the long light into night.",
+      "action": {
+        "kind": "world",
+        "target": "atlas-kona-light-after-dark",
+        "label": "Enter finish depth"
+      }
+    },
+    {
+      "room_id": "room-005",
+      "description": "Athletes, winning machines and the decisions behind championship performances.",
+      "action": {
+        "kind": "world",
+        "target": "kona",
+        "label": "Enter Champions depth"
+      }
+    },
+    {
+      "room_id": "room-006",
+      "description": "The long argument with air, position and the clock.",
+      "action": {
+        "kind": "world",
+        "target": "wing-against-the-clock",
+        "label": "Enter Against the Clock"
+      }
+    },
+    {
+      "room_id": "room-007",
+      "description": "Speedmax heritage, engineering lineage and source-backed machine studies.",
+      "action": {
+        "kind": "world",
+        "target": "hall",
+        "label": "Enter Canyon Museum depth"
+      }
+    },
+    {
+      "room_id": "room-008",
+      "description": "Airflow, position, drag and the mechanics of getting smaller.",
+      "action": {
+        "kind": "world",
+        "target": "atlas-kona-light-tunnel",
+        "label": "Enter Aero Lab depth"
+      }
+    },
+    {
+      "room_id": "room-009",
+      "description": "Shoes, helmets, suits and the equipment that surrounds the athlete.",
+      "action": {
+        "kind": "surface",
+        "target": "garage",
+        "label": "Open equipment"
+      }
+    },
+    {
+      "room_id": "room-010",
+      "description": "T1, T2, gear choices and the small rituals that save time when it matters.",
+      "action": {
+        "kind": "surface",
+        "target": "plan",
+        "label": "Open race craft"
+      }
+    },
+    {
+      "room_id": "room-011",
+      "description": "Schedule, island changes and the useful chaos before race day.",
+      "action": {
+        "kind": "surface",
+        "target": "plan",
+        "label": "Open race week"
+      }
+    },
+    {
+      "room_id": "room-012",
+      "description": "Place, geology, wind, coffee and respectful context beyond the course.",
+      "action": {
+        "kind": "world",
+        "target": "bay-kona",
+        "label": "Enter island depth"
+      }
+    },
+    {
+      "room_id": "room-013",
+      "description": "Results, references, old machines and the sources behind the world.",
+      "action": {
+        "kind": "world",
+        "target": "atlas-against-the-clock-refs",
+        "label": "Enter the Archive"
+      }
+    },
+    {
+      "room_id": "room-014",
+      "description": "Oddities, hidden objects, jokes and things that are better discovered than announced.",
+      "action": {
+        "kind": "surface",
+        "target": "collection",
+        "label": "Open Lost & Found"
+      }
+    }
+  ]
+}
