@@ -972,17 +972,36 @@ async function loadPierBike() {                                       // the cur
   dressBike(gltf.scene, { key: 'cfr', finish: null }); gltf.scene.traverse(o => { o.castShadow = false; });
   pier.setBike(gltf.scene);
 }
+// Display-only Speedmax copies (Sanctuary films, theme galleries): full detail within LOD_NEAR metres, beyond it the
+// derived 52k-triangle study (assets/museum/speedmax_web-lod1.glb, 10x lighter). Inspectable bikes never use it.
+const CFR_LOD = 'assets/museum/speedmax_web-lod1.glb', LOD_NEAR = 6;
+async function displayCopies(src) {
+  const isCfr = src === PIECES.find(p => p.key === 'cfr')?.glb;
+  const [hi, lo] = await Promise.all([loadShared(src), isCfr ? loadShared(CFR_LOD).catch(() => null) : null]);
+  return prep => {
+    const lod = new THREE.LOD();
+    for (const [g, d] of [[hi, 0], [lo, LOD_NEAR]]) {
+      if (!g) continue;
+      const b = g.scene.clone(true);                                   // one copy per exhibit, own materials (each takes its own skin)
+      b.traverse(o => { if (o.isMesh) o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone(); });
+      prep(b);
+      const box = new THREE.Box3().setFromObject(b), c = box.getCenter(new THREE.Vector3());
+      b.position.set(-c.x, -box.min.y, -c.z);
+      lod.addLevel(b, d);
+    }
+    return lod;
+  };
+}
 async function loadSanctuaryBikes() {
   const src = WROOMDATA?.bike?.glb || PIECES.find(p => p.key === 'cfr')?.glb;
   if (!src || sanctuary.films.some(f => f.bike)) return;
-  const gltf = await loadShared(src);
+  const copy = await displayCopies(src);
   for (const film of sanctuary.films) {
-    const bike = gltf.scene.clone(true);
-    bike.traverse(o => { if (o.isMesh) { o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone(); o.castShadow = false; } });
-    dressBike(bike, { key: 'cfr', finish: null });
-    applySkin(slotsOf(bike), skinFromFilm(film));
-    const box = new THREE.Box3().setFromObject(bike), c = box.getCenter(new THREE.Vector3());
-    bike.position.set(-c.x, -box.min.y, -c.z);
+    const bike = copy(b => {
+      b.traverse(o => { if (o.isMesh) o.castShadow = false; });
+      dressBike(b, { key: 'cfr', finish: null });
+      applySkin(slotsOf(b), skinFromFilm(film));
+    });
     const holder = new THREE.Group(); holder.add(bike); holder.rotation.y = film.rotY; holder.position.y = film.top;
     film.group.add(holder); film.bike = holder;
     holder.traverse(o => { if (o.isMesh) { o.userData.sanctuary = film; pickables.push(o); } });
@@ -992,19 +1011,14 @@ const SKIN = id => (window.__SKINS?.skins || []).find(s => s.id === id);
 async function loadThemeBikes() {
   const src = PIECES.find(p => p.key === 'cfr')?.glb;
   if (!src) return;
-  const gltf = await loadShared(src);
+  const copy = await displayCopies(src);
   for (const room of galleries.rooms) {
     if (room.bike) continue;
-    const bike = gltf.scene.clone(true);
-    bike.traverse(o => {
-      if (!o.isMesh) return;
-      o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone();
-      o.castShadow = !lite;
+    const bike = copy(b => {
+      dressBike(b, { key: 'cfr', finish: null });
+      b.traverse(o => { if (o.isMesh) o.castShadow = !lite; });
+      applySkin(slotsOf(b), SKIN(`theme-${room.id}`));
     });
-    dressBike(bike, { key: 'cfr', finish: null });
-    applySkin(slotsOf(bike), SKIN(`theme-${room.id}`));
-    const box = new THREE.Box3().setFromObject(bike), c = box.getCenter(new THREE.Vector3());
-    bike.position.set(-c.x, -box.min.y, -c.z);
     const holder = new THREE.Group();
     holder.add(bike);
     holder.rotation.y = room.specimenYaw || 0;
