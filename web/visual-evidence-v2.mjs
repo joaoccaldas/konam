@@ -178,6 +178,7 @@ for(const r of report){
  if(['320','360','390','430'].includes(r.viewport)&&['home','discover'].includes(r.state)&&r.metrics.heroHeight!=null&&r.metrics.heroHeight>180)violations.push(`${r.viewport}/${r.theme}/${r.state}: first hero exceeds compact mobile hierarchy at ${Math.round(r.metrics.heroHeight)}px`);
  if(['320','360','390','430'].includes(r.viewport)&&r.state==='plan'&&r.metrics.planPriorityColumns!==1)violations.push(`${r.viewport}/${r.theme}: Plan priority is not single-column on phone`);
  if(['320','360','390','430'].includes(r.viewport)&&r.state==='user-studio'&&(r.metrics.studioDestColumns!==2||r.metrics.studioControlColumns!==2))violations.push(`${r.viewport}/${r.theme}: User Studio compact menus are not 2-column`);
+ if(r.state==='user-studio'&&/Install KONAInstall|Install appInstall/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: duplicate install label in User Studio`);
  if(r.state==='user-studio'&&r.metrics.stage){
    const phone=['320','360','390','430'].includes(r.viewport),minW=r.viewport==='desktop'?520:260,minH=r.viewport==='desktop'?420:phone?300:220;
    if(r.metrics.stage.w<minW||r.metrics.stage.h<minH)violations.push(`${r.viewport}/${r.theme}: User Studio stage too small ${Math.round(r.metrics.stage.w)}x${Math.round(r.metrics.stage.h)}`);
