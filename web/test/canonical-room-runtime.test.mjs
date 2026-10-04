@@ -27,6 +27,8 @@ test('Discover consumes canonical room truth without a second styling authority'
   const source=read('web/src/ui/discover.js');
   assert.match(source,/world\/konam\/rooms-v1\.json/);
   assert.match(source,/world\/konam\/founding-runtime-v1\.json/);
+  assert.match(source,/fetch\('world\/konam\/rooms-v1\.json'/);
+  assert.match(source,/fetch\('world\/konam\/founding-runtime-v1\.json'/);
   assert.match(source,/14\/14 OPEN/);
   assert.match(source,/artifact artifact--label/);
   assert.match(source,/kona-primary/);
