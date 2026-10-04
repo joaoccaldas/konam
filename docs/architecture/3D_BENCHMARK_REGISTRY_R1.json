@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "status": "research-draft",
+  "benchmarks": [
+    {
+      "id": "BENCH-NOR",
+      "scene": "NOR // 3 · The Norwegian Engine",
+      "purpose": "engineering-performance",
+      "target_fps": {
+        "mobile": 30,
+        "tablet": 45,
+        "desktop": 60
+      },
+      "current_budget": {
+        "mobile_draw_calls": 95,
+        "mobile_triangles": 180000,
+        "desktop_draw_calls": 180,
+        "desktop_triangles": 450000
+      },
+      "protect": [
+        "composition",
+        "room narrative",
+        "visual hierarchy"
+      ],
+      "next_experiments": [
+        "EXP-001",
+        "EXP-002",
+        "EXP-004"
+      ]
+    },
+    {
+      "id": "BENCH-BEAST",
+      "scene": "Beast Cave",
+      "purpose": "golden-experience-regression",
+      "target_fps": {
+        "mobile": 30,
+        "tablet": 45,
+        "desktop": 60
+      },
+      "current_budget": {
+        "mobile_draw_calls": 110,
+        "mobile_triangles": 220000,
+        "desktop_draw_calls": 190,
+        "desktop_triangles": 450000
+      },
+      "protect": [
+        "atmosphere",
+        "lighting",
+        "story",
+        "interaction"
+      ],
+      "next_experiments": [
+        "shared-runtime regression only"
+      ]
+    },
+    {
+      "id": "BENCH-BREITLING",
+      "scene": "Breitling × KONA",
+      "purpose": "hero-product-fidelity",
+      "target_fps": {
+        "mobile_room": 30,
+        "desktop_room": 60,
+        "hero_mode_mobile": 30,
+        "hero_mode_desktop": 60
+      },
+      "protect": [
+        "product identity",
+        "macro legibility",
+        "material realism"
+      ],
+      "next_experiments": [
+        "EXP-003",
+        "EXP-002",
+        "EXP-004"
+      ]
+    },
+    {
+      "id": "BENCH-GAUDI",
+      "scene": "Living Threshold / Living Canopy",
+      "purpose": "architecture-procedural-geometry",
+      "protect": [
+        "urban logic",
+        "structural causality",
+        "competition brief"
+      ],
+      "next_experiments": [
+        "EXP-005"
+      ]
+    },
+    {
+      "id": "BENCH-STUDIO-KONA",
+      "scene": "outdoor canonical route",
+      "purpose": "world-scale-streaming",
+      "protect": [
+        "movement",
+        "terrain continuity",
+        "horizon stability"
+      ],
+      "next_experiments": [
+        "EXP-007-scale-baseline",
+        "EXP-008-world-partition"
+      ]
+    }
+  ],
+  "global_metrics": [
+    "fps_mean",
+    "frame_ms_p50",
+    "frame_ms_p95",
+    "frame_ms_p99",
+    "draw_calls",
+    "triangles",
+    "material_count",
+    "texture_bytes",
+    "network_bytes",
+    "ttff",
+    "memory_if_available",
+    "errors",
+    "visual_score"
+  ]
+}
