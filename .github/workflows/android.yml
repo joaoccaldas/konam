@@ -171,7 +171,7 @@ jobs:
           arch: x86_64
           disable-animations: true
           script: |
-            set -euo pipefail
+            set -eu
             PACKAGE=com.caldasstudio.speedmaxmuseum
             ACTIVITY="$PACKAGE/.MainActivity"
             adb install -r KONA.apk
