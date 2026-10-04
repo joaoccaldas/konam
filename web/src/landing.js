@@ -35,6 +35,7 @@ import { buildFinds, FINDS, readFinds } from './finds.js';
 import { initArtWorld } from './artworld.js';
 import { microNoise } from './tex.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { upgradeBikeMaterials } from './engine/bike-materials.js';
 import { coarse as dc, small as ds } from './detect.js';
 import { readPassportState, savePassportState } from './engine/passport-state.js';
 import { applyStoredEvent } from './engine/progression.js';
@@ -136,7 +137,7 @@ renderer.setPixelRatio(activeDpr);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.AgXToneMapping;
 renderer.toneMappingExposure = .96;
-renderer.shadowMap.enabled = RS.shadows;                              // the slatted-roof stripes are the museum's signature (off on Low)
+renderer.shadowMap.enabled = RS.shadows; renderer.shadowMap.autoUpdate = false;   // scheduled in frame(): the sun is static, so ~4 updates/s (every frame only while something big moves)                              // the slatted-roof stripes are the museum's signature (off on Low)
 renderer.shadowMap.type = THREE.PCFShadowMap;
 
 const scene = new THREE.Scene();
@@ -356,10 +357,12 @@ else glassRun('x', HALL.x0, HALL.x1, HALL.z1);
     const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0, 0), new THREE.Vector3(lean * .25, hgt * .4, 0), new THREE.Vector3(lean * .7, hgt * .8, 0), new THREE.Vector3(lean, hgt, 0)]);
     const trunk = new THREE.Mesh(new THREE.TubeGeometry(curve, 20, .15, 7), trunkM); trunk.castShadow = true; g.add(trunk);
     const crown = new THREE.Group(); crown.position.set(lean, hgt, 0); g.add(crown);
+    const parts = [], f = new THREE.Object3D();                       // one merged crown (1 draw instead of 11); same random sequence
     for (let i = 0; i < 11; i++) {
-      const f = new THREE.Mesh(frondG[i % 2], frondM); f.castShadow = true;
-      f.rotation.set(0, i / 11 * Math.PI * 2 + rnd() * .3, 0); f.rotateZ(.25 - rnd() * .35); crown.add(f);
+      f.rotation.set(0, i / 11 * Math.PI * 2 + rnd() * .3, 0); f.rotateZ(.25 - rnd() * .35); f.updateMatrix();
+      parts.push(frondG[i % 2].clone().applyMatrix4(f.matrix));
     }
+    const fronds = new THREE.Mesh(mergeGeometries(parts), frondM); fronds.castShadow = true; crown.add(fronds);
     g.position.set(x, -.02, z); g.rotation.y = rnd() * 6.28; scene.add(g);
     sway.push({ o: crown, phase: rnd() * 6.28, amp: .045 }); return g;
   }
@@ -665,7 +668,7 @@ function wyldDisc(bike) {
 }
 async function loadWyldBikes() {
   if (!wyldBikes.length) return;
-  const gltf = await loader.loadAsync(WROOMDATA.bike.glb);
+  const gltf = await loadShared(WROOMDATA.bike.glb);
   const R = WROOMDATA ? WROOM : null;
   for (const b of wyldBikes) {
     const bike = gltf.scene.clone(true);
@@ -790,7 +793,7 @@ const birds = [];
 
 // ------------------------------------------------------------------ light
 const hemi = new THREE.HemisphereLight('#ffe3c2', '#b09572', lite ? 1.3 : .9); scene.add(hemi);
-let sealedRoom = false;
+let sealedRoom = false, shadowAt = -1;
 const hemiBase = hemi.intensity;                                    // rooms with a mood (Beast Cave, Breitling) dim these while you are inside
 const sun = new THREE.DirectionalLight('#ffddad', lite ? 2 : 2.45);
 const sunBase = sun.intensity;
@@ -798,7 +801,6 @@ sun.position.set(3, 15, -16); sun.target.position.set(-6, 0, -22); scene.add(sun
 sun.castShadow = true; sun.shadow.mapSize.set(lite ? 1024 : 2048, lite ? 1024 : 2048);
 Object.assign(sun.shadow.camera, { left: -36, right: 36, top: 36, bottom: -36, near: 1, far: 70 });
 sun.shadow.bias = -.0004; sun.shadow.normalBias = .02;
-if (lite) sun.shadow.autoUpdate = true;
 // the hall's signature: a cinematic shaft of golden light falling through the slats onto the apse
 {
   const shaft = new THREE.Mesh(new THREE.CylinderGeometry(1.15, 2.6, HALL.h + 1, 48, 1, true),
@@ -897,6 +899,17 @@ window.__brandRooms = brandRooms;
 
 // ------------------------------------------------------------------ bikes (streamed, nearest first)
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+// One parse per GLB: every caller gets a clone that shares geometry (GPU buffers) but owns its materials, so a
+// paint/skin on one bike never leaks to another. The museum CFR alone used to be fetched and decoded 7 times.
+const gltfCache = new Map();
+function loadShared(url) {
+  if (!gltfCache.has(url)) gltfCache.set(url, loader.loadAsync(url));
+  return gltfCache.get(url).then(g => {
+    const scene = g.scene.clone(true);
+    scene.traverse(o => { if (o.isMesh) o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone(); });
+    return { ...g, scene };
+  });
+}
 let findsApi = null;
 buildFinds({ scene, loader, pickables }).then(api => { findsApi = api; }).catch(e => console.warn('finds', e));
 let loaded = 0; const modelled = PIECES.filter(p => p.glb);
@@ -913,6 +926,7 @@ function chainOf(node) {                                            // instanced
   for (let i = 0; i < N; i++) { at(i * pitch, P); at(i * pitch + pitch, Q); q.setFromAxisAngle(Z, Math.atan2(Q.y - P.y, Q.x - P.x)); P.add(Q).multiplyScalar(.5); m4.compose(P, q, one); inst[i % 2].setMatrixAt(i >> 1, m4); }
 }
 function dressBike(root, p) {
+  upgradeBikeMaterials(root);                                        // tyre sheen, carbon clearcoat, saddle/tape sheen (engine/bike-materials.js)
   root.traverse(o => {
     if (o.userData?.optional_accessory || (p.key === 'slx' && o.name === 'aerofuel_front')) o.visible = false;
     if (o.name === 'chain') chainOf(o);
@@ -928,7 +942,7 @@ function dressBike(root, p) {
   if (p.finish) applySkin(slotsOf(root), { id: `hall-${p.key}`, name: 'Documented finish', frame: p.finish });
 }
 async function loadBike(p) {
-  const gltf = await loader.loadAsync(p.glb);
+  const gltf = await loadShared(p.glb);
   const bike = gltf.scene; dressBike(bike, p);
   const box = new THREE.Box3().setFromObject(bike), c = box.getCenter(new THREE.Vector3());
   bike.position.set(-c.x, -box.min.y, -c.z);
@@ -954,14 +968,14 @@ const sideRooms = ['champRoom', 'wyldRoom', ...(BEAST_CAVE_REVIEW?['beastCaveRoo
 async function loadPierBike() {                                       // the current CFR, turning under the finish arch
   if (!pier || pierBikeLoading) return; pierBikeLoading = true;
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!cfr?.glb) return;
-  const gltf = await loader.loadAsync(cfr.glb);
+  const gltf = await loadShared(cfr.glb);
   dressBike(gltf.scene, { key: 'cfr', finish: null }); gltf.scene.traverse(o => { o.castShadow = false; });
   pier.setBike(gltf.scene);
 }
 async function loadSanctuaryBikes() {
   const src = WROOMDATA?.bike?.glb || PIECES.find(p => p.key === 'cfr')?.glb;
   if (!src || sanctuary.films.some(f => f.bike)) return;
-  const gltf = await loader.loadAsync(src);
+  const gltf = await loadShared(src);
   for (const film of sanctuary.films) {
     const bike = gltf.scene.clone(true);
     bike.traverse(o => { if (o.isMesh) { o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone(); o.castShadow = false; } });
@@ -978,7 +992,7 @@ const SKIN = id => (window.__SKINS?.skins || []).find(s => s.id === id);
 async function loadThemeBikes() {
   const src = PIECES.find(p => p.key === 'cfr')?.glb;
   if (!src) return;
-  const gltf = await loader.loadAsync(src);
+  const gltf = await loadShared(src);
   for (const room of galleries.rooms) {
     if (room.bike) continue;
     const bike = gltf.scene.clone(true);
@@ -1009,7 +1023,7 @@ async function loadKonaMachines() {
   const room = scene.getObjectByName('champRoom'); if (!room || !window.__konaMachines?.length) return;
   for (const spot of window.__konaMachines) {
     if (spot.bike) continue;
-    const gltf = await loader.loadAsync(spot.glb);
+    const gltf = await loadShared(spot.glb);
     const bike = gltf.scene;
     dressBike(bike, { key: spot.generation, finish: spot.finish });
     const box = new THREE.Box3().setFromObject(bike), c = box.getCenter(new THREE.Vector3());
@@ -1041,14 +1055,14 @@ function openKona(spot) {
 }
 async function loadHweenBike() {
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!cfr?.glb || hween.piece.bike) return;
-  const gltf = await loader.loadAsync(cfr.glb);
+  const gltf = await loadShared(cfr.glb);
   hween.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
   hween.piece.bike.traverse(o => { if (o.isMesh) { o.userData.hween = hween.piece; delete o.userData.piece; } });
 }
 async function loadBeastBike() {
   if (beast?.ownBikes) { beast.useAssets(loader); return; }
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!beast || !cfr?.glb || beast.bikeSpot.bike) return;
-  const gltf = await loader.loadAsync(cfr.glb);
+  const gltf = await loadShared(cfr.glb);
   beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
   beast.useAssets(loader);
 }
@@ -1592,6 +1606,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     toast(`${area.name} · room overview`);
   };
   window.__museumGo = go;
+  window.__museumAreas = () => liveAreas.map(a => { const ov = safeOverview(a); return ov && { id: a.id, name: a.name, floor: a.floor, to: { x: ov.to.x, y: ov.to.y, z: ov.to.z }, face: { x: ov.face.x, y: ov.face.y, z: ov.face.z } }; }).filter(Boolean);   // read-only: evidence tooling
   window.__map = initMap({ areas, go, access:accessForRoom, button: $('mapBtn'), pose: () => ({ x: P.x, z: P.z, yaw: P.yaw, floor: P.y > 3.3 ? 'upper' : 'ground' }) });
 
   const where = $('where'); let lastWhere = null, wingHinted = (() => { try { return localStorage.getItem('speedmax.atlas.hint') === '1'; } catch (_) { return false; } })();
@@ -1979,7 +1994,7 @@ function frame(now) {
       pier.group.visible = reg === 'pier' || (reg === 'hall' && P.z < -22);
       // out on the pier the two walled rooms can't be seen and the hall's shadows don't move: skip both
       const out = reg === 'pier';
-      if (out !== pierOut) { pierOut = out; for (const r of sideRooms) r.visible = !out; renderer.shadowMap.autoUpdate = !out; renderer.shadowMap.needsUpdate = true; }
+      if (out !== pierOut) { pierOut = out; for (const r of sideRooms) r.visible = !out; renderer.shadowMap.needsUpdate = true; }
       if (out && P.z < -62) for (const p of PIECES) if (p.bike) p.bike.visible = false;
       if (P.z < -26 && reg !== 'champ' && reg !== 'wyld' && started) { pier.load(); loadPierBike(); }
       pier.update(dt, reduce);
@@ -2003,6 +2018,10 @@ function frame(now) {
   if (window.__foam) window.__foam.opacity = .38 + Math.sin(t * .9) * .14;
   if (window.__shaft) window.__shaft.opacity = .045 + Math.sin(t * .35) * .012;   // the shaft breathes with the trade wind
   window.__museumArt?.update?.(dt, t, P, camera, roomOf(P.x, P.z));
+  if (!pierOut) {                                                      // out on the pier the shadows don't move at all
+    const moving = !!riding || (current && Math.abs(current.ex - current.exT) > .002);
+    if (moving || t - shadowAt > .25) { renderer.shadowMap.needsUpdate = true; shadowAt = t; }
+  }
   renderer.render(scene, camera);
 }
 requestAnimationFrame(frame);

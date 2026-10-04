@@ -19,6 +19,7 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 import trio from '../../pitch/norwegian-trio/trio-facts-v1.json' with { type: 'json' };
 import { BROOM, BDOOR } from './beast-cave.js';
 import { loadDecor } from './engine/decor.js';
+import { localEnvCapture } from './engine/env-capture.js';
 import decor from '../../world/konam/rooms/nor3-winter.decor.json' with { type: 'json' };
 
 export const NOR3_MOOD = Object.freeze({ exposure: 1.0, hemi: .14, sun: .04, fog: { near: 10, far: 48 }, fogColor: new THREE.Color('#0a0d12') });
@@ -571,19 +572,9 @@ export function buildNor3Winter(ctx) {
   };
 
   // ------------------------------------------------------------ local reflections: one cube capture of this room
-  let envDirty = 1, cubeRT = null, cubeCam = null, pmrem = null, envTex = null;
-  function captureEnv() {
-    if (!renderer) return;
-    cubeRT ||= new THREE.WebGLCubeRenderTarget(lite ? 128 : 256, { type: THREE.HalfFloatType });
-    if (!cubeCam) { cubeCam = new THREE.CubeCamera(.1, 60, cubeRT); cubeCam.position.set(CX + 4, 1.6, CZ); cubeCam.children.forEach(c => c.layers.set(2)); scene.add(cubeCam); }
-    group.traverse(o => o.layers.enable(2)); scene.traverse(o => { if (o.isLight && !o.parent?.isGroup) o.layers.enable(2); });   // the capture sees only this room
-    const vis = []; scene.traverse(o => { if (o.isPoints) { vis.push([o, o.visible]); o.visible = false; } });
-    cubeCam.update(renderer, scene);
-    vis.forEach(([o, v]) => o.visible = v);
-    pmrem ||= new THREE.PMREMGenerator(renderer);
-    const next = pmrem.fromCubemap(cubeRT.texture).texture; envTex?.dispose(); envTex = next;
-    for (const m of envMats) { m.envMap = envTex; m.needsUpdate = true; }
-  }
+  let envDirty = 1;
+  const env = localEnvCapture({ renderer, scene, group, at: new THREE.Vector3(CX + 4, 1.6, CZ), lite, mats: envMats, hidePoints: true });
+  const captureEnv = () => env.capture();
 
   // ------------------------------------------------------------ cards
   const A = trio.athletes, disclaimer = { cls: 'G', text: 'An independent KONA.m room. Not affiliated with, endorsed by or sponsored by the athletes, their federation, teams or any brand. Taglines and slogans are KONA.m copy.' };
@@ -621,7 +612,7 @@ export function buildNor3Winter(ctx) {
     },
     setBike() { /* this room mounts its own LOD trio in useAssets; the canonical full bike is not loaded here */ },
     update(t, reduce, dt = 1 / 60) {
-      if (envDirty) { envDirty--; if (!envDirty) captureEnv(); else if (envDirty === 1 && !envTex) { captureEnv(); envDirty = 0; } }
+      if (envDirty) { envDirty--; if (!envDirty) captureEnv(); else if (envDirty === 1 && !env.texture) { captureEnv(); envDirty = 0; } }
       const tt = reduce ? 0 : t;
       snowShader.uniforms.t.value = tt; emMat.uniforms.t.value = tt; flameMat.uniforms.t.value = t; water.material.uniforms.t.value = tt;
       fireLight.intensity = (lite ? 6 : 9) * (.85 + Math.sin(t * 11) * .06 + Math.sin(t * 23.7) * .05 + Math.sin(t * 5.3) * .04);

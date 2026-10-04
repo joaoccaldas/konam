@@ -88,14 +88,20 @@ export function buildBrandRoom(desc, { lite = false, spinners = [], obstacles = 
   const fill = group.children[group.children.length - 1]; fill.position.set(CX, H - .5, CZ);
   if (!lite) for (const a of desc.light?.accents || []) { const pl = new THREE.PointLight(a.color || accent, a.i ?? 6, a.dist ?? 12, 1.4); pl.position.set(a.x, a.y, a.z); group.add(pl); }
 
-  // brand wordmark + kicker over the door
+  // room name + kicker. Fitted to the plate (names used to clip, and the kicker sat outside the canvas). Ink follows the
+  // wall's lightness. A room whose rights say "no wordmark" (desc.wordmark === false) gets the name in plain neutral type,
+  // never in brand colour.
   if (desc.name) {
-    const mark = lettering(Math.min(5, desc.name.length * .9), 1.0, g => {
-      g.fillStyle = accent; g.font = `800 1.0px ${FONT}`; g.letterSpacing = '.08px'; g.fillText(desc.name.toUpperCase(), .06, .95);
-      if (desc.kicker) { g.fillStyle = '#12181d'; g.font = `italic 400 .34px ${SERIF}`; g.fillText(desc.kicker, .08, 1.5); }
-    }, 1024);
+    const W = 5, H2 = 1.5, hex = (desc.theme?.wall || '#e9e3d9').replace('#', ''), lum = (parseInt(hex.slice(0, 2), 16) * .3 + parseInt(hex.slice(2, 4), 16) * .59 + parseInt(hex.slice(4, 6), 16) * .11) / 255;
+    const ink = lum < .45 ? '#eef0f3' : '#12181d', soft = lum < .45 ? '#b4c0c8' : '#5f6a72', nameInk = desc.wordmark === false ? ink : accent;
+    const mark = lettering(W, H2, g => {
+      const fit = (text, font, size, max) => { g.font = font(size); const w = g.measureText(text).width; return w > max ? size * max / w : size; };
+      const name = desc.name.toUpperCase(), ns = fit(name, z => `800 ${z}px ${FONT}`, .62, W - .16);
+      g.fillStyle = nameInk; g.font = `800 ${ns}px ${FONT}`; g.fillText(name, .08, .2 + ns * .9);
+      if (desc.kicker) { const ks = fit(desc.kicker, z => `italic 400 ${z}px ${SERIF}`, .3, W - .16); g.fillStyle = soft; g.font = `italic 400 ${ks}px ${SERIF}`; g.fillText(desc.kicker, .08, .32 + ns * .9 + ks * 1.15); }
+    }, 1536);
     const doorZ = desc.door ? (desc.door.z0 + desc.door.z1) / 2 : CZ;
-    mark.position.set(desc.door?.wall === 'west' ? b.x1 - .02 : b.x1 - .02, 3.9, doorZ); mark.rotation.y = -Math.PI / 2; group.add(mark);
+    mark.position.set(b.x1 - .02, 3.9, doorZ); mark.rotation.y = -Math.PI / 2; group.add(mark);
   }
 
   decorateRoom(desc.decorations,{group,lite,obstacles});

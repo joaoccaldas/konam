@@ -4,13 +4,24 @@
 // refreshes the byte counts in the sibling build-meta.json and in assets/atlas/build-report.json.
 //
 //   node tools/pack-glb.mjs assets/atlas/<key>/bike.glb [assets/atlas/<key>/bike-lite.glb ...]
+//   node tools/pack-glb.mjs --unpack <packed.glb> <plain.glb>     (for Blender, whose importer cannot read meshopt)
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cli = path.join(root, 'web/node_modules/.bin/gltf-transform');
+if (process.argv[2] === '--unpack') {                                     // decode meshopt for tools that cannot read it (Blender's importer)
+  const req = createRequire(path.join(root, 'web/node_modules/'));
+  const { NodeIO } = req('@gltf-transform/core'), { ALL_EXTENSIONS } = req('@gltf-transform/extensions'), { MeshoptDecoder } = req('meshoptimizer');
+  await MeshoptDecoder.ready;
+  const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder });
+  const doc = await io.read(process.argv[3]);
+  for (const e of doc.getRoot().listExtensionsUsed()) if (e.extensionName === 'EXT_meshopt_compression') e.dispose();
+  await io.write(process.argv[4], doc); process.exit(0);
+}
 const files = process.argv.slice(2);
 if (!files.length) { console.error('usage: node tools/pack-glb.mjs <file.glb> [...]'); process.exit(2); }
 const reportPath = path.join(root, 'assets/atlas/build-report.json');

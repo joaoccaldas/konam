@@ -66,6 +66,23 @@ if (pick.length && !flag('metrics-only')) {
   await page.close();
 }
 
+if (flag('areas')) {                                                  // every world area: overview still + render cost (calls/triangles), world mode
+  fs.mkdirSync(out, { recursive: true });
+  const { page, errors } = await open({ width: W, height: H }, false, true);
+  await page.addStyleTag({ content: 'body *{visibility:hidden !important} #hall{visibility:visible !important}' });
+  const areas = await page.evaluate(() => window.__museumAreas?.() || []);
+  const only = arg('areas-only') ? arg('areas-only').split(',') : null, rows = [];
+  for (const a of areas) {
+    if (only && !only.includes(a.id)) continue;
+    await page.evaluate(a => { const m = window.__museum; m.halt(); window.__museumGo?.(a.id); m.halt(); Object.assign(m.P, { x: a.to.x, z: a.to.z, vx: 0, vz: 0 }); m.P.yaw = Math.atan2(-(a.face.x - a.to.x), -(a.face.z - a.to.z)); m.P.pitch = -.06; }, a);
+    for (let i = 0; i < 6; i++) await page.evaluate(async () => { window.__vt += 120; await new Promise(r => window.__raf(() => window.__raf(r))); });
+    const r = await page.evaluate(async () => { const m = window.__museum, ren = m.renderer; ren.info.autoReset = true; ren.render(m.scene, m.camera); const i = ren.info.render;
+      const png = ren.domElement.toDataURL('image/jpeg', .86).split(',')[1]; return { calls: i.calls, triangles: i.triangles, lights: (() => { let n = 0; m.scene.traverse(o => { if (o.isLight && o.visible) n++; }); return n; })(), png }; });
+    fs.writeFileSync(path.join(out, `${a.id}.jpg`), Buffer.from(r.png, 'base64')); rows.push({ id: a.id, name: a.name, calls: r.calls, triangles: r.triangles, lights: r.lights }); console.log(a.id, r.calls, r.triangles, r.lights);
+  }
+  fs.writeFileSync(path.join(out, 'areas.json'), JSON.stringify({ measured_at: new Date().toISOString(), rows, errors }, null, 2));
+  await page.close();
+}
 if (flag('metrics') || flag('metrics-only')) {
   const budgets = pkgPath && fs.existsSync(path.join(root, pkgPath)) ? JSON.parse(fs.readFileSync(path.join(root, pkgPath), 'utf8')).performance : null;
   const hero = allShots.hero || Object.values(allShots)[0];

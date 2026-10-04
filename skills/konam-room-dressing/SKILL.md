@@ -45,7 +45,7 @@ node tools/room-evidence.mjs --review <id> [--shots a,b] --metrics --out docs/ev
 ## Making it look finished (what worked)
 
 - **Light from objects**: RectAreaLight from windows/screens, warm practicals (fire, candle, bulbs), painted additive washes on walls, LED strips with additive floor glow. One shadow-casting key for a cluster, not one per object.
-- **Wet / glossy floors**: canvas colour + roughness puddles + Sobel normal map; reflections from one local cube capture limited to the room's layer (re-taken only when it changes); a faded flipped copy of a bright backdrop on the floor.
+- **Wet / glossy floors**: canvas colour + roughness puddles + Sobel normal map; reflections from one local cube capture limited to the room's layer (re-taken only when it changes); a faded flipped copy of a bright backdrop on the floor. Use `localEnvCapture` from `web/src/engine/env-capture.js`; never a per-room CubeCamera.
 - **Depth through glass**: a generated plate a few metres behind the glass + real 3D foreground (palms, rocks) + GPU particles (snow) between.
 - **Lived-in detail**: towels as folded cloth geometry with terry normals and sheen; books, mug, notebook, candle as tiny procedural props with canvas labels; rocks as noise-displaced icosahedra with a bump map — never flat-shaded crystals.
 - **Text and jokes**: canvas typography on panels/paintings; data-driven from a sourced facts file; jokes may never state something the numbers do not (The Fjord Times flips "closing in" / "overtakes" from the data); label editorial copy as the room's, never the athlete's words.

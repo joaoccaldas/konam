@@ -18,6 +18,7 @@ import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLigh
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { indexMachine, applyExplosion } from './engine/machine-inspection.js';
 import { bake, instance } from './engine/decor.js';
+import { localEnvCapture } from './engine/env-capture.js';
 import { lightShaft } from './roomkit.js';
 import collection from '../../pitch/breitling-kona/collection-v1.json' with { type: 'json' };
 import { BROOM, BDOOR } from './beast-cave.js';
@@ -239,16 +240,9 @@ export function buildBreitlingKona(ctx) {
   };
 
   // ------------------------------------------------------------ local reflections (one capture, this room only)
-  let envDirty = 1, cubeRT, cubeCam, pmrem, envTex;
-  function captureEnv() {
-    if (!renderer) return;
-    cubeRT ||= new THREE.WebGLCubeRenderTarget(lite ? 128 : 256, { type: THREE.HalfFloatType });
-    if (!cubeCam) { cubeCam = new THREE.CubeCamera(.1, 60, cubeRT); cubeCam.position.set(MON.x - 4, 1.6, MON.z); cubeCam.children.forEach(c => c.layers.set(2)); scene.add(cubeCam); }
-    group.traverse(o => o.layers.enable(2)); scene.traverse(o => { if (o.isLight && !o.parent?.isGroup) o.layers.enable(2); });
-    cubeCam.update(renderer, scene);
-    pmrem ||= new THREE.PMREMGenerator(renderer); const next = pmrem.fromCubemap(cubeRT.texture).texture; envTex?.dispose(); envTex = next;
-    for (const m of envMats) { m.envMap = envTex; m.needsUpdate = true; }
-  }
+  let envDirty = 1;
+  const env = localEnvCapture({ renderer, scene, group, at: new THREE.Vector3(MON.x - 4, 1.6, MON.z), lite, mats: envMats });
+  const captureEnv = () => env.capture();
 
   // ------------------------------------------------------------ cards
   const C = collection, marks = C.commission;

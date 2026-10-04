@@ -299,7 +299,8 @@
      "r": 1.25,
      "color": "#c8102e"
     }
-   }
+   },
+   "wordmark": false
   }
  ]
 }

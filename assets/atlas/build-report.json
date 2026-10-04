@@ -1,150 +1,171 @@
 {
  "merckx-hour-1972": {
   "glb": "assets/atlas/merckx-hour-1972/bike.glb",
-  "bytes": 173860,
+  "bytes": 71200,
   "tris": 7784,
   "wheelbase_m": 0.9554,
-  "objects": 32
+  "objects": 32,
+  "compression": "EXT_meshopt_compression"
  },
  "obree-riverside": {
   "glb": "assets/atlas/obree-riverside/bike.glb",
-  "bytes": 154628,
+  "bytes": 67788,
   "tris": 7600,
   "wheelbase_m": 0.96,
-  "objects": 36
+  "objects": 36,
+  "compression": "EXT_meshopt_compression"
  },
  "lotus-108-1992": {
   "glb": "assets/atlas/lotus-108-1992/bike.glb",
-  "bytes": 167184,
+  "bytes": 71376,
   "tris": 8020,
   "wheelbase_m": 1.0408,
-  "objects": 32
+  "objects": 32,
+  "compression": "EXT_meshopt_compression"
  },
  "zipp-2001": {
   "glb": "assets/atlas/zipp-2001/bike.glb",
-  "bytes": 172500,
+  "bytes": 75608,
   "tris": 8040,
   "wheelbase_m": 1.0293,
-  "objects": 35
+  "objects": 35,
+  "compression": "EXT_meshopt_compression"
  },
  "stevens-tri": {
   "glb": "assets/atlas/stevens-tri/bike.glb",
-  "bytes": 171000,
+  "bytes": 72012,
   "tris": 7764,
   "wheelbase_m": 1.0058,
-  "objects": 37
+  "objects": 37,
+  "compression": "EXT_meshopt_compression"
  },
  "alu-tri-2005": {
   "glb": "assets/atlas/alu-tri-2005/bike.glb",
-  "bytes": 160912,
+  "bytes": 72588,
   "tris": 7772,
   "wheelbase_m": 0.9868,
-  "objects": 40
+  "objects": 40,
+  "compression": "EXT_meshopt_compression"
  },
  "type-funny-1980s": {
   "glb": "assets/atlas/type-funny-1980s/bike.glb",
-  "bytes": 172744,
+  "bytes": 77812,
   "tris": 8056,
   "wheelbase_m": 0.9536,
-  "objects": 32
+  "objects": 32,
+  "compression": "EXT_meshopt_compression"
  },
  "type-pursuit": {
   "glb": "assets/atlas/type-pursuit/bike.glb",
-  "bytes": 178676,
+  "bytes": 70512,
   "tris": 8784,
   "wheelbase_m": 1.0054,
-  "objects": 36
+  "objects": 36,
+  "compression": "EXT_meshopt_compression"
  },
  "type-disc-superbike": {
   "glb": "assets/atlas/type-disc-superbike/bike.glb",
-  "bytes": 186104,
+  "bytes": 85692,
   "tris": 8572,
   "wheelbase_m": 1.0194,
-  "objects": 42
+  "objects": 42,
+  "compression": "EXT_meshopt_compression"
  },
  "type-aerobar-1989": {
   "glb": "assets/atlas/type-aerobar-1989/bike.glb",
-  "bytes": 179032,
+  "bytes": 72832,
   "tris": 7920,
   "wheelbase_m": 0.9788,
-  "objects": 36
+  "objects": 36,
+  "compression": "EXT_meshopt_compression"
  },
  "type-lowpro-650c": {
   "glb": "assets/atlas/type-lowpro-650c/bike.glb",
-  "bytes": 176692,
+  "bytes": 77984,
   "tris": 8196,
   "wheelbase_m": 0.9834,
-  "objects": 36
+  "objects": 36,
+  "compression": "EXT_meshopt_compression"
  },
  "type-hour-track": {
   "glb": "assets/atlas/type-hour-track/bike.glb",
-  "bytes": 178676,
+  "bytes": 72852,
   "tris": 8784,
   "wheelbase_m": 1.0075,
-  "objects": 36
+  "objects": 36,
+  "compression": "EXT_meshopt_compression"
  },
  "type-draft-legal": {
   "glb": "assets/atlas/type-draft-legal/bike.glb",
-  "bytes": 172688,
+  "bytes": 79060,
   "tris": 7840,
   "wheelbase_m": 0.9756,
-  "objects": 37
+  "objects": 37,
+  "compression": "EXT_meshopt_compression"
  },
  "studio-kona-2030": {
   "glb": "assets/atlas/studio-kona-2030/bike.glb",
-  "bytes": 186540,
+  "bytes": 85928,
   "tris": 9052,
   "wheelbase_m": 1.0333,
-  "objects": 42
+  "objects": 42,
+  "compression": "EXT_meshopt_compression"
  },
  "studio-small-650c": {
   "glb": "assets/atlas/studio-small-650c/bike.glb",
-  "bytes": 176684,
+  "bytes": 78016,
   "tris": 8196,
   "wheelbase_m": 0.9343,
-  "objects": 36
+  "objects": 36,
+  "compression": "EXT_meshopt_compression"
  },
  "studio-xl-tri": {
   "glb": "assets/atlas/studio-xl-tri/bike.glb",
-  "bytes": 186116,
+  "bytes": 85660,
   "tris": 8572,
   "wheelbase_m": 1.0838,
-  "objects": 42
+  "objects": 42,
+  "compression": "EXT_meshopt_compression"
  },
  "studio-alloy-entry": {
   "glb": "assets/atlas/studio-alloy-entry/bike.glb",
-  "bytes": 172428,
+  "bytes": 72136,
   "tris": 7748,
   "wheelbase_m": 0.9868,
-  "objects": 36
+  "objects": 36,
+  "compression": "EXT_meshopt_compression"
  },
  "studio-sprint-track": {
   "glb": "assets/atlas/studio-sprint-track/bike.glb",
-  "bytes": 168608,
+  "bytes": 75320,
   "tris": 8256,
   "wheelbase_m": 0.9532,
-  "objects": 34
+  "objects": 34,
+  "compression": "EXT_meshopt_compression"
  },
  "studio-beam-2020s": {
   "glb": "assets/atlas/studio-beam-2020s/bike.glb",
-  "bytes": 172480,
+  "bytes": 75588,
   "tris": 8040,
   "wheelbase_m": 1.0293,
-  "objects": 35
+  "objects": 35,
+  "compression": "EXT_meshopt_compression"
  },
  "studio-wing-road": {
   "glb": "assets/atlas/studio-wing-road/bike.glb",
-  "bytes": 171712,
+  "bytes": 70324,
   "tris": 7976,
   "wheelbase_m": 1.0408,
-  "objects": 30
+  "objects": 30,
+  "compression": "EXT_meshopt_compression"
  },
  "studio-gravel-aero": {
   "glb": "assets/atlas/studio-gravel-aero/bike.glb",
-  "bytes": 172692,
+  "bytes": 79064,
   "tris": 7840,
   "wheelbase_m": 0.9756,
-  "objects": 37
+  "objects": 37,
+  "compression": "EXT_meshopt_compression"
  },
  "studio-nor3-disc-tri": {
   "glb": "assets/atlas/studio-nor3-disc-tri/bike.glb",

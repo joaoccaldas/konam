@@ -14,6 +14,7 @@ This document names the canonical owners of product truth. If a proposed change 
 | Asset manifest | `museum/schemas/asset-manifest.schema.json` | register provenance/rights/performance before canonical use |
 | Bike truth | `museum/bike.schema.json` | extend, never fork |
 | Machine inspection | `web/src/engine/machine-inspection.js` | reuse global part/explode semantics |
+| Room dressing / reflections / bike finish | `web/src/engine/decor.js`, `web/src/engine/env-capture.js`, `web/src/engine/bike-materials.js` | bake+instance decor, one local cube capture per room, one bike material upgrade; do not re-implement per room |
 | Product catalog | `museum/catalog/products.json` + generated projections | edit source catalog, regenerate projections |
 | Brand/UI | `docs/BRAND_SYSTEM.md`, `brand/tokens.css`, `web/styles/components.css` | compose existing primitives first |
 | Consumer shell | `web/src/entry.js` + `web/src/ui/kona-shell.js` | do not create a second shell/navigation authority |
