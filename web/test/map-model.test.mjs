@@ -41,3 +41,12 @@ test('world renderer consumes the map model and map navigation uses overview pol
 test('mobile world map is full-screen and map-first',()=>{
  assert.match(mobile,/World map on phones/);assert.match(mobile,/height:100dvh/);assert.match(mobile,/map-plan svg/);
 });
+
+test('room overview fits floor and ceiling into the unobstructed landscape region',()=>{
+ const area={id:'champions',x0:-19.3,x1:-7.3,z0:-25.6,z1:-8.8,height:4.6};
+ const o={to:{x:-8.7,z:-17.2},face:{x:-13.3,y:1.6,z:-17.2},floorY:0};
+ const region={width:718,height:80,fullHeight:354};
+ const fov=roomOverviewFov(area,o,region),vertical=Math.tan(fov*Math.PI/360)*region.height/region.fullHeight;
+ for(const y of [0,4.6])assert.ok(Math.abs(y-o.face.y)/10.6<vertical,'Actual far wall floor and ceiling must clear the controls');
+ assert.ok(fov<=135);
+});

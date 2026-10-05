@@ -21,7 +21,7 @@ export function roomOverview(area,{upperY=4.7,groundY=1.6,isWalkable=()=>true,fl
   if(!area) return null;
   if(area.overview?.to && area.overview?.face && isWalkable(area.overview.to.x,area.overview.to.z)){
     const y=floorAt?floorAt(area.overview.to.x,area.overview.to.z)+groundY:area.overview.face.y;
-    return {...area.overview,roomId:area.id,face:{...area.overview.face,y}};
+    return {...area.overview,roomId:area.id,floorY:y-groundY,face:{...area.overview.face,y}};
   }
   const {w,d}=span(area);
   const cx=mid(area.x0,area.x1),cz=mid(area.z0,area.z1);
@@ -34,17 +34,21 @@ export function roomOverview(area,{upperY=4.7,groundY=1.6,isWalkable=()=>true,fl
   const to=candidates.find(p=>Math.hypot(p.x-cx,p.z-cz)>.5&&isWalkable(p.x,p.z));
   if(!to)return null;
   const y=floorAt?floorAt(to.x,to.z)+groundY:area.floor==='upper'?upperY:groundY;
-  return {to,face:{x:cx,y,z:cz},roomId:area.id};
+  return {to,face:{x:cx,y,z:cz},floorY:y-groundY,roomId:area.id};
 }
 
-export function roomOverviewFov(area,overview,{width,fullHeight,minFov=48,maxFov=135}){
+export function roomOverviewFov(area,overview,{width,fullHeight,height=fullHeight,minFov=48,maxFov=135}){
   const dx=overview.face.x-overview.to.x,dz=overview.face.z-overview.to.z,dist=Math.hypot(dx,dz);
-  let tangent=0;
+  let horizontal=0,vertical=0;
   for(const x of [area.x0,area.x1])for(const z of [area.z0,area.z1]){
     const ox=x-overview.to.x,oz=z-overview.to.z,depth=(ox*dx+oz*dz)/dist;
-    if(depth>dist*.5)tangent=Math.max(tangent,Math.abs((ox*dz-oz*dx)/dist)/depth);
+    if(depth>dist*.5){
+      horizontal=Math.max(horizontal,Math.abs((ox*dz-oz*dx)/dist)/depth);
+      const floor=overview.floorY??overview.face.y-1.6;
+      for(const y of [floor,floor+(area.height??1.6)])vertical=Math.max(vertical,Math.abs(y-overview.face.y)/depth);
+    }
   }
-  return Math.max(minFov,Math.min(maxFov,2*Math.atan(tangent*1.08*fullHeight/width)*180/Math.PI));
+  return Math.max(minFov,Math.min(maxFov,2*Math.atan(Math.max(horizontal*fullHeight/width,vertical*fullHeight/height)*1.08)*180/Math.PI));
 }
 
 export function mapFloors(areas=[]){
