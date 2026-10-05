@@ -80,11 +80,21 @@ async function openReview(room,{width,height,mobile},clock=false){
   }
   const url=new URL(base);url.searchParams.set('reviewRoom',room.id);
   await page.goto(url.href,{waitUntil:'domcontentloaded',timeout:180000});
-  await page.waitForFunction(()=>window.__museum?.beast?.group && window.__museumGo,{timeout:180000});
+  await page.waitForFunction(()=>window.__museum?.beast?.group && window.__museumGo,{timeout:90000});
   await page.evaluate(()=>window.__museumGo('beast'));
-  await page.waitForFunction(()=>window.__museum?.beast?.group?.visible===true,{timeout:120000});
-  try{await page.waitForFunction(()=>window.__museum?.beast?.bikeSpot?.bike || window.__museum?.beast?.ownBikes===undefined,{timeout:90000})}catch{}
-  await new Promise(r=>setTimeout(r,2500));
+  await page.waitForFunction(()=>window.__museum?.beast?.group?.visible===true,{timeout:60000});
+  // Final NOR/Breitling rooms own their assets. Do not block the entire evidence run waiting
+  // for one mobile GLB to populate bikeSpot; asset failures are already captured as HTTP/console errors.
+  const readiness=await page.evaluate(()=>({
+    ownBikes:window.__museum?.beast?.ownBikes===true,
+    hasBike:Boolean(window.__museum?.beast?.bikeSpot?.bike),
+    room:window.__museum?.beast?.group?.name||null
+  }));
+  if(!readiness.ownBikes&&!readiness.hasBike){
+    try{await page.waitForFunction(()=>Boolean(window.__museum?.beast?.bikeSpot?.bike),{timeout:30000})}catch{}
+  }
+  await new Promise(r=>setTimeout(r,3500));
+  console.log('ready',room.id,width+'x'+height,JSON.stringify(readiness));
   return {page,errors};
 }
 async function place(page,s){
