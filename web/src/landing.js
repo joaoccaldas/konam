@@ -325,13 +325,13 @@ else glassRun('x', HALL.x0, HALL.x1, HALL.z1);
         c += vec3(1.,.93,.78) * s * (w * 2.2) + vec3(.9,.97,1.) * smoothstep(.82,.98,w) * .12 * (1.-fres);
         gl_FragColor = vec4(c, 1.); }`,
   }));
-  ocean.rotation.x = -Math.PI / 2; ocean.position.y = -1.1; scene.add(ocean);
+  ocean.rotation.x = -Math.PI / 2; ocean.position.y = -1.1; scene.add(ocean); sky.userData.outdoor = ocean.userData.outdoor = true;   // seen through room windows: never sealed
   window.__ocean = ocean.material;
   // lava shore / terrace and the lava field behind the plaster wall
   const shore = new THREE.Mesh(new THREE.BoxGeometry(6, 1.3, D + 16), M.basalt);
-  shore.position.set(HALL.x1 + 3, -.66, CZ - 4); shore.receiveShadow = true; scene.add(shore);
+  shore.position.set(HALL.x1 + 3, -.66, CZ - 4); shore.receiveShadow = true; scene.add(shore); shore.userData.outdoor = true;
   const shoreEnd = new THREE.Mesh(new THREE.BoxGeometry(L + 12, 1.3, 5), M.basalt);
-  shoreEnd.position.set(3, -.66, HALL.z1 - 2.6); shoreEnd.receiveShadow = true; scene.add(shoreEnd);
+  shoreEnd.position.set(3, -.66, HALL.z1 - 2.6); shoreEnd.receiveShadow = true; scene.add(shoreEnd); shoreEnd.userData.outdoor = true;
   const fieldTex = basaltTex.clone(); fieldTex.repeat.set(160, 160); fieldTex.needsUpdate = true;
   const field = new THREE.Mesh(new THREE.PlaneGeometry(900, 459), new THREE.MeshStandardMaterial({ map: fieldTex, color: '#6b625a', roughness: 1 }));
   field.rotation.x = -Math.PI / 2; field.position.set(-460, -.05, 220.5); scene.add(field);   // stops short of the WYLD window's sightlines
@@ -2040,7 +2040,9 @@ function frame(now) {
       : (reg === 'champ' || reg === 'hween') && P.x < HALL.x0 - 3 ? sealedGroups[reg]
       : brandHere && P.x > brandHere.bounds.x0 + 3 ? brandHere.group : null;
     if (keep || sealedRoom) for (const o of scene.children) {
-      if (o === hall || o.isLight || o.isCamera) continue;
+      if (o === hall || o.isLight || o.isCamera || o.userData.outdoor) continue;
+      if (keep && o !== keep && o.userData.homeRoom === undefined) { const c = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()); o.userData.homeRoom = Number.isFinite(c.x) ? roomOf(c.x, c.z) : null; }
+      if (keep && o.userData.homeRoom === reg) continue;              // props placed inside this room at world level (decor palms)
       if (keep && o !== keep) { if (o.userData.sealedVis === undefined) o.userData.sealedVis = o.visible; o.visible = false; }
       else if (o.userData.sealedVis !== undefined) { o.visible = o.userData.sealedVis; delete o.userData.sealedVis; }
     }
