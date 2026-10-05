@@ -1088,10 +1088,14 @@ async function loadHweenBike() {
   hween.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
   hween.piece.bike.traverse(o => { if (o.isMesh) { o.userData.hween = hween.piece; delete o.userData.piece; } });
 }
-async function loadBeastBike() {
+let beastBikeLoad = null;                                              // one load: four callers race on open (two full bikes stacked before)
+function loadBeastBike() { return beastBikeLoad ||= loadBeastBikeOnce(); }
+async function loadBeastBikeOnce() {
   if (beast?.ownBikes) { beast.useAssets(loader); return; }
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!beast || !cfr?.glb || beast.bikeSpot.bike) return;
-  const gltf = await loadShared(cfr.glb);
+  // phones: the derived 77k-triangle hero (speedmax_web-lite.glb) keeps the room inside its mobile budget (220k)
+  const gltf = await (lite ? loadShared(cfr.glb.replace(/\.glb$/, '-lite.glb')).catch(() => loadShared(cfr.glb)) : loadShared(cfr.glb));
+  if (beast.bikeSpot.bike) return;
   beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
   beast.useAssets(loader);
 }
