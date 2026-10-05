@@ -1,5 +1,5 @@
 {
- "version": "08adb66dab82",
+ "version": "3c6f0f5d2933",
  "core": [
   "index.html",
   "about.html",
@@ -48,8 +48,8 @@
   "manifest.webmanifest": "D80RDjSyU/ENx8num4CsbgCHG48x8J4k6F4pT2ANlUA=",
   "web/styles/entry.css": "cH9e/Lf6xcKbx8nfJ5ylTJEpOElE4xRFCdnmGdhSZEU=",
   "web/styles/system.css": "11ec8dOKplvbCsT+CIvzO9Iozqjzr9fuQXIiZEruRes=",
-  "web/styles/shell-mobile.css": "vxjlGAnPjO5qyGPcX7ZlXU5qXVFSfaR6U8M4f1W5xA4=",
-  "web/styles/home.css": "GVVpeLUS5razwPrBDG/sGcVRM1XkdB8YbEfFhNwQ5t0=",
+  "web/styles/shell-mobile.css": "7B1oYJf/34mBHCfozobJVvpaFhOjvm+LeqrYWmQ7oP0=",
+  "web/styles/home.css": "PlA97qjuDYDHixVSdrDsvll3OfpuzFTXh0iVof2y/LQ=",
   "web/styles/garage.css": "wm+HmyfZlvpb01WwKcB91XvG88Q8exKaG0hW8k70Xss=",
   "web/styles/plan.css": "tooNxznOuMMYN77dfByjGoQ/QkUAj0BIkw+oSiy/NAA=",
   "web/styles/race-self.css": "VLj2JVlKVvLYp/hNIz1VynlhepoyJS69l6WhwLGrLZ4=",
