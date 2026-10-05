@@ -1,6 +1,26 @@
-import {signInWithPassword,registerAccount,requestPasswordReset,resendConfirmation,updatePassword,currentUser} from '../cloud/supabase-lite.js';
+import {signInWithPassword,registerAccount,requestPasswordReset,resendConfirmation,updatePassword,currentUser,PUBLIC_SUPABASE_URL,PUBLIC_SUPABASE_KEY} from '../cloud/supabase-lite.js';
 
 // Account access shares the entry shell. Account and newsletter consent are separate.
+export function renderNewsletterUnsubscribe(host,token,{onBack=()=>{}}={}) {
+  const valid=typeof token==='string'&&/^[a-f0-9]{64}$/.test(token);
+  host.innerHTML=`<section class="account-auth" aria-label="The Intern’s newsletter"><div class="account-story"><p class="account-kicker">YOUR INBOX · YOUR PACE</p><h2>Three things worth your time.<br><em>You choose when.</em></h2><p>The Intern’s Kona.m newsletter.</p></div><div class="account-panel artifact artifact--label"><p class="account-kicker">THE INTERN READ THE INTERNET</p><h2>Your inbox. Your pace.</h2><p>${valid?'Unsubscribe from The Intern’s newsletter. Your Kona.m account and progress stay yours.':'This link is incomplete. Open the Unsubscribe link from your newsletter, or contact the operator on the privacy page.'}</p><form class="account-form"><p class="account-status" role="status" aria-live="polite"></p>${valid?'<button class="btn primary" type="submit">Unsubscribe <span aria-hidden="true">→</span></button>':''}</form><div class="account-exits"><button class="btn text" type="button" data-back>Back to Kona.m</button><a href="privacy.html">Privacy & data</a></div></div></section>`;
+  host.querySelector('[data-back]').addEventListener('click',onBack);
+  host.querySelector('form').addEventListener('submit',async event=>{
+    event.preventDefault();if(!valid)return;
+    const button=host.querySelector('[type=submit]'),status=host.querySelector('.account-status');
+    if(!button||button.disabled)return;button.disabled=true;status.setAttribute('role','status');status.textContent='One moment…';
+    try {
+      const response=await fetch(PUBLIC_SUPABASE_URL+'/functions/v1/newsletter-subscribe',{
+        method:'POST',headers:{apikey:PUBLIC_SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({unsubscribe:token})
+      });
+      if(!response.ok)throw new Error('Could not unsubscribe. Please try again or contact the operator.');
+      const data=await response.json();if(data.status!=='unsubscribed')throw new Error('Could not confirm withdrawal. Please try again.');
+      host.querySelector('.account-panel h2').textContent='You’re off the list.';
+      status.textContent='You won’t receive future editions. Your account and progress stay yours.';button.remove();token='';
+    }catch(error){status.setAttribute('role','alert');status.textContent=error instanceof TypeError?'Couldn’t reach the newsletter service. Check your connection and try again.':error.message;button.disabled=false;}
+  });
+}
+
 export function renderAccountAuth(host,{mode='login',onSuccess=()=>{},onContinue=()=>{},onBack=()=>{},error=''}={}) {
   let active=['login','register','forgot','reset'].includes(mode)?mode:'login';
   let email='',pending=false;

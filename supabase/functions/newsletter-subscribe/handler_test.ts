@@ -15,7 +15,7 @@ Deno.test('newsletter denies non-browser origins and invalid JSON before service
 Deno.test('unsubscribe links require an opaque token and GET never touches the database',async()=>{
   const token='a'.repeat(64);
   const page=await handler(new Request('https://example.org?unsubscribe='+token));
-  assert.equal(page.status,200);assert.match(await page.text(),/method="post"/);
+  assert.equal(page.status,303);assert.equal(page.headers.get('location'),'https://joaoccaldas.github.io/konam/index.html?account=unsubscribe&token='+token);
   assert.equal(page.headers.get('Referrer-Policy'),'no-referrer');
   for(const invalid of ['short','<script>','A'.repeat(64)])assert.equal((await handler(new Request('https://example.org?unsubscribe='+encodeURIComponent(invalid)))).status,400);
 });
@@ -37,7 +37,7 @@ Deno.test('unsubscribe POST updates only the token owner, preserves suppression 
   }};
   const deps={admin:admin as any,quota:async()=> 'allowed' as const};
   const req=()=>new Request('https://example.org',{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded'},body:'unsubscribe='+token});
-  for(let i=0;i<2;i++){const result=await handler(req(),deps);assert.equal(result.status,200);assert.match(await result.text(),/You’re off the list/);}
+  for(let i=0;i<2;i++){const result=await handler(req(),deps);assert.equal(result.status,200);assert.deepEqual(await result.json(),{ok:true,status:'unsubscribed'});}
   assert.equal(updates,2);
   assert.equal((await handler(new Request('https://example.org',{method:'POST',body:JSON.stringify({unsubscribe:'bad'})}),deps)).status,400);assert.equal(updates,2);
 });

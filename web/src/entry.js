@@ -188,16 +188,20 @@ function paintQuest(step) {
   }
 }
 
-async function showAccount(mode='login',error='') {
+async function showAccount(mode='login',error='',newsletterToken='') {
   setEntryMode('quest');
   const host=questHost();if(!host)return;
   host.hidden=false;intro?.removeAttribute('hidden');
   host.textContent='Opening your account…';
-  let renderAccountAuth;
-  try { ({renderAccountAuth}=await import(new URL('app/account-auth.js',document.baseURI).href)); }
+  let renderAccountAuth,renderNewsletterUnsubscribe;
+  try { ({renderAccountAuth,renderNewsletterUnsubscribe}=await import(new URL('app/account-auth.js',document.baseURI).href)); }
   catch (_) {
     host.innerHTML='<p class="kona-note" role="alert">The account form could not load. Check your connection and try again.</p><button class="btn-primary" type="button">Continue without account</button>';
     host.querySelector('button').addEventListener('click',()=>enterApp('home'));return;
+  }
+  if(mode==='unsubscribe'){
+    renderNewsletterUnsubscribe(host,newsletterToken,{onBack:()=>{setEntryMode('landing');host.hidden=true;}});
+    window.scrollTo(0,0);return;
   }
   renderAccountAuth(host,{
     mode,error,
@@ -253,7 +257,12 @@ function paintShared(draft){
 }
 const q = new URLSearchParams(location.search);
 const shared=decodeShare(q.get('kona'));
-if(shared) paintShared(shared);
+if(q.get('account')==='unsubscribe'){
+  const token=q.get('token')||'';q.delete('token');
+  history.replaceState(null,'',location.pathname+(q.toString()?'?'+q.toString():''));
+  showAccount('unsubscribe','',token);
+}
+else if(shared) paintShared(shared);
 else if (q.get('reviewRoom') === 'beast-cave') openMuseum('beast');
 else if (q.get('room') || q.get('map')) openMuseum();
 else if (recovering && authReturned) showAccount('reset');

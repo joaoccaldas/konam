@@ -77,9 +77,12 @@ source verification, exactly-three-story rule and **never send automatically**:
 
 ## Unsubscribe
 
-The existing `newsletter-subscribe` function serves a branded confirmation page
-for the random token in the newsletter URL. GET does not mutate consent, so mail
-link scanners cannot unsubscribe. The confirmation form POST withdraws only that
+The existing `newsletter-subscribe` function redirects the random-token link to
+the branded confirmation mode in the existing Kona.m account shell. Hosted
+Supabase rewrites HTML to plain text on its shared domain, so HTML stays in the
+public app and the function remains a JSON API. GET does not mutate consent, so mail
+link scanners cannot unsubscribe. The confirmation page strips the token from the address bar without storing it.
+Its explicit confirmation POST withdraws only that
 token’s subscription, preserves suppression and returns no email/address status.
 Malformed and oversized requests are denied. Subsequent confirmed-account retries
 cannot undo the withdrawal.

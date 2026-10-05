@@ -12,7 +12,7 @@ try {
   const url=request.url();if(!url.includes('mtvpnoqwjpoqaiocrklq.supabase.co'))return request.continue();
   let body={},status=200;
   if(request.method()==='OPTIONS')return request.respond({status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'apikey,content-type,authorization','access-control-allow-methods':'POST,GET,PUT,OPTIONS'}});
-  if(url.includes('/newsletter-subscribe')){newsletterCalls++;body={ok:true,status:'pending'};if(mode==='newsletter-failure'){status=503;body={error:'Service temporarily unavailable'};}}
+  if(url.includes('/newsletter-subscribe')){newsletterCalls++;body={ok:true,status:JSON.parse(request.postData()||'{}').unsubscribe?'unsubscribed':'pending'};if(mode==='newsletter-failure'){status=503;body={error:'Service temporarily unavailable'};}}
   else if(url.includes('/signup')){choices.push(JSON.parse(request.postData()).data.kona_newsletter);body={id:'fixture-pending'};if(mode==='rate'){status=429;body={msg:'Rate limited'};}}
   else if(url.includes('grant_type=password')){status=400;body={error_code:'invalid_credentials',msg:'Invalid login credentials'};}
   else if(url.includes('/auth/v1/user'))body={id:'fixture-user'};
@@ -39,5 +39,11 @@ try {
  await page.click('[data-mode=forgot]');await page.click('[type=submit]');await page.waitForFunction(()=>document.querySelector('.account-status').textContent.includes('If an account'));
  await page.goto(base+'#access_token=fixture-token&refresh_token=fixture-refresh&type=recovery&expires_in=3600',{waitUntil:'networkidle2'});await page.waitForSelector('[name=confirm]');assert.equal(await page.evaluate(()=>location.hash),'');await page.type('[name=password]','fixture-new-password');await page.type('[name=confirm]','fixture-new-password');await page.click('[type=submit]');await page.waitForFunction(()=>document.querySelector('.account-status').textContent.includes('Password updated'));
  await page.goto(base+'?account=register',{waitUntil:'networkidle2'});await page.waitForSelector('.account-form');await page.evaluate(()=>document.documentElement.style.fontSize='200%');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,'200% text overflow');await page.click('[data-local]');await page.waitForFunction(()=>document.body.dataset.entryMode==='app');
- console.log('Account forms PASS: 16 viewport/mode combinations, opt-in isolation, confirmation-linked newsletter, rate limit, password error/show, recovery callback, reset, 200% text, local continuation.');
+ const token='a'.repeat(64);
+ await page.goto(base+'?account=unsubscribe&token='+token,{waitUntil:'networkidle2'});await page.waitForSelector('.account-form');assert.equal(newsletterCalls,0);assert.ok(!await page.evaluate(()=>location.search.includes('token=')));assert.ok(!await page.evaluate(token=>JSON.stringify(localStorage).includes(token),token));
+ await page.screenshot({path:'output/playwright/newsletter-unsubscribe-390.png',fullPage:true});
+ await page.click('[type=submit]');await page.waitForFunction(()=>document.querySelector('.account-panel h2').textContent==='You’re off the list.');assert.equal(newsletterCalls,1);
+ mode='newsletter-failure';await page.goto(base+'?account=unsubscribe&token='+token,{waitUntil:'networkidle2'});await page.waitForSelector('.account-form');await page.click('[type=submit]');await page.waitForFunction(()=>document.querySelector('.account-status').getAttribute('role')==='alert');assert.ok(await page.$eval('[type=submit]',el=>!el.disabled));assert.equal(newsletterCalls,2);
+ mode='success';await page.goto(base+'?account=unsubscribe&token=invalid',{waitUntil:'networkidle2'});await page.waitForSelector('.account-form');assert.equal(await page.$('[type=submit]'),null);assert.equal(newsletterCalls,2);
+ console.log('Account forms PASS: 16 viewport/mode combinations, opt-in isolation, confirmation-linked newsletter, rate limit, password error/show, recovery callback, reset, 200% text, local continuation, unsubscribe confirmation/token stripping/failure.');
 } finally {await browser.close();}

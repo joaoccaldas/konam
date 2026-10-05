@@ -17,7 +17,10 @@ const response=(origin:string|null,body:unknown,status=200)=>new Response(JSON.s
 const cleanEmail=(value:unknown)=>String(value??'').trim().toLowerCase();
 
 const validToken=(token:unknown)=>typeof token==='string'&&/^[a-f0-9]{64}$/.test(token);
-const unsubscribePage=(token:string,complete=false)=>new Response(`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>Kona.m · Newsletter</title><style>body{margin:0;background:#f4efe7;color:#12181d;font:16px/1.6 Arial,sans-serif}main{max-width:32rem;margin:10vh auto;padding:24px}h1{font:42px/1.1 Georgia,serif}button{background:#ff6a00;border:0;border-radius:999px;min-height:48px;padding:12px 24px;font:700 16px Arial;cursor:pointer}a{color:#12181d}</style><main><p>KONA.M · THE INTERN’S NEWSLETTER</p><h1>${complete?'You’re off the list.':'Your inbox. Your pace.'}</h1><p>${complete?'You won’t receive future editions of this newsletter. Your Kona.m account and progress stay yours.':'Unsubscribe from The Intern’s newsletter. Your Kona.m account and progress stay yours.'}</p>${complete?'':`<form method="post"><input type="hidden" name="unsubscribe" value="${token}"><button type="submit">Unsubscribe</button></form>`}<p><a href="https://joaoccaldas.github.io/konam/">Back to Kona.m →</a></p></main></html>`,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Referrer-Policy':'no-referrer','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"}});
+const unsubscribeRedirect=(token:string)=>new Response(null,{status:303,headers:{
+  Location:'https://joaoccaldas.github.io/konam/index.html?account=unsubscribe&token='+token,
+  'Cache-Control':'no-store','Referrer-Policy':'no-referrer',
+}});
 
 type Dependencies={admin?:SupabaseClient,quota?:typeof rateLimit};
 export async function handler(req:Request,dependencies:Dependencies={}){
@@ -25,7 +28,7 @@ export async function handler(req:Request,dependencies:Dependencies={}){
   if(req.method==='OPTIONS')return new Response(null,{status:204,headers:cors(origin)});
   // GET never changes a subscription: email link scanners cannot unsubscribe.
   const linkToken=new URL(req.url).searchParams.get('unsubscribe');
-  if(req.method==='GET'&&linkToken!==null)return validToken(linkToken)?unsubscribePage(linkToken):response(origin,{error:'Invalid unsubscribe link.'},400);
+  if(req.method==='GET'&&linkToken!==null)return validToken(linkToken)?unsubscribeRedirect(linkToken):response(origin,{error:'Invalid unsubscribe link.'},400);
   if(req.method!=='POST')return response(origin,{error:'Method not supported.'},405);
 
   const form=req.headers.get('content-type')?.startsWith('application/x-www-form-urlencoded');
@@ -46,7 +49,7 @@ export async function handler(req:Request,dependencies:Dependencies={}){
     const {error}=await admin.from('newsletter_subscriptions').update({status:'unsubscribed',updated_at:new Date().toISOString()}).eq('unsubscribe_token',input.unsubscribe).neq('status','suppressed');
     if(error)return response(origin,{error:'Could not unsubscribe. Please try again.'},503);
     // Neutral, idempotent response; neither address nor previous status leaks.
-    return form?unsubscribePage('',true):response(origin,{ok:true,status:'unsubscribed'});
+    return response(origin,{ok:true,status:'unsubscribed'});
   }
 
   if(input.company)return response(origin,{ok:true,status:'pending'},202);
