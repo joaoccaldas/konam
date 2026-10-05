@@ -31,7 +31,9 @@
     "three": "^0.186.1"
   },
   "devDependencies": {
-    "@gltf-transform/cli": "^4.5.0",
-    "puppeteer-core": "^25.12.0"
+    "puppeteer-core": "^25.12.0",
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1"
   }
 }

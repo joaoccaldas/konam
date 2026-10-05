@@ -49,7 +49,8 @@ jobs:
                   .filter(r => r.head_sha === context.sha)
                   .sort((a,b) => b.id - a.id);
 
-                const success = runs.find(r => r.status === 'completed' && r.conclusion === 'success');
+                const latest = runs[0];
+                const success = latest?.status === 'completed' && latest.conclusion === 'success' ? latest : null;
                 if (success) {
                   core.info(`${workflow_id}: certified by ${success.html_url}`);
                   continue;
@@ -62,7 +63,6 @@ jobs:
                 }
 
                 if (runs.length) {
-                  const latest = runs[0];
                   core.setFailed(`${workflow_id} completed without a successful certification for ${context.sha}: ${latest.conclusion || latest.status} (${latest.html_url})`);
                   return;
                 }

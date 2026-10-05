@@ -12,6 +12,7 @@ import { cpSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import {sealInlineScripts} from '../../../tools/lib/content-security-policy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..', '..', '..');
@@ -37,5 +38,5 @@ rmSync(join(www, 'app', 'nor3-review.js'), { force: true });
 const versionCode = Number.parseInt(process.env.SPEEDMAX_VERSION_CODE || '0', 10) || 0;
 const versionName = (process.env.SPEEDMAX_VERSION_NAME || 'dev').replace(/[^\w.-]/g, '').slice(0, 20);
 const index = join(www, 'index.html');
-writeFileSync(index, readFileSync(index, 'utf8').replace('<head>', `<head>\n<script>window.__NATIVE=${JSON.stringify({ versionCode, versionName })};</script>`));
+writeFileSync(index, sealInlineScripts(readFileSync(index, 'utf8').replace('</head>', `<script>window.__NATIVE=${JSON.stringify({ versionCode, versionName })};</script></head>`)));
 console.log(`www ready · version ${versionName} (${versionCode})`);

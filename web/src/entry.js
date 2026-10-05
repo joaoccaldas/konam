@@ -30,7 +30,7 @@ const settingsUI = initSettings({
   activeQuality:()=>profile.get().quality,
   onQuality:id=>window.__konaWorldSettings?.onQuality?.(id) ?? true,
   onSound:on=>window.__konaWorldSettings?.onSound?.(on),
-  onMotion:()=>window.__konaWorldSettings?.onMotion?.() ?? true,
+  onMotion:value=>window.__konaWorldSettings?.onMotion?.(value) ?? false,
   sync:{available:true,start:async()=>{settingsUI.close();await enterApp('me');document.querySelector('[data-race-self-action=progress]')?.click();}},
 });
 window.__konaSettingsUI = settingsUI;
@@ -245,4 +245,3 @@ else if (q.get('room') || q.get('map')) openMuseum();
 else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());
 else if (returningVisit && ['home','garage','collection','discover','plan','me','feed','travel'].includes(q.get('view'))) enterApp(q.get('view'));
-

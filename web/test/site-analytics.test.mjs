@@ -10,6 +10,7 @@ test('site analytics is session-scoped, web-only and contains no identity payloa
   const src=read('web/src/site-analytics.js');
   assert.match(src,/sessionStorage/);
   assert.match(src,/!globalThis\.__NATIVE/);
+  assert.match(src,/PROD&&consent===true/);
   assert.doesNotMatch(src,/localStorage/);
   assert.doesNotMatch(src,/document\.cookie|cookie=/);
   assert.doesNotMatch(src,/user_id|account_id|userAgent|navigator\.userAgent|latitude|longitude|free.?text/i);
@@ -31,7 +32,7 @@ test('race-week funnel includes bike, Kona Now and binary feedback without text 
   ]) assert.ok(src.includes("'"+event+"'"),event);
   const feedback=read('web/src/ui/return-journey.js');
   for(const event of ['feedback_useful_yes','feedback_useful_no']) assert.ok(feedback.includes("'"+event+"'"),event);
-  const fn=read('supabase/functions/site-analytics/index.ts');
+  const fn=read('supabase/functions/site-analytics/handler.ts');
   for(const event of ['first_bike_shown','feedback_useful_yes','feedback_useful_no']) assert.ok(fn.includes("'"+event+"'"),event);
 });
 
@@ -46,8 +47,8 @@ test('privacy notice describes public-web analytics and native no-op',()=>{
 
 test('runtime telemetry is allowlisted, bounded and never sends raw exception content',()=>{
   const src=read('web/src/site-analytics.js');
-  const fn=read('supabase/functions/site-analytics/index.ts');
-  const migration=read('supabase/migrations/20261003114500_add_runtime_health_analytics.sql');
+  const fn=read('supabase/functions/site-analytics/handler.ts');
+  const migration=read('supabase/migrations/20261003121431_add_runtime_health_analytics.sql');
 
   assert.match(src,/trackRuntimeError/);
   assert.match(src,/runtimeTotal>=12/);
@@ -96,9 +97,9 @@ test('runtime failure hooks report only coarse codes',()=>{
 
 test('analytics v2 preserves first-touch acquisition and separates traffic quality',()=>{
   const src=read('web/src/site-analytics.js');
-  const fn=read('supabase/functions/site-analytics/index.ts');
-  const migration=read('supabase/migrations/20261003123000_analytics_v2_traffic_quality.sql');
-  assert.match(src,/kona\.analytics\.acquisition\.v2/);
+  const fn=read('supabase/functions/site-analytics/handler.ts');
+  const migration=read('supabase/migrations/20261003123822_analytics_v2_traffic_quality.sql');
+  assert.match(read('web/src/engine/storage.js'),/kona\.analytics\.acquisition\.v2/);
   assert.match(src,/analytics_mode/);
   assert.match(src,/navigator\.webdriver/);
   assert.match(src,/traffic_class:trafficClass/);

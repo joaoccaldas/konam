@@ -7,6 +7,7 @@ import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.j
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { buildAvatar } from '../engine/avatar-models.js';
 import { createRendererContext } from '../render/renderer.js';
+import { renderSettings } from '../engine/profile.js';
 
 const plain=(color,roughness=.72)=>new THREE.MeshStandardMaterial({color,roughness,metalness:.02});
 function disposeObject(obj){
@@ -21,7 +22,7 @@ function frameObject(obj,target=1.8){
   const max=Math.max(size.x,size.y,size.z)||1,s=target/max;obj.scale.setScalar(s);obj.position.sub(center.multiplyScalar(s));
 }
 
-export async function mountRaceSelfStage(canvas,{accent='#e8471c',avatarStyle=null,bike=null,shoe=null,onReady}={}){
+export async function mountRaceSelfStage(canvas,{accent='#e8471c',avatarStyle=null,bike=null,shoe=null,preferences={},onReady}={}){
   if(!canvas)return {dispose(){}};
   let disposed=false;
   const renderContext=createRendererContext({
@@ -29,7 +30,7 @@ export async function mountRaceSelfStage(canvas,{accent='#e8471c',avatarStyle=nu
     antialias:false,
     alpha:true,
     powerPreference:'low-power',
-    maxDpr:1.5,
+    maxDpr:renderSettings(preferences.quality,{lite:matchMedia('(pointer:coarse)').matches,dpr:devicePixelRatio||1}).dpr,
     toneMapping:'aces',
     exposure:1.05,
   });
@@ -70,7 +71,7 @@ export async function mountRaceSelfStage(canvas,{accent='#e8471c',avatarStyle=nu
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
   renderContext.setAnimationLoop(now=>{
     if(disposed||document.body.classList.contains('settings-open'))return;
-    const t=reducedMotion.matches?0:(now-startedAt)/1000,base=avatar.userData.baseY??.03,kind=avatar.userData.avatarAnimation;
+    const t=(preferences.motion==='reduced'||(preferences.motion!=='full'&&reducedMotion.matches))?0:(now-startedAt)/1000,base=avatar.userData.baseY??.03,kind=avatar.userData.avatarAnimation;
     if(kind==='bounce')avatar.position.y=base+Math.sin(t*2.1)*.012;
     else if(kind==='swagger'){avatar.position.y=base+Math.sin(t*1.45)*.006;avatar.rotation.z=Math.sin(t*.85)*.012;}
     else if(kind==='ready'){avatar.position.y=base+Math.sin(t*1.8)*.005;avatar.rotation.y=-.08+Math.sin(t*.55)*.018;}
@@ -80,6 +81,7 @@ export async function mountRaceSelfStage(canvas,{accent='#e8471c',avatarStyle=nu
   canvas.__raceSelfRendererAuthority='shared-r0';
   onReady?.();
   return {
+    setPreferences(next={}){preferences=next;renderer.setPixelRatio(renderSettings(next.quality,{lite:matchMedia('(pointer:coarse)').matches,dpr:devicePixelRatio||1}).dpr);resize();},
     resetView:fitCamera,
     setAccent(c){rim.color.set(c);},
     setAvatarStyle(next){

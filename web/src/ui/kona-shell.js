@@ -9,11 +9,10 @@ import { renderCollectionSurface } from './collection.js';
 import { renderDiscoverSurface } from './discover.js';
 import { renderPlanSurface } from './plan.js';
 import { renderFeed, renderTravel } from './companion.js';
-import { renderAdminAssets } from './admin-assets.js';
 import { currentUser, isAdminUser } from '../cloud/supabase-lite.js';
 import { readGameState } from '../engine/game-state.js';
 import { navigationForState } from '../engine/navigation-policy.js';
-import { readStorage, writeStorage } from '../engine/storage.js';
+import { readStorage, writeStorage, STATE_CHANGE_EVENT } from '../engine/storage.js';
 import { initReturnJourney } from './return-journey.js';
 import { initSurpriseLayer } from './surprise.js';
 
@@ -81,7 +80,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   };
   accessReady.then(syncNavigation);
   syncNavigation();
-  let routeToken=0;
+  let routeToken=0,currentView='';
   const returnJourney=initReturnJourney({openProgress:async()=>{
     await raceSelf();
     body.querySelector('[data-race-self-action="progress"]')?.click();
@@ -160,6 +159,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   shell.querySelector('#konaPanelClose').onclick=()=>panel.classList.contains('companion-panel')?(companionReturn||raceSelf)():close();
 
   async function now(){
+    currentView='home';
     await accessReady;
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('home','web/styles/home.css');
@@ -188,6 +188,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   }
 
   async function raceSelf(){
+    currentView='me';
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('race-self','web/styles/race-self.css');
     if(request!==studioRequest)return;
@@ -215,6 +216,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   }
 
   async function companion(view,origin='studio'){
+    currentView='companion';
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('companion','web/styles/companion.css');
     if(request!==studioRequest)return;
@@ -229,6 +231,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   const feed=(origin='studio')=>companion('feed',origin),travel=(origin='studio')=>companion('travel',origin);
 
   async function collection(){
+    currentView='collection';
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('',null);
     if(request!==studioRequest)return;
@@ -238,6 +241,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   }
 
   async function garage(){
+    currentView='garage';
     await accessReady;
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('garage','web/styles/garage.css');
@@ -250,6 +254,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   }
 
   async function plan(){
+    currentView='plan';
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('plan','web/styles/plan.css');
     if(request!==studioRequest)return;
@@ -265,11 +270,14 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   }
 
   async function adminAssets(){
+    currentView='assets';
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('admin','web/styles/admin-assets.css');
     if(request!==studioRequest)return;
     title.textContent='Asset Portfolio';eyebrow.textContent=`${PRODUCT_NAME} · ADMIN`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('me');
+    const {renderAdminAssets}=await import(new URL('app/admin-assets-ui.js',document.baseURI).href);
+    if(request!==studioRequest)return;
     await renderAdminAssets(body);
   }
 
@@ -280,6 +288,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     enter?.(id);
   }
   async function explore(){
+    currentView='discover';
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('',null);
     if(request!==studioRequest)return;
@@ -290,18 +299,24 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     scheduleSurprise('discover');
   }
 
-  shell.querySelector('[data-tab=home]').onclick=now;
-  shell.querySelector('[data-tab=discover]').onclick=explore;
-  shell.querySelector('[data-tab=garage]').onclick=garage;
-  shell.querySelector('[data-tab=plan]').onclick=plan;
-  shell.querySelector('[data-tab=me]').onclick=me;
-  shell.querySelector('[data-desktop-tab=home]').onclick=now;
-  shell.querySelector('[data-desktop-tab=discover]').onclick=explore;
-  shell.querySelector('[data-desktop-tab=garage]').onclick=garage;
-  shell.querySelector('[data-desktop-tab=plan]').onclick=plan;
-  shell.querySelector('[data-desktop-tab=me]').onclick=me;
+  let navigationRequest=0;
+  const guardRoute=action=>async(...args)=>{
+    const request=++navigationRequest;
+    try{return await action(...args);}
+    catch(error){
+      globalThis.__konaAnalytics?.trackRuntimeError?.('route_load',{subsystem:'navigation'});
+      if(request!==navigationRequest)return;
+      panel.hidden=false;document.body.classList.add('kona-panel-open');
+      const notice=document.createElement('p');notice.setAttribute('role','alert');notice.textContent='This view could not load. Check your connection and try again.';
+      body.replaceChildren(notice);
+      const retry=document.createElement('button');retry.className='btn-primary';retry.textContent='Try again';retry.onclick=()=>guardRoute(action)(...args);body.append(retry);
+    }
+  };
+  const routes=Object.fromEntries(Object.entries({home:now,discover:explore,garage,plan,me}).map(([key,action])=>[key,guardRoute(action)]));
+  shell.querySelector('[data-tab=home]').onclick=routes.home;
+  for(const button of shell.querySelectorAll('[data-tab]:not([data-tab=home]),[data-desktop-tab]'))button.onclick=()=>routes[button.dataset.tab||button.dataset.desktopTab]?.();
   const routeToUserStudio=()=>typeof openUserStudio==='function'?openUserStudio():me();
-  shell.querySelector('[data-user-studio]').onclick=routeToUserStudio;
+  shell.querySelector('[data-user-studio]').onclick=guardRoute(routeToUserStudio);
   addEventListener('keydown',e=>{if(e.key==='Escape'&&!e.defaultPrevented&&!panel.hidden&&document.body.classList.contains('museum-open'))close();});
 
   const userMenu=shell.querySelector('[data-user-studio]');
@@ -313,5 +328,10 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     }
   };
   syncUserMenu(profile?.get?.()); profile?.subscribe?.(syncUserMenu);
-  return { now, raceSelf, garage, plan, me, explore, collection, feed, travel, adminAssets, tour:replayTour, close, accessReady, syncNavigation };
+  globalThis.addEventListener?.(STATE_CHANGE_EVENT,syncNavigation);
+  addEventListener('pageshow',event=>{
+    if(!event.persisted)return;
+    const route={me:raceSelf,collection,garage,plan,discover:explore,home:now}[currentView];if(route)guardRoute(route)();
+  });
+  return { ...Object.fromEntries(Object.entries({now,raceSelf,garage,plan,me,explore,collection,feed,travel,adminAssets,tour:replayTour}).map(([key,action])=>[key,guardRoute(action)])),close,accessReady,syncNavigation };
 }

@@ -1,9 +1,6 @@
 name: Publish Kona.m public site
 
 on:
-  push:
-    branches:
-      - launch/public-surface-certification-20261002
   workflow_dispatch:
 
 permissions:
@@ -13,11 +10,12 @@ permissions:
   id-token: write
 
 concurrency:
-  group: konam-public-pages
+  group: canyon-pages
   cancel-in-progress: true
 
 jobs:
   publish:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment:
@@ -31,7 +29,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const required = ['checks.yml','app-seal.yml','release-security.yml','integration-contract.yml','visual-evidence-v2.yml','ui-interaction-audit.yml'];
+            const required = ['checks.yml','app-seal.yml','release-security.yml','integration-contract.yml','visual-evidence-v2.yml','ui-interaction-audit.yml','hostile-runtime.yml'];
             const deadline = Date.now() + 25 * 60 * 1000;
             const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -49,7 +47,8 @@ jobs:
                   .filter(r => r.head_sha === context.sha)
                   .sort((a,b) => b.id - a.id);
 
-                const success = runs.find(r => r.status === 'completed' && r.conclusion === 'success');
+                const latest = runs[0];
+                const success = latest?.status === 'completed' && latest.conclusion === 'success' ? latest : null;
                 if (success) {
                   core.info(`${workflow_id}: certified by ${success.html_url}`);
                   continue;
@@ -62,7 +61,6 @@ jobs:
                 }
 
                 if (runs.length) {
-                  const latest = runs[0];
                   core.setFailed(`${workflow_id} completed without a successful certification for ${context.sha}: ${latest.conclusion || latest.status} (${latest.html_url})`);
                   return;
                 }

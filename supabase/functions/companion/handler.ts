@@ -1,29 +1,29 @@
+import {readBoundedJSON} from '../_shared/request.ts';
+import {rateLimit} from '../_shared/rate-limit.ts';
 import {fetchPublic,parseFeed,resolveFeed,toRSS} from './providers.ts';
 import config from './public-config.json' with {type:'json'};
-const cache=new Map<string,{at:number,value:any}>(),rates=new Map<string,{at:number,count:number}>();
+const cache=new Map<string,{at:number,value:any}>();
 let active=0;
 const cors={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'apikey, content-type','Access-Control-Allow-Methods':'GET, POST, OPTIONS'};
 const safeId=(value:any)=>/^[a-z0-9-]{1,64}$/.test(String(value||''))?String(value):'unknown';
-export async function handler(req:Request){
+export async function handler(req:Request,{quota=rateLimit}:{quota?:typeof rateLimit}={}){
  const url=new URL(req.url);
  const json=(value:any,status=200)=>new Response(JSON.stringify(value),{status,headers:{...cors,'Content-Type':'application/json','Cache-Control':'no-store'}});
  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
  if(!['GET','POST'].includes(req.method))return json({error:'Method not supported.'},405);
  // Public read-only capability, authenticated with this project's publishable key.
- // No service-role client, database access, cookies, or upstream credentials.
+ // Service credentials are used only for shared abuse quotas, never upstream feed requests.
  const supplied=req.headers.get('apikey')||url.searchParams.get('key');
  if(supplied!==config.publishable_key)return json({error:'App key required.'},401);
- const now=Date.now(),ip=req.headers.get('x-forwarded-for')?.split(',')[0]||'unknown';
- for(const [key,r] of rates)if(now-r.at>60000)rates.delete(key);
- const rate=rates.get(ip)||{at:now,count:0};rate.count++;rates.set(ip,rate);
- if(rate.count>45||rates.size>2000||active>=8)return json({error:'Quick breather. Try again in a minute.'},429);
+ const now=Date.now();
+ if(active>=8)return json({error:'Quick breather. Try again in a minute.'},429);
  active++;
  try{
-  if(Number(req.headers.get('content-length')||0)>18000)return json({error:'Too many sources.'},400);
-  const body=req.method==='POST'?await req.text():null;
-  if(body&&body.length>18000)return json({error:'Too many sources.'},400);
-  const input=body?JSON.parse(body):{sources:JSON.parse(url.searchParams.get('sources')||'[]')};
+  if(req.method==='GET'&&url.search.length>18000)return json({error:'Too many sources.'},400);
+  const input=req.method==='POST'?await readBoundedJSON(req,18000):{sources:JSON.parse(url.searchParams.get('sources')||'[]')};
   if(!Array.isArray(input.sources)||!input.sources.length||input.sources.length>12)return json({error:'Choose between 1 and 12 sources.'},400);
+  const allowance=await quota(req,'companion');
+  if(allowance!=='allowed')return json({error:allowance==='limited'?'Quick breather. Try again in a minute.':'Feed temporarily unavailable.'},allowance==='limited'?429:503);
   const results=[];
   // Bounded groups: slow publishers cannot fan out unbounded network work.
   for(let n=0;n<input.sources.length;n+=3){

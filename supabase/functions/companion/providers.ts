@@ -64,5 +64,5 @@ export async function resolveFeed(value:string){
 }
 export function toRSS(data:any){
  const x=(v:any)=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]!));
- return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>KONA · Your Feed</title><link>https://joaoccaldas.github.io/canyonmuseum/?view=feed</link><description>Your selected triathlon and island sources. Read and watch at the original publisher.</description>'+data.items.slice(0,100).map((i:any)=>'<item><title>'+x(i.title)+'</title><link>'+x(i.url)+'</link><guid>'+x(i.url)+'</guid><pubDate>'+new Date(i.published_at).toUTCString()+'</pubDate></item>').join('')+'</channel></rss>';
+ return '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>KONA · Your Feed</title><link>https://joaoccaldas.github.io/konam/?view=feed</link><description>Your selected triathlon and island sources. Read and watch at the original publisher.</description>'+data.items.slice(0,100).map((i:any)=>'<item><title>'+x(i.title)+'</title><link>'+x(i.url)+'</link><guid>'+x(i.url)+'</guid><pubDate>'+new Date(i.published_at).toUTCString()+'</pubDate></item>').join('')+'</channel></rss>';
 }

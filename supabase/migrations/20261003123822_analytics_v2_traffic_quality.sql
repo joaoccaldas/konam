@@ -34,3 +34,4 @@ create index if not exists site_analytics_events_landing_time_idx
 
 comment on table public.site_analytics_events is
   'Kona.m privacy-minimal product analytics and coarse runtime health. Session-only acquisition context includes landing path, external referring hostname, UTM campaign values and a public/qa/automation traffic class. No account ID, email, IP address, user agent, raw error message, stack trace, raw feedback text, precise location or persistent cross-session visitor identifier is stored.';
+
