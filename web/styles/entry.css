@@ -321,3 +321,5 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-peek{padding:0 22px;min-height:var(--brand-touch);border:1px solid color-mix(in srgb,var(--brand-mist) 32%,transparent);border-radius:999px;background:transparent;color:var(--brand-mist);font:700 14px/1 var(--brand-font-ui)}
 #intro.kona-entry .entry-peek:is(:hover,:focus-visible){border-color:var(--brand-action);outline:none}
 @media(max-width:899px){#intro.kona-entry .entry-peek{width:100%}}
+/* short landscape phones: the lede already says what Kona.m does; keep both ways in above the fold */
+@media(orientation:landscape) and (max-height:520px){#intro.kona-entry .entry-promise{display:none}#intro.kona-entry .entry-peek{width:auto}}
