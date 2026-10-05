@@ -2,8 +2,20 @@
 // New code must use kona.* keys. Legacy speedmax.* keys are read/migrated for compatibility.
 
 export const STORAGE_VERSION = 1;
+export const STATE_CHANGE_EVENT = 'kona:statechange';
+
+const announceStateChange = (name, action='write') => {
+  try { globalThis.dispatchEvent?.(new CustomEvent(STATE_CHANGE_EVENT,{detail:{name,action}})); } catch (_) {}
+};
 
 const MAP = Object.freeze({
+  brandRandom: { current: 'kona.brand.random-family.v1', legacy: [], area: 'session' },
+  returnJourneySession: { current: 'kona.returnJourney.session.v1', legacy: [], area: 'session' },
+  surpriseSession: { current: 'kona.surprise.session.v1', legacy: [], area: 'session' },
+  analyticsSession: { current: 'kona.analytics.session.v1', legacy: [], area: 'session' },
+  analyticsMode: { current: 'kona.analytics.mode.v2', legacy: [], area: 'session' },
+  analyticsAcquisition: { current: 'kona.analytics.acquisition.v2', legacy: [], area: 'session' },
+  analyticsEngaged: { current: 'kona.analytics.engaged15.v1', legacy: [], area: 'session' },
   profile: { current: 'kona.profile.v1', legacy: ['speedmax.profile.v1'] },
   passport: { current: 'kona.passport.v1', legacy: ['speedmax.passport.v1'] },
   finds: { current: 'kona.finds.v1', legacy: ['speedmax.finds.v1'] },
@@ -69,6 +81,7 @@ export function writeStorage(name, value, storage = globalThis.localStorage) {
   try {
     if (value == null) storage?.removeItem?.(row.current);
     else storage?.setItem?.(row.current, String(value));
+    announceStateChange(name,value==null?'remove':'write');
     return true;
   } catch (_) { globalThis.__konaAnalytics?.trackRuntimeError?.('state_write',{subsystem:'storage'}); return false; }
 }
@@ -76,16 +89,19 @@ export function writeStorage(name, value, storage = globalThis.localStorage) {
 export function removeStorage(name, storage = globalThis.localStorage) {
   const row = MAP[name];
   if (!row) throw new Error(`Unknown storage key: ${name}`);
-  try { storage?.removeItem?.(row.current); } catch (_) {}
+  let changed=false;
+  try { if(storage?.getItem?.(row.current)!=null)changed=true; storage?.removeItem?.(row.current); } catch (_) {}
   for (const legacy of row.legacy) {
     if (legacy === row.current) continue;
-    try { storage?.removeItem?.(legacy); } catch (_) {}
+    try { if(storage?.getItem?.(legacy)!=null)changed=true; storage?.removeItem?.(legacy); } catch (_) {}
   }
+  if(changed)announceStateChange(name,'remove');
 }
 
 export function migrateStorage(storage = globalThis.localStorage) {
   const migrated = [];
   for (const [name,row] of Object.entries(MAP)) {
+    if (row.area === 'session') continue;
     if (row.legacy.every(k => k === row.current)) continue;
     let hasCurrent = false;
     try { hasCurrent = storage?.getItem?.(row.current) != null; } catch (_) {}
@@ -110,9 +126,10 @@ export function storageNames() {
   return Object.keys(MAP);
 }
 
-export function storageKeys({ includeLegacy = false } = {}) {
+export function storageKeys({ includeLegacy = false, area = 'local' } = {}) {
   const keys = [];
   for (const row of Object.values(MAP)) {
+    if ((row.area || 'local') !== area) continue;
     keys.push(row.current);
     if (includeLegacy) keys.push(...row.legacy);
   }

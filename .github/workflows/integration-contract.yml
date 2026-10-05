@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   validate:
+    name: Integration contract
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -41,8 +41,8 @@ jobs:
           cache-dependency-path: web/package-lock.json
       - run: npm ci --ignore-scripts
         working-directory: web
-      - name: Audit production dependency graph
-        run: npm audit --omit=dev --audit-level=high
+      - name: Audit complete dependency graph
+        run: npm audit --audit-level=high
         working-directory: web
 
   android-dependencies:
@@ -60,6 +60,44 @@ jobs:
           cache-dependency-path: app/native/package-lock.json
       - run: npm ci --ignore-scripts
         working-directory: app/native
-      - name: Audit production dependency graph
-        run: npm audit --omit=dev --audit-level=high
+      - name: Audit complete dependency graph
+        run: npm audit --audit-level=high
         working-directory: app/native
+      - name: Verify native build-tool compatibility
+        working-directory: app/native
+        run: |
+          npm ci --prefix ../../web --ignore-scripts
+          npm run sync
+          npm run icons
+      - name: Verify packaged entry layout
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          python3 -m http.server 8762 --bind 127.0.0.1 --directory app/native/www >/tmp/kona-native-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8762/ >/dev/null && break; sleep .5; done
+          node web/native-entry-layout-browser.mjs http://127.0.0.1:8762/
+
+  supabase-replay:
+    name: Supabase replay and RLS
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.119.0
+      - name: Replay migrations in a clean local Supabase
+        run: |
+          supabase start
+          supabase db reset --local
+          psql 'postgresql://postgres:postgres@127.0.0.1:54322/postgres' -v ON_ERROR_STOP=1 -f supabase/tests/security.sql
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Edge handler and stream boundary tests
+        run: deno test --lock=supabase/functions/deno.lock --frozen --allow-read --allow-env supabase/functions/_shared/request_test.ts supabase/functions/companion/handler_test.ts supabase/functions/companion/providers_test.ts supabase/functions/site-analytics/handler_test.ts supabase/functions/newsletter-subscribe/handler_test.ts

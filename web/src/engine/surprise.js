@@ -1,9 +1,9 @@
 // engine/surprise.js — deterministic, sparse collectible surprises across app surfaces.
-import { readStorage, writeStorage } from './storage.js';
+import { readStorage, writeStorage, storageKey } from './storage.js';
 import { COLLECTIBLES, SURPRISE_POLICY, ensureProgression, applyStoredEvent, collectibleById } from './progression.js';
 import { readReturnJourney } from './return-journey.js';
 
-const SESSION_KEY='kona.surprise.session.v1';
+const SESSION_KEY=storageKey('surpriseSession');
 const rarityOrder=['common','uncommon','rare','epic','legendary','mythic'];
 const hash=s=>[...String(s)].reduce((n,c)=>((n*33)^c.charCodeAt(0))>>>0,5381);
 const stateDefault=()=>({schema:1,last_visit:0,shown:[],collected:[]});

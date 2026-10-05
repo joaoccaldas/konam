@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {COMMON_DESIGN_LINKS,pageDesignLinks} from './design-system-manifest.mjs';
+import {sealInlineScripts} from './lib/content-security-policy.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const productMeta = JSON.parse(fs.readFileSync(path.join(root,'config/product-meta.json'),'utf8'));
@@ -20,7 +21,7 @@ const DISCLAIMER = 'An independent, unofficial fan and research project. Not aff
 // Explicit image providers: Wikimedia and validated YouTube video thumbnails; no wildcard origins.
 const CSP_BASE = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",       // hall and studio load app/*.js; meshopt decoder is WebAssembly
+  "script-src 'self' 'wasm-unsafe-eval'",       // Inline boot scripts receive exact content hashes below.
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://i.ytimg.com",
@@ -178,16 +179,23 @@ for (const p of PAGES) {
     html=html.replace(/<\/body>/i, ANALYTICS_SCRIPT+'\n</body>');
   }
   html=html.replace(/\n{3,}(?=<!--design-system:start-->)/g,'\n\n');
-  fs.writeFileSync(f, html);
+  fs.writeFileSync(f, sealInlineScripts(html));
+}
+
+// Candidate review surface stays outside the consumer/crawler page registry.
+const reviewFile=path.join(root,'norwegian-engine-review.html');
+if(fs.existsSync(reviewFile)){
+  let html=fs.readFileSync(reviewFile,'utf8');
+  if(!html.includes('http-equiv="Content-Security-Policy"'))html=html.replace('</head>','<meta http-equiv="Content-Security-Policy" content="'+CSP_BASE.join('; ')+'"></head>');
+  fs.writeFileSync(reviewFile,sealInlineScripts(html));
 }
 
 const CHAMPS = JSON.parse(fs.readFileSync(path.join(root, 'museum/kona_champions.json'), 'utf8')).titles.map(t => `${t.year} ${t.athlete} (${t.bike})`).join('; ');
 const brandFile = path.join(root, 'museum/world/brand_rooms.json');
 const BRANDS = fs.existsSync(brandFile) ? JSON.parse(fs.readFileSync(brandFile, 'utf8')).rooms.flatMap(r => (r.products || []).map(p => `${p.brand} ${p.model} in ${r.name} (${p.legal || 'independent study'})`)) : [];
-const today = new Date().toISOString().slice(0, 10);
 fs.writeFileSync(path.join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${PAGES.map(p => `  <url><loc>${SITE}${p.file === 'index.html' ? '' : p.file}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
+${PAGES.map(p => `  <url><loc>${SITE}${p.file === 'index.html' ? '' : p.file}</loc></url>`).join('\n')}
 </urlset>
 `);
 fs.writeFileSync(path.join(root, 'robots.txt'), `User-agent: OAI-SearchBot

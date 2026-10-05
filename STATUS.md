@@ -49,4 +49,8 @@ Do not commit or publish:
 - credentials, private tokens or secret API keys
 - private race-history matches or user profiles
 
-Public-facing product surfaces should identify **Kona.m**, not an individual person.
+Public-facing product surfaces identify **Kona.m**. The owner-approved operator identity and support contact may appear in the privacy notice through exact, file-scoped scanner exceptions.
+
+## 5 October audit remediation
+
+See [the remediation record](docs/AUDIT_REMEDIATION_2026-10-05.md) for implemented fixes, evidence requirements and remaining launch dependencies. Public sign-in remains unavailable pending production email delivery and account procedures. A protected PR and certified Pages release are required before describing the web changes as published.

@@ -40,6 +40,8 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-trust{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;margin-top:15px;color:color-mix(in srgb,var(--brand-mist) 78%,transparent);font:650 10px/1.35 var(--brand-font-ui,var(--sans))}
 #intro.kona-entry .entry-trust a{color:inherit;text-decoration:underline;text-underline-offset:4px}   /* not browser blue on the dark entry */
 #intro.kona-entry .entry-trust>span{display:inline-flex;align-items:center;gap:7px}
+#intro.kona-entry .entry-trust a,#intro.kona-entry .entry-story-note a{color:var(--brand-mist);text-decoration:underline;text-underline-offset:3px}
+#intro.kona-entry .entry-trust a:focus-visible,#intro.kona-entry .entry-story-note a:focus-visible{outline:2px solid var(--brand-discovery);outline-offset:4px}
 #intro.kona-entry .entry-trust>span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--brand-discovery)}
 #intro.kona-entry .entry-trust #entryInstall{width:auto;min-height:36px;padding:0;border:0;border-bottom:1px solid rgba(255,255,255,.45);border-radius:0;background:transparent;color:var(--brand-mist)}
 #intro.kona-entry .entry-signin-note{margin:7px 0 0;color:var(--brand-faint);font:500 10px/1.4 var(--brand-font-ui,var(--sans))}
@@ -324,3 +326,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 /* short landscape phones: the lede already says what Kona.m does; keep both ways in above the fold */
 @media(orientation:landscape) and (max-height:520px){#intro.kona-entry .entry-promise{display:none}#intro.kona-entry .entry-peek{width:auto}}
 #intro.kona-entry .entry-story-note a{display:inline-flex;align-items:center;min-height:48px}   /* phone touch target */
+/* The packaged WebView needs clearance below its fixed Why Kona shortcut. */
+@media(max-width:899px){
+  html.native-app body.entry-landing #intro.kona-entry .entry-copy{padding-top:18px}
+}

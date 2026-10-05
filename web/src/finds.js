@@ -2,6 +2,7 @@
 // a scrap of black coral, a race bib. They are not on the rail. Tap one to keep it.
 import * as THREE from 'three';
 import { applyStoredEvent } from './engine/progression.js';
+import { readStorage, writeStorage } from './engine/storage.js';
 
 export const FINDS = [
   { id: 'plumeria', mesh: 'plumeria', name: 'A plumeria', line: 'Left by the chapel door, the colour of the late light on Aliʻi.', x: 2.35, z: 3.55, y: .02, yaw: .4 },
@@ -11,17 +12,16 @@ export const FINDS = [
   { id: 'bib', mesh: 'race_bib', name: 'A race bib', line: 'In the champions room, face down. The number has worn off. The pin holes have not.', x: -16.6, z: -16.4, y: .02, yaw: .15 },
 ];
 
-const KEY = 'speedmax.finds.v1';
 
 export function readFinds() {
   try {
-    const raw = JSON.parse(localStorage.getItem(KEY) || '[]');
+    const raw = JSON.parse(readStorage('finds') || '[]');
     return Array.isArray(raw) ? raw.filter(id => FINDS.some(f => f.id === id)) : [];
   } catch (_) { return []; }
 }
 
 export function writeFinds(ids) {
-  try { localStorage.setItem(KEY, JSON.stringify(ids)); } catch (_) { }
+  try { writeStorage('finds', JSON.stringify(ids)); } catch (_) { }
 }
 
 export async function buildFinds(ctx) {

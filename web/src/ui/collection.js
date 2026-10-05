@@ -4,6 +4,7 @@ import { findCollection, findSummary, FIND_METHODS, itemCollection } from '../en
 import { collectibleReward } from '../engine/progression.js';
 import { findAccess } from '../engine/access.js';
 import { getPublicProduct } from '../engine/catalog.js';
+import { STATE_CHANGE_EVENT } from '../engine/storage.js';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number=n=>String(n).padStart(3,'0');
 const mark='<svg viewBox="0 0 100 70" aria-hidden="true"><path d="M12 52 24 25 47 12 72 18 89 45 70 60 36 64Z" fill="currentColor"/></svg>';
@@ -41,6 +42,9 @@ export async function renderCollectionSurface(root,{admin=false,onBack}={}){
     }
     if(!host.children.length)root.querySelector('[data-other-collection]').hidden=true;
   };
+  let repaintFrame=0;
+  const onStateChange=()=>{cancelAnimationFrame(repaintFrame);repaintFrame=requestAnimationFrame(()=>{if(!disposed)paint();});};
+  globalThis.addEventListener?.(STATE_CHANGE_EVENT,onStateChange);
   const detail=item=>{
     if(!item)return;disposeStage();selected=item.id;const reveal=visible(item),pay=collectibleReward(item);
     root.innerHTML='<article class="find-studio"><button type="button" class="btn-text" data-find-return>← KONA Finds</button><header><small class="t-data">FIND '+number(item.number)+' / 100 · '+esc(reveal?item.rarity:'UNDISCOVERED')+'</small><h3>'+esc(reveal?item.name:'A story still waiting.')+'</h3><p>'+esc(reveal?item.tagline:'Keep wandering. This slot will remember what you find.')+'</p></header>'+
@@ -62,5 +66,5 @@ export async function renderCollectionSurface(root,{admin=false,onBack}={}){
     root.querySelector('[data-find-return]').focus();
   };
   paint();
-  return()=>{disposed=true;disposeStage();};
+  return()=>{disposed=true;cancelAnimationFrame(repaintFrame);globalThis.removeEventListener?.(STATE_CHANGE_EVENT,onStateChange);disposeStage();};
 }

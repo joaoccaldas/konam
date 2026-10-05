@@ -1,4 +1,6 @@
-import {handler} from './handler.ts';import config from './public-config.json' with {type:'json'};import assert from 'node:assert/strict';
+import {handler as handle} from './handler.ts';
+const handler=(req:Request)=>handle(req,{quota:async()=> 'allowed'});
+import config from './public-config.json' with {type:'json'};import assert from 'node:assert/strict';
 const req=(body:any,key=true)=>new Request('https://example.com/companion',{method:'POST',headers:key?{apikey:config.publishable_key,'Content-Type':'application/json'}:{},body:JSON.stringify(body)});
 Deno.test('missing app key, invalid methods and oversized source lists are rejected',async()=>{
  assert.equal((await handler(req({sources:[]},false))).status,401);

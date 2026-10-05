@@ -1,8 +1,9 @@
+import {storageKey} from '../engine/storage.js';
 // brand/runtime.js — one runtime contract for Light, Dark and Random presentation.
 // Random is stable for the current browser session to avoid visual flicker and screenshot drift.
 
 export const RANDOM_FAMILIES = ['lava','ocean','hibiscus','lilac','lime'];
-const SESSION_KEY = 'kona.brand.random-family.v1';
+const SESSION_KEY = storageKey('brandRandom');
 
 const safeSession = () => {
   try { return window.sessionStorage; } catch (_) { return null; }

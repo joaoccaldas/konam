@@ -76,7 +76,7 @@ if(injectors.length>governance.limits.js_style_injectors)errors.push('JavaScript
 const tokens=read('brand/tokens.css'),components=read('web/styles/components.css'),shell=read('web/src/ui/kona-shell.js'),landing=read('web/landing.template.html'),index=read('index.html'),system=read('web/styles/system.css'),harden=read('tools/harden_pages.mjs');
 for(const token of ['--brand-sand','--brand-lava','--brand-ocean','--brand-sunrise','--brand-hibiscus','--brand-lilac','--brand-lime','--brand-font-ui','--brand-font-editorial','--brand-font-data','--brand-font-hand','--brand-mobile-gutter:20px'])if(!tokens.includes(token))errors.push('brand/tokens.css missing '+token);
 for(const primitive of ['.btn-primary','.btn-secondary','.btn-text','.btn-icon','.ui-input','.ui-sheet'])if(!components.includes(primitive))errors.push('components.css missing '+primitive);
-if(!/\[data-tab=home\]'\)\.onclick=now/.test(shell))errors.push('Home tab must invoke canonical Home, not Race Self');
+if(!/\[data-tab=home\]'\)\.onclick=routes\.home/.test(shell))errors.push('Home tab must invoke canonical Home, not Race Self');
 if(!read('web/styles/studio.css').includes('--sand:var(--brand-bg)'))errors.push('Studio must consume brand tokens');
 if(!read('web/styles/experience.css').includes('--accent:var(--brand-sunrise)'))errors.push('Experiences must consume brand accent');
 if(!read('web/styles/collection.css').includes('font-family:var(--brand-font-ui)'))errors.push('Collection must consume brand typography');
