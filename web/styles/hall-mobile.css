@@ -251,3 +251,15 @@ html.phone-fit #card{left:8px;right:auto;width:calc((100vw - 16px)/var(--fit))!i
   .world-more-menu{top:max(60px,calc(48px + env(safe-area-inset-top)));right:max(10px,env(safe-area-inset-right));left:auto;width:min(220px,calc(100dvw - 20px))}
   .world-more-menu button{min-height:48px}
 }
+
+/* Short-landscape chrome must prioritize the 3D viewport over duplicate labels. */
+@media(max-height:500px) and (orientation:landscape){
+ #konaWorld>header{max-width:calc(100dvw - 16px);overflow:hidden}
+ #konaWorld>header .logo{max-width:120px;flex:0 1 auto;overflow:hidden}
+ #konaWorld>header nav{min-width:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+ #konaWorld>header nav::-webkit-scrollbar{display:none}
+ #nearby{max-width:min(42vw,320px)}
+ #rail{max-width:100dvw;overflow:hidden}
+ .rail-inner{max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+ .rail-inner::-webkit-scrollbar{display:none}
+}
