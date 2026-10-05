@@ -4,6 +4,7 @@
 import puppeteer from 'puppeteer-core';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {pauseSoftwareRaster,drawSoftwareFrame} from './browser-software-raster.mjs';
 if(process.env.KONA_TEST_VIEWPORT&&!['390','844','1440'].includes(process.env.KONA_TEST_VIEWPORT))throw Error('Unknown test viewport; refusing empty coverage');
 const base=process.argv[2]||'http://127.0.0.1:8748/';
 const out=new URL('../output/playwright/',import.meta.url);fs.mkdirSync(out,{recursive:true});
@@ -28,12 +29,12 @@ try{
   assert.ok(first.visible,'Museum action must be visible on first screen');assert.match(first.label,/Enter the 3D museum/);
   assert.equal(requests.some(url=>/\/hall\.js|\.glb(?:\?|$)/.test(url)),false,'No renderer/model request before intent');
   await page.screenshot({path:new URL(`museum-entry-${width}.png`,out).pathname});
-  await press(page,'#entryWorld');await page.waitForFunction(()=>document.body.classList.contains('walking')&&window.__museum?.renderer.info.render.triangles>1000);
+  await press(page,'#entryWorld');await pauseSoftwareRaster(page);await page.waitForFunction(()=>document.body.classList.contains('walking')&&window.__museum?.renderer);await drawSoftwareFrame(page);assert.ok(await page.evaluate(()=>__museum.renderer.info.render.triangles>1000));
   assert.equal(await page.$('[data-onboarding-question]'),null,'Museum must bypass onboarding');
   assert.equal(requests.filter(url=>url.endsWith('/app/hall.js')).length,1,'One canonical runtime load');
   await page.waitForFunction(()=>window.__museum.PIECES.some(piece=>piece.bike&&Math.hypot(piece.view.x-window.__museum.P.x,piece.view.z-window.__museum.P.z)>9));
   assert.ok(await page.evaluate(()=>window.__museum.P.z<3),'Hero must place the visitor inside the gallery, not outside its door');
-  await page.screenshot({path:new URL(`museum-walking-${width}.png`,out).pathname});
+  await drawSoftwareFrame(page);await page.screenshot({path:new URL(`museum-walking-${width}.png`,out).pathname});
   for(const selector of ['#mapBtn','#worldMoreBtn'])assert.ok(await page.$eval(selector,(button,minHeight)=>{const r=button.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return r.height>=minHeight&&r.top>=0&&r.bottom<=innerHeight&&(hit===button||button.contains(hit));},width<900?48:40),`${selector} must be reachable`);
   await press(page,'#mapBtn');await page.waitForSelector('#map:not([hidden])');assert.ok(await page.$('.map-list button'),'Explore has real rooms');await press(page,'.map-close');
   await press(page,'#worldMoreBtn');await page.waitForSelector('#worldMoreMenu:not([hidden])');await page.keyboard.press('Escape');assert.equal(await page.$eval('#worldMoreMenu',el=>el.hidden),true);assert.equal(await page.evaluate(()=>document.activeElement.id),'worldMoreBtn');
@@ -46,7 +47,7 @@ try{
   await page.$eval('#cExplode',e=>e.scrollIntoView({block:'center'}));await press(page,'#cExplode');await page.waitForFunction(()=>window.__museum.inspectionFocus?.piece?.ex>.99,{timeout:15000});
   const framing=await page.evaluate(()=>{const api=window.__museum,b=api.inspectionBounds(),r=api.inspectionViewport();api.camera.updateMatrixWorld(true);const points=[];for(const x of [b.min.x,b.max.x])for(const y of [b.min.y,b.max.y])for(const z of [b.min.z,b.max.z]){const p=api.camera.position.clone().set(x,y,z).project(api.camera);points.push({x:(p.x+1)*innerWidth/2,y:(1-p.y)*innerHeight/2});}return {region:r,points};});
   for(const point of framing.points)assert.ok(point.x>=framing.region.x-3&&point.x<=framing.region.x+framing.region.width+3&&point.y>=framing.region.y-3&&point.y<=framing.region.y+framing.region.height+3,`Museum explosion clips: ${JSON.stringify(framing)}`);
-  await page.screenshot({path:new URL(`museum-exploded-${width}.png`,out).pathname});await page.$eval('#cExplode',e=>e.scrollIntoView({block:'center'}));await press(page,'#cExplode');
+  await drawSoftwareFrame(page);await page.screenshot({path:new URL(`museum-exploded-${width}.png`,out).pathname});await page.$eval('#cExplode',e=>e.scrollIntoView({block:'center'}));await press(page,'#cExplode');
   await page.waitForFunction(()=>!window.__museum.inspectionFocus,{timeout:15000});
   await page.waitForFunction(()=>{const e=document.querySelector('#cardClose'),r=e.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2),top=document.querySelector('#card').getBoundingClientRect().top;const previous=window.__cardTestGeometry;window.__cardTestGeometry={top,at:previous?.top===top?previous.at:performance.now()};return performance.now()-window.__cardTestGeometry.at>200&&(hit===e||e.contains(hit));});
   await press(page,'#cardClose');await page.waitForFunction(()=>!document.body.classList.contains('card-open'));await page.waitForFunction(()=>{const e=document.querySelector('#worldMoreBtn'),r=e.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return hit===e||e.contains(hit);});await press(page,'#worldMoreBtn');await page.waitForSelector('#worldMoreMenu:not([hidden])');await press(page,'[data-world-home]');await page.waitForSelector('#konaPanel:not([hidden])');
@@ -55,7 +56,7 @@ try{
   await page.$eval('[data-home-world]',button=>button.scrollIntoView({block:'center'}));await press(page,'[data-home-world]');
   await page.waitForFunction(()=>document.querySelector('#konaPanel').hidden&&document.body.classList.contains('museum-open'));
   assert.equal(requests.filter(url=>url.endsWith('/app/hall.js')).length,1,'Return reuses the existing renderer');assert.deepEqual(errors,[]);
-  report.push({width,height,returning,...first,actualGallery:true,exhibitStory:true,exploreAndMenu:true,expandedBikeFits:true,homeUngated:true,status:'PASS'});await context.close();
+  report.push({width,height,returning,...first,actualGallery:true,exhibitStory:true,exploreAndMenu:true,expandedBikeFits:true,homeUngated:true,softwareRasterStepped:!!process.env.CI,status:'PASS'});await context.close();
  }
  const context=await browser.createBrowserContext(),page=await context.newPage();let rejectHall=true;
  await page.setViewport({width:390,height:844,deviceScaleFactor:process.env.CI?.35:1,isMobile:true,hasTouch:true});await page.setBypassServiceWorker(true);await page.setRequestInterception(true);
@@ -63,7 +64,7 @@ try{
  await page.goto(base,{waitUntil:'networkidle2'});await page.waitForFunction(()=>window.__konaShell);await press(page,'#entryWorld');
  await page.waitForFunction(()=>document.querySelector('[data-museum-status]').textContent.includes('could not open'));
  assert.ok(await page.$eval('#entryWorld',button=>!button.disabled));assert.equal(await page.$('[data-onboarding-question]'),null);
- rejectHall=false;await press(page,'#entryWorld');await page.waitForFunction(()=>document.body.classList.contains('walking')&&window.__museum?.renderer);
+ rejectHall=false;await press(page,'#entryWorld');await pauseSoftwareRaster(page);await page.waitForFunction(()=>document.body.classList.contains('walking')&&window.__museum?.renderer);
  report.push({journey:'Failed runtime download stays on landing with a working retry; retry enters actual museum',status:'PASS'});await context.close();
  console.log(JSON.stringify(report,null,2));
 }finally{fs.writeFileSync(new URL('museum-entry-report.json',out),JSON.stringify(report,null,2));await browser.close();}
