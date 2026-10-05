@@ -339,3 +339,9 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 @media(max-width:520px) and (min-height:760px){
  #intro.kona-entry .entry-product{margin-top:18px}
 }
+
+.entry-value-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.entry-value-map p{min-width:0;margin:0;padding:9px 10px;border-top:1px solid color-mix(in srgb,var(--brand-mist) 18%,transparent);display:grid;gap:3px}
+.entry-value-map b{color:var(--brand-discovery);font:800 9px/1.2 var(--brand-font-ui);letter-spacing:.08em;text-transform:uppercase}
+.entry-value-map span{color:color-mix(in srgb,var(--brand-mist) 82%,transparent);font:550 9px/1.35 var(--brand-font-ui)}
+@media(max-width:520px){.entry-value-map{grid-template-columns:1fr;margin-top:7px;gap:0}.entry-value-map p{grid-template-columns:52px minmax(0,1fr);align-items:start;padding:6px 0}.entry-value-map b,.entry-value-map span{font-size:9px}}
