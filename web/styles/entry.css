@@ -308,3 +308,34 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-global-note{max-width:36rem;margin:14px 0 0;color:color-mix(in srgb,var(--brand-mist) 88%,transparent);font:550 11px/1.55 var(--brand-font-ui,var(--sans))}
 #intro.kona-entry .entry-global-note strong{color:var(--brand-mist)}
 #intro.kona-entry .entry-legal-note{max-width:38rem;margin:8px 0 0;color:color-mix(in srgb,var(--brand-mist) 62%,transparent);font:500 9px/1.45 var(--brand-font-ui,var(--sans))}
+
+/* Phone landing: value first. The product stage belongs below the first decision, not inside it. */
+@media(max-width:520px){
+ #intro.kona-entry{overflow-x:hidden;padding-inline:max(14px,env(safe-area-inset-left),env(safe-area-inset-right))}
+ #intro.kona-entry .intro-inner{max-width:100%;min-width:0}
+ #intro.kona-entry .entry-copy{min-width:0}
+ #intro.kona-entry .entry-mast{align-items:flex-start;margin-bottom:10px}
+ #intro.kona-entry .eyebrow{font-size:10px;flex:0 0 auto}
+ #intro.kona-entry .entry-event{font-size:7px;line-height:1.35;max-width:19ch;overflow-wrap:anywhere}
+ #intro.kona-entry h1{font-size:clamp(36px,10.5vw,44px);line-height:.9;max-width:11.5ch;margin-bottom:9px}
+ #intro.kona-entry .lede{font-size:13px;line-height:1.38;max-width:31ch}
+ #intro.kona-entry .entry-actions{margin-top:11px}
+ #intro.kona-entry #buildSelf{width:100%;min-height:54px;justify-content:space-between;padding-inline:18px}
+ #intro.kona-entry .entry-trust{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;margin-top:7px;font-size:9px;line-height:1.3}
+ #intro.kona-entry .entry-trust>span{min-width:0}
+ #intro.kona-entry .entry-trust #entryInstall{min-height:40px;padding:0;justify-self:start}
+ #intro.kona-entry .entry-trust a{min-height:40px;display:inline-flex;align-items:center}
+ #intro.kona-entry .entry-story-note,#intro.kona-entry .entry-depth-note,#intro.kona-entry .entry-global-note,#intro.kona-entry .entry-legal-note{font-size:9px;line-height:1.35;margin-top:6px}
+ #intro.kona-entry .entry-global-note,#intro.kona-entry .entry-legal-note{display:none}
+ #intro.kona-entry .entry-product{margin-top:16px;padding-top:12px}
+ #intro.kona-entry .entry-product-stage{min-height:190px}
+ #intro.kona-entry .entry-stage-bike{top:22px;bottom:48px}
+ #intro.kona-entry .entry-stage-caption small{font-size:7.5px}
+ #intro.kona-entry .entry-stage-caption b{font-size:19px}
+ #intro.kona-entry .entry-product-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #intro.kona-entry .entry-product-nav span{min-width:0;min-height:40px;padding-inline:4px;font-size:8.5px;white-space:normal;text-align:center;line-height:1.15}
+ #intro.kona-entry .entry-race-clock{gap:4px 10px}
+}
+@media(max-width:520px) and (min-height:760px){
+ #intro.kona-entry .entry-product{margin-top:18px}
+}
