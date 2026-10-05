@@ -299,3 +299,12 @@ html{scroll-padding-top:92px}
 .promo-editorial-bridge strong{font:400 clamp(24px,4vw,38px)/1 var(--brand-font-editorial)}
 .promo-editorial-bridge>span{font:400 34px/1 var(--brand-font-editorial);color:var(--brand-action)}
 @media(max-width:640px){.promo-editorial-bridge{padding:18px;align-items:flex-end}.promo-editorial-bridge strong{font-size:28px}}
+
+
+/* Embedded live-app previews are viewport-contained artifacts, never page geometry. */
+.real-tour-device,.real-tour-stage,.start-live-card,.start-live-stage{min-width:0;max-width:100%;contain:layout paint}
+.real-tour-stage iframe,.start-live-stage iframe{max-width:none!important;pointer-events:none!important}
+@media(max-width:560px){
+ .real-tour-stage,.start-live-stage{width:100%;max-width:100%;overflow:hidden;isolation:isolate}
+ .real-tour-device,.start-live-card{width:100%;max-width:100%;overflow:hidden}
+}
