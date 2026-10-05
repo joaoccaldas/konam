@@ -72,6 +72,8 @@ header>*{pointer-events:auto}
 .brand b{font-size:13px;font-weight:800;letter-spacing:.34em}
 .brand small{font-size:10px;letter-spacing:.14em;color:var(--mute);text-transform:uppercase}
 .hr{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+/* the global Why Kona / User Studio chips (system.css .global-kona-links, fixed top-right, ~220px) must never sit on the toolbar */
+@media(min-width:761px){.hr{margin-right:calc(232px + max(0px,env(safe-area-inset-right)))}}
 .pill{height:38px;padding:0 14px;border-radius:999px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.02em;transition:.2s}
 .pill:hover{border-color:rgba(10,132,255,.45)}
 .pill.active{background:var(--ink);color:var(--bg);border-color:transparent}

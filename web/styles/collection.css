@@ -89,3 +89,5 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{o
 
 /* shared KONA interaction contract */
 button,a,[role="button"]{min-height:var(--brand-touch,48px)}
+/* phones: the header clears the fixed global chips (system.css .global-kona-links) */
+@media(max-width:760px){header{padding-top:calc(max(14px,env(safe-area-inset-top)) + var(--brand-touch) + 12px)}}
