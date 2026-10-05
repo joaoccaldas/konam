@@ -309,7 +309,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-promise span{color:color-mix(in srgb,var(--brand-mist) 86%,transparent);font:500 13px/1.45 var(--brand-font-ui)}
 #intro.kona-entry .entry-promise strong{display:block;color:var(--brand-mist);font:700 15px/1.3 var(--brand-font-ui);margin-bottom:2px}
 #intro.kona-entry .entry-links{display:flex;flex-wrap:wrap;align-items:center;gap:0 14px;margin-top:6px}
-#intro.kona-entry .entry-links a,#intro.kona-entry .entry-links .btn.text{min-height:44px;display:inline-flex;align-items:center;padding:0;border:0;background:transparent;color:color-mix(in srgb,var(--brand-mist) 78%,transparent);font:600 12px/1.2 var(--brand-font-ui);text-decoration:underline;text-underline-offset:4px}
+#intro.kona-entry .entry-links a,#intro.kona-entry .entry-links .btn.text{min-height:48px;display:inline-flex;align-items:center;padding:0;border:0;background:transparent;color:color-mix(in srgb,var(--brand-mist) 78%,transparent);font:600 12px/1.2 var(--brand-font-ui);text-decoration:underline;text-underline-offset:4px}
 @media(max-width:899px){
   #intro.kona-entry .entry-promise{margin-top:12px;gap:0}
   #intro.kona-entry .entry-promise li{grid-template-columns:4.2rem 1fr;gap:10px;padding:9px 0}
@@ -323,3 +323,4 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 @media(max-width:899px){#intro.kona-entry .entry-peek{width:100%}}
 /* short landscape phones: the lede already says what Kona.m does; keep both ways in above the fold */
 @media(orientation:landscape) and (max-height:520px){#intro.kona-entry .entry-promise{display:none}#intro.kona-entry .entry-peek{width:auto}}
+#intro.kona-entry .entry-story-note a{display:inline-flex;align-items:center;min-height:48px}   /* phone touch target */
