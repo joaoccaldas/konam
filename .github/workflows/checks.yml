@@ -47,6 +47,7 @@ jobs:
           for i in {1..20}; do curl -fsS http://127.0.0.1:8744/ >/dev/null && break; sleep 0.5; done
           CHROME_PATH=/usr/bin/google-chrome node web/audit-remediation-browser.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/p0-journey-smoke.mjs http://127.0.0.1:8744/
+          CHROME_PATH=/usr/bin/google-chrome node web/native-entry-layout-browser.mjs http://127.0.0.1:8744/ --web
           CHROME_PATH=/usr/bin/google-chrome node web/studio-launch-audit.mjs http://127.0.0.1:8744
           CHROME_PATH=/usr/bin/google-chrome node web/launch-regression-browser.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/install-launch-audit.mjs http://127.0.0.1:8744
