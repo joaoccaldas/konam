@@ -133,7 +133,7 @@ export function buildLaidlowNice(ctx) {
   box(steel, .09, .06, RD - .8, RAIL, .95, CZ); box(steel, .06, .04, RD - .8, RAIL, .35, CZ);
   // potted palms along the Promenade: the museum's canonical kona-palm prop (museum/world/decorations.json)
   const sway = [];
-  for (const g of decorateRoom([{ prop: 'kona-palm', x: 28.9, z: -4.9, height: 2.6, seed: 2 }, { prop: 'kona-palm', x: 23.9, z: -16.9, height: 2.4, seed: 5 },
+  for (const g of decorateRoom([{ prop: 'kona-palm', x: 28.9, z: -4.9, height: 2.6, seed: 2 }, { prop: 'kona-palm', x: 32.3, z: -16.5, height: 2.4, seed: 5 },
     { prop: 'kona-palm', x: 8.3, z: -4.8, height: 2.2, seed: 7 }, { prop: 'kona-palm', x: 31.6, z: -10.9, height: 2.9, seed: 11 }], { group, lite, obstacles, sway, basaltTex: ctx.basaltTex })) g.userData.prop = 'kona-palm';   // the factory adds to the group
 
   // ------------------------------------------------------------ the blue chairs of the Promenade, facing the sea (one InstancedMesh)
