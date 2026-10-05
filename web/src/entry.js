@@ -22,6 +22,10 @@ const setEntryMode = mode => {
   document.body.classList.remove('entry-landing','entry-quest','entry-app');
   document.body.classList.add('entry-' + mode);
   document.body.dataset.entryMode = mode;
+  // Keep the shared shortcut in document flow while the entry is visible.
+  const why = document.querySelector('.kona-why-global');
+  const whyHost = document.getElementById(mode === 'app' ? 'konaShell' : 'entryWhy');
+  if (why && whyHost && why.parentElement !== whyHost) whyHost.prepend(why);
 };
 const profile = createProfile();
 window.__konaProfile = profile;
