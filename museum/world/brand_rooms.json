@@ -1,12 +1,12 @@
 {
  "schema_version": 1,
- "note": "Production brand rooms. One descriptor per themed room; the landing builds each through the data-driven engine (web/src/engine/roomscene.js). A room is data, not code — add a brand by adding an entry here plus a GLB under assets/. No brand-specific runtime allowed.",
+ "note": "Production brand rooms. One descriptor per themed room; the landing builds each through the data-driven engine (web/src/engine/roomscene.js). A room is data, not code \u2014 add a brand by adding an entry here plus a GLB under assets/. No brand-specific runtime allowed.",
  "rooms": [
   {
    "id": "nike-running",
    "name": "Nike Running Lab",
    "kicker": "The shoe under the marathon leg",
-   "story": "Footwear as engineering: the Alphafly 3 reconstructed from Nike's published specification — ZoomX foam, a full-length carbon Flyplate and two forefoot Air Zoom units. An independent study.",
+   "story": "Footwear as engineering: the Alphafly 3 reconstructed from Nike's published specification \u2014 ZoomX foam, a full-length carbon Flyplate and two forefoot Air Zoom units. An independent study.",
    "kind": "brand",
    "theme": {
     "wall": "#f0eee9",
@@ -111,7 +111,7 @@
    "id": "breitling",
    "name": "Breitling \u00b7 Endurance Pro",
    "kicker": "Independent chronograph study",
-   "story": "A monumental original chronograph, a 2021\u2192Kona-2026 timeline, and swim / bike / run portals. Independent study; not affiliated with or endorsed by Breitling. No logo, wordmark or product photograph is used.",
+   "story": "A monumental original chronograph under one stage light, a 17-hour race-clock dial, and swim / bike / run portals onto the Pacific. Independent study; not affiliated with or endorsed by Breitling. No logo, wordmark or product photograph is used.",
    "kind": "brand",
    "theme": {
     "wall": "#0d0f13",
@@ -186,7 +186,121 @@
       "share"
      ]
     }
-   ]
+   ],
+   "mood": {
+    "exposure": 0.82,
+    "hemi": 0.05,
+    "sun": 0.03,
+    "fill": 0.8,
+    "spots": [
+     {
+      "x": 30.5,
+      "z": -24.0,
+      "color": "#fff0e2",
+      "i": 60,
+      "angle": 0.3,
+      "dist": 9,
+      "shadow": true,
+      "ty": 1.0,
+      "shaftOpacity": 0.15
+     },
+     {
+      "x": 30.5,
+      "z": -28.4,
+      "y": 5.15,
+      "ty": 2.2,
+      "color": "#cfdcff",
+      "i": 14,
+      "angle": 0.55,
+      "dist": 8,
+      "shaft": false
+     }
+    ],
+    "haze": {
+     "n": 140,
+     "color": "#cfdcff",
+     "opacity": 0.45,
+     "size": 0.02
+    },
+    "monument": {
+     "kind": "race-clock",
+     "x": 30.5,
+     "y": 3.05,
+     "r": 1.8,
+     "hours": 17,
+     "title": "RACE CLOCK \u00b7 17 HOURS",
+     "subtitle": "from the gun to the last finisher",
+     "glow": "#9fb8ff",
+     "info": {
+      "eyebrow": "RACE CLOCK",
+      "title": "Seventeen hours.",
+      "sub": "The full-distance cut-off",
+      "text": "An IRONMAN gives every athlete 17 hours from their swim start to finish. The dial counts that day; the red hand ticks real seconds. Original KONA.m dial, not a Breitling design.",
+      "source": "https://en.wikipedia.org/wiki/Ironman_Triathlon"
+     }
+    },
+    "portals": [
+     {
+      "x": 35.9,
+      "z": -20.6,
+      "rotY": -1.5708,
+      "label": "SWIM",
+      "sub": "3.86 km \u00b7 2.4 miles",
+      "color": "#5fd8d3",
+      "info": {
+       "eyebrow": "PORTAL \u00b7 SWIM",
+       "title": "3.86 km",
+       "sub": "2.4 miles",
+       "text": "The full-distance swim. Through the glass, the Pacific it is swum in at Kona.",
+       "source": "https://en.wikipedia.org/wiki/Ironman_Triathlon"
+      }
+     },
+     {
+      "x": 35.9,
+      "z": -24.0,
+      "rotY": -1.5708,
+      "label": "BIKE",
+      "sub": "180.25 km \u00b7 112 miles",
+      "color": "#ff6427",
+      "info": {
+       "eyebrow": "PORTAL \u00b7 BIKE",
+       "title": "180.25 km",
+       "sub": "112 miles",
+       "text": "The full-distance bike. At Kona it runs out along the Queen K and back.",
+       "source": "https://en.wikipedia.org/wiki/Ironman_Triathlon"
+      }
+     },
+     {
+      "x": 35.9,
+      "z": -27.4,
+      "rotY": -1.5708,
+      "label": "RUN",
+      "sub": "42.2 km \u00b7 26.2 miles",
+      "color": "#c9a6db",
+      "info": {
+       "eyebrow": "PORTAL \u00b7 RUN",
+       "title": "42.2 km",
+       "sub": "26.2 miles",
+       "text": "A full marathon to finish, after everything else.",
+       "source": "https://en.wikipedia.org/wiki/Ironman_Triathlon"
+      }
+     }
+    ],
+    "env": 0.08,
+    "floor": "#0d0e11",
+    "fog": {
+     "near": 4,
+     "far": 30,
+     "color": "#07080b"
+    },
+    "dais": {
+     "x": 30.5,
+     "z": -24.0,
+     "r": 1.25,
+     "color": "#c8102e"
+    }
+   },
+   "wordmark": false
   }
  ]
 }

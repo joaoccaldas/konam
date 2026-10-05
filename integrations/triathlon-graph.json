@@ -9,8 +9,8 @@
     "remote_writes": false
   },
   "counts": {
-    "nodes": 66,
-    "edges": 49
+    "nodes": 67,
+    "edges": 50
   },
   "nodes": [
     {
@@ -397,6 +397,17 @@
       ],
       "product_type": "bike",
       "representation": "concept"
+    },
+    {
+      "id": "atlas-studio-nor3-disc-tri",
+      "kind": "product",
+      "public": true,
+      "label": "Winter lane tri study",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "product_type": "bike",
+      "representation": "provisional"
     },
     {
       "id": "edition-film-aero-glam",
@@ -957,6 +968,15 @@
       "relationship": "manufactured_by",
       "to": "brand-studio",
       "evidence": "published",
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ]
+    },
+    {
+      "from": "atlas-studio-nor3-disc-tri",
+      "relationship": "manufactured_by",
+      "to": "brand-type-study",
+      "evidence": "provisional",
       "source_records": [
         "museum/atlas/bikes.json"
       ]

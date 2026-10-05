@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "room_id": "norwegian-engine",
+  "variant": "nor3-winter",
+  "review_route": "?reviewRoom=nor3-winter",
+  "runtime": "web/src/nor3-winter.js (host renderer: web/src/landing.js)",
+  "policy": "reuse-first",
+  "assets": [
+    {
+      "asset_id": "lane-bike-studio-nor3-disc-tri",
+      "kind": "bike",
+      "decision": "ADAPT",
+      "why": "The athletes do not ride Canyon (Giant Trinity for Blummenfelt and Iden, Pinarello for Stornes — sourced in the facts file). Replicating a sponsor's bike needs that brand's approval, so the lanes use an unbranded KONA.m study built by the existing parametric generator.",
+      "source": "museum/atlas/bikes.json#studio-nor3-disc-tri",
+      "generator": "blender/atlas_build.py (detail: hero) + tools/pack-glb.mjs",
+      "runtime_ref": [
+        "assets/atlas/studio-nor3-disc-tri/bike.glb",
+        "assets/atlas/studio-nor3-disc-tri/bike-lite.glb"
+      ],
+      "sha256": "be48b8ac02f12b56d6c8cf611ff8dfe05d2036c902b3e14038d5fc33c7a78cba",
+      "tris": {
+        "hero": 39348,
+        "lite": 8472
+      },
+      "runtime_notes": "parts merged per material and instanced ×3 (one draw per material for the trio); Kona × Norway liveries painted in the shader, selected per instance",
+      "rights": "original-kona-m",
+      "representation": "concept",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "kona-winter-window-plate",
+      "kind": "backdrop-image",
+      "decision": "CREATE",
+      "why_not_reuse": "no existing panorama combines a Norwegian winter with a Kona coast; the room's concept is that transition",
+      "source": "generated",
+      "generator": "Higgsfield gpt_image_2_5, 21:9, job b9dd1bab-017c-4a3a-86e3-8a3b8889b613 (no people, no text, no logos)",
+      "runtime_ref": [
+        "assets/rooms/nor3-winter/kona-winter-plate-2048.webp",
+        "assets/rooms/nor3-winter/kona-winter-plate-1024.webp"
+      ],
+      "derivation": "1344×576 source, Lanczos resize to 2048 / 1024, WebP q86 / q82",
+      "sha256": {
+        "2048": "8bdd5bbee911b2a7721e358c35fee52012e381dd190628bab58dbb22e6d1da96",
+        "1024": "cca734497d16da407b20712d1e9877cddb59a632fa3e4b32d565ccccccebd67a"
+      },
+      "rights": "generated-unbranded-rights-review",
+      "truth": "imagined landscape (snow on palms is deliberate); not a photograph of any real place",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "drum-fan",
+      "kind": "prop",
+      "decision": "REUSE",
+      "source_ref": "world/konam/candidates/beast-cave-asset-manifest-v1.json",
+      "runtime_ref": "assets/rooms/beast-cave/hf-drum-fan.glb",
+      "runtime_notes": "instanced ×3; skipped on phones for the triangle budget",
+      "rights": "generated-unbranded-rights-review",
+      "lifecycle": "candidate"
+    }
+  ],
+  "procedural": "shell, wet-stone floor (canvas colour/roughness + Sobel normal map), glass wall, terrace, palms, panels, platforms, towels (terry normal + sheen), plunge water shader, fire pit + flame/ember shaders, lounge, signage — all original KONA.m code",
+  "constraints": {
+    "copied_third_party_ui": false,
+    "copied_race_photography": false,
+    "athlete_likeness": false,
+    "official_partner_marks": false,
+    "athlete_specific_equipment_claims": false
+  },
+  "facts": "pitch/norwegian-trio/trio-facts-v1.json (verify-before-outreach)",
+  "performance_measured_20261004": {
+    "desktop_1440x900": {
+      "room_meshes": 90,
+      "room_triangles": 161250,
+      "scene_calls": 336,
+      "errors": 0
+    },
+    "phone_390x844": {
+      "room_meshes": 89,
+      "room_triangles": 62722,
+      "scene_calls": 91,
+      "errors": 0
+    },
+    "budget": "world/konam/rooms/norwegian-engine.room.json → mobile ≤ 95 calls / 180k triangles; desktop ≤ 180 calls / 450k triangles"
+  }
+}

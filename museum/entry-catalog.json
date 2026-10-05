@@ -205,6 +205,13 @@
    "image": "assets/entry/catalog/atlas-studio-gravel-aero.webp"
   },
   {
+   "id": "atlas-studio-nor3-disc-tri",
+   "label": "Winter lane tri study",
+   "brand": "Type study",
+   "year": 2026,
+   "image": "assets/entry/catalog/atlas-studio-nor3-disc-tri.webp"
+  },
+  {
    "id": "edition-film-aero-glam",
    "label": "Alien Glam",
    "brand": "Canyon",

@@ -80,12 +80,12 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
  .hub-drawer{left:auto;right:24px;top:104px;bottom:24px;width:min(480px,45vw);max-height:none}
 }
 @media(max-height:550px) and (min-width:600px){
- .race-self-experience{grid-template-columns:180px minmax(0,1fr) 190px;grid-template-rows:52px minmax(280px,1fr);gap:0 12px;min-height:380px}
+ .race-self-experience{grid-template-columns:180px minmax(0,1fr) 190px;grid-template-rows:48px minmax(280px,1fr);gap:0 12px;min-height:380px}
  .studio-heading{grid-column:1/-1}.studio-destinations{grid-column:1;grid-row:2}.race-self-stage-wrap{grid-column:2;grid-row:2}.race-self-controls{grid-column:3;grid-row:2}
  .studio-destinations,.race-self-controls{grid-template-columns:1fr;gap:4px;border:0;overflow-y:auto;overflow-x:hidden;align-content:start}
  .studio-destinations>button,.race-self-controls>button,.race-self-controls>a{flex-direction:row;text-align:left;min-height:48px;padding:6px;gap:8px}
  .studio-menu-label{margin:0}.studio-menu-note,.race-self-identity p,.race-self-identity small,.studio-stage-caption small{display:none}
- .race-self-identity{padding-top:12px}.race-self-identity h1{font-size:28px}.studio-stage-caption{padding:0}.race-self-controls mark{display:inline-block;margin:0 0 0 4px}
+ .race-self-identity{padding-top:2px}.race-self-identity h1{font-size:22px;line-height:1.05}.studio-stage-caption{padding:0}.race-self-controls mark{display:inline-block;margin:0 0 0 4px}
 }
 @media(prefers-reduced-motion:reduce){.race-self-experience *{transition:none}}
 
@@ -150,3 +150,8 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 
 .studio-home{color:var(--stage-ink);min-width:48px;white-space:nowrap}
 @media(max-width:340px){.studio-wordmark span{display:none}.studio-heading{gap:8px}}
+/* short landscape phones: the journey sits in a 180px side column, so it stays one column (the 3-up phone grid above stacked labels letter by letter) */
+@media(max-height:550px) and (min-width:600px){
+  .studio-destinations{grid-template-columns:1fr;gap:4px;padding:0;overflow-y:auto;align-content:start}
+  .studio-destinations>button{min-height:48px}
+}

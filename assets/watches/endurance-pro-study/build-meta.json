@@ -1,0 +1,67 @@
+{
+ "schema_version": 1,
+ "id": "endurance-pro-study",
+ "type": "watch",
+ "brand": "Breitling (subject)",
+ "model": "Endurance Pro family \u2014 geometry study",
+ "representation": "geometry-study",
+ "source_records": [
+  "pitch/breitling-kona/collection-v1.json"
+ ],
+ "generator": "blender",
+ "generator_script": "blender/watch_build.py",
+ "notes": "Public specification only (44 mm, 12.5 mm, compass bezel, three-counter quartz chronograph, 22/20 mm strap). No logo, IRONMAN mark or product photograph. Movement is illustrative.",
+ "lods": {
+  "watch.glb": {
+   "tris": 16576,
+   "bytes": 156488,
+   "objects": 48,
+   "semantic_parts": [
+    "bezel",
+    "buckle",
+    "case",
+    "caseback",
+    "crown",
+    "crystal",
+    "dial",
+    "hands",
+    "movement",
+    "pusher",
+    "strap"
+   ]
+  },
+  "watch-lite.glb": {
+   "tris": 6148,
+   "bytes": 71184,
+   "objects": 33,
+   "semantic_parts": [
+    "bezel",
+    "buckle",
+    "case",
+    "caseback",
+    "crown",
+    "crystal",
+    "dial",
+    "hands",
+    "pusher",
+    "strap"
+   ]
+  }
+ },
+ "tris": 16576,
+ "bytes": 156488,
+ "semantic_parts": [
+  "bezel",
+  "buckle",
+  "case",
+  "caseback",
+  "crown",
+  "crystal",
+  "dial",
+  "hands",
+  "movement",
+  "pusher",
+  "strap"
+ ],
+ "compression": "EXT_meshopt_compression"
+}

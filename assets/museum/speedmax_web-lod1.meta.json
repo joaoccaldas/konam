@@ -1,0 +1,13 @@
+{
+ "asset": "assets/museum/speedmax_web-lod1.glb",
+ "kind": "derived-runtime-lod",
+ "derived_from": "assets/museum/speedmax_web.glb",
+ "rights": "inherits the source asset's rights and provenance; no new geometry or marks",
+ "pipeline": "gltf-transform weld -> simplify --ratio 0.05 --error 0.003 -> meshopt --level medium (node tools/pack-glb.mjs --lod)",
+ "triangles": 52427,
+ "source_triangles": 509624,
+ "bytes": 434212,
+ "materials": 20,
+ "nodes": 61,
+ "use": "beyond LOD_NEAR only (web/src/landing.js); never for inspection, explode or hero shots"
+}

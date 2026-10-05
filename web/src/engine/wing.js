@@ -97,6 +97,25 @@ function compact(root) {
 
 export function applySkin(inst, skin) { if (!inst?.paint || !skin) return; paintBike(inst.paint, skin); inst.skin = skin; }
 
+// One museum painting in its frame, with a wall wash and a caption: the wings and the athlete rooms hang art the same way.
+// p: an entry of museum/art/paintings.json. Returns { g, fr, pic, w, h }; the caller positions g and registers picks.
+export function framedPainting(p, { frameMat, texLoader, wash, lettering, FONT, SERIF, width = 1.75, captionInk = '#12181d', captionMuted = '#5f6a72' }) {
+  const aspect = p.height / p.width, wpx = aspect > 1 ? 1.45 / aspect * 1.25 * width / 1.75 : width, hpx = wpx * aspect;
+  const g = new THREE.Group();
+  const fr = new THREE.Mesh(new THREE.BoxGeometry(wpx + .14, hpx + .14, .05), frameMat); g.add(fr);
+  const mat = new THREE.MeshBasicMaterial({ color: '#d8d0c4' });
+  const pic = new THREE.Mesh(new THREE.PlaneGeometry(wpx, hpx), mat); pic.position.z = .03; g.add(pic);
+  texLoader.load(`assets/art/paintings/${p.file}`, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; mat.map = t; mat.color.set('#ffffff'); mat.needsUpdate = true; });
+  if (wash) { const wl = new THREE.Mesh(new THREE.PlaneGeometry(wpx + 1.1, hpx + 1.3), new THREE.MeshBasicMaterial({ map: wash, transparent: true, opacity: .35, depthWrite: false, blending: THREE.AdditiveBlending }));
+    wl.position.set(0, .15, .004); g.add(wl); }
+  const cap = lettering(1.6, .28, cc => {
+    cc.fillStyle = captionInk; cc.font = `700 .07px ${FONT}`; cc.fillText(p.title.toUpperCase(), 0, .1);
+    cc.fillStyle = captionMuted; cc.font = `italic 400 .075px ${SERIF}`; cc.fillText(p.provenance?.kind === 'ai-generated' ? 'AI-generated for the museum · Higgsfield' : (p.credit || ''), 0, .21);
+  }, 512);
+  cap.position.set(0, -hpx / 2 - .28, .03); g.add(cap);
+  return { g, fr, pic, w: wpx, h: hpx };
+}
+
 // ---------------------------------------------------------------- the builder
 export function buildWings(ctx, { wings, bikes: BIKES = [], extraRefs = [], paintings: PAINT = [], sculptures: SCULPT = [] }) {
   const { scene, lettering, FONT, SERIF, lite, pickables, obstacles, contactShadow } = ctx;
@@ -242,19 +261,8 @@ export function buildWings(ctx, { wings, bikes: BIKES = [], extraRefs = [], pain
       // paintings, each with a picture light and a label
       for (const s of L.paintings) {
         const p = paintingById[s.id]; if (!p) { console.warn('painting not in catalogue', s.id); continue; }
-        const aspect = p.height / p.width, wpx = aspect > 1 ? 1.45 / aspect * 1.25 : 1.75, hpx = wpx * aspect;
-        const g = new THREE.Group(); g.position.set(s.x, Y + 1.9, s.z); g.rotation.y = s.ry; group.add(g);
-        const fr = new THREE.Mesh(new THREE.BoxGeometry(wpx + .14, hpx + .14, .05), frameMat); g.add(fr);
-        const mat = new THREE.MeshBasicMaterial({ color: '#d8d0c4' });
-        const pic = new THREE.Mesh(new THREE.PlaneGeometry(wpx, hpx), mat); pic.position.z = .03; g.add(pic);
-        texLoader.load(`assets/art/paintings/${p.file}`, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; mat.map = t; mat.color.set('#ffffff'); mat.needsUpdate = true; });
-        const wl = new THREE.Mesh(new THREE.PlaneGeometry(wpx + 1.1, hpx + 1.3), new THREE.MeshBasicMaterial({ map: wash, transparent: true, opacity: .35, depthWrite: false, blending: THREE.AdditiveBlending }));
-        wl.position.set(0, .15, .004); g.add(wl);
-        const cap = lettering(1.6, .28, cc => {
-          cc.fillStyle = '#12181d'; cc.font = `700 .07px ${FONT}`; cc.fillText(p.title.toUpperCase(), 0, .1);
-          cc.fillStyle = '#5f6a72'; cc.font = `italic 400 .075px ${SERIF}`; cc.fillText(p.provenance?.kind === 'ai-generated' ? 'AI-generated for the museum · Higgsfield' : (p.credit || ''), 0, .21);
-        }, 512);
-        cap.position.set(0, -hpx / 2 - .28, .03); g.add(cap);
+        const { g, fr, pic } = framedPainting(p, { frameMat, texLoader, wash, lettering, FONT, SERIF });
+        g.position.set(s.x, Y + 1.9, s.z); g.rotation.y = s.ry; group.add(g);
         const item = { kind: 'painting', data: p, room, pos: g.position.clone(), view: g.position.clone().add(new THREE.Vector3(Math.sin(s.ry) * 2.4, 0, Math.cos(s.ry) * 2.4)).setY(Y), face: g.position.clone() };
         pic.userData.wingArt = item; fr.userData.wingArt = item; pickables.push(pic, fr);
         paintings.push(item); room.art.push(item);

@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "id": "breitling-kona",
+  "name": "BREITLING × KONA · The Finish-Line Atelier",
+  "parent_room": "room-027",
+  "classification": {
+    "type": "partner-room",
+    "status": "candidate",
+    "public": false
+  },
+  "implementation": {
+    "kind": "native-room",
+    "module": "web/src/breitling-kona.js",
+    "review_route": "?reviewRoom=breitling-kona"
+  },
+  "story": {
+    "concept": "Every second of Kona, measured: a 2.2 m chronograph taken apart over a molten dais, six IRONMAN® editions in their own colours, the island at sunset.",
+    "editorial_status": "original-copy",
+    "pitch": "docs/evidence/breitling-kona-20261004/CONCEPT.md"
+  },
+  "spatial": {
+    "units": "meters",
+    "footprint": "review footprint (BROOM)",
+    "zones": [
+      "threshold",
+      "monument",
+      "race-clock-ring",
+      "collection",
+      "sunset-letterbox"
+    ],
+    "decor": "world/konam/rooms/breitling-kona.decor.json"
+  },
+  "assets": {
+    "manifest": "world/konam/candidates/breitling-kona-asset-manifest-v1.json",
+    "placements": "world/konam/rooms/breitling-kona.decor.json",
+    "bike_pipeline": "museum/bike.schema.json"
+  },
+  "subjects": [
+    {
+      "subject_id": "breitling",
+      "display_name": "Breitling",
+      "subject_type": "brand",
+      "room_role": "partner",
+      "claim_status": "sourced-product-facts",
+      "likeness_status": "not-used",
+      "image_rights_status": "not-used",
+      "brand_association_status": "client-request-reported-by-creator",
+      "public_release_status": "rights-review",
+      "equipment_claims": []
+    }
+  ],
+  "interactions": {
+    "authority": "KONA.m host pickables/cards/dialogs",
+    "room_specific": [
+      "monument-explode",
+      "edition-cards",
+      "product-links"
+    ]
+  },
+  "performance": {
+    "mobile": {
+      "target_fps": 30,
+      "max_room_draw_calls": 110,
+      "max_room_triangles": 220000,
+      "max_texture_edge": 1024,
+      "max_dpr": 1.5,
+      "particle_density": 34,
+      "transmission": "reduced",
+      "shadow_policy": "host-budget",
+      "lod_policy": "LOD1/micro-props-optional"
+    },
+    "tablet": {
+      "target_fps": 45,
+      "max_room_draw_calls": 149,
+      "max_room_triangles": 341000,
+      "max_texture_edge": 2048,
+      "max_dpr": 1.75,
+      "particle_density": 54,
+      "transmission": "medium",
+      "shadow_policy": "host-budget",
+      "lod_policy": "LOD0/LOD1"
+    },
+    "desktop": {
+      "target_fps": 60,
+      "max_room_draw_calls": 190,
+      "max_room_triangles": 450000,
+      "max_texture_edge": 2048,
+      "max_dpr": 2,
+      "particle_density": 78,
+      "transmission": "full",
+      "shadow_policy": "host-budget",
+      "lod_policy": "LOD0"
+    }
+  },
+  "provenance": {
+    "concept": "KONA.m editorial concept for a reported client request",
+    "watch": "blender/watch_build.py geometry study from the public specification",
+    "facts": "pitch/breitling-kona/collection-v1.json"
+  },
+  "rights": {
+    "endorsement": false,
+    "partnership": "reported-not-recorded",
+    "marks_allowed": false,
+    "equipment_claims_require_sources": true,
+    "brand_marks_require_review": true
+  },
+  "release": {
+    "evidence_path": "docs/evidence/breitling-kona-20261004/",
+    "required_gates": [
+      "schema",
+      "architecture",
+      "assets",
+      "desktop-visual",
+      "mobile-portrait",
+      "mobile-landscape",
+      "interaction",
+      "performance",
+      "truth",
+      "rights"
+    ],
+    "public_wiring": false
+  },
+  "brand": {
+    "authority": "docs/BRAND_SYSTEM.md",
+    "tokens": "brand/tokens.css",
+    "ui": "global",
+    "typography": "global",
+    "tone": "Kona.m",
+    "theme_scope": [
+      "environment",
+      "story",
+      "props",
+      "materials",
+      "sound",
+      "local-lighting"
+    ]
+  }
+}

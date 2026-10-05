@@ -31,8 +31,7 @@ code,kbd,pre,samp{font-family:var(--mono)}
 .card-media figcaption{font-size:var(--fs-caption)}
 /* one eyebrow / title / body everywhere */
 .t-eyebrow{font:700 var(--fs-eyebrow)/1.3 var(--sans);letter-spacing:var(--ls-eyebrow);text-transform:uppercase}
-.t-title{font-family:var(--serif);font-weight:400;font-size:var(--fs-title);line-height:1}
-.t-body{font-size:var(--fs-body);line-height:var(--lh-body)}
+/* .t-title / .t-body: brand/typography.css owns them (a copy here overrode the brand scale on About/Promo) */
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 
 /* The story is the front door. The hall canvas stays out of the first paint. */
@@ -66,7 +65,8 @@ body:has(#konaShell):not(.museum-open) > #fallback{display:none}
   border:0;border-top:1px solid var(--kona-line);border-radius:0;background:color-mix(in srgb,var(--kona-surface-strong) 94%,transparent);
   backdrop-filter:blur(22px) saturate(1.08);-webkit-backdrop-filter:blur(22px) saturate(1.08);box-shadow:0 -14px 34px -30px rgba(0,0,0,.55)
 }
-.kona-panel-open .kona-bottom-nav{display:grid}\n.kona-bottom-nav [hidden],.kona-user-menu[hidden]{display:none!important}
+.kona-panel-open .kona-bottom-nav{display:grid}
+.kona-bottom-nav [hidden],.kona-user-menu[hidden]{display:none!important}
 .kona-bottom-nav button,.kona-bottom-nav a{
   min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
   position:relative;color:var(--kona-muted);border:0;border-radius:0;appearance:none;background:transparent;font:650 10px/1 var(--sans);letter-spacing:.01em;text-decoration:none;touch-action:manipulation
@@ -438,7 +438,7 @@ body.return-moment-open{overflow:hidden}
 @media(orientation:landscape) and (max-height:520px){.kona-tour{width:300px;padding:14px}.kona-tour h3{font-size:24px}.kona-tour p{font-size:12px}.kona-tour-actions{margin-top:10px;gap:6px}}
 
 /* Launch accessibility gate: interactive text controls remain finger-sized without changing visual hierarchy. */
-.btn-text,.kona-link-btn,.photo-credit a,.onboarding-story a,.entry-story-note a,.entry-trust a{min-height:48px;display:inline-flex;align-items:center}
+.btn-text,.kona-link-btn,.photo-credit a,.onboarding-story a,.entry-trust a,.entry-links a{min-height:48px;display:inline-flex;align-items:center}
 
 .home-world-hero{position:relative;overflow:hidden;min-height:360px;padding:0;background:var(--brand-lava);color:var(--brand-mist)}
 .home-world-hero-media{position:absolute;inset:0}.home-world-hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,12,17,.08),rgba(4,12,17,.82))}

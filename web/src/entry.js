@@ -157,6 +157,7 @@ function paintQuest(step) {
   const host = questHost();
   if (!host) return;
   host.hidden = false;
+  window.scrollTo(0, 0); const intro = document.getElementById('intro'); if (intro) intro.scrollTop = 0;   // each step starts at its top (Skip sits at the bottom of a long step)
   if(step==='questions'){
     renderOnboardingQuestions(host,{onDone:()=>paintQuest('bike'),onSkip:()=>paintQuest('avatar')});
     return;
@@ -228,6 +229,9 @@ if (returningVisit) {
 } else {
   buildButton?.addEventListener('click', () => paintQuest(firstRunStep()));
 }
+// first visit: value before setup. Today opens straight away; the Race Self waits in Me (Home offers it too).
+const peekButton = document.getElementById('entryPeek');
+if (peekButton) { if (returningVisit) peekButton.hidden = true; else peekButton.addEventListener('click', () => enterApp('home')); }
 renderEntryProductStage(document.getElementById('entryProductStage'), {profile});
 entryDataReady.then(data=>{ window.__ENTRY_DATA=data||{}; window.__ENTRY_EVENT=data?.event||{}; paintCount(); }).catch(()=>{});
 
@@ -241,6 +245,9 @@ const q = new URLSearchParams(location.search);
 const shared=decodeShare(q.get('kona'));
 if(shared) paintShared(shared);
 else if (q.get('reviewRoom') === 'beast-cave') openMuseum('beast');
+else if (q.get('reviewRoom') === 'nor3-winter') openMuseum('beast');   // NOR // 3 · Kona Winter review (same footprint)
+else if (q.get('reviewRoom') === 'breitling-kona') openMuseum('beast');   // BREITLING × KONA atelier review (same footprint)
+else if (q.get('reviewRoom') === 'laidlow-nice') openMuseum('beast');   // LAIDLOW // NICE · Baie des Anges review (same footprint)
 else if (q.get('room') || q.get('map')) openMuseum();
 else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());

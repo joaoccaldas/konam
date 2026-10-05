@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "id": "laidlow-nice",
+  "name": "LAIDLOW // NICE · Baie des Anges",
+  "parent_room": "room-026",
+  "classification": {
+    "type": "athlete-room",
+    "status": "candidate",
+    "public": false
+  },
+  "implementation": {
+    "kind": "native-room",
+    "module": "web/src/laidlow-nice.js",
+    "review_route": "?reviewRoom=laidlow-nice"
+  },
+  "story": {
+    "concept": "The Promenade des Anglais at golden hour, indoors: the blue chairs facing a live Baie des Anges, 8:06:22 cut like a monument, the Canyon Speedmax CFR on a drum of Nice limestone.",
+    "editorial_status": "original-copy",
+    "pitch": "docs/evidence/laidlow-nice-20261005/CONCEPT.md"
+  },
+  "spatial": {
+    "units": "meters",
+    "footprint": "review footprint (BROOM)",
+    "zones": [
+      "threshold",
+      "hero-drum",
+      "monument-wall",
+      "records-wall",
+      "coach-corner",
+      "promenade",
+      "beach",
+      "bay"
+    ],
+    "decor": "world/konam/rooms/laidlow-nice.decor.json"
+  },
+  "assets": {
+    "manifest": "world/konam/candidates/laidlow-nice-asset-manifest-v1.json",
+    "placements": "world/konam/rooms/laidlow-nice.decor.json",
+    "bike_pipeline": "museum/bike.schema.json"
+  },
+  "subjects": [
+    {
+      "subject_id": "sam-laidlow",
+      "display_name": "Sam Laidlow",
+      "subject_type": "athlete",
+      "room_role": "hero",
+      "claim_status": "sourced-results",
+      "likeness_status": "not-used",
+      "image_rights_status": "not-used",
+      "brand_association_status": "sourced-equipment-sponsor",
+      "public_release_status": "rights-review",
+      "equipment_claims": [
+        "Canyon athlete since January 2023 (Speedmax CFR): pitch/sam-laidlow/laidlow-facts-v1.json"
+      ]
+    }
+  ],
+  "interactions": {
+    "authority": "KONA.m host pickables/cards/dialogs",
+    "room_specific": [
+      "result-cards",
+      "bike-card",
+      "coach-card",
+      "front-page-card"
+    ]
+  },
+  "performance": {
+    "mobile": {
+      "target_fps": 30,
+      "max_room_draw_calls": 110,
+      "max_room_triangles": 220000,
+      "max_texture_edge": 1024,
+      "max_dpr": 1.5,
+      "particle_density": 34,
+      "transmission": "reduced",
+      "shadow_policy": "host-budget",
+      "lod_policy": "LOD1/micro-props-optional"
+    },
+    "tablet": {
+      "target_fps": 45,
+      "max_room_draw_calls": 149,
+      "max_room_triangles": 341000,
+      "max_texture_edge": 2048,
+      "max_dpr": 1.75,
+      "particle_density": 54,
+      "transmission": "medium",
+      "shadow_policy": "host-budget",
+      "lod_policy": "LOD0/LOD1"
+    },
+    "desktop": {
+      "target_fps": 60,
+      "max_room_draw_calls": 190,
+      "max_room_triangles": 450000,
+      "max_texture_edge": 2048,
+      "max_dpr": 2,
+      "particle_density": 78,
+      "transmission": "full",
+      "shadow_policy": "host-budget",
+      "lod_policy": "LOD0"
+    }
+  },
+  "provenance": {
+    "concept": "KONA.m editorial concept",
+    "bike": "canonical museum asset assets/museum/speedmax_web.glb (phones: derived assets/museum/speedmax_web-lite.glb)",
+    "facts": "pitch/sam-laidlow/laidlow-facts-v1.json",
+    "bay": "procedural shader, no photograph"
+  },
+  "rights": {
+    "endorsement": false,
+    "partnership": "none",
+    "marks_allowed": false,
+    "equipment_claims_require_sources": true,
+    "brand_marks_require_review": true,
+    "likeness": false
+  },
+  "release": {
+    "evidence_path": "docs/evidence/laidlow-nice-20261005/",
+    "required_gates": [
+      "schema",
+      "architecture",
+      "assets",
+      "desktop-visual",
+      "mobile-portrait",
+      "mobile-landscape",
+      "interaction",
+      "performance",
+      "truth",
+      "rights"
+    ],
+    "public_wiring": false
+  },
+  "brand": {
+    "authority": "docs/BRAND_SYSTEM.md",
+    "tokens": "brand/tokens.css",
+    "ui": "global",
+    "typography": "global",
+    "tone": "Kona.m",
+    "theme_scope": [
+      "environment",
+      "story",
+      "props",
+      "materials",
+      "sound",
+      "local-lighting"
+    ]
+  }
+}

@@ -7,6 +7,7 @@ import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.j
 import { marbleTex, travertineTex, basaltTex, lettering, contactShadow, FONT, SERIF } from './textures.js';
 import { decorateRoom } from './decoration-props.js';
 import { layoutStations } from './brandroom.js';
+import { motes, lightShaft } from '../roomkit.js';
 
 const FLOOR_TEX = {
   marble: r => marbleTex('#f7f5f4', '120,118,122', r),
@@ -26,7 +27,8 @@ function lightPool(w, d, color, strength = .5) {
 }
 
 // Returns { group, products:[{...p, view, face, holder}], bounds } — plus a .walkable used by the router.
-export function buildBrandRoom(desc, { lite = false, spinners = [], obstacles = [], pickables = [] } = {}) {
+// openings: extra doorways cut into the north wall by a neighbouring room ({ wall:'north', x0, x1, h }).
+export function buildBrandRoom(desc, { lite = false, spinners = [], obstacles = [], pickables = [], openings = [] } = {}) {
   layoutStations(desc);
   const b = desc.bounds, th = desc.theme || {};
   const RW = b.x1 - b.x0, RD = b.z0 - b.z1, CX = (b.x0 + b.x1) / 2, CZ = (b.z0 + b.z1) / 2;
@@ -44,7 +46,14 @@ export function buildBrandRoom(desc, { lite = false, spinners = [], obstacles = 
   // walls + ceiling
   const wallMat = new THREE.MeshStandardMaterial({ color: th.wall || '#f0eee9', roughness: th.wallRough ?? .85, envMapIntensity: .5 });
   const wall = (w, h, d, x, y, z) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), wallMat); m.position.set(x, y, z); m.receiveShadow = true; group.add(m); return m; };
-  wall(RW, H, .3, CX, H / 2, b.z0 + .15);            // north
+  const northCuts = openings.filter(o => o.wall === 'north').sort((a, c) => a.x0 - c.x0);
+  { let x = b.x0;                                                     // north, with any neighbour's doorways cut out
+    for (const o of northCuts) {
+      if (o.x0 - x > .05) wall(o.x0 - x, H, .3, (x + o.x0) / 2, H / 2, b.z0 + .15);
+      const oh = o.h ?? 3.2; wall(o.x1 - o.x0, H - oh, .3, (o.x0 + o.x1) / 2, oh + (H - oh) / 2, b.z0 + .15);
+      x = o.x1;
+    }
+    if (b.x1 - x > .05) wall(b.x1 - x, H, .3, (x + b.x1) / 2, H / 2, b.z0 + .15); }
   wall(RW, H, .3, CX, H / 2, b.z1 - .15);            // south
   const ceilM = new THREE.MeshStandardMaterial({ color: th.ceil || th.wall || '#fbf9fa', roughness: .3, envMapIntensity: .7 });
   const ceil = new THREE.Mesh(new THREE.BoxGeometry(RW, .14, RD), ceilM); ceil.position.set(CX, H + .07, CZ); group.add(ceil);
@@ -74,18 +83,25 @@ export function buildBrandRoom(desc, { lite = false, spinners = [], obstacles = 
   for (const z of [b.z0 - .005, b.z1 + .005]) { const s = new THREE.Mesh(new THREE.PlaneGeometry(RW - .4, .06), cove); s.position.set(CX, H - .3, z); s.rotation.y = z === b.z0 ? Math.PI : 0; group.add(s); }
 
   // lighting: neutral fill + optional accents (skipped on lite phones)
-  group.add(new THREE.PointLight('#ffffff', lite ? 22 : (desc.light?.fillI ?? 18), 24, 1.2).translateY(0));
+  const mood = desc.mood ? { ...desc.mood, fogColor: desc.mood.fog?.color ? new THREE.Color(desc.mood.fog.color) : null } : null;
+  group.add(new THREE.PointLight('#ffffff', mood?.fill ?? (lite ? 22 : (desc.light?.fillI ?? 18)), 24, 1.2).translateY(0));
   const fill = group.children[group.children.length - 1]; fill.position.set(CX, H - .5, CZ);
   if (!lite) for (const a of desc.light?.accents || []) { const pl = new THREE.PointLight(a.color || accent, a.i ?? 6, a.dist ?? 12, 1.4); pl.position.set(a.x, a.y, a.z); group.add(pl); }
 
-  // brand wordmark + kicker over the door
+  // room name + kicker. Fitted to the plate (names used to clip, and the kicker sat outside the canvas). Ink follows the
+  // wall's lightness. A room whose rights say "no wordmark" (desc.wordmark === false) gets the name in plain neutral type,
+  // never in brand colour.
   if (desc.name) {
-    const mark = lettering(Math.min(5, desc.name.length * .9), 1.0, g => {
-      g.fillStyle = accent; g.font = `800 1.0px ${FONT}`; g.letterSpacing = '.08px'; g.fillText(desc.name.toUpperCase(), .06, .95);
-      if (desc.kicker) { g.fillStyle = '#12181d'; g.font = `italic 400 .34px ${SERIF}`; g.fillText(desc.kicker, .08, 1.5); }
-    }, 1024);
+    const W = 5, H2 = 1.5, hex = (desc.theme?.wall || '#e9e3d9').replace('#', ''), lum = (parseInt(hex.slice(0, 2), 16) * .3 + parseInt(hex.slice(2, 4), 16) * .59 + parseInt(hex.slice(4, 6), 16) * .11) / 255;
+    const ink = lum < .45 ? '#eef0f3' : '#12181d', soft = lum < .45 ? '#b4c0c8' : '#5f6a72', nameInk = desc.wordmark === false ? ink : accent;
+    const mark = lettering(W, H2, g => {
+      const fit = (text, font, size, max) => { g.font = font(size); const w = g.measureText(text).width; return w > max ? size * max / w : size; };
+      const name = desc.name.toUpperCase(), ns = fit(name, z => `800 ${z}px ${FONT}`, .62, W - .16);
+      g.fillStyle = nameInk; g.font = `800 ${ns}px ${FONT}`; g.fillText(name, .08, .2 + ns * .9);
+      if (desc.kicker) { const ks = fit(desc.kicker, z => `italic 400 ${z}px ${SERIF}`, .3, W - .16); g.fillStyle = soft; g.font = `italic 400 ${ks}px ${SERIF}`; g.fillText(desc.kicker, .08, .32 + ns * .9 + ks * 1.15); }
+    }, 1536);
     const doorZ = desc.door ? (desc.door.z0 + desc.door.z1) / 2 : CZ;
-    mark.position.set(desc.door?.wall === 'west' ? b.x1 - .02 : b.x1 - .02, 3.9, doorZ); mark.rotation.y = -Math.PI / 2; group.add(mark);
+    mark.position.set(b.x1 - .02, 3.9, doorZ); mark.rotation.y = -Math.PI / 2; group.add(mark);
   }
 
   decorateRoom(desc.decorations,{group,lite,obstacles});
@@ -106,8 +122,13 @@ export function buildBrandRoom(desc, { lite = false, spinners = [], obstacles = 
     return rec;
   });
 
-  const walkable = (x, z) => x > b.x0 + .5 && x < b.x1 - .4 && z < b.z0 - .5 && z > b.z1 + .5;
-  return { group, products, bounds: b, walkable, desc };
+  if (mood?.env != null) { floor.material.envMapIntensity = mood.env; wallMat.envMapIntensity = mood.env * .5; if (mood.floor) floor.material.color.set(mood.floor); }
+  const living = mood ? cinematic(desc, mood, { group, lite, b, H, accent, obstacles, pickables }) : null;
+
+  const inRoom = (x, z) => x > b.x0 + .5 && x < b.x1 - .4 && z < b.z0 - .5 && z > b.z1 + .5;
+  const inCut = (x, z) => northCuts.some(o => x > o.x0 + .3 && x < o.x1 - .3 && z < b.z0 + .95 && z >= b.z0 - .6);
+  const walkable = (x, z) => inRoom(x, z) || inCut(x, z);
+  return { group, products, bounds: b, walkable, desc, mood, update: living?.update || null };
 }
 
 function products_assignView(rec, b) {
@@ -144,3 +165,73 @@ export async function loadBrandRoom(built, loader) {
 }
 
 export function makeBrandLoader() { return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder); }
+
+// ---------------------------------------------------------------- cinematic mood (data: desc.mood)
+// A darker room lit with intent: stage spots with visible shafts, haze in the light, and optional
+// architecture that tells the brand's story without its marks — a race-clock dial and portals.
+function cinematic(desc, mood, { group, lite, b, H, accent, obstacles, pickables }) {
+  const motesList = [], hands = [];
+  for (const s of mood.spots || []) {
+    const y = s.y ?? H - .25;
+    const sp = new THREE.SpotLight(s.color || '#ffffff', (s.i ?? 60) * (lite ? .8 : 1), s.dist ?? 9, s.angle ?? .35, .6, 1.3);
+    sp.position.set(s.x, y, s.z); sp.target.position.set(s.x, s.ty ?? .8, s.z);
+    sp.castShadow = !lite && !!s.shadow; if (sp.castShadow) { sp.shadow.mapSize.set(1024, 1024); sp.shadow.bias = -.0004; }
+    group.add(sp, sp.target);
+    if (s.shaft !== false) { const sh = lightShaft({ top: .12, bottom: Math.tan(s.angle ?? .35) * (y - .1) * 1.05, height: y - .05, color: s.color || '#ffffff', opacity: (s.shaftOpacity ?? .14) * (lite ? .7 : 1) }); sh.position.set(s.x, y, s.z); group.add(sh); }
+  }
+  if (mood.haze) {
+    const h = mood.haze, m = motes({ n: lite ? Math.round((h.n || 120) * .4) : (h.n || 120), box: [b.x0 + .6, b.x1 - .6, .3, H - .4, b.z1 + .6, b.z0 - .6], color: h.color || '#ffffff', size: h.size || .02, rise: .015, sway: .3, opacity: h.opacity ?? .5, seed: 83 });
+    group.add(m.points); motesList.push(m);
+  }
+  if (mood.dais) {                                                    // a low stage under the hero product, ringed in the accent colour
+    const d = mood.dais, disc = new THREE.Mesh(new THREE.CylinderGeometry(d.r, d.r + .06, .06, 72), new THREE.MeshPhysicalMaterial({ color: '#08090c', roughness: .25, metalness: .5, clearcoat: 1, envMapIntensity: .4 }));
+    disc.position.set(d.x, .03, d.z); disc.receiveShadow = true; group.add(disc);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(d.r + .02, .012, 8, 128), new THREE.MeshBasicMaterial({ color: d.color || accent, toneMapped: false }));
+    ring.rotation.x = Math.PI / 2; ring.position.set(d.x, .062, d.z); group.add(ring);
+    const halo = new THREE.Mesh(new THREE.RingGeometry(d.r, d.r + .9, 96), new THREE.MeshBasicMaterial({ color: d.color || accent, transparent: true, opacity: lite ? .05 : .08, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+    halo.rotation.x = -Math.PI / 2; halo.position.set(d.x, .014, d.z); group.add(halo);
+  }
+  const mono = mood.monument;
+  if (mono?.kind === 'race-clock') {
+    const R = mono.r ?? 1.9, cx = mono.x ?? (b.x0 + b.x1) / 2, cy = mono.y ?? 2.7, z = b.z1 + .06;
+    const dial = new THREE.Group(); dial.position.set(cx, cy, z); group.add(dial);
+    const face = new THREE.Mesh(new THREE.CircleGeometry(R, 96), new THREE.MeshPhysicalMaterial({ color: '#0b0d11', roughness: .35, metalness: .4, clearcoat: 1, clearcoatRoughness: .15, envMapIntensity: .6 }));
+    dial.add(face);
+    const bezel = new THREE.Mesh(new THREE.TorusGeometry(R + .06, .07, 16, 120), new THREE.MeshStandardMaterial({ color: '#c9ccd2', metalness: 1, roughness: .18 }));
+    dial.add(bezel);
+    const hours = mono.hours ?? 17;
+    const ink = lettering(R * 2, R * 2, g => {
+      g.translate(R, R);
+      for (let i = 0; i < hours * 4; i++) { const a = i / (hours * 4) * Math.PI * 2 - Math.PI / 2, major = i % 4 === 0, r0 = R * (major ? .82 : .88);
+        g.strokeStyle = major ? '#eef0f3' : 'rgba(238,240,243,.45)'; g.lineWidth = major ? .035 : .012;
+        g.beginPath(); g.moveTo(Math.cos(a) * r0, Math.sin(a) * r0); g.lineTo(Math.cos(a) * R * .95, Math.sin(a) * R * .95); g.stroke();
+        if (major) { g.fillStyle = '#eef0f3'; g.font = `600 ${R * .1}px ${FONT}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(i / 4 || hours), Math.cos(a) * R * .7, Math.sin(a) * R * .7); } }
+      g.fillStyle = accent; g.font = `800 ${R * .075}px ${FONT}`; g.textAlign = 'center'; g.fillText(mono.title || 'RACE CLOCK', 0, -R * .32);
+      g.fillStyle = 'rgba(238,240,243,.7)'; g.font = `italic 400 ${R * .085}px ${SERIF}`; g.fillText(mono.subtitle || '', 0, R * .36);
+    }, 1024);
+    ink.position.z = .01; dial.add(ink);
+    const hand = (len, wid, color, zz) => { const pivot = new THREE.Group(); pivot.position.z = zz; const m = new THREE.Mesh(new THREE.BoxGeometry(wid, len, .02), new THREE.MeshBasicMaterial({ color, toneMapped: false })); m.position.y = len / 2 - len * .12; pivot.add(m); dial.add(pivot); return pivot; };
+    hands.push({ o: hand(R * .55, .07, '#eef0f3', .03), period: hours * 3600 }, { o: hand(R * .85, .04, '#eef0f3', .045), period: 3600 }, { o: hand(R * .92, .018, accent, .06), period: 60, tick: true });
+    const cap = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .05, 24), new THREE.MeshStandardMaterial({ color: accent, metalness: .6, roughness: .3 })); cap.rotation.x = Math.PI / 2; cap.position.z = .08; dial.add(cap);
+    const glow = new THREE.PointLight(mono.glow || '#9fb8ff', lite ? 2 : 4, 6, 1.6); glow.position.set(cx, cy, z + 1.2); group.add(glow);
+    if (mono.info) { face.userData.info = mono.info; pickables.push(face); }
+  }
+  for (const p of mood.portals || []) {
+    const fr = new THREE.Group(); fr.position.set(p.x, 0, p.z); fr.rotation.y = p.rotY ?? 0; group.add(fr);
+    const mat = new THREE.MeshBasicMaterial({ color: p.color || accent, toneMapped: false });
+    const w = p.w ?? 1.6, h = p.h ?? 2.8, t = .06;
+    for (const [sw, sh, x, y] of [[t, h, -w / 2, h / 2], [t, h, w / 2, h / 2], [w + t, t, 0, h]]) { const m = new THREE.Mesh(new THREE.BoxGeometry(sw, sh, t), mat); m.position.set(x, y, 0); fr.add(m); }
+    const lab = lettering(w, .5, g => { g.fillStyle = '#eef0f3'; g.font = `800 .16px ${FONT}`; g.letterSpacing = '.08px'; g.fillText(p.label || '', .02, .2); g.fillStyle = 'rgba(238,240,243,.7)'; g.font = `500 .1px ${FONT}`; g.fillText(p.sub || '', .02, .4); }, 512);
+    lab.position.set(0, h + .32, 0); fr.add(lab);
+    const pool = new THREE.Mesh(new THREE.PlaneGeometry(w, 1.2), new THREE.MeshBasicMaterial({ color: p.color || accent, transparent: true, opacity: lite ? .05 : .09, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
+    pool.rotation.x = -Math.PI / 2; pool.position.set(0, .015, .6); fr.add(pool);
+    if (p.info) for (const m of fr.children) if (m.isMesh) { m.userData.info = p.info; pickables.push(m); }
+  }
+  return {
+    update(t, reduce) {
+      if (!reduce) for (const m of motesList) m.step(t);
+      const now = Date.now() / 1000;
+      for (const h of hands) { const v = h.tick ? Math.floor(now % h.period) / h.period : (now % h.period) / h.period; h.o.rotation.z = -v * Math.PI * 2; }
+    },
+  };
+}
