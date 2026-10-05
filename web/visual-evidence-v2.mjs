@@ -5,14 +5,15 @@ const base=process.argv[2]||'http://127.0.0.1:8754/';
 const out=process.argv[3]||'visual-evidence-v2';fs.mkdirSync(out,{recursive:true});
 const chrome=process.env.CHROME_PATH;if(!chrome)throw new Error('CHROME_PATH required');
 const browser=await puppeteer.launch({executablePath:chrome,timeout:90000,headless:'new',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
-const viewports=[{id:'320',width:320,height:720},{id:'360',width:360,height:640},{id:'390',width:390,height:844},{id:'430',width:430,height:932},{id:'tablet',width:768,height:1024},{id:'landscape-phone',width:844,height:390},{id:'desktop',width:1440,height:900}];
+const viewports=[{id:'desktop-phone',width:980,height:2125,screenWidth:393,screenHeight:852},{id:'320',width:320,height:720},{id:'360',width:360,height:640},{id:'390',width:390,height:844},{id:'430',width:430,height:932},{id:'tablet',width:768,height:1024},{id:'landscape-phone',width:844,height:390},{id:'desktop',width:1440,height:900}];
 const states=['landing','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','collection','find-studio','bike-studio'];const report=[];
 fs.writeFileSync(path.join(out,'candidate.json'),JSON.stringify({source_sha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),source_dirty:!!execFileSync('git',['status','--porcelain'],{encoding:'utf8'}).trim(),bundle_sha256:createHash('sha256').update(fs.readFileSync('app/kona-core.js')).digest('hex'),generated_at:new Date().toISOString()},null,2)+'\n');
 // deterministic storage per capture: seed after origin exists, then reload exactly once.
 async function capture(vp,state,theme){
  const context=await browser.createBrowserContext();const p=await context.newPage();await p.setBypassServiceWorker(true);p.setDefaultNavigationTimeout(180000);const requests=[];const errors=[];
  p.on('request',r=>requests.push(r.url()));p.on('pageerror',e=>errors.push(e.message));
- await p.setViewport({width:vp.width,height:vp.height,deviceScaleFactor:vp.id==='desktop'?1:2,isMobile:vp.id!=='desktop',hasTouch:vp.id!=='desktop'});
+ await p.setViewport({width:vp.width,height:vp.height,deviceScaleFactor:vp.id==='desktop'?1:2,isMobile:vp.id!=='desktop'&&vp.id!=='desktop-phone',hasTouch:vp.id!=='desktop'});
+ if(vp.screenWidth)await p.evaluateOnNewDocument(({w,h})=>{Object.defineProperty(screen,'width',{get:()=>w});Object.defineProperty(screen,'height',{get:()=>h});},{w:vp.screenWidth,h:vp.screenHeight});
  await p.evaluateOnNewDocument(({theme,state})=>{
    localStorage.clear();
    if(state==='bike-studio')localStorage.setItem('kona.progression.v1',JSON.stringify({schema:'progression-v1',xp:40,level:2,access_tier:'visitor',streak:0,discoveries:[],badges:[],unlocks:[],seen:[],ledger:[],credits:0,history:[],acquisitions:[]}));
