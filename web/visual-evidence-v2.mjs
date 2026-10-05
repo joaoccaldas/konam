@@ -106,7 +106,10 @@ async function capture(vp,state,theme){
    // Canonical touch targets apply to phone captures; desktop mouse controls
    // retain their existing compact layout. Record the threshold with evidence.
    const targetMinimum=touchViewport?48:24;
-   const small=els.map(x=>{const r=x.getBoundingClientRect();return{tag:x.tagName,text:(x.textContent||'').trim().slice(0,50),w:r.width,h:r.height};}).filter(x=>x.w<targetMinimum||x.h<targetMinimum);
+   // Transformed DOMRects can report 48px as 47.99997px. Keep raw evidence,
+   // but tolerate only floating-point rounding, not a subpixel-short control.
+   const targetRoundingTolerance=.001;
+   const small=els.map(x=>{const r=x.getBoundingClientRect();return{tag:x.tagName,text:(x.textContent||'').trim().slice(0,50),w:r.width,h:r.height};}).filter(x=>x.w+targetRoundingTolerance<targetMinimum||x.h+targetRoundingTolerance<targetMinimum);
    const grid=document.querySelector('.finds-grid'),cards=grid?[...grid.querySelectorAll('[data-find]')].slice(0,2):[];
    const collectionGrid=grid?{display:getComputedStyle(grid).display,columns:getComputedStyle(grid).gridTemplateColumns.split(' ').length,sameFirstRow:cards.length===2&&Math.abs(cards[0].getBoundingClientRect().top-cards[1].getBoundingClientRect().top)<1}:null;
    const back=document.querySelector('#konaPanelClose');
