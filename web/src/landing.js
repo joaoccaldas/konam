@@ -50,7 +50,15 @@ const KY = window.__KONAYEARS || null;                                // Kona by
 const WYLD = { pink: '#ff3d8e', blush: '#ff8fbf', lilac: '#e9cde8', mint: '#8fe7dc', aqua: '#5fd8d3' };
 const NOR3_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'nor3-winter';
 const BREITLING_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'breitling-kona';
-const BEAST_CAVE_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'beast-cave' || NOR3_REVIEW || BREITLING_REVIEW;
+const BEAST_ONLY_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'beast-cave';
+const BEAST_CAVE_REVIEW = BEAST_ONLY_REVIEW || NOR3_REVIEW || BREITLING_REVIEW;
+const REVIEW_ROOM_SEMANTIC_ID = NOR3_REVIEW
+  ? 'room:konam:nor3-winter'
+  : BREITLING_REVIEW
+    ? 'room:konam:breitling-kona'
+    : BEAST_ONLY_REVIEW
+      ? 'room:konam:beast-cave'
+      : null;
 // Phone detection must survive a browser's "Desktop view", where pointer and
 // viewport width both lie; detect.js adds the physical-screen signal.
 const coarse = dc;
@@ -2053,5 +2061,6 @@ const konaShell = window.__konaShell;
 if (!konaShell) throw new Error('KONA consumer Shell authority missing');
 window.__app = { profile, settings: settingsUI, shareView, openArt, openAtlas, konaShell };
 window.__atlas = atlas;
-window.__museum = { P, PIECES, visit, enter, scene, camera, champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
+window.__reviewRoomIdentity = REVIEW_ROOM_SEMANTIC_ID;
+window.__museum = { P, PIECES, visit, enter, scene, camera, champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, reviewRoomIdentity: REVIEW_ROOM_SEMANTIC_ID, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
 initArtWorld(window.__museum).catch(e => console.warn('art world', e));
