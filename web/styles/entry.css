@@ -345,3 +345,11 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 .entry-value-map b{color:var(--brand-discovery);font:800 9px/1.2 var(--brand-font-ui);letter-spacing:.08em;text-transform:uppercase}
 .entry-value-map span{color:color-mix(in srgb,var(--brand-mist) 82%,transparent);font:550 9px/1.35 var(--brand-font-ui)}
 @media(max-width:520px){.entry-value-map{grid-template-columns:1fr;margin-top:7px;gap:0}.entry-value-map p{grid-template-columns:52px minmax(0,1fr);align-items:start;padding:6px 0}.entry-value-map b,.entry-value-map span{font-size:9px}}
+
+/* Landing information hierarchy: one decision, three proof points, then optional depth. */
+@media(max-width:520px){
+ #intro.kona-entry .entry-story-note{margin-top:5px;font-size:9px;opacity:.82}
+ #intro.kona-entry .entry-story-note a{min-height:40px;display:inline-flex;align-items:center}
+ #intro.kona-entry .entry-trust{color:color-mix(in srgb,var(--brand-mist) 72%,transparent)}
+ #intro.kona-entry .entry-trust>span::before{width:4px;height:4px}
+}
