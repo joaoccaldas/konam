@@ -71,10 +71,6 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-stage-caption small{grid-column:1/-1;color:var(--brand-accent-2,#39c8ef);font:800 9px/1 var(--brand-font-ui,var(--sans));letter-spacing:.17em}
 #intro.kona-entry .entry-stage-caption b{font:400 clamp(24px,2.3vw,36px)/1 var(--brand-font-editorial,var(--serif));letter-spacing:-.02em}
 #intro.kona-entry .entry-stage-caption span{justify-self:end;color:var(--brand-muted);font:600 10px/1.2 var(--brand-font-ui,var(--sans))}
-#intro.kona-entry .entry-product-nav{display:grid;grid-template-columns:repeat(3,1fr);margin-top:10px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(7,17,22,.46);backdrop-filter:blur(12px);overflow:hidden}
-#intro.kona-entry .entry-product-nav span{min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--brand-mist);font:700 10px/1 var(--brand-font-ui,var(--sans));border-right:1px solid rgba(255,255,255,.1)}
-#intro.kona-entry .entry-product-nav span:last-child{border-right:0}
-#intro.kona-entry .entry-product-nav b{color:var(--brand-accent-2,#39c8ef);font-size:8px;letter-spacing:.12em}
 #intro.kona-entry .entry-race-clock{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0 16px;margin-top:10px;padding:0 4px}
 #intro.kona-entry .entry-race-clock small{color:var(--brand-muted);font:750 9px/1.2 var(--brand-font-ui,var(--sans));letter-spacing:.14em}
 #intro.kona-entry .entry-race-clock strong{color:var(--brand-accent,#ff6427);font:800 11px/1.2 var(--brand-font-ui,var(--sans));letter-spacing:.12em;text-transform:uppercase}
@@ -102,9 +98,6 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
   #intro.kona-entry .entry-stage-caption{left:14px;right:14px;bottom:12px}
   #intro.kona-entry .entry-stage-caption b{font-size:22px}
   #intro.kona-entry .entry-stage-caption span{font-size:9px}
-  #intro.kona-entry .entry-product-nav{margin-top:7px;border-radius:14px}
-  #intro.kona-entry .entry-product-nav span{min-height:44px;font-size:10px;gap:5px}
-  #intro.kona-entry .entry-product-nav b{display:none}
   #intro.kona-entry .entry-race-clock{margin-top:7px}
   #intro.kona-entry .entry-race-clock small{font-size:8px}
   #intro.kona-entry .entry-race-clock strong{font-size:9px}
@@ -126,7 +119,6 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
   #intro.kona-entry .entry-stage-bike{width:auto;bottom:52px}
   #intro.kona-entry .entry-stage-caption b{font-size:19px}
   #intro.kona-entry .entry-stage-caption span{display:none}
-  #intro.kona-entry .entry-product-nav span{min-height:38px;font-size:8px}
   #intro.kona-entry .entry-race-clock small{max-width:62%;line-height:1.25}
   #intro.kona-entry .entry-actions{margin-top:10px}
   #intro.kona-entry .entry-actions .btn{min-height:50px;padding-inline:14px}
@@ -234,7 +226,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
   #intro.kona-entry .entry-signin-note{display:none}
   #intro.kona-entry .entry-product{grid-area:product;margin:0;padding:0;border:0;min-height:0}
   #intro.kona-entry .entry-product-stage{min-height:220px;height:calc(var(--vvh,100dvh) - 66px)}
-  #intro.kona-entry .entry-product-nav,#intro.kona-entry .entry-race-clock{display:none}
+  #intro.kona-entry .entry-race-clock{display:none}
 }
 
 
@@ -309,3 +301,18 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-global-note{max-width:36rem;margin:14px 0 0;color:color-mix(in srgb,var(--brand-mist) 88%,transparent);font:550 11px/1.55 var(--brand-font-ui,var(--sans))}
 #intro.kona-entry .entry-global-note strong{color:var(--brand-mist)}
 #intro.kona-entry .entry-legal-note{max-width:38rem;margin:8px 0 0;color:color-mix(in srgb,var(--brand-mist) 62%,transparent);font:500 9px/1.45 var(--brand-font-ui,var(--sans))}
+
+/* What you get: three plain promises under the headline (only features that exist) */
+#intro.kona-entry .entry-promise{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px;max-width:34rem}
+#intro.kona-entry .entry-promise li{display:grid;grid-template-columns:4.6rem 1fr;gap:12px;align-items:baseline;padding:10px 0;border-top:1px solid color-mix(in srgb,var(--brand-mist) 16%,transparent)}
+#intro.kona-entry .entry-promise b{color:var(--brand-accent);font:800 10px/1.2 var(--brand-font-ui);letter-spacing:.16em;text-transform:uppercase}
+#intro.kona-entry .entry-promise span{color:color-mix(in srgb,var(--brand-mist) 86%,transparent);font:500 13px/1.45 var(--brand-font-ui)}
+#intro.kona-entry .entry-promise strong{display:block;color:var(--brand-mist);font:700 15px/1.3 var(--brand-font-ui);margin-bottom:2px}
+#intro.kona-entry .entry-links{display:flex;flex-wrap:wrap;align-items:center;gap:0 14px;margin-top:6px}
+#intro.kona-entry .entry-links a,#intro.kona-entry .entry-links .btn.text{min-height:44px;display:inline-flex;align-items:center;padding:0;border:0;background:transparent;color:color-mix(in srgb,var(--brand-mist) 78%,transparent);font:600 12px/1.2 var(--brand-font-ui);text-decoration:underline;text-underline-offset:4px}
+@media(max-width:899px){
+  #intro.kona-entry .entry-promise{margin-top:12px;gap:0}
+  #intro.kona-entry .entry-promise li{grid-template-columns:4.2rem 1fr;gap:10px;padding:9px 0}
+  #intro.kona-entry .entry-promise span{font-size:12.5px}
+  #intro.kona-entry .entry-promise strong{font-size:14px}
+}
