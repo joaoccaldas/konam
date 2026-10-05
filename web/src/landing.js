@@ -59,6 +59,7 @@ const REVIEW_ROOM_SEMANTIC_ID = NOR3_REVIEW
     : BEAST_ONLY_REVIEW
       ? 'room:konam:beast-cave'
       : null;
+window.__reviewRoomIdentity = REVIEW_ROOM_SEMANTIC_ID;
 // Phone detection must survive a browser's "Desktop view", where pointer and
 // viewport width both lie; detect.js adds the physical-screen signal.
 const coarse = dc;
