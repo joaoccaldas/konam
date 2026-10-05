@@ -20,8 +20,8 @@ body.museum-open #konaPanelClose{display:grid}
 @media(max-width:899px){
   .kona-panel{inset:0;width:min(100dvw,var(--vvw,100dvw));max-width:min(100dvw,var(--vvw,100dvw));min-height:min(100dvh,var(--vvh,100dvh));padding-left:max(var(--brand-mobile-gutter),env(safe-area-inset-left));padding-right:max(var(--brand-mobile-gutter),env(safe-area-inset-right))}
   .kona-panel-head,.kona-panel-body{width:100%;max-width:100%;min-width:0}
-  .kona-panel-head h2{font-size:clamp(36px,11vw,58px);overflow-wrap:anywhere}
-  .kona-hero-card{min-height:200px;padding:20px}
+  .kona-panel-head h2{font-size:clamp(32px,9vw,48px);overflow-wrap:anywhere}
+  .kona-hero-card{min-height:180px;padding:18px}
   .kona-hero-card h3{font-size:clamp(34px,10vw,52px);overflow-wrap:anywhere}
   .kona-list article,.kona-timeline article{min-width:0}
   .kona-list b,.kona-list span,.kona-timeline b,.kona-timeline span,.kona-place-grid b,.kona-place-grid span{overflow-wrap:anywhere}

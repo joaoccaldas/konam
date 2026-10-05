@@ -53,11 +53,13 @@ test('Home is lightweight while User Studio owns personal depth and tour replay'
   assert.match(raceCards,/Search IRONMAN races/);
 });
 
-test('User Studio main menu is a finite responsive grid, never a sideways discovery rail',()=>{
+// Mobile composition is a product contract: phones prioritize the athlete; tablets expand context.
+test('User Studio composes for phone, tablet and desktop without a sideways discovery rail',()=>{
   const raceSelfCss=fs.readFileSync(new URL('../styles/race-self.css',import.meta.url),'utf8');
-  assert.match(raceSelfCss,/\.race-self-controls\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)\}/);
-  assert.match(raceSelfCss,/@media\(max-width:899px\)[\s\S]*\.studio-destinations\{[\s\S]*display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
-  assert.doesNotMatch(raceSelfCss,/@media\(max-width:360px\)[\s\S]*\.studio-destinations\{grid-template-columns:repeat\(2/);
+  assert.match(raceSelfCss,/\.race-self-controls\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)\}/,'wide/base control grammar stays four-up');
+  assert.match(raceSelfCss,/@media\(max-width:599px\)[\s\S]*\.studio-destinations\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/,'phones use two journey columns');
+  assert.match(raceSelfCss,/@media\(max-width:599px\)[\s\S]*\.race-self-controls\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/,'phones use two athlete-action columns');
+  assert.match(raceSelfCss,/@media\(min-width:600px\) and \(max-width:899px\)[\s\S]*\.studio-destinations\{[\s\S]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/,'tablets keep three journey columns');
   assert.doesNotMatch(raceSelfCss,/\.studio-destinations[\s\S]{0,220}overflow-x:auto/);
   assert.doesNotMatch(raceSelfCss,/scroll-snap-type:x/);
 });
