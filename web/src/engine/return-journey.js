@@ -1,6 +1,6 @@
-import { readStorage, writeStorage } from './storage.js';
+import { readStorage, writeStorage, storageKey } from './storage.js';
 
-const SESSION_KEY='kona.returnJourney.session.v1';
+const SESSION_KEY=storageKey('returnJourneySession');
 const fresh=()=>({
   schema:1,
   visits:0,

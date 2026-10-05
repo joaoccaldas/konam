@@ -50,11 +50,8 @@ def run(name, cmd, cwd=ROOT, env=None):
 run('build', [blender, '-b', '--factory-startup', '--python-exit-code', '1', '-P', 'blender/heritage_build.py', '--', PROFILE, OUT, MASTER])
 run('validate', [blender, '-b', MASTER, '--python-exit-code', '1', '-P', 'blender/heritage_validate.py', '--', PROFILE, OUT / 'checks'])
 run('comparison', [sys.executable, 'tools/heritage_compare.py', PROFILE, OUT / 'checks'])
-cli = ROOT / 'web/node_modules/.bin/gltf-transform'
-if not cli.exists():
-    raise SystemExit('Run npm ci in web first')
-run('optimize', [cli, 'optimize', OUT / 'speedmax_web_raw.glb', OUT / 'speedmax_web.glb', '--compress', 'meshopt', '--texture-compress', 'false',
-                 '--simplify', 'false', '--instance', 'false', '--join', 'false', '--flatten', 'false', '--palette', 'false', '--sparse', 'false'])
+# Canonical optimizer preserves named parts and hierarchy; no CLI/glob dependency.
+run('optimize',['node',ROOT/'web/optimize-glb.mjs',OUT/'speedmax_web_raw.glb',OUT/'speedmax_web.glb'])
 viewer = ROOT / m['deliverables']['viewer']
 run('viewer', ['node', 'build_heritage.mjs'], ROOT / 'web', {'GLB': str(OUT / 'speedmax_web.glb'), 'BIKE_PROFILE': str(ROOT / m['viewer_profile']),
                                                              'OUT_HTML': str(viewer),

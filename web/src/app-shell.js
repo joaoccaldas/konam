@@ -1,4 +1,4 @@
-import { PRODUCT_NAME } from './product-meta.js';
+import { PRODUCT_META, PRODUCT_NAME } from './product-meta.js';
 import { initInstall } from './ui/install.js';
 // The museum as an installable app.
 //  - Web (Android Chrome, desktop, iOS Safari): a service worker (sw.js) keeps the museum offline and
@@ -7,7 +7,7 @@ import { initInstall } from './ui/install.js';
 //  - Android app (Capacitor build, see app/native): the museum ships inside the APK. On launch it asks
 //    the museum's HTTPS site for app/android-version.json and offers the newer APK when there is one;
 //    Android only installs it over this one if it carries the same signing key.
-const SITE = 'https://joaoccaldas.github.io/canyonmuseum/';
+const SITE = PRODUCT_META.canonical_site;
 const $ = id => document.getElementById(id);
 function ensureUpdateBar(){
  let el=$('updateBar');if(el)return el;
@@ -20,10 +20,17 @@ function pill(text, action, onAction) {
   const el = ensureUpdateBar();
   el.querySelector('span').textContent = text;
   const b = el.querySelector('button, a.go'); b.textContent = action;
-  if (typeof onAction === 'string') { b.outerHTML = `<a class="go" href="${onAction}" rel="noopener">${action}</a>`; }
+  if (typeof onAction === 'string') { const a=document.createElement('a');a.className='go';a.href=onAction;a.rel='noopener';a.textContent=action;b.replaceWith(a); }
   else b.onclick = onAction;
   el.hidden = false;
   el.querySelector('.later').onclick = () => { el.hidden = true; };
+}
+
+export function nativeUpdateURL(v, mine, site=SITE) {
+  if(v?.published!==true||!Number.isSafeInteger(v.versionCode)||v.versionCode<=mine||typeof v.apk!=='string')return null;
+  if(!/^downloads\/[a-z0-9._-]+\.apk$/i.test(v.apk))return null;
+  const base=new URL(site),url=new URL(v.apk,base);
+  return url.protocol==='https:'&&url.origin===base.origin&&url.pathname.startsWith(base.pathname)?url.href:null;
 }
 
 async function nativeUpdateCheck() {
@@ -32,15 +39,15 @@ async function nativeUpdateCheck() {
     const res = await fetch(SITE + 'app/android-version.json', { cache: 'no-store', credentials: 'omit' });
     if (!res.ok) return;
     const v = await res.json();
-    if ((v.versionCode | 0) > mine && typeof v.apk === 'string' && !/^[a-z]+:/i.test(v.apk))   // only a path on our own site
-      pill(`${PRODUCT_NAME} ${v.versionName} is available`, 'Download', SITE + v.apk);
+    const apk=nativeUpdateURL(v,mine);
+    if(apk) pill(`${PRODUCT_NAME} ${String(v.versionName||v.versionCode)} is available`, 'Download', apk);
   } catch (_) { /* offline: try next launch */ }
 }
 
 export function initAppShell() {
   if (window.__appShell) return;
   window.__appShell = true;
-  if (window.Capacitor?.isNativePlatform?.()) { document.body.classList.add('native'); nativeUpdateCheck(); return; }
+  if (window.__NATIVE||window.Capacitor?.isNativePlatform?.()) { document.body.classList.add('native'); nativeUpdateCheck(); return; }
   initInstall();
 
   // --- offline + verified updates

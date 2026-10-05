@@ -167,21 +167,33 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
+      actions: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           name: KONA-apk
           path: ${{ runner.temp }}/apk
-      - name: Commit APK to the website
+      - name: Propose signed APK through the protected release path
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "codex/android-release-${{ github.run_id }}"
           mkdir -p downloads app
           cp "$RUNNER_TEMP/apk/KONA.apk" downloads/KONA.apk
           cp "$RUNNER_TEMP/apk/android-version.json" app/android-version.json
           node -e "const fs=require('fs');const p='app/android-version.json';const v=JSON.parse(fs.readFileSync(p,'utf8'));v.published=true;v.apk=v.apk||'downloads/KONA.apk';fs.writeFileSync(p,JSON.stringify(v,null,2)+'\n')"
           git add -f downloads/KONA.apk app/android-version.json
           if git diff --cached --quiet; then echo "APK unchanged"; exit 0; fi
-          git commit -m "build(app): publish Android app [skip ci]"
-          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
+          node tools/build_app.mjs
+          git add sw.js app/app-manifest.json
+          git commit -m "build(app): propose signed Android release"
+          git push origin HEAD
+          gh pr create --base main --head "codex/android-release-${{ github.run_id }}" --title "Publish signed Android release ${{ github.run_number }}" --body "Publish the signed APK and its verified checksum after the emulator smoke test. This release must pass the protected branch checks before publishing."
+          # GITHUB_TOKEN pushes do not trigger workflows. Explicit dispatch does.
+          for workflow in checks.yml app-seal.yml release-security.yml integration-contract.yml visual-evidence-v2.yml ui-interaction-audit.yml hostile-runtime.yml; do
+            gh workflow run "$workflow" --ref "codex/android-release-${{ github.run_id }}"
+          done

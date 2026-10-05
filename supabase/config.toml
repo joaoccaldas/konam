@@ -1,0 +1,16 @@
+project_id = "konam"
+
+[db]
+major_version = 17
+
+[db.seed]
+enabled = false
+
+# These public endpoints check the app key in the handler. It is a capability,
+# not a user credential; service writes have separate service-role-only grants.
+[functions.companion]
+verify_jwt = false
+[functions.site-analytics]
+verify_jwt = false
+[functions.newsletter-subscribe]
+verify_jwt = false

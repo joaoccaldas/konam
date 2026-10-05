@@ -11,3 +11,6 @@ output/
 artifacts/artworld-visual/
 
 _site/
+
+supabase/.temp/
+supabase/.branches/
