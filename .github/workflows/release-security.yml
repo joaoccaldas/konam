@@ -96,6 +96,13 @@ jobs:
           supabase start
           supabase db reset --local
           psql 'postgresql://postgres:postgres@127.0.0.1:54322/postgres' -v ON_ERROR_STOP=1 -f supabase/tests/security.sql
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Real Auth registration, confirmation, login, recovery and refresh
+        run: |
+          supabase status -o env > "$RUNNER_TEMP/konam-auth.env"
+          node web/account-auth-backend.mjs "$RUNNER_TEMP/konam-auth.env"
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x

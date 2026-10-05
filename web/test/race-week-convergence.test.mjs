@@ -43,9 +43,9 @@ test('return feedback is one-tap, rewarded and never stores free text',()=>{
   assert.equal(progression.events.FEEDBACK_RESPONSE.repeat,'once-per-prompt');
 });
 
-test('entry is explicitly a beta and does not advertise unavailable sign-in',()=>{
+test('entry is explicitly a beta and provides optional account access',()=>{
   const entry=read('web/landing.template.html');
   assert.match(entry,/RACE WEEK BETA/);
-  assert.doesNotMatch(entry,/id="entrySignIn"/);
+  assert.match(entry,/id="entrySignIn"/);
   assert.match(entry,/>What is Kona\.m\?<\/a>/);
 });

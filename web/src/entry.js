@@ -15,7 +15,12 @@ import { renderOnboardingBike } from './ui/onboarding-bike.js';
 import { PRODUCT_NAME } from './product-meta.js';
 
 const intro = document.getElementById('intro');
-const authReturned = consumeAuthCallback();
+const callbackParams = new URLSearchParams(location.hash.replace(/^#/, ''));
+const recovering = callbackParams.get('type') === 'recovery';
+let authReturned = false;
+let authError = callbackParams.get('error_description') || '';
+try { authReturned = consumeAuthCallback(); } catch (error) { authError = error.message; }
+if (callbackParams.has('error') || callbackParams.has('access_token')) history.replaceState(null, '', location.pathname + location.search);
 const setEntryMode = mode => {
   intro?.classList.toggle('quest-active', mode === 'quest');
   intro?.classList.toggle('app-ready', mode === 'app');
@@ -179,24 +184,29 @@ function paintQuest(step) {
     return;
   }
   if(step==='save'){
-    host.innerHTML = `<p class="eyebrow">Sign in or create your account</p><form id="saveForm"><input name="email" type="email" disabled required placeholder="Email address" aria-label="Email address" autocomplete="email"><button class="btn-primary" type="submit" disabled>Public email sign-in unavailable</button></form><button class="btn-text" type="button" id="continueLocal">Continue without account</button><button class="btn-text" type="button" id="backFromSave">Back</button><p class="kona-note" role="status" id="saveNote">Public email sign-in is unavailable while production email delivery is being configured. Use Kona.m without an account; progress stays on this device. <a href="privacy.html">Privacy & data</a></p>`;
-    host.querySelector('#continueLocal')?.addEventListener('click',()=>enterApp('home'));
-    host.querySelector('#backFromSave')?.addEventListener('click',()=>{setEntryMode('landing');host.hidden=true;document.getElementById('entrySignIn')?.focus();});
-    host.querySelector('#saveForm')?.addEventListener('submit', async event => {
-      event.preventDefault();
-      if(event.currentTarget.querySelector('input').disabled)return;
-      const email = new FormData(event.currentTarget).get('email');
-      const note = host.querySelector('#saveNote'),button=event.currentTarget.querySelector('button[type=submit]');
-      button.disabled=true;button.textContent='Sending…';
-      try {
-        const { sendMagicLink } = await import('./cloud/supabase-lite.js');
-        await sendMagicLink(email);
-        if(note)note.textContent='Check your email. Your Kona is already on this device.';
-      } catch (err) {
-        if(note)note.textContent=(err?.message||'The link could not be sent.')+' You can continue without an account.';
-      } finally { button.disabled=false;button.textContent='Send sign-in link'; }
-    });
+    showAccount();
   }
+}
+
+async function showAccount(mode='login',error='') {
+  setEntryMode('quest');
+  const host=questHost();if(!host)return;
+  host.hidden=false;intro?.removeAttribute('hidden');
+  host.textContent='Opening your account…';
+  let renderAccountAuth;
+  try { ({renderAccountAuth}=await import(new URL('app/account-auth.js',document.baseURI).href)); }
+  catch (_) {
+    host.innerHTML='<p class="kona-note" role="alert">The account form could not load. Check your connection and try again.</p><button class="btn-primary" type="button">Continue without account</button>';
+    host.querySelector('button').addEventListener('click',()=>enterApp('home'));return;
+  }
+  renderAccountAuth(host,{
+    mode,error,
+    onSuccess:()=>enterApp(existingRaceIdentity()?'home':'me'),
+    onContinue:()=>enterApp('home'),
+    onBack:()=>{setEntryMode('landing');host.hidden=true;document.getElementById('entrySignIn')?.focus();}
+  });
+  window.scrollTo(0,0);
+
 }
 
 function existingRaceIdentity() {
@@ -246,6 +256,9 @@ const shared=decodeShare(q.get('kona'));
 if(shared) paintShared(shared);
 else if (q.get('reviewRoom') === 'beast-cave') openMuseum('beast');
 else if (q.get('room') || q.get('map')) openMuseum();
+else if (recovering && authReturned) showAccount('reset');
+else if (authError) showAccount('login', authError);
+else if (['login','register'].includes(q.get('account'))) showAccount(q.get('account'));
 else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());
 else if (returningVisit && ['home','garage','collection','discover','plan','me','feed','travel'].includes(q.get('view'))) enterApp(q.get('view'));

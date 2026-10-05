@@ -25,35 +25,19 @@ try{
  // Local-first continuation stays usable at every release viewport.
  for(const [width,height] of [[320,720],[390,844],[844,390],[1440,900]]){
   const {context,page,errors}=await pageFor(width,height);await page.goto(base,{waitUntil:'networkidle0'});
-  assert.equal(await page.$('#entrySignIn'),null,'unavailable sign-in must not be advertised');
+  assert.ok(await page.$('#entrySignIn'),'optional account access must remain reachable');
   await page.click('#buildSelf');await page.waitForFunction(()=>!document.querySelector('#konaPanel').hidden);
   assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Now/);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   assert.equal(await page.$eval('[data-tab="home"]',e=>getComputedStyle(e).borderTopStyle),'none');
   assert.deepEqual(errors,[]);report.push({journey:'local-first continuation',width,height,status:'PASS'});await context.close();
  }
- // No email is sent. Exercise async form success and all error states through real DOM events.
- for(const status of [200,429,500]){
-  const {context,page,errors}=await pageFor();let requests=0;await page.setRequestInterception(true);
-  page.on('request',request=>{
-   if(request.url().includes('/auth/v1/otp')){const headers={'access-control-allow-origin':new URL(base).origin,'access-control-allow-methods':'POST, OPTIONS','access-control-allow-headers':'apikey, content-type'};if(request.method()==='OPTIONS')return request.respond({status:204,headers,body:''});requests++;request.respond({status,contentType:'application/json',headers,body:JSON.stringify(status===200?{}:{message:status===429?'Too many requests':'Unavailable'})});}
-   else request.continue();
-  });
-  await progress(page);
-  const login=await page.$('[data-login]');
-  if(!login){
-    assert.equal(requests,0);
-    assert.match(await page.$eval('#konaAccount',e=>e.innerText),/email sign-in|unavailable|without an account/i);
-    assert.deepEqual(errors,[]);
-    report.push({journey:'public email sign-in intentionally unavailable',http:status,status:'PASS'});await context.close();continue;
-  }
-  await page.type('#passportEmail','tester@example.test');await page.click('[data-login] button');
-  await page.waitForFunction(()=>/Check your email|wait|Unavailable/.test(document.querySelector('#konaAccount [data-status]').textContent));
-  assert.equal(requests,1);assert.deepEqual(errors,[]);
-  if(status===200)assert.equal(await page.$eval('[data-login]',e=>e.hidden),true);
-  else assert.equal(await page.$eval('[data-login] button',e=>e.disabled),false);
-  report.push({journey:'mock account request',http:status,status:'PASS'});await context.close();
- }
+ // Progress exposes the same account form and keeps local continuation available.
+ const account=await pageFor();await progress(account.page);
+ assert.match(await account.page.$eval('#konaAccount',e=>e.innerText),/Sign in/);
+ await account.page.click('#konaAccount a[href="index.html?account=login"]');await account.page.waitForSelector('.account-form');
+ await account.page.click('[data-local]');await account.page.waitForFunction(()=>document.body.dataset.entryMode==='app');
+ assert.deepEqual(account.errors,[]);report.push({journey:'Progress → account form → local continuation',status:'PASS'});await account.context.close();
  // A late stylesheet cannot reopen the previous tab after a newer navigation.
  const nav=await pageFor();await nav.page.goto(base,{waitUntil:'networkidle0'});
  await nav.page.click('#buildSelf');
@@ -72,7 +56,7 @@ try{
   localStorage.setItem('speedmax.hist.tut.v1','1');
  });
  await page.goto(new URL('Experiences.html',base).href,{waitUntil:'networkidle0'});await page.waitForFunction(()=>window.__exp?.passport);
- await page.waitForFunction(()=>document.getElementById('loading')?.classList.contains('off'),{timeout:60000});
+ await page.waitForFunction(()=>{const overlay=document.getElementById('loading');return overlay&&getComputedStyle(overlay).visibility==='hidden';},{timeout:60000});
  if(await page.$eval('#card',e=>e.classList.contains('on')))await page.click('#cClose');
  assert.ok(await page.$('link[href="web/styles/passport.css"]'),'Passport stylesheet must be external and page-scoped');
  assert.equal(await page.$('#ppStyle'),null,'Passport must not inject a runtime stylesheet');

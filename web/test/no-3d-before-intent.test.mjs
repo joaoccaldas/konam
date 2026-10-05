@@ -21,9 +21,9 @@ test('landing HTML contains no GLB, HDR or Three.js preload',()=>{
   assert.equal(/\.glb\b|\.hdr\b|three(?:\.min)?\.js/i.test(html),false);
 });
 
-test('landing exposes the product door and install affordance without unavailable sign-in',()=>{
+test('landing exposes the product door and install affordance with optional account access',()=>{
   assert.match(html,/id="buildSelf"/i);
   assert.match(html,/Enter KONA/i);
-  assert.doesNotMatch(html,/id="entrySignIn"/i);
+  assert.match(html,/id="entrySignIn"/i);
   assert.match(html,/Install app/i);
 });

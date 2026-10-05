@@ -18,7 +18,12 @@ const json = async res => {
 };
 const baseHeaders = () => ({ apikey: KEY, 'Content-Type':'application/json' });
 const session = () => { try { return JSON.parse(readStorage('session') || 'null'); } catch (_) { return null; } };
-const saveSession = s => { try { s ? writeStorage('session', JSON.stringify(s)) : removeStorage('session'); } catch (_) {} };
+const saveSession = s => {
+  if(!s){removeStorage('session');return;}
+  if(!s.access_token||!s.refresh_token)throw new Error('Sign-in returned an incomplete session. Please try again.');
+  const expires_at=Number(s.expires_at)||Math.floor(Date.now()/1000)+Number(s.expires_in||3600);
+  if(!writeStorage('session',JSON.stringify({access_token:s.access_token,refresh_token:s.refresh_token,token_type:s.token_type||'bearer',expires_at})))throw new Error('This browser could not save your sign-in. Allow device storage and try again.');
+};
 
 let refreshing=null;
 async function refresh() {
@@ -51,15 +56,66 @@ export function consumeAuthCallback() {
   const h = new URLSearchParams(location.hash.replace(/^#/, ''));
   if (!h.get('access_token')) return false;
   const now = Math.floor(Date.now()/1000);
-  saveSession({
+  try { saveSession({
     access_token:h.get('access_token'),
     refresh_token:h.get('refresh_token'),
     token_type:h.get('token_type') || 'bearer',
     expires_in:Number(h.get('expires_in') || 3600),
     expires_at:Number(h.get('expires_at') || (now + Number(h.get('expires_in') || 3600))),
-  });
-  history.replaceState(null, '', location.pathname + location.search);
+  }); } finally { history.replaceState(null, '', location.pathname + location.search); }
   return true;
+}
+
+const cleanEmail = email => {
+  const clean=String(email||'').trim().toLowerCase();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(clean))throw new Error('Enter a valid email address.');
+  return clean;
+};
+const strongPassword = password => {
+  if(typeof password!=='string'||password.length<12)throw new Error('Use at least 12 characters for your password.');
+  if(password.length>512)throw new Error('Use a password of no more than 512 characters.');
+  return password;
+};
+// Email links always return to the hosted app, including when requested in the APK.
+// No caller-supplied destination is accepted.
+export const authRedirect = () => 'https://joaoccaldas.github.io/konam/index.html';
+
+export async function signInWithPassword(email,password) {
+  if(typeof password!=='string'||!password)throw new Error('Enter your password.');
+  const data=await json(await fetch(URL+'/auth/v1/token?grant_type=password',{
+    method:'POST',headers:baseHeaders(),body:JSON.stringify({email:cleanEmail(email),password})
+  }));
+  saveSession(data);return data.user;
+}
+
+export async function registerAccount(email,password) {
+  const data=await json(await fetch(URL+'/auth/v1/signup?redirect_to='+encodeURIComponent(authRedirect()),{
+    method:'POST',headers:baseHeaders(),body:JSON.stringify({email:cleanEmail(email),password:strongPassword(password)})
+  }));
+  if(data?.access_token){saveSession(data);return {signedIn:true,user:data.user};}
+  // Confirmation-enabled signups intentionally return no session. An obfuscated
+  // duplicate-account response also receives this neutral confirmation message.
+  if(!data?.id&&!data?.user?.id)throw new Error('Registration could not be completed. Please try again.');
+  return {signedIn:false};
+}
+
+export async function requestPasswordReset(email) {
+  return json(await fetch(URL+'/auth/v1/recover?redirect_to='+encodeURIComponent(authRedirect()),{
+    method:'POST',headers:baseHeaders(),body:JSON.stringify({email:cleanEmail(email)})
+  }));
+}
+
+export async function resendConfirmation(email) {
+  return json(await fetch(URL+'/auth/v1/resend?redirect_to='+encodeURIComponent(authRedirect()),{
+    method:'POST',headers:baseHeaders(),body:JSON.stringify({type:'signup',email:cleanEmail(email)})
+  }));
+}
+
+export async function updatePassword(password) {
+  const data=await json(await fetch(URL+'/auth/v1/user',{
+    method:'PUT',headers:await authHeaders(),body:JSON.stringify({password:strongPassword(password)})
+  }));
+  return data;
 }
 
 // Success and throttling have different messages: a 429 does not prove an email was sent.
