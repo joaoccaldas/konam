@@ -67,3 +67,19 @@ test('recovery updates require authentication and keep backend failures visible'
 test('storage failure strips callback tokens and is reported to the visitor',t=>{
  context(t);globalThis.localStorage.setItem=()=>{throw new Error('blocked')};globalThis.location.hash='#access_token=test-only&refresh_token=test-refresh';let replaced;globalThis.history={replaceState:(_,__,url)=>replaced=url};assert.throws(consumeAuthCallback,/could not save/);assert.equal(replaced,'/kona/Studio.html');
 });
+
+test('registration records explicit newsletter choice without a second anonymous signup',async t=>{
+ context(t);const {registerAccount}=await import('../src/cloud/supabase-lite.js');const choices=[];
+ globalThis.fetch=async(url,options)=>{assert.match(url,/\/auth\/v1\/signup/);choices.push(JSON.parse(options.body).data.kona_newsletter);return new Response('{"id":"pending"}');};
+ await registerAccount('athlete@example.com','memorable-test-words');await registerAccount('athlete@example.com','memorable-test-words',{newsletter:true});await registerAccount('athlete@example.com','memorable-test-words',{newsletter:'true'});
+ assert.deepEqual(choices.map(x=>x.opt_in),[false,true,false]);assert.ok(choices.every(x=>x.id==='kona-intern'&&x.version===1));
+});
+
+test('newsletter reconciliation is owner-authenticated and cannot undo successful login on failure',async t=>{
+ const store=context(t);const {signInWithPassword}=await import('../src/cloud/supabase-lite.js');let reconciled=0;
+ globalThis.fetch=async(url,options)=>{
+   if(url.includes('grant_type=password'))return new Response(JSON.stringify({access_token:'test-only',refresh_token:'test-refresh',expires_in:3600,user:{id:'owner',user_metadata:{kona_newsletter:{opt_in:true}}}}));
+   assert.match(url,/confirm_registration_newsletter$/);assert.equal(options.headers.Authorization,'Bearer test-only');assert.deepEqual(JSON.parse(options.body),{});reconciled++;return new Response('{}',{status:503});
+ };
+ assert.equal((await signInWithPassword('athlete@example.com','test-passphrase')).id,'owner');assert.equal(reconciled,1);assert.ok(store.getItem('kona.supabase.session.v1'));
+});

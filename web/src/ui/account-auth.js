@@ -1,17 +1,6 @@
-import {signInWithPassword,registerAccount,requestPasswordReset,resendConfirmation,updatePassword,currentUser,PUBLIC_SUPABASE_URL,PUBLIC_SUPABASE_KEY} from '../cloud/supabase-lite.js';
+import {signInWithPassword,registerAccount,requestPasswordReset,resendConfirmation,updatePassword,currentUser} from '../cloud/supabase-lite.js';
 
 // Account access shares the entry shell. Account and newsletter consent are separate.
-export async function requestProjectUpdates(email) {
-  const response=await fetch(PUBLIC_SUPABASE_URL+'/functions/v1/newsletter-subscribe',{
-    method:'POST',headers:{apikey:PUBLIC_SUPABASE_KEY,'Content-Type':'application/json'},
-    body:JSON.stringify({email,source:'account-registration',locale:'en'})
-  });
-  if(!response.ok)throw new Error('Your update request could not be saved. Your account registration is unaffected.');
-  const data=await response.json();
-  if(data?.status!=='pending')throw new Error('Your update request could not be confirmed.');
-  return data;
-}
-
 export function renderAccountAuth(host,{mode='login',onSuccess=()=>{},onContinue=()=>{},onBack=()=>{},error=''}={}) {
   let active=['login','register','forgot','reset'].includes(mode)?mode:'login';
   let email='',pending=false;
@@ -27,7 +16,7 @@ export function renderAccountAuth(host,{mode='login',onSuccess=()=>{},onContinue
           ${active!=='reset'?'<label for="account-email">Email address</label><input id="account-email" name="email" type="email" required maxlength="254" autocomplete="username" inputmode="email" autocapitalize="none" spellcheck="false">':''}
           ${active!=='forgot'?`<label for="account-password">${active==='reset'?'New password':'Password'}</label><div class="account-password"><input id="account-password" name="password" type="password" required ${active==='login'?'':'minlength="12"'} maxlength="512" autocomplete="${active==='login'?'current-password':'new-password'}"><button type="button" data-show aria-label="Show password" aria-pressed="false">Show</button></div>`:''}
           ${active==='register'||active==='reset'?'<p class="account-hint">At least 12 characters. A few memorable words work well.</p><label for="account-confirm">Confirm password</label><input id="account-confirm" name="confirm" type="password" required minlength="12" maxlength="512" autocomplete="new-password">':''}
-          ${active==='register'?'<label class="account-consent"><input type="checkbox" name="updates"><span><b>Keep me in the loop.</b><span>Kona.m news, fresh discoveries and other cool projects from João Caldas. Optional — your Kona is yours either way.</span></span></label>':''}
+          ${active==='register'?'<label class="account-consent"><input type="checkbox" name="updates"><span><b>Get The Intern’s newsletter.</b><span>Three things worth your time: Kona.m news, fresh discoveries and other cool projects. The Intern reads the internet so you don’t have to. Optional — your Kona is yours either way.</span></span></label>':''}
           <p class="account-status" role="status" aria-live="polite" tabindex="-1"></p>
           <button class="btn primary" type="submit">${labels[active]} <span aria-hidden="true">→</span></button>
         </form>
@@ -65,9 +54,8 @@ export function renderAccountAuth(host,{mode='login',onSuccess=()=>{},onContinue
         if(active==='forgot'){
           await requestPasswordReset(email);announce('If an account uses this address, you’ll receive a reset link. Check your spam folder too.');return;
         }
-        const account=await registerAccount(email,password);
-        let updateNote='';
-        if(wantsUpdates){try{await requestProjectUpdates(email);updateNote=' Your update request is saved as pending; it is separate from your account.';}catch(err){updateNote=' '+err.message;}}
+        const account=await registerAccount(email,password,{newsletter:wantsUpdates});
+        const updateNote=wantsUpdates?' Your newsletter choice is saved with this registration. Confirming your email also confirms this optional subscription. Every edition has an unsubscribe link.':'';
         if(account.signedIn){await onSuccess();return;}
         announce('Check your inbox to confirm your email, then sign in. If you already have an account, use Sign in or Forgot password.'+updateNote);
         form.querySelector('[data-resend]')?.remove();
