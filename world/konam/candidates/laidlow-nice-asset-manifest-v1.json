@@ -1,0 +1,27 @@
+{
+ "schema_version": 1,
+ "room_id": "laidlow-nice",
+ "policy": "reuse-first",
+ "assets": [
+  {
+   "asset_id": "canyon-speedmax-cfr-canonical",
+   "kind": "bike",
+   "decision": "REUSE",
+   "why_reuse": "The subject is a Canyon athlete on the Speedmax CFR; the museum's canonical Canyon Speedmax CFR is the right object, loaded by the host (loadBeastBike).",
+   "runtime_ref": ["assets/museum/speedmax_web.glb", "assets/museum/speedmax_web-lite.glb"],
+   "sha256": { "hero": "d0562d1e445099f60e79e258f980e4fc0d098efdb851f2ff1365351d719ed0e0", "lite": "12f55114e165aee2dd3cd53b2c736efa66771dddfd938be8c74cae222e54e016" },
+   "tris": { "hero": 509624, "lite": 76826 },
+   "representation": "canonical-museum-asset (documented finish; not the athlete's race bike, livery or setup)",
+   "rights": "museum asset; Canyon wordmarks only as modelled",
+   "lifecycle": "candidate"
+  }
+ ],
+ "constraints": {
+  "athlete_likeness": false,
+  "athlete_marks": false,
+  "ironman_mark": false,
+  "photography": false,
+  "real_newspaper_marks": false
+ },
+ "procedural": "limestone floor, ochre dado, Baie des Anges shader (sky, Colline du Château, sea glint, Promenade lights), blue chairs (instanced), galets (instanced), balustrade, palms, monument and record panels, fictional front page (Le Promeneur), coach's corner — original KONA.m code"
+}

@@ -1,0 +1,34 @@
+{
+ "schema": "athlete-facts-v1",
+ "subject": "Sam Laidlow",
+ "verified_on": "2026-10-05",
+ "editorial": "KONA.m independent room. Results only; taglines are KONA.m copy, not the athlete's words.",
+ "athlete": {
+  "name": "Sam Laidlow",
+  "nation": "France",
+  "born": { "date": "1998-12-23", "place": "Oakley, Bedfordshire, England", "source": "https://en.wikipedia.org/wiki/Sam_Laidlow" },
+  "coach": { "line": "Coached by his father, Richard Laidlow.", "source": "https://en.wikipedia.org/wiki/Sam_Laidlow" }
+ },
+ "results": [
+  { "id": "nice-2023", "event": "IRONMAN World Championship", "place": "Nice, France", "date": "2023-09-10", "position": 1,
+    "time": "8:06:22", "splits": { "swim": "47:50", "bike": "4:31:28", "run": "2:41:46" },
+    "note": "First IRONMAN World Champion from France and the youngest man ever to win the title.",
+    "sources": ["https://www.olympics.com/en/news/france-sam-laidlow-2023-ironman-world-championships-nice-results", "https://en.wikipedia.org/wiki/Sam_Laidlow"] },
+  { "id": "kona-2022", "event": "IRONMAN World Championship", "place": "Kailua-Kona, Hawai‘i", "date": "2022-10-08", "position": 2,
+    "time": "7:42:00", "bike": "4:04:36", "note": "Bike course record, more than four minutes under the 2018 mark.",
+    "sources": ["https://bigislandnow.com/2022/10/08/ironman-update-frances-sam-laidlow-smashes-bike-course-record-two-norwegians-chasing-in-the-run/", "https://en.wikipedia.org/wiki/Sam_Laidlow"] },
+  { "id": "roth-2026", "event": "Challenge Roth", "place": "Roth, Germany", "date": "2026-07-05", "position": 1,
+    "time": "7:21:04", "note": "Described by Canyon as a long-distance triathlon world record, on the then-unreleased Speedmax CFR.",
+    "sources": ["https://media-centre.canyon.com/en-INT/267864-unreleased-canyon-speedmax-obliterates-course-records-at-challenge-roth/", "https://en.wikipedia.org/wiki/Sam_Laidlow"] }
+ ],
+ "equipment": {
+  "line": "A Canyon athlete since January 2023 (Speedmax CFR).",
+  "sources": ["https://triathlonmagazine.ca/personalities/sam-laidlow-signs-with-canyon/", "https://media-centre.canyon.com/en-INT/267864-unreleased-canyon-speedmax-obliterates-course-records-at-challenge-roth/"],
+  "room_model": "The room shows the KONA.m museum's canonical Canyon Speedmax CFR (assets/museum/speedmax_web.glb) in its documented finish: the model line he races, not his race bike, livery or setup."
+ },
+ "known_context": {
+  "note": "Not displayed in the room. In October 2023 Laidlow announced an International Testing Agency investigation following concerns raised by private sources; no public outcome or suspension as of verification. Anyone presenting this room should know it.",
+  "sources": ["https://en.wikipedia.org/wiki/Sam_Laidlow"]
+ },
+ "rights": { "endorsement": false, "likeness_used": false, "athlete_marks_used": false, "brand_marks": "Canyon wordmarks appear only as modelled on the canonical museum asset" }
+}
