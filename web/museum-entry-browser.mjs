@@ -4,6 +4,7 @@
 import puppeteer from 'puppeteer-core';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+if(process.env.KONA_TEST_VIEWPORT&&!['390','844','1440'].includes(process.env.KONA_TEST_VIEWPORT))throw Error('Unknown test viewport; refusing empty coverage');
 const base=process.argv[2]||'http://127.0.0.1:8748/';
 const out=new URL('../output/playwright/',import.meta.url);fs.mkdirSync(out,{recursive:true});
 const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage',process.env.CI?'--use-angle=swiftshader':'--use-angle=metal','--enable-unsafe-swiftshader']});
@@ -17,7 +18,7 @@ async function press(page,selector){
 }
 
 try{
- for(const [width,height,returning] of [[390,844,false],[844,390,true],[1440,900,false]]){
+ for(const [width,height,returning] of [[390,844,false],[844,390,true],[1440,900,false]].filter(v=>!process.env.KONA_TEST_VIEWPORT||String(v[0])===process.env.KONA_TEST_VIEWPORT)){
   const context=await browser.createBrowserContext(),page=await context.newPage(),errors=[],requests=[];
   page.setDefaultTimeout(60000);page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>requests.push(request.url()));
   await page.setViewport({width,height,deviceScaleFactor:process.env.CI?.35:1,isMobile:width<900,hasTouch:width<900});await page.setBypassServiceWorker(true);

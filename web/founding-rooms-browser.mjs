@@ -3,11 +3,12 @@
 import puppeteer from 'puppeteer-core';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+if(process.env.KONA_TEST_VIEWPORT&&!['390','844'].includes(process.env.KONA_TEST_VIEWPORT))throw Error('Unknown test viewport; refusing empty coverage');
 const base=process.argv[2]||'http://127.0.0.1:8748/';
 const routes=JSON.parse(fs.readFileSync('world/konam/founding-runtime-v1.json')).routes;
 const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage',process.env.CI?'--use-angle=swiftshader':'--use-angle=metal','--enable-unsafe-swiftshader']});const report=[];
 try{
- for(const [width,height] of [[390,844],[844,390]]){
+ for(const [width,height] of [[390,844],[844,390]].filter(v=>!process.env.KONA_TEST_VIEWPORT||String(v[0])===process.env.KONA_TEST_VIEWPORT)){
  const context=await browser.createBrowserContext(),page=await context.newPage();page.setDefaultTimeout(60000);await page.setViewport({width,height,deviceScaleFactor:process.env.CI?.35:1,isMobile:true,hasTouch:true});await page.setBypassServiceWorker(true);
  await page.evaluateOnNewDocument(()=>{localStorage.setItem('kona.profile.v1',JSON.stringify({v:1,quality:'low',motion:'reduced',travel:'teleport'}));localStorage.setItem('speedmax.coach.v1','1');localStorage.setItem('kona.onboarding.v1','seen');});
  await page.goto(base,{waitUntil:'networkidle2'});await page.click('#entryWorld');await page.waitForFunction(()=>!!window.__museum?.renderer);await page.waitForFunction(()=>document.body.classList.contains('walking'));
