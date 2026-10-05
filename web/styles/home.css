@@ -52,5 +52,5 @@
   .home-today .kona-primary{width:100%;justify-content:space-between;margin-top:14px}
   .home-kona-now .kona-list article{display:grid;grid-template-columns:44px minmax(0,1fr);align-items:start;gap:8px 10px;padding:11px 0}
   .home-kona-now .kona-list article>i{grid-row:1/3}
-  .home-kona-now .kona-list article>button{grid-column:2;justify-self:start;min-height:44px;padding:0}
+  .home-kona-now .kona-list article>button{grid-column:2;justify-self:start;min-height:48px;padding:0}
 }
