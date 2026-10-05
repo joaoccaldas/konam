@@ -157,6 +157,7 @@ function paintQuest(step) {
   const host = questHost();
   if (!host) return;
   host.hidden = false;
+  window.scrollTo(0, 0); const intro = document.getElementById('intro'); if (intro) intro.scrollTop = 0;   // each step starts at its top (Skip sits at the bottom of a long step)
   if(step==='questions'){
     renderOnboardingQuestions(host,{onDone:()=>paintQuest('bike'),onSkip:()=>paintQuest('avatar')});
     return;

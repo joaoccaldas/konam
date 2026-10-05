@@ -78,7 +78,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 
 @media(max-width:899px){
   #intro.kona-entry{
-    min-height:100dvh;padding:calc(14px + env(safe-area-inset-top)) max(var(--brand-mobile-gutter),env(safe-area-inset-left),env(safe-area-inset-right)) calc(16px + env(safe-area-inset-bottom));overflow:auto
+    min-height:100dvh;padding:calc(22px + var(--brand-touch) + env(safe-area-inset-top)) max(var(--brand-mobile-gutter),env(safe-area-inset-left),env(safe-area-inset-right)) calc(16px + env(safe-area-inset-bottom));overflow:auto
   }
   #intro.kona-entry .entry-media img{object-position:58% center;filter:saturate(.68) contrast(1.04)}
   #intro.kona-entry::before{background:linear-gradient(180deg,rgba(5,14,19,.38),rgba(5,14,19,.62) 36%,rgba(5,14,19,.96) 78%)}
