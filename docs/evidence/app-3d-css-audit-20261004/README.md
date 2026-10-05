@@ -44,6 +44,20 @@ Reproduce: `node tools/room-evidence.mjs --review world --room hall --areas [--a
 - Display LOD: invisible at display distance; up close (< 6 m) the full model is always used. Faceting of the LOD
   is visible at 1.6 m, which is why it never serves inspection, explode or hero views.
 
+### Review rooms (`?reviewRoom=`), metrics vs their room-package budgets
+
+| Room | Desktop | Phone | Errors |
+|---|---|---|---|
+| NOR // 3 | 91 meshes · 200k tris ✅ | 89 · 63k ✅ | 0 |
+| Breitling × Kona | 102 · 63k ✅ | 86 · 49k ✅ | 0 |
+| Beast Cave | 231 meshes ❌ (190) · 30k tris | 304 meshes ❌ (110) · **141k tris ✅** (was 1.13M) | 0 |
+
+Beast Cave: a race loaded **two** full Speedmaxes into the same spot (present before the audit); now one shared load,
+and phones use the derived 77k-triangle hero (`assets/museum/speedmax_web-lite.glb`). Its remaining breach is mesh
+count — the cave's ~120 small static meshes are not merged per material the way NOR and Breitling are. Next fix:
+merge them with the same `flush()`/`bake` pattern. Breitling's monument now reports `moving`, so its shadow stays
+per-frame while the scheduled-shadow saving applies everywhere else.
+
 ### CSS — conflicts fixed, duplicates removed
 
 | Problem | Effect before | Fix |
