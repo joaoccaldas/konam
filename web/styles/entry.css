@@ -324,7 +324,9 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-peek:is(:hover,:focus-visible){border-color:var(--brand-action);outline:none}
 @media(max-width:899px){#intro.kona-entry .entry-peek{width:100%}}
 /* short landscape phones: the lede already says what Kona.m does; keep both ways in above the fold */
-@media(orientation:landscape) and (max-height:520px){#intro.kona-entry .entry-promise{display:none}#intro.kona-entry .entry-peek{width:auto}}
+@media(orientation:landscape) and (max-height:520px){#intro.kona-entry .entry-promise{display:none}#intro.kona-entry .entry-peek{width:auto}#intro.kona-entry h1{max-width:none;font-size:clamp(28px,4.6vw,38px)}}
+/* short portrait phones (e.g. 320×568): same trade, so Enter Kona.m stays above the fold */
+@media(orientation:portrait) and (max-height:700px){#intro.kona-entry .entry-promise{display:none}}
 #intro.kona-entry .entry-story-note a{display:inline-flex;align-items:center;min-height:48px}   /* phone touch target */
 /* The packaged WebView needs clearance below its fixed Why Kona shortcut. */
 @media(max-width:899px){
