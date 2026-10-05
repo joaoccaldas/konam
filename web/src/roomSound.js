@@ -37,6 +37,13 @@ export function createRoomSound(ctx, out) {
     const hum = osc('sawtooth', 120), lp = filt('lowpass', 420), hg = gain(.012); hum.connect(lp).connect(hg).connect(g);
   }
 
+  { // Haunt: a house-sized drone (two sines that beat), wind in the eaves, rain on glass
+    const g = bed('haunt');
+    const d1 = osc('sine', 46), d2 = osc('sine', 49.4), dg = gain(.16); lfo(.07, .06, dg.gain); d1.connect(dg); d2.connect(dg); dg.connect(g);
+    const wind = noise(6), wbp = filt('bandpass', 420, 1.4), wg = gain(.1); lfo(.05, 200, wbp.frequency); lfo(.11, .05, wg.gain); wind.connect(wbp).connect(wg).connect(g);
+    const rain = noise(4), rhp = filt('highpass', 3200, .5), rg = gain(.028); rain.connect(rhp).connect(rg).connect(g);
+  }
+
   const blip = (id, fn) => { if (active === id) fn(beds[id]); };
   const drip = g => {
     const o = osc('sine', 900 + Math.random() * 1400), e = gain(0), t = now();
@@ -61,6 +68,21 @@ export function createRoomSound(ctx, out) {
     e.gain.setValueAtTime(0, t); e.gain.linearRampToValueAtTime(.035, t + .01); e.gain.exponentialRampToValueAtTime(.0001, t + 1.6);
     o.connect(e).connect(g); o.stop(t + 1.7);
   };
+
+  // One-shots the Hollow House's director asks for. All synthesised; nothing plays unless the visitor opted in to sound.
+  const burst = (secs, f, type, v, t0, q = 1) => { const n = noise(secs + .2), fl = filt(type, f, q), e = gain(0); e.gain.setValueAtTime(0, t0); e.gain.linearRampToValueAtTime(v, t0 + .02); e.gain.exponentialRampToValueAtTime(.0001, t0 + secs); n.connect(fl).connect(e).connect(beds.haunt); n.stop(t0 + secs + .2); };
+  const CUES = {
+    slam: t => { burst(.5, 220, 'lowpass', .5, t); thump(beds.haunt, t, .8); },
+    thunder: t => { burst(3.2, 140, 'lowpass', .55, t); burst(2.2, 70, 'lowpass', .5, t + .15); },
+    whisper: t => { for (let i = 0; i < 3; i++) burst(1.1, 1800 + i * 500, 'bandpass', .05, t + i * .7, 5); },
+    drip: t => drip(beds.haunt),
+    thud: t => { thump(beds.haunt, t, .7); burst(.25, 600, 'bandpass', .12, t); },
+    flicker: t => { burst(.2, 2400, 'highpass', .08, t); burst(.35, 110, 'lowpass', .2, t); },
+    musicbox: t => { [659, 622, 659, 622, 659, 494, 587, 523, 440, 0, 262, 330, 440, 494].forEach((f, i) => { if (!f) return; const o = osc('sine', f), e = gain(0), at = t + i * .42; e.gain.setValueAtTime(0, at); e.gain.linearRampToValueAtTime(.05, at + .01); e.gain.exponentialRampToValueAtTime(.0001, at + 1.3); o.connect(e).connect(beds.haunt); o.stop(at + 1.4); }); },
+    stinger: t => { const a = osc('sawtooth', 77), b = osc('sawtooth', 81.5), lp = filt('lowpass', 900, 3), e = gain(0); a.frequency.exponentialRampToValueAtTime(240, t + 1.4); b.frequency.exponentialRampToValueAtTime(250, t + 1.4); e.gain.setValueAtTime(0, t); e.gain.linearRampToValueAtTime(.16, t + 1.2); e.gain.linearRampToValueAtTime(0, t + 1.6); a.connect(lp); b.connect(lp); lp.connect(e).connect(beds.haunt); a.stop(t + 1.7); b.stop(t + 1.7); },
+    heartbeat: t => { for (let i = 0; i < 9; i++) { const at = t + i * (.72 - i * .04); thump(beds.haunt, at, .55); thump(beds.haunt, at + .22, .33); } },
+    run: t => { for (let i = 0; i < 4; i++) { const o = osc('sine', 392 * 2 ** (i / 4)), e = gain(0), at = t + i * .18; e.gain.setValueAtTime(0, at); e.gain.linearRampToValueAtTime(.04, at + .01); e.gain.exponentialRampToValueAtTime(.0001, at + 1.2); o.connect(e).connect(beds.haunt); o.stop(at + 1.3); } },
+  };
   let active = null, beat = 0;
   const timer = setInterval(() => {
     if (ctx.state !== 'running' || !active) return;
@@ -68,6 +90,8 @@ export function createRoomSound(ctx, out) {
     if (active === 'horror' && (beat = (beat + 1) % 4) === 0) { const t = now() + .02; thump(beds.horror, t, .5); thump(beds.horror, t + .24, .32); }
     if (Math.random() < .07) blip('zombie', groan);
     if (Math.random() < .09) blip('alien', ping);
+    if (Math.random() < .06) blip('haunt', groan);
+    if (Math.random() < .03) blip('haunt', g => thump(g, now() + .02, .22));       // footsteps somewhere upstairs
   }, 280);
 
   return {
@@ -76,6 +100,7 @@ export function createRoomSound(ctx, out) {
       active = id;
       for (const [k, g] of Object.entries(beds)) g.gain.setTargetAtTime(k === id ? 1 : 0, now(), .8);
     },
+    cue(name, delay = 0) { const fn = CUES[name]; if (fn && ctx.state === 'running' && active === 'haunt') fn(now() + .03 + delay); },
     stop() { clearInterval(timer); },
   };
 }

@@ -1,0 +1,168 @@
+{
+  "note": "software-rendered (SwiftShader) browser; frame times are not representative, budgets (draws, triangles) are exact",
+  "results": [
+    {
+      "label": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "deviceScaleFactor": 1
+      },
+      "state": {
+        "room": "hollowHouseRoom",
+        "visible": true,
+        "budget": {
+          "draws": 94,
+          "tris": 47418,
+          "realLights": 5
+        },
+        "budgetWithBike": {
+          "draws": 167,
+          "tris": 598946,
+          "realLights": 5
+        },
+        "painted": [
+          27,
+          27
+        ],
+        "pickables": 1914,
+        "reduced": false
+      },
+      "shots": [
+        "desktop-01-door-from-hall.png",
+        "desktop-02-foyer-stair-and-glass.png",
+        "desktop-03-corridor-and-the-lodger.png",
+        "desktop-04-parlor-table.png",
+        "desktop-05-nursery.png",
+        "desktop-06-library.png",
+        "desktop-07-dining.png",
+        "desktop-08-cellar-machine.png"
+      ],
+      "errors": [],
+      "tier": "desktop",
+      "limits": {
+        "draws": 125,
+        "triangles": 100000
+      }
+    },
+    {
+      "label": "phone-portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "deviceScaleFactor": 1,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "state": {
+        "room": "hollowHouseRoom",
+        "visible": true,
+        "budget": {
+          "draws": 94,
+          "tris": 47418,
+          "realLights": 3
+        },
+        "budgetWithBike": {
+          "draws": 167,
+          "tris": 598946,
+          "realLights": 3
+        },
+        "painted": [
+          27,
+          27
+        ],
+        "pickables": 1912,
+        "reduced": false
+      },
+      "shots": [
+        "phone-portrait-01-door-from-hall.png",
+        "phone-portrait-02-foyer-stair-and-glass.png",
+        "phone-portrait-03-corridor-and-the-lodger.png",
+        "phone-portrait-04-parlor-table.png"
+      ],
+      "errors": [],
+      "tier": "mobile",
+      "limits": {
+        "draws": 110,
+        "triangles": 70000
+      }
+    },
+    {
+      "label": "phone-landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "deviceScaleFactor": 1,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "state": {
+        "room": "hollowHouseRoom",
+        "visible": true,
+        "budget": {
+          "draws": 94,
+          "tris": 47418,
+          "realLights": 3
+        },
+        "budgetWithBike": {
+          "draws": 167,
+          "tris": 598946,
+          "realLights": 3
+        },
+        "painted": [
+          27,
+          27
+        ],
+        "pickables": 1912,
+        "reduced": false
+      },
+      "shots": [
+        "phone-landscape-02-foyer-stair-and-glass.png",
+        "phone-landscape-03-corridor-and-the-lodger.png"
+      ],
+      "errors": [],
+      "tier": "mobile",
+      "limits": {
+        "draws": 110,
+        "triangles": 70000
+      }
+    },
+    {
+      "label": "desktop-reduced-motion",
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "deviceScaleFactor": 1
+      },
+      "state": {
+        "room": "hollowHouseRoom",
+        "visible": true,
+        "budget": {
+          "draws": 94,
+          "tris": 47418,
+          "realLights": 5
+        },
+        "budgetWithBike": {
+          "draws": 167,
+          "tris": 598946,
+          "realLights": 5
+        },
+        "painted": [
+          27,
+          27
+        ],
+        "pickables": 1914,
+        "reduced": true
+      },
+      "shots": [
+        "desktop-reduced-motion-03-corridor-and-the-lodger.png"
+      ],
+      "errors": [],
+      "tier": "desktop",
+      "limits": {
+        "draws": 125,
+        "triangles": 100000
+      }
+    }
+  ]
+}

@@ -20,6 +20,7 @@ This document names the canonical owners of product truth. If a proposed change 
 | World renderer/player | `web/src/landing.js` | rooms plug in through approved adapters |
 | Renderer authority freeze | `config/renderer-authority-v1.json` + `tools/authority-hygiene.mjs` | do not add a renderer constructor outside the explicit inventory; production entries must have a kernel migration disposition |
 | Shared renderer kernel | Wave 2 target: `web/src/render/` (not implemented yet) | migrate one bounded consumer at a time; do not create a parallel renderer stack |
+| Dark-room primitives | `web/src/horrorkit.js` + `web/src/horrorkit-surfaces.js` | reuse the lighting shield, geometry batching, light pool, fog swap, shared Halloween props and procedural surfaces for any room that must be lit from within; extend them, do not copy them into a room |
 | Build outputs | source files + deterministic builders | never hand-edit generated bundles as authority |
 | Release truth | exact-SHA CI + evidence | branch existence is not production authority |
 

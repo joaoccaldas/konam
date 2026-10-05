@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "room_id": "hollow-house",
+  "policy": "reuse-first",
+  "assets": [
+    {
+      "asset_id": "hero-bike-speedmax-cfr",
+      "kind": "bike",
+      "decision": "REUSE",
+      "source": "canonical-product-pipeline",
+      "source_ref": "museum/bike.schema.json",
+      "rights": "existing-canonical",
+      "lifecycle": "approved",
+      "runtime_ref": "existing CFR GLB via PIECES; repainted through engine/skins.js applySkin"
+    },
+    {
+      "asset_id": "skin-hollow-house",
+      "kind": "livery",
+      "decision": "ADAPT",
+      "source": "skin-system",
+      "source_ref": "web/src/engine/skins.js",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "inline museum-made pale livery, same contract as the Lava Night fallback; not a Canyon colourway"
+    },
+    {
+      "asset_id": "prop-skeleton",
+      "kind": "prop",
+      "decision": "REUSE",
+      "source": "procedural-three",
+      "source_ref": "web/src/horrorkit.js#makeSkeleton",
+      "rights": "original",
+      "lifecycle": "approved",
+      "note": "extracted unchanged from Lava Night; both rooms import it"
+    },
+    {
+      "asset_id": "prop-cobweb",
+      "kind": "prop",
+      "decision": "REUSE",
+      "source": "procedural-three",
+      "source_ref": "web/src/horrorkit.js#cobwebPoints",
+      "rights": "original",
+      "lifecycle": "approved",
+      "note": "extracted from Lava Night"
+    },
+    {
+      "asset_id": "painters-roomkit",
+      "kind": "texture",
+      "decision": "REUSE",
+      "source": "procedural-canvas",
+      "source_ref": "web/src/roomkit.js",
+      "rights": "original",
+      "lifecycle": "approved",
+      "note": "motes, mistTex, scrawlTex, glyphTex"
+    },
+    {
+      "asset_id": "host-lettering",
+      "kind": "signage",
+      "decision": "REUSE",
+      "source": "host-runtime",
+      "source_ref": "web/src/engine/textures.js#lettering",
+      "rights": "original",
+      "lifecycle": "approved"
+    },
+    {
+      "asset_id": "interior-shield",
+      "kind": "material-primitive",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/horrorkit.js#shieldMaterial",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "shared primitive: a room's materials ignore the hall's sun/sky/environment and use only the room's own lights; proven against this three version by a test"
+    },
+    {
+      "asset_id": "geo-batch",
+      "kind": "geometry-primitive",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/horrorkit.js#GeoBatch",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "shared primitive: static geometry merged per material with world-metre UVs"
+    },
+    {
+      "asset_id": "light-pool",
+      "kind": "light-primitive",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/horrorkit.js#createLightPool",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "shared primitive: a few real lights follow the nearest of many flames"
+    },
+    {
+      "asset_id": "atmosphere",
+      "kind": "fog-primitive",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/horrorkit.js#createAtmosphere",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "swaps the hall's day fog for room fog and restores it exactly"
+    },
+    {
+      "asset_id": "drape-sheet",
+      "kind": "geometry-primitive",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/horrorkit.js#drapeGeometry",
+      "rights": "original",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "surfaces-pbr",
+      "kind": "texture-set",
+      "decision": "NEW",
+      "source": "procedural-canvas",
+      "source_ref": "web/src/horrorkit-surfaces.js",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "floorboards, marble, wallpaper x3 styles, wainscot, plaster, brick, flagstone, runner, rust, dust sheet, portraits, storm view, rain, stained glass; colour + bump (+ wet roughness); seeded; painted lazily in idle slices"
+    },
+    {
+      "asset_id": "shell-and-furniture",
+      "kind": "architecture",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/hollow-house.js",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "seven zones; static geometry batched per material"
+    },
+    {
+      "asset_id": "lodger",
+      "kind": "character",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/hollow-house.js#lodger",
+      "rights": "fictional-original",
+      "lifecycle": "candidate",
+      "note": "featureless figure; moves only unseen (hollow-director.js)"
+    },
+    {
+      "asset_id": "director",
+      "kind": "logic",
+      "decision": "NEW",
+      "source": "pure-js",
+      "source_ref": "web/src/hollow-director.js",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "house rules enforced by web/test/hollow-house-native.test.mjs"
+    },
+    {
+      "asset_id": "audio-haunt",
+      "kind": "sound",
+      "decision": "ADAPT",
+      "source": "web-audio-synthesis",
+      "source_ref": "web/src/roomSound.js",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "a 'haunt' bed and cue() one-shots added to the existing synthesised room-sound system; no audio files"
+    }
+  ],
+  "constraints": {
+    "copied_third_party_ui": false,
+    "copied_race_photography": false,
+    "real_person_likeness": false,
+    "athlete_likeness": false,
+    "official_partner_marks": false,
+    "audio_files": false,
+    "downloaded_textures": false
+  }
+}

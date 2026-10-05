@@ -10,6 +10,7 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { slotsOf, applySkin } from './engine/skins.js';
+import { pumpkinGeometry, makeSkeleton, makeBat, flapBat, cobwebPoints } from './horrorkit.js';
 
 export const HROOM = { x0: -18.3, x1: -7.3, z0: 4.8, z1: -8.4, h: 4.4 };
 export const HDOOR = { z0: 1.0, z1: 4.0, h: 3.4 };
@@ -97,11 +98,7 @@ export function buildHalloween(ctx) {
     glow(() => { g.beginPath(); g.moveTo(cx - 6, 124); g.lineTo(cx + 6, 124); g.lineTo(cx, 112); g.closePath(); });
     glow(() => { g.beginPath(); g.moveTo(cx - 54, 140); for (let i = 0; i <= 8; i++) g.lineTo(cx - 54 + i * 13.5, 140 + (i % 2 ? 10 : 0) + Math.sin(i / 8 * Math.PI) * 26); for (let i = 8; i >= 0; i--) g.lineTo(cx - 54 + i * 13.5, 150 + Math.sin(i / 8 * Math.PI) * 36 - (i % 2 ? 0 : 8)); g.closePath(); });
   });
-  const pumpkinGeo = (() => {
-    const g = new THREE.SphereGeometry(.3, 40, 20), p = g.attributes.position, v = new THREE.Vector3();
-    for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i); const a = Math.atan2(v.z, v.x), rib = 1 - .075 * Math.pow(Math.abs(Math.sin(a * 4)), .6); v.x *= rib; v.z *= rib; v.y *= .78; if (v.y > .19) v.y -= (v.y - .19) * .6; p.setXYZ(i, v.x, v.y, v.z); }
-    g.computeVertexNormals(); return g;
-  })();
+  const pumpkinGeo = pumpkinGeometry(.3);
   const pumpkinM = new THREE.MeshStandardMaterial({ color: '#e8641a', roughness: .55, emissive: new THREE.Color('#ffae42'), emissiveMap: faceTex, emissiveIntensity: 2.2 });
   const lanterns = [
     [HROOM.x1 - .9, HROOM.z0 - .8, 1, -2.2], [HROOM.x1 - 1.6, HROOM.z0 - .7, .75, -2.6], [HROOM.x0 + .8, HROOM.z0 - .8, 1.1, -.8],
@@ -132,53 +129,22 @@ export function buildHalloween(ctx) {
   // ---- cobwebs in the ceiling corners (one line mesh)
   {
     const pts = [];
-    for (const [cx, cz, sx, sz] of [[HROOM.x0, HROOM.z0, 1, -1], [HROOM.x1, HROOM.z1, -1, 1], [HROOM.x0, HROOM.z1, 1, 1]]) {
-      const O = new THREE.Vector3(cx, HROOM.h, cz), spokes = 7, R = 1.3;
-      const spokeEnd = k => { const a = k / (spokes - 1); return O.clone().add(new THREE.Vector3(sx * R * (1 - a), -R * .8 * Math.sin(a * Math.PI / 2) - .05, sz * R * a)); };
-      for (let k = 0; k < spokes; k++) pts.push(O, spokeEnd(k));
-      for (let r = 1; r <= 5; r++) for (let k = 0; k < spokes - 1; k++) { const t = r / 5.4; pts.push(O.clone().lerp(spokeEnd(k), t).add(new THREE.Vector3(0, -.03 * r, 0)), O.clone().lerp(spokeEnd(k + 1), t).add(new THREE.Vector3(0, -.03 * r, 0))); }
-    }
+    for (const [cx, cz, sx, sz] of [[HROOM.x0, HROOM.z0, 1, -1], [HROOM.x1, HROOM.z1, -1, 1], [HROOM.x0, HROOM.z1, 1, 1]]) pts.push(...cobwebPoints(new THREE.Vector3(cx, HROOM.h, cz), sx, sz));
     group.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: '#cfc9d6', transparent: true, opacity: .45 })));
   }
 
   // ---- bats circling under the ceiling
   const bats = [];
   {
-    const shape = new THREE.Shape(); shape.moveTo(0, 0); shape.quadraticCurveTo(.12, .08, .26, .05); shape.lineTo(.22, -.02); shape.quadraticCurveTo(.18, .02, .15, -.03); shape.quadraticCurveTo(.1, .01, .07, -.04); shape.quadraticCurveTo(.04, -.01, 0, -.03); shape.closePath();
-    const wing = new THREE.ShapeGeometry(shape); wing.rotateX(-Math.PI / 2);
     const bm = new THREE.MeshBasicMaterial({ color: '#0b0a0d', side: THREE.DoubleSide });
     for (let i = 0; i < 6; i++) {
-      const o = new THREE.Group(), l = new THREE.Mesh(wing, bm), r = new THREE.Mesh(wing, bm); r.scale.x = -1; o.add(l, r);
-      const body = new THREE.Mesh(new THREE.SphereGeometry(.035, 8, 6), bm); body.scale.set(1, .8, 1.6); o.add(body);
-      o.scale.setScalar(1.2 + (i % 3) * .25); group.add(o);
+      const { o, l, r } = makeBat(bm, { size: 1.2 + (i % 3) * .25 }); group.add(o);
       bats.push({ o, l, r, c: new THREE.Vector3(CX + (i % 2 ? 1.4 : -1.6), 3.4 + (i % 3) * .25, CZ + (i % 3 - 1) * 2), rad: 1.1 + (i % 3) * .6, speed: .7 + (i % 4) * .18, phase: i * 1.3, flap: 16 + (i % 3) * 4 });
     }
   }
 
   // ---- the skeleton: a finisher with an arm raised, merged bones (one mesh)
-  const skeleton = (() => {
-    const bones = [], cap = (r, len, a, b) => { const g = new THREE.CapsuleGeometry(r, len, 4, 8); const A = new THREE.Vector3(...a), B = new THREE.Vector3(...b); const mid = A.clone().add(B).multiplyScalar(.5), d = B.clone().sub(A); g.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize())); g.translate(mid.x, mid.y, mid.z); bones.push(g); };
-    const skull = new THREE.SphereGeometry(.11, 20, 14); skull.scale(1, 1.08, 1.12); skull.translate(0, 1.6, 0); bones.push(skull);
-    const jaw = new THREE.BoxGeometry(.13, .05, .1); jaw.translate(0, 1.49, .035); bones.push(jaw);
-    cap(.022, .12, [0, 1.46, 0], [0, 1.36, 0]);                                    // neck
-    cap(.03, .5, [0, 1.34, 0], [0, .93, 0]);                                       // spine
-    for (let i = 0; i < 6; i++) { const y = 1.28 - i * .055, w = .14 - Math.abs(i - 2) * .012; const r = new THREE.TorusGeometry(w, .011, 5, 20, Math.PI * 1.5); r.rotateX(Math.PI / 2); r.rotateY(Math.PI * .25 + Math.PI); r.scale(1, 1, .75); r.translate(0, y, .01); bones.push(r); }
-    cap(.018, .3, [-.17, 1.3, 0], [.17, 1.3, 0]);                                  // collarbones
-    const pelvis = new THREE.TorusGeometry(.12, .03, 6, 16); pelvis.rotateX(Math.PI / 2 - .3); pelvis.translate(0, .9, 0); bones.push(pelvis);
-    cap(.022, .26, [.18, 1.3, 0], [.28, 1.58, .02]); cap(.018, .24, [.28, 1.58, .02], [.34, 1.86, .06]);   // right arm, raised
-    cap(.022, .26, [-.18, 1.3, 0], [-.24, 1.02, .04]); cap(.018, .24, [-.24, 1.02, .04], [-.22, .78, .12]); // left arm
-    cap(.028, .38, [.08, .88, 0], [.1, .47, .02]); cap(.024, .36, [.1, .47, .02], [.1, .06, -.01]);        // legs
-    cap(.028, .38, [-.08, .88, 0], [-.1, .47, .02]); cap(.024, .36, [-.1, .47, .02], [-.1, .06, -.01]);
-    for (const x of [.1, -.1]) { const f = new THREE.BoxGeometry(.07, .035, .17); f.translate(x, .02, .05); bones.push(f); }
-    for (const [x, y, z] of [[.34, 1.9, .07], [-.22, .74, .13]]) { const h = new THREE.SphereGeometry(.035, 8, 6); h.translate(x, y, z); bones.push(h); }
-    const norm = bones.map(g => { const n = g.index ? g.toNonIndexed() : g; for (const a of Object.keys(n.attributes)) if (!['position', 'normal'].includes(a)) n.deleteAttribute(a); return n; });
-    const m = new THREE.Mesh(mergeGeometries(norm), new THREE.MeshStandardMaterial({ color: '#e9e1cd', roughness: .7, emissive: '#ff7a1a', emissiveIntensity: .05 }));
-    m.castShadow = !lite;
-    const g = new THREE.Group(); g.add(m);
-    const eyes = new THREE.MeshBasicMaterial({ color: '#ff8a2a', toneMapped: false });
-    for (const x of [.04, -.04]) { const e = new THREE.Mesh(new THREE.SphereGeometry(.024, 10, 8), eyes); e.position.set(x, 1.62, .095); g.add(e); }
-    return g;
-  })();
+  const skeleton = makeSkeleton({ lite });
   skeleton.position.set(CX - .2, 0, CZ - 2.35); skeleton.rotation.y = Math.PI / 2 + .35; group.add(skeleton);
   obstacles.push({ c: skeleton.position.clone(), r: .45 });
 
@@ -234,7 +200,7 @@ export function buildHalloween(ctx) {
       lavaFloor.emissiveIntensity = .9 + (reduce ? 0 : Math.sin(t * .8) * .2);
       if (!reduce) {
         mistTex.offset.set(t * .012, t * .007);
-        for (const b of bats) { const a = t * b.speed + b.phase; b.o.position.set(b.c.x + Math.cos(a) * b.rad, b.c.y + Math.sin(a * 2.3) * .15, b.c.z + Math.sin(a) * b.rad); b.o.rotation.y = -a; const fl = Math.sin(t * b.flap + b.phase) * .8; b.l.rotation.z = fl; b.r.rotation.z = -fl; }
+        for (const b of bats) { const a = t * b.speed + b.phase; b.o.position.set(b.c.x + Math.cos(a) * b.rad, b.c.y + Math.sin(a * 2.3) * .15, b.c.z + Math.sin(a) * b.rad); b.o.rotation.y = -a; flapBat(b, t, b.flap, b.phase); }
       }
     },
   };

@@ -264,6 +264,7 @@ if(q.get('account')==='unsubscribe'){
 }
 else if(shared) paintShared(shared);
 else if (q.get('reviewRoom') === 'beast-cave') openMuseum('beast');
+else if (q.get('reviewRoom') === 'hollow-house') openMuseum('hollow');
 else if (q.get('room') || q.get('map')) openMuseum();
 else if (recovering && authReturned) showAccount('reset');
 else if (authError) showAccount('login', authError);

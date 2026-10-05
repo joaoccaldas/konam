@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "id": "hollow-house",
+  "name": "The Hollow House",
+  "parent_room": "room-014",
+  "classification": {
+    "type": "seasonal-room",
+    "status": "candidate",
+    "public": false
+  },
+  "implementation": {
+    "kind": "native-room",
+    "module": "web/src/hollow-house.js",
+    "support_modules": [
+      "web/src/hollow-director.js",
+      "web/src/horrorkit.js",
+      "web/src/horrorkit-surfaces.js"
+    ]
+  },
+  "story": {
+    "concept": "A storm night in a house that remembers every ride that never finished.",
+    "loop": "ARRIVE -> LISTEN -> READ -> DESCEND -> FIND -> RUN",
+    "editorial_status": "original-copy",
+    "content_note": "Halloween horror: dark, loud, with lightning. Fiction. Nothing touches, blocks or traps the visitor; nothing moves while it is watched; reduced motion gets stillness."
+  },
+  "spatial": {
+    "units": "meters",
+    "coordinate_system": "host world coordinates; y vertical",
+    "bounds_source": "web/src/hollow-house.js#HHROOM",
+    "doorway_source": "web/src/hollow-house.js#HHDOOR",
+    "walkability_source": "web/src/hollow-house.js#hollowWalkable",
+    "zones": [
+      "foyer",
+      "corridor",
+      "parlor",
+      "nursery",
+      "library",
+      "dining",
+      "cellar"
+    ],
+    "zone_source": "web/src/hollow-house.js#zoneOf"
+  },
+  "assets": {
+    "manifest": "world/konam/candidates/hollow-house-asset-manifest-v1.json",
+    "bike_pipeline": "museum/bike.schema.json"
+  },
+  "subjects": [],
+  "interactions": {
+    "authority": "KONA.m host pickables/cards/dialogs",
+    "room_specific": [
+      "portraits",
+      "seance-table",
+      "nursery-doll",
+      "library-ledger",
+      "furnace",
+      "cellar-machine"
+    ],
+    "director": "web/src/hollow-director.js"
+  },
+  "performance": {
+    "mobile": {
+      "target_fps": 30,
+      "max_room_draw_calls": 110,
+      "max_room_triangles": 70000,
+      "max_texture_edge": 512,
+      "max_dpr": 1.5,
+      "particle_density": 60,
+      "transmission": "reduced",
+      "shadow_policy": "none-room-lights-do-not-cast",
+      "lod_policy": "pooled-lights-2-of-N/dust-halved"
+    },
+    "tablet": {
+      "target_fps": 45,
+      "max_room_draw_calls": 125,
+      "max_room_triangles": 90000,
+      "max_texture_edge": 1024,
+      "max_dpr": 1.75,
+      "particle_density": 110,
+      "transmission": "medium",
+      "shadow_policy": "none-room-lights-do-not-cast",
+      "lod_policy": "pooled-lights-4-of-N"
+    },
+    "desktop": {
+      "target_fps": 60,
+      "max_room_draw_calls": 125,
+      "max_room_triangles": 100000,
+      "max_texture_edge": 1024,
+      "max_dpr": 2,
+      "particle_density": 140,
+      "transmission": "full",
+      "shadow_policy": "none-room-lights-do-not-cast",
+      "lod_policy": "pooled-lights-4-of-N"
+    },
+    "measured": {
+      "method": "web/hollow-house-evidence.mjs (renderer-independent counts: the room's own draws and triangles, canonical bike excluded)",
+      "room_draw_calls": 94,
+      "room_triangles": 48000,
+      "canonical_bike_adds": {
+        "draw_calls": 73,
+        "triangles": 551000,
+        "note": "the shared Speedmax CFR GLB, identical in every room that shows it"
+      },
+      "real_lights": {
+        "mobile": 3,
+        "desktop": 5
+      }
+    }
+  },
+  "provenance": {
+    "concept": "independent KONA.m Halloween concept",
+    "generated_imagery": "none",
+    "surfaces": "deterministic procedural canvases (web/src/horrorkit-surfaces.js), seeded, no downloads",
+    "reused": [
+      "Speedmax CFR GLB via PIECES",
+      "Lava Night skeleton/cobweb/pumpkin props, now shared in web/src/horrorkit.js",
+      "web/src/roomkit.js motes, mist, scrawl and glyph painters",
+      "web/src/engine/skins.js livery system"
+    ]
+  },
+  "rights": {
+    "endorsement": false,
+    "partnership": false,
+    "real_people": false,
+    "likeness": "none; portraits are invented sitters",
+    "equipment_claims_require_sources": true,
+    "brand_marks_require_review": true
+  },
+  "release": {
+    "evidence_path": "docs/evidence/hollow-house/",
+    "required_gates": [
+      "schema",
+      "architecture",
+      "assets",
+      "desktop-visual",
+      "mobile-portrait",
+      "mobile-landscape",
+      "interaction",
+      "performance",
+      "truth",
+      "rights",
+      "content-safety"
+    ],
+    "public_wiring": false,
+    "review_url": "?reviewRoom=hollow-house"
+  },
+  "brand": {
+    "authority": "docs/BRAND_SYSTEM.md",
+    "tokens": "brand/tokens.css",
+    "ui": "global",
+    "typography": "global",
+    "tone": "Kona.m",
+    "theme_scope": [
+      "environment",
+      "story",
+      "props",
+      "materials",
+      "sound",
+      "local-lighting"
+    ]
+  }
+}
