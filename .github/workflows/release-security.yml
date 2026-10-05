@@ -69,6 +69,15 @@ jobs:
           npm ci --prefix ../../web --ignore-scripts
           npm run sync
           npm run icons
+      - name: Verify packaged entry layout
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          python3 -m http.server 8762 --bind 127.0.0.1 --directory app/native/www >/tmp/kona-native-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8762/ >/dev/null && break; sleep .5; done
+          node web/native-entry-layout-browser.mjs http://127.0.0.1:8762/
 
   supabase-replay:
     name: Supabase replay and RLS
