@@ -90,3 +90,31 @@ export async function loadDecor(manifest, { group, loader, lite = false, hooks =
   }
   return out;
 }
+
+// Merge a built room's static meshes per material, in place: one draw per material instead of one per prop.
+// `keep(o)` returns true for anything that moves, is picked, swaps state or is positioned later — those (and their
+// subtrees) stay untouched, as do instanced, skinned, multi-material and transparent meshes (sorting stays per
+// object). Returns { before, after } mesh counts. Call once, at the end of a room's build.
+export function mergeStatic(group, { keep = () => false } = {}) {
+  group.updateMatrixWorld(true);
+  const count = () => { let n = 0; group.traverse(o => { if (o.isMesh) n++; }); return n; }, before = count();
+  const inv = new THREE.Matrix4().copy(group.matrixWorld).invert(), buckets = new Map(), owner = new Map();
+  const walk = o => {
+    for (const c of [...o.children]) {
+      if (keep(c)) continue;
+      const attrs = c.isMesh ? Object.keys(c.geometry.attributes).filter(n => ['position', 'normal', 'uv'].includes(n)).sort() : [];
+      if (c.isMesh && !c.isInstancedMesh && !c.isSkinnedMesh && !Array.isArray(c.material) && !c.material.transparent && c.visible && !c.children.length && attrs.includes('normal')) {
+        const key = [c.material.uuid, c.castShadow, c.receiveShadow, c.renderOrder, attrs.join()].join('|');
+        if (!buckets.has(key)) buckets.set(key, { mat: c.material, cast: c.castShadow, recv: c.receiveShadow, order: c.renderOrder, list: [], meshes: [] });
+        const b = buckets.get(key); b.list.push(toFloat(c.geometry.clone(), attrs).applyMatrix4(new THREE.Matrix4().multiplyMatrices(inv, c.matrixWorld))); b.meshes.push(c);
+      } else walk(c);
+    }
+  };
+  walk(group);
+  for (const b of buckets.values()) {
+    if (b.meshes.length < 2) continue;                                     // nothing to gain
+    const m = new THREE.Mesh(mergeGeometries(b.list), b.mat); m.castShadow = b.cast; m.receiveShadow = b.recv; m.renderOrder = b.order; m.name = 'merged-static';
+    group.add(m); for (const c of b.meshes) c.parent.remove(c);
+  }
+  return { before, after: count() };
+}

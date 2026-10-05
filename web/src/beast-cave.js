@@ -8,6 +8,7 @@
 // best, and an empty slot for the athlete's own line that stays empty until the athlete rides it.
 import * as THREE from 'three';
 import { motes, lightShaft } from './roomkit.js';
+import { mergeStatic } from './engine/decor.js';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { createInterval, bandAt, INTERVAL_SECONDS } from './beast-interval.js';
 import facts from '../../pitch/lionel-sanders/career-facts-v1.json' with { type: 'json' };
@@ -607,6 +608,11 @@ export function buildBeastCave(ctx) {
     return new Promise(r=>c.toBlob(b=>r(b),'image/jpeg',.92));
   }
 
+  // one draw per material for the cave's static shell and props (was ~1 draw per prop: over the room's mesh budget).
+  // Everything that moves, is clicked, is swapped by useAssets() or is placed when the bike arrives stays separate.
+  const keepers=new Set([trainer,riser,screen,treadmill,floor,sign,...fanGroups]);
+  const mergedStats=mergeStatic(group,{keep:o=>keepers.has(o)||!!o.userData?.info||!!o.userData?.floor||pickables.includes(o)||o.isLight||o.isPoints});
+  group.userData.merged=mergedStats;
   return {
     group,floor,sign,bikeSpot,infos,mood:BEAST_MOOD,
     get ride(){return ride;},
