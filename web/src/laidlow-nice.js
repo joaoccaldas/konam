@@ -383,8 +383,8 @@ export function buildLaidlowNice(ctx) {
     setBike(bike, dress) {                                             // the canonical Speedmax CFR, side-on to the door, front wheel to the 8:06:22 wall
       const prep = b => { const once = new Map(), cl = m => { const k = m.name || m.uuid; if (!once.has(k)) once.set(k, m.clone()); return once.get(k); };   // one material per name (the shared loader hands out per-mesh copies), so they merge
         b.traverse(o => { if (!o.isMesh) return; o.material = Array.isArray(o.material) ? o.material.map(cl) : cl(o.material); o.castShadow = !lite; delete o.userData.piece; });
-        dress?.(b); mergeStatic(b);                                    // this room never explodes the bike: ~70 parts → one draw per material
-        b.traverse(o => { if (o.isMesh) { o.userData.info = bikeSpot.info; pickables.push(o); } }); };
+        dress?.(b); };
+      const merge = b => { mergeStatic(b); b.traverse(o => { if (o.isMesh) { o.userData.info = bikeSpot.info; pickables.push(o); } }); };   // after orienting: the merge removes the wheel nodes
       prep(bike);
       const holder = new THREE.Group(); holder.add(bike); group.add(holder);
       const node = n => bike.getObjectByName(n) || [...bike.children].find(ch => ch.userData?.part === n), centre = o => new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3());
@@ -394,10 +394,11 @@ export function buildLaidlowNice(ctx) {
       if (front && rear) { const f = centre(front), r = centre(rear); holder.rotation.y = Math.atan2(-(f.x - r.x), f.z - r.z); /* wheelbase onto +z */ holder.updateMatrixWorld(true);
         if (centre(front).z < centre(rear).z) { holder.rotation.y += Math.PI; holder.updateMatrixWorld(true); }
         const m = centre(front).add(centre(rear)).multiplyScalar(.5); holder.position.x += HX - m.x; holder.position.z += HZ - m.z; }
+      merge(bike);                                                    // this room never explodes the bike: ~70 parts → one draw per material
       bikeSpot.bike = holder; envDirty = 2;
       this._lod = () => {                                              // desktop: the derived 77k hero beyond 5 m (room budget); runs once both bike and loader exist
         if (lite || !this._loader || this._lodDone) return; this._lodDone = true;
-        const load = u => this._loader.loadAsync(u).then(g => { const m = g.scene; prep(m); const lb = new THREE.Box3().setFromObject(m), lc = lb.getCenter(new THREE.Vector3()); m.position.set(-lc.x, -lb.min.y, -lc.z); return m; });
+        const load = u => this._loader.loadAsync(u).then(g => { const m = g.scene; prep(m); merge(m); const lb = new THREE.Box3().setFromObject(m), lc = lb.getCenter(new THREE.Vector3()); m.position.set(-lc.x, -lb.min.y, -lc.z); return m; });
         Promise.all([load('assets/museum/speedmax_web-hero.glb'), load('assets/museum/speedmax_web-lite.glb')]).then(([near, far]) => {   // 134k within 5 m, 77k beyond
           near.position.copy(bike.position); far.position.copy(bike.position);
           const lod = new THREE.LOD(); lod.addLevel(near, 0); lod.addLevel(far, 5); far.visible = false; holder.remove(bike); holder.add(lod);
