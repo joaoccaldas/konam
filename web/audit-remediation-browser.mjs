@@ -13,7 +13,7 @@ try{
  const name=await p.$eval('.studio-stage-caption span',e=>e.textContent);assert.equal(name,'Test Athlete');findings.push({test:'profile refresh',name});
  await p.click('[data-race-self-action="races"]');await p.waitForSelector('[data-race-results] [data-race-rel="interested"]');await p.click('[data-race-results] [data-race-rel="interested"]');await p.waitForFunction(()=>document.querySelector('[data-race-feedback]')?.textContent.startsWith('Saved'));await p.click('[data-hub-close]');
  const races=await p.$eval('[data-race-self-action="races"] small',e=>e.textContent);assert.equal(races,'1 race badges');findings.push({test:'race refresh',races});
- await p.evaluate(()=>{window.__konaProfile.set({motion:'reduced'});});await new Promise(r=>setTimeout(r,200));
+ await p.evaluate(()=>{window.__konaProfile.set({motion:'reduced'});});await p.waitForFunction(()=>Math.abs(document.querySelector('[data-race-self-stage]').__studioFrame.objects[0].matrixWorld.elements[13]-.03)<1e-8);
  const before=await p.evaluate(()=>{const f=document.querySelector('[data-race-self-stage]').__studioFrame;return {matrix:f.objects[0].matrixWorld.elements.slice(),width:document.querySelector('[data-race-self-stage]').width,css:document.querySelector('[data-race-self-stage]').clientWidth};});await new Promise(r=>setTimeout(r,300));
  const after=await p.evaluate(()=>document.querySelector('[data-race-self-stage]').__studioFrame.objects[0].matrixWorld.elements.slice());assert.deepEqual(after,before.matrix);assert.ok(Math.abs(before.width-before.css)<2);findings.push({test:'reduced motion and low DPR',dpr:before.width/before.css});
  await p.screenshot({path:out+'/studio-fixed-390.png'});

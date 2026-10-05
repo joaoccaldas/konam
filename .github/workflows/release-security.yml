@@ -63,6 +63,11 @@ jobs:
       - name: Audit complete dependency graph
         run: npm audit --audit-level=high
         working-directory: app/native
+      - name: Verify native build-tool compatibility
+        working-directory: app/native
+        run: |
+          npm run sync
+          npm run icons
 
   supabase-replay:
     name: Supabase replay and RLS
