@@ -133,7 +133,7 @@ export function buildLaidlowNice(ctx) {
   box(steel, .09, .06, RD - .8, RAIL, .95, CZ); box(steel, .06, .04, RD - .8, RAIL, .35, CZ);
   // potted palms along the Promenade: the museum's canonical kona-palm prop (museum/world/decorations.json)
   const sway = [];
-  for (const g of decorateRoom([{ prop: 'kona-palm', x: 27.6, z: -4.9, height: 2.6, seed: 2 }, { prop: 'kona-palm', x: 27.6, z: -16.8, height: 2.4, seed: 5 },
+  for (const g of decorateRoom([{ prop: 'kona-palm', x: 28.9, z: -4.9, height: 2.6, seed: 2 }, { prop: 'kona-palm', x: 23.9, z: -16.9, height: 2.4, seed: 5 },
     { prop: 'kona-palm', x: 8.3, z: -4.8, height: 2.2, seed: 7 }, { prop: 'kona-palm', x: 31.6, z: -10.9, height: 2.9, seed: 11 }], { group, lite, obstacles, sway, basaltTex: ctx.basaltTex })) g.userData.prop = 'kona-palm';   // the factory adds to the group
 
   // ------------------------------------------------------------ the blue chairs of the Promenade, facing the sea (one InstancedMesh)
@@ -179,14 +179,14 @@ export function buildLaidlowNice(ctx) {
   box(navyWall, 12.4, 4.6, .06, 21.0, 2.75, R.z0 - .07);
   const monMat = panel(12, 4.4, 2400, (g, w, h) => {
     const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#12355c'); gr.addColorStop(1, '#0b2440'); g.fillStyle = gr; g.fillRect(0, 0, w, h);
-    g.textAlign = 'center'; g.fillStyle = 'rgba(245,243,238,.78)'; g.font = `700 36px ${FONT}`; g.letterSpacing = '12px'; g.fillText('IRONMAN WORLD CHAMPIONSHIP · NICE · 10 SEPTEMBER 2023', w / 2, 120);
-    g.fillStyle = PAL.gold; g.font = `400 470px ${SERIF}`; g.letterSpacing = '-6px'; g.fillText(NICE.time, w / 2, 560);
+    g.textAlign = 'center'; g.fillStyle = 'rgba(245,243,238,.78)'; g.font = `700 36px ${FONT}`; g.letterSpacing = '12px'; g.fillText('IRONMAN WORLD CHAMPIONSHIP · NICE · 10 SEPTEMBER 2023', w / 2, 96);
+    g.fillStyle = PAL.gold; g.font = `400 400px ${SERIF}`; g.letterSpacing = '-6px'; g.fillText(NICE.time, w / 2, 450);
     g.fillStyle = 'rgba(245,243,238,.9)'; g.font = `600 44px ${FONT}`; g.letterSpacing = '10px';
     const sp = [['SWIM', NICE.splits.swim], ['BIKE', NICE.splits.bike], ['RUN', NICE.splits.run]];
-    sp.forEach(([k, v], i) => { const x = w * (.25 + i * .25); g.fillStyle = 'rgba(245,243,238,.55)'; g.font = `600 30px ${FONT}`; g.fillText(k, x, 660); g.fillStyle = '#f5f3ee'; g.font = `400 78px ${SERIF}`; g.letterSpacing = '0px'; g.fillText(v, x, 745); g.letterSpacing = '10px'; });
-    g.fillStyle = 'rgba(245,243,238,.18)'; g.fillRect(w * .12, 790, w * .76, 2);
-    for (let i = 0; i < 3; i++) { g.fillStyle = ['#2f5fae', '#f5f3ee', '#c8323f'][i]; g.fillRect(w / 2 - 90 + i * 60, 820, 60, 8); }
-    g.fillStyle = 'rgba(245,243,238,.82)'; g.font = `italic 400 52px ${SERIF}`; g.letterSpacing = '0px'; fit(g, 'First from France. Youngest man ever. On home soil.', w / 2, 905, w * .8); });
+    sp.forEach(([k, v], i) => { const x = w * (.25 + i * .25); g.fillStyle = 'rgba(245,243,238,.55)'; g.font = `600 30px ${FONT}`; g.fillText(k, x, 530); g.fillStyle = '#f5f3ee'; g.font = `400 78px ${SERIF}`; g.letterSpacing = '0px'; g.fillText(v, x, 610); g.letterSpacing = '10px'; });
+    g.fillStyle = 'rgba(245,243,238,.18)'; g.fillRect(w * .12, 650, w * .76, 2);
+    for (let i = 0; i < 3; i++) { g.fillStyle = ['#2f5fae', '#f5f3ee', '#c8323f'][i]; g.fillRect(w / 2 - 90 + i * 60, 676, 60, 8); }
+    g.fillStyle = 'rgba(245,243,238,.82)'; g.font = `italic 400 52px ${SERIF}`; g.letterSpacing = '0px'; fit(g, 'First from France. Youngest man ever. On home soil.', w / 2, 770, w * .8); });
   const mon = new THREE.Mesh(new THREE.PlaneGeometry(12, 4.4), monMat); mon.rotation.y = Math.PI; mon.position.set(21.0, 2.75, R.z0 - .105); group.add(mon);
   info(mon, { model: act => niceCard(act), eyebrow: 'NICE · 2023', title: NICE.time, sub: 'IRONMAN World Champion' });
   for (const x of [15.5, 21, 26.5]) { const s = new THREE.SpotLight('#ffe6c4', lite ? 10 : 16, 7, .55, .6, 1.4); s.position.set(x, R.h - .2, R.z0 - 2.2); s.target.position.set(x, 2.6, R.z0 - .1); group.add(s, s.target); }
@@ -252,7 +252,7 @@ export function buildLaidlowNice(ctx) {
 
   // ------------------------------------------------------------ the coach's corner: a director's chair and a whiteboard
   const canvasBlue = new THREE.MeshStandardMaterial({ color: PAL.bleu, roughness: .9 }), wood = new THREE.MeshStandardMaterial({ color: '#8a6a48', roughness: .7 });
-  const cx = 11.2, cz = -15.6;
+  const cx = 9.6, cz = -13.4;
   for (const [dx, dz] of [[-.25, -.2], [.25, -.2], [-.25, .2], [.25, .2]]) box(wood, .035, .45, .035, cx + dx, .225, cz + dz);
   box(canvasBlue, .52, .03, .44, cx, .46, cz); box(canvasBlue, .52, .32, .02, cx, .78, cz - .22); for (const dx of [-.27, .27]) box(wood, .035, .5, .035, cx + dx, .7, cz - .22);
   const boardMat = panel(1.4, 1.0, 900, (g, w, h) => { g.fillStyle = '#fbfbf8'; g.fillRect(0, 0, w, h); g.strokeStyle = '#1f5fa0'; g.lineWidth = 6; g.lineCap = 'round';
@@ -262,10 +262,10 @@ export function buildLaidlowNice(ctx) {
     g.strokeStyle = '#c8323f'; g.beginPath(); g.ellipse(430, 245, 140, 60, 0, 0, 6.3); g.stroke();
     g.fillStyle = '#c8323f'; g.font = `italic 600 44px ${SERIF}`; g.fillText('go at 40 km', 330, 360);
     g.fillStyle = '#20262c'; g.font = `500 36px ${FONT}`; g.fillText('— Dad', 640, 520); });
-  box(wood, .04, 1.7, .04, cx + 1.0, .85, cz + .3); box(wood, .04, 1.7, .04, cx + 1.7, .85, cz + .3);
-  const board = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 1.0), boardMat); board.position.set(cx + 1.35, 1.25, cz + .33); group.add(board);
+  box(wood, .04, 1.5, .04, cx - .55, .75, cz + 1.0); box(wood, .04, 1.5, .04, cx - .55, .75, cz + 2.4);
+  const board = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 1.0), boardMat); board.position.set(cx - .52, 1.15, cz + 1.7); board.rotation.y = Math.PI / 2; group.add(board);
   info([board], { model: act => coachCard(act), eyebrow: 'THE COACH', title: 'Coached by his father.', sub: 'Richard Laidlow' });
-  obstacles.push({ c: new THREE.Vector3(cx + .6, 0, cz), r: 1.0 });
+  obstacles.push({ c: new THREE.Vector3(cx, 0, cz + .9), r: 1.1 });
 
   // ------------------------------------------------------------ hall-side sign over the door
   const sign = lettering(4.6, .9, g => { g.fillStyle = '#12181d'; g.font = `700 .14px ${FONT}`; g.letterSpacing = '.06px'; g.fillText('LAIDLOW // NICE · BAIE DES ANGES', 0, .28);
@@ -336,7 +336,7 @@ export function buildLaidlowNice(ctx) {
   return {
     group, floor, sign, bikeSpot, infos, mood: LAIDLOW_MOOD, introCard,
     async useAssets(loader) {                                           // the museum's sculptures (museum/art/sculptures.json), scaled as catalogued
-      if (this._assets) return; this._assets = true;
+      if (this._assets) return; this._assets = true; this._loader = loader; this._lod?.();
       for (const { h, sc } of sculptHolders) loader.loadAsync(`assets/art/sculptures/${sc.file}`).then(g => {
         const m = g.scene, b = new THREE.Box3().setFromObject(m), size = b.getSize(new THREE.Vector3()); m.scale.setScalar(sc.height / Math.max(.001, size.y));
         const b2 = new THREE.Box3().setFromObject(m), c = b2.getCenter(new THREE.Vector3()); m.position.set(-c.x, -b2.min.y, -c.z);
@@ -346,8 +346,11 @@ export function buildLaidlowNice(ctx) {
         envDirty = 2; }).catch(e => console.warn('sculpture', sc.id, e?.message || e));
     },
     setBike(bike, dress) {                                             // the canonical Speedmax CFR, side-on to the door, front wheel to the 8:06:22 wall
-      bike.traverse(o => { if (!o.isMesh) return; o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone(); o.castShadow = !lite; delete o.userData.piece; o.userData.info = bikeSpot.info; pickables.push(o); });
-      dress?.(bike);
+      const prep = b => { const once = new Map(), cl = m => { if (!once.has(m)) once.set(m, m.clone()); return once.get(m); };   // shared materials stay shared, so they merge
+        b.traverse(o => { if (!o.isMesh) return; o.material = Array.isArray(o.material) ? o.material.map(cl) : cl(o.material); o.castShadow = !lite; delete o.userData.piece; });
+        dress?.(b); mergeStatic(b);                                    // this room never explodes the bike: ~70 parts → one draw per material
+        b.traverse(o => { if (o.isMesh) { o.userData.info = bikeSpot.info; pickables.push(o); } }); };
+      prep(bike);
       const holder = new THREE.Group(); holder.add(bike); group.add(holder);
       const node = n => bike.getObjectByName(n) || [...bike.children].find(ch => ch.userData?.part === n), centre = o => new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3());
       const box0 = new THREE.Box3().setFromObject(bike), c0 = box0.getCenter(new THREE.Vector3()); bike.position.set(-c0.x, -box0.min.y, -c0.z);
@@ -357,6 +360,12 @@ export function buildLaidlowNice(ctx) {
         if (centre(front).z < centre(rear).z) { holder.rotation.y += Math.PI; holder.updateMatrixWorld(true); }
         const m = centre(front).add(centre(rear)).multiplyScalar(.5); holder.position.x += HX - m.x; holder.position.z += HZ - m.z; }
       bikeSpot.bike = holder; envDirty = 2;
+      this._lod = () => {                                              // desktop: the derived 77k hero beyond 5 m (room budget); runs once both bike and loader exist
+        if (lite || !this._loader || this._lodDone) return; this._lodDone = true;
+        this._loader.loadAsync('assets/museum/speedmax_web-lite.glb').then(g => {
+          const low = g.scene; prep(low); const lb = new THREE.Box3().setFromObject(low), lc = lb.getCenter(new THREE.Vector3()); low.position.set(-lc.x, -lb.min.y, -lc.z);
+          const lod = new THREE.LOD(); holder.remove(bike); lod.addLevel(bike, 0); lod.addLevel(low, 5); holder.add(lod); }).catch(() => {}); };
+      this._lod();
     },
     update(t, reduce, dt = 1 / 60) {
       if (envDirty) { envDirty--; if (!envDirty) env.capture(); }
