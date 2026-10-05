@@ -310,3 +310,8 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-global-note{max-width:36rem;margin:14px 0 0;color:color-mix(in srgb,var(--brand-mist) 88%,transparent);font:550 11px/1.55 var(--brand-font-ui,var(--sans))}
 #intro.kona-entry .entry-global-note strong{color:var(--brand-mist)}
 #intro.kona-entry .entry-legal-note{max-width:38rem;margin:8px 0 0;color:color-mix(in srgb,var(--brand-mist) 62%,transparent);font:500 9px/1.45 var(--brand-font-ui,var(--sans))}
+
+/* The packaged WebView needs clearance below its fixed Why Kona shortcut. */
+@media(max-width:899px){
+  html.native-app body.entry-landing #intro.kona-entry .entry-copy{padding-top:18px}
+}

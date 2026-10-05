@@ -38,5 +38,5 @@ rmSync(join(www, 'app', 'nor3-review.js'), { force: true });
 const versionCode = Number.parseInt(process.env.SPEEDMAX_VERSION_CODE || '0', 10) || 0;
 const versionName = (process.env.SPEEDMAX_VERSION_NAME || 'dev').replace(/[^\w.-]/g, '').slice(0, 20);
 const index = join(www, 'index.html');
-writeFileSync(index, sealInlineScripts(readFileSync(index, 'utf8').replace('</head>', `<script>window.__NATIVE=${JSON.stringify({ versionCode, versionName })};</script></head>`)));
+writeFileSync(index, sealInlineScripts(readFileSync(index, 'utf8').replace('</head>', `<script>window.__NATIVE=${JSON.stringify({ versionCode, versionName })};document.documentElement.classList.add('native-app');</script></head>`)));
 console.log(`www ready · version ${versionName} (${versionCode})`);
