@@ -37,6 +37,13 @@ html.phone-fit .kona-bottom-nav{
 }
 html.phone-fit #intro.kona-entry,
 html.phone-fit .kona-panel{height:calc(100dvh / var(--fit));max-height:calc(100dvh / var(--fit))}
+/* Fit changes the element width, not CSS media-query width. The entry uses a
+   container query for its contents; keep its own padding/height physical too. */
+html.phone-fit.viewport-portrait #intro.kona-entry{
+  min-height:calc(100dvh / var(--fit));
+  height:auto;max-height:none;
+  padding:14px max(16px,env(safe-area-inset-left),env(safe-area-inset-right)) 20px;
+}
 html.phone-fit #appSheet>div{zoom:var(--fit);width:min(420px,calc((100vw - 24px)/var(--fit)))}
 
 /* RC1 touch invariant: all primary phone interactions in Home/Garage are at least 48px. */

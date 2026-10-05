@@ -10,6 +10,52 @@ concurrency:
   group: ui-interaction-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
+  public-pages:
+    name: Public pages ${{ matrix.profile }}
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [phone320, phone393, phone430, desktopPhone, landscape]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci --ignore-scripts
+        working-directory: web
+      - run: node tools/build_pages.mjs && node tools/build_app.mjs
+      - name: Compare baseline and candidate public pages
+        env:
+          AUDIT_PROFILE: ${{ matrix.profile }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          export CHROME_PATH="$(which google-chrome || which chromium)"
+          python3 -m http.server 8755 --bind 127.0.0.1 >/tmp/kona-candidate.log 2>&1 &
+          CANDIDATE_PID=$!
+          BASE_PID=''
+          trap 'kill "$CANDIDATE_PID" ${BASE_PID:-} || true' EXIT
+          if git cat-file -e "${BASE_SHA}^{commit}" 2>/dev/null; then
+            git worktree add --detach /tmp/kona-portrait-baseline "$BASE_SHA"
+            python3 -m http.server 8756 --bind 127.0.0.1 --directory /tmp/kona-portrait-baseline >/tmp/kona-baseline.log 2>&1 &
+            BASE_PID=$!
+            # A failing baseline is evidence, not permission to ignore candidate failures.
+            AUDIT_ROOT=/tmp/kona-portrait-baseline node web/page-release-audit.mjs http://127.0.0.1:8756/ portrait-evidence/baseline || true
+          fi
+          node web/page-release-audit.mjs http://127.0.0.1:8755/ portrait-evidence/candidate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: portrait-pages-${{ matrix.profile }}-${{ github.event.pull_request.head.sha || github.sha }}
+          path: portrait-evidence/
+          retention-days: 14
   interaction:
     name: Buttons ${{ matrix.viewport }}
     strategy:

@@ -26,8 +26,21 @@ export function desiredLod({distance=Infinity,visible=false,currentRoom=false,in
  return 'none';
 }
 
-export function shouldRelease({distance=Infinity,currentRoom=false,secondsAway=0,budget='medium'}={}){
+export function shouldRelease({distance=Infinity,currentRoom=false,visible=false,intent='walk',pinned=false,secondsAway=0,budget='medium'}={}){
+ // Distance is insufficient evidence for eviction: keep visible, selected and
+ // actively inspected content resident, including views through room openings.
+ if(currentRoom||visible||pinned||intent==='inspect')return false;
  const threshold=budget==='low'?24:budget==='high'?45:35;
  const cooldown=budget==='low'?3:budget==='high'?10:6;
  return !currentRoom&&distance>threshold&&secondsAway>=cooldown;
+}
+
+// Resolve a quality request only to a representation the asset actually owns.
+// Missing HERO geometry must never become a guessed URL or a second identity.
+export function availableLod(requested,available=[]){
+ const target=ASSET_STATES.indexOf(requested);
+ if(target<0||requested==='none')return 'none';
+ const levels=new Set(available.filter(level=>ASSET_STATES.includes(level)));
+ for(let i=target;i>0;i--)if(levels.has(ASSET_STATES[i]))return ASSET_STATES[i];
+ return 'none';
 }

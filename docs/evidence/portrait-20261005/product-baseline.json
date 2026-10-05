@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "kind": "static-product-baseline",
+  "source_sha": "02a35d2f33daaeb214094caf315d9918577b4b1b",
+  "limitations": [
+    "Mesh triangle count is per mesh definition, not per rendered instance or draw call.",
+    "File bytes are not decoded GPU memory.",
+    "No FPS, mobile thermal, LOD visual parity, or quality improvement is established."
+  ],
+  "products": 47,
+  "uniqueAssets": 29,
+  "totalUniqueBytes": 18309432,
+  "productsWithExplicitLodMap": 0,
+  "assets": [
+    {
+      "path": "assets/atlas/alu-tri-2005/bike.glb",
+      "sha256": "ae2fc0063c0d879d211f2f2b3ebbe8e5d404d400acf75048792a720abc952229",
+      "bytes": 160912,
+      "meshTriangles": 7772,
+      "primitives": 40,
+      "materials": 8,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-alu-tri-2005"
+      ]
+    },
+    {
+      "path": "assets/atlas/lotus-108-1992/bike.glb",
+      "sha256": "08b04886edad2b5c156d44431724a3949e78d2172b51817aecff1ee1ac869b80",
+      "bytes": 167184,
+      "meshTriangles": 8020,
+      "primitives": 32,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-lotus-108-1992"
+      ]
+    },
+    {
+      "path": "assets/atlas/merckx-hour-1972/bike.glb",
+      "sha256": "2f44a13fec189d664a8057133f82fd75fd288a20ce16067b388a80ff8e6618d5",
+      "bytes": 173860,
+      "meshTriangles": 7784,
+      "primitives": 32,
+      "materials": 8,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-merckx-hour-1972"
+      ]
+    },
+    {
+      "path": "assets/atlas/obree-riverside/bike.glb",
+      "sha256": "f0585f99b9ba0279b3324d6a13dedd5c2552a62e3adddbd9a8bb7fb4323b2f96",
+      "bytes": 154628,
+      "meshTriangles": 7600,
+      "primitives": 36,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-obree-riverside"
+      ]
+    },
+    {
+      "path": "assets/atlas/stevens-tri/bike.glb",
+      "sha256": "0ed5f948db2c31270de9350a0ef8b1f49369c941753e6cbae4fd54d9361b0998",
+      "bytes": 171000,
+      "meshTriangles": 7764,
+      "primitives": 37,
+      "materials": 8,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-stevens-tri"
+      ]
+    },
+    {
+      "path": "assets/atlas/studio-alloy-entry/bike.glb",
+      "sha256": "410d6b687f0e626ad6c54de396e5f518be0fceb6c534167c950eb0698fa645db",
+      "bytes": 172428,
+      "meshTriangles": 7748,
+      "primitives": 36,
+      "materials": 7,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-studio-alloy-entry"
+      ]
+    },
+    {
+      "path": "assets/atlas/studio-beam-2020s/bike.glb",
+      "sha256": "05264ebe00a0f502170e78ac045230918af4996099af171477e0407344ee39ac",
+      "bytes": 172480,
+      "meshTriangles": 8040,
+      "primitives": 35,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-studio-beam-2020s"
+      ]
+    },
+    {
+      "path": "assets/atlas/studio-gravel-aero/bike.glb",
+      "sha256": "9ccd4743b82fd1cefbfd886233f3b218e399b5227bd27576f13145aff638ed59",
+      "bytes": 172692,
+      "meshTriangles": 7840,
+      "primitives": 37,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-studio-gravel-aero"
+      ]
+    },
+    {
+      "path": "assets/atlas/studio-kona-2030/bike.glb",
+      "sha256": "1ef4934369ce82c6ea23a9cec7d51560bbe5a50532b0092ab10660a06d286f8c",
+      "bytes": 186540,
+      "meshTriangles": 9052,
+      "primitives": 42,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-studio-kona-2030"
+      ]
+    },
+    {
+      "path": "assets/atlas/studio-small-650c/bike.glb",
+      "sha256": "b3831ac6d78a800a7dc7d06c23f8753d629e481bbb5ae8effbba951f5cac176b",
+      "bytes": 176684,
+      "meshTriangles": 8196,
+      "primitives": 36,
+      "materials": 8,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-studio-small-650c"
+      ]
+    },
+    {
+      "path": "assets/atlas/studio-sprint-track/bike.glb",
+      "sha256": "9cb89da5c7439efdc129e8110eea145fc7efa6128eb2f3a00bc48679c68690b1",
+      "bytes": 168608,
+      "meshTriangles": 8256,
+      "primitives": 34,
+      "materials": 10,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-studio-sprint-track"
+      ]
+    },
+    {
+      "path": "assets/atlas/studio-wing-road/bike.glb",
+      "sha256": "5640f7791dbb0ae0ad44392bf550a449f8c00cebe9a1d5de9711018229d6c908",
+      "bytes": 171712,
+      "meshTriangles": 7976,
+      "primitives": 30,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-studio-wing-road"
+      ]
+    },
+    {
+      "path": "assets/atlas/studio-xl-tri/bike.glb",
+      "sha256": "6d52cae1552cbff7c005d7d6072c474d8c62281b36950bf86b6e4da46d1c226b",
+      "bytes": 186116,
+      "meshTriangles": 8572,
+      "primitives": 42,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-studio-xl-tri"
+      ]
+    },
+    {
+      "path": "assets/atlas/type-aerobar-1989/bike.glb",
+      "sha256": "5d18aa62a322af279b1f8f662993c3704825c748a0ad6e5a95704febcda91883",
+      "bytes": 179032,
+      "meshTriangles": 7920,
+      "primitives": 36,
+      "materials": 8,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-type-aerobar-1989"
+      ]
+    },
+    {
+      "path": "assets/atlas/type-disc-superbike/bike.glb",
+      "sha256": "0c9d0715f95f4c0af2ebb33b51effbc9fca61a8c3e7e6c599d2a1febede2683c",
+      "bytes": 186104,
+      "meshTriangles": 8572,
+      "primitives": 42,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-type-disc-superbike"
+      ]
+    },
+    {
+      "path": "assets/atlas/type-draft-legal/bike.glb",
+      "sha256": "692beed04f1dedddc564011955eeb007bba6850f9f08898638be55a45c2e80a4",
+      "bytes": 172688,
+      "meshTriangles": 7840,
+      "primitives": 37,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-type-draft-legal"
+      ]
+    },
+    {
+      "path": "assets/atlas/type-funny-1980s/bike.glb",
+      "sha256": "3c62b7cbb1c7cedb076b0a2f0e9982997aef3f916c795593fe8e23c78ee4c65a",
+      "bytes": 172744,
+      "meshTriangles": 8056,
+      "primitives": 32,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-type-funny-1980s"
+      ]
+    },
+    {
+      "path": "assets/atlas/type-hour-track/bike.glb",
+      "sha256": "7306da2796bf4559cd30dd5a9d42effb95eb9f5b4a04a69993fe87453b612105",
+      "bytes": 178676,
+      "meshTriangles": 8784,
+      "primitives": 36,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-type-hour-track"
+      ]
+    },
+    {
+      "path": "assets/atlas/type-lowpro-650c/bike.glb",
+      "sha256": "2cbaea5a6093f89be073296be8ed94c43485d0e9baa60cd86da1585a0d81f469",
+      "bytes": 176692,
+      "meshTriangles": 8196,
+      "primitives": 36,
+      "materials": 8,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-type-lowpro-650c"
+      ]
+    },
+    {
+      "path": "assets/atlas/type-pursuit/bike.glb",
+      "sha256": "b948c1e9f975ea2067d048ebda6501302a6c48600b0852001acb6254dbf337a2",
+      "bytes": 178676,
+      "meshTriangles": 8784,
+      "primitives": 36,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-type-pursuit"
+      ]
+    },
+    {
+      "path": "assets/atlas/zipp-2001/bike.glb",
+      "sha256": "18ff90904ed59e4a7510703eabf846fd26f2bcf7e4379463951ed8ae94b66ee0",
+      "bytes": 172500,
+      "meshTriangles": 8040,
+      "primitives": 35,
+      "materials": 9,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "atlas-zipp-2001"
+      ]
+    },
+    {
+      "path": "assets/heritage/speedmax-2007/speedmax_web.glb",
+      "sha256": "b628e77ce8f4a8e81b1c484dc09063f879842da5e037654524221d67c7a50f71",
+      "bytes": 1575896,
+      "meshTriangles": 386820,
+      "primitives": 53,
+      "materials": 21,
+      "extensions": [
+        "EXT_meshopt_compression",
+        "KHR_materials_clearcoat",
+        "KHR_mesh_quantization"
+      ],
+      "products": [
+        "canyon-speedmax-2007"
+      ]
+    },
+    {
+      "path": "assets/heritage/speedmax-al-2011/speedmax_web.glb",
+      "sha256": "b3539c05a41564d08d2f978ae7d666b8e907d27593fd9ed5cc89ccd0b911ea29",
+      "bytes": 1587128,
+      "meshTriangles": 392536,
+      "primitives": 52,
+      "materials": 19,
+      "extensions": [
+        "EXT_meshopt_compression",
+        "KHR_materials_clearcoat",
+        "KHR_mesh_quantization"
+      ],
+      "products": [
+        "canyon-speedmax-al-2011"
+      ]
+    },
+    {
+      "path": "assets/heritage/speedmax-cf-2011/speedmax_web.glb",
+      "sha256": "59ebd3cf81dc414dda1d7515a85fdd619d7d46ecf702883cb62be889aac7f9b3",
+      "bytes": 1594888,
+      "meshTriangles": 385196,
+      "primitives": 52,
+      "materials": 20,
+      "extensions": [
+        "EXT_meshopt_compression",
+        "KHR_materials_clearcoat",
+        "KHR_mesh_quantization"
+      ],
+      "products": [
+        "canyon-speedmax-cf-2011"
+      ]
+    },
+    {
+      "path": "assets/heritage/speedmax-three-2005/speedmax_web.glb",
+      "sha256": "b20f2ae83bcf5a7c242bca9d8bb79086f89e455eebd1a7adccaa6ad2669e4c9d",
+      "bytes": 1547460,
+      "meshTriangles": 377244,
+      "primitives": 50,
+      "materials": 20,
+      "extensions": [
+        "EXT_meshopt_compression",
+        "KHR_materials_clearcoat",
+        "KHR_mesh_quantization"
+      ],
+      "products": [
+        "canyon-speedmax-three-2005"
+      ]
+    },
+    {
+      "path": "assets/kona-years/bikes/cfr-2019/speedmax_web.glb",
+      "sha256": "6525c66a2bf7bdb79eea254e533d34ef1702b12b21b7b8ab9db8b4532ab0eced",
+      "bytes": 2117860,
+      "meshTriangles": 106150,
+      "primitives": 30,
+      "materials": 13,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "canyon-kona-cfr-2019"
+      ]
+    },
+    {
+      "path": "assets/kona-years/bikes/cfslx-2015/speedmax_web.glb",
+      "sha256": "f9702f239b6adb0787fcd834e127a4b0a89aafabe6c882321e86c3471a4735e0",
+      "bytes": 2129084,
+      "meshTriangles": 106166,
+      "primitives": 32,
+      "materials": 14,
+      "extensions": [
+        "KHR_materials_clearcoat"
+      ],
+      "products": [
+        "canyon-kona-cfslx-2015"
+      ]
+    },
+    {
+      "path": "assets/museum-slx/speedmax_web.glb",
+      "sha256": "f111eb792571139c60de3a92a7c02f4fe2e51c35f6374e5d8c5bd475f32a556c",
+      "bytes": 2023912,
+      "meshTriangles": 492942,
+      "primitives": 73,
+      "materials": 18,
+      "extensions": [
+        "EXT_meshopt_compression",
+        "KHR_materials_clearcoat",
+        "KHR_mesh_quantization"
+      ],
+      "products": [
+        "canyon-slx-2027"
+      ]
+    },
+    {
+      "path": "assets/museum/speedmax_web.glb",
+      "sha256": "d0562d1e445099f60e79e258f980e4fc0d098efdb851f2ff1365351d719ed0e0",
+      "bytes": 2081248,
+      "meshTriangles": 509624,
+      "primitives": 74,
+      "materials": 20,
+      "extensions": [
+        "EXT_meshopt_compression",
+        "KHR_materials_clearcoat",
+        "KHR_materials_emissive_strength",
+        "KHR_mesh_quantization"
+      ],
+      "products": [
+        "canyon-cfr-2027",
+        "edition-film-aero-glam",
+        "edition-film-couture",
+        "edition-film-tiffany-tide",
+        "edition-film-hex",
+        "edition-film-stay-weird",
+        "edition-film-lake-house",
+        "edition-film-sanctuary",
+        "edition-galleries-bio",
+        "edition-galleries-horror",
+        "edition-galleries-alien",
+        "edition-galleries-zombie",
+        "edition-lava-night-lava-night",
+        "edition-artworld-witchcraft",
+        "edition-artworld-stitched",
+        "edition-artworld-pagan",
+        "edition-artworld-moonlit",
+        "edition-artworld-carnival",
+        "edition-artworld-ritual-forest"
+      ]
+    }
+  ]
+}
