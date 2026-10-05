@@ -35,5 +35,8 @@ test('reuses the canonical Canyon bike, shared primitives and instancing; no new
   assert.match(room, /setBike\(bike, dress\)/);
   assert.doesNotMatch(room, /ownBikes: true/);                         // the host loads the museum CFR (lite on phones)
   const m = JSON.parse(read('world/konam/candidates/laidlow-nice-asset-manifest-v1.json'));
-  assert.equal(m.assets[0].decision, 'REUSE');
+  assert.ok(m.assets.length >= 7 && m.assets.every(a => a.decision === 'REUSE'), 'every asset in this room is reused');
+  assert.match(room, /decorateRoom\(\[\{ prop: 'kona-palm'/);
+  assert.match(room, /framedPainting\(p, /);
+  assert.match(read('web/src/engine/wing.js'), /const \{ g, fr, pic \} = framedPainting\(p, /);   // the wings hang art through the same function
 });

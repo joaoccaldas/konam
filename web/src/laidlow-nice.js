@@ -20,9 +20,14 @@ import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLigh
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import facts from '../../pitch/sam-laidlow/laidlow-facts-v1.json' with { type: 'json' };
 import { BROOM, BDOOR } from './beast-cave.js';
-import { lightShaft } from './roomkit.js';
+import { lightShaft, motes } from './roomkit.js';
 import { mergeStatic } from './engine/decor.js';
 import { localEnvCapture } from './engine/env-capture.js';
+import { decorateRoom } from './engine/decoration-props.js';
+import { framedPainting } from './engine/wing.js';
+import { paintingCard, sculptureCard } from './engine/card.js';
+import PAINTINGS from '../../museum/art/paintings.json' with { type: 'json' };
+import SCULPTURES from '../../museum/art/sculptures.json' with { type: 'json' };
 
 export const LAIDLOW_MOOD = Object.freeze({ exposure: 1.05, hemi: .32, sun: .12, fog: { near: 18, far: 70 }, fogColor: new THREE.Color('#d9c7ae') });
 const NICE = facts.results.find(r => r.id === 'nice-2023'), KONA = facts.results.find(r => r.id === 'kona-2022'), ROTH = facts.results.find(r => r.id === 'roth-2026');
@@ -109,18 +114,10 @@ export function buildLaidlowNice(ctx) {
   const posts = new THREE.InstancedMesh(new THREE.CylinderGeometry(.035, .05, .92, 10), steel, postAt.length);
   postAt.forEach((z, k) => { M4.makeTranslation(RAIL, .46, z); posts.setMatrixAt(k, M4); }); posts.castShadow = !lite; group.add(posts);
   box(steel, .09, .06, RD - .8, RAIL, .95, CZ); box(steel, .06, .04, RD - .8, RAIL, .35, CZ);
-  // palms on the beach, real geometry in front of the bay so it has depth when you move
-  const leafC = canvas(128, 512, (g, w, h) => { g.fillStyle = '#4c6b3a'; g.translate(w / 2, 0); g.fillRect(-2, 0, 4, h);
-    for (let i = 0; i < 46; i++) { const y = 10 + i * (h - 20) / 46, l = (w / 2 - 4) * Math.sin(Math.PI * (i + 2) / 50); g.fillStyle = i % 4 ? '#47643a' : '#6b8a4c';
-      for (const s of [-1, 1]) { g.beginPath(); g.moveTo(0, y); g.quadraticCurveTo(s * l * .6, y + 8, s * l, y + 26); g.lineTo(s * l * .9, y + 30); g.quadraticCurveTo(s * l * .5, y + 13, 0, y + 6); g.fill(); } } });
-  const leafMat = new THREE.MeshStandardMaterial({ map: tex(leafC), alphaTest: .5, side: THREE.DoubleSide, roughness: .8 }), trunkMat = new THREE.MeshStandardMaterial({ color: '#7a6450', roughness: .95 });
-  const palm = (x, z, h, lean) => { const path = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0, 0), new THREE.Vector3(lean * .3, h * .45, lean * .1), new THREE.Vector3(lean, h, lean * .25)]);
-    add(trunkMat, new THREE.TubeGeometry(path, 18, .12, 8), x, 0, z); const top = path.getPoint(1), parts = [];
-    for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2 + rand() * .3, len = 1.8 + rand() * .6, f = new THREE.PlaneGeometry(.6, len, 1, 6), p = f.attributes.position;
-      for (let k = 0; k < p.count; k++) { const v = Math.max(0, (p.getY(k) + len / 2) / len); p.setZ(k, -Math.pow(v, 1.6) * .9); p.setY(k, v * len); } f.computeVertexNormals();
-      f.applyMatrix4(M4.compose(V.set(x + top.x, top.y, z + top.z), Q.setFromEuler(EU.set(-1.05 + rand() * .3, a, 0)), S.set(1, 1, 1))); parts.push(f); }
-    const crown = new THREE.Mesh(mergeGeometries(parts), leafMat); crown.castShadow = !lite; group.add(crown); };
-  palm(32.3, -5.6, 4.4, -.5); palm(32.5, -16.0, 4.0, -.35);
+  // potted palms along the Promenade: the museum's canonical kona-palm prop (museum/world/decorations.json)
+  const sway = [];
+  for (const g of decorateRoom([{ prop: 'kona-palm', x: 27.6, z: -4.9, height: 2.6, seed: 2 }, { prop: 'kona-palm', x: 27.6, z: -16.8, height: 2.4, seed: 5 },
+    { prop: 'kona-palm', x: 8.3, z: -4.8, height: 2.2, seed: 7 }, { prop: 'kona-palm', x: 31.6, z: -10.9, height: 2.9, seed: 11 }], { group, lite, obstacles, sway, basaltTex: ctx.basaltTex })) g.userData.prop = 'kona-palm';   // the factory adds to the group
 
   // ------------------------------------------------------------ the blue chairs of the Promenade, facing the sea (one InstancedMesh)
   const chairGeo = (() => { const p = [], b = (w, h, d, x, y, z, rx = 0) => { const g = new THREE.BoxGeometry(w, h, d); g.applyMatrix4(M4.compose(V.set(x, y, z), Q.setFromEuler(EU.set(rx, 0, 0)), S.set(1, 1, 1))); p.push(g); };
@@ -200,6 +197,21 @@ export function buildLaidlowNice(ctx) {
   const plaque = lettering(2.2, .2, g => { g.fillStyle = 'rgba(30,38,46,.9)'; g.font = `600 .085px ${FONT}`; g.letterSpacing = '.014px'; g.fillText('CANYON SPEEDMAX CFR · THE LINE HE RACES', .05, .13); }, 1024);
   plaque.rotation.set(-Math.PI / 2 + .35, 0, -Math.PI / 2); plaque.position.set(HX - 1.95, .2, HZ); group.add(plaque);
 
+  // ------------------------------------------------------------ museum art from the catalogue (museum/art), hung the way the wings hang it
+  const P = id => PAINTINGS.paintings.find(p => p.id === id), SC = id => SCULPTURES.sculptures.find(x => x.id === id);
+  const texLoader = new THREE.TextureLoader(), frameMat = new THREE.MeshStandardMaterial({ color: '#1c1916', roughness: .5 });
+  const ROOM = 'LAIDLOW // NICE';
+  for (const [id, x, y, z, ry] of [['queen-k-first-light', 9.55, 2.35, R.z1 - .22, 0], ['race-morning-bay', 7.55, 2.2, -12.4, Math.PI / 2], ['midnight-seawall', 7.55, 2.3, -15.0, Math.PI / 2]]) {
+    const p = P(id); if (!p) continue;
+    const { g, fr, pic } = framedPainting(p, { frameMat, texLoader, wash: null, lettering, FONT, SERIF, width: 1.6 });
+    g.position.set(x, y, z); g.rotation.y = ry; group.add(g);
+    info([pic, fr], { model: () => paintingCard(p, { room: ROOM }), eyebrow: 'FROM THE MUSEUM', title: p.title, sub: p.medium });
+  }
+  const sculptAt = [['the-tuck', 12.9, -5.4, .5], ['sea-glass-wave', 32.0, -13.6, -1.2]], sculptHolders = [];
+  for (const [id, x, z, yaw] of sculptAt) { const sc = SC(id); if (!sc) continue;
+    box(limestone, .7, .62, .7, x, .31, z, 0, true); obstacles.push({ c: new THREE.Vector3(x, 0, z), r: .55 });
+    const h = new THREE.Group(); h.position.set(x, .62, z); h.rotation.y = yaw; group.add(h); sculptHolders.push({ h, sc }); }
+
   // ------------------------------------------------------------ the coach's corner: a director's chair and a whiteboard
   const canvasBlue = new THREE.MeshStandardMaterial({ color: PAL.bleu, roughness: .9 }), wood = new THREE.MeshStandardMaterial({ color: '#8a6a48', roughness: .7 });
   const cx = 11.2, cz = -15.6;
@@ -275,15 +287,26 @@ export function buildLaidlowNice(ctx) {
   const paperCard = simple('LE PROMENEUR · A FICTIONAL FRONT PAGE', 'Le jeune homme et la mer.', 'Local man rides 180 km and ends up exactly where he started. The paper is invented; the times on it are real.', [{ cls: 'P', text: src(`Nice 2023 splits: swim ${NICE.splits.swim}, bike ${NICE.splits.bike}, run ${NICE.splits.run}.`, NICE.sources) }]);
 
   // ------------------------------------------------------------ static merge (one draw per material), reflections
-  const keepers = new Set([floor, sign, drum, ring, mon, kona, roth, paper, board, bay, glass, chairs, peb, posts]);
+  const keepers = new Set([floor, sign, drum, ring, mon, kona, roth, paper, board, bay, glass, chairs, peb, posts, ...sculptHolders.map(s => s.h), ...sway.map(w => w.o)]);
   group.userData.merged = mergeStatic(group, { keep: o => keepers.has(o) || !!o.userData?.info || o.isLight || o.isPoints || o.isInstancedMesh || o.material?.transparent });
   let envDirty = 2;
+  const dust = lite ? null : motes({ n: 160, box: [GX - 7, GX - .4, .3, R.h - .6, CZ - 3, CZ + 3], color: '#ffe2b0', size: .03, rise: .05, sway: .18, opacity: .6 });   // the sunbeam's dust (roomkit)
+  if (dust) group.add(dust.points);
   const env = localEnvCapture({ renderer, scene, group, at: new THREE.Vector3(HX - 3, 1.6, HZ), lite, mats: envMats });
 
   // ------------------------------------------------------------ host interface (same shape as the Beast Cave)
   return {
     group, floor, sign, bikeSpot, infos, mood: LAIDLOW_MOOD, introCard,
-    async useAssets() { this._assets = true; },
+    async useAssets(loader) {                                           // the museum's sculptures (museum/art/sculptures.json), scaled as catalogued
+      if (this._assets) return; this._assets = true;
+      for (const { h, sc } of sculptHolders) loader.loadAsync(`assets/art/sculptures/${sc.file}`).then(g => {
+        const m = g.scene, b = new THREE.Box3().setFromObject(m), size = b.getSize(new THREE.Vector3()); m.scale.setScalar(sc.height / Math.max(.001, size.y));
+        const b2 = new THREE.Box3().setFromObject(m), c = b2.getCenter(new THREE.Vector3()); m.position.set(-c.x, -b2.min.y, -c.z);
+        m.traverse(o => { if (o.isMesh) { o.castShadow = !lite; envMats.push(o.material); } }); h.add(m);
+        const parts = []; m.traverse(o => { if (o.isMesh) parts.push(o); });
+        info(parts, { model: () => sculptureCard(sc, { room: ROOM }), eyebrow: 'FROM THE MUSEUM', title: sc.title, sub: sc.material });
+        envDirty = 2; }).catch(e => console.warn('sculpture', sc.id, e?.message || e));
+    },
     setBike(bike, dress) {                                             // the canonical Speedmax CFR, side-on to the door, front wheel to the 8:06:22 wall
       bike.traverse(o => { if (!o.isMesh) return; o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone(); o.castShadow = !lite; delete o.userData.piece; o.userData.info = bikeSpot.info; pickables.push(o); });
       dress?.(bike);
@@ -300,6 +323,8 @@ export function buildLaidlowNice(ctx) {
     update(t, reduce, dt = 1 / 60) {
       if (envDirty) { envDirty--; if (!envDirty) env.capture(); }
       bayMat.uniforms.t.value = reduce ? 0 : t;
+      if (dust && !reduce) dust.step(t);
+      if (!reduce) for (const w of sway) { const a = Math.sin(t * .9 + w.phase) * w.amp; w.o.rotation.z = a; w.o.rotation.x = a * .5; }
       return { power: 0, heat: 0, riding: false };
     },
   };

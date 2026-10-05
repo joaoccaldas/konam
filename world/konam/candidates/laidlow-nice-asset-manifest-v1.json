@@ -8,12 +8,91 @@
    "kind": "bike",
    "decision": "REUSE",
    "why_reuse": "The subject is a Canyon athlete on the Speedmax CFR; the museum's canonical Canyon Speedmax CFR is the right object, loaded by the host (loadBeastBike).",
-   "runtime_ref": ["assets/museum/speedmax_web.glb", "assets/museum/speedmax_web-lite.glb"],
-   "sha256": { "hero": "d0562d1e445099f60e79e258f980e4fc0d098efdb851f2ff1365351d719ed0e0", "lite": "12f55114e165aee2dd3cd53b2c736efa66771dddfd938be8c74cae222e54e016" },
-   "tris": { "hero": 509624, "lite": 76826 },
+   "runtime_ref": [
+    "assets/museum/speedmax_web.glb",
+    "assets/museum/speedmax_web-lite.glb"
+   ],
+   "sha256": {
+    "hero": "d0562d1e445099f60e79e258f980e4fc0d098efdb851f2ff1365351d719ed0e0",
+    "lite": "12f55114e165aee2dd3cd53b2c736efa66771dddfd938be8c74cae222e54e016"
+   },
+   "tris": {
+    "hero": 509624,
+    "lite": 76826
+   },
    "representation": "canonical-museum-asset (documented finish; not the athlete's race bike, livery or setup)",
    "rights": "museum asset; Canyon wordmarks only as modelled",
    "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "queen-k-first-light",
+   "kind": "painting",
+   "decision": "REUSE",
+   "runtime_ref": "assets/art/paintings/queen-k-first-light.jpg",
+   "source_ref": "museum/art/paintings.json",
+   "hung_with": "web/src/engine/wing.js framedPainting()",
+   "rights": "original museum work (ai-generated, Higgsfield)",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "race-morning-bay",
+   "kind": "painting",
+   "decision": "REUSE",
+   "runtime_ref": "assets/art/paintings/race-morning-bay.jpg",
+   "source_ref": "museum/art/paintings.json",
+   "hung_with": "web/src/engine/wing.js framedPainting()",
+   "rights": "original museum work (ai-generated, Higgsfield)",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "midnight-seawall",
+   "kind": "painting",
+   "decision": "REUSE",
+   "runtime_ref": "assets/art/paintings/midnight-seawall.jpg",
+   "source_ref": "museum/art/paintings.json",
+   "hung_with": "web/src/engine/wing.js framedPainting()",
+   "rights": "original museum work (ai-generated, Higgsfield)",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "the-tuck",
+   "kind": "sculpture",
+   "decision": "REUSE",
+   "runtime_ref": "assets/art/sculptures/the-tuck.glb",
+   "source_ref": "museum/art/sculptures.json",
+   "rights": "original museum work (ai-generated, Higgsfield)",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "sea-glass-wave",
+   "kind": "sculpture",
+   "decision": "REUSE",
+   "runtime_ref": "assets/art/sculptures/sea-glass-wave.glb",
+   "source_ref": "museum/art/sculptures.json",
+   "rights": "original museum work (ai-generated, Higgsfield)",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "kona-palm",
+   "kind": "decor-prop",
+   "decision": "REUSE",
+   "runtime_ref": "web/src/engine/decoration-props.js decorateRoom()",
+   "source_ref": "museum/world/decorations.json",
+   "rights": "original-kona-m",
+   "lifecycle": "canonical"
+  },
+  {
+   "asset_id": "roomkit",
+   "kind": "effects",
+   "decision": "REUSE",
+   "runtime_ref": [
+    "web/src/roomkit.js motes()",
+    "web/src/roomkit.js lightShaft()",
+    "web/src/engine/env-capture.js",
+    "web/src/engine/decor.js mergeStatic()"
+   ],
+   "rights": "original-kona-m",
+   "lifecycle": "canonical"
   }
  ],
  "constraints": {
@@ -23,5 +102,5 @@
   "photography": false,
   "real_newspaper_marks": false
  },
- "procedural": "limestone floor, ochre dado, Baie des Anges shader (sky, Colline du Château, sea glint, Promenade lights), blue chairs (instanced), galets (instanced), balustrade, palms, monument and record panels, fictional front page (Le Promeneur), coach's corner — original KONA.m code"
+ "procedural": "limestone floor, ochre dado, Baie des Anges shader (sky, Colline du Château, sea glint, Promenade lights), blue chairs (instanced), galets (instanced), balustrade, monument and record panels, fictional front page (Le Promeneur), coach's corner — original KONA.m code"
 }
