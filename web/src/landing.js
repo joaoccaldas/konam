@@ -2042,9 +2042,9 @@ function frame(now) {
     if (keep || sealedRoom) for (const o of scene.children) {
       if (o === hall || o.isLight || o.isCamera || o.userData.outdoor) continue;
       if (keep && o !== keep && o.userData.homeRoom === undefined) { const c = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()); o.userData.homeRoom = Number.isFinite(c.x) ? roomOf(c.x, c.z) : null; }
-      if (keep && o.userData.homeRoom === reg) continue;              // props placed inside this room at world level (decor palms)
-      if (keep && o !== keep) { if (o.userData.sealedVis === undefined) o.userData.sealedVis = o.visible; o.visible = false; }
-      else if (o.userData.sealedVis !== undefined) { o.visible = o.userData.sealedVis; delete o.userData.sealedVis; }
+      const show = !keep || o === keep || o.userData.homeRoom === reg;  // + props placed inside this room at world level (decor palms)
+      if (!show) { if (o.userData.sealedVis === undefined) o.userData.sealedVis = o.visible; o.visible = false; }
+      else if (o.userData.sealedVis !== undefined) { o.visible = o.userData.sealedVis; delete o.userData.sealedVis; }   // also on a teleport between sealed rooms
     }
     sealedRoom = !!keep;
   }
