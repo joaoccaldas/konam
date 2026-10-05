@@ -4,6 +4,7 @@
 // refreshes the byte counts in the sibling build-meta.json and in assets/atlas/build-report.json.
 //
 //   node tools/pack-glb.mjs assets/atlas/<key>/bike.glb [assets/atlas/<key>/bike-lite.glb ...]
+//   node tools/pack-glb.mjs --lod <src.glb> [...]                    (derived display LOD <src>-lod1.glb + .meta.json)
 //   node tools/pack-glb.mjs --unpack <packed.glb> <plain.glb>     (for Blender, whose importer cannot read meshopt)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -13,6 +14,28 @@ import { createRequire } from 'node:module';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cli = path.join(root, 'web/node_modules/.bin/gltf-transform');
+if (process.argv[2] === '--lod') {                                        // derived display LOD: <src>-lod1.glb + .meta.json (same materials/nodes)
+  const req = createRequire(path.join(root, 'web/node_modules/'));
+  const { NodeIO } = req('@gltf-transform/core'), { ALL_EXTENSIONS } = req('@gltf-transform/extensions'), { MeshoptDecoder } = req('meshoptimizer');
+  await MeshoptDecoder.ready;
+  const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder });
+  const stats = async f => { const d = await io.read(f); let t = 0; for (const m of d.getRoot().listMeshes()) for (const q of m.listPrimitives()) { const i = q.getIndices(); t += (i ? i.getCount() : q.getAttribute('POSITION').getCount()) / 3; }
+    return { triangles: Math.round(t), materials: d.getRoot().listMaterials().length, nodes: d.getRoot().listNodes().length }; };
+  const error = '0.003';
+  for (const src of process.argv.slice(3)) {
+    const abs = path.resolve(root, src), out = abs.replace(/\.glb$/, '-lod1.glb'), w = out + '.weld.glb', sm = out + '.simp.glb';
+    execFileSync(cli, ['weld', abs, w], { stdio: 'pipe' }); execFileSync(cli, ['simplify', w, sm, '--ratio', '0.05', '--error', error], { stdio: 'pipe' });
+    execFileSync(cli, ['meshopt', sm, out, '--level', 'medium'], { stdio: 'pipe' }); fs.rmSync(w); fs.rmSync(sm);
+    const a = await stats(abs), b = await stats(out), rel = path.relative(root, out);
+    fs.writeFileSync(out.replace(/\.glb$/, '.meta.json'), JSON.stringify({ asset: rel, kind: 'derived-runtime-lod', derived_from: path.relative(root, abs),
+      rights: "inherits the source asset's rights and provenance; no new geometry or marks",
+      pipeline: `gltf-transform weld -> simplify --ratio 0.05 --error ${error} -> meshopt --level medium (node tools/pack-glb.mjs --lod)`,
+      triangles: b.triangles, source_triangles: a.triangles, bytes: fs.statSync(out).size, materials: b.materials, nodes: b.nodes,
+      use: 'beyond LOD_NEAR only (web/src/landing.js); never for inspection, explode or hero shots' }, null, 1) + '\n');
+    console.log(`lod ${rel}: ${a.triangles} -> ${b.triangles} triangles, ${fs.statSync(out).size} bytes`);
+  }
+  process.exit(0);
+}
 if (process.argv[2] === '--unpack') {                                     // decode meshopt for tools that cannot read it (Blender's importer)
   const req = createRequire(path.join(root, 'web/node_modules/'));
   const { NodeIO } = req('@gltf-transform/core'), { ALL_EXTENSIONS } = req('@gltf-transform/extensions'), { MeshoptDecoder } = req('meshoptimizer');

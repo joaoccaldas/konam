@@ -958,7 +958,19 @@ async function loadBike(p) {
     ex: { configurable: true, get: () => p.inspection.value, set: v => { p.inspection.value = v; } },
     exT: { configurable: true, get: () => p.inspection.target, set: v => { p.inspection.target = v; } },
   });
-  const holder = new THREE.Group(); holder.add(bike); holder.rotation.y = p.rotY; holder.position.y = p.top;
+  // Beyond LOD_NEAR_HALL the derived light model stands in; inspection and explode always run on the full model,
+  // and both only happen with the visitor at the pedestal.
+  const low = lodOf(p.glb) ? await loadShared(lodOf(p.glb)).then(g => g.scene).catch(() => null) : null;
+  let shown = bike;
+  if (low) {
+    dressBike(low, p);
+    const lb = new THREE.Box3().setFromObject(low), lc = lb.getCenter(new THREE.Vector3());
+    low.position.set(-lc.x, -lb.min.y, -lc.z);
+    shown = new THREE.LOD(); shown.addLevel(bike, 0); shown.addLevel(low, LOD_NEAR_HALL);
+    p.lod = shown;
+    low.traverse(o => { if (o.isMesh) pickables.push(o); });
+  }
+  const holder = new THREE.Group(); holder.add(shown); holder.rotation.y = p.rotY; holder.position.y = p.top;
   holder.scale.setScalar(.001); p.group.add(holder); p.bike = holder; p.bikeIn = 0;
   const cs = contactShadow(2.1, .55); cs.position.y = p.top + .004; cs.rotation.z = p.rotY; p.group.add(cs);
   bike.traverse(o => { if (o.isMesh) pickables.push(o); });
@@ -974,10 +986,12 @@ async function loadPierBike() {                                       // the cur
 }
 // Display-only Speedmax copies (Sanctuary films, theme galleries): full detail within LOD_NEAR metres, beyond it the
 // derived 52k-triangle study (assets/museum/speedmax_web-lod1.glb, 10x lighter). Inspectable bikes never use it.
-const CFR_LOD = 'assets/museum/speedmax_web-lod1.glb', LOD_NEAR = 6;
+// Derived LODs exist for these canonical bikes (node tools/pack-glb.mjs --lod; provenance in <name>-lod1.meta.json).
+const LODS = new Set(['assets/museum/speedmax_web.glb', 'assets/museum-slx/speedmax_web.glb', 'assets/heritage/speedmax-three-2005/speedmax_web.glb',
+  'assets/heritage/speedmax-2007/speedmax_web.glb', 'assets/heritage/speedmax-al-2011/speedmax_web.glb', 'assets/heritage/speedmax-cf-2011/speedmax_web.glb']);
+const lodOf = src => LODS.has(src) ? src.replace(/\.glb$/, '-lod1.glb') : null, LOD_NEAR = 6, LOD_NEAR_HALL = 9;   // hall: beyond the 7.5 m walk-away that reassembles an exploded bike
 async function displayCopies(src) {
-  const isCfr = src === PIECES.find(p => p.key === 'cfr')?.glb;
-  const [hi, lo] = await Promise.all([loadShared(src), isCfr ? loadShared(CFR_LOD).catch(() => null) : null]);
+  const [hi, lo] = await Promise.all([loadShared(src), lodOf(src) ? loadShared(lodOf(src)).catch(() => null) : null]);
   return prep => {
     const lod = new THREE.LOD();
     for (const [g, d] of [[hi, 0], [lo, LOD_NEAR]]) {
@@ -1949,7 +1963,10 @@ function frame(now) {
     p.ring.material.opacity += (want - p.ring.material.opacity) * (1 - Math.exp(-dt * 7.5));
     if (p.bike && p.bikeIn < 1) { p.bikeIn = Math.min(1, p.bikeIn + dt * 1.4); const e = 1 - Math.pow(1 - p.bikeIn, 3); p.bike.scale.setScalar(Math.max(.001, e)); }
   }
-  for (const p of PIECES) p.inspection?.update(dt, { reduced: reduce });
+  for (const p of PIECES) {
+    p.inspection?.update(dt, { reduced: reduce });
+    if (p.lod) { const pin = p.ex > .001 || p === current; p.lod.autoUpdate = !pin; if (pin) { p.lod.levels[0].object.visible = true; p.lod.levels[1].object.visible = false; } }   // explode/inspection: always the full model
+  }
   if (exploded && Math.hypot(P.x - exploded.pos.x, P.z - exploded.pos.z) > 7.5) setExploded(exploded, false);   // walked away
   const lab = exploded?.anchors ? exploded : null;
   $('labels').style.visibility = lab && lab.ex > .05 ? 'visible' : 'hidden';
