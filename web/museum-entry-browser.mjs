@@ -1,10 +1,12 @@
+// CI uses a smaller raster canvas; CSS viewport and all projection assertions remain unchanged.
+// Full pixel-density checks live in visual-evidence-v2 and the physical-device audit.
 // Prove the actual gallery is one action away, without onboarding or unlocks.
 import puppeteer from 'puppeteer-core';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const base=process.argv[2]||'http://127.0.0.1:8748/';
 const out=new URL('../output/playwright/',import.meta.url);fs.mkdirSync(out,{recursive:true});
-const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--no-sandbox',process.env.CI?'--use-angle=swiftshader':'--use-angle=metal','--enable-unsafe-swiftshader']});
+const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage',process.env.CI?'--use-angle=swiftshader':'--use-angle=metal','--enable-unsafe-swiftshader']});
 const report=[];
 async function press(page,selector){
  console.log('museum control',page.viewport().width,selector);
@@ -18,7 +20,7 @@ try{
  for(const [width,height,returning] of [[390,844,false],[844,390,true],[1440,900,false]]){
   const context=await browser.createBrowserContext(),page=await context.newPage(),errors=[],requests=[];
   page.setDefaultTimeout(60000);page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>requests.push(request.url()));
-  await page.setViewport({width,height,isMobile:width<900,hasTouch:width<900});await page.setBypassServiceWorker(true);
+  await page.setViewport({width,height,deviceScaleFactor:process.env.CI?.35:1,isMobile:width<900,hasTouch:width<900});await page.setBypassServiceWorker(true);
   await page.evaluateOnNewDocument(returning=>{localStorage.setItem('kona.profile.v1',JSON.stringify({v:1,quality:'low',motion:'reduced'}));localStorage.setItem('speedmax.coach.v1','1');if(returning)localStorage.setItem('kona.onboarding.v1','seen');},returning);
   await page.goto(base,{waitUntil:'networkidle2'});await page.waitForFunction(()=>window.__konaShell);await page.evaluate(()=>document.fonts.ready);
   const first=await page.$eval('#entryWorld',button=>{const r=button.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {label:button.textContent,bottom:r.bottom,visible:r.top>=0&&r.bottom<=innerHeight&&(hit===button||button.contains(hit))};});
@@ -55,7 +57,7 @@ try{
   report.push({width,height,returning,...first,actualGallery:true,exhibitStory:true,exploreAndMenu:true,expandedBikeFits:true,homeUngated:true,status:'PASS'});await context.close();
  }
  const context=await browser.createBrowserContext(),page=await context.newPage();let rejectHall=true;
- await page.setViewport({width:390,height:844,isMobile:true,hasTouch:true});await page.setBypassServiceWorker(true);await page.setRequestInterception(true);
+ await page.setViewport({width:390,height:844,deviceScaleFactor:process.env.CI?.35:1,isMobile:true,hasTouch:true});await page.setBypassServiceWorker(true);await page.setRequestInterception(true);
  page.on('request',request=>request.url().endsWith('/app/hall.js')&&rejectHall?request.abort():request.continue());
  await page.goto(base,{waitUntil:'networkidle2'});await page.waitForFunction(()=>window.__konaShell);await press(page,'#entryWorld');
  await page.waitForFunction(()=>document.querySelector('[data-museum-status]').textContent.includes('could not open'));

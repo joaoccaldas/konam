@@ -14,6 +14,7 @@ jobs:
   checks:
     name: Museum checks
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -48,9 +49,12 @@ jobs:
           CHROME_PATH=/usr/bin/google-chrome node web/audit-remediation-browser.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/p0-journey-smoke.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/native-entry-layout-browser.mjs http://127.0.0.1:8744/ --web
-          CHROME_PATH=/usr/bin/google-chrome node web/museum-entry-browser.mjs http://127.0.0.1:8744/
-          CHROME_PATH=/usr/bin/google-chrome node web/founding-rooms-browser.mjs http://127.0.0.1:8744/
-          CHROME_PATH=/usr/bin/google-chrome node web/inspection-framing-browser.mjs http://127.0.0.1:8744/
+          echo "Checking museum-entry-browser.mjs at unchanged CSS geometry with a software-renderer canvas"
+          CHROME_PATH=/usr/bin/google-chrome timeout 6m node web/museum-entry-browser.mjs http://127.0.0.1:8744/
+          echo "Checking founding-rooms-browser.mjs at unchanged CSS geometry with a software-renderer canvas"
+          CHROME_PATH=/usr/bin/google-chrome timeout 6m node web/founding-rooms-browser.mjs http://127.0.0.1:8744/
+          echo "Checking inspection-framing-browser.mjs at unchanged CSS geometry with a software-renderer canvas"
+          CHROME_PATH=/usr/bin/google-chrome timeout 6m node web/inspection-framing-browser.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/account-auth-browser.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/studio-launch-audit.mjs http://127.0.0.1:8744
           CHROME_PATH=/usr/bin/google-chrome node web/launch-regression-browser.mjs http://127.0.0.1:8744/
