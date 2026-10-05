@@ -793,7 +793,7 @@ const birds = [];
 
 // ------------------------------------------------------------------ light
 const hemi = new THREE.HemisphereLight('#ffe3c2', '#b09572', lite ? 1.3 : .9); scene.add(hemi);
-let sealedRoom = false, shadowAt = -1;
+let sealedRoom = false, shadowAt = -1, roomMoving = false;
 const hemiBase = hemi.intensity;                                    // rooms with a mood (Beast Cave, Breitling) dim these while you are inside
 const sun = new THREE.DirectionalLight('#ffddad', lite ? 2 : 2.45);
 const sunBase = sun.intensity;
@@ -1997,6 +1997,7 @@ function frame(now) {
     const beastVisible = !!beast && (reg === 'beast' || (reg === 'hall' && P.z < BDOOR.z1 + 5 && P.z > BDOOR.z0 - 5));
     if (beast) beast.group.visible = beastVisible;
     const beastNow = beastVisible ? beast.update(t, reduce, dt) : null;
+    roomMoving = !!beastNow?.moving;                                 // a room's shadow casters animate: keep shadows per-frame
     if (riding && beast?.ride) {
       const st = beast.ride.iv.state, band = beast.ride.iv.band(), lo = 90, hi = 480, pct = v => `${Math.max(0, Math.min(100, (v - lo) / (hi - lo) * 100))}%`;
       $('rideWatts').textContent = `${Math.round(st.power)} W`; $('rideBand').textContent = `${band.label} · ${band.lo}–${band.hi} W`;
@@ -2059,7 +2060,7 @@ function frame(now) {
   if (window.__shaft) window.__shaft.opacity = .045 + Math.sin(t * .35) * .012;   // the shaft breathes with the trade wind
   window.__museumArt?.update?.(dt, t, P, camera, roomOf(P.x, P.z));
   if (!pierOut) {                                                      // out on the pier the shadows don't move at all
-    const moving = !!riding || (current && Math.abs(current.ex - current.exT) > .002);
+    const moving = !!riding || roomMoving || (current && Math.abs(current.ex - current.exT) > .002);
     if (moving || t - shadowAt > .25) { renderer.shadowMap.needsUpdate = true; shadowAt = t; }
   }
   renderer.render(scene, camera);

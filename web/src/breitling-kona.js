@@ -319,7 +319,7 @@ export function buildBreitlingKona(ctx) {
         if (!reduce) monument.rotation.y = Math.sin(t * .18) * .32;
       }
       molten.intensity = (lite ? 5 : 8) * (.85 + Math.sin(t * 1.3) * .1 + Math.sin(t * 3.7) * .05);
-      return { power: 0, heat: 0, riding: false };
+      return { power: 0, heat: 0, riding: false, moving: !!mIndex && !reduce };   // the monument turns and opens: its shadow follows every frame
     },
   };
 }
