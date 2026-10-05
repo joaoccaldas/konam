@@ -27,6 +27,11 @@ Reproduce: `node tools/room-evidence.mjs --review world --room hall --areas [--a
 | Wing · Kona Light view: triangles | 6.47 M | 2.73 M | **−58 %** (display-bike LOD) |
 | Wing · Kona Light view: render time | 16.2 s | 8.0 s | **−50 %** |
 | Hall view: draw calls | 1,482 | 1,342 | −9 % (palm crowns merged, 11 → 1 per palm) |
+| **Area overviews (same camera, 960×540, `before/` vs `after/areas.json`)** | | | |
+| Hall: triangles · draw calls | 12.83 M · 2,647 | 0.92 M · 1,342 | **−93 % · −49 %** |
+| Sanctuary | 8.39 M · 2,078 | 1.13 M · 913 | **−87 % · −56 %** |
+| Kona | 14.51 M · 3,271 | 2.56 M · 2,344 | **−82 % · −28 %** |
+| Wing · Kona Light | 7.32 M · 3,609 | 2.75 M · 3,070 | **−62 % · −15 %** |
 | Shadow-map renders, 30 idle frames at 60 fps (desktop, shadows on) | 30 | 1 | **−97 %** (static sun: re-rendered only while something moves, else ≤ 4 Hz) |
 
 ### Better quality — yes, with one correction
@@ -63,7 +68,6 @@ No new `!important`. Brand, authority and repository hygiene pass.
 
 | Item | Why it matters | Risk |
 |---|---|---|
-| Hall still draws ~5.6 M triangles / ~1,300 calls at its overview | the inspectable collection bikes are full-resolution (510k each) | LOD on inspectable bikes changes what you see when you walk up; needs a near-distance rule tied to inspection |
 | Region culling (Champions, WYLD, brand rooms always drawn) | draw calls everywhere | pop-in at doorways if done badly |
 | ~28 always-on point lights | per-pixel cost on phones | a light pool changes the lighting mood per room |
 | hall-mobile.css ~108 `!important`, two button grammars, 760 vs 899/900 breakpoints | maintainability | visual regressions across many screens |
