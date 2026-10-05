@@ -89,3 +89,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{o
 
 /* shared KONA interaction contract */
 button,a,[role="button"]{min-height:var(--brand-touch,48px)}
+
+/* Compact comparison is intentionally horizontally scrollable, but the scroller itself must stay inside the viewport. */
+.comparison,.compare-tabs{max-width:100%;min-width:0;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+.comparison{overflow-x:auto;overflow-y:hidden}
+.compare-tabs{overflow-x:auto;overflow-y:hidden}
+@media(max-width:760px){.comparison{margin-inline:0}.comparison table{min-width:650px}}
