@@ -32,11 +32,18 @@ async function emailCallback(type) {
  }
  throw new Error('Local confirmation/recovery email was not received.');
 }
-assert.deepEqual(await registerAccount(email,password),{signedIn:false});assert.equal(store.size,0);
+assert.deepEqual(await registerAccount(email,password,{newsletter:true}),{signedIn:false});assert.equal(store.size,0);
 await assert.rejects(signInWithPassword(email,password),error=>error.code==='email_not_confirmed');
-await emailCallback('signup');assert.ok((await currentUser()).id);await signOut();assert.equal(store.size,0);
+assert.ok(env.SERVICE_ROLE_KEY);
+async function subscription(){
+ const response=await networkFetch(api+'/rest/v1/newsletter_subscriptions?select=status,confirmed_at&email=eq.'+encodeURIComponent(email),{headers:{apikey:env.SERVICE_ROLE_KEY,Authorization:'Bearer '+env.SERVICE_ROLE_KEY}});assert.equal(response.status,200);return response.json();
+}
+assert.deepEqual(await subscription(),[]);
+await emailCallback('signup');assert.ok((await currentUser()).id);
+const subscribed=await subscription();assert.equal(subscribed.length,1);assert.equal(subscribed[0].status,'active');assert.ok(subscribed[0].confirmed_at);
+await signOut();assert.equal(store.size,0);
 await assert.rejects(signInWithPassword(email,'wrong-password'),error=>error.code==='invalid_credentials');
 assert.equal((await signInWithPassword(email,password)).email,email);
 const key='kona.supabase.session.v1',session=JSON.parse(store.get(key));store.set(key,JSON.stringify({...session,expires_at:1}));assert.equal((await currentUser()).email,email);assert.ok(JSON.parse(store.get(key)).expires_at>1);
 await requestPasswordReset(email);await emailCallback('recovery');const newPassword='New-ci-password-'+randomUUID();await updatePassword(newPassword);await signOut();await assert.rejects(signInWithPassword(email,password));assert.equal((await signInWithPassword(email,newPassword)).email,email);await signOut();assert.equal(store.size,0);
-console.log('Real GoTrue + Mailpit PASS: signup, email confirmation, rejected unconfirmed login, password login, refresh, recovery email, password update, old-password rejection, logout.');
+console.log('Real GoTrue + Mailpit PASS: signup, optional newsletter activation after email confirmation, rejected unconfirmed login, password login, refresh, recovery email, password update, old-password rejection, logout.');

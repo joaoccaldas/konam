@@ -85,12 +85,21 @@ export async function signInWithPassword(email,password) {
   const data=await json(await fetch(URL+'/auth/v1/token?grant_type=password',{
     method:'POST',headers:baseHeaders(),body:JSON.stringify({email:cleanEmail(email),password})
   }));
-  saveSession(data);return data.user;
+  saveSession(data);await confirmNewsletterChoice(data.user);return data.user;
 }
 
-export async function registerAccount(email,password) {
+async function confirmNewsletterChoice(user) {
+  if(user?.user_metadata?.kona_newsletter?.opt_in!==true)return;
+  // The server checks the signed-in owner and confirmed address. This retries a
+  // deferred signup trigger without changing withdrawn/suppressed subscriptions.
+  try {await json(await fetch(URL+'/rest/v1/rpc/confirm_registration_newsletter',{
+    method:'POST',headers:await authHeaders(),body:'{}'
+  }));} catch { /* An optional newsletter failure does not undo account access. */ }
+}
+
+export async function registerAccount(email,password,{newsletter=false}={}) {
   const data=await json(await fetch(URL+'/auth/v1/signup?redirect_to='+encodeURIComponent(authRedirect()),{
-    method:'POST',headers:baseHeaders(),body:JSON.stringify({email:cleanEmail(email),password:strongPassword(password)})
+    method:'POST',headers:baseHeaders(),body:JSON.stringify({email:cleanEmail(email),password:strongPassword(password),data:{kona_newsletter:{id:"kona-intern",version:1,opt_in:newsletter===true}}})
   }));
   if(data?.access_token){saveSession(data);return {signedIn:true,user:data.user};}
   // Confirmation-enabled signups intentionally return no session. An obfuscated
@@ -148,9 +157,10 @@ export async function currentUser() {
   const s = await validSession();
   if (!s?.access_token) return null;
   try {
-    return await json(await fetch(URL + '/auth/v1/user', {
+    const user=await json(await fetch(URL + '/auth/v1/user', {
       headers:{ ...baseHeaders(), Authorization:'Bearer ' + s.access_token }
     }));
+    await confirmNewsletterChoice(user);return user;
   } catch (error) { if(error.status===401||error.status===403)saveSession(null); return null; }
 }
 

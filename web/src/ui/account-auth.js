@@ -1,15 +1,24 @@
 import {signInWithPassword,registerAccount,requestPasswordReset,resendConfirmation,updatePassword,currentUser,PUBLIC_SUPABASE_URL,PUBLIC_SUPABASE_KEY} from '../cloud/supabase-lite.js';
 
 // Account access shares the entry shell. Account and newsletter consent are separate.
-export async function requestProjectUpdates(email) {
-  const response=await fetch(PUBLIC_SUPABASE_URL+'/functions/v1/newsletter-subscribe',{
-    method:'POST',headers:{apikey:PUBLIC_SUPABASE_KEY,'Content-Type':'application/json'},
-    body:JSON.stringify({email,source:'account-registration',locale:'en'})
+export function renderNewsletterUnsubscribe(host,token,{onBack=()=>{}}={}) {
+  const valid=typeof token==='string'&&/^[a-f0-9]{64}$/.test(token);
+  host.innerHTML=`<section class="account-auth" aria-label="The Intern’s newsletter"><div class="account-story"><p class="account-kicker">YOUR INBOX · YOUR PACE</p><h2>Three things worth your time.<br><em>You choose when.</em></h2><p>The Intern’s Kona.m newsletter.</p></div><div class="account-panel artifact artifact--label"><p class="account-kicker">THE INTERN READ THE INTERNET</p><h2>Your inbox. Your pace.</h2><p>${valid?'Unsubscribe from The Intern’s newsletter. Your Kona.m account and progress stay yours.':'This link is incomplete. Open the Unsubscribe link from your newsletter, or contact the operator on the privacy page.'}</p><form class="account-form"><p class="account-status" role="status" aria-live="polite"></p>${valid?'<button class="btn primary" type="submit">Unsubscribe <span aria-hidden="true">→</span></button>':''}</form><div class="account-exits"><button class="btn text" type="button" data-back>Back to Kona.m</button><a class="btn text" href="privacy.html">Privacy & data</a></div></div></section>`;
+  host.querySelector('[data-back]').addEventListener('click',onBack);
+  host.querySelector('form').addEventListener('submit',async event=>{
+    event.preventDefault();if(!valid)return;
+    const button=host.querySelector('[type=submit]'),status=host.querySelector('.account-status');
+    if(!button||button.disabled)return;button.disabled=true;status.setAttribute('role','status');status.textContent='One moment…';
+    try {
+      const response=await fetch(PUBLIC_SUPABASE_URL+'/functions/v1/newsletter-subscribe',{
+        method:'POST',headers:{apikey:PUBLIC_SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({unsubscribe:token})
+      });
+      if(!response.ok)throw new Error('Could not unsubscribe. Please try again or contact the operator.');
+      const data=await response.json();if(data.status!=='unsubscribed')throw new Error('Could not confirm withdrawal. Please try again.');
+      host.querySelector('.account-panel h2').textContent='You’re off the list.';
+      status.textContent='You won’t receive future editions. Your account and progress stay yours.';button.remove();token='';
+    }catch(error){status.setAttribute('role','alert');status.textContent=error instanceof TypeError?'Couldn’t reach the newsletter service. Check your connection and try again.':error.message;button.disabled=false;}
   });
-  if(!response.ok)throw new Error('Your update request could not be saved. Your account registration is unaffected.');
-  const data=await response.json();
-  if(data?.status!=='pending')throw new Error('Your update request could not be confirmed.');
-  return data;
 }
 
 export function renderAccountAuth(host,{mode='login',onSuccess=()=>{},onContinue=()=>{},onBack=()=>{},error=''}={}) {
@@ -27,7 +36,7 @@ export function renderAccountAuth(host,{mode='login',onSuccess=()=>{},onContinue
           ${active!=='reset'?'<label for="account-email">Email address</label><input id="account-email" name="email" type="email" required maxlength="254" autocomplete="username" inputmode="email" autocapitalize="none" spellcheck="false">':''}
           ${active!=='forgot'?`<label for="account-password">${active==='reset'?'New password':'Password'}</label><div class="account-password"><input id="account-password" name="password" type="password" required ${active==='login'?'':'minlength="12"'} maxlength="512" autocomplete="${active==='login'?'current-password':'new-password'}"><button type="button" data-show aria-label="Show password" aria-pressed="false">Show</button></div>`:''}
           ${active==='register'||active==='reset'?'<p class="account-hint">At least 12 characters. A few memorable words work well.</p><label for="account-confirm">Confirm password</label><input id="account-confirm" name="confirm" type="password" required minlength="12" maxlength="512" autocomplete="new-password">':''}
-          ${active==='register'?'<label class="account-consent"><input type="checkbox" name="updates"><span><b>Keep me in the loop.</b><span>Kona.m news, fresh discoveries and other cool projects from João Caldas. Optional — your Kona is yours either way.</span></span></label>':''}
+          ${active==='register'?'<label class="account-consent"><input type="checkbox" name="updates"><span><b>Get The Intern’s newsletter.</b><span>Three things worth your time: Kona.m news, fresh discoveries and other cool projects. The Intern reads the internet so you don’t have to. Optional — your Kona is yours either way.</span></span></label>':''}
           <p class="account-status" role="status" aria-live="polite" tabindex="-1"></p>
           <button class="btn primary" type="submit">${labels[active]} <span aria-hidden="true">→</span></button>
         </form>
@@ -65,9 +74,8 @@ export function renderAccountAuth(host,{mode='login',onSuccess=()=>{},onContinue
         if(active==='forgot'){
           await requestPasswordReset(email);announce('If an account uses this address, you’ll receive a reset link. Check your spam folder too.');return;
         }
-        const account=await registerAccount(email,password);
-        let updateNote='';
-        if(wantsUpdates){try{await requestProjectUpdates(email);updateNote=' Your update request is saved as pending; it is separate from your account.';}catch(err){updateNote=' '+err.message;}}
+        const account=await registerAccount(email,password,{newsletter:wantsUpdates});
+        const updateNote=wantsUpdates?' For a new account, confirming your email also confirms this optional newsletter subscription. Every edition has an unsubscribe link.':'';
         if(account.signedIn){await onSuccess();return;}
         announce('Check your inbox to confirm your email, then sign in. If you already have an account, use Sign in or Forgot password.'+updateNote);
         form.querySelector('[data-resend]')?.remove();

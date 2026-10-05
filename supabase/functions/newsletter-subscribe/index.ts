@@ -1,2 +1,2 @@
 import {handler} from './handler.ts';
-Deno.serve(handler);
+Deno.serve(req=>handler(req));
