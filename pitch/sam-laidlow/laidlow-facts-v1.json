@@ -24,11 +24,7 @@
  "equipment": {
   "line": "A Canyon athlete since January 2023 (Speedmax CFR).",
   "sources": ["https://triathlonmagazine.ca/personalities/sam-laidlow-signs-with-canyon/", "https://media-centre.canyon.com/en-INT/267864-unreleased-canyon-speedmax-obliterates-course-records-at-challenge-roth/"],
-  "room_model": "The room shows the KONA.m museum's canonical Canyon Speedmax CFR (assets/museum/speedmax_web.glb) in its documented finish: the model line he races, not his race bike, livery or setup."
- },
- "known_context": {
-  "note": "Not displayed in the room. In October 2023 Laidlow announced an International Testing Agency investigation following concerns raised by private sources; no public outcome or suspension as of verification. Anyone presenting this room should know it.",
-  "sources": ["https://en.wikipedia.org/wiki/Sam_Laidlow"]
+  "room_model": "The room shows the KONA.m museum's canonical Canyon Speedmax CFR (assets/museum/speedmax_web.glb) in its documented finish: the model line Laidlow races, not the actual race bike, livery or setup."
  },
  "rights": { "endorsement": false, "likeness_used": false, "athlete_marks_used": false, "brand_marks": "Canyon wordmarks appear only as modelled on the canonical museum asset" }
 }

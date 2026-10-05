@@ -22,7 +22,7 @@ dome are a shader — no photograph.
 phone 90 meshes · 187k triangles (110 / 220k). `metrics.json`.
 
 **Truth and rights:** results only; taglines are KONA.m copy; no likeness, no athlete marks; the bike is the line Laidlow
-races, not the actual race bike. The facts file records, for presenters, the ITA investigation Laidlow announced in October
+races, not the actual race bike. `laidlow-presenter-notes-v1.json` (never imported, never shipped) records, for presenters, the ITA investigation Laidlow announced in October
 2023 (no public outcome or suspension as of verification); the room never displays it.
 
 **Frames:** `hero`, `low`, `monument`, `records`, `bay`, `promenade` at 1600×900; `phone-portrait-hero` and

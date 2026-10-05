@@ -16,13 +16,16 @@ test('LAIDLOW // NICE is a gated review room in the host world with a valid pack
   assert.doesNotMatch(room, /new THREE\.WebGLRenderer|new THREE\.PerspectiveCamera|localStorage/);
 });
 
-test('every displayed result is sourced; the investigation is recorded for presenters, never displayed', () => {
+test('every displayed result is sourced; the investigation is recorded for presenters only, never displayed or shipped', () => {
   for (const r of F.results) { assert.ok(r.sources.length >= 1, r.id); assert.match(r.time, /^\d:\d\d:\d\d$/, r.id); }
   const nice = F.results.find(r => r.id === 'nice-2023');
   assert.deepEqual([nice.time, nice.splits.swim, nice.splits.bike, nice.splits.run], ['8:06:22', '47:50', '4:31:28', '2:41:46']);
   assert.equal(F.results.find(r => r.id === 'kona-2022').bike, '4:04:36');
-  assert.ok(F.known_context.note && F.known_context.sources.length);
-  assert.doesNotMatch(room, /known_context|investigation|doping/i);
+  const notes = JSON.parse(read('pitch/sam-laidlow/laidlow-presenter-notes-v1.json'));
+  assert.ok(notes.known_context.note && notes.known_context.sources.length);
+  assert.equal(F.known_context, undefined, 'presenter-only context lives outside the facts file the room bundles');
+  assert.doesNotMatch(room, /known_context|investigation|doping|presenter-notes/i);
+  assert.doesNotMatch(read('app/hall.js'), /known_context|Testing Agency|investigation/i, 'never shipped in the public bundle');
   assert.equal(F.rights.likeness_used, false);
   assert.match(room, /Not affiliated with, endorsed by or sponsored by Sam Laidlow/);
   assert.match(room, /A FICTIONAL FRONT PAGE/);
