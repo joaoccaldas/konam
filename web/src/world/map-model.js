@@ -17,18 +17,34 @@ export function withFutureLevels(liveAreas=[]){
   return [...liveAreas.map(a=>({...a,status:a.status||'live'})),...FUTURE_LEVELS.map(a=>({...a}))];
 }
 
-export function roomOverview(area,{upperY=4.7,groundY=1.6}={}){
+export function roomOverview(area,{upperY=4.7,groundY=1.6,isWalkable=()=>true,floorAt=null}={}){
   if(!area) return null;
-  if(area.overview?.to && area.overview?.face) return area.overview;
+  if(area.overview?.to && area.overview?.face && isWalkable(area.overview.to.x,area.overview.to.z)){
+    const y=floorAt?floorAt(area.overview.to.x,area.overview.to.z)+groundY:area.overview.face.y;
+    return {...area.overview,roomId:area.id,face:{...area.overview.face,y}};
+  }
   const {w,d}=span(area);
   const cx=mid(area.x0,area.x1),cz=mid(area.z0,area.z1);
-  const inset=Math.max(.9,Math.min(2.2,Math.min(w,d)*.18));
-  let x=cx,z=cz;
-  // Stand near the edge of the long axis so the first frame reveals the whole room.
-  if(d>=w) z=Math.max(area.z0,area.z1)-inset;
-  else x=Math.min(area.x0,area.x1)+inset;
-  const y=area.floor==='upper'?upperY:groundY;
-  return {to:{x,z},face:{x:cx,y,z:cz},roomId:area.id};
+  const inset=Math.max(.9,Math.min(1.4,Math.min(w,d)*.12));
+  const x0=Math.min(area.x0,area.x1)+inset,x1=Math.max(area.x0,area.x1)-inset;
+  const z0=Math.min(area.z0,area.z1)+inset,z1=Math.max(area.z0,area.z1)-inset;
+  const alongZ=[{x:cx,z:z1},{x:cx,z:z0}],alongX=[{x:x0,z:cz},{x:x1,z:cz}];
+  // Try the opposite end and other edges before corners. Never aim at our own position.
+  const candidates=[...(d>=w?[...alongZ,...alongX]:[...alongX,...alongZ]),{x:x0,z:z0},{x:x1,z:z0},{x:x0,z:z1},{x:x1,z:z1}];
+  const to=candidates.find(p=>Math.hypot(p.x-cx,p.z-cz)>.5&&isWalkable(p.x,p.z));
+  if(!to)return null;
+  const y=floorAt?floorAt(to.x,to.z)+groundY:area.floor==='upper'?upperY:groundY;
+  return {to,face:{x:cx,y,z:cz},roomId:area.id};
+}
+
+export function roomOverviewFov(area,overview,{width,fullHeight,minFov=48,maxFov=135}){
+  const dx=overview.face.x-overview.to.x,dz=overview.face.z-overview.to.z,dist=Math.hypot(dx,dz);
+  let tangent=0;
+  for(const x of [area.x0,area.x1])for(const z of [area.z0,area.z1]){
+    const ox=x-overview.to.x,oz=z-overview.to.z,depth=(ox*dx+oz*dz)/dist;
+    if(depth>dist*.5)tangent=Math.max(tangent,Math.abs((ox*dz-oz*dx)/dist)/depth);
+  }
+  return Math.max(minFov,Math.min(maxFov,2*Math.atan(tangent*1.08*fullHeight/width)*180/Math.PI));
 }
 
 export function mapFloors(areas=[]){
