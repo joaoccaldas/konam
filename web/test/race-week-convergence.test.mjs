@@ -4,11 +4,11 @@ import fs from 'node:fs';
 
 const read=p=>fs.readFileSync(new URL('../../'+p,import.meta.url),'utf8');
 
-test('Home keeps current context ahead of optional 3D depth without duplicating Plan',()=>{
+test('Home puts the museum before supporting race-week context without duplicating Plan',()=>{
   const home=read('web/src/ui/home.js');
   for(const phrase of ['KONA NOW · RACE WEEK','The Intern has been reading everything again.','Just landed?']) assert.ok(home.includes(phrase),phrase);
   assert.equal((home.match(/What matters next\./g)||[]).length,0,'Kona Now should not duplicate the hero Plan action');
-  assert.ok(home.indexOf('KONA NOW · RACE WEEK')<home.indexOf('KONA.M · 3D WORLD'),'Kona Now must precede optional 3D depth');
+  assert.ok(home.indexOf('KONA.M · THE 3D MUSEUM')<home.indexOf('KONA NOW · RACE WEEK'),'Museum must precede supporting content');
   assert.match(home,/data-home-feed/);
   assert.match(home,/data-home-travel/);
   const shell=read('web/src/ui/kona-shell.js');
@@ -45,7 +45,7 @@ test('return feedback is one-tap, rewarded and never stores free text',()=>{
 
 test('entry is explicitly a beta and provides optional account access',()=>{
   const entry=read('web/landing.template.html');
-  assert.match(entry,/RACE WEEK BETA/);
+  assert.match(entry,/KAILUA-KONA · BETA/);
   assert.match(entry,/id="entrySignIn"/);
   assert.match(entry,/>What is Kona\.m\?<\/a>/);
 });

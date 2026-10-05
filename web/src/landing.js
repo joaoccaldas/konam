@@ -5,6 +5,7 @@ import { roomAccess } from './engine/access.js';
 // flagships in an apse facing the ocean. Walk (WASD / tap the floor), look (drag),
 // visit a bike (click / tap / 1–9), then step into its full 3D studio.
 import * as THREE from 'three';
+import { fitPerspectiveBounds, setPerspectiveRegion } from './engine/framing.js';
 import { FONT, SERIF } from './engine/type.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
@@ -1425,11 +1426,11 @@ function coachDid(kind) {                                            // the hint
 }
 $('coachOk')?.addEventListener('click', () => coachShow(coachState.k + 1));
 
-function enter() {
+function enter({gallery=false}={}) {
   if (started) return; started = true;
   document.body.classList.add('walking'); $('intro').classList.add('off');
   const coaching = coarse && (() => { try { return localStorage.getItem('speedmax.coach.v1') !== '1'; } catch (_) { return true; } })();
-  const returning = passport.visits > 0 && passport.pose && ['hall', 'champ', 'wyld', 'pier', 'hween'].includes(passport.pose.region)
+  const returning = !gallery && passport.visits > 0 && passport.pose && ['hall', 'champ', 'wyld', 'pier', 'hween'].includes(passport.pose.region)
     && walkable(passport.pose.x, passport.pose.z);
   passport.visits = (passport.visits || 0) + 1;
   try { applyStoredEvent({ type: 'FIRST_VISIT', id: 'FIRST_VISIT:museum' }); } catch (_) { }
@@ -1440,7 +1441,8 @@ function enter() {
     if (!coaching) toast(`Welcome back · Museum Passport ${seen}/${total}`);
   } else {
     if (!coaching) toast(coarse ? 'Walk with the tri-stick · drag to look around · tap any bike' : 'WASD to walk · drag to look · click a bike or press 1–9');
-    path = [{ x: 0, z: .6 }];
+    if(gallery){P.x=0;P.z=2.8;P.y=0;P.yaw=0;P.pitch=-.04;path=null;}
+    else path = [{ x: 0, z: .6 }];
   }
   writePassport(); canvas.focus({ preventScroll: true }); haptic(10); coach();
   if (profile.get().sound && $('soundBtn').getAttribute('aria-pressed') !== 'true') $('soundBtn').click();
@@ -1520,7 +1522,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     toast(`${area.name} · room overview`);
   };
   window.__museumGo = go;
-  window.__map = initMap({ areas, go, access:accessForRoom, button: $('mapBtn'), pose: () => ({ x: P.x, z: P.z, yaw: P.yaw, floor: P.y > 3.3 ? 'upper' : 'ground' }) });
+  window.__map = initMap({ areas, go, access:accessForRoom, openFounding:action=>action.kind==='world'?go(action.target):window.__konaShell?.[action.target]?.(), button: $('mapBtn'), pose: () => ({ x: P.x, z: P.z, yaw: P.yaw, floor: P.y > 3.3 ? 'upper' : 'ground' }) });
 
   const where = $('where'); let lastWhere = null, wingHinted = (() => { try { return localStorage.getItem('speedmax.atlas.hint') === '1'; } catch (_) { return false; } })();
   where?.addEventListener('click', () => window.__map.open());
@@ -1550,6 +1552,7 @@ function openCard(p) {
   $('cStats').hidden = !p.stats; partSel = null; highlight(p, null);
   document.querySelectorAll('.plabel').forEach(b => b.classList.remove('on'));
   const exploded = p.exT > 0;
+  document.body.classList.toggle('inspection-overview',exploded);
   $('cMedia').innerHTML = (exploded && p.anchors ? `<div class="c-parts"><small>Parts · tap to read</small><div>${p.anchors.map((a, i) => `<button data-part="${a.id}"><i>${i + 1}</i>${esc(p.parts[a.id].name)}</button>`).join('')}</div></div>` : '')
     + (p.photo ? `<figure class="c-photo"><img src="${esc(p.photo.src)}" alt="${esc(p.name)}, ${esc(p.photo.credit)}" referrerpolicy="no-referrer" onerror="this.closest('figure').remove()"><figcaption><a href="${esc(p.photo.href)}" target="_blank" rel="noopener">${esc(p.photo.credit)} ↗</a></figcaption></figure>` : '')
     + (p.uncertain?.length ? `<details class="c-unc"><summary>What is reconstructed</summary><ul>${p.uncertain.map(u => `<li>${esc(u)}</li>`).join('')}</ul></details>` : '');
@@ -1563,9 +1566,10 @@ function openCard(p) {
   if (p.glb && p.key) $('cActions').insertAdjacentHTML('beforeend', `<a class="btn ghost" href="Studio.html?p=canyon-${p.key === 'cfr' || p.key === 'slx' ? p.key + '-2027' : esc(p.key)}">Paint it<span class="long"> in the studio</span></a>`);
   if ($('cExplode')) $('cExplode').onclick = () => setExploded(p, !(p.exT > 0));
   $('card').classList.add('on'); document.body.classList.add('card-open');
+  if(inspectionFocus?.piece===p)requestAnimationFrame(()=>focusInspection(p));
 }
 function closeCard(keepCurrent) {
-  $('card').classList.remove('on'); document.body.classList.remove('card-open');
+  $('card').classList.remove('on'); document.body.classList.remove('card-open','inspection-overview');
   if (!keepCurrent) { if (exploded) setExploded(exploded, false); current = null; railActive(null); }
 }
 $('cardClose').onclick = () => { tourEnd(false); closeCard(); };
@@ -1579,7 +1583,29 @@ function labelled(p) {
   if (!p.parts || !p.nodes) return [];
   return LABEL_ORDER.filter(id => p.nodes[id] && p.parts[id]).slice(0, lite ? 10 : 14);
 }
+let inspectionFocus=null;
 let partSel = null, exploded = null;                                 // the one bike currently apart
+function inspectionViewport(){
+  const W=innerWidth,H=innerHeight,pad=16;
+  const top=Math.min(H*.4,Math.max(80,$('konaWorld').querySelector('header').getBoundingClientRect().bottom+12));
+  let bottom=H-16,right=W-16;
+  const card=$('card').getBoundingClientRect();
+  if($('card').classList.contains('on')){if(card.width>W*.7)bottom=Math.min(bottom,card.top-12);else right=Math.min(right,card.left-12);}
+  const nav=document.querySelector('.kona-bottom-nav')?.getBoundingClientRect();if(nav&&nav.top>H/2)bottom=Math.min(bottom,nav.top-12);
+  return {x:pad,y:top,width:Math.max(80,right-pad),height:Math.max(80,bottom-top),fullWidth:W,fullHeight:H};
+}
+function focusInspection(p){
+  if(!p?.inspection)return;
+  const previous=inspectionFocus?.previous||{x:P.x,z:P.z,yaw:P.yaw,pitch:P.pitch};
+  const bounds=p.inspection.measureAtProgress(1,()=>new THREE.Box3().setFromObject(p.bike));
+  const center=bounds.getCenter(new THREE.Vector3()),direction=new THREE.Vector3(P.x-center.x,0,P.z-center.z).normalize();direction.y=.12;
+  camera.fov=coarse?78:museumFov();
+  fitPerspectiveBounds(camera,{target:new THREE.Vector3(),update(){}},bounds,{direction:direction.toArray(),padding:1.08,region:inspectionViewport()});
+  if(!walkable(camera.position.x,camera.position.z)){camera.fov=museumFov();camera.far=700;camera.clearViewOffset();return;}
+  P.x=camera.position.x;P.z=camera.position.z;P.vx=P.vz=0;path=null;
+  P.yaw=Math.atan2(P.x-center.x,P.z-center.z);P.pitch=Math.atan2(center.y-camera.position.y,Math.hypot(center.x-P.x,center.z-P.z));
+  inspectionFocus={piece:p,previous,eyeOffset:camera.position.y-P.y-EYE};camera.far=700;
+}
 function setExploded(p, on) {
   if (!p?.bike) return;
   if (on && exploded && exploded !== p) setExploded(exploded, false);
@@ -1593,9 +1619,10 @@ function setExploded(p, on) {
       return { id, node: n, local: n.worldToLocal(box.getCenter(wp).clone()) };
     });
     $('labels').innerHTML = p.anchors.map((a, i) => `<button class="plabel" data-part="${a.id}"><i>${i + 1}</i><span>${esc(p.parts[a.id].name)}</span></button>`).join('');
-  } else { $('labels').innerHTML = ''; p.anchors = null; highlight(p, null); }
+  } else { if(inspectionFocus?.piece===p){Object.assign(P,inspectionFocus.previous);inspectionFocus=null;camera.fov=museumFov();camera.far=700;camera.clearViewOffset();}document.body.classList.remove('inspection-overview');$('labels').innerHTML = ''; p.anchors = null; highlight(p, null); }
   $('labels').classList.toggle('on', on);
   if (current === p && $('card').classList.contains('on') && !partSel) openCard(p);
+  if(on)focusInspection(p);
 }
 const hlMats = new Map();
 function highlight(p, id) {
@@ -1610,7 +1637,8 @@ function highlight(p, id) {
 }
 function openPart(p, id) {
   const info = p.parts?.[id]; if (!info) return;
-  partSel = id; highlight(p, id);
+  partSel = id;document.body.classList.remove('inspection-overview');highlight(p, id);
+  if(inspectionFocus?.piece===p)requestAnimationFrame(()=>focusInspection(p));
   document.querySelectorAll('.plabel').forEach(b => b.classList.toggle('on', b.dataset.part === id));
   $('cYears').textContent = `${p.name} · ${info.group || 'part'}`;
   $('cName').textContent = info.name;
@@ -1691,7 +1719,7 @@ function nudge(f) { const nx = P.x - Math.sin(P.yaw) * f, nz = P.z - Math.cos(P.
 addEventListener('keydown', e => {
   if (e.target.closest?.('input,textarea,select,a')) return;
   const k = e.key.toLowerCase();
-  if (!started) { if (k === 'enter' && !$('enterBtn').disabled) { e.preventDefault(); enter(); } return; }
+  if (!started) { if (k === 'enter' && $('enterBtn') && !$('enterBtn').disabled) { e.preventDefault(); enter(); } return; }
   if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'shift', 'q', 'e'].includes(k)) { keys.add(k); path = null; tourEnd(false); if (k.startsWith('arrow')) e.preventDefault(); }
   if (k >= '1' && k <= '9' && PIECES[+k - 1]) visit(PIECES[+k - 1]);
   if (k === 'escape') { if (partSel && current) openCard(current); else closeCard(); }
@@ -1746,7 +1774,7 @@ function resize() {
   renderer.setSize(w, h, false); camera.aspect = w / h;
   camera.fov = museumFov(); camera.updateProjectionMatrix();
 }
-addEventListener('resize', resize); resize();
+addEventListener('resize',()=>{resize();if(inspectionFocus)focusInspection(inspectionFocus.piece);}); resize();
 let last = performance.now(), shift = 0;
 function frame(now) {
   requestAnimationFrame(frame);
@@ -1811,12 +1839,13 @@ function frame(now) {
   const wantY = atlas.floorY(P.x, P.z) ?? galleryFloorY(P.x, P.z);
   P.y += (wantY - P.y) * (1 - Math.exp(-dt * 8));
   const yaw = P.yaw + idle * Math.sin(t * .13) * .1, pitch = P.pitch + idle * Math.sin(t * .1) * .015;
-  camera.position.set(P.x, P.y + EYE + (reduce ? 0 : Math.sin(bob) * .045 * Math.min(1, moving)), P.z);
+  camera.position.set(P.x, P.y + EYE + (inspectionFocus?.eyeOffset||0) + (reduce ? 0 : Math.sin(bob) * .045 * Math.min(1, moving)), P.z);
   fwd.set(-Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), -Math.cos(yaw) * Math.cos(pitch));
   camera.lookAt(look.copy(camera.position).add(fwd));
   const cardOn = $('card').classList.contains('on'), W = innerWidth, H = innerHeight;
   shift += ((cardOn ? 1 : 0) - shift) * (1 - Math.exp(-dt * 4));
-  if (shift > .002) { const dx = small ? 0 : W * .17 * shift, dy = small ? H * .23 * shift : 0; camera.setViewOffset(W + 2 * dx, H + 2 * dy, 2 * dx, 2 * dy, W, H); }
+  if(inspectionFocus){setPerspectiveRegion(camera,inspectionViewport());}
+  else if (shift > .002) { const dx = small ? 0 : W * .17 * shift, dy = small ? H * .23 * shift : 0; camera.setViewOffset(W + 2 * dx, H + 2 * dy, 2 * dx, 2 * dy, W, H); }
   else if (camera.view?.enabled) camera.clearViewOffset();
   // hover (desktop): halo + name tag
   let hot = null;
@@ -1951,19 +1980,34 @@ async function shareView(title) {
 $('shareBtn')?.addEventListener('click', () => shareView($('card').classList.contains('on') ? $('cName').textContent : ''));
 const worldMore=$('worldMoreMenu'),worldMoreBtn=$('worldMoreBtn');
 $('backKonaBtn')?.addEventListener('click',()=>window.__konaShell?.now?.());
+function closeWorldMenu({focus=false}={}) {
+  if(worldMore)worldMore.hidden=true;
+  worldMoreBtn?.setAttribute('aria-expanded','false');
+  if(focus)worldMoreBtn?.focus({preventScroll:true});
+}
 worldMoreBtn?.addEventListener('click',()=>{
   const open=worldMore?.hidden!==false;
   if(worldMore)worldMore.hidden=!open;
   worldMoreBtn.setAttribute('aria-expanded',String(open));
+  if(open)worldMore?.querySelector('button')?.focus({preventScroll:true});
 });
-worldMore?.querySelector('[data-world-share]')?.addEventListener('click',()=>{worldMore.hidden=true;worldMoreBtn?.setAttribute('aria-expanded','false');shareView($('card').classList.contains('on') ? $('cName').textContent : '');});
-worldMore?.querySelector('[data-world-tour]')?.addEventListener('click',()=>{worldMore.hidden=true;worldMoreBtn?.setAttribute('aria-expanded','false');tourStart?.();});
-worldMore?.querySelector('[data-world-settings]')?.addEventListener('click',()=>{worldMore.hidden=true;worldMoreBtn?.setAttribute('aria-expanded','false');settingsUI?.open?.();});
-document.addEventListener('click',e=>{if(!worldMore||worldMore.hidden)return;if(e.target.closest('#worldMoreBtn,#worldMoreMenu'))return;worldMore.hidden=true;worldMoreBtn?.setAttribute('aria-expanded','false');});
+worldMore?.querySelector('[data-world-home]')?.addEventListener('click',()=>{closeWorldMenu();window.__konaShell?.now?.();});
+worldMore?.querySelector('[data-world-share]')?.addEventListener('click',()=>{closeWorldMenu({focus:true});shareView($('card').classList.contains('on') ? $('cName').textContent : '');});
+worldMore?.querySelector('[data-world-tour]')?.addEventListener('click',()=>{closeWorldMenu({focus:true});tourStart?.();});
+worldMore?.querySelector('[data-world-settings]')?.addEventListener('click',()=>{closeWorldMenu({focus:true});settingsUI?.open?.();});
+worldMore?.addEventListener('keydown',e=>{
+  const buttons=[...worldMore.querySelectorAll('button')],index=buttons.indexOf(document.activeElement);
+  if(e.key==='Escape'){e.preventDefault();closeWorldMenu({focus:true});}
+  else if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){
+    e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?buttons.length-1:(index+(e.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length;
+    buttons[next]?.focus();
+  }else if(e.key==='Tab')closeWorldMenu();
+});
+document.addEventListener('click',e=>{if(!worldMore||worldMore.hidden)return;if(e.target.closest('#worldMoreBtn,#worldMoreMenu'))return;closeWorldMenu();});
 $('cardShare')?.addEventListener('click', () => shareView($('cName').textContent));
 const konaShell = window.__konaShell;
 if (!konaShell) throw new Error('KONA consumer Shell authority missing');
 window.__app = { profile, settings: settingsUI, shareView, openArt, openAtlas, konaShell };
 window.__atlas = atlas;
-window.__museum = { P, PIECES, visit, enter, scene, camera, champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
+window.__museum = { P, PIECES, visit, enter, scene, camera, inspectionViewport,get inspectionFocus(){return inspectionFocus;},inspectionBounds:()=>inspectionFocus?.piece?.inspection.measureAtProgress(1,()=>new THREE.Box3().setFromObject(inspectionFocus.piece.bike)), champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
 initArtWorld(window.__museum).catch(e => console.warn('art world', e));

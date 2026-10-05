@@ -5,7 +5,7 @@ import fs from 'node:fs';
 const base=process.argv[2]||'http://127.0.0.1:8748/';
 const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
 fs.mkdirSync('output/playwright',{recursive:true});
-let newsletterCalls=0,mode='success';const choices=[];
+let newsletterCalls=0,explicitSubscriptions=0,mode='success';const choices=[];
 try {
  const page=await browser.newPage();await page.setBypassServiceWorker(true);await page.setRequestInterception(true);
  page.on('request',request=>{
@@ -15,7 +15,8 @@ try {
   if(url.includes('/newsletter-subscribe')){newsletterCalls++;body={ok:true,status:JSON.parse(request.postData()||'{}').unsubscribe?'unsubscribed':'pending'};if(mode==='newsletter-failure'){status=503;body={error:'Service temporarily unavailable'};}}
   else if(url.includes('/signup')){choices.push(JSON.parse(request.postData()).data.kona_newsletter);body={id:'fixture-pending'};if(mode==='rate'){status=429;body={msg:'Rate limited'};}}
   else if(url.includes('grant_type=password')){status=400;body={error_code:'invalid_credentials',msg:'Invalid login credentials'};}
-  else if(url.includes('/auth/v1/user'))body={id:'fixture-user'};
+  else if(url.includes('/auth/v1/user'))body={id:'fixture-user',email:'fixture@example.com'};
+  else if(url.endsWith('/rpc/subscribe_intern_newsletter')){explicitSubscriptions++;body='active';if(mode==='newsletter-failure')status=503;}
   request.respond({status,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify(body)});
  });
  for(const [width,height] of [[280,480],[320,568],[390,844],[430,932],[600,360],[844,390],[768,1024],[1440,900]])for(const account of ['login','register']){
@@ -45,5 +46,8 @@ try {
  await page.click('[type=submit]');await page.waitForFunction(()=>document.querySelector('.account-panel h2').textContent==='You’re off the list.');assert.equal(newsletterCalls,1);
  mode='newsletter-failure';await page.goto(base+'?account=unsubscribe&token='+token,{waitUntil:'networkidle2'});await page.waitForSelector('.account-form');await page.click('[type=submit]');await page.waitForFunction(()=>document.querySelector('.account-status').getAttribute('role')==='alert');assert.ok(await page.$eval('[type=submit]',el=>!el.disabled));assert.equal(newsletterCalls,2);
  mode='success';await page.goto(base+'?account=unsubscribe&token=invalid',{waitUntil:'networkidle2'});await page.waitForSelector('.account-form');assert.equal(await page.$('[type=submit]'),null);assert.equal(newsletterCalls,2);
+ await page.evaluate(()=>localStorage.removeItem('kona.supabase.session.v1'));await page.goto(base+'?account=newsletter',{waitUntil:'networkidle2'});await page.waitForSelector('[data-newsletter-auth]');assert.equal(explicitSubscriptions,0);assert.match(await page.$eval('.account-story',e=>e.textContent),/Three things/);await page.click('[data-newsletter-auth="register"]');await page.waitForSelector('[name=updates]');assert.equal(await page.$eval('[name=updates]',e=>e.checked),false);await page.click('[data-back]');await page.waitForSelector('[data-newsletter-auth]');
+ await page.goto(new URL('index.html',base).href+'?account=newsletter#access_token=fixture-token&refresh_token=fixture-refresh&expires_in=3600',{waitUntil:'networkidle2'});await page.waitForSelector('[data-newsletter-access] [type=submit]');assert.equal(explicitSubscriptions,0);assert.equal(await page.evaluate(()=>location.hash),'');await page.screenshot({path:'output/playwright/newsletter-signup-390.png',fullPage:true});await page.click('[type=submit]');await page.waitForFunction(()=>document.querySelector('.account-status').textContent.includes('subscription is confirmed'));assert.equal(explicitSubscriptions,1);
+ mode='newsletter-failure';await page.goto(base+'?account=newsletter',{waitUntil:'networkidle2'});await page.waitForSelector('[data-newsletter-access] [type=submit]');assert.equal(explicitSubscriptions,1);await page.click('[type=submit]');await page.waitForFunction(()=>document.querySelector('.account-status').getAttribute('role')==='alert');assert.ok(await page.$eval('[type=submit]',e=>!e.disabled));assert.equal(explicitSubscriptions,2);
  console.log('Account forms PASS: 16 viewport/mode combinations, opt-in isolation, confirmation-linked newsletter, rate limit, password error/show, recovery callback, reset, 200% text, local continuation, unsubscribe confirmation/token stripping/failure.');
 } finally {await browser.close();}

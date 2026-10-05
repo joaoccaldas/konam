@@ -1,0 +1,25 @@
+{
+  "id": "museum-hero",
+  "kind": "runtime-preview",
+  "decision": "ADAPT existing public museum scene; capture its canvas without interface overlays",
+  "source": "web/src/landing.js",
+  "capture_url": "index.html?room=hall",
+  "captured_at": "2026-10-05",
+  "source_commit": "746107c2cb2645b6ea47f78612dd40cb455123f7",
+  "source_changes": "Preview captured before the museum hero entry change; gallery geometry unchanged.",
+  "pose": {
+    "x": 0,
+    "z": 2.8,
+    "yaw": 0,
+    "pitch": -0.01
+  },
+  "dimensions": [
+    1600,
+    1000
+  ],
+  "bytes": 97354,
+  "sha256": "0f12c95a1648949bd4338b1bfc2110ab652918763339bedec86a8d1d0ea6449a",
+  "truth_classification": "independent-reconstruction",
+  "rights": "Screenshot of the existing public Kona.m runtime. Existing exhibit provenance and credits apply; no partnership or endorsement claim.",
+  "validation": "Inspected actual WebGL canvas capture; not concept art."
+}

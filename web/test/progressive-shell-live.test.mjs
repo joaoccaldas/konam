@@ -24,10 +24,11 @@ test('first Home does not automatically launch the old guided tour',()=>{
   assert.match(shell,/tour:replayTour/);
 });
 
-test('Home depth unfolds after a meaningful discovery',()=>{
+test('Museum is always the first Home section; rewards still unfold after discovery',()=>{
   assert.match(home,/const showWorldDepth=admin\|\|meaningfulDiscovery/);
   assert.match(home,/const showHorizon=admin\|\|Number\(progression\.level\|\|1\)>=3/);
-  assert.match(home,/showWorldDepth\?'<section class="home-world-hero/);
+  assert.match(home,/root.innerHTML=\s*'<section class="home-world-hero/);
+  assert.doesNotMatch(home,/showWorldDepth\?'<section class="home-world-hero/);
   assert.match(home,/showInvite\?'<section class="home-invite/);
   assert.match(home,/showHorizon\?'<section class="home-horizon/);
 });

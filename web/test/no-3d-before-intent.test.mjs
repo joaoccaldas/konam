@@ -22,8 +22,8 @@ test('landing HTML contains no GLB, HDR or Three.js preload',()=>{
 });
 
 test('landing exposes the product door and install affordance with optional account access',()=>{
-  assert.match(html,/id="buildSelf"/i);
-  assert.match(html,/Enter KONA/i);
+  assert.match(html,/id="entryWorld"/i);
+  assert.match(html,/Enter the 3D museum/i);
   assert.match(html,/id="entrySignIn"/i);
   assert.match(html,/Install app/i);
 });

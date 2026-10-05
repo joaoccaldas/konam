@@ -83,3 +83,13 @@ test('newsletter reconciliation is owner-authenticated and cannot undo successfu
  };
  assert.equal((await signInWithPassword('athlete@example.com','test-passphrase')).id,'owner');assert.equal(reconciled,1);assert.ok(store.getItem('kona.supabase.session.v1'));
 });
+
+test('explicit newsletter consent uses only the authenticated owner and rejects unavailable confirmation',async t=>{
+ const store=context(t);const {subscribeInternNewsletter}=await import('../src/cloud/supabase-lite.js');let calls=0;
+ globalThis.fetch=async(url,options)=>{calls++;assert.match(url,/\/rpc\/subscribe_intern_newsletter$/);assert.equal(options.headers.Authorization,'Bearer test-only');assert.deepEqual(JSON.parse(options.body),{});return new Response('"active"');};
+ await assert.rejects(subscribeInternNewsletter(),/Sign in first/);assert.equal(calls,0);
+ store.setItem('kona.supabase.session.v1',JSON.stringify({access_token:'test-only',expires_at:Date.now()/1000+3600}));
+ assert.equal(await subscribeInternNewsletter(),'active');assert.equal(calls,1);
+ globalThis.fetch=async()=>new Response('"suppressed"');await assert.rejects(subscribeInternNewsletter(),/Could not confirm/);
+ globalThis.fetch=async()=>new Response('{}',{status:503});await assert.rejects(subscribeInternNewsletter(),e=>e.status===503);
+});

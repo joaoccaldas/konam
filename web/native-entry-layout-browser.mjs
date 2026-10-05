@@ -29,12 +29,12 @@ try {
     await new Promise(resolve=>setTimeout(resolve,60));
     const layout = await page.evaluate(()=>{
       const rect=selector=>{const r=document.querySelector(selector).getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height};};
-      const cta=document.querySelector('#buildSelf'),why=document.querySelector('.kona-why-global');
+      const cta=document.querySelector('#entryWorld'),why=document.querySelector('.kona-why-global');
       const r=cta.getBoundingClientRect(),hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);
       return {native:document.documentElement.classList.contains('native-app'),width:innerWidth,height:innerHeight,
         overflow:document.documentElement.scrollWidth>innerWidth+1,
-        header:rect('.entry-header'),mast:rect('.entry-mast'),why:rect('.kona-why-global'),title:rect('#intro h1'),lede:rect('#intro .lede'),cta:rect('#buildSelf'),
-        regions:['.entry-header','.entry-copy','.entry-actions-wrap','.entry-product','.entry-notes'].map(rect),
+        header:rect('.entry-header'),mast:rect('.entry-mast'),why:rect('.kona-why-global'),title:rect('#intro h1'),lede:rect('#intro .lede'),cta:rect('#entryWorld'),
+        regions:['.entry-header','.entry-copy','.entry-actions-wrap','.entry-notes'].map(rect),
         flow:why.parentElement.id==='entryWhy',ctaHit:hit===cta||cta.contains(hit)};
     });
     const label=`${native?'native':'web'} ${width}x${height}`;
@@ -52,14 +52,14 @@ try {
       assert.ok(layout.ctaHit,`${label}: Enter covered by another element`);
     }
     // Extremely short windows may scroll vertically; controls must remain fully reachable.
-    await page.$eval('#buildSelf',el=>el.scrollIntoView({block:'center'}));
-    assert.ok(await page.$eval('#buildSelf',el=>{const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return r.top>=0&&r.bottom<=innerHeight&&(hit===el||el.contains(hit));}),`${label}: Enter unreachable after scrolling`);
+    await page.$eval('#entryWorld',el=>el.scrollIntoView({block:'center'}));
+    assert.ok(await page.$eval('#entryWorld',el=>{const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return r.top>=0&&r.bottom<=innerHeight&&(hit===el||el.contains(hit));}),`${label}: Enter unreachable after scrolling`);
     checks.push({width,height,ctaBottom:layout.cta.bottom,status:'PASS'});
   }
   await page.setViewport({width:390,height:844,isMobile:true,hasTouch:true});
   await page.evaluate(()=>{document.documentElement.style.fontSize='200%';window.scrollTo(0,0);});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,'200% text size causes horizontal overflow');
-  await page.$eval('#buildSelf',el=>el.scrollIntoView({block:'center'}));
+  await page.$eval('#entryWorld',el=>el.scrollIntoView({block:'center'}));
   await page.click('#buildSelf');
   await page.waitForSelector('#konaQuest');
   assert.ok(await page.$eval('.kona-why-global',el=>el.parentElement.id==='entryWhy'),'Onboarding must keep shared Why route in flow');
@@ -75,7 +75,7 @@ try {
   await desktopPhone.goto(base,{waitUntil:'networkidle2'});
   await desktopPhone.waitForFunction(()=>window.__konaShell);
   const phoneFit = await desktopPhone.evaluate(()=>{
-    const cta=document.querySelector('#buildSelf').getBoundingClientRect();
+    const cta=document.querySelector('#entryWorld').getBoundingClientRect();
     return {fit:window.__konaViewport.desktopViewPhone,overflow:document.documentElement.scrollWidth>innerWidth+1,
       stacked:getComputedStyle(document.querySelector('.intro-inner')).display==='flex',bottom:cta.bottom,height:innerHeight};
   });

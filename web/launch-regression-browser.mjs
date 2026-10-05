@@ -19,9 +19,10 @@ async function progress(page){
 }
 try{
  const hero=await pageFor();await hero.page.goto(base,{waitUntil:'networkidle0'});
- const expected=JSON.parse(fs.readFileSync(new URL('../museum/entry-catalog.json',import.meta.url))).bikes.map(x=>x.id);
- const previews=await hero.page.evaluate(()=>{const seen=new Set([document.querySelector('[data-preview-id]').dataset.previewId]),random=Math.random;try{for(let i=0;i<300;i++){Math.random=()=>((i*37)%300)/300;document.querySelector('.entry-livery').click();seen.add(document.querySelector('[data-preview-id]').dataset.previewId);}return [...seen];}finally{Math.random=random;}});
- assert.deepEqual([...previews].sort(),expected.sort());assert.doesNotMatch(await hero.page.$eval('#intro',e=>e.innerText),/wyld/i);assert.deepEqual(hero.errors,[]);report.push({journey:'all landing catalogue previews reachable without progression; no WYLD',status:'PASS'});await hero.context.close();
+ assert.equal(await hero.page.$eval('#entryWorld',e=>e.textContent.trim()),'Enter the 3D museum →');
+ assert.ok(await hero.page.$eval('.entry-media img',e=>e.complete&&e.naturalWidth>0));
+ assert.equal(await hero.page.evaluate(()=>!!window.__museum),false,'Museum must wait for the explicit primary action');
+ assert.doesNotMatch(await hero.page.$eval('#intro',e=>e.innerText),/wyld/i);assert.deepEqual(hero.errors,[]);report.push({journey:'museum is the first action; real gallery preview; runtime waits for intent',status:'PASS'});await hero.context.close();
  // Local-first continuation stays usable at every release viewport.
  for(const [width,height] of [[320,720],[390,844],[844,390],[1440,900]]){
   const {context,page,errors}=await pageFor(width,height);await page.goto(base,{waitUntil:'networkidle0'});
