@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "room_id": "breitling-kona",
+  "variant": "breitling-kona",
+  "runtime": "web/src/breitling-kona.js",
+  "coordinates": "host world metres; vitrines and the monument are placed in the module from pitch/breitling-kona/collection-v1.json",
+  "items": [],
+  "shots": {
+    "hero": [
+      11.8,
+      -10.85,
+      0.0,
+      22,
+      2.3,
+      -10.85
+    ],
+    "monument": [
+      15.6,
+      -12.4,
+      -0.1,
+      20.2,
+      2.4,
+      -10.85
+    ],
+    "low": [
+      15.2,
+      -9.2,
+      -0.75,
+      20.2,
+      2.8,
+      -10.85
+    ],
+    "vitrines": [
+      21.6,
+      -9.0,
+      -0.25,
+      27.1,
+      1.1,
+      -16.4
+    ],
+    "vitrine": [
+      26.4,
+      -14.0,
+      -0.5,
+      27.1,
+      1.2,
+      -16.4
+    ],
+    "window": [
+      24.5,
+      -10.85,
+      -0.1,
+      35.3,
+      2.3,
+      -10.85
+    ],
+    "clock": [
+      17.2,
+      -6.2,
+      0.6,
+      20.2,
+      0,
+      -10.85
+    ],
+    "exploded": [
+      17.6,
+      -15.9,
+      0.0,
+      20.4,
+      2.5,
+      -10.6,
+      "explode"
+    ],
+    "exploded2": [
+      16.0,
+      -6.0,
+      -0.2,
+      20.4,
+      2.5,
+      -11.0,
+      "explode"
+    ]
+  }
+}

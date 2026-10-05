@@ -12,7 +12,10 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { buildPier, pierWalkable, PIER, ordinal } from './pier.js';
 import { initAppShell } from './app-shell.js';
 import { buildHalloween, hweenWalkable, HDOOR, HROOM } from './halloween.js';
-import { buildBeastCave, beastCaveWalkable, BDOOR, BROOM } from './beast-cave.js';
+import { buildBeastCave, beastCaveWalkable, BDOOR, BROOM, beastEvent, eventWhen } from './beast-cave.js';
+import { buildNor3Winter } from './nor3-winter.js';
+import { buildBreitlingKona } from './breitling-kona.js';
+import { readStorage, writeStorage } from './engine/storage.js';
 import { buildSanctuary, sanctuaryWalkable, SDOOR, SROOM } from './sanctuary.js';
 import { buildGalleries, galleryWalkable, galleryFloorY, EDOOR, UPPER } from './galleries.js';
 import { createRoomSound } from './roomSound.js';
@@ -45,7 +48,18 @@ const WROOMDATA = eventEnabled('wyld') ? window.__WYLDROOM || null : null;
 const BRANDROOMS = window.__BRANDROOMS?.rooms || [];
 const KY = window.__KONAYEARS || null;                                // Kona by Year: the pier
 const WYLD = { pink: '#ff3d8e', blush: '#ff8fbf', lilac: '#e9cde8', mint: '#8fe7dc', aqua: '#5fd8d3' };
-const BEAST_CAVE_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'beast-cave';
+const NOR3_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'nor3-winter';
+const BREITLING_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'breitling-kona';
+const BEAST_ONLY_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'beast-cave';
+const BEAST_CAVE_REVIEW = BEAST_ONLY_REVIEW || NOR3_REVIEW || BREITLING_REVIEW;
+const REVIEW_ROOM_SEMANTIC_ID = NOR3_REVIEW
+  ? 'room:konam:nor3-winter'
+  : BREITLING_REVIEW
+    ? 'room:konam:breitling-kona'
+    : BEAST_ONLY_REVIEW
+      ? 'room:konam:beast-cave'
+      : null;
+window.__reviewRoomIdentity = REVIEW_ROOM_SEMANTIC_ID;
 // Phone detection must survive a browser's "Desktop view", where pointer and
 // viewport width both lie; detect.js adds the physical-screen signal.
 const coarse = dc;
@@ -358,7 +372,9 @@ else glassRun('x', HALL.x0, HALL.x1, HALL.z1);
     g.position.set(x, -.02, z); g.rotation.y = rnd() * 6.28; scene.add(g);
     sway.push({ o: crown, phase: rnd() * 6.28, amp: .045 }); return g;
   }
-  for (let i = 0; i < 7; i++) palm(HALL.x1 + 2.2 + rnd() * 2.5, 2 - i * 7.2 - rnd() * 2, 6 + rnd() * 2.5, .8 + rnd() * 1.4);
+  for (let i = 0; i < 7; i++) { const x = HALL.x1 + 2.2 + rnd() * 2.5, z = 2 - i * 7.2 - rnd() * 2, hgt = 6 + rnd() * 2.5, lean = .8 + rnd() * 1.4;
+    if (BEAST_CAVE_REVIEW && x > BROOM.x0 - .6 && z < BROOM.z0 + .6 && z > BROOM.z1 - .6) continue;
+    palm(x, z, hgt, lean); }
   palm(-2, HALL.z1 - 3.4, 7.2, 1.3); palm(KY ? 11.6 : 5.5, HALL.z1 - 3.1, 6.3, -1);   // with the pier, this one steps aside onto the lava
 }
 
@@ -783,7 +799,9 @@ const birds = [];
 
 // ------------------------------------------------------------------ light
 const hemi = new THREE.HemisphereLight('#ffe3c2', '#b09572', lite ? 1.3 : .9); scene.add(hemi);
+const hemiBase = hemi.intensity;
 const sun = new THREE.DirectionalLight('#ffddad', lite ? 2 : 2.45);
+const sunBase = sun.intensity;
 sun.position.set(3, 15, -16); sun.target.position.set(-6, 0, -22); scene.add(sun, sun.target);
 sun.castShadow = true; sun.shadow.mapSize.set(lite ? 1024 : 2048, lite ? 1024 : 2048);
 Object.assign(sun.shadow.camera, { left: -36, right: 36, top: 36, bottom: -36, near: 1, far: 70 });
@@ -868,7 +886,8 @@ const pier = KY ? buildPier({ scene, data: KY, lettering, canvasTex, M, WYLD, FO
 // ------------------------------------------------------------------ Lava Night: the Halloween room by the entrance
 const hween = buildHalloween({ scene, canvasTex, lettering, lightPool, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x0 });
 hall.add(hween.sign);
-const beast = BEAST_CAVE_REVIEW ? buildBeastCave({ scene, canvasTex, lettering, lightPool, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 }) : null;
+const reviewCtx = { scene, renderer, renderCard: m => renderCard(m), canvasTex, lettering, lightPool, contactShadow, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 };
+const beast = BEAST_CAVE_REVIEW ? (NOR3_REVIEW ? buildNor3Winter(reviewCtx) : BREITLING_REVIEW ? buildBreitlingKona(reviewCtx) : buildBeastCave(reviewCtx)) : null;
 if (beast) hall.add(beast.sign);
 const sanctuary = buildSanctuary({ scene, lettering, lightPool, FONT, SERIF, lite, coarse, pickables, obstacles });
 sanctuary.sign.position.set(0, SDOOR.h + .7, HALL.z0 - .04); sanctuary.sign.rotation.y = Math.PI; hall.add(sanctuary.sign);
@@ -1035,9 +1054,11 @@ async function loadHweenBike() {
   hween.piece.bike.traverse(o => { if (o.isMesh) { o.userData.hween = hween.piece; delete o.userData.piece; } });
 }
 async function loadBeastBike() {
+  if (beast?.ownBikes) { beast.useAssets(loader); return; }
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!beast || !cfr?.glb || beast.bikeSpot.bike) return;
   const gltf = await loader.loadAsync(cfr.glb);
   beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
+  beast.useAssets(loader);
 }
 async function loadAll() {
   const order = [...modelled].sort((a, b) => a.pos.distanceTo(start) - b.pos.distanceTo(start));
@@ -1103,6 +1124,8 @@ const roomOf = (x, z) => {
   return z > -8.6 ? 'hween' : z > -26.1 ? 'champ' : 'wyld';
 };
 const DOORZ = { champ: DZ, wyld: WZ, pier: -46.5, hween: (HDOOR.z0 + HDOOR.z1) / 2, beast: (BDOOR.z0 + BDOOR.z1) / 2, ...Object.fromEntries(brandRooms.map(r => [r.desc.id, r.desc.door ? (r.desc.door.z0 + r.desc.door.z1) / 2 : (r.bounds.z0 + r.bounds.z1) / 2])) };
+const EAST_DOORS = new Set(['beast']);
+const ROOM_LINKS = {};
 const PIER_IN = [{ x: 1.2, z: -38.6 }, { x: 5.6, z: -38.6 }, { x: 5.4, z: -44.6 }, { x: 5.4, z: -48.4 }];   // round the apse plinth, through the glass door
 const NAVE_LANE = 13.6;                                             // upstairs walking lane: east of the bay plinths (x 11.15), west of the room openings
 const fader = document.getElementById('fade');
@@ -1119,7 +1142,7 @@ function teleport(end) {
 }
 function route(to, face, piece) {                                   // aisle first, then the doorway — never a diagonal through the plinths
   const a = roomOf(P.x, P.z), b = roomOf(to.x, to.z);
-  const pts = planRoute({ x: P.x, z: P.z, to, fromRoom: a, toRoom: b, doors: DOORZ, pierIn: PIER_IN, naveLane: NAVE_LANE });
+  const pts = planRoute({ x: P.x, z: P.z, to, fromRoom: a, toRoom: b, doors: DOORZ, east: EAST_DOORS, links: ROOM_LINKS, pierIn: PIER_IN, naveLane: NAVE_LANE });
   path = pts; path.stuck = 0; path.face = face; path.piece = piece || null;
   const end = pts[pts.length - 1], far = end && (roomOf(end.x, end.z) !== a || Math.hypot(end.x - P.x, end.z - P.z) > 9);
   if (far && profile.get().travel !== 'walk') teleport(end);
@@ -1213,6 +1236,8 @@ function openWyld(v) {
 function openInfo(n) {
   if (exploded) setExploded(exploded, false);
   current = null; champ = null;
+  if (n.model) { renderCard(n.model({ ride: startRide, close: () => closeCard() })); return; }
+  if (n.source) { renderCard({ eyebrow: n.eyebrow, title: n.title, kicker: n.sub, lede: n.text, actions: [{ label: 'Source ↗', href: n.source }, { label: 'Keep walking', onClick: () => closeCard() }] }); return; }
   $('cYears').textContent = n.eyebrow; $('cName').textContent = n.title; $('cMat').textContent = n.sub; $('cNote').textContent = n.text;
   $('cStats').hidden = true;
   $('cMedia').innerHTML = n.photo ? `<figure class="c-photo"><img src="${esc(n.photo.src)}" alt="${esc(n.photo.caption)}" referrerpolicy="no-referrer"><figcaption>${esc(n.photo.caption)}<br><a href="${esc(n.photo.page)}" target="_blank" rel="noopener">© ${esc(n.photo.author)} · ${esc(n.photo.license)} ↗</a></figcaption></figure>` : '';
@@ -1268,6 +1293,60 @@ function openFinale() {
   $('cActions').innerHTML = (cfr?.viewer ? `<a class="btn primary" href="${esc(cfr.viewer)}"><span class="long">Enter </span>3D studio <span aria-hidden="true">→</span></a>` : '') + `<button class="btn ghost" id="cBackYears">Back to 2014</button>`;
   $('cBackYears').onclick = () => visitPier(pier.stations[0]);
   $('card').classList.add('on'); document.body.classList.add('card-open');
+}
+
+// ------------------------------------------------------------------ Beast Cave (review): the empty saddle and its interval
+function visitBeast() {
+  if (!beast) return;
+  if (current && current.exT > 0) setExploded(current, false);
+  closeCard(); champ = null; loadBeastBike();
+  route(beast.bikeSpot.view, beast.bikeSpot.face, null); path.beast = true;
+  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === 'beast'));
+}
+let riding = null;
+function rideHud() {
+  let hud = $('rideHud'); if (hud) return hud;
+  document.body.insertAdjacentHTML('beforeend', `<div id="rideHud" class="ride-hud" hidden><div class="ride-hud__top"><small id="rideBand">Settle</small><b id="rideWatts">— W</b><span id="rideClock">60</span></div><div class="ride-hud__bar"><i id="rideTarget"></i><i id="rideNeedle"></i></div><button type="button" id="ridePush" class="btn primary ride-hud__push">Hold to push</button><button type="button" id="rideQuit" class="btn ghost ride-hud__quit">Leave saddle</button><p class="ride-hud__hint">Hold the button (or Space) to push. Let go to ease off. Stay in the orange band.</p></div>`);
+  hud = $('rideHud');
+  const push = $('ridePush'), on = e => { e.preventDefault(); beast?.hold(true); push.classList.add('on'); }, off = () => { beast?.hold(false); push.classList.remove('on'); };
+  push.addEventListener('pointerdown', on); push.addEventListener('pointerup', off); push.addEventListener('pointercancel', off); push.addEventListener('pointerleave', off);
+  $('rideQuit').onclick = () => endRide(false);
+  return hud;
+}
+function startRide() {
+  if (!beast?.startRide) return;
+  closeCard(); tourEnd(false); loadBeastBike(); path = null; P.vx = P.vz = 0;
+  const c = beast.bikeSpot.cockpit;
+  riding = riding || { back: { x: beast.bikeSpot.view.x, z: beast.bikeSpot.view.z } };
+  P.x = c.x; P.z = c.z; P.yaw = c.yaw; P.pitch = c.pitch; P.drop = c.drop;
+  beast.startRide(); rideHud().hidden = false; document.body.classList.add('riding');
+  if (!audioOn) toast('Turn on Sound for the flywheel and fans');
+}
+function endRide(finished) {
+  if (!riding || !beast) return;
+  const res = beast.stopRide(); beast.hold(false);
+  $('rideHud').hidden = true; document.body.classList.remove('riding');
+  if (finished && res) {
+    let earned = '', bests = {};
+    try { bests = JSON.parse(readStorage('athleteRoomBests') || '{}') || {}; } catch (_) { bests = {}; }
+    const prevBest = +bests.beastInterval || 0, best = Math.max(prevBest, res.inBand), isBest = res.inBand > prevBest;
+    if (isBest) { bests.beastInterval = res.inBand; writeStorage('athleteRoomBests', JSON.stringify(bests)); }
+    if (res.rewarded) { try { applyStoredEvent({ type: 'CHALLENGE_COMPLETED', id: 'CHALLENGE_COMPLETED:beast-interval', subject: 'beast-interval' }); earned = ' Interval logged to your progress.'; } catch (_) {} }
+    renderCard({ kind: 'beast', eyebrow: 'BEAST INTERVAL · 60 S', title: res.rewarded ? 'You held it.' : 'Almost is still information.',
+      kicker: `${res.inBand} s in the band · best streak ${res.bestStreak} s`,
+      lede: (res.rewarded ? 'Half the minute or more inside a moving power band. Now imagine the session is not one minute.' : 'Under 30 seconds in the band. The loop is the same as on the wall: inspect, adapt, return.') + earned,
+      stats: [{ value: `${res.inBand} s`, label: 'in the band' }, { value: `${res.avgWatts} W`, label: 'average' }, { value: `${best} s`, label: isBest ? 'new personal best' : 'personal best' }],
+      facts: [{ cls: 'G', text: 'Simulated power from your taps — not a real trainer reading.' }],
+      notes: [{ summary: 'Lionel’s line', text: 'Not recorded. This slot stays empty until Lionel Sanders chooses to ride the interval — nothing here is invented on Lionel’s behalf.' }],
+      actions: [{ label: 'Share result', primary: true, onClick: () => beast.resultImage(res, best).then(b => shareImage(b, { title: 'Beast Interval', text: `I held ${res.inBand} s of the Beast Interval in the KONA.m Beast Cave.` + (beastEvent().active ? ` Next: riding with Lionel on Zwift, ${eventWhen()}.` : ''), filename: 'beast-interval.jpg' })) },
+        ...(beastEvent().active ? [{ label: beastEvent().live ? 'Now ride with Lionel on Zwift ↗' : `Ride with Lionel on Zwift · ${eventWhen()} ↗`, href: beastEvent().url }] : []),
+        { label: 'Ride again', onClick: () => startRide() }, { label: 'Leave saddle', onClick: () => leaveSaddle() }] });
+  } else leaveSaddle();
+}
+function leaveSaddle() {
+  if (!riding) return;
+  const b = riding.back; riding = null; P.drop = 0; closeCard();
+  P.x = b.x; P.z = b.z; const face = beast.bikeSpot.face; P.yaw = Math.atan2(-(face.x - P.x), -(face.z - P.z)); P.pitch = -.08;
 }
 
 // ------------------------------------------------------------------ Lava Night
@@ -1460,7 +1539,7 @@ if (KONA.titles.length) $('railInner').insertAdjacentHTML('afterbegin', `<button
 if (WROOMDATA) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip wyld" data-room="wyld" aria-label="WYLD Room"><span class="n">W</span><span><small>4 DYES · MY2027</small><b>WYLD Room</b></span></button>`);
 if (pier) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip pier" data-room="pier" aria-label="The Kona Pier: Kona by Year"><span class="n"><img src="assets/kona-years/y2019.jpg" alt="" loading="lazy"></span><span><small>2014 — 2025</small><b>Kona by Year</b></span></button>`);
 $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip hween" data-room="hween" aria-label="Lava Night, the Halloween room"><span class="n" aria-hidden="true">🎃</span><span><small>HALLOWEEN</small><b>Lava Night</b></span></button>`);
-if (BEAST_CAVE_REVIEW) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip beast" data-room="beast" aria-label="Lionel Sanders Beast Cave review"><span class="n">B</span><span><small>REVIEW · ATHLETE ROOM</small><b>Beast Cave</b></span></button>`);
+if (BEAST_CAVE_REVIEW) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip beast" data-room="beast" aria-label="${BREITLING_REVIEW ? 'Breitling KONA atelier' : NOR3_REVIEW ? 'NOR 3 Kona Winter' : 'Lionel Sanders Beast Cave'} review"><span class="n">${BREITLING_REVIEW ? 'B' : NOR3_REVIEW ? 'N' : 'B'}</span><span><small>REVIEW · ${BREITLING_REVIEW ? 'PARTNER' : 'ATHLETE'} ROOM</small><b>${BREITLING_REVIEW ? 'Breitling × KONA' : NOR3_REVIEW ? 'NOR // 3 · KONA WINTER' : 'Beast Cave'}</b></span></button>`);
 for (const r of [...brandRooms].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip brand" data-room="${esc(r.desc.id)}" aria-label="${esc(r.desc.name)}"><span class="n" style="background:${esc(r.desc.theme?.accent || '#c9a13b')};-webkit-background-clip:text;background-clip:text;color:transparent">${esc(r.desc.name.slice(0, 1))}</span><span><small>${r.products.length} PRODUCT${r.products.length > 1 ? 'S' : ''}</small><b>${esc(r.desc.name)}</b></span></button>`);
 $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip sanctuary" data-room="sanctuary" aria-label="Sanctuary chapel, eight films"><span class="n">S</span><span><small>8 FILMS</small><b>Sanctuary</b></span></button>`);
 for (const w of [...atlas.wings].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip atlas" data-room="wing-${esc(w.id)}" aria-label="${esc(w.name)}: ${esc(w.sub)}"><span class="n" aria-hidden="true">${w.features?.clock ? '⏱' : '✦'}</span><span><small>UPPER FLOOR · ${atlas.rooms.filter(r => r.wing === w.id).reduce((n, r) => n + r.bikes.length + r.art.length, 0)} WORKS</small><b>${esc(w.name)}</b></span></button>`);
@@ -1473,7 +1552,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
   const liveAreas = [
     ...['hall', 'sanctuary', 'hween', ...(BEAST_CAVE_REVIEW?['beast']:[]), 'kona', ...(WROOMDATA?['wyld']:[]), ...(pier ? ['pier'] : []), 'stair', 'nave'].map(id => {
       const w = WORDS[id], rect = { hall: HALL, sanctuary: SROOM, hween: HROOM, beast: BROOM, kona: ROOM, wyld: WROOM, pier: pier && { x0: PIER.x0, x1: PIER.x1, z0: PIER.z0, z1: PIER.z1 }, stair: { x0: 7.35, x1: 12.3, z0: .75, z1: 6.55 }, nave: { x0: 7.5, x1: 16.5, z0: 5.55, z1: 27.2 } }[id];
-      return R(id, w?.short || id, w?.sub || '', rect, w?.floor || 'ground', AREA_COLOR[id], id === 'stair' || id === 'nave' ? { layer: 0 } : {});
+      return R(id, w?.short || ({ beast: BREITLING_REVIEW ? 'Breitling × Kona' : NOR3_REVIEW ? 'NOR // 3' : 'Beast Cave' })[id] || id, w?.sub || ({ beast: BREITLING_REVIEW ? 'The Finish-Line Atelier · partner room review' : NOR3_REVIEW ? 'Kona Winter · athlete room review' : 'Lionel Sanders · athlete room review' })[id] || '', rect, w?.floor || 'ground', AREA_COLOR[id], id === 'stair' || id === 'nave' ? { layer: 0 } : {});
     }),
     ...brandRooms.map(r => R(r.desc.id, r.desc.name, r.desc.kicker || '', r.bounds, 'ground', r.desc.theme?.accent || '#c9a13b')),
     ...galleries.bays.map(b => R('bay-' + b.id, b.title, b.sub, { x0: 8.4, x1: 14.8, z0: b.z - 1.8, z1: b.z + 1.8 }, 'upper', b.floor, { layer: 1, ink: /^#(1|0)/.test(b.floor) ? '#fbf9f5' : '#12181d', kind: 'bay' })),
@@ -1512,6 +1591,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     if(!gate.unlocked){toast(`Level ${gate.requiredLevel} · keep exploring to unlock ${area.name}`);return;}
     if (!started) enter();
     tourEnd(false); closeCard(); prepareRoom(id);
+    if (id === 'beast' && beast) { visitBeast(); toast(`${area.name} · ${BREITLING_REVIEW ? 'every second of Kona' : NOR3_REVIEW ? 'three lanes' : 'the empty saddle'}`); return; }
     const ov=safeOverview(area); if(!ov) return;
     const face=new THREE.Vector3(ov.face.x,ov.face.y,ov.face.z);
     route(ov.to,face,null);
@@ -1691,6 +1771,8 @@ function nudge(f) { const nx = P.x - Math.sin(P.yaw) * f, nz = P.z - Math.cos(P.
 addEventListener('keydown', e => {
   if (e.target.closest?.('input,textarea,select,a')) return;
   const k = e.key.toLowerCase();
+  if (riding && beast?.ride && (k === ' ' || k === 'spacebar')) { e.preventDefault(); beast.hold(true); return; }
+  if (riding && k === 'escape') { endRide(false); return; }
   if (!started) { if (k === 'enter' && !$('enterBtn').disabled) { e.preventDefault(); enter(); } return; }
   if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'shift', 'q', 'e'].includes(k)) { keys.add(k); path = null; tourEnd(false); if (k.startsWith('arrow')) e.preventDefault(); }
   if (k >= '1' && k <= '9' && PIECES[+k - 1]) visit(PIECES[+k - 1]);
@@ -1702,7 +1784,7 @@ addEventListener('keydown', e => {
   if (k === 'h') visitHween();
   if (k === 'enter' && current?.viewer) location.href = current.viewer;
 });
-addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
+addEventListener('keyup', e => { const k = e.key.toLowerCase(); keys.delete(k); if (k === ' ' && riding) beast?.hold(false); });
 addEventListener('blur', () => keys.clear());
 
 // ------------------------------------------------------------------ triathlon joystick: swim · bike · run ring, walk with the thumb
@@ -1753,6 +1835,7 @@ function frame(now) {
   // Zero visual cost: pause expensive 3D work when it cannot be seen.
   // Reset the clock while paused so resuming never creates a physics/camera jump.
   if (document.hidden || document.body.classList.contains('kona-panel-open') || document.body.classList.contains('settings-open')) { last = now; return; }
+  const gap = Math.min(2, (now - last) / 1000);
   const dt = Math.min(.05, (now - last) / 1000); last = now; const t = now / 1000;
   // movement: gentle acceleration, slide along obstacles
   let ix = 0, iz = 0;
@@ -1763,6 +1846,7 @@ function frame(now) {
   if (keys.has('arrowleft') || keys.has('q')) P.yaw += dt * 1.7;
   if (keys.has('arrowright') || keys.has('e')) P.yaw -= dt * 1.7;
   if (joy.on) { ix += joy.x; iz += -joy.y; }                          // triathlon joystick (touch)
+  if (riding) { ix = iz = 0; path = null; }
   const sp = (keys.has('shift') ? 5.8 : 3.35) * (joy.on ? Math.min(1, Math.hypot(joy.x, joy.y)) * 1.08 : 1);
   let wx = 0, wz = 0, following = false;
   if (Math.hypot(ix, iz) > .08) {
@@ -1783,7 +1867,7 @@ function frame(now) {
     const want = Math.atan2(-fx, -fz), dyaw = ((want - P.yaw + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
     const wantPitch = Math.atan2(path.face.y - (P.y + EYE), Math.hypot(fx, fz));
     P.yaw += dyaw * (1 - Math.exp(-dt * 5.6)); P.pitch += (wantPitch - P.pitch) * (1 - Math.exp(-dt * 4.8));
-    if (!path.length && Math.abs(dyaw) < .02) { const pc = path.piece, ch = path.champ, wy = path.wyld, pr = path.pier, hw = path.hween, sa = path.sanctuary, gy = path.gallery, kn = path.kona, ax = path.atlas, ar = path.art, br = path.brand; path = null; if (ax) openAtlas(ax); if (ar) openArt(ar); if (hw) openHween(); if (sa) openSanctuary(sa); if (gy) openGallery(gy); if (kn) openKona(kn); if (pc) openCard(pc); if (ch) openChamp(ch); if (wy) openWyld(wy); if (br) openBrand(br); if (pr) pr.kind === 'finale' ? openFinale() : openYear(pr); }
+    if (!path.length && Math.abs(dyaw) < .02) { const pc = path.piece, ch = path.champ, wy = path.wyld, pr = path.pier, hw = path.hween, sa = path.sanctuary, gy = path.gallery, kn = path.kona, ax = path.atlas, ar = path.art, br = path.brand, bs = path.beast; path = null; if (bs) renderCard(beast.introCard({ ride: startRide, close: () => closeCard() })); if (ax) openAtlas(ax); if (ar) openArt(ar); if (hw) openHween(); if (sa) openSanctuary(sa); if (gy) openGallery(gy); if (kn) openKona(kn); if (pc) openCard(pc); if (ch) openChamp(ch); if (wy) openWyld(wy); if (br) openBrand(br); if (pr) pr.kind === 'finale' ? openFinale() : openYear(pr); }
   } else if (path && !path.length) path = null;
   const k = 1 - Math.exp(-dt * 15); P.vx += (wx - P.vx) * k; P.vz += (wz - P.vz) * k;
   const nx = P.x + P.vx * dt, nz = P.z + P.vz * dt;
@@ -1811,7 +1895,7 @@ function frame(now) {
   const wantY = atlas.floorY(P.x, P.z) ?? galleryFloorY(P.x, P.z);
   P.y += (wantY - P.y) * (1 - Math.exp(-dt * 8));
   const yaw = P.yaw + idle * Math.sin(t * .13) * .1, pitch = P.pitch + idle * Math.sin(t * .1) * .015;
-  camera.position.set(P.x, P.y + EYE + (reduce ? 0 : Math.sin(bob) * .045 * Math.min(1, moving)), P.z);
+  camera.position.set(P.x, P.y + EYE + (P.drop || 0) + (reduce ? 0 : Math.sin(bob) * .045 * Math.min(1, moving)), P.z);
   fwd.set(-Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), -Math.cos(yaw) * Math.cos(pitch));
   camera.lookAt(look.copy(camera.position).add(fwd));
   const cardOn = $('card').classList.contains('on'), W = innerWidth, H = innerHeight;
@@ -1873,14 +1957,27 @@ function frame(now) {
     const upstairs = reg === 'gallery' || reg === 'stair';
     const beastVisible = !!beast && (reg === 'beast' || (reg === 'hall' && P.z < BDOOR.z1 + 5 && P.z > BDOOR.z0 - 5));
     if (beast) beast.group.visible = beastVisible;
-    if (beastVisible) beast.update(t, reduce);
+    const beastNow = beastVisible ? beast.update(t, reduce, dt) : null;
+    if (riding && beast?.ride) {
+      const st = beast.ride.iv.state, band = beast.ride.iv.band(), lo = 90, hi = 480, pct = v => `${Math.max(0, Math.min(100, (v - lo) / (hi - lo) * 100))}%`;
+      $('rideWatts').textContent = `${Math.round(st.power)} W`; $('rideBand').textContent = `${band.label} · ${band.lo}–${band.hi} W`;
+      $('rideClock').textContent = String(Math.max(0, Math.ceil(60 - st.t)));
+      $('rideTarget').style.left = pct(band.lo); $('rideTarget').style.width = `calc(${pct(band.hi)} - ${pct(band.lo)})`; $('rideNeedle').style.left = pct(st.power);
+      $('rideHud').classList.toggle('in', st.power >= band.lo && st.power <= band.hi);
+      if (st.done) endRide(true);
+    }
+    const moodRoom = reg === 'beast' ? beast?.mood : brandRooms.find(r => r.desc.id === reg)?.mood || null;
+    const wantHemi = hemiBase * (moodRoom?.hemi ?? 1), wantSun = sunBase * (moodRoom?.sun ?? 1), km = reduce ? 1 : 1 - Math.exp(-gap * 2.5);
+    hemi.intensity += (wantHemi - hemi.intensity) * km; sun.intensity += (wantSun - sun.intensity) * km;
+    if (scene.fog) { const fn = moodRoom?.fog?.near ?? 70, ff = moodRoom?.fog?.far ?? 420; scene.fog.near += (fn - scene.fog.near) * km; scene.fog.far += (ff - scene.fog.far) * km; }
     hween.group.visible = reg === 'hween' || P.z > -32;
     sanctuary.group.visible = true;                                   // the chapel's walls and roof always draw; upstairs only its bikes are culled
     for (const f of sanctuary.films) if (f.bike) f.bike.visible = reg !== 'gallery';
-    const themeRoom = galleries.update(t, P, reduce, scene, renderer, reg);
+    const themeRoom = galleries.update(t, P, reduce, scene, renderer, reg, moodRoom);
     atlas.update(t, dt, P, upstairs, reduce);
     if (audio) {                                                      // the sea fades upstairs; each room brings its own bed
-      roomSound.set(themeRoom?.id || null);
+      roomSound.set(themeRoom?.id || (reg === 'beast' ? (NOR3_REVIEW ? 'nor3' : BREITLING_REVIEW ? 'breitling' : 'beast') : null));
+      roomSound.drive?.('beast', beastNow?.power || 0);
       const sea = audioOn ? (upstairs ? .05 : .2) : 0;
       if (sea !== audio.sea) { audio.sea = sea; audio.gain.gain.setTargetAtTime(sea, audio.ctx.currentTime, .8); }
     }
@@ -1912,7 +2009,7 @@ onFontsReady();
 initAppShell();
 // progressive loading: the hall first (loadAll), then each room in the background, with a quiet status chip
 {
-  const steps = [...(WROOMDATA?[['the WYLD Room',loadWyldBikes]]:[]), ['Lava Night', loadHweenBike], ...(BEAST_CAVE_REVIEW?[['the Beast Cave review', loadBeastBike]]:[]), ['the Sanctuary', loadSanctuaryBikes], ['the Champions room', loadKonaMachines], ['the upper floor', loadThemeBikes], ['the wings', () => atlas.load(loader)], ['the brand rooms', loadBrand]];
+  const steps = [...(WROOMDATA?[['the WYLD Room',loadWyldBikes]]:[]), ['Lava Night', loadHweenBike], ...(BEAST_CAVE_REVIEW?[[BREITLING_REVIEW?'the Breitling × KONA review':NOR3_REVIEW?'the NOR // 3 review':'the Beast Cave review', loadBeastBike]]:[]), ['the Sanctuary', loadSanctuaryBikes], ['the Champions room', loadKonaMachines], ['the upper floor', loadThemeBikes], ['the wings', () => atlas.load(loader)], ['the brand rooms', loadBrand]];
   const chip = $('bgload'), say = t => { if (chip) { chip.hidden = false; chip.querySelector('span').textContent = t; } };
   let chain = loadAll();
   let offline = false;
@@ -1965,5 +2062,6 @@ const konaShell = window.__konaShell;
 if (!konaShell) throw new Error('KONA consumer Shell authority missing');
 window.__app = { profile, settings: settingsUI, shareView, openArt, openAtlas, konaShell };
 window.__atlas = atlas;
-window.__museum = { P, PIECES, visit, enter, scene, camera, champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
+window.__reviewRoomIdentity = REVIEW_ROOM_SEMANTIC_ID;
+window.__museum = { P, PIECES, visit, enter, scene, camera, champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, reviewRoomIdentity: REVIEW_ROOM_SEMANTIC_ID, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
 initArtWorld(window.__museum).catch(e => console.warn('art world', e));

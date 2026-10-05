@@ -1,0 +1,53 @@
+name: Breitling recovery mobile smoke
+
+on:
+  push:
+    branches:
+      - recovery/final-rooms-20261004
+    paths:
+      - 'web/breitling-recovery-mobile-smoke.mjs'
+      - 'web/src/breitling-kona.js'
+      - 'web/src/landing.js'
+      - 'assets/watches/endurance-pro-study/**'
+      - '.github/workflows/breitling-recovery-mobile.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: recovery/final-rooms-20261004
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Verify deterministic site
+        run: |
+          node tools/build_pages.mjs
+          node tools/build_app.mjs
+          git diff --exit-code -- app sw.js index.html web/dist
+      - name: Capture Breitling mobile final room
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          GIT_SHA: ${{ github.sha }}
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/breitling-mobile-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..30}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep 1; done
+          node web/breitling-recovery-mobile-smoke.mjs http://127.0.0.1:8765/index.html
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: breitling-recovery-mobile-${{ github.sha }}
+          path: docs/evidence/final-room-recovery-20261004/breitling-mobile/
+          if-no-files-found: error
+          retention-days: 14
