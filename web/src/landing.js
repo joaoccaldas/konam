@@ -976,6 +976,7 @@ async function loadBike(p) {
   bike.traverse(o => { if (o.isMesh) pickables.push(o); });
 }
 let pierBikeLoading = false, pierOut = false;
+const sealedGroups = { champ: scene.getObjectByName('champRoom'), hween: scene.getObjectByName('hweenRoom') };   // closed rooms that seal (frame())
 const sideRooms = ['champRoom', 'wyldRoom', ...(BEAST_CAVE_REVIEW?['beastCaveRoom']:[])].map(n => scene.getObjectByName(n)).filter(Boolean);
 async function loadPierBike() {                                       // the current CFR, turning under the finish arch
   if (!pier || pierBikeLoading) return; pierBikeLoading = true;
@@ -2031,13 +2032,19 @@ function frame(now) {
       pier.update(dt, reduce);
     }
     // deep inside a review room the only opening is the hall door behind you: draw the hall and the room, nothing else
-    const sealed = !!beast && reg === 'beast' && P.x > BROOM.x0 + 4;
-    if (sealed || sealedRoom) for (const o of scene.children) {
-      if (o === beast?.group || o === hall || o.isLight || o.isCamera) continue;
-      if (sealed) { if (o.userData.sealedVis === undefined) o.userData.sealedVis = o.visible; o.visible = false; }
+    // The same holds for the closed side rooms once you are 3 m past their door: Kona Champions and Lava Night (doors in
+    // the hall's west wall) and the brand rooms (doors in their own west wall). Measured from inside Kona Champions the
+    // world still drew the Sanctuary, the upstairs wings and Lava Night: ~630 draw calls behind solid walls.
+    const brandHere = brandRooms.find(r => r.desc.id === reg);
+    const keep = !!beast && reg === 'beast' && P.x > BROOM.x0 + 4 ? beast.group
+      : (reg === 'champ' || reg === 'hween') && P.x < HALL.x0 - 3 ? sealedGroups[reg]
+      : brandHere && P.x > brandHere.bounds.x0 + 3 ? brandHere.group : null;
+    if (keep || sealedRoom) for (const o of scene.children) {
+      if (o === hall || o.isLight || o.isCamera) continue;
+      if (keep && o !== keep) { if (o.userData.sealedVis === undefined) o.userData.sealedVis = o.visible; o.visible = false; }
       else if (o.userData.sealedVis !== undefined) { o.visible = o.userData.sealedVis; delete o.userData.sealedVis; }
     }
-    sealedRoom = sealed;
+    sealedRoom = !!keep;
   }
   tourTick(dt);
   if (!reduce) for (const s2 of spinners) s2.o.rotation[s2.axis] += dt * s2.speed;

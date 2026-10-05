@@ -68,5 +68,5 @@ test('efficiency: instanced trio, merged statics, one shadow pass, GPU particles
   assert.equal((room.match(/key\.castShadow = true/g) || []).length, 1, 'one shadow-casting light for the whole trio');
   assert.doesNotMatch(room, /s\.castShadow = !lite/, 'lane spots do not cast shadows');
   assert.match(room, /gl_PointSize/);
-  assert.match(landing, /const sealed = !!beast && reg === 'beast'/);
+  assert.match(landing, /const keep = !!beast && reg === 'beast' && P.x > BROOM.x0 \+ 4 \? beast.group/);   // sealed review room (now one rule with the closed side rooms)
 });
