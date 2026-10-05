@@ -290,7 +290,12 @@ body.kona-panel-open .kona-why-global{display:none}
   font:800 10px/1 var(--brand-font-ui);letter-spacing:.07em;text-decoration:none;white-space:nowrap;
 }
 .global-user-studio:is(:hover,:focus-visible),.global-why-kona:is(:hover,:focus-visible){border-color:var(--brand-action);outline:none}
-@media(max-width:420px){.global-user-studio,.global-why-kona{padding-inline:10px;font-size:9px}}
+@media(max-width:899px){
+ .global-kona-links{top:auto;right:max(10px,env(safe-area-inset-right));bottom:calc(84px + env(safe-area-inset-bottom));gap:6px}
+ .global-user-studio,.global-why-kona{min-height:44px;padding-inline:10px;font-size:9px}
+ body.kona-panel-open .global-kona-links{display:none}
+}
+@media(max-width:420px){.global-user-studio,.global-why-kona{padding-inline:9px;font-size:8.5px}}
 
 
 /* Progress road */
