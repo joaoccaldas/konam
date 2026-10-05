@@ -1,5 +1,5 @@
 {
- "version": "c72db1b5e752",
+ "version": "e23cb650d7c6",
  "core": [
   "index.html",
   "about.html",
@@ -67,7 +67,7 @@
   "assets/pwa/icon-v3-512.png": "TjJpu7ZmZYrQIO9sWSzdVeBHr2RYy+FWmCyygkZsECs=",
   "assets/pwa/icon-v3-maskable-512.png": "TjJpu7ZmZYrQIO9sWSzdVeBHr2RYy+FWmCyygkZsECs=",
   "assets/pwa/apple-touch-icon-v3.png": "R7r+34dBZMxUezo2xBD34dbHtfTyvjdCViUhs3wRamI=",
-  "app/account-auth.js": "3muzkc/jv204LG0pEk7PggRsfMwxPpv7OB9xY5jZYGw=",
+  "app/account-auth.js": "OoBxvmCFT9ZbfZvyj9L0bIfYmmfyDz763nUKLFTwEYA=",
   "integrations/companion/feed.json": "E8OUvTTusuZCwkY266d2O6Esez1wSXw4UEv4/QIzF58=",
   "integrations/companion/rss.xml": "53aSt5o5wWPaA6M0KgGvQgkYjNos7NdfWjHJErVWkis=",
   "integrations/companion/travel.json": "5pwgWGf/zUlADtAPhQjB/0cqaP7BypgqCRd9sMU0cnQ=",

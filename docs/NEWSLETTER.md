@@ -35,7 +35,9 @@ source verification, exactly-three-story rule and **never send automatically**:
 > send drafts automatically. Reconcile any `preparing` receipt with existing Gmail
 > drafts before retrying; flag ambiguity instead of creating duplicates.
 
-1. Keep the existing source registry and refresh/fallback behavior. Verify facts,
+1. Keep the existing source registry and refresh/fallback behavior. On the first
+   wired run also compare with the original Gmail sent/draft editions; an empty
+   new edition table is not proof that no story has already been used. Verify facts,
    canonical HTTPS URLs and actual publication dates. No duplicate prior story.
    Do not import an incomplete edition or select unverified filler.
 2. Render using `newsletter/render.mjs` (`prepareNewsletter`) with `edition_date`,

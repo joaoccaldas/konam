@@ -3,7 +3,7 @@ import {signInWithPassword,registerAccount,requestPasswordReset,resendConfirmati
 // Account access shares the entry shell. Account and newsletter consent are separate.
 export function renderNewsletterUnsubscribe(host,token,{onBack=()=>{}}={}) {
   const valid=typeof token==='string'&&/^[a-f0-9]{64}$/.test(token);
-  host.innerHTML=`<section class="account-auth" aria-label="The Intern’s newsletter"><div class="account-story"><p class="account-kicker">YOUR INBOX · YOUR PACE</p><h2>Three things worth your time.<br><em>You choose when.</em></h2><p>The Intern’s Kona.m newsletter.</p></div><div class="account-panel artifact artifact--label"><p class="account-kicker">THE INTERN READ THE INTERNET</p><h2>Your inbox. Your pace.</h2><p>${valid?'Unsubscribe from The Intern’s newsletter. Your Kona.m account and progress stay yours.':'This link is incomplete. Open the Unsubscribe link from your newsletter, or contact the operator on the privacy page.'}</p><form class="account-form"><p class="account-status" role="status" aria-live="polite"></p>${valid?'<button class="btn primary" type="submit">Unsubscribe <span aria-hidden="true">→</span></button>':''}</form><div class="account-exits"><button class="btn text" type="button" data-back>Back to Kona.m</button><a href="privacy.html">Privacy & data</a></div></div></section>`;
+  host.innerHTML=`<section class="account-auth" aria-label="The Intern’s newsletter"><div class="account-story"><p class="account-kicker">YOUR INBOX · YOUR PACE</p><h2>Three things worth your time.<br><em>You choose when.</em></h2><p>The Intern’s Kona.m newsletter.</p></div><div class="account-panel artifact artifact--label"><p class="account-kicker">THE INTERN READ THE INTERNET</p><h2>Your inbox. Your pace.</h2><p>${valid?'Unsubscribe from The Intern’s newsletter. Your Kona.m account and progress stay yours.':'This link is incomplete. Open the Unsubscribe link from your newsletter, or contact the operator on the privacy page.'}</p><form class="account-form"><p class="account-status" role="status" aria-live="polite"></p>${valid?'<button class="btn primary" type="submit">Unsubscribe <span aria-hidden="true">→</span></button>':''}</form><div class="account-exits"><button class="btn text" type="button" data-back>Back to Kona.m</button><a class="btn text" href="privacy.html">Privacy & data</a></div></div></section>`;
   host.querySelector('[data-back]').addEventListener('click',onBack);
   host.querySelector('form').addEventListener('submit',async event=>{
     event.preventDefault();if(!valid)return;
@@ -75,7 +75,7 @@ export function renderAccountAuth(host,{mode='login',onSuccess=()=>{},onContinue
           await requestPasswordReset(email);announce('If an account uses this address, you’ll receive a reset link. Check your spam folder too.');return;
         }
         const account=await registerAccount(email,password,{newsletter:wantsUpdates});
-        const updateNote=wantsUpdates?' Your newsletter choice is saved with this registration. Confirming your email also confirms this optional subscription. Every edition has an unsubscribe link.':'';
+        const updateNote=wantsUpdates?' For a new account, confirming your email also confirms this optional newsletter subscription. Every edition has an unsubscribe link.':'';
         if(account.signedIn){await onSuccess();return;}
         announce('Check your inbox to confirm your email, then sign in. If you already have an account, use Sign in or Forgot password.'+updateNote);
         form.querySelector('[data-resend]')?.remove();
