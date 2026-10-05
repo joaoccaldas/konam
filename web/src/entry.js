@@ -229,6 +229,9 @@ if (returningVisit) {
 } else {
   buildButton?.addEventListener('click', () => paintQuest(firstRunStep()));
 }
+// first visit: value before setup. Today opens straight away; the Race Self waits in Me (Home offers it too).
+const peekButton = document.getElementById('entryPeek');
+if (peekButton) { if (returningVisit) peekButton.hidden = true; else peekButton.addEventListener('click', () => enterApp('home')); }
 renderEntryProductStage(document.getElementById('entryProductStage'), {profile});
 entryDataReady.then(data=>{ window.__ENTRY_DATA=data||{}; window.__ENTRY_EVENT=data?.event||{}; paintCount(); }).catch(()=>{});
 
