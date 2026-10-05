@@ -23,13 +23,14 @@ import { BROOM, BDOOR } from './beast-cave.js';
 import { lightShaft, motes } from './roomkit.js';
 import { mergeStatic } from './engine/decor.js';
 import { localEnvCapture } from './engine/env-capture.js';
+import { travertineTex, marbleTex, wallWash, normalFrom } from './engine/textures.js';
 import { decorateRoom } from './engine/decoration-props.js';
 import { framedPainting } from './engine/wing.js';
 import { paintingCard, sculptureCard } from './engine/card.js';
 import PAINTINGS from '../../museum/art/paintings.json' with { type: 'json' };
 import SCULPTURES from '../../museum/art/sculptures.json' with { type: 'json' };
 
-export const LAIDLOW_MOOD = Object.freeze({ exposure: 1.05, hemi: .32, sun: .12, fog: { near: 18, far: 70 }, fogColor: new THREE.Color('#d9c7ae') });
+export const LAIDLOW_MOOD = Object.freeze({ exposure: .98, hemi: .22, sun: .1, fog: { near: 18, far: 70 }, fogColor: new THREE.Color('#d9c7ae') });
 const NICE = facts.results.find(r => r.id === 'nice-2023'), KONA = facts.results.find(r => r.id === 'kona-2022'), ROTH = facts.results.find(r => r.id === 'roth-2026');
 const PAL = { limestone: '#e9dfcf', ochre: '#d39b5f', terracotta: '#b65f3c', navy: '#0e2a4a', bleu: '#1f5fa0', chair: '#2f74c0', sea: '#0f5f96', gold: '#f2c879', ink: '#f5f3ee' };
 
@@ -52,32 +53,44 @@ export function buildLaidlowNice(ctx) {
   const box = (mat, w, h, d, x, y, z, ry = 0, cast = false) => add(mat, new THREE.BoxGeometry(w, h, d), x, y, z, ry, cast);
 
   // ------------------------------------------------------------ materials: Nice in daylight
-  const stoneC = canvas(1024, 1024, (g, w, h) => { g.fillStyle = '#e6dccb'; g.fillRect(0, 0, w, h); const r = rng(3);
-    for (let i = 0; i < 9000; i++) { const v = 200 + r() * 40; g.fillStyle = `rgba(${v},${v - 8},${v - 22},.35)`; g.fillRect(r() * w, r() * h, 1 + r() * 2.5, 1 + r() * 2); }
-    for (let i = 0; i < 60; i++) { g.fillStyle = `rgba(150,130,100,${.04 + r() * .05})`; g.beginPath(); g.arc(r() * w, r() * h, 1 + r() * 4, 0, 6.3); g.fill(); }   // fossil pits of the limestone
-    g.strokeStyle = 'rgba(120,104,84,.55)'; g.lineWidth = 3; for (const p of [0, w / 2, w]) { g.beginPath(); g.moveTo(p, 0); g.lineTo(p, h); g.moveTo(0, p); g.lineTo(w, p); g.stroke(); } });
-  const floorMat = E(new THREE.MeshPhysicalMaterial({ map: tex(stoneC, true, [RW / 3.2, RD / 3.2]), color: '#ffffff', roughness: .55, clearcoat: .25, clearcoatRoughness: .4, envMapIntensity: .5 }));
-  const plaster = new THREE.MeshStandardMaterial({ color: '#efe4d2', roughness: .92 });
+  const travMap = travertineTex([RW / 3.0, RD / 3.0]);                  // the museum's own stone (engine/textures.js)
+  const travN = lite ? null : normalFrom(travMap.image, 1.1); if (travN) travN.repeat.set(RW / 3.0, RD / 3.0);
+  const floorMat = E(new THREE.MeshPhysicalMaterial({ map: travMap, normalMap: travN, normalScale: new THREE.Vector2(.25, .25), color: '#fbf5ea', roughness: .5, clearcoat: lite ? 0 : .35, clearcoatRoughness: .3, envMapIntensity: .55 }));
+  const stuccoH = canvas(lite ? 256 : 512, lite ? 256 : 512, (g, w, h) => { g.fillStyle = '#808080'; g.fillRect(0, 0, w, h); const r = rng(17);
+    for (let i = 0; i < (lite ? 1800 : 7000); i++) { const v = 100 + r() * 70; g.fillStyle = `rgba(${v},${v},${v},.35)`; g.beginPath(); g.ellipse(r() * w, r() * h, 1 + r() * 5, 1 + r() * 3, r() * 3, 0, 6.3); g.fill(); } });
+  const stuccoC = canvas(512, 512, (g, w, h) => { const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#e9dcc6'); gr.addColorStop(1, '#f3e9d8'); g.fillStyle = gr; g.fillRect(0, 0, w, h); g.globalAlpha = .18; g.drawImage(stuccoH, 0, 0, w, h); });
+  const plaster = new THREE.MeshStandardMaterial({ map: tex(stuccoC, true, [RW / 4, R.h / 4]), normalMap: lite ? null : Object.assign(normalFrom(stuccoH, 1.6), {}), normalScale: new THREE.Vector2(.5, .5), color: '#ffffff', roughness: .93 });
+  if (plaster.normalMap) plaster.normalMap.repeat.set(RW / 4, R.h / 4);
+  const moulding = new THREE.MeshStandardMaterial({ color: '#f6efe3', roughness: .7 });
   const ochre = new THREE.MeshStandardMaterial({ color: PAL.ochre, roughness: .9 });
   const navyWall = new THREE.MeshStandardMaterial({ color: PAL.navy, roughness: .85 });
   const ceilMat = new THREE.MeshStandardMaterial({ color: '#f4ede2', roughness: .95 });
   const steel = E(new THREE.MeshStandardMaterial({ color: '#e9ecef', roughness: .3, metalness: .85 }));
   const darkSteel = E(new THREE.MeshStandardMaterial({ color: '#20262c', roughness: .35, metalness: .8 }));
   const ledWarm = new THREE.MeshBasicMaterial({ color: '#ffe2b8', toneMapped: false });
-  const limestone = E(new THREE.MeshPhysicalMaterial({ map: tex(stoneC, true, [1, .3]), color: '#fffaf2', roughness: .4, clearcoat: .5, clearcoatRoughness: .25 }));
+  const limestone = E(new THREE.MeshPhysicalMaterial({ map: marbleTex('#f7f1e6', '150,132,108', [1, .35], 9), color: '#fffaf2', roughness: .4, clearcoat: .5, clearcoatRoughness: .25 }));
   const chairMat = E(new THREE.MeshPhysicalMaterial({ color: PAL.chair, roughness: .32, metalness: .55, clearcoat: .8, clearcoatRoughness: .15 }));
 
   // ------------------------------------------------------------ floor and shell
   const floor = new THREE.Mesh(new THREE.BoxGeometry(RW, .16, RD), floorMat); floor.position.set(CX, -.074, CZ); floor.receiveShadow = true; floor.userData.floor = true; group.add(floor); pickables.push(floor);
   box(plaster, RW, R.h, .3, CX, R.h / 2, R.z0 + .15); box(plaster, RW, R.h, .3, CX, R.h / 2, R.z1 - .15);   // north / south
   box(ceilMat, RW, .2, RD, CX, R.h + .1, CZ);
-  for (const z of [R.z0, R.z1]) box(ochre, RW, .9, .32, CX, .45, z + (z > CZ ? .16 : -.16));                // an ochre dado: Vieux Nice
+  for (const z of [R.z0, R.z1]) box(ochre, RW, .9, .04, CX, .45, z + (z > CZ ? -.02 : .02));   // inside faces: north is z < z0, south is z > z1                // an ochre dado: Vieux Nice
   for (let x = 9.6; x < GX - 1; x += 2.6) box(ledWarm, .9, .02, RD - 2.2, x, R.h - .01, CZ);               // long ceiling light slots
+  // Belle Époque order on the long walls: pilasters with capitals, a stepped crown cornice, a stone skirting
+  for (const [z, d] of [[R.z0, -1], [R.z1, 1]]) {
+    for (const x of [8.4, 11.8, 30.2, 32.9]) { box(moulding, .34, R.h - .6, .08, x, (R.h - .6) / 2 + .1, z + d * .04); box(moulding, .46, .14, .14, x, R.h - .42, z + d * .07); box(moulding, .44, .12, .12, x, .16, z + d * .06); }
+    box(moulding, RW, .1, .16, CX, R.h - .25, z + d * .08); box(moulding, RW, .07, .26, CX, R.h - .14, z + d * .13); box(moulding, RW, .05, .36, CX, R.h - .05, z + d * .18);
+    box(moulding, RW, .1, .05, CX, .95, z + d * .045);                 // a dado rail over the ochre band
+  }
 
   // ------------------------------------------------------------ the bay: glass, the beach, the Baie des Anges
   const BAYS = [R.z0 - .05, -8.6, -13.1, R.z1 + .05];
   for (const z of BAYS) box(steel, .14, R.h, .14, GX, R.h / 2, z);
   box(steel, .18, .12, RD, GX, .06, CZ); box(plaster, .3, .8, RD, GX, R.h - .4, CZ);
+  for (let i = 0; i < 3; i++) { const z0 = BAYS[i], z1 = BAYS[i + 1], w = Math.abs(z1 - z0), arch = new THREE.TorusGeometry(w / 2 - .08, .06, lite ? 6 : 10, lite ? 24 : 48, Math.PI);
+    arch.rotateY(Math.PI / 2); add(moulding, arch, GX - .05, R.h - 1.6 - (w / 2 - .08) * .25, (z0 + z1) / 2).scale.set(1, .5, 1);
+    box(steel, .05, .05, w, GX - .02, 1.0, (z0 + z1) / 2); }                        // the arches of a Promenade façade, a rail at sill height
   const glass = new THREE.Mesh(new THREE.PlaneGeometry(RD, R.h - .8), E(new THREE.MeshPhysicalMaterial({ color: '#dfeef7', roughness: .03, transparent: true, opacity: .08, depthWrite: false, envMapIntensity: 1.3 })));
   glass.rotation.y = -Math.PI / 2; glass.position.set(GX - .02, (R.h - .8) / 2, CZ); group.add(glass);
   obstacles.push({ box: [RAIL - .2, R.x1 + .5, R.z1 - .5, R.z0 + .5] });
@@ -99,7 +112,11 @@ export function buildLaidlowNice(ctx) {
           float lights=step(.985,h(floor(vec2(u.x*400.,u.y*600.))))*step(.6,u.x)*step(u.y,coast+.004); c+=vec3(1.,.8,.5)*lights*.8; }
         else { float dy=hz-u.y; vec3 sea=mix(vec3(.10,.42,.62),vec3(.03,.22,.40),smoothstep(.0,.42,dy));
           float w=n(vec2(u.x*90.,dy*260.-t*.6))*n(vec2(u.x*40.+t*.2,dy*120.)); float glint=smoothstep(.6,.95,w)*smoothstep(.16,.0,abs(u.x-sun.x))*(1.-smoothstep(.0,.42,dy)*.6);
-          c=sea+vec3(1.,.82,.55)*glint*1.4+vec3(.9,.95,1.)*smoothstep(.006,.0,abs(dy-.004))*.25; }
+          c=sea+vec3(1.,.82,.55)*glint*1.4+vec3(.9,.95,1.)*smoothstep(.006,.0,abs(dy-.004))*.25;
+          for(int k=0;k<3;k++){ float fk=float(k); vec2 b=vec2(fract(.18+fk*.29+t*.002*(1.+fk*.3)),.012+fk*.018);   // sails far out on the bay
+            float sx=(u.x-b.x)/(.004+fk*.002), sy=(dy-b.y)/(.02+fk*.008); if(sy<0.&&sy>-1.&&abs(sx)<1.+sy) c=mix(c,vec3(.97,.95,.9),.9); } }
+        if(u.y>hz+.08){ for(int k=0;k<4;k++){ float fk=float(k); vec2 b=vec2(fract(.3+fk*.21+t*.006*(1.+fk*.2)),.62+fk*.05+.01*sin(t*.5+fk));   // gulls gliding
+          vec2 q=(u-b)*vec2(180.,260.); float wing=abs(abs(q.x)-1.2+.0)*.6+abs(q.y+.5*abs(q.x)-.0); if(abs(q.x)<2.4&&abs(q.y+.4*abs(q.x)*(.6+.4*sin(t*4.+fk)))<.18) c=mix(c,vec3(.25,.24,.26),.85); } }
         gl_FragColor=vec4(c,1.); }` });
   const bayW = RD + 2, bayH = R.h + .6, bay = new THREE.Mesh(new THREE.PlaneGeometry(bayW, bayH), bayMat);
   bay.rotation.y = -Math.PI / 2; bay.position.set(R.x1 - .03, bayH / 2 - .3, CZ); group.add(bay);
@@ -120,15 +137,36 @@ export function buildLaidlowNice(ctx) {
     { prop: 'kona-palm', x: 8.3, z: -4.8, height: 2.2, seed: 7 }, { prop: 'kona-palm', x: 31.6, z: -10.9, height: 2.9, seed: 11 }], { group, lite, obstacles, sway, basaltTex: ctx.basaltTex })) g.userData.prop = 'kona-palm';   // the factory adds to the group
 
   // ------------------------------------------------------------ the blue chairs of the Promenade, facing the sea (one InstancedMesh)
-  const chairGeo = (() => { const p = [], b = (w, h, d, x, y, z, rx = 0) => { const g = new THREE.BoxGeometry(w, h, d); g.applyMatrix4(M4.compose(V.set(x, y, z), Q.setFromEuler(EU.set(rx, 0, 0)), S.set(1, 1, 1))); p.push(g); };
-    for (let i = 0; i < 6; i++) b(.06, .02, .5, -.17 + i * .068, .42 - i * .006, 0, 0);                      // seat slats, sloping back
-    for (let i = 0; i < 6; i++) b(.06, .52, .02, -.17 + i * .068, .72, -.27, -.32);                         // reclined back slats
-    for (const sx of [-.24, .24]) { b(.03, .42, .03, sx, .21, .2); b(.03, .9, .03, sx, .45, -.2, -.18); b(.04, .03, .5, sx, .62, 0); }   // legs and armrests
-    const g = mergeGeometries(p.map(x => x.toNonIndexed())); g.rotateY(-Math.PI / 2); return g; })();      // faces +x: the sea
+  const chairGeo = (() => { const p = [], RS = lite ? 5 : 8, TS = lite ? 10 : 22;
+    const tube = pts => p.push(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(([x, y, z]) => new THREE.Vector3(x, y, z))), TS, .014, RS).toNonIndexed());
+    for (const sx of [-.25, .25]) {                                   // side frames: front leg up into the armrest, back leg sweeping into the back post
+      tube([[sx, 0, .24], [sx, .3, .23], [sx, .6, .2], [sx, .63, .05], [sx, .64, -.12]]);
+      tube([[sx, 0, -.26], [sx, .32, -.2], [sx, .62, -.3], [sx, .95, -.42]]); }
+    tube([[-.25, .34, .2], [0, .345, .2], [.25, .34, .2]]); tube([[-.25, .3, -.2], [0, .3, -.2], [.25, .3, -.2]]);
+    const slat = (w, len, bend, segs) => { const g = new THREE.BoxGeometry(w, .016, len, 1, 1, segs), q = g.attributes.position; for (let k = 0; k < q.count; k++) { const z = q.getZ(k) / len * 2; q.setY(k, q.getY(k) - bend * (1 - z * z)); } g.computeVertexNormals(); return g.toNonIndexed(); };
+    for (let i = 0; i < 6; i++) { const g = slat(.07, .46, .025, lite ? 3 : 6); g.translate(-.18 + i * .072, .37, 0); g.rotateX(-.06); p.push(g); }                    // a dished seat
+    for (let i = 0; i < 6; i++) { const g = slat(.07, .5, .03, lite ? 3 : 6); g.rotateX(Math.PI / 2 - .4); g.translate(-.18 + i * .072, .72, -.33); p.push(g); }    // a reclined, curved back
+    const g = mergeGeometries(p); g.rotateY(-Math.PI / 2); return g; })();      // faces +x: the sea
   const chairAt = []; for (let i = 0; i < 11; i++) chairAt.push([28.5 + (i % 2) * .5 + rand() * .3, R.z1 + 1.2 + i * (RD - 2.4) / 10, (rand() - .5) * .5]);
   const chairs = new THREE.InstancedMesh(chairGeo, chairMat, chairAt.length);
   chairAt.forEach(([x, z, yaw], k) => { M4.compose(V.set(x, 0, z), Q.setFromEuler(EU.set(0, yaw, 0)), S.set(1, 1, 1)); chairs.setMatrixAt(k, M4); }); chairs.castShadow = !lite; chairs.receiveShadow = true; group.add(chairs);
+  const cs0 = ctx.contactShadow ? ctx.contactShadow(.8, .7) : null;        // one soft footprint per chair, one draw for all of them
+  if (cs0) { const csI = new THREE.InstancedMesh(cs0.geometry, cs0.material, chairAt.length); csI.renderOrder = 1;
+    chairAt.forEach(([x, z, yaw], k) => { M4.compose(V.set(x, .006, z), Q.setFromEuler(EU.set(-Math.PI / 2, 0, yaw)), S.set(1, 1, 1)); csI.setMatrixAt(k, M4); }); group.add(csI); }
   info(chairs, { model: act => chairsCard(act), eyebrow: 'LES CHAISES BLEUES', title: 'A seat facing the sea.', sub: 'The Promenade des Anglais' });
+
+  // ------------------------------------------------------------ golden hour: the arches' light lying across the floor and up the walls
+  const sunPatch = tex(canvas(256, 512, (g, w, h) => { const gr = g.createLinearGradient(0, h, 0, 0); gr.addColorStop(0, 'rgba(255,200,140,.95)'); gr.addColorStop(1, 'rgba(255,180,120,0)');
+    g.fillStyle = gr; g.beginPath(); g.moveTo(14, h); g.lineTo(14, h * .32); g.ellipse(w / 2, h * .32, w / 2 - 14, h * .2, 0, Math.PI, 0); g.lineTo(w - 14, h); g.fill(); }));
+  const patchMat = new THREE.MeshBasicMaterial({ map: sunPatch, transparent: true, opacity: lite ? .22 : .3, blending: THREE.AdditiveBlending, depthWrite: false, fog: false });
+  for (let i = 0; i < 3; i++) { const z = (BAYS[i] + BAYS[i + 1]) / 2, pl = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 9.5), patchMat); pl.rotation.set(-Math.PI / 2, 0, -Math.PI / 2 - .12); pl.position.set(GX - 5.2, .008, z + .5); pl.renderOrder = 1; group.add(pl); }
+  for (const x of [14.0, 21.0, 28.0]) { const w = wallWash(3.6, 4.4, lite ? .28 : .38); w.position.set(x, 2.6, R.z1 + .03); group.add(w); }
+  for (const x of [15.5, 26.5]) { const w = wallWash(3.6, 4.4, lite ? .2 : .3); w.position.set(x, 2.6, R.z0 - .03); w.rotation.y = Math.PI; group.add(w); }
+  // a brass line set into the stone: from the door, past the drum, to the sea
+  const brass = E(new THREE.MeshStandardMaterial({ color: '#c9a25a', roughness: .28, metalness: 1 }));
+  box(brass, GX - 1 - R.x0, .012, .05, (R.x0 + GX - 1) / 2, .004, HZ + 2.4);
+  const inlay = lettering(3.2, .3, g => { g.fillStyle = '#b48b45'; g.font = `600 .12px ${FONT}`; g.letterSpacing = '.04px'; g.fillText('NICE · 10.09.2023 · 8:06:22', .05, .2); }, 1024);
+  inlay.rotation.set(-Math.PI / 2, 0, 0); inlay.position.set(12.2, .006, HZ + 2.62); group.add(inlay);
 
   // ------------------------------------------------------------ the header over the bay
   const header = lettering(5.4, .8, g => { g.textAlign = 'center'; g.fillStyle = '#1b2733'; g.font = `800 .34px ${FONT}`; g.letterSpacing = '.02px'; g.fillText('KONA.m', 2.7, .38);
@@ -138,7 +176,7 @@ export function buildLaidlowNice(ctx) {
   // ------------------------------------------------------------ north wall: 8:06:22, cut like a monument (real-pixel canvas)
   const panel = (w, h, px, draw) => { const c = canvas(px, Math.round(px * h / w), draw), t = tex(c);
     return new THREE.MeshStandardMaterial({ map: t, emissiveMap: t, emissive: '#ffffff', emissiveIntensity: .35, roughness: .75 }); };
-  box(navyWall, 12.4, 4.6, .06, 21.0, 2.75, R.z0 + .33);
+  box(navyWall, 12.4, 4.6, .06, 21.0, 2.75, R.z0 - .07);
   const monMat = panel(12, 4.4, 2400, (g, w, h) => {
     const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#12355c'); gr.addColorStop(1, '#0b2440'); g.fillStyle = gr; g.fillRect(0, 0, w, h);
     g.textAlign = 'center'; g.fillStyle = 'rgba(245,243,238,.78)'; g.font = `700 36px ${FONT}`; g.letterSpacing = '12px'; g.fillText('IRONMAN WORLD CHAMPIONSHIP · NICE · 10 SEPTEMBER 2023', w / 2, 120);
@@ -149,9 +187,9 @@ export function buildLaidlowNice(ctx) {
     g.fillStyle = 'rgba(245,243,238,.18)'; g.fillRect(w * .12, 790, w * .76, 2);
     for (let i = 0; i < 3; i++) { g.fillStyle = ['#2f5fae', '#f5f3ee', '#c8323f'][i]; g.fillRect(w / 2 - 90 + i * 60, 820, 60, 8); }
     g.fillStyle = 'rgba(245,243,238,.82)'; g.font = `italic 400 52px ${SERIF}`; g.letterSpacing = '0px'; fit(g, 'First from France. Youngest man ever. On home soil.', w / 2, 905, w * .8); });
-  const mon = new THREE.Mesh(new THREE.PlaneGeometry(12, 4.4), monMat); mon.rotation.y = Math.PI; mon.position.set(21.0, 2.75, R.z0 + .3); group.add(mon);
+  const mon = new THREE.Mesh(new THREE.PlaneGeometry(12, 4.4), monMat); mon.rotation.y = Math.PI; mon.position.set(21.0, 2.75, R.z0 - .105); group.add(mon);
   info(mon, { model: act => niceCard(act), eyebrow: 'NICE · 2023', title: NICE.time, sub: 'IRONMAN World Champion' });
-  for (const x of [15.5, 21, 26.5]) { const s = new THREE.SpotLight('#ffe6c4', lite ? 10 : 16, 7, .55, .6, 1.4); s.position.set(x, R.h - .2, R.z0 + 2.2); s.target.position.set(x, 2.6, R.z0 + .3); group.add(s, s.target); }
+  for (const x of [15.5, 21, 26.5]) { const s = new THREE.SpotLight('#ffe6c4', lite ? 10 : 16, 7, .55, .6, 1.4); s.position.set(x, R.h - .2, R.z0 - 2.2); s.target.position.set(x, 2.6, R.z0 - .1); group.add(s, s.target); }
 
   // ------------------------------------------------------------ south wall: Kona 2022, the front page, Roth 2026
   const recordPanel = (x, w, h, top, big, bigCol, line1, line2, grad) => {
@@ -160,8 +198,8 @@ export function buildLaidlowNice(ctx) {
       g.fillStyle = bigCol; g.font = `400 300px ${SERIF}`; g.letterSpacing = '-4px'; fit(g, big, 70, 440, cw - 140);
       g.fillStyle = '#f5f3ee'; g.font = `600 44px ${FONT}`; g.letterSpacing = '6px'; fit(g, line1, 80, 560, cw - 160);
       g.fillStyle = 'rgba(245,243,238,.7)'; g.font = `500 34px ${FONT}`; g.letterSpacing = '3px'; fit(g, line2, 80, 630, cw - 160); });
-    box(darkSteel, w + .14, h + .14, .04, x, 2.35, R.z1 - .26);
-    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, h), m); p.position.set(x, 2.35, R.z1 - .23); group.add(p); return p; };
+    box(darkSteel, w + .14, h + .14, .04, x, 2.35, R.z1 + .02);
+    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, h), m); p.position.set(x, 2.35, R.z1 + .045); group.add(p); return p; };
   const kona = recordPanel(14.0, 4.6, 3.1, 'KAILUA-KONA · 8 OCTOBER 2022', KONA.bike, '#ff8a3d', 'BIKE COURSE RECORD · 180 KM', `2nd overall · ${KONA.time}`, ['#2a0f08', '#0c0a0a']);
   info(kona, { model: act => konaCard(act), eyebrow: 'KONA · 2022', title: `${KONA.bike} on the Queen K`, sub: 'Bike course record' });
   const roth = recordPanel(28.0, 4.6, 3.1, 'ROTH · 5 JULY 2026', ROTH.time, '#9fd0ff', 'LONG-DISTANCE WORLD RECORD', 'Canyon Speedmax CFR · then unreleased (per Canyon)', ['#0b1f33', '#081018']);
@@ -181,8 +219,8 @@ export function buildLaidlowNice(ctx) {
     g.fillStyle = '#3a342c'; g.font = `italic 400 24px ${SERIF}`; g.fillText('No photograph: we were all watching.', w / 2 + 60, 1070);
     g.font = `600 18px ${FONT}`; g.letterSpacing = '3px'; g.fillStyle = 'rgba(29,26,22,.55)'; g.fillText('A FICTIONAL FRONT PAGE · KONA.m', 90, h - 50); });
   const gilt = E(new THREE.MeshStandardMaterial({ color: '#b8893c', roughness: .3, metalness: 1 }));
-  box(gilt, 2.3, 3.0, .07, 21.0, 2.35, R.z1 - .25);
-  const paper = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 2.7), paperMat); paper.position.set(21.0, 2.35, R.z1 - .205); group.add(paper);
+  box(gilt, 2.3, 3.0, .07, 21.0, 2.35, R.z1 + .035);
+  const paper = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 2.7), paperMat); paper.position.set(21.0, 2.35, R.z1 + .075); group.add(paper);
   info(paper, { model: act => paperCard(act), eyebrow: 'LE PROMENEUR', title: 'Le jeune homme et la mer.', sub: 'A fictional front page' });
   for (const x of [14.0, 21.0, 28.0]) { const s = new THREE.SpotLight('#ffe9cf', lite ? 8 : 13, 6.5, .5, .65, 1.4); s.position.set(x, R.h - .2, R.z1 + 2.2); s.target.position.set(x, 2.3, R.z1); group.add(s, s.target); }
 
@@ -195,13 +233,13 @@ export function buildLaidlowNice(ctx) {
   obstacles.push({ c: new THREE.Vector3(HX, 0, HZ), r: 1.95 });
   if (ctx.contactShadow) { const cs = ctx.contactShadow(2.2, .6); cs.position.set(HX, .345, HZ); cs.rotation.z = Math.PI / 2; group.add(cs); }
   const plaque = lettering(2.2, .2, g => { g.fillStyle = 'rgba(30,38,46,.9)'; g.font = `600 .085px ${FONT}`; g.letterSpacing = '.014px'; g.fillText('CANYON SPEEDMAX CFR · THE LINE HE RACES', .05, .13); }, 1024);
-  plaque.rotation.set(-Math.PI / 2 + .35, 0, -Math.PI / 2); plaque.position.set(HX - 1.95, .2, HZ); group.add(plaque);
+  plaque.rotation.set(-Math.PI / 2, 0, -Math.PI / 2); plaque.position.set(HX - 1.45, .346, HZ - 1.1);   // on the drum's top, reading from the door group.add(plaque);
 
   // ------------------------------------------------------------ museum art from the catalogue (museum/art), hung the way the wings hang it
   const P = id => PAINTINGS.paintings.find(p => p.id === id), SC = id => SCULPTURES.sculptures.find(x => x.id === id);
   const texLoader = new THREE.TextureLoader(), frameMat = new THREE.MeshStandardMaterial({ color: '#1c1916', roughness: .5 });
   const ROOM = 'LAIDLOW // NICE';
-  for (const [id, x, y, z, ry] of [['queen-k-first-light', 9.55, 2.35, R.z1 - .22, 0], ['race-morning-bay', 7.55, 2.2, -12.4, Math.PI / 2], ['midnight-seawall', 7.55, 2.3, -15.0, Math.PI / 2]]) {
+  for (const [id, x, y, z, ry] of [['queen-k-first-light', 9.55, 2.35, R.z1 + .04, 0], ['midnight-seawall', 18.1, 2.4, R.z1 + .04, 0], ['race-morning-bay', 10.9, 2.35, R.z0 - .04, Math.PI]]) {
     const p = P(id); if (!p) continue;
     const { g, fr, pic } = framedPainting(p, { frameMat, texLoader, wash: null, lettering, FONT, SERIF, width: 1.6 });
     g.position.set(x, y, z); g.rotation.y = ry; group.add(g);
@@ -236,8 +274,8 @@ export function buildLaidlowNice(ctx) {
 
   // ------------------------------------------------------------ light: the bay does most of the work
   if (!rectLib) { RectAreaLightUniformsLib.init(); rectLib = true; }
-  const sunIn = new THREE.RectAreaLight('#ffc48a', lite ? 4.5 : 6, RD - 1, 3.6); sunIn.position.set(GX - .1, 2.2, CZ); sunIn.lookAt(GX - 6, 1.0, CZ); group.add(sunIn);
-  const skyFill = new THREE.HemisphereLight('#cfe3ff', '#e4d3bb', lite ? .9 : .6); group.add(skyFill);
+  const sunIn = new THREE.RectAreaLight('#ffbb7a', lite ? 5.5 : 7.5, RD - 1, 3.6); sunIn.position.set(GX - .1, 2.2, CZ); sunIn.lookAt(GX - 6, 1.0, CZ); group.add(sunIn);
+  const skyFill = new THREE.HemisphereLight('#cfe3ff', '#d8c2a2', lite ? .7 : .42); group.add(skyFill);
   const heroSpot = new THREE.SpotLight('#fff1dc', lite ? 26 : 34, 9, .5, .5, 1.3); heroSpot.position.set(HX - 1.6, R.h - .2, HZ + 1.2); heroSpot.target.position.set(HX, .6, HZ); group.add(heroSpot, heroSpot.target);
   if (!lite) { heroSpot.castShadow = true; heroSpot.shadow.mapSize.set(2048, 2048); heroSpot.shadow.bias = -.0002; heroSpot.shadow.normalBias = .02; heroSpot.shadow.camera.near = 2; heroSpot.shadow.camera.far = 9; }
   if (!lite) { const shaft = lightShaft({ top: .5, bottom: 2.4, height: 6.5, color: '#ffd9a8', opacity: .07 }); shaft.position.set(GX - .3, R.h - .3, CZ + 1.5); shaft.lookAt(HX + 4, 0, HZ); shaft.rotateX(Math.PI / 2); group.add(shaft); }

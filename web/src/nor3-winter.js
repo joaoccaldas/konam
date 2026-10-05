@@ -20,6 +20,7 @@ import trio from '../../pitch/norwegian-trio/trio-facts-v1.json' with { type: 'j
 import { BROOM, BDOOR } from './beast-cave.js';
 import { loadDecor } from './engine/decor.js';
 import { localEnvCapture } from './engine/env-capture.js';
+import { normalFrom } from './engine/textures.js';
 import decor from '../../world/konam/rooms/nor3-winter.decor.json' with { type: 'json' };
 
 export const NOR3_MOOD = Object.freeze({ exposure: 1.0, hemi: .14, sun: .04, fog: { near: 10, far: 48 }, fogColor: new THREE.Color('#0a0d12') });
@@ -32,17 +33,6 @@ export const NOR3_LANES = Object.freeze(trio.athletes.map(a => a.lane));
 const rng = (seed = 0x4E0B3) => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
 let rectLib = false;
 
-// a tangent-space normal map from a height canvas (Sobel), so painted surfaces catch light like real ones
-function normalFrom(src, strength = 2) {
-  const w = src.width, h = src.height, s = src.getContext('2d').getImageData(0, 0, w, h).data;
-  const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'), out = g.createImageData(w, h);
-  const H = (x, y) => s[(((y + h) % h) * w + ((x + w) % w)) * 4] / 255;
-  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-    const dx = (H(x + 1, y) - H(x - 1, y)) * strength, dy = (H(x, y + 1) - H(x, y - 1)) * strength, l = Math.hypot(dx, dy, 1), i = (y * w + x) * 4;
-    out.data[i] = (-dx / l * .5 + .5) * 255; out.data[i + 1] = (dy / l * .5 + .5) * 255; out.data[i + 2] = (1 / l * .5 + .5) * 255; out.data[i + 3] = 255;
-  }
-  g.putImageData(out, 0, 0); const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; return t;
-}
 const canvas = (w, h, draw) => { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h); return c; };
 const tex = (c, srgb = true, repeat) => { const t = new THREE.CanvasTexture(c); if (srgb) t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; if (repeat) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(...repeat); } return t; };
 

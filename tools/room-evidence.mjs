@@ -43,7 +43,10 @@ async function open(viewport, mobile = false, clock = false) {
   if (clock) await page.addInitScript(() => { window.__vt = performance.now(); const raf = window.requestAnimationFrame.bind(window); window.__raf = raf; window.requestAnimationFrame = cb => raf(() => cb(window.__vt)); performance.now = () => window.__vt; });
   await page.goto(base, { waitUntil: 'load' });
   if (review === 'world') await page.waitForFunction(() => window.__museum?.scene, null, { timeout: 600000 });   // --review world: any place in the public world
-  else await page.waitForFunction(() => window.__museum?.beast?.group && (window.__museum.beast.bikeSpot?.bike || window.__museum.beast.ownBikes === undefined), null, { timeout: 600000 });
+  else {
+    await page.waitForFunction(() => window.__museum?.beast?.group, null, { timeout: 600000 });
+    await page.waitForFunction(() => window.__museum.beast.bikeSpot?.bike || window.__museum.beast.ownBikes, null, { timeout: 180000 }).catch(() => console.warn('no bike after 180 s'));   // host-loaded bikes count in the receipt
+  }
   await page.waitForTimeout(6000);
   return { page, errors };
 }
