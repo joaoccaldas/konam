@@ -27,7 +27,8 @@ test('Studio no longer owns an inline design system',()=>{
 });
 test('mobile world cards are compact branded sheets',()=>{
   assert.match(hallMobile,/RC5 mobile world interaction grammar/);
-  assert.match(hallMobile,/max-height:min\(42dvh,430px\)/);
+  assert.match(hallMobile,/max-height:var\(--inspection-sheet-height,min\(42dvh,430px\)\)/);
+  assert.match(hallMobile,/--inspection-sheet-height:min\(30dvh,240px\)/);
   assert.match(hallMobile,/--brand-sheet-radius/);
   assert.match(hallMobile,/--brand-surface-glass-strong/);
   assert.match(hallMobile,/grid-template-columns:1fr/);

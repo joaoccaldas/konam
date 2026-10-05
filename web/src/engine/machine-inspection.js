@@ -107,6 +107,11 @@ export function createExplosionController(index,{
       }
       return null;
     },
+    measureAtProgress(progress,measure){
+      const previous=state.value;
+      try{api.value=progress;index.root.updateMatrixWorld(true);return measure(index.root);}
+      finally{api.value=previous;index.root.updateMatrixWorld(true);}
+    },
     assemble({immediate=false}={}){api.setProgress(0,{immediate});},
     explode({immediate=false}={}){api.setProgress(1,{immediate});},
   };

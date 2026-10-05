@@ -53,4 +53,38 @@ do $$begin
  if public.activate_registration_newsletter('00000000-0000-4000-8000-000000000011')<>'suppressed' then raise exception 'suppression undone';end if;
 end $$;
 reset role;
+-- Explicit opt-in is available to a previously declining verified owner.
+set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000012',true);
+do $$begin
+ if public.subscribe_intern_newsletter()<>'active' then raise exception 'explicit owner consent not active';end if;
+ if public.subscribe_intern_newsletter()<>'active' then raise exception 'duplicate explicit consent not idempotent';end if;
+end $$;
+reset role;
+do $$begin
+ if not exists(select 1 from public.newsletter_subscriptions where email='newsletter-ci-decline@example.test' and user_id='00000000-0000-4000-8000-000000000012' and source='newsletter-explicit-consent') then raise exception 'wrong explicit owner';end if;
+ if has_function_privilege('anon','public.subscribe_intern_newsletter()','EXECUTE') then raise exception 'anonymous explicit consent privilege';end if;
+end $$;
+update public.newsletter_subscriptions set status='unsubscribed' where email='newsletter-ci-decline@example.test';
+set local role authenticated;
+do $$begin
+ if public.subscribe_intern_newsletter()<>'active' then raise exception 'explicit resubscribe failed';end if;
+end $$;
+reset role;
+update public.newsletter_subscriptions set status='suppressed' where email='newsletter-ci-decline@example.test';
+set local role authenticated;
+do $$begin
+ if public.subscribe_intern_newsletter()<>'suppressed' then raise exception 'explicit consent undid suppression';end if;
+end $$;
+reset role;
+insert into auth.users(id,email) values('00000000-0000-4000-8000-000000000014','newsletter-ci-unverified@example.test');
+set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000014',true);
+do $$begin
+ begin
+  perform public.subscribe_intern_newsletter();
+  raise exception 'unverified explicit subscription accepted';
+ exception when insufficient_privilege then null;end;
+end $$;
+reset role;
 rollback;

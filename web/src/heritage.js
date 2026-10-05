@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { fitPerspectiveBounds } from './engine/framing.js';
 import { createMachineInspection } from './engine/machine-inspection.js';
 
 const PROFILE = window.__BIKE_PROFILE;
@@ -31,7 +32,7 @@ $$('.tabs button').forEach(b => b.onclick = () => {
   $$('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b));
   $$('.pane').forEach(p => p.hidden = p.dataset.pane !== b.dataset.tab);
 });
-$('#togglePanel').onclick = () => { const o = $('#panel').classList.toggle('open'); $('#togglePanel').setAttribute('aria-expanded', o); };
+$('#togglePanel').onclick = () => { const o = $('#panel').classList.toggle('open'); $('#togglePanel').setAttribute('aria-expanded', o);requestAnimationFrame(()=>view('hero',true)); };
 
 // ------------------------------------------------------------------ renderer
 const canvas = $('#c');
@@ -58,6 +59,14 @@ floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
 const plinth = new THREE.Mesh(new THREE.RingGeometry(1.25, 1.27, 128), new THREE.MeshBasicMaterial({ color: '#bde9d9', transparent: true, opacity: .25 }));
 plinth.rotation.x = -Math.PI / 2; plinth.position.y = .001; scene.add(plinth);
 
+function inspectionRegion(){
+  const W=innerWidth,H=innerHeight,pad=16;
+  let top=pad,bottom=H-pad,right=W-pad;
+  for(const selector of ['.top','.global-kona-links']){const r=document.querySelector(selector)?.getBoundingClientRect();if(r&&r.bottom>0&&r.top<H/2)top=Math.max(top,r.bottom+12);}
+  const dock=document.querySelector('.dock')?.getBoundingClientRect();if(dock&&dock.top>H/2)bottom=Math.min(bottom,dock.top-12);
+  const panel=document.querySelector('#panel')?.getBoundingClientRect();if(panel&&panel.left<W&&panel.top<H){if(panel.width>W*.7)bottom=Math.min(bottom,panel.top-12);else right=Math.min(right,panel.left-12);}
+  return {x:pad,y:Math.min(top,H*.4),width:Math.max(80,right-pad),height:Math.max(80,bottom-Math.min(top,H*.4)),fullWidth:W,fullHeight:H};
+}
 function resize() {
   const w = innerWidth, h = innerHeight;
   renderer.setSize(w, h, false); camera.aspect = w / h;
@@ -66,7 +75,7 @@ function resize() {
   if (w >= 820) camera.setViewOffset(w, h, 180, 0, w, h); else camera.clearViewOffset();
   camera.updateProjectionMatrix();
 }
-addEventListener('resize', resize); resize();
+addEventListener('resize',()=>{resize();if(inspection)view('hero',true);}); resize();
 
 // ------------------------------------------------------------------ model
 const bike = new THREE.Group(); scene.add(bike);
@@ -99,7 +108,7 @@ loader.load(window.__SPEEDMAX_GLB_URL, gltf => {
   buildPartList();
   view('hero', true);
   $('#loader i').style.width = '100%';
-  setTimeout(() => { $('#loader').style.opacity = 0; setTimeout(() => $('#loader').remove(), 500); document.body.classList.add('ready'); window.__heritage = { parts: Object.keys(parts) }; }, 150);
+  setTimeout(() => { $('#loader').style.opacity = 0; setTimeout(() => $('#loader').remove(), 500); document.body.classList.add('ready'); window.__heritage = { parts: Object.keys(parts),camera,bike,get inspection(){return inspection;},inspectionRegion,inspectionBounds:()=>inspection.measureAtProgress(eT,root=>new THREE.Box3().setFromObject(root)) }; }, 150);
 }, xhr => { if (xhr.total) $('#loader i').style.width = (30 + Math.min(55, xhr.loaded / xhr.total * 55)).toFixed(0) + '%'; }, err => { $('#loader div').textContent = 'Model failed to load'; console.error(err); });
 
 // ------------------------------------------------------------------ parts, picking, isolate
@@ -121,10 +130,9 @@ function select(id, focus) {
   if (id && parts[id]) parts[id].traverse(o => { if (o.isMesh) keep.add(o); });
   bike.traverse(o => { if (o.isMesh) o.material = !id || keep.has(o) ? o.userData.baseMat : ghost; });
   if (id && focus && parts[id]) {
-    const bx = new THREE.Box3().setFromObject(parts[id]); const c = bx.getCenter(new THREE.Vector3());
-    const r = Math.max(.18, bx.getSize(new THREE.Vector3()).length() * .9);
-    const dir = camera.position.clone().sub(controls.target).normalize();
-    fly(c.clone().add(dir.multiplyScalar(r * 2.2)), c);
+    const bounds=new THREE.Box3().setFromObject(parts[id]),oldPosition=camera.position.clone(),oldTarget=controls.target.clone();
+    fitPerspectiveBounds(camera,controls,bounds,{direction:oldPosition.clone().sub(oldTarget).normalize().toArray(),padding:1.12,region:inspectionRegion()});
+    const targetPosition=camera.position.clone(),target=controls.target.clone();camera.position.copy(oldPosition);controls.target.copy(oldTarget);fly(targetPosition,target);
   }
 }
 const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
@@ -158,17 +166,19 @@ function fly(pos, tgt, instant) {
 }
 function view(name, instant) {
   const [p, t] = VIEWS[name];
-  // In a phone's "Desktop view" the layout is ~980 px wide but the physical
-  // screen is small — pull the camera back like a phone so the bike fits.
-  const physicalPhone = Math.min(screen.width || 1e5, screen.height || 1e5) <= 500;
-  const phoneish = physicalPhone || innerWidth < 820;
-  const k = phoneish ? ((physicalPhone || innerWidth < 480) ? 1.9 : 1.45) : 1;
-  fly(new THREE.Vector3(p[0], p[1], p[2]).multiplyScalar(k).add(centre), new THREE.Vector3(t[0], t[1], t[2]).add(centre), instant);
+  if(inspection&&['hero','side'].includes(name)){
+    const oldPosition=camera.position.clone(),oldTarget=controls.target.clone();
+    const bounds=inspection.measureAtProgress(eT,root=>new THREE.Box3().setFromObject(root));
+    const distance=fitPerspectiveBounds(camera,controls,bounds,{direction:p,padding:1.12,region:inspectionRegion()});
+    // Fitting an expanded bike can move beyond the original display fog range.
+    if(scene.fog){scene.fog.near=distance+bounds.getSize(new THREE.Vector3()).length()/2;scene.fog.far=scene.fog.near+12;}
+    const position=camera.position.clone(),target=controls.target.clone();camera.position.copy(oldPosition);controls.target.copy(oldTarget);fly(position,target,instant);
+  }else fly(new THREE.Vector3(...p).add(centre),new THREE.Vector3(...t).add(centre),instant);
   $$('[data-view]').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === name));
 }
 $$('[data-view]').forEach(b => b.onclick = () => view(b.dataset.view));
 let eT = 0, e = 0, spin = false;
-$('#explode').oninput = ev => eT = +ev.target.value;
+$('#explode').oninput = ev => {eT=+ev.target.value;view('hero',true);};
 $('#spin').onclick = () => { spin = !spin; $('#spin').setAttribute('aria-pressed', spin); };
 
 const clock = new THREE.Clock();

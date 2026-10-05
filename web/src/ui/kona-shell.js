@@ -176,7 +176,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openCollection:collection,
       openFeed:()=>feed('home'),
       openTravel:()=>travel('home'),
-      openWorld:()=>{close();enter?.();},
+      openWorld:()=>enter?.(),
       onStateChange:syncNavigation,
       admin:accessContext.admin,
     });
@@ -333,5 +333,5 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(!event.persisted)return;
     const route={me:raceSelf,collection,garage,plan,discover:explore,home:now}[currentView];if(route)guardRoute(route)();
   });
-  return { ...Object.fromEntries(Object.entries({now,raceSelf,garage,plan,me,explore,collection,feed,travel,adminAssets,tour:replayTour}).map(([key,action])=>[key,guardRoute(action)])),close,accessReady,syncNavigation };
+  return { ...Object.fromEntries(Object.entries({now,raceSelf,garage,plan,me,explore,collection,feed,travel,adminAssets,tour:replayTour}).map(([key,action])=>[key,guardRoute(action)])),close,accessReady,syncNavigation,navigationVersion:()=>navigationRequest };
 }

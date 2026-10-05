@@ -164,6 +164,15 @@ export async function currentUser() {
   } catch (error) { if(error.status===401||error.status===403)saveSession(null); return null; }
 }
 
+// Explicit consent only. Postgres derives the confirmed address from auth.uid().
+export async function subscribeInternNewsletter() {
+  const status=await json(await fetch(URL+'/rest/v1/rpc/subscribe_intern_newsletter',{
+    method:'POST',headers:await authHeaders(),body:'{}'
+  }));
+  if(status!=='active')throw new Error('Could not confirm this subscription. Please contact the operator on the privacy page.');
+  return status;
+}
+
 export async function signOut() {
   const s = await validSession();
   if (s?.access_token) {

@@ -1,4 +1,5 @@
 // engine/access.js — one entitlement resolver for app, Studio and 3D world.
+import { FOUNDING_ROOM_ACCESS } from '../generated/game-config.js';
 import { contentVisible } from './event-visibility.js';
 import { LEVELS, ADMIN_POLICY, RANKING_POLICY, ensureProgression } from './progression.js';
 
@@ -9,6 +10,7 @@ const selectorMatch=(product,selector={})=>Object.entries(selector).every(([key,
 });
 
 export function minimumLevelForRoom(roomId){
+  if(FOUNDING_ROOM_ACCESS.includes(roomId))return 1;
   let min=Infinity;
   for(const reward of rewards()){
     if(reward.type==='room'&&reward.id===roomId)min=Math.min(min,reward.level);

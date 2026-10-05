@@ -77,6 +77,12 @@ source verification, exactly-three-story rule and **never send automatically**:
    Only a reviewed, explicitly authorized draft can be sent. This workflow has no
    automatic send step. A prepared draft is not evidence of delivery.
 
+## Feed signup and existing accounts
+
+The Feed’s **Get The Intern’s newsletter** action opens `index.html?account=newsletter`, using the same branded account shell. Guests sign in or create an account to confirm their address. Existing verified accounts join only after pressing the explicit newsletter button. `subscribe_intern_newsletter()` accepts no address or user ID, derives ownership from `auth.uid()`, and preserves suppression. Explicit resubscription is allowed after a prior withdrawal; merely opening the page or signing in never resubscribes.
+
+RSS remains a separate reader integration under **Make this feed yours**. **Copy RSS feed URL** copies the selected-source feed instead of navigating a phone browser to raw XML. Copy failure exposes a selectable URL.
+
 ## Unsubscribe
 
 The existing `newsletter-subscribe` function redirects the random-token link to

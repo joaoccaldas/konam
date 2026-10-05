@@ -49,3 +49,13 @@
   .home-purpose{font-size:12.5px;line-height:1.4}
   .home-today .kona-primary{width:100%;justify-content:space-between}
 }
+
+/* Home opens with the museum, including short landscape windows. */
+.home-world-hero [data-museum-status]:empty{display:none}
+.home-world-hero [data-museum-status]{margin:10px 0 0;font-size:12px;color:var(--brand-discovery)}
+@media(orientation:landscape) and (max-height:520px){
+  .home-world-hero,.home-world-hero-copy{min-height:210px}
+  .home-world-hero-copy{padding:18px}
+  .home-world-hero-copy h3{font-size:36px;margin:6px 0}
+  .home-world-hero-copy p{font-size:12px;margin-bottom:10px}
+}

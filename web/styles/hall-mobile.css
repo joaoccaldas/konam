@@ -151,7 +151,7 @@ html.phone-fit #coach{
   zoom:var(--fit);
 }
 html.phone-fit header,html.phone-fit #rail,html.phone-fit #nearby,html.phone-fit #tourPill{width:calc(100vw / var(--fit));max-width:calc(100vw / var(--fit))}
-html.phone-fit #card{left:8px;right:auto;width:calc((100vw - 16px)/var(--fit))!important;max-height:calc((100dvh - 150px)/var(--fit))}
+html.phone-fit #card{left:8px;right:auto;width:var(--inspection-card-width,calc((100vw - 16px)/var(--fit)))!important;max-height:calc((100dvh - 150px)/var(--fit))}
 
 /* World map on phones: map first, list second. */
 @media(max-width:760px),(pointer:coarse){
@@ -180,12 +180,11 @@ html.phone-fit #card{left:8px;right:auto;width:calc((100vw - 16px)/var(--fit))!i
 }
 
 /* World chrome offsets relative to the consumer navigation shell. */
-@media(max-width:760px){
-  body.touch.walking #rail{bottom:0}
+@media(max-width:899px),(pointer:coarse){
+  body.touch.walking #rail{bottom:calc(64px + env(safe-area-inset-bottom))}
   body.touch #joy{bottom:calc(150px + var(--safe-b))}
   body.touch #card{bottom:calc(86px + var(--safe-b));max-height:62dvh}
   body.touch #konaWorld>header{padding-bottom:0}
-  body.touch #konaWorld>header nav{display:none}
   body.touch #konaWorld>header .logo{background:color-mix(in srgb,var(--kona-surface-strong) 82%,transparent);border-color:var(--kona-line);color:var(--kona-text)}
 }
 
@@ -193,13 +192,13 @@ html.phone-fit #card{left:8px;right:auto;width:calc((100vw - 16px)/var(--fit))!i
 @media(max-width:760px),(pointer:coarse){
   body.card-open #rail{opacity:1;pointer-events:auto}
   #card{
-    left:var(--brand-mobile-gutter,12px)!important;
+    left:var(--inspection-card-left,var(--brand-mobile-gutter,12px))!important;
     right:var(--brand-mobile-gutter,12px)!important;
-    top:auto!important;
-    bottom:calc(82px + env(safe-area-inset-bottom))!important;
-    width:auto!important;
+    top:var(--inspection-card-top,auto)!important;
+    bottom:var(--inspection-card-bottom,calc(82px + env(safe-area-inset-bottom)))!important;
+    width:var(--inspection-card-width,auto)!important;
     max-width:none!important;
-    max-height:min(42dvh,430px)!important;
+    max-height:var(--inspection-sheet-height,min(42dvh,430px))!important;
     padding:14px 14px 12px!important;
     border-radius:var(--brand-sheet-radius,24px)!important;
     background:var(--brand-surface-glass-strong,#fbf9f5)!important;
@@ -209,6 +208,7 @@ html.phone-fit #card{left:8px;right:auto;width:calc((100vw - 16px)/var(--fit))!i
     backdrop-filter:blur(18px) saturate(1.05)!important;
     -webkit-backdrop-filter:blur(18px) saturate(1.05)!important;
     overscroll-behavior:contain;
+    transition:opacity .16s;
   }
   #card::before{width:36px;height:4px;margin:0 auto 9px;background:color-mix(in srgb,var(--brand-ink,#12181d) 18%,transparent)}
   #card .close{top:9px!important;right:9px!important;width:48px!important;height:48px!important}
@@ -242,12 +242,52 @@ html.phone-fit #card{left:8px;right:auto;width:calc((100vw - 16px)/var(--fit))!i
   body.touch.card-open #joy{opacity:.12!important;pointer-events:none}
 }
 @media(max-width:390px){
-  #card{max-height:min(40dvh,390px)!important;bottom:calc(76px + env(safe-area-inset-bottom))!important}
+  #card{max-height:var(--inspection-sheet-height,min(40dvh,390px))!important;bottom:calc(76px + env(safe-area-inset-bottom))!important}
   #card h2{font-size:29px!important}
   .c-note{font-size:12px!important}
 }
 
+/* Keep world navigation below the shell masthead, in both phone orientations. */
 @media(max-width:899px),(pointer:coarse){
-  .world-more-menu{top:max(60px,calc(48px + env(safe-area-inset-top)));right:max(10px,env(safe-area-inset-right));left:auto;width:min(220px,calc(100dvw - 20px))}
+  body.touch.walking #konaWorld>header{top:calc(64px + env(safe-area-inset-top));padding:0 var(--brand-mobile-gutter,12px);display:flex;align-items:center;gap:8px;opacity:1;transform:none}
+  body.touch.walking #konaWorld>header .logo{display:none}
+  body.touch.walking #konaWorld>header .brand{min-width:0;flex:1}
+  body.touch.walking #konaWorld>header .where{min-height:48px;max-width:100%;padding:6px 10px;gap:6px}
+  body.touch.walking #konaWorld>header .where span{min-width:0}
+  body.touch.walking #konaWorld>header .where b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  body.touch.walking #konaWorld>header nav{display:flex;gap:6px;flex-shrink:0}
+  body.touch.walking #backKonaBtn,body.touch.walking #soundBtn{display:none}
+  body.touch.walking #konaWorld>header nav button{min-height:48px;padding:0 12px;background:var(--kona-surface-strong);color:var(--kona-text);border:1px solid var(--kona-line);border-radius:12px}
+  .world-more-menu{top:calc(120px + env(safe-area-inset-top));right:var(--brand-mobile-gutter,12px);left:auto;width:min(260px,calc(100dvw - 24px));max-height:calc(100dvh - 200px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow-y:auto}
   .world-more-menu button{min-height:48px}
+  body.touch #nearby{top:calc(120px + env(safe-area-inset-top))}
+}
+
+/* Long exhibit names and archive media must fit inside the detail sheet. */
+#card :is(h2,p,b,small,a,button,figcaption){overflow-wrap:anywhere}
+#card{box-sizing:border-box}
+#card :is(.c-stats>div,.c-parts button){min-width:0}
+#card .c-photo{max-width:100%;margin-inline:0}
+#card .c-photo img{max-width:100%;object-fit:contain}
+
+/* A room picker is a readable list, with spatial floor plans one tab away. */
+#map.map-founding .map-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;overflow-y:auto;overflow-x:hidden;min-height:0;align-content:start}
+#map.map-founding .map-list li{min-width:0}
+#map.map-founding .map-list button{width:100%;min-height:64px;justify-content:space-between}
+#map.map-founding .map-list :is(b,small){overflow-wrap:anywhere;white-space:normal}
+@media(max-width:899px),(pointer:coarse){
+  #map.map-founding .map-card{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr) auto}
+  #map.map-founding .map-head{grid-column:1;grid-row:1}
+  #map.map-founding .map-list{grid-column:1;grid-row:2;margin-top:10px}
+  #map.map-founding .map-foot{grid-column:1;grid-row:3;white-space:normal}
+}
+@media(orientation:landscape) and (max-height:560px){#map.map-founding .map-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+@media(orientation:landscape) and (max-height:560px){.world-more-menu{grid-template-columns:repeat(2,minmax(0,1fr));width:min(420px,calc(100dvw - 24px))}}
+@media(max-width:899px),(pointer:coarse){
+  body.inspection-overview #card{--inspection-sheet-height:min(30dvh,240px)}
+  body.inspection-overview #card :is(.c-note,.c-stats,.c-photo,.c-unc){display:none}
+}
+@media (orientation:landscape) and (max-height:540px) and (pointer:coarse){
+  #card{--inspection-card-left:auto;--inspection-card-top:124px;--inspection-card-bottom:76px;--inspection-card-width:min(340px,42vw);--inspection-sheet-height:calc(100dvh - 200px)}
 }

@@ -1,4 +1,23 @@
-import {signInWithPassword,registerAccount,requestPasswordReset,resendConfirmation,updatePassword,currentUser,PUBLIC_SUPABASE_URL,PUBLIC_SUPABASE_KEY} from '../cloud/supabase-lite.js';
+import {signInWithPassword,registerAccount,requestPasswordReset,resendConfirmation,updatePassword,currentUser,subscribeInternNewsletter,PUBLIC_SUPABASE_URL,PUBLIC_SUPABASE_KEY} from '../cloud/supabase-lite.js';
+
+export async function renderNewsletterSignup(host,{onBack=()=>{},onAuth=()=>{}}={}) {
+  host.innerHTML=`<section class="account-auth" aria-label="The Intern’s newsletter"><div class="account-story"><p class="account-kicker">THE INTERN READ THE INTERNET</p><h2>Three things<br><em>worth your time.</em></h2><p>Kona.m news, fresh discoveries and other cool projects. The Intern reads the internet so you don’t have to.</p><div class="account-field-note">A good detour.<br>In your inbox.</div></div><div class="account-panel artifact artifact--label"><p class="account-kicker">YOUR INBOX · YOUR PACE</p><h2>Get the newsletter.</h2><p class="account-hint">Optional. Every edition has an unsubscribe link.</p><div data-newsletter-access><p class="account-status" role="status">Checking your account…</p></div><div class="account-exits"><button class="btn text" type="button" data-back>Back to Kona.m</button><a class="btn text" href="privacy.html">Privacy & data</a></div></div></section>`;
+  host.querySelector('[data-back]').onclick=onBack;
+  const access=host.querySelector('[data-newsletter-access]'),user=await currentUser();
+  if(!access.isConnected)return;
+  if(!user?.email){
+    access.innerHTML='<p class="account-hint">Sign in or create a Kona.m account to confirm your email. Then choose to join the newsletter. Exploring the museum stays free.</p><div class="account-exits"><button class="btn primary" type="button" data-newsletter-auth="register">Create account</button><button class="btn text" type="button" data-newsletter-auth="login">Sign in</button></div>';
+    access.querySelectorAll('[data-newsletter-auth]').forEach(button=>button.onclick=()=>onAuth(button.dataset.newsletterAuth));return;
+  }
+  access.innerHTML='<form class="account-form"><p class="account-hint" data-newsletter-address></p><button class="btn primary" type="submit">Get The Intern’s newsletter <span aria-hidden="true">→</span></button><p class="account-status" role="status" aria-live="polite"></p></form>';
+  access.querySelector('[data-newsletter-address]').textContent='Send it to '+user.email+'.';
+  access.querySelector('form').onsubmit=async event=>{
+    event.preventDefault();const button=access.querySelector('[type=submit]'),status=access.querySelector('.account-status');
+    if(button.disabled)return;button.disabled=true;status.textContent='Confirming your choice…';status.setAttribute('role','status');
+    try{await subscribeInternNewsletter();status.textContent='You’re on the list. Your subscription is confirmed; every edition has an unsubscribe link.';button.remove();}
+    catch(error){status.setAttribute('role','alert');status.textContent=readableError(error);button.disabled=false;}
+  };
+}
 
 // Account access shares the entry shell. Account and newsletter consent are separate.
 export function renderNewsletterUnsubscribe(host,token,{onBack=()=>{}}={}) {

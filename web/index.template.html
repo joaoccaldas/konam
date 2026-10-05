@@ -307,6 +307,13 @@ html.phone-fit #lab-hud{zoom:var(--fit);left:12px;top:72px}
 html.phone-fit body.in-lab .dock{display:none}
 html.phone-fit #loader .load{zoom:var(--fit);width:min(420px,calc(82vw / var(--fit)))}
 html.phone-fit #toast{zoom:var(--fit)}
+
+/* Details must wrap within their own sheet, including long part names. */
+.drawer,.panel,#card{overflow-wrap:anywhere}
+.drawer img,.panel img{max-width:100%;height:auto;object-fit:contain}
+.parts button{min-width:0;white-space:normal}
+.parts small{max-width:45%;overflow-wrap:anywhere}
+.kv{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
 </style>
 </head>
 <body data-ui="light">

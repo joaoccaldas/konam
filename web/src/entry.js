@@ -1,7 +1,5 @@
 // Kona.m entry. HTML is already on screen. This file does not import Three.js.
 // The museum runtime loads only after the visitor chooses to explore.
-import { mountCountdown } from './ui/countdown.js';
-import { renderEntryProductStage } from './ui/visual-primitives.js';
 import { createProfile, QUALITY, AVATARS } from './engine/profile.js';
 import { initSettings } from './ui/settings.js';
 import { consumeAuthCallback } from './cloud/supabase-lite.js';
@@ -110,24 +108,44 @@ const ensureWorldShell = () => {
 let museumDataReady = null;
 const ensureMuseumData = () => museumDataReady || (museumDataReady = loadScript('app/museum-data.js').catch(error=>{museumDataReady=null;throw error;}));
 
-let disposeCount=null;
-function paintCount(){disposeCount?.();const host=document.querySelector('.entry-race-clock');if(host)disposeCount=mountCountdown(host,window.__ENTRY_EVENT||{});}
-
 let opening = null;
 function openMuseum(room) {
+  const intent=window.__konaShell?.navigationVersion?.();
+  const enterLoaded=()=>{
+    if(intent!==window.__konaShell?.navigationVersion?.())return;
+    window.__museum.enter({gallery:!room&&!new URLSearchParams(location.search).get('room')});
+    setEntryMode('app');
+    window.__konaShell?.close?.();
+  };
   document.body.classList.add('museum-open');
-  const btn = document.getElementById('enterBtn');
-  if (btn && !window.__museum) btn.innerHTML = 'Opening the coast…';
   if (!opening) {
+    const buttons=[...document.querySelectorAll('#entryWorld,[data-home-world]')];
+    const labels=buttons.map(button=>button.innerHTML);
+    for(const button of buttons){button.disabled=true;button.textContent='Opening the museum…';}
+    for(const status of document.querySelectorAll('[data-museum-status]'))status.textContent='Opening the museum. Your visit starts in the gallery.';
     opening = Promise.resolve(window.__konaShell?.accessReady)
       .then(() => ensureWorldShell())
       .then(() => ensureMuseumData())
       .then(() => loadScript('app/hall.js'))
-      .then(() => window.__museum?.enter?.())
-      .catch(err => { opening = null; console.warn('museum', err); });
+      .then(() => {
+        if(typeof window.__museum?.enter!=='function')throw new Error('museum unavailable');
+        enterLoaded();
+        for(const status of document.querySelectorAll('[data-museum-status]'))status.textContent='';
+        return true;
+      })
+      .catch(err => {
+        opening = null;
+        document.body.classList.remove('museum-open');
+        for(const status of document.querySelectorAll('[data-museum-status]'))status.textContent='The museum could not open. Check your connection and try again.';
+        console.warn('museum', err);
+        return false;
+      })
+      .finally(()=>buttons.forEach((button,index)=>{button.disabled=false;button.innerHTML=labels[index];}));
+  } else {
+    opening.then(entered=>{if(entered)enterLoaded();});
   }
   if (typeof room === 'string') {
-    opening.then(() => setTimeout(() => window.__museumGo?.(room), 600));
+    opening.then(entered => {if(entered)setTimeout(() => {if(intent===window.__konaShell?.navigationVersion?.())window.__museumGo?.(room);}, 600);});
   }
   return opening;
 }
@@ -188,13 +206,13 @@ function paintQuest(step) {
   }
 }
 
-async function showAccount(mode='login',error='',newsletterToken='') {
+async function showAccount(mode='login',error='',newsletterToken='',newsletterReturn=false) {
   setEntryMode('quest');
   const host=questHost();if(!host)return;
   host.hidden=false;intro?.removeAttribute('hidden');
   host.textContent='Opening your account…';
-  let renderAccountAuth,renderNewsletterUnsubscribe;
-  try { ({renderAccountAuth,renderNewsletterUnsubscribe}=await import(new URL('app/account-auth.js',document.baseURI).href)); }
+  let renderAccountAuth,renderNewsletterUnsubscribe,renderNewsletterSignup;
+  try { ({renderAccountAuth,renderNewsletterUnsubscribe,renderNewsletterSignup}=await import(new URL('app/account-auth.js',document.baseURI).href)); }
   catch (_) {
     host.innerHTML='<p class="kona-note" role="alert">The account form could not load. Check your connection and try again.</p><button class="btn-primary" type="button">Continue without account</button>';
     host.querySelector('button').addEventListener('click',()=>enterApp('home'));return;
@@ -203,11 +221,15 @@ async function showAccount(mode='login',error='',newsletterToken='') {
     renderNewsletterUnsubscribe(host,newsletterToken,{onBack:()=>{setEntryMode('landing');host.hidden=true;}});
     window.scrollTo(0,0);return;
   }
+  if(mode==='newsletter'){
+    await renderNewsletterSignup(host,{onBack:()=>{setEntryMode('landing');host.hidden=true;},onAuth:mode=>showAccount(mode,'','',true)});
+    window.scrollTo(0,0);return;
+  }
   renderAccountAuth(host,{
     mode,error,
-    onSuccess:()=>enterApp(existingRaceIdentity()?'home':'me'),
+    onSuccess:()=>newsletterReturn?showAccount('newsletter'):enterApp(existingRaceIdentity()?'home':'me'),
     onContinue:()=>enterApp('home'),
-    onBack:()=>{setEntryMode('landing');host.hidden=true;document.getElementById('entrySignIn')?.focus();}
+    onBack:()=>{if(newsletterReturn)return showAccount('newsletter');setEntryMode('landing');host.hidden=true;document.getElementById('entrySignIn')?.focus();}
   });
   window.scrollTo(0,0);
 
@@ -226,6 +248,7 @@ function firstRunStep() {
 }
 
 document.getElementById('entrySignIn')?.addEventListener('click', () => paintQuest('save'));
+document.getElementById('entryWorld')?.addEventListener('click', () => openMuseum());
 
 setEntryMode('landing');
 const existingIdentity = existingRaceIdentity();
@@ -233,21 +256,15 @@ let onboardingSeen=false;try{onboardingSeen=readStorage('onboarding')==='seen';}
 const returningVisit=Boolean(existingIdentity||onboardingSeen);
 const buildButton = document.getElementById('buildSelf');
 if (returningVisit) {
-  const lede = document.querySelector('#intro .lede');
-  const note = document.querySelector('#intro .kona-note');
-  if (lede) lede.textContent = existingIdentity?.goal?.label
-    ? `Your Kona is saved. Next: ${existingIdentity.goal.label}.`
-    : 'Your athlete is saved. Pick up where you left off.';
   if (buildButton) {
     buildButton.textContent = 'Continue your Kona';
+    buildButton.setAttribute('aria-description','Your Kona stays private on this device unless you choose to save or share it.');
     buildButton.addEventListener('click', () => enterApp());
   }
-  if (note) note.textContent = 'Your RaceIdentity stays private on this device unless you choose to save or share it.';
 } else {
   buildButton?.addEventListener('click', () => paintQuest(firstRunStep()));
 }
-renderEntryProductStage(document.getElementById('entryProductStage'), {profile});
-entryDataReady.then(data=>{ window.__ENTRY_DATA=data||{}; window.__ENTRY_EVENT=data?.event||{}; paintCount(); }).catch(()=>{});
+entryDataReady.then(data=>{ window.__ENTRY_DATA=data||{}; window.__ENTRY_EVENT=data?.event||{}; }).catch(()=>{});
 
 function paintShared(draft){
   const host=questHost(); if(!host) return;
@@ -267,7 +284,7 @@ else if (q.get('reviewRoom') === 'beast-cave') openMuseum('beast');
 else if (q.get('room') || q.get('map')) openMuseum();
 else if (recovering && authReturned) showAccount('reset');
 else if (authError) showAccount('login', authError);
-else if (['login','register'].includes(q.get('account'))) showAccount(q.get('account'));
+else if (['login','register','newsletter'].includes(q.get('account'))) showAccount(q.get('account'));
 else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());
 else if (returningVisit && ['home','garage','collection','discover','plan','me','feed','travel'].includes(q.get('view'))) enterApp(q.get('view'));
