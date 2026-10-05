@@ -4,6 +4,7 @@
 //   node tools/harden_pages.mjs
 import fs from 'node:fs';
 import path from 'node:path';
+import {COMMON_DESIGN_LINKS,pageDesignLinks} from './design-system-manifest.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const productMeta = JSON.parse(fs.readFileSync(path.join(root,'config/product-meta.json'),'utf8'));
@@ -62,21 +63,11 @@ for (const f of fs.readdirSync(root).filter(f => /^Speedmax_.*_?Museum\.html$/.t
   PAGES.push({ file: f, type: 'WebPage', image: 'assets/share/museum.jpg', title: t, description: d, keepTitle: true });
 }
 
-const COMMON_DESIGN_LINKS = [
-  'brand/tokens.css',
-  'brand/themes.css',
-  'brand/artifacts.css',
-  'brand/typography.css',
-  'web/styles/system.css',
-  'web/styles/components.css',
-];
-const pageDesignLinks = file => file === 'index.html'
-  ? [...COMMON_DESIGN_LINKS, 'web/styles/shell-mobile.css', 'web/styles/entry.css']
-  : COMMON_DESIGN_LINKS;
 const FONTS = 'https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300..800&display=swap';
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const jsonld = o => JSON.stringify(o).replace(/</g, '\\u003c');
-const GLOBAL_USER_STUDIO = '<!--global-user-studio:start--><a class="global-user-studio" href="index.html?view=me" aria-label="Open User Studio">USER STUDIO</a><!--global-user-studio:end-->';
+const GLOBAL_USER_STUDIO = '<!--global-user-studio:start--><nav class="global-kona-links" aria-label="Kona.m shortcuts"><a class="global-why-kona" href="why.html">WHY KONA</a><a class="global-user-studio" href="index.html?view=me" aria-label="Open User Studio">USER STUDIO</a></nav><!--global-user-studio:end-->';
+const ANALYTICS_SCRIPT = '<script type="module" src="web/src/site-analytics.js"></script>';
 
 function block(p) {
   const url = SITE + (p.file === 'index.html' ? '' : p.file), img = SITE + p.image;
@@ -179,6 +170,13 @@ for (const p of PAGES) {
   }
   html=html.replace(/<script src="app\/standalone-access.js"><\/script>\n?/g,'');
   if(/^Speedmax_.*Museum\.html$/.test(p.file))html=html.replace(/<\/head>/i,'<script src="app/standalone-access.js"></script>\n</head>');
+  const analyticsCount=(html.match(/<script type="module" src="web\/src\/site-analytics\.js"><\/script>/g)||[]).length;
+  const analyticsViaStandalone=/^Speedmax_.*Museum\.html$/.test(p.file);
+  if(analyticsCount>1)throw new Error('duplicate analytics module in '+p.file);
+  if(!analyticsViaStandalone&&!analyticsCount){
+    if(!/<\/body>/i.test(html))throw new Error('no </body> in '+p.file);
+    html=html.replace(/<\/body>/i, ANALYTICS_SCRIPT+'\n</body>');
+  }
   html=html.replace(/\n{3,}(?=<!--design-system:start-->)/g,'\n\n');
   fs.writeFileSync(f, html);
 }

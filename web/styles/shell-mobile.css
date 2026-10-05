@@ -11,8 +11,8 @@
 @media(max-width:380px){.kona-place-grid{grid-template-columns:1fr}.kona-section{padding:14px}}
 
 /* The 2D app is the canonical surface, not a modal. Close appears only when returning to a loaded world makes sense. */
-body:not(.museum-open) .kona-panel-head>button{display:none!important}
-body.museum-open .kona-panel-head>button{display:grid}
+body:not(.museum-open) #konaPanelClose{display:none!important}
+body.museum-open #konaPanelClose{display:grid}
 
 /* Batch 6: the consumer shell must fit physical phones even when the browser reports desktop width. */
 .kona-panel,.kona-bottom-nav{box-sizing:border-box;max-width:min(100dvw,var(--vvw,100dvw))}

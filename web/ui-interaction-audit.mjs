@@ -66,22 +66,22 @@ for(const id of selected){
       await enter();await inventory('landing');await click('#buildSelf');
       await p.waitForSelector('[data-onboarding-question]');await inventory('onboarding');
       await p.screenshot({path:path.join(out,prefix+'-onboarding.png')});
-      for(const answer of ['dreaming','never','ocean','seen','review'])await click('[data-onboarding-answer="'+answer+'"]');
+      for(const answer of ['dreaming','never'])await click('[data-onboarding-answer="'+answer+'"]');
       await p.waitForFunction(()=>document.querySelector('[data-onboarding-bike]')||document.querySelector('.registration-avatar'));
       if(await p.$('[data-onboarding-bike]'))await click('[data-onboarding-bike-skip]');
       await p.waitForSelector('.registration-avatar');
       const data=await p.evaluate(()=>({answers:JSON.parse(localStorage.getItem('kona.entryIntent.v1')),progress:JSON.parse(localStorage.getItem('kona.progression.v1'))}));
       assert.equal(data.answers.answers['kona-intent'],'dreaming');assert.equal(data.answers.completed,true);
-      assert.equal(data.progress.xp,75);assert.equal(data.progress.level,2);
+      assert.equal(data.progress.xp,2);assert.equal(data.progress.level,1);
       await click('[data-reg-back]');await click('#buildSelf');
       await p.waitForSelector('.registration-avatar');
       assert.equal(await p.$('[data-onboarding-question]'),null,'one-time onboarding cards must not replay');
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.cards.v1')),'seen');
-      assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),75);
+      assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),2);
     });
     await step('avatar registration persists, first Home stays calm, and manual tour can finish',async()=>{
       await click('[data-reg-archetype="aero"]');await click('[data-reg-trisuit="aero-panel"]');
-      await click('[data-reg-continue]');await p.waitForSelector('.onboarding-handoff');await inventory('install-rotate-handoff');await p.screenshot({path:path.join(out,prefix+'-handoff.png')});await click('[data-handoff-continue]');await waitHome();
+      await click('[data-reg-continue]');await waitHome();
       assert.equal(await p.$('.kona-tour'),null,'fresh Home must not auto-open the tutorial');
       assert.match(await text('#konaPanelBody'),/KONA NOW|YOUR RACE SELF/i,'fresh Home must explain the useful core immediately');
       assert.equal(await p.evaluate(()=>localStorage.getItem('kona.onboarding.v1')),null,'manual tour must remain available until explicitly opened');
@@ -185,9 +185,9 @@ for(const id of selected){
       assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),earned.xp);
       await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
-    await step('countdown defaults to seconds, normal/timezone persist, and traveller brief has useful sourced links',async()=>{
-      await click('[data-studio-home]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'seconds');
-      await click('.home-today .kona-countdown-options summary');await click('.home-today [data-clock-mode="normal"]');
+    await step('countdown defaults to normal, optional seconds/timezone persist, and traveller brief has useful sourced links',async()=>{
+      await click('[data-studio-home]');await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'normal');
+      await click('.home-today .kona-countdown-options summary');await click('.home-today [data-clock-mode="seconds"]');
       await p.select('.home-today [aria-label="Countdown timezone"]','Europe/Stockholm');
       assert.match(await text('.home-today [data-clock-target]'),/Europe\/Stockholm/);
       await click('[data-home-plan]');await p.waitForSelector('[data-kona-weather]');
@@ -195,7 +195,7 @@ for(const id of selected){
       assert.equal((await p.$$('.plan-priority-card')).length,3,'Plan should lead with three glanceable priorities');
       assert.ok((await p.$$('.plan-day')).length>=1,'race-week timeline must be visual');
       assert.ok((await p.$$('a[href*="airports.hawaii.gov"]')).length>=2);await inventory('Plan cockpit');
-      await goHome();await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'normal');
+      await goHome();await waitHome();assert.equal(await p.$eval('[data-countdown-value]',e=>e.dataset.countdownMode),'seconds');
       await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
     await step('sharing exports a real PNG, handles cancellation, and preserves private data',async()=>{
@@ -215,20 +215,24 @@ for(const id of selected){
       await p.evaluate(()=>window.__shareCancelled=true);await click('[data-share-progress]');await p.waitForFunction(()=>document.querySelector('[data-share-status]').textContent.includes('Not shared'));
       assert.equal(await p.$eval('[data-share-progress]',e=>e.disabled),false);await click('[data-hub-close]');
     });
-    await step('Feed shortcut, category buttons, search and RSS affordance work',async()=>{
-      await click('[data-race-self-action="feed"]');await p.waitForSelector('.companion-page');
+    await step('Home Feed route, category buttons, RSS and return-to-Now provenance work',async()=>{
+      await click('[data-studio-home]');await waitHome();
+      await click('[data-home-feed]');await p.waitForSelector('.companion-page');
+      assert.equal(await p.$eval('[data-tab="home"]',e=>e.getAttribute('aria-current')),'page');
       await p.waitForSelector('[data-kind]',{timeout:45000});
       const kinds=await p.$$eval('[data-kind]',els=>els.map(e=>e.dataset.kind));
       for(const kind of kinds){await click('[data-kind="'+kind+'"]');assert.equal(await p.$eval('[data-kind="'+kind+'"]',e=>e.getAttribute('aria-pressed')),'true');}
       await inventory('The Feed');await p.screenshot({path:path.join(out,prefix+'-feed.png')});
       const rss=await p.$('[data-personal-rss]');assert.ok(rss,'RSS affordance missing');
       const href=await rss.evaluate(e=>e.getAttribute('href'));assert.ok(href&&!href.startsWith('javascript:'));
-      await click('.companion-page [data-back]');await p.waitForSelector('.race-self-experience');
+      await click('.companion-page [data-back]');await waitHome();
     });
-    await step('Travel shortcut, place filters and return to User Studio work',async()=>{
-      await click('[data-race-self-action="travel"]');await p.waitForSelector('.companion-arrival');
+    await step('Home Travel route, Plan nav authority, place filters and return-to-Now provenance work',async()=>{
+      await click('[data-home-travel]');await p.waitForSelector('.companion-arrival');
+      assert.equal(await p.$eval('[data-tab="plan"]',e=>e.getAttribute('aria-current')),'page');
       for(const filter of ['bike-service','coffee','ocean','all']){await click('[data-place-filter="'+filter+'"]');assert.equal(await p.$eval('[data-place-filter="'+filter+'"]',e=>e.getAttribute('aria-pressed')),'true');}
-      await inventory('Travel');await click('.companion-page > [data-back]');await p.waitForSelector('.race-self-experience');
+      await inventory('Travel');await click('.companion-page > [data-back]');await waitHome();
+      await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
     });
     await step('Settings opens and closes without breaking subsequent Studio actions',async()=>{
       await click('[data-race-self-action="settings"]');await p.waitForSelector('#settings:not([hidden])');

@@ -28,7 +28,6 @@ try{
  await page.click('[data-reg-archetype="aero"]');
  await page.click('[data-reg-trisuit="aero-panel"]');
  await page.click('[data-reg-continue]');
- await page.waitForSelector('.onboarding-handoff');await page.click('[data-handoff-continue]');
  await page.waitForFunction(()=>document.querySelector('.kona-bottom-nav')&&!document.querySelector('#konaPanel').hidden);
  assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Now/i,'first run lands on the calm Now surface');
  assert.equal(museumHeavy().length,0,'Home must not request museum/world assets');
@@ -57,11 +56,10 @@ try{
  assert.equal(await page.evaluate(()=>window.__konaProfile.get().avatarStyle.archetype),'renegade');
  assert.equal(await page.$('.kona-tour'),null);
 
- // Discover is earned through a meaningful first Find, not exposed by onboarding XP.
- assert.equal(await page.$eval('[data-tab="discover"]',e=>e.hidden),true,'Discover starts hidden');
+ // The primary map stays stable; discovery depth changes inside the surface, not in navigation.
+ assert.equal(await page.$eval('[data-tab="discover"]',e=>e.hidden),false,'Discover stays visible in the stable primary map');
  await page.click('[data-first-find]');
  await page.waitForFunction(()=>document.querySelector('[data-first-find]')?.disabled);
- await page.waitForFunction(()=>document.querySelector('[data-tab="discover"]')?.hidden===false);
  await page.click('[data-tab="discover"]');
  await page.waitForSelector('[data-enter-world]');
  await page.click('[data-enter-world]');

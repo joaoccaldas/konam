@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
  "generated_by": "tools/build_catalog.mjs",
- "count": 47,
+ "count": 48,
  "in_museum": 39,
- "studio_only": 8,
+ "studio_only": 9,
  "brands": [
   "Canyon",
   "Colnago",
@@ -1739,6 +1739,46 @@
    ],
    "ref": null,
    "atlasKey": "studio-gravel-aero",
+   "sources": [
+    {
+     "label": "Bike record",
+     "file": "museum/atlas/bikes.json"
+    }
+   ],
+   "where": []
+  },
+  {
+   "id": "atlas-studio-nor3-disc-tri",
+   "brand": "Type study",
+   "family": "superbike",
+   "name": "Winter lane tri study",
+   "year": 2026,
+   "era": null,
+   "type": "bike",
+   "category": "triathlon",
+   "origin": "type-study",
+   "glb": "assets/atlas/studio-nor3-disc-tri/bike.glb",
+   "museum": false,
+   "text": "An unbranded long-course bike: deep kamm tubes, a disc behind, a deep front, everything integrated.",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A KONA.m studio design for the NOR // 3 room: a generic disc-brake triathlon superbike. Not any athlete's or brand's bike."
+    }
+   ],
+   "skins": [
+    {
+     "id": "winter",
+     "name": "Winter",
+     "kind": "studio",
+     "frame": "#16181b",
+     "accent": "#2a2e34",
+     "rim": "#141518",
+     "disc": "#18191c"
+    }
+   ],
+   "ref": null,
+   "atlasKey": "studio-nor3-disc-tri",
    "sources": [
     {
      "label": "Bike record",

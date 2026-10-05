@@ -202,9 +202,9 @@ function drawPanel() {
     P.append(h('div', { class: 'sec' }, h('h4', {}, 'Finish'), h('div', { class: 'seg' }, ['gloss', 'satin', 'matte'].map(f =>
       h('button', { type: 'button', 'aria-pressed': String((look.finish || 'gloss') === f), onclick: () => { applyLook({ ...look, finish: f }); drawPanel(); } }, f[0].toUpperCase() + f.slice(1))))));
     P.append(h('div', { class: 'row' },
-      h('button', { type: 'button', class: 'btn primary', onclick: saveLivery }, 'Save to my liveries'),
-      h('button', { type: 'button', class: 'btn ghost', onclick: saveCurrentToSetup }, 'Add to My Kona Setup'),
-      h('button', { type: 'button', class: 'btn ghost', onclick: () => { applyLook(defaultLook(p)); drawPanel(); } }, 'Reset')));
+      h('button', { type: 'button', class: 'btn-primary studio-action', onclick: saveLivery }, 'Save to my liveries'),
+      h('button', { type: 'button', class: 'btn-secondary studio-action', onclick: saveCurrentToSetup }, 'Add to My Kona Setup'),
+      h('button', { type: 'button', class: 'btn-secondary studio-action', onclick: () => { applyLook(defaultLook(p)); drawPanel(); } }, 'Reset')));
   } else if (tab === 'themes' && current) {
     const ids = event?.themes?.length ? [...event.themes, ...FILMS.map(f => f.id).filter(i => !event.themes.includes(i))] : FILMS.map(f => f.id);
     P.append(h('div', { class: 'sec' }, h('h4', {}, 'Films · the Bike Porn series'), h('div', { class: 'chips' }, ids.map(id => FILMS.find(f => f.id === id)).filter(Boolean).map(f =>
@@ -217,7 +217,7 @@ function drawPanel() {
     P.append(h('div', { class: 'sec' }, h('h4', {}, 'Scene'), h('div', { class: 'chips' }, Object.entries(SCENES).filter(([k]) => k !== 'film').map(([k, s]) =>
       h('button', { type: 'button', 'aria-pressed': String(sceneId === k), onclick: () => { setScene(k); writeUrl(); drawPanel(); } }, h('i', { style: `background:linear-gradient(${s.sky[0]},${s.sky[1]})` }), s.label)))));
     P.append(h('div', { class: 'sec' }, h('h4', {}, 'Quality'), h('p', { class: 'count' }, `${QUALITY[profile.get().quality].label} · change it in your profile`),
-      h('button', { type: 'button', class: 'btn ghost', onclick: () => settingsUI.open() }, 'Profile and quality')));
+      h('button', { type: 'button', class: 'btn-secondary studio-action', onclick: () => settingsUI.open() }, 'Profile and quality')));
   } else if (tab === 'setup') {
     renderRaceSetup(P);
   } else if (tab === 'info' && current) {
@@ -286,8 +286,8 @@ function renderRaceSetup(P) {
       raceBadges
     ),
     h('div', { class:'setup-actions' },
-      h('button', { type:'button', class:'btn primary', onclick:saveCurrentToSetup }, bikeProduct && current?.product.id === bikeProduct.id ? 'Update bike' : 'Save bike'),
-      bikeProduct ? h('button', { type:'button', class:'btn ghost', 'aria-label':'Share My Kona Setup', onclick:shareRaceSetup }, 'Share setup') : null
+      h('button', { type:'button', class: 'btn-primary studio-action', onclick:saveCurrentToSetup }, bikeProduct && current?.product.id === bikeProduct.id ? 'Update bike' : 'Save bike'),
+      bikeProduct ? h('button', { type:'button', class: 'btn-secondary studio-action', 'aria-label':'Share My Kona Setup', onclick:shareRaceSetup }, 'Share setup') : null
     )
   );
 }

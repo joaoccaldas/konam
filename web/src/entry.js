@@ -1,4 +1,3 @@
-import { openInviteDialog } from './ui/invite.js';
 // Kona.m entry. HTML is already on screen. This file does not import Three.js.
 // The museum runtime loads only after the visitor chooses to explore.
 import { mountCountdown } from './ui/countdown.js';
@@ -61,7 +60,7 @@ function loadStyle(href,group='app') {
     link.rel='stylesheet'; link.href=href; link.dataset.styleScope=group;
     if(!managedStyles.has(group))managedStyles.set(group,new Set());
     managedStyles.get(group).add(link);
-    link.onload=()=>{syncManagedStyles();resolve(link);}; link.onerror=()=>{loads.delete(key);managedStyles.get(group)?.delete(link);link.remove();reject(new Error(href));};
+    link.onload=()=>{syncManagedStyles();resolve(link);}; link.onerror=()=>{globalThis.__konaAnalytics?.trackRuntimeError?.('route_load',{subsystem:'navigation'});loads.delete(key);managedStyles.get(group)?.delete(link);link.remove();reject(new Error(href));};
     document.head.append(link);syncManagedStyles();
   });
   loads.set(key,pending);
@@ -73,7 +72,7 @@ function loadScript(src) {
     const s = document.createElement('script');
     s.src = src;
     s.onload = () => resolve();
-    s.onerror = () => { loads.delete(src); s.remove(); reject(new Error(src)); };
+    s.onerror = () => { globalThis.__konaAnalytics?.trackRuntimeError?.('route_load',{subsystem:'navigation'}); loads.delete(src); s.remove(); reject(new Error(src)); };
     document.body.append(s);
   });
   loads.set(src, pending);
@@ -96,7 +95,7 @@ const ensureWorldShell = () => {
       const t=document.createElement('template'); t.innerHTML=html.trim();
       const anchor=document.getElementById('appSheet');
       document.body.insertBefore(t.content,anchor||document.body.firstChild);
-    }).catch(error=>{worldShellReady=null;throw error;});
+    }).catch(error=>{globalThis.__konaAnalytics?.trackRuntimeError?.('route_load',{subsystem:'navigation'});worldShellReady=null;throw error;});
   return worldShellReady;
 };
 let museumDataReady = null;
@@ -171,21 +170,8 @@ function paintQuest(step) {
     renderAvatarRegistration(host,{
       profile,
       onBack:()=>{setEntryMode('landing');host.hidden=true;document.getElementById('buildSelf')?.focus();},
-      onContinue:()=>paintQuest('install')
+      onContinue:()=>enterApp('home')
     });
-    return;
-  }
-  if(step==='install'){
-    const landscape=matchMedia('(orientation: landscape)').matches;
-    host.innerHTML='<section class="onboarding-handoff">'+
-      `<div class="onboarding-handoff-copy"><p class="eyebrow">ONE TINY THING</p><h2>Make ${PRODUCT_NAME} feel less like a browser.</h2><p>Then turn your phone sideways when the world gets serious.</p></div>`+
-      '<div class="onboarding-handoff-grid">'+
-        `<article class="onboarding-tip install-tip"><span class="handoff-mark">↓</span><small>01 · INSTALL</small><h3>Put ${PRODUCT_NAME} on your phone.</h3><p>If the install prompt lands somewhere unexpected, use your browser menu to install or add Kona.m to your Home Screen.</p><button type="button" class="btn-primary" data-install-app>Install ${PRODUCT_NAME}</button></article>`+
-        '<article class="onboarding-tip rotate-tip '+(landscape?'is-landscape':'')+'"><div class="phone-rotate" aria-hidden="true"><i></i><b>↻</b></div><small>02 · ROTATE</small><h3>'+(landscape?'Perfect. Keep it sideways.':'Turn your phone sideways.')+'</h3><p>The 3D world is built for landscape. Rotate when you want the full view.</p></article>'+
-      '</div>'+
-      `<div class="quest-nav"><button type="button" class="btn-primary" data-handoff-continue>Show me ${PRODUCT_NAME} →</button></div>`+
-    '</section>';
-    host.querySelector('[data-handoff-continue]')?.addEventListener('click',()=>enterApp('home'));
     return;
   }
   if(step==='save'){
@@ -263,4 +249,3 @@ else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());
 else if (returningVisit && ['home','garage','collection','discover','plan','me','feed','travel'].includes(q.get('view'))) enterApp(q.get('view'));
 
-document.getElementById('entryInvite')?.addEventListener('click',openInviteDialog);

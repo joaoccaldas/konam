@@ -1,0 +1,38 @@
+name: KONA Now freshness
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'tools/check_companion_freshness.mjs'
+      - 'integrations/companion/sources.json'
+      - 'supabase/functions/companion/**'
+      - 'web/src/cloud/supabase-lite.js'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/check_companion_freshness.mjs'
+      - 'integrations/companion/sources.json'
+      - 'supabase/functions/companion/**'
+      - 'web/src/cloud/supabase-lite.js'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kona-now-freshness
+  cancel-in-progress: true
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Probe live KONA Now sources
+        run: node tools/check_companion_freshness.mjs

@@ -23,7 +23,7 @@ export async function fetchPublic(value:string,redirects=0):Promise<string>{
  if(!addresses.length||addresses.some(a=>!publicIPv4(a.address)))throw new Error('This address is not a public website.');
  const response=await fetch(u,{redirect:'manual',signal:AbortSignal.timeout(10000),headers:{'User-Agent':'KONAFeed/1.0','Accept':'application/atom+xml, application/rss+xml, application/xml, text/html'}});
  if(response.status>=300&&response.status<400){await response.body?.cancel();if(redirects>=3||!response.headers.get('location'))throw new Error('Too many redirects.');return fetchPublic(new URL(response.headers.get('location')!,u).href,redirects+1);}
- if(!response.ok){await response.body?.cancel();throw new Error('The source is not available right now.');}
+ if(!response.ok){await response.body?.cancel();throw new Error('Upstream HTTP '+response.status);}
  const reader=response.body!.getReader(),chunks:Uint8Array[]=[];let bytes=0;
  try{while(true){const {done,value}=await reader.read();if(done)break;bytes+=value.length;if(bytes>2_000_000)throw new Error('This source is too large.');chunks.push(value);}}finally{await reader.cancel();}
  const merged=new Uint8Array(bytes);let offset=0;for(const c of chunks){merged.set(c,offset);offset+=c.length;}return new TextDecoder().decode(merged);

@@ -41,15 +41,25 @@ test('Home is lightweight while User Studio owns personal depth and tour replay'
   assert.match(home,/data-home-self/);
   assert.match(home,/YOUR RACE SELF/);
   assert.doesNotMatch(home,/race-self-stage\.js|hall\.js|museum-data\.js/);
-  for(const control of ['Avatar','Bike Studio','Races','Settings','Quick tour','The Feed','Travel to Kona']) assert.match(avatarHome,new RegExp(control));
+  for(const control of ['Avatar','Bike Studio','Races','Finds','Progress','Settings','Quick tour']) assert.match(avatarHome,new RegExp(control));
+  assert.doesNotMatch(avatarHome,/The Feed|Travel to Kona/);
   assert.doesNotMatch(avatarHome,/Canyon Museum|Discover Kona|Race week/);
-  assert.match(avatarHome,/Collection/);
+  assert.match(avatarHome,/Finds/);
   assert.match(avatarHome,/Progress/);
   assert.match(avatarHome,/openTour/);
   assert.match(avatarHome,/race-self-controls/);
   assert.match(avatarHome,/app\/race-self-stage\.js/);
   assert.doesNotMatch(avatarHome,/app\/hall\.js|museum-data\.js|__museum/);
   assert.match(raceCards,/Search IRONMAN races/);
+});
+
+test('User Studio main menu is a finite responsive grid, never a sideways discovery rail',()=>{
+  const raceSelfCss=fs.readFileSync(new URL('../styles/race-self.css',import.meta.url),'utf8');
+  assert.match(raceSelfCss,/\.race-self-controls\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)\}/);
+  assert.match(raceSelfCss,/@media\(max-width:899px\)[\s\S]*\.studio-destinations\{[\s\S]*display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
+  assert.doesNotMatch(raceSelfCss,/@media\(max-width:360px\)[\s\S]*\.studio-destinations\{grid-template-columns:repeat\(2/);
+  assert.doesNotMatch(raceSelfCss,/\.studio-destinations[\s\S]{0,220}overflow-x:auto/);
+  assert.doesNotMatch(raceSelfCss,/scroll-snap-type:x/);
 });
 
 test('Plan is lightweight and independent of museum globals',()=>{
@@ -74,10 +84,8 @@ test('entry has questions, avatar, install handoff and replayable contextual onb
   assert.match(entry,/paintQuest\(firstRunStep\(\)\)/);
   assert.match(entry,/renderOnboardingQuestions/);
   assert.match(entry,/renderAvatarRegistration/);
-  assert.match(entry,/onContinue:\(\)=>paintQuest\('install'\)/);
-  assert.match(entry,/if\(step==='install'\)/);
-  assert.match(entry,/data-install-app/);
-  assert.match(entry,/Turn your phone sideways/);
+  
+  assert.match(entry,/onContinue:\(\)=>enterApp\('home'\)/);
   assert.match(onboarding,/What brings you to Kona/);
   assert.match(onboarding,/ONBOARDING_ANSWER/);
   assert.doesNotMatch(entry,/data-race-picker/);
@@ -86,6 +94,15 @@ test('entry has questions, avatar, install handoff and replayable contextual onb
   assert.match(shell,/writeStorage\('onboarding','seen'\)/);
   assert.match(registration,/TRISUIT LAYOUT/);
   assert.match(registration,/data-reg-overlay/);
+});
+
+test('mobile shell keeps the canonical five-tab menu and only shows Close when a 3D world is open',()=>{
+  const mobile=fs.readFileSync(new URL('../styles/shell-mobile.css',import.meta.url),'utf8');
+  for(const tab of ['home','discover','garage','plan','me']) assert.match(shell,new RegExp('data-tab="'+tab+'"'));
+  assert.match(shell,/aria-label="Main navigation"/);
+  assert.match(mobile,/body:not\(\.museum-open\) #konaPanelClose\{display:none!important\}/);
+  assert.match(mobile,/body\.museum-open #konaPanelClose\{display:grid\}/);
+  assert.doesNotMatch(mobile,/\.kona-panel-head>button/);
 });
 
 test('Now tab routes to Home behavior and Admin Assets stays a generated, Me-only capability',()=>{
@@ -99,5 +116,5 @@ test('Now tab routes to Home behavior and Admin Assets stays a generated, Me-onl
 
 test('visual evidence covers launch, companion and museum-return states across Random mode',()=>{
   assert.match(visual,/\['light','dark','random'\]/);
-  for(const view of ['landing','onboarding-profile','avatar-registration','install-handoff','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','bike-studio']) assert.match(visual,new RegExp(view));
+  for(const view of ['landing','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','bike-studio']) assert.match(visual,new RegExp(view));
 });

@@ -8,6 +8,7 @@ on:
       - 'web/styles/**'
       - 'web/landing.template.html'
       - 'museum/**'
+      - 'world/konam/**'
       - 'assets/**'
       - 'tools/build_pages.mjs'
   workflow_dispatch:
@@ -18,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        viewport: [320, 360, 390, 430, landscape-phone, desktop]
+        viewport: [320, 360, 390, 430, tablet, landscape-phone, desktop]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:

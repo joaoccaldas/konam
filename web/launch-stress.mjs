@@ -3,14 +3,15 @@ import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const base=process.argv[2]||'http://127.0.0.1:8744';
-const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--use-angle=metal']});
+const launchArgs=process.env.CI?['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']:['--use-angle=metal'];
+const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:launchArgs});
 const report={};
 try{
- const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.setBypassServiceWorker(true);await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
+ const page=await browser.newPage();page.setDefaultTimeout(process.env.CI?90000:30000);page.setDefaultNavigationTimeout(process.env.CI?120000:60000);const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.setBypassServiceWorker(true);await page.evaluateOnNewDocument(()=>{try{localStorage.setItem('kona.raceIdentity.v1',JSON.stringify({entity_type:'race-identity',event_id:'kona-2026',goal:{label:'Stress test'}}));localStorage.setItem('kona.progression.v1',JSON.stringify({schema:'progression-v1',xp:40,level:2,access_tier:'visitor',streak:0,discoveries:[],badges:[],unlocks:[],seen:[],ledger:[],credits:0,history:[],acquisitions:[]}));localStorage.setItem('kona.onboarding.v1','seen');}catch{}});await page.setViewport({width:390,height:844,deviceScaleFactor:2,isMobile:true,hasTouch:true});
  const cdp=await page.createCDPSession();await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
  let start=Date.now();await page.goto(base,{waitUntil:'networkidle0'});report.entryReady4xCPUms=Date.now()-start;
  const before=await page.evaluate(()=>performance.getEntriesByType('resource').filter(r=>/\.glb|race-self-stage|hall\.js/.test(r.name)).length);assert.equal(before,0);
- start=Date.now();await page.click('#buildSelf');await page.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);report.studioReady4xCPUms=Date.now()-start;
+ start=Date.now();await page.click('#buildSelf');await page.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden);await page.evaluate(()=>window.__konaShell.me());await page.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);report.studioReady4xCPUms=Date.now()-start;
  await cdp.send('Emulation.setCPUThrottlingRate',{rate:1});
  for(let i=0;i<20;i++){
   await page.evaluate(()=>window.__konaShell.plan());await page.evaluate(()=>window.__konaShell.me());
@@ -21,7 +22,11 @@ try{
  await page.keyboard.press('Escape');
  report.studioStress={visits:20,avatarChanges:40,canvases:await page.$$eval('canvas',xs=>xs.length)};assert.equal(report.studioStress.canvases,1);
  report.frameIntervalsMs=await page.evaluate(()=>new Promise(resolve=>{const deltas=[];let prev=performance.now();function frame(t){deltas.push(t-prev);prev=t;if(deltas.length<90)requestAnimationFrame(frame);else{deltas.sort((a,b)=>a-b);resolve({median:deltas[45],p95:deltas[85]})}}requestAnimationFrame(frame)}));
- await page.goto(base+'/Studio.html',{waitUntil:'networkidle0'});await page.waitForFunction(()=>window.__studio?.current);
+ await page.goto(base+'/Studio.html',{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>window.__studio?.CAT?.products?.length>0);
+ await page.waitForSelector('.prod:not([disabled])',{visible:true});
+ await page.click('.prod:not([disabled])');
+ await page.waitForFunction(()=>window.__studio?.current?.root);
  const fit=()=>page.evaluate(()=>{
   const {camera,current}=window.__studio;const box=new (camera.position.constructor)(); // use existing Three values; no remote imports.
   const r=document.querySelector('#stage').getBoundingClientRect(),d=document.querySelector('#dock').getBoundingClientRect();

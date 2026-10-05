@@ -18,9 +18,9 @@ Launch is a focused free beta: discover Kona, build a race self, keep progress, 
 | P0 | Freeze a reproducible candidate | Commit sources and generated pages/bundles/manifest/worker. All workflows check the PR head, never a synthetic merge. Rebuild must leave generated outputs unchanged. |
 | P0 | Safe persistence and navigation | Legacy/new passport union; identity/equipment rollback on failed saves; no writes on Studio preview; latest requested tab wins delayed loads; scene disposal; return Home. |
 | P0 | Publish only certified content | Unit, Museum/browser, security, integration, seal, visual and four UI interaction jobs succeed at the same immutable SHA. Verify production receipt and sealed file hashes. Physical phone installation remains explicitly unverified until observed. |
-| P1 | Landing and first visit | Full eligible bike catalogue, independent of progression; no immediate repeat; anonymous secret previews; usable sign-in, five optional onboarding questions, avatar, install/rotate handoff. |
+| P1 | Landing and first visit | Full eligible bike catalogue, independent of progression; no immediate repeat; anonymous secret previews; usable sign-in, two useful onboarding questions, avatar, optional install/rotate guidance. |
 | P1 | What matters most | Useful sourced weather, airport arrivals and transport, HST bearings, official websites/social, local thumbnails, manually authored Intern notes. Reject stale observations; show a useful forecast fallback. |
-| P1 | Countdown | Seconds default; normal display and timezone preference; fixed HST event instant. Label race-day midnight separately from an unverified race start. |
+| P1 | Countdown | Human-readable default; seconds as an optional playful mode; timezone preference; fixed HST event instant. Label race-day midnight separately from an unverified race start. |
 | P1 | Finds and sharing | 100 slots, honest locked identities, first Find once, real Item Studio model, admin inspection without invented ownership; real PNG sharing, cancellation, clean links. |
 | P1 | UI fit | Canonical tokens/components; 320, 390, short landscape, desktop, plus 360/430; no horizontal overflow; meaningful touch targets; light/dark/random screenshots and explicit visual review. |
 

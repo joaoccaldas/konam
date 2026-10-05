@@ -31,7 +31,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const required = ['checks.yml','app-seal.yml','release-security.yml','integration-contract.yml','visual-evidence-v2.yml','ui-interaction-audit.yml'];
+            const required = ['checks.yml','app-seal.yml','release-security.yml','integration-contract.yml','visual-evidence-v2.yml','ui-interaction-audit.yml','hostile-runtime.yml'];
             const deadline = Date.now() + 25 * 60 * 1000;
             const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 

@@ -6,8 +6,15 @@ const eventTypes=new Set([
   'plan_opened','me_opened','share_invoked','install_invoked',
   'first_bike_shown','first_bike_collected','first_bike_skipped',
   'kona_now_feed_opened','kona_now_travel_opened',
-  'feedback_useful_yes','feedback_useful_no'
+  'feedback_useful_yes','feedback_useful_no','session_engaged_15s','runtime_error'
 ]);
+const runtimeCodes=new Set([
+  'uncaught_js','unhandled_promise','renderer_init','renderer_context_lost',
+  'renderer_context_restored','route_load','state_read','state_write','companion_load'
+]);
+const runtimeSubsystems=new Set(['runtime','renderer','navigation','storage','companion']);
+const trafficClasses=new Set(['public','qa','automation']);
+const release=/^[0-9a-f]{12}$/;
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const cors=(origin:string|null)=>{
@@ -40,17 +47,32 @@ Deno.serve(async(req:Request)=>{
   const rate=rates.get(ip)||{at:now,count:0};rate.count++;rates.set(ip,rate);
   if(rate.count>240||rates.size>10000)return response(origin,{error:'Too many analytics events.'},429);
 
-  if(Number(req.headers.get('content-length')||0)>3000)return response(origin,{error:'Request too large.'},400);
+  if(Number(req.headers.get('content-length')||0)>3500)return response(origin,{error:'Request too large.'},400);
   let input:any={};try{input=await req.json();}catch{return response(origin,{error:'Invalid request.'},400);}
 
   const eventType=String(input.event_type||'');
   const path=String(input.path||'').slice(0,240);
+  const landingPath=String(input.landing_path||'').slice(0,240);
   const sessionId=String(input.session_id||'');
   const viewport=String(input.viewport||'');
+  const trafficClass=String(input.traffic_class||'');
+  const runtime=eventType==='runtime_error';
+  const eventCode=String(input.event_code||'');
+  const subsystem=String(input.subsystem||'');
+  const releaseId=String(input.release_id||'');
+  const online=input.online;
   if(!eventTypes.has(eventType))return response(origin,{error:'Unknown event.'},400);
   if(!path.startsWith('/')||path.length>240)return response(origin,{error:'Invalid path.'},400);
+  if(landingPath&&(!landingPath.startsWith('/')||landingPath.length>240))return response(origin,{error:'Invalid landing path.'},400);
   if(!uuid.test(sessionId))return response(origin,{error:'Invalid session.'},400);
   if(!['compact','medium','wide'].includes(viewport))return response(origin,{error:'Invalid viewport.'},400);
+  if(trafficClass&&!trafficClasses.has(trafficClass))return response(origin,{error:'Invalid traffic class.'},400);
+  if(runtime){
+    if(!runtimeCodes.has(eventCode))return response(origin,{error:'Invalid runtime code.'},400);
+    if(!runtimeSubsystems.has(subsystem))return response(origin,{error:'Invalid runtime subsystem.'},400);
+    if(releaseId&&!release.test(releaseId))return response(origin,{error:'Invalid release id.'},400);
+    if(typeof online!=='boolean')return response(origin,{error:'Invalid online state.'},400);
+  }
 
   const url=Deno.env.get('SUPABASE_URL'),serviceKey=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
   if(!url||!serviceKey)return response(origin,{error:'Analytics unavailable.'},503);
@@ -66,6 +88,12 @@ Deno.serve(async(req:Request)=>{
     campaign_source:text(input.campaign_source,100),
     campaign_medium:text(input.campaign_medium,100),
     campaign_name:text(input.campaign_name,140),
+    landing_path:landingPath||null,
+    traffic_class:trafficClass||null,
+    event_code:runtime?eventCode:null,
+    subsystem:runtime?subsystem:null,
+    release_id:runtime?(releaseId||null):null,
+    online:runtime?online:null,
   };
   const res=await fetch(url+'/rest/v1/site_analytics_events',{
     method:'POST',

@@ -1,4 +1,5 @@
 // Bookmarked engineering viewers share the main Studio entitlement resolver.
+import './site-analytics.js';
 import catalog from '../../museum/catalog/products.json' with { type: 'json' };
 import { productAccess } from './engine/access.js';
 export function standaloneDestination(page,options={}) {
