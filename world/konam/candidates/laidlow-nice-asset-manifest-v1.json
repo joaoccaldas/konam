@@ -10,6 +10,7 @@
    "why_reuse": "The subject is a Canyon athlete on the Speedmax CFR; the museum's canonical Canyon Speedmax CFR is the right object, loaded by the host (loadBeastBike).",
    "runtime_ref": [
     "assets/museum/speedmax_web.glb",
+    "assets/museum/speedmax_web-hero.glb",
     "assets/museum/speedmax_web-lite.glb"
    ],
    "sha256": {
@@ -17,8 +18,9 @@
     "lite": "12f55114e165aee2dd3cd53b2c736efa66771dddfd938be8c74cae222e54e016"
    },
    "tris": {
-    "hero": 509624,
-    "lite": 76826
+    "source": 509624,
+    "desktop_near": 133584,
+    "far_and_phone": 76826
    },
    "representation": "canonical-museum-asset (documented finish; not the athlete's race bike, livery or setup)",
    "rights": "museum asset; Canyon wordmarks only as modelled",
@@ -102,5 +104,5 @@
   "photography": false,
   "real_newspaper_marks": false
  },
- "procedural": "limestone floor, ochre dado, Baie des Anges shader (sky, Colline du Château, sea glint, Promenade lights), blue chairs (instanced), galets (instanced), balustrade, monument and record panels, fictional front page (Le Promeneur), coach's corner — original KONA.m code"
+ "procedural": "limestone floor, ochre dado, Baie des Anges shader (sky, Colline du Château, sea glint, Promenade lights), blue chairs (instanced), galets (instanced), balustrade, monument and record panels, fictional front page (Le Promeneur), coach's corner — original KONA.m code, Promenade lamp posts (instanced, emissive), voile curtains (vertex shader), Ville de Nice enamel sign, Negresco dome in the bay shader, towel and paper on a chair"
 }

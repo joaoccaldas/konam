@@ -108,7 +108,8 @@ export function buildLaidlowNice(ctx) {
         // Colline du Château and Mont Boron to the left, the Promenade curving away to the right
         float hill=hz+.11*smoothstep(.32,.0,u.x)*(.8+.2*sin(u.x*40.))+.05*smoothstep(.0,.06,u.x)*smoothstep(.22,.1,u.x);
         float coast=hz+.018*smoothstep(.62,1.,u.x)*(1.+.3*sin(u.x*90.));
-        if(u.y>hz){ c=sky; if(u.y<hill) c=mix(vec3(.30,.27,.30),vec3(.46,.38,.36),(u.y-hz)/.11); if(u.y<coast&&u.x>.6) c=vec3(.38,.33,.34);
+        vec2 dq=(u-vec2(.80,coast))*vec2(70.,110.); float dome=step(length(vec2(dq.x,max(dq.y,0.)))-1.,0.)*step(0.,dq.y)+step(abs(dq.x),.12)*step(1.,dq.y)*step(dq.y,1.6);   // the Negresco's pink dome
+        if(u.y>hz){ c=sky; if(u.y<hill) c=mix(vec3(.30,.27,.30),vec3(.46,.38,.36),(u.y-hz)/.11); if(u.y<coast&&u.x>.6) c=vec3(.38,.33,.34); if(dome>.5) c=mix(vec3(.93,.62,.58),vec3(.55,.40,.42),smoothstep(.0,1.2,dq.y)*.5);
           float lights=step(.985,h(floor(vec2(u.x*400.,u.y*600.))))*step(.6,u.x)*step(u.y,coast+.004); c+=vec3(1.,.8,.5)*lights*.8; }
         else { float dy=hz-u.y; vec3 sea=mix(vec3(.10,.42,.62),vec3(.03,.22,.40),smoothstep(.0,.42,dy));
           float w=n(vec2(u.x*90.,dy*260.-t*.6))*n(vec2(u.x*40.+t*.2,dy*120.)); float glint=smoothstep(.6,.95,w)*smoothstep(.16,.0,abs(u.x-sun.x))*(1.-smoothstep(.0,.42,dy)*.6);
@@ -154,6 +155,40 @@ export function buildLaidlowNice(ctx) {
   if (cs0) { const csI = new THREE.InstancedMesh(cs0.geometry, cs0.material, chairAt.length); csI.renderOrder = 1;
     chairAt.forEach(([x, z, yaw], k) => { M4.compose(V.set(x, .006, z), Q.setFromEuler(EU.set(-Math.PI / 2, 0, yaw)), S.set(1, 1, 1)); csI.setMatrixAt(k, M4); }); group.add(csI); }
   info(chairs, { model: act => chairsCard(act), eyebrow: 'LES CHAISES BLEUES', title: 'A seat facing the sea.', sub: 'The Promenade des Anglais' });
+
+  // ------------------------------------------------------------ the Promenade's cast-iron lamps along the railing (instanced, emissive globes, no lights)
+  const lampAt = [-5.3, -8.6, -13.1, -16.4], lampGeo = (() => { const p = [];
+    p.push(new THREE.CylinderGeometry(.11, .15, .3, 12).translate(0, .15, 0), new THREE.CylinderGeometry(.04, .06, 2.6, 10).translate(0, 1.6, 0), new THREE.TorusGeometry(.09, .015, 6, 18).rotateX(Math.PI / 2).translate(0, 2.9, 0), new THREE.ConeGeometry(.16, .14, 12).translate(0, 3.32, 0));
+    return mergeGeometries(p.map(g => g.toNonIndexed())); })();
+  const castIron = E(new THREE.MeshStandardMaterial({ color: '#1f2a28', roughness: .45, metalness: .6 }));
+  const lamps = new THREE.InstancedMesh(lampGeo, castIron, lampAt.length), globes = new THREE.InstancedMesh(new THREE.SphereGeometry(.13, 16, 12), new THREE.MeshBasicMaterial({ color: '#ffe3b0', toneMapped: false }), lampAt.length);
+  lampAt.forEach((z, k) => { M4.makeTranslation(RAIL + .05, 0, z); lamps.setMatrixAt(k, M4); M4.makeTranslation(RAIL + .05, 3.1, z); globes.setMatrixAt(k, M4); });
+  lamps.castShadow = !lite; group.add(lamps, globes);
+  const haloT = tex(canvas(128, 128, (g, w, h) => { const gr = g.createRadialGradient(w / 2, h / 2, 2, w / 2, h / 2, w / 2); gr.addColorStop(0, 'rgba(255,220,160,.9)'); gr.addColorStop(1, 'rgba(255,220,160,0)'); g.fillStyle = gr; g.fillRect(0, 0, w, h); }));
+  const halos = new THREE.InstancedMesh(new THREE.PlaneGeometry(.9, .9), new THREE.MeshBasicMaterial({ map: haloT, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }), lampAt.length);
+  lampAt.forEach((z, k) => { M4.compose(V.set(RAIL - .05, 3.1, z), Q.setFromEuler(EU.set(0, -Math.PI / 2, 0)), S.set(1, 1, 1)); halos.setMatrixAt(k, M4); }); group.add(halos);
+  obstacles.push(...lampAt.map(z => ({ c: new THREE.Vector3(RAIL + .05, 0, z), r: .3 })));
+
+  // ------------------------------------------------------------ voile at the bay's edges, breathing in the sea breeze (vertex shader, two planes)
+  const sheerU = { t: { value: 0 } };
+  const sheerMat = new THREE.MeshStandardMaterial({ color: '#fbf6ee', roughness: 1, transparent: true, opacity: lite ? .5 : .62, side: THREE.DoubleSide, depthWrite: false });
+  sheerMat.onBeforeCompile = sh => { sh.uniforms.uT = sheerU.t; sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uT;')
+    .replace('#include <begin_vertex>', '#include <begin_vertex>\nfloat hang=clamp((2.6-position.y)/5.2,0.,1.);transformed.z+=(sin(position.x*5.+uT*1.3)*.07+sin(position.x*11.-uT*2.1)*.03)*hang*hang+hang*.05;'); };
+  sheerMat.customProgramCacheKey = () => 'laidlow-sheer';
+  for (const z of [R.z0 - .55, R.z1 + .55]) { const g = new THREE.PlaneGeometry(1.1, R.h - .9, lite ? 6 : 14, lite ? 8 : 20); const sh = new THREE.Mesh(g, sheerMat); sh.rotation.y = -Math.PI / 2; sh.position.set(GX - .35, (R.h - .9) / 2, z); sh.renderOrder = 2; group.add(sh); }
+
+  // ------------------------------------------------------------ the blue enamel street sign of Nice, on the pilaster by the bay
+  const plaqueMat = new THREE.MeshPhysicalMaterial({ map: tex(canvas(1024, 384, (g, w, h) => { g.fillStyle = '#1d4f9c'; g.fillRect(0, 0, w, h); g.strokeStyle = '#f4f1e8'; g.lineWidth = 14; g.strokeRect(22, 22, w - 44, h - 44);
+      g.fillStyle = '#f4f1e8'; g.textAlign = 'center'; g.font = `700 30px ${FONT}`; g.letterSpacing = '8px'; g.fillText('VILLE DE NICE', w / 2, 92);
+      g.font = `800 76px ${FONT}`; g.letterSpacing = '2px'; fit(g, 'PROMENADE', w / 2, 196, w - 140); fit(g, 'DES ANGLAIS', w / 2, 286, w - 140); })), roughness: .18, clearcoat: 1, clearcoatRoughness: .05 });
+  const streetSign = new THREE.Mesh(new THREE.BoxGeometry(1.15, .43, .02), plaqueMat); streetSign.position.set(29.9, 2.75, R.z0 - .1); streetSign.rotation.y = Math.PI; group.add(streetSign);
+
+  // ------------------------------------------------------------ someone just went for a swim: a striped towel and Le Promeneur left on a chair
+  { const [cx2, cz2, yaw2] = chairAt[4], o = new THREE.Object3D(); o.position.set(cx2, 0, cz2); o.rotation.y = yaw2; o.updateMatrix();
+    const towelC = canvas(256, 64, (g, w, h) => { for (let i = 0; i < 8; i++) { g.fillStyle = i % 2 ? '#f4f1e8' : '#2f74c0'; g.fillRect(i * w / 8, 0, w / 8, h); } });
+    const towel = new THREE.Mesh(new THREE.BoxGeometry(.4, .05, .3), new THREE.MeshStandardMaterial({ map: tex(towelC), roughness: 1 })); towel.position.set(0, .42, .03); towel.rotation.y = .2;
+    const paperM = new THREE.MeshStandardMaterial({ color: '#efe7d6', roughness: .9 }), folded = new THREE.Mesh(new THREE.BoxGeometry(.22, .012, .3), paperM); folded.position.set(.04, .455, -.02); folded.rotation.y = -.35;
+    for (const m of [towel, folded]) { m.applyMatrix4(o.matrix); m.castShadow = !lite; group.add(m); } }
 
   // ------------------------------------------------------------ golden hour: the arches' light lying across the floor and up the walls
   const sunPatch = tex(canvas(256, 512, (g, w, h) => { const gr = g.createLinearGradient(0, h, 0, 0); gr.addColorStop(0, 'rgba(255,200,140,.95)'); gr.addColorStop(1, 'rgba(255,180,120,0)');
@@ -325,7 +360,7 @@ export function buildLaidlowNice(ctx) {
   const paperCard = simple('LE PROMENEUR · A FICTIONAL FRONT PAGE', 'Le jeune homme et la mer.', 'Local man rides 180 km and ends up exactly where he started. The paper is invented; the times on it are real.', [{ cls: 'P', text: src(`Nice 2023 splits: swim ${NICE.splits.swim}, bike ${NICE.splits.bike}, run ${NICE.splits.run}.`, NICE.sources) }]);
 
   // ------------------------------------------------------------ static merge (one draw per material), reflections
-  const keepers = new Set([floor, sign, drum, ring, mon, kona, roth, paper, board, bay, glass, chairs, peb, posts, ...sculptHolders.map(s => s.h), ...sway.map(w => w.o)]);
+  const keepers = new Set([floor, sign, drum, ring, mon, kona, roth, paper, board, bay, glass, chairs, peb, posts, lamps, globes, halos, streetSign, ...sculptHolders.map(s => s.h), ...sway.map(w => w.o)]);
   group.userData.merged = mergeStatic(group, { keep: o => keepers.has(o) || !!o.userData?.info || o.isLight || o.isPoints || o.isInstancedMesh || o.material?.transparent });
   let envDirty = 2;
   const dust = lite ? null : motes({ n: 160, box: [GX - 7, GX - .4, .3, R.h - .6, CZ - 3, CZ + 3], color: '#ffe2b0', size: .03, rise: .05, sway: .18, opacity: .6 });   // the sunbeam's dust (roomkit)
@@ -346,7 +381,7 @@ export function buildLaidlowNice(ctx) {
         envDirty = 2; }).catch(e => console.warn('sculpture', sc.id, e?.message || e));
     },
     setBike(bike, dress) {                                             // the canonical Speedmax CFR, side-on to the door, front wheel to the 8:06:22 wall
-      const prep = b => { const once = new Map(), cl = m => { if (!once.has(m)) once.set(m, m.clone()); return once.get(m); };   // shared materials stay shared, so they merge
+      const prep = b => { const once = new Map(), cl = m => { const k = m.name || m.uuid; if (!once.has(k)) once.set(k, m.clone()); return once.get(k); };   // one material per name (the shared loader hands out per-mesh copies), so they merge
         b.traverse(o => { if (!o.isMesh) return; o.material = Array.isArray(o.material) ? o.material.map(cl) : cl(o.material); o.castShadow = !lite; delete o.userData.piece; });
         dress?.(b); mergeStatic(b);                                    // this room never explodes the bike: ~70 parts → one draw per material
         b.traverse(o => { if (o.isMesh) { o.userData.info = bikeSpot.info; pickables.push(o); } }); };
@@ -362,14 +397,16 @@ export function buildLaidlowNice(ctx) {
       bikeSpot.bike = holder; envDirty = 2;
       this._lod = () => {                                              // desktop: the derived 77k hero beyond 5 m (room budget); runs once both bike and loader exist
         if (lite || !this._loader || this._lodDone) return; this._lodDone = true;
-        this._loader.loadAsync('assets/museum/speedmax_web-lite.glb').then(g => {
-          const low = g.scene; prep(low); const lb = new THREE.Box3().setFromObject(low), lc = lb.getCenter(new THREE.Vector3()); low.position.set(-lc.x, -lb.min.y, -lc.z);
-          const lod = new THREE.LOD(); holder.remove(bike); lod.addLevel(bike, 0); lod.addLevel(low, 5); holder.add(lod); }).catch(() => {}); };
+        const load = u => this._loader.loadAsync(u).then(g => { const m = g.scene; prep(m); const lb = new THREE.Box3().setFromObject(m), lc = lb.getCenter(new THREE.Vector3()); m.position.set(-lc.x, -lb.min.y, -lc.z); return m; });
+        Promise.all([load('assets/museum/speedmax_web-hero.glb'), load('assets/museum/speedmax_web-lite.glb')]).then(([near, far]) => {   // 134k within 5 m, 77k beyond
+          near.position.copy(bike.position); far.position.copy(bike.position);
+          const lod = new THREE.LOD(); lod.addLevel(near, 0); lod.addLevel(far, 5); far.visible = false; holder.remove(bike); holder.add(lod);
+          bike.traverse(o => { if (o.isMesh) { const i = pickables.indexOf(o); if (i >= 0) pickables.splice(i, 1); } }); envDirty = 2; }).catch(() => {}); };
       this._lod();
     },
     update(t, reduce, dt = 1 / 60) {
       if (envDirty) { envDirty--; if (!envDirty) env.capture(); }
-      bayMat.uniforms.t.value = reduce ? 0 : t;
+      bayMat.uniforms.t.value = reduce ? 0 : t; sheerU.t.value = reduce ? 0 : t;
       if (dust && !reduce) dust.step(t);
       if (!reduce) for (const w of sway) { const a = Math.sin(t * .9 + w.phase) * w.amp; w.o.rotation.z = a; w.o.rotation.x = a * .5; }
       return { power: 0, heat: 0, riding: false };
