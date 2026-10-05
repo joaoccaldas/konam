@@ -5,7 +5,7 @@ const html=fs.readFileSync(new URL('../landing.template.html',import.meta.url),'
 const home=fs.readFileSync(new URL('../src/ui/home.js',import.meta.url),'utf8');
 const harden=fs.readFileSync(new URL('../../tools/harden_pages.mjs',import.meta.url),'utf8');
 
-test('landing exposes purpose and build without requiring 3D or unavailable sign-in',()=>{assert.match(html,/id="buildSelf"/);assert.match(html,/race-week cockpit/i);assert.match(html,/YOUR RACE-WEEK COMPANION/i);assert.doesNotMatch(html,/id="entrySignIn"/);});
+test('landing exposes purpose and build with optional account access',()=>{assert.match(html,/id="buildSelf"/);assert.match(html,/race-week cockpit/i);assert.match(html,/YOUR RACE-WEEK COMPANION/i);assert.match(html,/id="entrySignIn"/);});
 test('Now has one explicit race-week cockpit purpose and primary plan action',()=>{assert.match(home,/YOUR RACE WEEK · TODAY/);assert.match(home,/Your race-week cockpit/);assert.match(home,/Open today\\'s plan/);});
 test('first run moves through questions, first bike, avatar and install handoff without a gear wall',()=>{
   assert.match(entry,/step==='questions'/);
@@ -26,8 +26,9 @@ test('contextual onboarding runs once and can be replayed',()=>{
   assert.match(shell,/tour:replayTour/);
 });
 test('sign-in remains optional and local-first',()=>{
-  assert.match(entry,/Continue without account/);
-  assert.match(entry,/sendMagicLink/);
+  const form=fs.readFileSync(new URL('../src/ui/account-auth.js',import.meta.url),'utf8');
+  assert.match(form,/Continue without account/);
+  assert.match(entry,/renderAccountAuth/);
   assert.match(entry,/enterApp\('home'\)/);
 });
 test('CSP allows the exact public Supabase project used by auth adapter',()=>assert.match(harden,/connect-src[^\n]*https:\/\/mtvpnoqwjpoqaiocrklq\.supabase\.co/));

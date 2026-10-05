@@ -6,8 +6,8 @@ const shell=fs.readFileSync(new URL('../src/ui/kona-shell.js',import.meta.url),'
 const system=fs.readFileSync(new URL('../styles/system.css',import.meta.url),'utf8');
 const studio=fs.readFileSync(new URL('../studio.template.html',import.meta.url),'utf8');
 
-test('landing always exposes Enter and Install without advertising unavailable sign-in',()=>{
-  assert.match(html,/id="buildSelf"/);assert.match(html,/id="entryInstall"/);assert.doesNotMatch(html,/id="entrySignIn"/);
+test('landing always exposes Enter and Install with optional account access',()=>{
+  assert.match(html,/id="buildSelf"/);assert.match(html,/id="entryInstall"/);assert.match(html,/id="entrySignIn"/);
 });
 test('one helper leaves intro and supports canonical consumer routes',()=>{
   assert.match(entry,/function enterApp\(first = 'home'\)/);
@@ -28,7 +28,7 @@ test('avatar setup can be escaped and does not trap the visitor',()=>{
   
 });
 test('local-first continuation remains available without an account',()=>{
-  assert.match(entry,/Continue without account/);assert.match(entry,/continueLocal/);assert.match(entry,/enterApp\('home'\)/);
+  const form=fs.readFileSync(new URL('../src/ui/account-auth.js',import.meta.url),'utf8');assert.match(form,/Continue without account/);assert.match(entry,/onContinue:/);assert.match(entry,/enterApp\('home'\)/);
 });
 test('P0 entry uses canonical storage adapter, never raw localStorage',()=>{
   assert.match(entry,/readStorage/);
