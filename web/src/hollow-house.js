@@ -279,6 +279,7 @@ export function buildHollowHouse(ctx) {
   }
   const furnaceSrc = src({ x: 34.6, y: 1.0, z: -38.4, base: 6.5, color: '#ff5a14', flicker: 'fire', range: 9, grp: 'furnace' });
   src({ x: 27.6, y: 1.2, z: -38.4, base: 2.4, color: '#ff6a1c', flicker: 'fire', range: 4, grp: 'furnace', prio: 1.2 });          // the red bleed through the cellar door
+  src({ x: 9.0, y: 2.6, z: -38.4, base: 3.0, color: '#ffbd70', flicker: 'candle', range: 7, prio: .6 });                            // a lamp just inside the front door, so the threshold glows from the hall
   src({ x: 14.3, y: 3.4, z: -43.0, base: 2.0, color: '#ffbd70', flicker: 'bulb', range: 5, prio: 1.4 });                             // light under the landing door
   for (const b of beams) src({ x: b.x, y: b.y, z: b.z, base: b.big ? 4.5 : 2.2, color: '#8fa6ff', flicker: 'steady', range: b.big ? 8 : 6, moon: true, prio: b.big ? .9 : 1.3 });
 
@@ -470,7 +471,8 @@ export function buildHollowHouse(ctx) {
     const fx = dir.update(t, dt, P, reduce), inside = fx.inside;
     atmo.update(dt, inside, { color: '#040307', near: 1.2, far: lite ? 17 : 23 });
     const fl = fx.flash, lv = fx.level.all;
-    interior.ambient.value.setRGB(.085 * lv + .3 * fl, .08 * lv + .33 * fl, .12 * lv + .46 * fl);
+    const base = inside ? 1 : 1.7;                                      // seen from the hall the house glimmers; inside it is as dark as it is meant to be
+    interior.ambient.value.setRGB(.085 * base * lv + .3 * fl, .08 * base * lv + .33 * fl, .12 * base * lv + .46 * fl);
     // exterior night follows the lightning
     M.night.color.setScalar(1 + fl * 1.8); M.beam.opacity = .5 + fl * .5;
     if (!reduce) { if (M.rain.map) { M.rain.map.offset.y -= dt * 1.1; M.rain.map.offset.x += dt * .02; } mistT.offset.set(t * .01, t * .006); }
@@ -478,7 +480,7 @@ export function buildHollowHouse(ctx) {
 
     // flames and the lights that follow them
     for (const s of flameSrc) { const g = s.grp; s.level = (g === 'sconce' ? fx.level.sconce[s.gi] : g === 'furnace' ? fx.level.furnace : 1) * lv * (s.moon ? 1 + fl * 4 : 1); }
-    pool.update(P.x, P.z, dt, inside ? 1 : 0, t, reduce);
+    pool.update(P.x, P.z, dt, inside ? 1 : .8, t, reduce);
     lantern.position.set(P.x - Math.sin(P.yaw) * .25, 1.5, P.z - Math.cos(P.yaw) * .25);
     lantern.intensity = inside ? (reduce ? 13 : 14 * (.95 + Math.sin(t * 6.1) * .02 + Math.sin(t * 13.3) * .02)) * (fx.blackout ? .35 : 1) : 0;
     flameM.color.setRGB(1, .77 * (reduce ? 1 : .88 + Math.sin(t * 9) * .08), .42);
