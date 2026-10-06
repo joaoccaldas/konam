@@ -43,3 +43,10 @@ test('Beast Cave procedural material is deterministic and avoids copied UI',()=>
   assert.doesNotMatch(room,/Math\.random/);
   assert.match(room,/original KONA\.m training visualization, not a copied Zwift screen/);
 });
+
+test('Beast Cave does not use a material it never declares (this once crashed the whole museum on load)',()=>{
+  for(const m of room.matchAll(/new THREE\.InstancedMesh\([^,]+,\s*([a-zA-Z_$][\w$]*)\s*,/g)){
+    const name=m[1];
+    assert.match(room,new RegExp('(const|let)\\s+'+name+'\\b|[{,]\\s*'+name+'\\s*[,}]\\s*=\\s*ctx'),`${name} is used as an instanced material but never declared`);
+  }
+});

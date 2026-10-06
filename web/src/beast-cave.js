@@ -36,6 +36,7 @@ export function buildBeastCave(ctx) {
   const dark = new THREE.MeshStandardMaterial({color:'#111214',roughness:.62,metalness:.18});
   const steel = new THREE.MeshStandardMaterial({color:'#35383b',roughness:.32,metalness:.72});
   const pale = new THREE.MeshStandardMaterial({color:'#ded5c8',roughness:.86});
+  const rubber = new THREE.MeshStandardMaterial({color:'#0d0e0f',roughness:.92});
   const wall=(w,h,d,x,y,z,mat=wallMat)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.receiveShadow=true;m.castShadow=!lite;group.add(m);return m;};
 
   wall(RW,BROOM.h,.28,CX,BROOM.h/2,BROOM.z0+.14);
