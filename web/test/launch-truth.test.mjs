@@ -13,7 +13,7 @@ test('Kona.m launch identity is coherent on primary public surfaces',()=>{
   assert.equal(manifest.name,'Kona.m');
   assert.equal(manifest.short_name,'Kona.m');
   assert.match(landing,/<title>Kona\.m · Race the version of yourself<\/title>/);
-  assert.match(landing,/Enter Kona\.m/);
+  assert.match(landing,/id="entryWorld"[^>]*>Enter the 3D world/);
   assert.match(landing,/Canyon Museum/);
   const native=json('app/native/capacitor.config.json');
   assert.equal(native.appName,'Kona.m');

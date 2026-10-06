@@ -79,6 +79,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   const scheduleTourPosition=()=>{cancelAnimationFrame(tourFrame);tourFrame=requestAnimationFrame(positionTour);};
   addEventListener('resize',scheduleTourPosition);panel.addEventListener('scroll',scheduleTourPosition,{passive:true});window.visualViewport?.addEventListener('resize',scheduleTourPosition);
   const dismissTour=()=>{
+    if(tourNode&&title.textContent==='Home')panel.scrollTop=0;
     tourTarget?.classList.remove('tour-target');tourTarget=null;cancelAnimationFrame(tourFrame);
     tourNode?.remove();tourNode=null;
   };
@@ -126,6 +127,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     title.textContent='Home'; eyebrow.textContent=`${PRODUCT_NAME} · TODAY`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('home');
     disposeStudio=renderHomeSurface(body,{
+      enterWorld:()=>{close();enter?.();},
       event:facts().event,
       profile,
       openRaceSelf:raceSelf,

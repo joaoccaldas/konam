@@ -254,3 +254,5 @@ else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-rac
 else if (returningVisit && ['home','garage','collection','discover','plan','me','feed','travel'].includes(q.get('view'))) enterApp(q.get('view'));
 
 document.getElementById('entryInvite')?.addEventListener('click',openInviteDialog);
+
+document.getElementById('entryWorld')?.addEventListener('click',()=>{setEntryMode('app');intro?.setAttribute('hidden','');shell.close();openMuseum();});

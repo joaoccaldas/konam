@@ -23,7 +23,7 @@ test('landing HTML contains no GLB, HDR or Three.js preload',()=>{
 
 test('landing exposes the product door, sign-in and install affordances',()=>{
   assert.match(html,/id="buildSelf"/i);
-  assert.match(html,/Enter KONA/i);
+  assert.match(html,/id="entryWorld"[^>]*>Enter the 3D world/i);
   assert.match(html,/Sign in/i);
   assert.match(html,/Install app/i);
 });
