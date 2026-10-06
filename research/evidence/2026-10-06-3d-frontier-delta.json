@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-06",
+  "production_modified": false,
+  "scope": "Daily evidence-first 3D frontier decision delta",
+  "material_changes": [
+    {
+      "id": "SPLAT_INTEROP_CONVERGENCE",
+      "source_quality": "A/A-",
+      "confidence": 0.96,
+      "hypothesis_change": "Promote Gaussian splats from research-only capture representation to a standardized optional visual-delivery layer, while retaining explicit mesh proxies for collision, physics, selection, navigation and WebGL fallback.",
+      "evidence": [
+        {
+          "source": "Khronos glTF extension specification repository",
+          "url": "https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md",
+          "claim": "KHR_gaussian_splatting is marked Complete and Ratified in the maintained specification repository."
+        },
+        {
+          "source": "Three.js documentation",
+          "url": "https://threejs.org/docs/pages/GLTFGaussianSplatLoaderExtension.html",
+          "claim": "Three.js ships GLTFGaussianSplatLoaderExtension for KHR_gaussian_splatting; the GaussianSplat runtime path requires WebGPURenderer."
+        },
+        {
+          "source": "Blender 5.3 official release notes",
+          "url": "https://developer.blender.org/docs/release_notes/5.3/rendering/",
+          "claim": "Blender 5.3 imports and renders 3D Gaussian splats using a native point-cloud splat type from PLY/SPZ, but currently has no splat export and documents transform/rendering limitations."
+        }
+      ],
+      "contradiction": "Official Khronos specification text says Complete/Ratified while recent Khronos event material still calls Gaussian Splatting a Release Candidate. Blender can ingest/render splats but not export them, and Three.js native KHR splat rendering currently requires WebGPU.",
+      "engineering_implication": "Use KHR_gaussian_splatting GLB as the preferred standards-track research interchange where supported, retain SPZ as a compact capture/import format, and always pair captured splats with a semantic mesh/proxy layer. Feature-detect WebGPU and never make splats the sole production representation yet.",
+      "affected_projects": [
+        "gaudi-nexus",
+        "bellagio",
+        "studio-kona",
+        "konam"
+      ],
+      "isolated_experiment": "EXP-SPLAT-INTEROP-001",
+      "experiment_definition": "Take one captured room/architectural subject and test the same reconstruction as KHR_gaussian_splatting GLB, SPZ and semantic mesh proxy across Blender 5.3 and Three.js WebGPU; measure appearance/SH fidelity, transforms, bytes, load time, GPU memory, mobile/WebGL fallback and interaction/collision behavior.",
+      "priority_change": "Insert ahead of EXP-GLTF21-COMPOSE-001 because the interchange path is now concrete enough to validate cheaply and directly."
+    },
+    {
+      "id": "BLENDER_ASSET_AS_CODE",
+      "source_quality": "A",
+      "confidence": 0.94,
+      "implementation_maturity_confidence": 0.78,
+      "hypothesis_change": "Procedural node systems should increasingly have diffable, reviewable source authority rather than opaque .blend files being the only source of truth.",
+      "evidence": [
+        {
+          "source": "Blender Developers Blog, Geometry Nodes Workshop September 2026",
+          "url": "https://code.blender.org/2026/10/geometry-nodes-workshop-september-2026/",
+          "claim": "The Blender team documents external libraries such as Molecular Nodes storing node groups as Python code via nodebpy, discusses Git diff/merge workflows, plans asset splitting into one .blend per asset, and is exploring export nodes, lists, graph processing and reusable node-group compatibility."
+        },
+        {
+          "source": "Blender developer weekly update, 5 October 2026",
+          "url": "https://devtalk.blender.org/t/5-october-2026/45842",
+          "claim": "Current Geometry Nodes work includes bake path templating and ongoing asset/workflow changes, reinforcing a more automatable procedural content pipeline."
+        }
+      ],
+      "contradiction": "The strongest workflow ideas are partly workshop direction/WIP rather than stable Blender contracts. nodebpy proves the pattern in an external library, not universal round-trip fidelity for every Blender node system.",
+      "engineering_implication": "Prototype text-source procedural assets plus generated .blend artifacts and one-asset-per-file packaging. Do not migrate production authority until round-trip fidelity, deterministic builds, code review usefulness and CI behavior are demonstrated.",
+      "affected_projects": [
+        "gaudi-nexus",
+        "konam",
+        "world-tooling"
+      ],
+      "isolated_experiment": "EXP-BLENDER-ASSET-AS-CODE-001",
+      "experiment_definition": "Choose one Gaudí parametric element and one KONA procedural asset; represent node graph/source in diffable text, generate the Blender asset, rebuild twice for determinism, compare geometry/material hashes, and evaluate Git review/merge ergonomics.",
+      "priority_change": "Fold the narrower EXP-BLENDER52-BUNDLES-001 into this broader source-authority experiment."
+    }
+  ],
+  "no_material_change": [
+    "Gaudí scholarship/provenance: no new Catalan/Spanish primary-source development found that changes the documented/inferred/creative reconstruction policy.",
+    "Computational architecture/form-finding: no new development changes the current experiment order.",
+    "Meshopt/KTX2: meshoptimizer v1.3 benchmark-first decision and KTX2/Basis baseline remain unchanged.",
+    "Three.js/WebGPU: upstream WebGPU work continues rapidly, but no new evidence overturns the existing r187-dev isolated-benchmark plus WebGL-fallback policy.",
+    "Cycling aerodynamics/rolling resistance/wind/terrain: no new evidence changes the Generic Cyclist Model benchmark-first priority.",
+    "Human perception/perceptual resolution: perceptual LOD hypothesis unchanged.",
+    "Product visualization: no new watch/bike/shoe/helmet-specific evidence changes current fidelity/semantic-part policy.",
+    "AI x 3D: no new evidence changes the semantic parts/material slots/scale/provenance requirement."
+  ],
+  "experiment_priority": [
+    "EXP-GCM-CFD-001",
+    "EXP-CLUSTERLOD-001",
+    "EXP-SPLAT-INTEROP-001",
+    "EXP-HYBRID-CAPTURE-001",
+    "EXP-GLTF21-COMPOSE-001",
+    "EXP-PERCEPTUAL-LOD-001",
+    "EXP-BLENDER-ASSET-AS-CODE-001",
+    "EXP-THREE-R187-001",
+    "EXP-GAUDI-PROVENANCE-001",
+    "EXP-AI3D-PARTPBR-001"
+  ]
+}
