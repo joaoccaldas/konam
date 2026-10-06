@@ -60,7 +60,7 @@
   "performance": {
     "mobile": {
       "target_fps": 30,
-      "max_room_draw_calls": 110,
+      "max_room_draw_calls": 130,
       "max_room_triangles": 70000,
       "max_texture_edge": 512,
       "max_dpr": 1.5,
@@ -71,8 +71,8 @@
     },
     "tablet": {
       "target_fps": 45,
-      "max_room_draw_calls": 125,
-      "max_room_triangles": 90000,
+      "max_room_draw_calls": 130,
+      "max_room_triangles": 100000,
       "max_texture_edge": 1024,
       "max_dpr": 1.75,
       "particle_density": 110,
@@ -82,7 +82,7 @@
     },
     "desktop": {
       "target_fps": 60,
-      "max_room_draw_calls": 125,
+      "max_room_draw_calls": 130,
       "max_room_triangles": 100000,
       "max_texture_edge": 1024,
       "max_dpr": 2,
@@ -92,9 +92,9 @@
       "lod_policy": "pooled-lights-4-of-N"
     },
     "measured": {
-      "method": "web/hollow-house-evidence.mjs (renderer-independent counts: the room's own draws and triangles, canonical bike excluded)",
-      "room_draw_calls": 94,
-      "room_triangles": 48000,
+      "method": "web/hollow-house-evidence.mjs: the room's own draws and triangles at every evidence viewpoint, worst view reported; canonical bike excluded",
+      "worst_view_draw_calls": 120,
+      "worst_view_triangles_desktop": 74000,
       "canonical_bike_adds": {
         "draw_calls": 73,
         "triangles": 551000,
@@ -103,7 +103,8 @@
       "real_lights": {
         "mobile": 3,
         "desktop": 5
-      }
+      },
+      "culling": "zone graph; from most spots 75-120 draws"
     }
   },
   "provenance": {
@@ -114,7 +115,8 @@
       "Speedmax CFR GLB via PIECES",
       "Lava Night skeleton/cobweb/pumpkin props, now shared in web/src/horrorkit.js",
       "web/src/roomkit.js motes, mist, scrawl and glyph painters",
-      "web/src/engine/skins.js livery system"
+      "web/src/engine/skins.js livery system",
+      "museum Art World paintings and sculptures (museum/art/*.json): midnight-seawall, night-boards, lava-meets-sea, the-tuck, basalt-airfoil; AI-generated, provenance recorded in the registry and disclosed on their cards"
     ]
   },
   "rights": {

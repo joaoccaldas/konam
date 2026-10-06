@@ -238,3 +238,26 @@ test('haunt sound bed and every director cue construct and fire against a WebAud
   for (const c of ['slam', 'thunder', 'whisper', 'musicbox', 'stinger', 'heartbeat', 'run', 'thud', 'flicker', 'drip']) assert.match(read('web/src/roomSound.js'), new RegExp(c + ':'));
   assert.doesNotMatch(read('web/src/roomSound.js'), /new Audio\(|\.mp3|\.ogg|\.wav|fetch\(/, 'synthesised only: no audio files');
 });
+
+// ---------------------------------------------------------------- reuse across projects, and intelligent rendering
+test('the house reuses the museum\'s own Art World pieces, and records what they are', () => {
+  const man = j('world/konam/candidates/hollow-house-asset-manifest-v1.json'), paintings = j('museum/art/paintings.json').paintings, sculptures = j('museum/art/sculptures.json').sculptures;
+  const reused = man.assets.filter(a => a.asset_id.startsWith('art-'));
+  assert.equal(reused.length, 5);
+  for (const a of reused) {
+    assert.equal(a.decision, 'REUSE'); assert.ok(fs.existsSync(path.join(ROOT, a.runtime_ref)), a.runtime_ref + ' must exist');
+    const id = a.source_ref.split('#')[1], rec = [...paintings, ...sculptures].find(x => x.id === id);
+    assert.ok(rec, id + ' must be in the registry'); assert.ok(rec.provenance?.kind, id + ' must carry recorded provenance');
+  }
+  assert.match(room, /AI-generated work/, 'the card discloses that the reused art is AI-generated');
+  assert.match(room, /assets\/art\/paintings\//); assert.match(room, /assets\/art\/sculptures\//);
+});
+
+test('rooms are culled by a graph that never opens a hole to the hall', () => {
+  assert.match(room, /const SEES = /); assert.match(room, /plugGroups\[z\]\.visible = !show\.has\(z\)/);
+  const SEES = { foyer: ['corridor', 'cellar'], corridor: ['foyer', 'cellar'], parlor: ['corridor', 'nursery'], nursery: ['corridor', 'parlor'], library: ['corridor', 'dining'], dining: ['corridor', 'library'], cellar: ['corridor'] };
+  assert.match(room, /corridor: \['foyer', 'cellar'\]/);
+  for (const [z, seen] of Object.entries(SEES)) for (const o of seen) assert.ok(SEES[o], `${z} sees unknown zone ${o}`);
+  // every doorway into a zone that can be culled has a plug: foyer, cellar, and the four rooms
+  for (const z of ['foyer', 'cellar', 'parlor', 'nursery', 'library', 'dining']) assert.match(room, new RegExp(`plug\\('${z}'`), `${z} doorway needs a plug`);
+});

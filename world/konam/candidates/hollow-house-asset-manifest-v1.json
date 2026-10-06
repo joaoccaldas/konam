@@ -160,6 +160,70 @@
       "rights": "original",
       "lifecycle": "candidate",
       "note": "a 'haunt' bed and cue() one-shots added to the existing synthesised room-sound system; no audio files"
+    },
+    {
+      "asset_id": "art-painting-midnight-seawall",
+      "kind": "painting",
+      "decision": "REUSE",
+      "source": "museum-art-world",
+      "source_ref": "museum/art/paintings.json#midnight-seawall",
+      "rights": "existing-registered-ai-generated",
+      "lifecycle": "approved",
+      "runtime_ref": "assets/art/paintings/midnight-seawall.jpg",
+      "note": "hangs in the library; provenance (Higgsfield, gpt_image_2_5) is recorded in the registry; disclosed as AI-generated on its card"
+    },
+    {
+      "asset_id": "art-painting-night-boards",
+      "kind": "painting",
+      "decision": "REUSE",
+      "source": "museum-art-world",
+      "source_ref": "museum/art/paintings.json#night-boards",
+      "rights": "existing-registered-ai-generated",
+      "lifecycle": "approved",
+      "runtime_ref": "assets/art/paintings/night-boards.jpg"
+    },
+    {
+      "asset_id": "art-painting-lava-meets-sea",
+      "kind": "painting",
+      "decision": "REUSE",
+      "source": "museum-art-world",
+      "source_ref": "museum/art/paintings.json#lava-meets-sea",
+      "rights": "existing-registered-ai-generated",
+      "lifecycle": "approved",
+      "runtime_ref": "assets/art/paintings/lava-meets-sea.jpg",
+      "note": "above the parlor fireplace"
+    },
+    {
+      "asset_id": "art-sculpture-the-tuck",
+      "kind": "sculpture",
+      "decision": "REUSE",
+      "source": "museum-art-world",
+      "source_ref": "museum/art/sculptures.json#the-tuck",
+      "rights": "existing-registered-ai-generated",
+      "lifecycle": "approved",
+      "runtime_ref": "assets/art/sculptures/the-tuck.glb",
+      "note": "foyer, half under a dust sheet; ~20k triangles, loaded once, shielded materials"
+    },
+    {
+      "asset_id": "art-sculpture-basalt-airfoil",
+      "kind": "sculpture",
+      "decision": "REUSE",
+      "source": "museum-art-world",
+      "source_ref": "museum/art/sculptures.json#basalt-airfoil",
+      "rights": "existing-registered-ai-generated",
+      "lifecycle": "approved",
+      "runtime_ref": "assets/art/sculptures/basalt-airfoil.glb",
+      "note": "cellar; its glowing vein suits the furnace"
+    },
+    {
+      "asset_id": "zone-culling",
+      "kind": "render-primitive",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "source_ref": "web/src/hollow-house.js#zg/SEES/plug",
+      "rights": "original",
+      "lifecycle": "candidate",
+      "note": "rooms are separate groups drawn only when the visitor is in them or can see into them; doorways into culled rooms get a black plug so culling never shows the hall's sky; candidate for extraction into horrorkit.js when a second room needs it"
     }
   ],
   "constraints": {
@@ -169,6 +233,7 @@
     "athlete_likeness": false,
     "official_partner_marks": false,
     "audio_files": false,
-    "downloaded_textures": false
+    "downloaded_textures": false,
+    "art_assets_disclosed_as_ai_generated": true
   }
 }

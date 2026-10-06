@@ -12,21 +12,63 @@
         "room": "hollowHouseRoom",
         "visible": true,
         "budget": {
-          "draws": 94,
-          "tris": 47418,
+          "draws": 120,
+          "tris": 74406,
           "realLights": 5
         },
         "budgetWithBike": {
-          "draws": 167,
-          "tris": 598946,
+          "draws": 120,
+          "tris": 574661,
           "realLights": 5
         },
         "painted": [
           27,
           27
         ],
-        "pickables": 1914,
-        "reduced": false
+        "pickables": 1919,
+        "reduced": false,
+        "budgetByView": [
+          {
+            "draws": 84,
+            "tris": 67042,
+            "realLights": 5
+          },
+          {
+            "draws": 84,
+            "tris": 67042,
+            "realLights": 5
+          },
+          {
+            "draws": 120,
+            "tris": 74406,
+            "realLights": 5
+          },
+          {
+            "draws": 67,
+            "tris": 11124,
+            "realLights": 5
+          },
+          {
+            "draws": 67,
+            "tris": 11124,
+            "realLights": 5
+          },
+          {
+            "draws": 54,
+            "tris": 7708,
+            "realLights": 5
+          },
+          {
+            "draws": 54,
+            "tris": 7708,
+            "realLights": 5
+          },
+          {
+            "draws": 51,
+            "tris": 25917,
+            "realLights": 5
+          }
+        ]
       },
       "shots": [
         "desktop-01-door-from-hall.png",
@@ -41,7 +83,7 @@
       "errors": [],
       "tier": "desktop",
       "limits": {
-        "draws": 125,
+        "draws": 130,
         "triangles": 100000
       }
     },
@@ -58,21 +100,43 @@
         "room": "hollowHouseRoom",
         "visible": true,
         "budget": {
-          "draws": 94,
-          "tris": 47418,
+          "draws": 118,
+          "tris": 59387,
           "realLights": 3
         },
         "budgetWithBike": {
-          "draws": 167,
-          "tris": 598946,
+          "draws": 67,
+          "tris": 11124,
           "realLights": 3
         },
         "painted": [
           27,
           27
         ],
-        "pickables": 1912,
-        "reduced": false
+        "pickables": 1916,
+        "reduced": false,
+        "budgetByView": [
+          {
+            "draws": 82,
+            "tris": 52023,
+            "realLights": 3
+          },
+          {
+            "draws": 82,
+            "tris": 52023,
+            "realLights": 3
+          },
+          {
+            "draws": 118,
+            "tris": 59387,
+            "realLights": 3
+          },
+          {
+            "draws": 67,
+            "tris": 11124,
+            "realLights": 3
+          }
+        ]
       },
       "shots": [
         "phone-portrait-01-door-from-hall.png",
@@ -83,7 +147,7 @@
       "errors": [],
       "tier": "mobile",
       "limits": {
-        "draws": 110,
+        "draws": 130,
         "triangles": 70000
       }
     },
@@ -100,21 +164,33 @@
         "room": "hollowHouseRoom",
         "visible": true,
         "budget": {
-          "draws": 94,
-          "tris": 47418,
+          "draws": 118,
+          "tris": 59387,
           "realLights": 3
         },
         "budgetWithBike": {
-          "draws": 167,
-          "tris": 598946,
+          "draws": 187,
+          "tris": 608131,
           "realLights": 3
         },
         "painted": [
           27,
           27
         ],
-        "pickables": 1912,
-        "reduced": false
+        "pickables": 1916,
+        "reduced": false,
+        "budgetByView": [
+          {
+            "draws": 82,
+            "tris": 52023,
+            "realLights": 3
+          },
+          {
+            "draws": 118,
+            "tris": 59387,
+            "realLights": 3
+          }
+        ]
       },
       "shots": [
         "phone-landscape-02-foyer-stair-and-glass.png",
@@ -123,7 +199,7 @@
       "errors": [],
       "tier": "mobile",
       "limits": {
-        "draws": 110,
+        "draws": 130,
         "triangles": 70000
       }
     },
@@ -138,21 +214,28 @@
         "room": "hollowHouseRoom",
         "visible": true,
         "budget": {
-          "draws": 94,
-          "tris": 47418,
+          "draws": 120,
+          "tris": 74406,
           "realLights": 5
         },
         "budgetWithBike": {
-          "draws": 167,
-          "tris": 598946,
+          "draws": 189,
+          "tris": 623150,
           "realLights": 5
         },
         "painted": [
           27,
           27
         ],
-        "pickables": 1914,
-        "reduced": true
+        "pickables": 1919,
+        "reduced": true,
+        "budgetByView": [
+          {
+            "draws": 120,
+            "tris": 74406,
+            "realLights": 5
+          }
+        ]
       },
       "shots": [
         "desktop-reduced-motion-03-corridor-and-the-lodger.png"
@@ -160,7 +243,7 @@
       "errors": [],
       "tier": "desktop",
       "limits": {
-        "draws": 125,
+        "draws": 130,
         "triangles": 100000
       }
     }

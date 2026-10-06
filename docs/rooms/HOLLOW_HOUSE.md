@@ -30,6 +30,29 @@ One native-room module built into `landing.js` on the shared host: the host's re
 - **Depth.** Fog is swapped from the hall's day haze to a close dark fog while inside (and restored exactly on exit), so the corridor vanishes into black. Low mist, dust motes, moonbeams from every window, rain and a storm view outside.
 - **Surfaces arrive lazily.** The room is built at once from plain dark materials; the painted surfaces are generated one per idle slice, nearest the door first, so the museum's start-up is not blocked (generation is ~6 s of main-thread work on a software-rendered CI browser).
 
+## Intelligent rendering
+
+- **Zone-graph culling.** Every static piece is filed under the zone it stands in (by its own centre), each zone is its own group, and per frame only the visitor's zone plus the zones they can see into are drawn (`SEES` in `hollow-house.js`). In the corridor only the rooms whose door you are near are drawn. From a given spot the house draws roughly 75–120 calls, not all rooms at once.
+- **Culling never opens a hole.** A culled room behind an open doorway would show the hall's bright sky. Every doorway into a zone that can be hidden gets a black plug just inside it, drawn only while that zone is culled, so a room you have not entered simply reads as dark. A test holds this.
+- **Honest budgets.** The evidence script records the room's own draws and triangles at *every* viewpoint and checks the worst one against the manifest, with the canonical bike counted separately.
+- **Lazy painting, pooled lights, shielded materials** (see above) are what make this affordable on a phone. Mist respects the house fog so it fades with distance instead of glowing like daylight.
+
+## Cross-project reuse: what is shared, in which direction, and why
+
+The repo rule is REUSE → ADAPT → RESTYLE → COMPOSE → CREATE, and `check-before-create` flagged paintings and sculptures as existing assets, so the house borrows rather than makes.
+
+| From | Into the house | Why it is right |
+| --- | --- | --- |
+| Art World paintings (`midnight-seawall`, `night-boards`, `lava-meets-sea`) | library and parlor walls | already optimised, registered, with recorded provenance; the dark house makes familiar paintings read differently, which is the point of a Halloween "hidden collection" |
+| Art World sculptures (`the-tuck`, `basalt-airfoil`) | foyer (half under a sheet) and cellar | ~15–20k triangles each, loaded once through the host's loader; `basalt-airfoil`'s glowing vein suits the furnace |
+| Speedmax CFR GLB + `skins.js` | the cellar machine | the canonical product pipeline; only the livery is new |
+| Lava Night skeleton / cobweb / bat / pumpkin | cellar, every ceiling corner | extracted into `horrorkit.js`; both rooms now import one implementation |
+| `roomkit.js` dust, mist, tally, glyph painters | house-wide | same painters the theme rooms use |
+
+Disclosure: the Art World pieces are **AI-generated** (Higgsfield; provenance is in `museum/art/*.json`). They satisfy the asset standard because that provenance is recorded, and the house's cards say so rather than presenting them as originals made for the house.
+
+Reuse in the other direction (candidates, not done): `shieldMaterial` and `createLightPool` would let Beast Cave or any night room escape the hall's sun and environment light; `GeoBatch` plus zone culling would cut draw calls in the brand rooms; the brick, wainscot, flagstone and rust surfaces suit any industrial or heritage room. They live in `horrorkit*.js` and the authority map so the next room extends them instead of copying them. Not everything should be shared blindly: surfaces and lighting are cheap to share, while a room's story, rights and truth claims stay with the room.
+
 ## The house rules (enforced by tests)
 
 1. Nothing ever touches, blocks or traps the visitor, and nothing takes control of the camera. The front door shuts behind you and swings open again before you reach it; the doorway itself is never blocked.

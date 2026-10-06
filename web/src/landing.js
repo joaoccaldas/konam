@@ -870,7 +870,7 @@ const hween = buildHalloween({ scene, canvasTex, lettering, lightPool, basaltTex
 hall.add(hween.sign);
 const beast = BEAST_CAVE_REVIEW ? buildBeastCave({ scene, canvasTex, lettering, lightPool, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 }) : null;
 if (beast) hall.add(beast.sign);
-const hollow = HOLLOW_REVIEW ? buildHollowHouse({ scene, canvasTex, lettering, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1, onCue: (name, delay) => roomSound?.cue?.(name, delay) }) : null;
+const hollow = HOLLOW_REVIEW ? buildHollowHouse({ scene, canvasTex, lettering, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1, onCue: (name, delay) => roomSound?.cue?.(name, delay), loadGLB: url => loader.loadAsync(url) }) : null;
 if (hollow) hall.add(hollow.sign);
 const sanctuary = buildSanctuary({ scene, lettering, lightPool, FONT, SERIF, lite, coarse, pickables, obstacles });
 sanctuary.sign.position.set(0, SDOOR.h + .7, HALL.z0 - .04); sanctuary.sign.rotation.y = Math.PI; hall.add(sanctuary.sign);
@@ -1045,7 +1045,7 @@ let hollowBikeLoading = false;                                       // the rail
 async function loadHollowBike() {
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!hollow || !cfr?.glb || hollow.bikeSpot.bike || hollowBikeLoading) return;
   hollowBikeLoading = true;
-  try { const gltf = await loader.loadAsync(cfr.glb); hollow.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null })); }
+  try { hollow.loadArt?.(); const gltf = await loader.loadAsync(cfr.glb); hollow.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null })); }
   finally { hollowBikeLoading = false; }
 }
 async function loadAll() {

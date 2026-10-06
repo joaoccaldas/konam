@@ -53,7 +53,7 @@ export function hollowWalkable(x, z, WALK) {
 }
 
 export function buildHollowHouse(ctx) {
-  const { scene, canvasTex, lettering, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX, onCue } = ctx;
+  const { scene, canvasTex, lettering, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX, onCue, loadGLB } = ctx;
   const group = new THREE.Group(); group.name = 'hollowHouseRoom'; scene.add(group);
   const R = rng(77), Rf = (a, b) => a + R() * (b - a);
   const tier = lite ? 'mobile' : 'desktop';
@@ -107,7 +107,25 @@ export function buildHollowHouse(ctx) {
   const flash = { v: 0 };
 
   // ------------------------------------------------------------------ batch helpers
-  const B = new GeoBatch();
+  // Intelligent rendering: every static piece is filed under the zone it stands in (by its own centre), each zone is
+  // its own group, and per frame only the visitor's zone and the zones they can see into are drawn.
+  const ZONES = ['foyer', 'corridor', 'parlor', 'nursery', 'library', 'dining', 'cellar'];
+  const zg = Object.fromEntries(ZONES.map(z => { const g = new THREE.Group(); g.name = 'hh-zone-' + z; group.add(g); return [z, g]; }));
+  const clampTo = (v, a, b) => Math.min(b, Math.max(a, v));
+  const zoneKey = (x, z) => zoneOf(clampTo(x, HHROOM.x0 + .05, HHROOM.x1 - .05), clampTo(z, HHROOM.z1 + .05, HHROOM.z0 - .05));   // things outside the shell (night views, rain, the hall-side wall) belong to the nearest zone
+  const zadd = o => { zg[zoneKey(o.position.x, o.position.z)].add(o); return o; };
+  const batches = Object.fromEntries(ZONES.map(z => [z, new GeoBatch()]));
+  const B = {
+    add(key, geo, matrix, tile) { geo.computeBoundingSphere(); const c = geo.boundingSphere.center.clone(); if (matrix) c.applyMatrix4(matrix); batches[zoneKey(c.x, c.z)].add(key, geo, matrix, tile); return B; },
+    box(key, w, h, d, matrix, tile = 1) { return B.add(key, new THREE.BoxGeometry(w, h, d), matrix, tile); },
+  };
+  // Culling must never open a hole to the hall's sky: each doorway into a zone that can be hidden gets a black panel just
+  // inside it, drawn only while that zone is culled (a room you have not entered reads as dark, which is the point).
+  const plugBatches = Object.fromEntries(ZONES.map(z => [z, new GeoBatch()])), plugGroups = Object.fromEntries(ZONES.map(z => { const g = new THREE.Group(); g.name = 'hh-plug-' + z; group.add(g); return [z, g]; }));
+  const plug = (zone, x, z, w, ry) => plugBatches[zone].add('plug', new THREE.PlaneGeometry(w, 3.4), xf(x, 1.7, z, ry), 0);
+  plug('foyer', 14.4, -38.4, 2.9, Math.PI / 2); plug('cellar', 27.6, -38.4, 2.0, -Math.PI / 2);
+  plug('parlor', 17.2, -36.6, 1.6, Math.PI); plug('nursery', 24.4, -36.6, 1.6, Math.PI); plug('library', 18.6, -40.2, 1.6, 0); plug('dining', 23.2, -40.2, 1.6, 0);
+  const SEES = { foyer: ['corridor', 'cellar'], corridor: ['foyer', 'cellar'], parlor: ['corridor', 'nursery'], nursery: ['corridor', 'parlor'], library: ['corridor', 'dining'], dining: ['corridor', 'library'], cellar: ['corridor'] };   // who can be seen from where
   const bx = (k, w, h, d, x, y, z, ry = 0, tile = 1) => B.box(k, w, h, d, xf(x, y, z, ry), tile);
   const cyl = (k, r1, r2, h, x, y, z, seg = 14, tile = 0) => B.add(k, new THREE.CylinderGeometry(r1, r2, h, seg), xf(x, y, z), tile);
   const lathe = (k, pts, x, y, z, seg = 16, tile = 0, ry = 0) => B.add(k, new THREE.LatheGeometry(pts.map(([r, h]) => new THREE.Vector2(r, h)), seg), xf(x, y, z, ry), tile);
@@ -219,10 +237,9 @@ export function buildHollowHouse(ctx) {
   bx('wood', .5, 2.3, .38, 12.8, 1.15, Z0 - .25, 0, 1.2); bx('wood', .38, .95, .06, 12.8, 1.5, Z0 - .43);
   cyl('brass', .09, .09, .03, 12.8, 1.88, Z0 - .45, 20); B.add('brass', new THREE.CylinderGeometry(.015, .015, .5), xf(12.8, .72, Z0 - .45));
   bx('wood', 1.5, .08, .4, 10.2, .78, Z0 - .24, 0, 1.2); for (const dx of [-.65, .65]) bx('wood', .07, .78, .07, 10.2 + dx, .39, Z0 - .24);
-  const mirrorMat = std({ color: '#0a0c10', roughness: .06, metalness: .9 }); const mirror = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.6), mirrorMat); mirror.position.set(10.2, 1.9, Z0 - .05); mirror.rotation.y = Math.PI; group.add(mirror);
+  const mirrorMat = std({ color: '#0a0c10', roughness: .06, metalness: .9 }); const mirror = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.6), mirrorMat); mirror.position.set(10.2, 1.9, Z0 - .05); mirror.rotation.y = Math.PI; zadd(mirror);
   bx('wood', 1.16, .08, .08, 10.2, 2.73, Z0 - .06); bx('wood', 1.16, .08, .08, 10.2, 1.07, Z0 - .06); bx('wood', .08, 1.74, .08, 9.64, 1.9, Z0 - .06); bx('wood', .08, 1.74, .08, 10.76, 1.9, Z0 - .06);
-  const sheets = new THREE.Group(); group.add(sheets);
-  const sheetAt = (boxes, x, z, ry = 0) => { const m = new THREE.Mesh(drapeGeometry(boxes, { rand: R, flare: .5 }), M.sheet); m.position.set(x, 0, z); m.rotation.y = ry; sheets.add(m); return m; };
+  const sheetAt = (boxes, x, z, ry = 0) => { const m = new THREE.Mesh(drapeGeometry(boxes, { rand: R, flare: .5 }), M.sheet); m.position.set(x, 0, z); m.rotation.y = ry; zadd(m); return m; };
   sheetAt([[0, 0, .9, .9, .75], [0, -.38, .9, .16, 1.1]], 9.6, -34.0, 1.2); sheetAt([[0, 0, .9, .9, .75], [0, -.38, .9, .16, 1.1]], 13.4, -34.2, 1.9);
   obstacles.push({ c: new THREE.Vector3(9.6, 0, -34.0), r: .75 }, { c: new THREE.Vector3(13.4, 0, -34.2), r: .75 }, { box: [9.4, 11.0, Z0 - .5, Z0] }, { box: [12.4, 13.2, Z0 - .5, Z0] });
   // portraits (eyes follow) and the stained window over the stair
@@ -233,7 +250,7 @@ export function buildHollowHouse(ctx) {
   pSpots.forEach(([x, y, z, ry], i) => {
     const pm = new THREE.MeshBasicMaterial({ color: '#0c0a08', fog: true }); later(() => { pm.map = S.portrait(i); pm.color.set('#7c7468'); pm.needsUpdate = true; });   // lit by the dark: painted, not lamp-lit
     const m = new THREE.Mesh(new THREE.PlaneGeometry(PW, PH), pm);
-    m.position.set(x, y, z); m.rotation.y = ry; m.userData.portrait = true; group.add(m); pickables.push(m); frameMesh(PW, PH, x, y, z, ry); portraits.push({ x, y, z, ry });
+    m.position.set(x, y, z); m.rotation.y = ry; m.userData.portrait = true; zadd(m); pickables.push(m); frameMesh(PW, PH, x, y, z, ry); portraits.push({ x, y, z, ry });
   });
   const pupils = new THREE.InstancedMesh(new THREE.CircleGeometry(.0125, 14), new THREE.MeshBasicMaterial({ color: '#050403' }), portraits.length * 2); pupils.frustumCulled = false; group.add(pupils);
 
@@ -244,7 +261,7 @@ export function buildHollowHouse(ctx) {
     plane('night', wd + 1.2, h + .6, mid, (w.y0 + w.y1) / 2, w.c + w.dir * 1.4, w.dir > 0 ? 0 : Math.PI, 0, 0);
     plane('rain', wd + .4, h + .2, mid, (w.y0 + w.y1) / 2, w.c + w.dir * .12, w.dir > 0 ? 0 : Math.PI, 0, 0);
     bx('wood', .05, h, .1, mid, (w.y0 + w.y1) / 2, w.c + w.dir * .02); bx('wood', wd, .05, .1, mid, (w.y0 + w.y1) / 2 + h * .12, w.c + w.dir * .02);
-    if (w.big) { const g = new THREE.Mesh(new THREE.PlaneGeometry(wd, h), M.stained); g.position.set(mid, (w.y0 + w.y1) / 2, w.c + .04); group.add(g); }
+    if (w.big) { const g = new THREE.Mesh(new THREE.PlaneGeometry(wd, h), M.stained); g.position.set(mid, (w.y0 + w.y1) / 2, w.c + .04); zadd(g); }
     for (const k of [0, 1]) B.add('beam', new THREE.PlaneGeometry(wd * .8, w.big ? 4.4 : 2.9), xf(mid + (k ? .2 : -.2), (w.big ? 2.0 : 1.2), w.c - w.dir * (w.big ? 1.1 : .75), k ? .28 : -.28));
     if (!w.big) for (const sd of [-1, 1]) bx('cloth', .34, 2.2, .06, mid + sd * (wd / 2 + .14), 1.7, w.c - w.dir * .12, 0, 1);
     beams.push({ x: mid, z: w.c - w.dir * .8, y: w.big ? 3.0 : 1.9, big: w.big, room: w.room });
@@ -258,7 +275,7 @@ export function buildHollowHouse(ctx) {
   const src = o => { const s = pool.add(o); flameSrc.push(s); return s; };
 
   // ---- foyer chandelier (swings), fed by a ring of candles
-  const chand = new THREE.Group(); chand.position.set(11.1, FOY_H, -38.4); group.add(chand);
+  const chand = new THREE.Group(); chand.position.set(11.1, FOY_H, -38.4); zadd(chand);
   {
     const cb = new GeoBatch();
     cb.add('brass', new THREE.CylinderGeometry(.012, .012, 1.3), xf(0, -.65, 0)); cb.add('brass', new THREE.LatheGeometry([[.04, 0], [.11, -.1], [.06, -.28], [.2, -.34], [.05, -.5]].map(([r, h]) => new THREE.Vector2(r, h)), 14), xf(0, -1.3, 0));
@@ -293,11 +310,11 @@ export function buildHollowHouse(ctx) {
   for (let i = 0; i < 7; i++) { const a = i / 7 * 6.283; candle(TB.x + Math.cos(a) * .45, .75, TB.z + Math.sin(a) * .45, .1 + R() * .12); }
   cyl('porcelain', .09, .09, .02, TB.x, .76, TB.z, 16);
   src({ x: TB.x, y: 1.1, z: TB.z, base: 7, color: '#ffae5a', flicker: 'candle', range: 7.5, prio: .8 });
-  { const circle = new THREE.Mesh(new THREE.PlaneGeometry(4.4, 4.4), new THREE.MeshBasicMaterial({ map: glyphTex('#d8d2bd', 5), transparent: true, opacity: .42, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 })); circle.rotation.x = -Math.PI / 2; circle.position.set(TB.x, .008, TB.z); group.add(circle); }
-  const tableHit = new THREE.Mesh(new THREE.CylinderGeometry(.95, .95, .3, 16), new THREE.MeshBasicMaterial({ visible: false })); tableHit.position.set(TB.x, .85, TB.z); group.add(tableHit);
+  { const circle = new THREE.Mesh(new THREE.PlaneGeometry(4.4, 4.4), new THREE.MeshBasicMaterial({ map: glyphTex('#d8d2bd', 5), transparent: true, opacity: .42, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 })); circle.rotation.x = -Math.PI / 2; circle.position.set(TB.x, .008, TB.z); zadd(circle); }
+  const tableHit = new THREE.Mesh(new THREE.CylinderGeometry(.95, .95, .3, 16), new THREE.MeshBasicMaterial({ visible: false })); tableHit.position.set(TB.x, .85, TB.z); zadd(tableHit);
   // fireplace on the west wall, embers glowing
   bx('wood', .5, 1.35, 1.9, 15.35, .68, -34.0, 0, 1.2); bx('wood', .62, .12, 2.3, 15.4, 1.42, -34.0, 0, 1.2); bx('felt', .08, .95, 1.1, 15.62, .55, -34.0);
-  const embers = new THREE.Mesh(new THREE.PlaneGeometry(1.0, .22), new THREE.MeshBasicMaterial({ color: '#ff5a12', toneMapped: false, fog: false })); embers.rotation.y = Math.PI / 2; embers.position.set(15.65, .2, -34.0); group.add(embers);
+  const embers = new THREE.Mesh(new THREE.PlaneGeometry(1.0, .22), new THREE.MeshBasicMaterial({ color: '#ff5a12', toneMapped: false, fog: false })); embers.rotation.y = Math.PI / 2; embers.position.set(15.65, .2, -34.0); zadd(embers);
   src({ x: 16.0, y: .6, z: -34.0, base: 3.4, color: '#ff5a14', flicker: 'fire', range: 5, prio: 1.0 });
   obstacles.push({ box: [15.1, 16.0, -35.1, -32.9] });
   // piano against the south wall, dust sheet on the sofa
@@ -306,7 +323,7 @@ export function buildHollowHouse(ctx) {
   sheetAt([[0, 0, 1.7, .8, .6], [0, -.3, 1.7, .22, .95]], 16.6, -35.5, 0); obstacles.push({ box: [15.7, 17.5, -36.0, -35.0] });
 
   // ------------------------------------------------------------------ NURSERY: rocking chair, a crib, a doll that turns when you don't look
-  const crib = new THREE.Group(); crib.position.set(25.9, 0, -33.4); group.add(crib);
+  const crib = new THREE.Group(); crib.position.set(25.9, 0, -33.4); zadd(crib);
   { const cb = new GeoBatch();
     for (const [dx, dz] of [[-.5, -.3], [.5, -.3], [-.5, .3], [.5, .3]]) cb.add('wood', new THREE.BoxGeometry(.05, 1.0, .05), xf(dx, .5, dz), 1.2);
     cb.add('cloth', new THREE.BoxGeometry(1.0, .12, .6), xf(0, .4, 0), 1);
@@ -314,10 +331,10 @@ export function buildHollowHouse(ctx) {
     cb.add('wood', new THREE.BoxGeometry(1.06, .05, .05), xf(0, 1.02, -.3), 1.2); cb.add('wood', new THREE.BoxGeometry(1.06, .05, .05), xf(0, 1.02, .3), 1.2);
     cb.build({ wood: M.wood, cloth: M.cloth }, crib); }
   obstacles.push({ box: [25.2, 26.7, -33.8, -33.0] });
-  const mobile = new THREE.Group(); mobile.position.set(25.9, 2.2, -33.4); group.add(mobile);
+  const mobile = new THREE.Group(); mobile.position.set(25.9, 2.2, -33.4); zadd(mobile);
   { const mb2 = new GeoBatch(); mb2.add('brass', new THREE.CylinderGeometry(.006, .006, 1.0), xf(0, .5, 0)); for (let i = 0; i < 4; i++) { const a = i * 1.571; mb2.add('brass', new THREE.CylinderGeometry(.004, .004, .3), xf(Math.cos(a) * .24, -.15, Math.sin(a) * .24)); mb2.add('porcelain', new THREE.SphereGeometry(.05, 10, 8), xf(Math.cos(a) * .24, -.34, Math.sin(a) * .24)); }
     mb2.add('brass', new THREE.TorusGeometry(.24, .006, 5, 24), xf(0, 0, 0, 0, Math.PI / 2)); mb2.build({ brass: M.brass, porcelain: M.porcelain }, mobile); }
-  const rocker = new THREE.Group(); rocker.position.set(22.4, 0, -35.2); rocker.rotation.y = .6; group.add(rocker);
+  const rocker = new THREE.Group(); rocker.position.set(22.4, 0, -35.2); rocker.rotation.y = .6; zadd(rocker);
   { const rb = new GeoBatch();
     for (const dx of [-.28, .28]) { rb.add('wood', new THREE.TorusGeometry(.5, .018, 6, 22, 1.7), xf(dx, .5, 0, Math.PI / 2, 0, -Math.PI / 2 - .85 + Math.PI, 1, 1, 1)); rb.add('wood', new THREE.BoxGeometry(.04, .45, .04), xf(dx, .26, -.18)); rb.add('wood', new THREE.BoxGeometry(.04, .45, .04), xf(dx, .26, .18)); rb.add('wood', new THREE.BoxGeometry(.04, .8, .04), xf(dx, .72, -.26, 0, -.18)); }
     rb.add('cloth', new THREE.BoxGeometry(.6, .06, .5), xf(0, .5, 0), 1); rb.add('wood', new THREE.BoxGeometry(.58, .62, .04), xf(0, .92, -.28, 0, -.18), 1.2);
@@ -325,7 +342,7 @@ export function buildHollowHouse(ctx) {
   obstacles.push({ c: new THREE.Vector3(22.4, 0, -35.2), r: .55 });
   // shelf with the doll
   bx('wood', 1.2, .05, .3, 26.7, 1.25, -35.4, 0, 1.2); bx('wood', 1.2, .05, .3, 26.7, .85, -35.4, 0, 1.2);
-  const doll = new THREE.Group(); doll.position.set(26.65, 1.28, -35.4); group.add(doll);
+  const doll = new THREE.Group(); doll.position.set(26.65, 1.28, -35.4); zadd(doll);
   { const body = new THREE.Mesh(new THREE.ConeGeometry(.1, .3, 12), M.cloth); body.position.y = .15; doll.add(body); const head = new THREE.Group(); head.position.y = .36; doll.add(head);
     head.add(new THREE.Mesh(new THREE.SphereGeometry(.085, 16, 12), M.porcelain)); const em = new THREE.MeshBasicMaterial({ color: '#030303' });
     for (const x of [-.032, .032]) { const e = new THREE.Mesh(new THREE.SphereGeometry(.014, 8, 6), em); e.position.set(x, .012, .075); head.add(e); }
@@ -351,11 +368,11 @@ export function buildHollowHouse(ctx) {
   // the book that falls: placed as an instance, animated in update
   const fallBook = books.find(b => b.x < 16 && b.y > 1.4) || books[0]; fallBook.fall = true;
   bx('wood', 1.7, .06, .8, 18.3, .76, -42.6, 0, 1.2); for (const [dx, dz] of [[-.78, -.32], [.78, -.32], [-.78, .32], [.78, .32]]) bx('wood', .07, .76, .07, 18.3 + dx, .38, -42.6 + dz, 0, 1.2);
-  cyl('brass', .07, .09, .03, 17.7, .81, -42.5, 16); cyl('brass', .012, .012, .38, 17.7, 1.0, -42.5, 6); const lampShade = new THREE.Mesh(new THREE.CylinderGeometry(.09, .13, .12, 14, 1, true), std({ color: '#2d6a4a', roughness: .4, emissive: '#3f9d6e', emissiveIntensity: .6, side: THREE.DoubleSide })); lampShade.position.set(17.7, 1.22, -42.5); group.add(lampShade);
+  cyl('brass', .07, .09, .03, 17.7, .81, -42.5, 16); cyl('brass', .012, .012, .38, 17.7, 1.0, -42.5, 6); const lampShade = new THREE.Mesh(new THREE.CylinderGeometry(.09, .13, .12, 14, 1, true), std({ color: '#2d6a4a', roughness: .4, emissive: '#3f9d6e', emissiveIntensity: .6, side: THREE.DoubleSide })); lampShade.position.set(17.7, 1.22, -42.5); zadd(lampShade);
   src({ x: 17.7, y: 1.1, z: -42.5, base: 4.2, color: '#ffe0a0', flicker: 'bulb', range: 6, prio: .8 });
   obstacles.push({ box: [17.4, 19.2, -43.1, -42.1] });
-  const ledger = new THREE.Mesh(new THREE.BoxGeometry(.34, .06, .46), std({ color: '#3a2218', roughness: .8 })); ledger.position.set(18.7, .82, -42.6); ledger.rotation.y = .3; group.add(ledger);
-  const ledgerPages = new THREE.Mesh(new THREE.BoxGeometry(.31, .045, .43), std({ color: '#cfc2a2', roughness: 1 })); ledgerPages.position.set(18.7, .835, -42.6); ledgerPages.rotation.y = .3; group.add(ledgerPages);
+  const ledger = new THREE.Mesh(new THREE.BoxGeometry(.34, .06, .46), std({ color: '#3a2218', roughness: .8 })); ledger.position.set(18.7, .82, -42.6); ledger.rotation.y = .3; zadd(ledger);
+  const ledgerPages = new THREE.Mesh(new THREE.BoxGeometry(.31, .045, .43), std({ color: '#cfc2a2', roughness: 1 })); ledgerPages.position.set(18.7, .835, -42.6); ledgerPages.rotation.y = .3; zadd(ledgerPages);
   chairGeo(18.3, -41.7, 3.1); obstacles.push({ c: new THREE.Vector3(18.3, 0, -41.7), r: .35 });
   lathe('brass', [[.001, 0], [.1, .02], [.04, .08], [.02, .5], [.001, .52]], 16.0, 0, -40.9, 12); B.add('porcelain', new THREE.SphereGeometry(.26, 18, 14), xf(16.0, .8, -40.9, .5, 0, .4)); obstacles.push({ c: new THREE.Vector3(16.0, 0, -40.9), r: .4 });
 
@@ -365,7 +382,7 @@ export function buildHollowHouse(ctx) {
   bx('cloth', 3.7, .02, .6, DT.x, .805, DT.z, 0, 1); obstacles.push({ box: [DT.x - 1.9, DT.x + 1.9, DT.z - .65, DT.z + .65] });
   for (let i = 0; i < 4; i++) for (const sd of [-1, 1]) { chairGeo(DT.x - 1.2 + i * .8, DT.z + sd * .95, sd > 0 ? 3.14 : 0); obstacles.push({ c: new THREE.Vector3(DT.x - 1.2 + i * .8, 0, DT.z + sd * .95), r: .3 }); cyl('porcelain', .11, .1, .015, DT.x - 1.2 + i * .8, .82, DT.z + sd * .36, 16); }
   for (const dx of [-1.0, 0, 1.0]) { cyl('brass', .04, .06, .03, DT.x + dx, .835, DT.z, 10); B.add('brass', new THREE.CylinderGeometry(.01, .01, .26), xf(DT.x + dx, .98, DT.z)); for (const sx of [-.1, 0, .1]) { candle(DT.x + dx + sx, 1.11, DT.z, .1); } }
-  sheetAt([[0, 0, .55, .55, .5], [0, .22, .55, .1, 1.0]], 22.1, -42.7, Math.PI / 2); obstacles.push({ c: new THREE.Vector3(22.1, 0, -42.7), r: .5 });
+  const breather = sheetAt([[0, 0, .55, .55, .5], [0, .22, .55, .1, 1.0]], 22.1, -42.7, Math.PI / 2); obstacles.push({ c: new THREE.Vector3(22.1, 0, -42.7), r: .5 });
   bx('wood', .45, 2.0, 1.2, 26.6, 1.0, -43.0, 0, 1.2); src({ x: 24.0, y: 1.6, z: DT.z, base: 7, color: '#ffa65c', flicker: 'candle', range: 8, prio: .8 });
 
   // ------------------------------------------------------------------ CELLAR: the furnace, the pipes, the swinging bulbs, and the machine nobody finished
@@ -374,43 +391,77 @@ export function buildHollowHouse(ctx) {
     g.fillStyle = 'rgba(12,6,4,.92)'; for (let i = 1; i < 6; i++) g.fillRect(i * w / 6 - 3, 0, 6, h); g.fillRect(0, h * .46, w, 5);
     g.globalCompositeOperation = 'destination-in'; g.beginPath(); g.moveTo(8, h); g.lineTo(8, h * .35); g.quadraticCurveTo(8, 6, w / 2, 6); g.quadraticCurveTo(w - 8, 6, w - 8, h * .35); g.lineTo(w - 8, h); g.fill();
   });
-  const mouth = new THREE.Mesh(new THREE.PlaneGeometry(.7, .6), new THREE.MeshBasicMaterial({ map: mouthTex, transparent: true, toneMapped: false, fog: false })); mouth.rotation.y = -Math.PI / 2; mouth.position.set(X1 - 1.225, .62, -38.4); group.add(mouth);
+  const mouth = new THREE.Mesh(new THREE.PlaneGeometry(.7, .6), new THREE.MeshBasicMaterial({ map: mouthTex, transparent: true, toneMapped: false, fog: false })); mouth.rotation.y = -Math.PI / 2; mouth.position.set(X1 - 1.225, .62, -38.4); zadd(mouth);
   obstacles.push({ box: [X1 - 1.9, X1, -39.4, -37.4] });
   for (let i = 0; i < 4; i++) B.add('iron', new THREE.CylinderGeometry(.07 + (i % 2) * .03, .07 + (i % 2) * .03, 8.2, 10), xf(31.2, CEL_H - .22 - i * .16, -31.9 - i * 3.3, 0, 0, Math.PI / 2), 1);
   for (let i = 0; i < 3; i++) B.add('iron', new THREE.CylinderGeometry(.06, .06, 14.2, 10), xf(28.2 + i * 2.8, CEL_H - .18, -38.4, 0, Math.PI / 2, 0), 1);
   const bulbs = [{ x: 30.6, z: -38.4, ph: 0 }, { x: 33.2, z: -42.2, ph: 2 }, { x: 29.0, z: -34.0, ph: 4 }].map(b => {
-    const g = new THREE.Group(); g.position.set(b.x, CEL_H - .1, b.z); group.add(g);
+    const g = new THREE.Group(); g.position.set(b.x, CEL_H - .1, b.z); zadd(g);
     const cord = new THREE.Mesh(new THREE.CylinderGeometry(.005, .005, .7), M.iron); cord.position.set(0, -.35, 0); g.add(cord);
     const bulb = new THREE.Mesh(new THREE.SphereGeometry(.06, 10, 8), new THREE.MeshBasicMaterial({ color: '#ffd9a0', toneMapped: false, fog: false })); bulb.position.set(0, -.76, 0); g.add(bulb);
     src({ x: b.x, y: CEL_H - .9, z: b.z, base: 5.0, color: '#ffc880', flicker: 'bulb', range: 8, prio: .9 }); b.g = g; return b;
   });
   // the machine: the CFR on a crate under a half-pulled sheet, a vise and a lamp
   bx('wood', 1.9, .5, .9, BIKE.x, .25, BIKE.z, 0, 1.2); obstacles.push({ box: [BIKE.x - 1.2, BIKE.x + 1.2, BIKE.z - .8, BIKE.z + .8] });
-  { const m = new THREE.Mesh(drapeGeometry([[0, .5, .8, .6, .34], [0, .78, .6, .3, .5]], { rand: R, flare: .5 }), M.sheet); m.position.set(BIKE.x, .5, BIKE.z + .1); sheets.add(m); }   // pulled back over the rear wheel; the rest of the machine is bare
+  { const m = new THREE.Mesh(drapeGeometry([[0, .5, .8, .6, .34], [0, .78, .6, .3, .5]], { rand: R, flare: .5 }), M.sheet); m.position.set(BIKE.x, .5, BIKE.z + .1); zadd(m); }   // pulled back over the rear wheel; the rest of the machine is bare
   // shelves of jars, a coal heap, chains, the tally on the south wall
   bx('wood', 3.6, .05, .34, 31.0, 1.0, Z1 + .2, 0, 1.2); bx('wood', 3.6, .05, .34, 31.0, 1.55, Z1 + .2, 0, 1.2); bx('wood', 3.6, .05, .34, 31.0, 2.1, Z1 + .2, 0, 1.2);
   for (let i = 0; i < 22; i++) B.add('glass', new THREE.CylinderGeometry(.06, .06, .2, 10), xf(29.3 + (i % 11) * .33, (i < 11 ? 1.13 : 1.68), Z1 + .2), 0);
   for (let i = 0; i < 14; i++) B.add('iron', new THREE.SphereGeometry(.22 + R() * .2, 6, 5), xf(34.2 + R() * .9, .15 + R() * .1, -44.6 + R() * .9, R() * 6), 1);
-  const tally = new THREE.Mesh(new THREE.PlaneGeometry(4.0, 4.0), new THREE.MeshBasicMaterial({ map: scrawlTex('#cfc6b0', 13), transparent: true, opacity: .5, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 })); tally.position.set(31.5, 1.45, Z0 - .02); tally.rotation.y = Math.PI; tally.scale.set(.9, .55, 1); group.add(tally);
-  const skeleton = makeSkeleton({ lite, bone: '#cfc8b4', eye: '#444', glow: '#000' }); skeleton.position.set(34.6, 0, -33.6); skeleton.rotation.y = -Math.PI / 2 + .25; skeleton.scale.setScalar(1.05); group.add(skeleton); obstacles.push({ c: new THREE.Vector3(34.6, 0, -33.6), r: .5 });
-  for (const sgn of [0, 1]) { const g = new THREE.Mesh(new THREE.CylinderGeometry(.012, .012, CEL_H - 1.4), M.iron); g.position.set(33.8 + sgn * .7, (CEL_H + 1.4) / 2, -33.1); group.add(g); }
+  const tally = new THREE.Mesh(new THREE.PlaneGeometry(4.0, 4.0), new THREE.MeshBasicMaterial({ map: scrawlTex('#cfc6b0', 13), transparent: true, opacity: .5, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 })); tally.position.set(31.5, 1.45, Z0 - .02); tally.rotation.y = Math.PI; tally.scale.set(.9, .55, 1); zadd(tally);
+  const skeleton = makeSkeleton({ lite, bone: '#cfc8b4', eye: '#444', glow: '#000' }); skeleton.position.set(34.6, 0, -33.6); skeleton.rotation.y = -Math.PI / 2 + .25; skeleton.scale.setScalar(1.05); zadd(skeleton); obstacles.push({ c: new THREE.Vector3(34.6, 0, -33.6), r: .5 });
+  for (const sgn of [0, 1]) { const g = new THREE.Mesh(new THREE.CylinderGeometry(.012, .012, CEL_H - 1.4), M.iron); g.position.set(33.8 + sgn * .7, (CEL_H + 1.4) / 2, -33.1); zadd(g); }
 
   // cobwebs in the ceiling corners of every room
   { const pts = []; for (const [cx, cz, sx, sz, h] of [[X0, Z0, 1, -1, FOY_H], [14.9, Z1, -1, 1, FOY_H], [15.1, -36.89, 1, -1, COR_H], [26.89, -31.3, -1, 1, COR_H], [15.1, Z1, 1, 1, COR_H], [26.89, -39.91, -1, 1, COR_H], [27.11, Z0, 1, -1, CEL_H], [X1, Z1, -1, 1, CEL_H], [20.89, -36.89, -1, 1, COR_H]]) pts.push(...cobwebPoints(new THREE.Vector3(cx, h, cz), sx, sz, { R: 1.2 }));
     group.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: '#b9b6c4', transparent: true, opacity: .4 }))); }
 
+  const infos = [];
+  const info = (mesh, eyebrow, title, sub, text) => { const rec = { eyebrow, title, sub, text }; mesh.userData.info = rec; pickables.push(mesh); infos.push(rec); return rec; };
+  // ------------------------------------------------------------------ REUSE: the museum's own Art World pieces (existing, registered assets)
+  // Paintings and sculptures that already ship with the museum (museum/art/*.json carries their provenance: AI-generated,
+  // Higgsfield). They are lit by the house's lights like anything else, so the same pieces read differently in the dark.
+  const artInfo = (title, kind) => ({ eyebrow: 'FROM THE ART WORLD', title, sub: kind + ' · museum collection', text: 'This piece already hangs in the museum\'s Art World wings; the house borrowed it for Halloween. It is an AI-generated work (see museum/art for its recorded provenance), not an original made for the house, and the dark changes how it reads.' });
+  const paintings = [['midnight-seawall', 'Midnight on the seawall', 16.9, 1.75, -39.94, Math.PI, 1.1, .78], ['night-boards', 'Night boards', 20.1, 1.7, -39.94, Math.PI, .9, .64], ['lava-meets-sea', 'Where the lava meets the sea', 15.14, 2.15, -34.0, Math.PI / 2, 1.2, .84]];
+  const artMats = [];
+  for (const [id, title, x, y, z, ry, w, h] of paintings) {
+    const mat = std({ color: '#cfc7bc', roughness: .75, emissive: '#ffffff', emissiveIntensity: .05 }); artMats.push([mat, id]);
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat); m.position.set(x, y, z); m.rotation.y = ry; zadd(m); frameMesh(w, h, x, y, z, ry);
+    info(m, ...Object.values(artInfo(title, 'Painting')));
+  }
+  const sculptures = [['the-tuck', 'The Tuck', 9.0, -41.0, 1.45, true], ['basalt-airfoil', 'Basalt airfoil', 28.5, -33.4, 1.3, false]];
+  let artLoading = false, artLoaded = false;
+  async function loadArt() {                                        // paintings arrive as textures, sculptures as GLBs; both once
+    if (artLoading || artLoaded) return; artLoading = true;
+    try {
+      const tl = new THREE.TextureLoader();
+      for (const [mat, id] of artMats) tl.load(`assets/art/paintings/${id}.jpg`, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; mat.map = mat.emissiveMap = t; mat.needsUpdate = true; });
+      if (loadGLB) for (const [id, title, x, z, hgt, sheeted] of sculptures) {
+        if (lite && !sheeted) continue;                                 // phones keep the sheeted one; the second sculpture is a desktop/tablet luxury
+        const gltf = await loadGLB(`assets/art/sculptures/${id}.glb`), obj = gltf.scene;
+        obj.traverse(o => { if (o.isMesh) { o.material = shieldMaterial(o.material.clone()); o.castShadow = false; o.userData.info = artInfo(title, 'Sculpture'); pickables.push(o); } });
+        const box = new THREE.Box3().setFromObject(obj), size = box.getSize(new THREE.Vector3()), k = hgt / size.y; obj.scale.setScalar(k);
+        box.setFromObject(obj); const c = box.getCenter(new THREE.Vector3()); obj.position.set(-c.x, -box.min.y + .42, -c.z);
+        const holder = new THREE.Group(); holder.position.set(x, 0, z); holder.rotation.y = sheeted ? .6 : -.8; holder.add(obj); zadd(holder);
+        const plinth = new THREE.Mesh(new THREE.BoxGeometry(.8, .42, .8), M.wood); plinth.position.set(x, .21, z); zadd(plinth);
+        if (sheeted) { const sm = new THREE.Mesh(drapeGeometry([[0, .15, .55, .5, .9]], { rand: R, flare: .4 }), M.sheet); sm.position.set(x, .42 + hgt * .3, z); zadd(sm); }   // pulled half over it
+        obstacles.push({ c: new THREE.Vector3(x, 0, z), r: .65 });
+      }
+      artLoaded = true;
+    } finally { artLoading = false; }
+  }
+
   // ------------------------------------------------------------------ build the static shell
-  const stat = B.build(M, group);
+  for (const z of ZONES) { batches[z].build(M, zg[z]); plugBatches[z].build({ plug: new THREE.MeshBasicMaterial({ color: '#020103', fog: false }) }, plugGroups[z]); }
   // the room's floor: an invisible plane the host raycasts for tap-to-walk
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(HHROOM.x1 - HHROOM.x0, HHROOM.z0 - HHROOM.z1), new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false }));
   floor.rotation.x = -Math.PI / 2; floor.position.set((X0 + X1) / 2, .0015, (Z0 + Z1) / 2); floor.userData.floor = true; group.add(floor); pickables.push(floor);
-  for (const k of ['shadeTop', 'shadeBot', 'beam', 'rain']) if (stat[k]) stat[k].renderOrder = 2;
-  if (stat.beam) stat.beam.renderOrder = 3;
+  group.traverse(o => { if (o.name === 'hh:shadeTop' || o.name === 'hh:shadeBot' || o.name === 'hh:rain') o.renderOrder = 2; else if (o.name === 'hh:beam') o.renderOrder = 3; });
 
   // ------------------------------------------------------------------ flames, books, and the things that move
   const flameM = new THREE.MeshBasicMaterial({ color: '#ffc46b', toneMapped: false, fog: false });
   const flameMesh = new THREE.InstancedMesh(new THREE.ConeGeometry(.016, .065, 8), flameM, flames.length); flameMesh.frustumCulled = false; group.add(flameMesh);
-  const bookMesh = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), std({ color: '#fff', roughness: .85 }), books.length); group.add(bookMesh);
+  const bookMesh = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), std({ color: '#fff', roughness: .85 }), books.length); zadd(bookMesh);
   const bm4 = new THREE.Matrix4(), bq = new THREE.Quaternion(), bcol = new THREE.Color(); books.forEach((b, i) => { bq.setFromEuler(new THREE.Euler(0, b.ry, b.lean)); bookMesh.setMatrixAt(i, bm4.compose(new THREE.Vector3(b.x, b.y, b.z), bq, new THREE.Vector3(b.bw, b.bh, .22))); bookMesh.setColorAt(i, bcol.set(b.col).multiplyScalar(.7 + R() * .6)); });
   const fallIdx = books.indexOf(fallBook);
 
@@ -425,14 +476,14 @@ export function buildHollowHouse(ctx) {
 
   // ------------------------------------------------------------------ atmosphere that moves: mist, dust, rain
   const mistT = softMist(5); mistT.repeat.set(5, 3);
-  const mists = [[X0, 14.9, Z1, Z0, .22], [27.11, X1, Z1, Z0, .28], [15.1, 27.0, CORR.z0, CORR.z1, .16]].map(([x0, x1, z0, z1, o]) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, z0 - z1 > 0 ? z0 - z1 : z1 - z0), new THREE.MeshBasicMaterial({ map: mistT, transparent: true, opacity: o, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, color: '#8794b8' })); m.rotation.x = -Math.PI / 2; m.position.set((x0 + x1) / 2, .14, (z0 + z1) / 2); group.add(m); return m; });
+  const mists = [[X0, 14.9, Z1, Z0, .14], [27.11, X1, Z1, Z0, .16], [15.1, 27.0, CORR.z0, CORR.z1, .09]].map(([x0, x1, z0, z1, o]) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, z0 - z1 > 0 ? z0 - z1 : z1 - z0), new THREE.MeshBasicMaterial({ map: mistT, transparent: true, opacity: o, blending: THREE.AdditiveBlending, depthWrite: false, fog: true, color: '#8794b8' })); m.rotation.x = -Math.PI / 2; m.position.set((x0 + x1) / 2, .14, (z0 + z1) / 2); zadd(m); return m; });
   const dust = [motes({ n: lite ? 40 : 90, box: [8, 14.5, .4, 4.6, Z1 + .5, Z0 - .5], color: '#b9c4ff', size: .028, rise: .05, sway: .1, opacity: .55, seed: 3 }), motes({ n: lite ? 20 : 50, box: [15.5, 26.5, .5, 3.0, CORR.z0 + .2, CORR.z1 - .2], color: '#ffd9a0', size: .022, rise: .03, sway: .08, opacity: .4, seed: 5 })];
   dust.forEach(d => group.add(d.points));
 
   // ------------------------------------------------------------------ doors that obey the director
-  const frontLeaves = [-1, 1].map(sd => { const p = new THREE.Group(); p.position.set(X0 + .05, 0, sd < 0 ? HHDOOR.z0 + .02 : HHDOOR.z1 - .02); const m = new THREE.Mesh(new THREE.BoxGeometry(.06, HHDOOR.h - .1, 1.45), M.wood); m.position.set(0, (HHDOOR.h - .1) / 2, -sd * .73); m.castShadow = false; p.add(m); const k = new THREE.Mesh(new THREE.SphereGeometry(.04, 8, 6), M.brass); k.position.set(.06, 1.1, -sd * 1.3); p.add(k); p.userData.sd = sd; group.add(p); return p; });
-  const nurseryDoor = (() => { const p = new THREE.Group(); p.position.set(23.8, 0, -37.0); const m = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.25, .05), M.wood); m.position.set(-.6, 1.125, 0); p.add(m); p.rotation.y = -1.3; group.add(p); return p; })();
-  const cellarLeaf = (() => { const p = new THREE.Group(); p.position.set(27.0, 0, -37.6); const m = new THREE.Mesh(new THREE.BoxGeometry(.07, 2.45, 1.6), M.wood); m.position.set(0, 1.225, -.8); p.add(m); for (const y of [.4, 1.2, 2.0]) { const s2 = new THREE.Mesh(new THREE.BoxGeometry(.09, .07, 1.5), M.iron); s2.position.set(0, y, -.8); p.add(s2); } p.rotation.y = 1.25; group.add(p); return p; })();
+  const frontLeaves = [-1, 1].map(sd => { const p = new THREE.Group(); p.position.set(X0 + .05, 0, sd < 0 ? HHDOOR.z0 + .02 : HHDOOR.z1 - .02); const m = new THREE.Mesh(new THREE.BoxGeometry(.06, HHDOOR.h - .1, 1.45), M.wood); m.position.set(0, (HHDOOR.h - .1) / 2, -sd * .73); m.castShadow = false; p.add(m); const k = new THREE.Mesh(new THREE.SphereGeometry(.04, 8, 6), M.brass); k.position.set(.06, 1.1, -sd * 1.3); p.add(k); p.userData.sd = sd; zadd(p); return p; });
+  const nurseryDoor = (() => { const p = new THREE.Group(); p.position.set(23.8, 0, -37.0); const m = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.25, .05), M.wood); m.position.set(-.6, 1.125, 0); p.add(m); p.rotation.y = -1.3; zadd(p); return p; })();
+  const cellarLeaf = (() => { const p = new THREE.Group(); p.position.set(27.0, 0, -37.6); const m = new THREE.Mesh(new THREE.BoxGeometry(.07, 2.45, 1.6), M.wood); m.position.set(0, 1.225, -.8); p.add(m); for (const y of [.4, 1.2, 2.0]) { const s2 = new THREE.Mesh(new THREE.BoxGeometry(.09, .07, 1.5), M.iron); s2.position.set(0, y, -.8); p.add(s2); } p.rotation.y = 1.25; zadd(p); return p; })();
 
   // ------------------------------------------------------------------ the lantern: the visitor's own light
   const lantern = new THREE.PointLight('#ffc27d', 0, lite ? 7 : 9, 1.6); group.add(lantern);
@@ -445,8 +496,6 @@ export function buildHollowHouse(ctx) {
   }, 1024);
   sign.position.set(hallWallX + .02, HHDOOR.h + .75, (HHDOOR.z0 + HHDOOR.z1) / 2); sign.rotation.y = -Math.PI / 2;
 
-  const infos = [];
-  const info = (mesh, eyebrow, title, sub, text) => { const rec = { eyebrow, title, sub, text }; mesh.userData.info = rec; pickables.push(mesh); infos.push(rec); return rec; };
   const portraitInfo = { eyebrow: 'THE PORTRAITS', title: 'They are not looking at the painter.', sub: 'Foyer · oil on canvas · original', text: 'Eight portraits hang in the front of the house. The paint is craquelured, the sitters are invented, and their eyes find you wherever you stand. The house is a fiction made for Halloween; nobody in it is a real person.' };
   for (const o of pickables) if (o.userData.portrait) o.userData.info = portraitInfo;
   infos.push(portraitInfo);
@@ -470,6 +519,9 @@ export function buildHollowHouse(ctx) {
     const dt = Math.min(.1, Math.max(0, t - last)); last = t;
     const fx = dir.update(t, dt, P, reduce), inside = fx.inside;
     atmo.update(dt, inside, { color: '#040307', near: 1.2, far: lite ? 17 : 23 });
+    { const here = fx.zone === 'out' || fx.zone === 'door' ? null : fx.zone, show = new Set(here ? [here, ...SEES[here]] : ['foyer', 'corridor', 'cellar']);
+      if (here === 'corridor') for (const [room, dx] of [['parlor', 17.2], ['nursery', 24.4], ['library', 18.6], ['dining', 23.2]]) if (Math.abs(P.x - dx) < 3.4) show.add(room);   // only the rooms whose door you are near
+      for (const z of ZONES) { zg[z].visible = show.has(z); plugGroups[z].visible = !show.has(z); } }
     const fl = fx.flash, lv = fx.level.all;
     const base = inside ? 1 : 1.7;                                      // seen from the hall the house glimmers; inside it is as dark as it is meant to be
     interior.ambient.value.setRGB(.085 * base * lv + .3 * fl, .08 * base * lv + .33 * fl, .12 * base * lv + .46 * fl);
@@ -496,6 +548,7 @@ export function buildHollowHouse(ctx) {
       mobile.rotation.y = t * .25; rocker.rotation.z = Math.sin(t * 1.35) * .14 * fx.rock;
       for (const b of bulbs) { b.g.rotation.z = Math.sin(t * .8 + b.ph) * .06; b.g.rotation.x = Math.cos(t * .6 + b.ph) * .045; }
       nurseryDoor.rotation.y = -1.3 + Math.sin(t * .4) * .04;
+      breather.scale.set(1 + Math.sin(t * .8) * .006, 1 + Math.sin(t * .8 - .4) * .018, 1 + Math.sin(t * .8) * .006);   // the sheet at the head of the table is breathing
     }
     // front doors: they shut behind you, and swing open again before you reach them
     const target = fx.doorClosed ? 1 : 0;
@@ -528,9 +581,10 @@ export function buildHollowHouse(ctx) {
     ready, painted: () => [painted, total],
     group, floor, sign, bikeSpot, infos, zoneOf, update, director: dir,
     // the host culls the room when the visitor is far from it; whatever the room borrowed from the hall (its fog) goes back at once
+    loadArt,
     hide() { atmo.update(10, false); lantern.intensity = 0; },
     // what the room asks of the renderer: one draw per visible mesh / instanced mesh / points, triangles with instances counted
-    budget({ withBike = false } = {}) { let draws = 0, tris = 0; const bike = bikeSpot.bike; group.traverse(o => { if (!(o.isMesh || o.isPoints || o.isLine) || !o.visible || !o.geometry) return; if (!withBike && bike) { for (let p = o; p; p = p.parent) if (p === bike) return; } draws++; if (o.isMesh) { const g = o.geometry; tris += (g.index ? g.index.count : g.attributes.position.count) / 3 * (o.isInstancedMesh ? o.count : 1); } }); return { draws, tris: Math.round(tris), realLights: 1 + (lite ? 2 : 4) }; },
+    budget({ withBike = false } = {}) { let draws = 0, tris = 0; const bike = bikeSpot.bike; const shown = o => { for (let p = o; p && p !== group.parent; p = p.parent) if (!p.visible) return false; return true; }; group.traverse(o => { if (!(o.isMesh || o.isPoints || o.isLine) || !o.geometry || !shown(o)) return; if (!withBike && bike) { for (let p = o; p; p = p.parent) if (p === bike) return; } draws++; if (o.isMesh) { const g = o.geometry; tris += (g.index ? g.index.count : g.attributes.position.count) / 3 * (o.isInstancedMesh ? o.count : 1); } }); return { draws, tris: Math.round(tris), realLights: 1 + (lite ? 2 : 4) }; },
     setBike(bike, dress) {
       bike.traverse(o => {
         if (!o.isMesh) return;
@@ -541,7 +595,7 @@ export function buildHollowHouse(ctx) {
       dress?.(bike);
       const box = new THREE.Box3().setFromObject(bike), c = box.getCenter(new THREE.Vector3());
       bike.position.set(-c.x, -box.min.y, -c.z);
-      const holder = new THREE.Group(); holder.add(bike); holder.rotation.y = bikeSpot.rotY; holder.position.set(BIKE.x, .5, BIKE.z); group.add(holder); bikeSpot.bike = holder;
+      const holder = new THREE.Group(); holder.add(bike); holder.rotation.y = bikeSpot.rotY; holder.position.set(BIKE.x, .5, BIKE.z); zadd(holder); bikeSpot.bike = holder;
     },
   };
 }

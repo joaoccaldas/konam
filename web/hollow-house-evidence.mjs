@@ -44,18 +44,21 @@ async function capture(label, viewport, { reduce = false, views = VIEWS } = {}) 
   await page.evaluate(() => { try { localStorage.setItem('speedmax.coach.v1', '1'); } catch (_) { } window.__museum.enter(); window.__museumGo('hollow'); });
   await page.evaluate(() => window.__museum.hollow.ready);
   await page.waitForFunction(() => window.__museum.hollow.bikeSpot.bike, { timeout: 300000, polling: 1000 }).catch(() => errors.push('the CFR never loaded'));
-  const shots = [];
+  const shots = [], budgets = [];
   for (const [name, x, z, yaw, pitch] of views) {
     await page.evaluate((x, z, yaw, pitch) => { const m = window.__museum; m.halt(); Object.assign(m.P, { x, z, yaw, pitch }); }, x, z, yaw, pitch);
     await sleep(2500);
     const file = `${label}-${name}.png`;
     await page.screenshot({ path: path.join(out, file) });
     shots.push(file);
+    budgets.push(await page.evaluate(() => window.__museum.hollow.budget()));
   }
   const state = await page.evaluate(() => {
     const h = window.__museum.hollow;
     return { room: h.group.name, visible: h.group.visible, budget: h.budget(), budgetWithBike: h.budget({ withBike: true }), painted: h.painted(), pickables: window.__museum.pickables.length, reduced: matchMedia('(prefers-reduced-motion: reduce)').matches };
   });
+  state.budget = { draws: Math.max(...budgets.map(b => b.draws)), tris: Math.max(...budgets.map(b => b.tris)), realLights: budgets[0].realLights };   // the worst view, not the last
+  state.budgetByView = budgets;
   await page.close();
   return { label, viewport, state, shots, errors };
 }
