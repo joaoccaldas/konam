@@ -99,6 +99,7 @@ export function prepareNewsletter(input){
 
   const html=fill(TEMPLATE,{
     PUBLISHED:escape(published),
+    INTRO:escape(intro),
     BIKE_IMAGE:escape(bikeImage),
     BIKE_ALT:escape(`KONA.m ${bikeName}${yearLabel} real 3D asset`),
     BIKE_NAME:escape(bikeName+yearLabel),
@@ -110,7 +111,7 @@ export function prepareNewsletter(input){
   });
 
   if(!html.includes('{{UNSUBSCRIBE_URL}}'))throw new Error('Missing unsubscribe placeholder');
-  if(/{{(?:PUBLISHED|BIKE_|STORIES|INTERN_)/.test(html))throw new Error('Unresolved newsletter template placeholder');
+  if(/{{(?:PUBLISHED|INTRO|BIKE_|STORIES|INTERN_)/.test(html))throw new Error('Unresolved newsletter template placeholder');
 
   return {
     id:'intern-'+edition,
