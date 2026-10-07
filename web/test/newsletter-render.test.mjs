@@ -49,8 +49,9 @@ test('newsletter keeps compact image-led story rows instead of mobile full-width
   assert.match(html,/width="29%"/);
   assert.match(html,/width="71%"/);
   assert.match(html,/story-title/);
-  assert.match(html,/width:128%/);
-  assert.match(html,/background:#080b0e/);
+  assert.match(html,/background:transparent/);
+  assert.match(html,/max-width:612px/);
+  assert.doesNotMatch(html,/mix-blend-mode/);
   assert.doesNotMatch(html,/konamundo@gmail\.com/);
   assert.doesNotMatch(html,/\.story-img\{width:100%/);
   assert.doesNotMatch(html,/\.story-copy\{display:block/);
