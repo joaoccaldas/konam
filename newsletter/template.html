@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<title>Kona.m · The Intern</title>
+<style>
+  :root { color-scheme: light only; }
+  body, table, td { background-color:#f4efe7 !important; color:#080b0e !important; }
+  a { color:#ff6a00; }
+  @media screen and (max-width:640px){
+    .shell{width:100%!important;max-width:100%!important}
+    .pad{padding-left:16px!important;padding-right:16px!important}
+    .mast{font-size:48px!important}
+    .hero{font-size:42px!important;line-height:.98!important}
+    .dek{font-size:18px!important}
+    .bike-title{font-size:32px!important}
+    .bike-image{width:100%!important;max-width:100%!important}
+    .cta{display:block!important;width:100%!important;box-sizing:border-box!important;margin:8px 0!important;text-align:center!important}
+    .story-thumb{width:104px!important}
+    .story-title{font-size:22px!important;line-height:1.05!important}
+    .story-copy{font-size:14px!important;line-height:1.35!important}
+    .meta{font-size:9px!important;letter-spacing:.08em!important}
+    .right-brand{font-size:9px!important}
+  }
+  @media (prefers-color-scheme:dark){
+    body, table, td, .surface { background-color:#f4efe7 !important; color:#080b0e !important; }
+    .card { background-color:#eee5da !important; }
+    .intern { background-color:#efe6e8 !important; }
+  }
+</style>
+</head>
+<body class="body" style="margin:0;padding:0;background:#f4efe7;color:#080b0e;font-family:Arial,Helvetica,sans-serif;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f4efe7;">
+<tr><td align="center" class="pad" style="padding:24px 18px 34px;background:#f4efe7;">
+<table role="presentation" width="680" class="shell surface" cellspacing="0" cellpadding="0" border="0" style="width:680px;max-width:680px;background:#f4efe7;">
+
+<tr><td style="padding:0 0 18px;border-bottom:1px solid #8e877f;background:#f4efe7;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f4efe7;">
+    <tr>
+      <td valign="top" style="background:#f4efe7;">
+        <div class="mast" style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:56px;font-weight:900;line-height:.9;letter-spacing:-.045em;">Kona<span style="color:#ff6a00">.</span>m</div>
+        <div style="font-size:10px;letter-spacing:.28em;font-weight:700;margin-top:10px;">KAILUA-KONA · RACE WEEK BETA</div>
+      </td>
+      <td width="120" align="right" valign="top" class="right-brand" style="background:#f4efe7;font-size:10px;line-height:1.45;letter-spacing:.06em;">
+        <div style="font-family:'Comic Sans MS','Bradley Hand',cursive;font-size:16px;line-height:1.1;margin-bottom:8px;">Different.<br>Faster.<br>Kinder.</div>
+        <div>BIKES</div><div>STORIES</div><div>PEOPLE</div>
+      </td>
+    </tr>
+  </table>
+</td></tr>
+
+<tr><td style="padding:20px 0 18px;background:#f4efe7;">
+  <div class="meta" style="font-size:10px;letter-spacing:.22em;color:#282f36;margin-bottom:14px;">THE INTERN READ THE INTERNET · {{PUBLISHED}}</div>
+  <div class="hero" style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:58px;font-weight:900;line-height:.95;letter-spacing:-.04em;margin-bottom:10px;">Three things worth your time today.</div>
+  <div class="dek" style="font-size:21px;line-height:1.28;color:#282f36;">One beautiful bike. Three useful stories. Less noise.</div>
+</td></tr>
+
+<tr><td style="padding:4px 0 24px;background:#f4efe7;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="card" style="background:#eee5da;border-radius:20px;">
+    <tr><td style="padding:16px 16px 8px;background:#eee5da;">
+      <span style="display:inline-block;background:#ff6a00;color:#f4efe7;font-weight:800;font-size:12px;letter-spacing:.08em;padding:9px 15px;border-radius:999px;">BIKE OF THE DAY</span>
+    </td></tr>
+    <tr><td align="center" style="padding:4px 16px 6px;background:#eee5da;">
+      <img class="bike-image" src="{{BIKE_IMAGE}}" alt="{{BIKE_ALT}}" width="648" style="display:block;width:100%;max-width:648px;height:auto;border:0;background:#eee5da;">
+    </td></tr>
+    <tr><td style="padding:8px 18px 20px;background:#eee5da;">
+      <div style="font-size:11px;letter-spacing:.16em;color:#00a7c7;font-weight:800;margin-bottom:8px;">REAL KONA.m 3D ASSET</div>
+      <div class="bike-title" style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:39px;font-weight:900;line-height:1.0;letter-spacing:-.025em;margin-bottom:6px;">{{BIKE_NAME}}</div>
+      <div style="font-size:15px;line-height:1.45;color:#282f36;margin-bottom:14px;">{{BIKE_DEK}}</div>
+      <a class="cta" href="{{BIKE_VIEW_URL}}" style="display:inline-block;background:#ff6a00;color:#f4efe7;text-decoration:none;font-weight:800;padding:13px 20px;border-radius:999px;margin-right:8px;min-width:190px;text-align:center;">VIEW IN KONA.m →</a>
+      <a class="cta" href="{{BIKE_GLB_URL}}" style="display:inline-block;border:1px solid #ff6a00;color:#ff6a00;text-decoration:none;font-weight:800;padding:12px 20px;border-radius:999px;min-width:180px;text-align:center;">DOWNLOAD GLB →</a>
+    </td></tr>
+  </table>
+</td></tr>
+
+{{STORIES}}
+
+<tr><td class="intern" style="padding:17px 18px;background:#efe6e8;border-radius:18px;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#efe6e8;">
+    <tr>
+      <td valign="middle" style="background:#efe6e8;">
+        <div style="font-size:10px;letter-spacing:.13em;color:#ff2d6d;font-weight:800;margin-bottom:6px;">THE INTERN, CURRENTLY</div>
+        <div style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:23px;font-weight:900;line-height:1.05;">{{INTERN_CURRENTLY}}</div>
+      </td>
+      <td width="140" align="right" valign="middle" style="background:#efe6e8;font-family:'Comic Sans MS','Bradley Hand',cursive;font-size:15px;line-height:1.15;">Same ocean.<br>Different day.</td>
+    </tr>
+  </table>
+</td></tr>
+
+<tr><td align="center" style="padding:28px 0 6px;border-top:1px solid #8e877f;background:#f4efe7;">
+  <div style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:20px;font-weight:900;margin-bottom:8px;">Race the version of yourself you haven’t met yet.</div>
+  <div style="font-size:11px;color:#555;">Kona.m · konamundo@gmail.com · <a href="{{UNSUBSCRIBE_URL}}" style="color:#555;">Unsubscribe</a></div>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>
