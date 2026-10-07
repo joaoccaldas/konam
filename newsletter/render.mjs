@@ -37,7 +37,7 @@ function fill(template,replacements){
   return out;
 }
 function renderStory(story,index){
-  const intern=story.intern?'<div style="font-family:\\'Comic Sans MS\\',\\'Bradley Hand\\',cursive;font-size:13px;line-height:1.25;margin-top:7px;color:#282f36;">'+escape(story.intern)+'</div>':'';
+  const intern=story.intern?`<div style="font-family:'Comic Sans MS','Bradley Hand',cursive;font-size:13px;line-height:1.25;margin-top:7px;color:#282f36;">${escape(story.intern)}</div>`:'';
   return \`<tr><td style="padding:14px 0;border-top:1px solid #b8b0a7;background:#f4efe7;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f4efe7;">
     <tr>
