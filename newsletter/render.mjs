@@ -37,23 +37,18 @@ function fill(template,replacements){
   return out;
 }
 function renderStory(story,index){
-  const intern=story.intern?`<div style="font-family:'Comic Sans MS','Bradley Hand',cursive;font-size:13px;line-height:1.25;margin-top:7px;color:#282f36;">${escape(story.intern)}</div>`:'';
-  return `<tr><td style="padding:14px 0;border-top:1px solid #b8b0a7;background:#f4efe7;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f4efe7;">
-    <tr>
-      <td width="29%" valign="middle" style="padding-right:14px;background:#f4efe7;">
-        <img src="${escape(story.image)}" alt="" width="185" style="display:block;width:100%;height:auto;border:0;border-radius:12px;background:#e6e9ed;">
-      </td>
-      <td width="71%" valign="middle" style="background:#f4efe7;">
-        <div class="meta" style="font-size:10px;letter-spacing:.1em;color:#00a7c7;margin-bottom:5px;">${String(index+1).padStart(2,'0')} / ${escape(story.category)} · ${escape(story.published_at)} · ${escape(story.source)}</div>
-        <div class="story-title" style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:27px;font-weight:900;line-height:1.02;letter-spacing:-.02em;margin-bottom:5px;">${escape(story.headline)}</div>
-        <div class="story-copy" style="font-size:14px;line-height:1.35;color:#282f36;margin-bottom:7px;">${escape(story.summary)}</div>
-        <a href="${escape(story.url)}" style="color:#ff6a00;font-weight:800;text-decoration:none;">READ →</a>
-        ${intern}
-      </td>
-    </tr>
-  </table>
-</td></tr>`;
+  const intern=story.intern?'<div style="font-family:\'Comic Sans MS\',\'Bradley Hand\',cursive;font-size:13px;line-height:1.25;margin-top:7px;color:#282f36;">'+escape(story.intern)+'</div>':'';
+  return '<tr><td style="padding:14px 0;border-top:1px solid #b8b0a7;background:#f4efe7;">'
+    +'<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f4efe7;"><tr>'
+    +'<td width="29%" valign="middle" style="padding-right:14px;background:#f4efe7;">'
+    +'<img src="'+escape(story.image)+'" alt="" width="185" style="display:block;width:100%;height:auto;border:0;border-radius:12px;background:#e6e9ed;">'
+    +'</td><td width="71%" valign="middle" style="background:#f4efe7;">'
+    +'<div class="meta" style="font-size:10px;letter-spacing:.1em;color:#00a7c7;margin-bottom:5px;">'
+    +String(index+1).padStart(2,'0')+' / '+escape(story.category)+' · '+escape(story.published_at)+' · '+escape(story.source)+'</div>'
+    +'<div class="story-title" style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:27px;font-weight:900;line-height:1.02;letter-spacing:-.02em;margin-bottom:5px;">'+escape(story.headline)+'</div>'
+    +'<div class="story-copy" style="font-size:14px;line-height:1.35;color:#282f36;margin-bottom:7px;">'+escape(story.summary)+'</div>'
+    +'<a href="'+escape(story.url)+'" style="color:#ff6a00;font-weight:800;text-decoration:none;">READ →</a>'
+    +intern+'</td></tr></table></td></tr>';
 }
 
 export function prepareNewsletter(input){
