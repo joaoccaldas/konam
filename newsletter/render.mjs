@@ -19,17 +19,19 @@ function https(value,name){
   if(url.protocol!=='https:'||url.username||url.password||url.hash)throw new Error('Invalid '+name);
   return url.href;
 }
-function repoAsset(value,name,{raw=false}={}){
+function resolveUrl(value,name,base){
   const source=text(value,name,500);
-  if(source.startsWith('https://'))return https(source,name);
   if(source.startsWith('/')||source.includes('..'))throw new Error('Invalid '+name);
-  return https((raw?RAW_ORIGIN:APP_ORIGIN)+source.replace(/^\.\//,''),name);
+  let url;
+  try{url=new URL(source,base)}catch{throw new Error('Invalid '+name)}
+  if(url.protocol!=='https:'||url.username||url.password||url.hash)throw new Error('Invalid '+name);
+  return url.href;
+}
+function repoAsset(value,name,{raw=false}={}){
+  return resolveUrl(value,name,raw?RAW_ORIGIN:APP_ORIGIN);
 }
 function repoPage(value,name){
-  const source=text(value,name,500);
-  if(source.startsWith('https://'))return https(source,name);
-  if(source.startsWith('/')||source.includes('..'))throw new Error('Invalid '+name);
-  return https(APP_ORIGIN+source.replace(/^\.\//,''),name);
+  return resolveUrl(value,name,APP_ORIGIN);
 }
 function fill(template,replacements){
   let out=template;
