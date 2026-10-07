@@ -1,0 +1,5 @@
+{
+  "date": "2026-10-07",
+  "production_modified": false,
+  "material_changes": ["meshoptimizer cluster-bound tuning changes EXP-CLUSTERLOD-001 benchmark design"]
+}
