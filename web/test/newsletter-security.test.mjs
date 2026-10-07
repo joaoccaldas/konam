@@ -13,13 +13,13 @@ test('newsletter endpoint is production-origin scoped and never wildcard CORS',(
   assert.doesNotMatch(fn,/Access-Control-Allow-Origin':'\*'/);
 });
 
-test('anonymous newsletter signup never overwrites consent state',()=>{
+test('explicit single-opt-in newsletter signup activates while suppression remains a hard stop',()=>{
   const fn=read('supabase/functions/newsletter-subscribe/handler.ts');
   assert.match(fn,/select\('status'\)/);
-  assert.match(fn,/if\(existing\)return response/);
-  assert.match(fn,/\.insert\(\{/);
+  assert.match(fn,/existing\.status==='pending'\|\|existing\.status==='unsubscribed'/);
+  assert.match(fn,/status:'active'/);
+  assert.match(fn,/suppression is always a hard stop/i);
   assert.doesNotMatch(fn,/\.upsert\(/);
-  assert.match(fn,/status:'pending'/);
 });
 
 test('newsletter table is denied to browser roles and least-privileged to service role',()=>{
