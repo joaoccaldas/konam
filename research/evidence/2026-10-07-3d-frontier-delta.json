@@ -1,5 +1,13 @@
 {
   "date": "2026-10-07",
   "production_modified": false,
-  "material_changes": ["meshoptimizer cluster-bound tuning changes EXP-CLUSTERLOD-001 benchmark design"]
+  "finding": "Post-v1.3 meshoptimizer main materially improves cluster-bound preprocessing and outlier handling.",
+  "source_quality": "A",
+  "confidence": 0.95,
+  "evidence": "840047bc reports about 25% faster sphere bounds and up to about 10% faster cluster/meshlet bounds; a4cac8f9 prevents outlier inputs from creating very large KD leaves; both merged in c313abae.",
+  "contradiction": "These are unreleased upstream-main commits and maintainer microbenchmarks, so transfer to our WASM/mobile/end-to-end workloads is unproven.",
+  "engineering_implication": "EXP-CLUSTERLOD-001 should compare current pipeline, released v1.3 and pinned c313abae; add outlier-heavy geometry and separate preprocessing from runtime measurements. Production dependencies remain unchanged.",
+  "affected_projects": "studio-kona, bellagio, konam, gaudi-nexus, shared-world-tooling",
+  "isolated_experiment": "EXP-CLUSTERLOD-001",
+  "priority_change": "No rank change; experiment design changes materially."
 }
