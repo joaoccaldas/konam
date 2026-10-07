@@ -111,7 +111,7 @@ export function prepareNewsletter(input){
   const html=fill(TEMPLATE,{
     PUBLISHED:escape(published),
     INTRO:escape(intro),
-    BIKE_IMAGE:escape(emailImage(bikeImage,{width:1200,height:700,fit:'contain',background:'f4efe7',quality:92})),
+    BIKE_IMAGE:escape(emailImage(bikeImage,{width:1200,height:700,fit:'contain',background:'eee5da',quality:92})),
     BIKE_ALT:escape(`KONA.m ${bikeName}${yearLabel} real 3D asset`),
     BIKE_NAME:escape(bikeName+yearLabel),
     BIKE_DEK:escape(bikeDek),
@@ -128,7 +128,7 @@ export function prepareNewsletter(input){
     id:'intern-'+edition,
     subject:'Kona.m — The Intern read the internet · '+published,
     html,
-    bike:{id:bikeId,name:bikeName,brand:bikeBrand,year:bike.year??null,image:bikeImage,email_image:emailImage(bikeImage,{width:1200,height:700,fit:'contain',background:'f4efe7',quality:92}),glb:bikeGlb,viewer_url:bikeView,verified:true},
+    bike:{id:bikeId,name:bikeName,brand:bikeBrand,year:bike.year??null,image:bikeImage,email_image:emailImage(bikeImage,{width:1200,height:700,fit:'contain',background:'eee5da',quality:92}),glb:bikeGlb,viewer_url:bikeView,verified:true},
     stories
   };
 }
