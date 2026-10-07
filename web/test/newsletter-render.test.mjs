@@ -37,7 +37,11 @@ test('newsletter preserves edition identity, exact branded hierarchy and unsubsc
   assert.match(edition.html,/REAL KONA\.m 3D ASSET/);
   assert.match(edition.html,/Three things worth your time today/);
   assert.match(edition.html,/THE INTERN, CURRENTLY/);
-  assert.match(edition.html,/assets\/entry\/catalog\/canyon-cfr-2027\.webp/);
+  assert.match(edition.html,/images\.weserv\.nl/);
+  assert.match(edition.html,/output=jpg/);
+  assert.match(edition.html,/bg=f4efe7/);
+  assert.match(edition.html,/fit=contain/);
+  assert.match(edition.bike.email_image,/images\.weserv\.nl/);
   assert.match(edition.html,/raw\.githubusercontent\.com\/joaoccaldas\/konam\/main\/assets\/museum\/speedmax_web\.glb/);
   assert.match(edition.html,/\{\{UNSUBSCRIBE_URL\}\}/);
   assert.equal(edition.stories.length,3);
@@ -52,6 +56,7 @@ test('newsletter keeps compact image-led story rows instead of mobile full-width
   assert.match(html,/background:transparent/);
   assert.match(html,/max-width:612px/);
   assert.doesNotMatch(html,/mix-blend-mode/);
+  assert.doesNotMatch(html,/src="https:\/\/joaoccaldas\.github\.io\/konam\/assets\/entry\/catalog\/canyon-cfr-2027\.webp"/);
   assert.doesNotMatch(html,/konamundo@gmail\.com/);
   assert.doesNotMatch(html,/\.story-img\{width:100%/);
   assert.doesNotMatch(html,/\.story-copy\{display:block/);
