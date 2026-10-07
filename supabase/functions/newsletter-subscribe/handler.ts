@@ -52,22 +52,30 @@ export async function handler(req:Request,dependencies:Dependencies={}){
     return response(origin,{ok:true,status:'unsubscribed'});
   }
 
-  if(input.company)return response(origin,{ok:true,status:'pending'},202);
+  // Honeypot submissions are acknowledged but never stored.\n  if(input.company)return response(origin,{ok:true,status:'active'},202);
 
   const email=cleanEmail(input.email),source=String(input.source||'app').trim().slice(0,80),locale=String(input.locale||'en').trim().slice(0,16);
   if(email.length>254||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))return response(origin,{error:'Enter a valid email address.'},400);
 
   const {data:existing,error:lookupError}=await admin.from('newsletter_subscriptions').select('status').eq('email',email).maybeSingle();
   if(lookupError){console.error('newsletter lookup failed',lookupError.code);return response(origin,{error:'Signup is temporarily unavailable.'},503);}
-  // Anonymous submissions never change an existing consent state. In particular,
-  // unsubscribed/suppressed addresses cannot be silently re-pended by a third party.
-  if(existing)return response(origin,{ok:true,status:'pending'},202);
-
   const timestamp=new Date().toISOString();
+  if(existing){
+    // Explicit single-opt-in signup may reactivate a prior unsubscribe, but a
+    // suppression is always a hard stop. Return a neutral success either way.
+    if(existing.status==='pending'||existing.status==='unsubscribed'){
+      const {error}=await admin.from('newsletter_subscriptions').update({
+        status:'active',consented_at:timestamp,source,locale,updated_at:timestamp,
+      }).eq('email',email).in('status',['pending','unsubscribed']);
+      if(error){console.error('newsletter resubscribe failed',error.code);return response(origin,{error:'Signup is temporarily unavailable.'},503);}
+    }
+    return response(origin,{ok:true,status:'active'},202);
+  }
+
   const {error}=await admin.from('newsletter_subscriptions').insert({
-    email,status:'pending',consented_at:timestamp,source,locale,updated_at:timestamp,
+    email,status:'active',consented_at:timestamp,source,locale,updated_at:timestamp,
   });
-  if(error?.code==='23505')return response(origin,{ok:true,status:'pending'},202);
+  if(error?.code==='23505')return response(origin,{ok:true,status:'active'},202);
   if(error){console.error('newsletter signup failed',error.code);return response(origin,{error:'Signup is temporarily unavailable.'},503);}
-  return response(origin,{ok:true,status:'pending'},202);
+  return response(origin,{ok:true,status:'active'},202);
 }
