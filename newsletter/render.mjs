@@ -38,22 +38,22 @@ function fill(template,replacements){
 }
 function renderStory(story,index){
   const intern=story.intern?`<div style="font-family:'Comic Sans MS','Bradley Hand',cursive;font-size:13px;line-height:1.25;margin-top:7px;color:#282f36;">${escape(story.intern)}</div>`:'';
-  return \`<tr><td style="padding:14px 0;border-top:1px solid #b8b0a7;background:#f4efe7;">
+  return `<tr><td style="padding:14px 0;border-top:1px solid #b8b0a7;background:#f4efe7;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f4efe7;">
     <tr>
       <td width="29%" valign="middle" style="padding-right:14px;background:#f4efe7;">
-        <img src="\${escape(story.image)}" alt="" width="185" style="display:block;width:100%;height:auto;border:0;border-radius:12px;background:#e6e9ed;">
+        <img src="${escape(story.image)}" alt="" width="185" style="display:block;width:100%;height:auto;border:0;border-radius:12px;background:#e6e9ed;">
       </td>
       <td width="71%" valign="middle" style="background:#f4efe7;">
-        <div class="meta" style="font-size:10px;letter-spacing:.1em;color:#00a7c7;margin-bottom:5px;">\${String(index+1).padStart(2,'0')} / \${escape(story.category)} · \${escape(story.published_at)} · \${escape(story.source)}</div>
-        <div class="story-title" style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:27px;font-weight:900;line-height:1.02;letter-spacing:-.02em;margin-bottom:5px;">\${escape(story.headline)}</div>
-        <div class="story-copy" style="font-size:14px;line-height:1.35;color:#282f36;margin-bottom:7px;">\${escape(story.summary)}</div>
-        <a href="\${escape(story.url)}" style="color:#ff6a00;font-weight:800;text-decoration:none;">READ →</a>
-        \${intern}
+        <div class="meta" style="font-size:10px;letter-spacing:.1em;color:#00a7c7;margin-bottom:5px;">${String(index+1).padStart(2,'0')} / ${escape(story.category)} · ${escape(story.published_at)} · ${escape(story.source)}</div>
+        <div class="story-title" style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:27px;font-weight:900;line-height:1.02;letter-spacing:-.02em;margin-bottom:5px;">${escape(story.headline)}</div>
+        <div class="story-copy" style="font-size:14px;line-height:1.35;color:#282f36;margin-bottom:7px;">${escape(story.summary)}</div>
+        <a href="${escape(story.url)}" style="color:#ff6a00;font-weight:800;text-decoration:none;">READ →</a>
+        ${intern}
       </td>
     </tr>
   </table>
-</td></tr>\`;
+</td></tr>`;
 }
 
 export function prepareNewsletter(input){
@@ -98,12 +98,12 @@ export function prepareNewsletter(input){
   const currently=text(input.intern_currently,'Intern currently',220);
   const published=new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(edition+'T00:00:00Z')).toUpperCase();
   const yearLabel=bikeYear?' · '+bikeYear:'';
-  const bikeDek=text(input.bike_dek||(\`\${bikeBrand} \${bikeName}\${yearLabel}. A real bike from the KONA.m 3D collection.\`),'bike dek',180);
+  const bikeDek=text(input.bike_dek||(`${bikeBrand} ${bikeName}${yearLabel}. A real bike from the KONA.m 3D collection.`),'bike dek',180);
 
   const html=fill(TEMPLATE,{
     PUBLISHED:escape(published),
     BIKE_IMAGE:escape(bikeImage),
-    BIKE_ALT:escape(\`KONA.m \${bikeName}\${yearLabel} real 3D asset\`),
+    BIKE_ALT:escape(`KONA.m ${bikeName}${yearLabel} real 3D asset`),
     BIKE_NAME:escape(bikeName+yearLabel),
     BIKE_DEK:escape(bikeDek),
     BIKE_VIEW_URL:escape(bikeView),
