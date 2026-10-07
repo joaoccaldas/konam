@@ -33,6 +33,17 @@ function repoAsset(value,name,{raw=false}={}){
 function repoPage(value,name){
   return resolveUrl(value,name,APP_ORIGIN);
 }
+function emailImage(source,{width,height,fit='cover',background='f4efe7',quality=90}={}){
+  const url=new URL('https://images.weserv.nl/');
+  url.searchParams.set('url',source.replace(/^https:\/\//,''));
+  url.searchParams.set('output','jpg');
+  url.searchParams.set('q',String(quality));
+  url.searchParams.set('bg',background);
+  if(width)url.searchParams.set('w',String(width));
+  if(height)url.searchParams.set('h',String(height));
+  url.searchParams.set('fit',fit);
+  return url.href;
+}
 function fill(template,replacements){
   let out=template;
   for(const [key,value] of Object.entries(replacements))out=out.replaceAll('{{'+key+'}}',value);
@@ -86,7 +97,7 @@ export function prepareNewsletter(input){
       headline:text(story.headline,'headline',140),
       summary:text(story.summary,'summary',280),
       intern:text(story.intern,'Intern note',180,{optional:true}),
-      image:repoAsset(story.image,'story image'),
+      image:emailImage(repoAsset(story.image,'story image'),{width:520,height:340,fit:'cover',background:'e6e9ed',quality:88}),
       verified:true
     };
   });
@@ -100,7 +111,7 @@ export function prepareNewsletter(input){
   const html=fill(TEMPLATE,{
     PUBLISHED:escape(published),
     INTRO:escape(intro),
-    BIKE_IMAGE:escape(bikeImage),
+    BIKE_IMAGE:escape(emailImage(bikeImage,{width:1200,height:700,fit:'contain',background:'f4efe7',quality:92})),
     BIKE_ALT:escape(`KONA.m ${bikeName}${yearLabel} real 3D asset`),
     BIKE_NAME:escape(bikeName+yearLabel),
     BIKE_DEK:escape(bikeDek),
@@ -117,7 +128,7 @@ export function prepareNewsletter(input){
     id:'intern-'+edition,
     subject:'Kona.m — The Intern read the internet · '+published,
     html,
-    bike:{id:bikeId,name:bikeName,brand:bikeBrand,year:bike.year??null,image:bikeImage,glb:bikeGlb,viewer_url:bikeView,verified:true},
+    bike:{id:bikeId,name:bikeName,brand:bikeBrand,year:bike.year??null,image:bikeImage,email_image:emailImage(bikeImage,{width:1200,height:700,fit:'contain',background:'f4efe7',quality:92}),glb:bikeGlb,viewer_url:bikeView,verified:true},
     stories
   };
 }
