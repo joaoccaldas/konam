@@ -4,7 +4,7 @@ insert into auth.users(id,email,raw_user_meta_data) values
  ('00000000-0000-4000-8000-000000000011','newsletter-ci-optin@example.test','{"kona_newsletter":{"id":"kona-intern","version":1,"opt_in":true}}'),
  ('00000000-0000-4000-8000-000000000012','newsletter-ci-decline@example.test','{"kona_newsletter":{"id":"kona-intern","version":1,"opt_in":false}}'),
  ('00000000-0000-4000-8000-000000000013','newsletter-ci-anonymous@example.test','{}');
-insert into public.newsletter_subscriptions(email,status) values('newsletter-ci-anonymous@example.test','pending');
+insert into public.newsletter_subscriptions(email,status) values('newsletter-ci-anonymous@example.test','active');
 do $$begin
  if public.activate_registration_newsletter('00000000-0000-4000-8000-000000000011')<>'not_requested' then raise exception 'unverified activation';end if;
  if exists(select 1 from public.newsletter_subscriptions where email='newsletter-ci-optin@example.test') then raise exception 'unverified newsletter row';end if;
@@ -14,7 +14,7 @@ update auth.users set email_confirmed_at=now() where id in
 do $$begin
  if not exists(select 1 from public.newsletter_subscriptions where email='newsletter-ci-optin@example.test' and status='active' and confirmed_at is not null and user_id='00000000-0000-4000-8000-000000000011') then raise exception 'confirmed opt-in not activated';end if;
  if exists(select 1 from public.newsletter_subscriptions where email='newsletter-ci-decline@example.test') then raise exception 'declined user subscribed';end if;
- if not exists(select 1 from public.newsletter_subscriptions where email='newsletter-ci-anonymous@example.test' and status='pending') then raise exception 'anonymous pending silently activated';end if;
+ if not exists(select 1 from public.newsletter_subscriptions where email='newsletter-ci-anonymous@example.test' and status='active') then raise exception 'single-opt-in subscriber not active';end if;
 end $$;
 set local role authenticated;
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000012',true);
@@ -39,9 +39,9 @@ update public.newsletter_editions set review_draft_id='ci-not-a-real-gmail-draft
 do $$declare r record;n integer:=0;begin
  for r in select * from public.claim_newsletter_drafts('newsletter-ci',25) loop
    n:=n+1;
-   if r.email<>'newsletter-ci-optin@example.test' or r.html not like '%newsletter-subscribe?unsubscribe=%' or r.html like '%{{UNSUBSCRIBE_URL}}%' then raise exception 'wrong recipient/token interpolation';end if;
+   if r.email not in ('newsletter-ci-optin@example.test','newsletter-ci-anonymous@example.test') or r.html not like '%newsletter-subscribe?unsubscribe=%' or r.html like '%{{UNSUBSCRIBE_URL}}%' then raise exception 'wrong recipient/token interpolation';end if;
  end loop;
- if n<>1 then raise exception 'wrong recipient count: %',n;end if;
+ if n<>2 then raise exception 'wrong recipient count: %',n;end if;
  if exists(select 1 from public.claim_newsletter_drafts('newsletter-ci',25)) then raise exception 'duplicate claim';end if;
 end $$;
 update public.newsletter_subscriptions set status='unsubscribed' where email='newsletter-ci-optin@example.test';
