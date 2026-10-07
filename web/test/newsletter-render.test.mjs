@@ -39,7 +39,7 @@ test('newsletter preserves edition identity, exact branded hierarchy and unsubsc
   assert.match(edition.html,/THE INTERN, CURRENTLY/);
   assert.match(edition.html,/images\.weserv\.nl/);
   assert.match(edition.html,/output=jpg/);
-  assert.match(edition.html,/bg=f4efe7/);
+  assert.match(edition.html,/bg=eee5da/);
   assert.match(edition.html,/fit=contain/);
   assert.match(edition.bike.email_image,/images\.weserv\.nl/);
   assert.match(edition.html,/raw\.githubusercontent\.com\/joaoccaldas\/konam\/main\/assets\/museum\/speedmax_web\.glb/);
