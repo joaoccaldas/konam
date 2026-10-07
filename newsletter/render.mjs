@@ -11,7 +11,7 @@ const text=(value,name,max=3000,{optional=false}={})=>{
   return value.trim();
 };
 function date(value){
-  if(typeof value!=='string'||!new RegExp('^\\\\d{4}-\\\\d{2}-\\\\d{2}$').test(value)||new Date(value+'T00:00:00Z').toISOString().slice(0,10)!==value)throw new Error('Invalid publication date');
+  if(typeof value!=='string'||value.length!==10||value[4]!=='-'||value[7]!=='-'||!/^\d+$/.test(value.slice(0,4)+value.slice(5,7)+value.slice(8,10))||new Date(value+'T00:00:00Z').toISOString().slice(0,10)!==value)throw new Error('Invalid publication date');
   return value;
 }
 function https(value,name){
