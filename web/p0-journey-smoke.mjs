@@ -96,10 +96,10 @@ try{
  await collectionPage.click('[data-compare="components"]');await collectionPage.waitForSelector('#comparison table');
  assert.deepEqual(collectionErrors,[]);await collectionPage.close();
 
- // Public email sign-in is deliberately absent from the entry surface.
+ // Account access remains optional and returns to the same local-first app.
  const auth=await browser.newPage();auth.setDefaultTimeout(30000);
  await auth.goto(base,{waitUntil:'domcontentloaded'});
- assert.equal(await auth.$('#entrySignIn'),null,'unavailable sign-in must not be advertised');
+ await auth.waitForSelector('#entrySignIn');await auth.click('#entrySignIn');await auth.waitForSelector('.account-form');await auth.click('[data-back]');await auth.waitForFunction(()=>document.body.dataset.entryMode==='landing');
  assert.ok(await auth.$('#buildSelf'),'local-first build action remains available');
  await auth.close();
 

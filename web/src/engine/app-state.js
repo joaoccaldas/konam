@@ -20,6 +20,9 @@ export const APP_STATE_PREFIXES = Object.freeze([
 ]);
 
 const owned = key => APP_STATE_KEYS.includes(key) || APP_STATE_PREFIXES.some(p => key.startsWith(p));
+const sessionRows = storage => storageKeys({area:'session'}).flatMap(key => {
+  try { const value=storage?.getItem(key); return value==null?[]:[{key,value}]; } catch { return []; }
+});
 
 export function listAppState(storage = globalThis.localStorage) {
   const rows = [];
@@ -35,28 +38,33 @@ export function listAppState(storage = globalThis.localStorage) {
   return rows.sort((a, b) => a.key.localeCompare(b.key));
 }
 
-export function exportAppState(storage = globalThis.localStorage) {
+export function exportAppState(storage = globalThis.localStorage, session = globalThis.sessionStorage) {
   const entries = Object.fromEntries(listAppState(storage).filter(({key})=>key!==storageKey('session')).map(({ key, value }) => [key, value]));
   return JSON.stringify({
     schema_version: APP_STATE_SCHEMA_VERSION,
     scope: 'canyonmuseum-local-state',
     exported_at: new Date().toISOString(),
     entries,
+    session_entries: Object.fromEntries(sessionRows(session).map(({key,value})=>[key,value])),
   }, null, 2);
 }
 
-export function eraseAppState(storage = globalThis.localStorage) {
-  if (!storage) return 0;
+export function eraseAppState(storage = globalThis.localStorage, session = globalThis.sessionStorage) {
+  const sessions=sessionRows(session);
+  globalThis.__konaAnalytics?.setConsent?.(false);
   const keys = listAppState(storage).map(x => x.key);
   let removed = 0;
   for (const key of keys) {
     try { storage.removeItem(key); removed++; } catch (_) {}
   }
+  for (const {key} of sessions) {
+    try { session.removeItem(key); removed++; } catch (_) {}
+  }
   return removed;
 }
 
-export function appStateSummary(storage = globalThis.localStorage) {
-  const rows = listAppState(storage);
+export function appStateSummary(storage = globalThis.localStorage, session = globalThis.sessionStorage) {
+  const rows = [...listAppState(storage),...sessionRows(session)];
   return {
     records: rows.length,
     bytes: rows.reduce((n, x) => n + x.key.length + x.value.length, 0),

@@ -32,7 +32,8 @@ test('every published page carries security, privacy and SEO metadata', () => {
     assert.match(page?.disambiguatingDescription||'',/Not affiliated/,f+' independence disclosure');
     assert.ok(page?.about?.some?.(x=>x.name==='Triathlon'),f+' triathlon semantic');
     assert.ok(page?.about?.some?.(x=>x.name==='IRONMAN World Championship'),f+' IRONMAN semantic');
-    assert.doesNotMatch(h, /<meta\s+[^>]*name=["']author["']|\/Users\/[a-z]+|joaoccaldas(?:&#64;|@)gmail\.com|Jo[aã]o\s+Caldas/i, f);
+    if(f==='privacy.html')assert.match(h,/mailto:joaoccaldas\x40gmail\.com/);
+    assert.doesNotMatch(h, /<meta\s+[^>]*name=["']author["']|\/Users\/[a-z]+/i, f);
   }
 });
 
@@ -69,13 +70,10 @@ test('hardener uses the canonical Kona.m origin and supports a Vercel override',
 });
 
 
-test('global launch SEO is people-first and does not fake localized alternates', () => {
+test('museum landing describes the real experience and does not fake localized alternates', () => {
   const landing=fs.readFileSync(path.join(root,'index.html'),'utf8');
-  assert.match(landing,/Kona triathlon/i);
-  assert.match(landing,/IRONMAN(?:®| World Championship)/i);
-  assert.match(landing,/Brazil/i);
-  assert.match(landing,/Sweden/i);
-  assert.match(landing,/Dubai/i);
+  assert.match(landing,/Walk the 3D museum on the Kona coast/i);
+  assert.match(landing,/Independent project/i);
   assert.doesNotMatch(landing,/hreflang=/i);
   const locale=JSON.parse(fs.readFileSync(path.join(root,'config/launch-language-v1.json'),'utf8'));
   assert.equal(locale.default_locale,'en');

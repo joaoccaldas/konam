@@ -42,11 +42,8 @@ blend('validate',MASTER,'blender/validate_asset.py',[OUT/'checks'])
 if not SLX and not (OUT/'baseline-checks/silhouette.png').exists():
  blend('validate-baseline',ROOT/'assets/original-2026-09-27/speedmax_cfr_master.blend','blender/validate_asset.py',[OUT/'baseline-checks'])
 run('comparison',[sys.executable,'tools/compare_silhouette.py'])
-cli=ROOT/'web/node_modules/.bin/gltf-transform'
-if not cli.exists():raise SystemExit('Run npm ci in web first')
-# sparse=true bakes world transforms incorrectly for parented children with
-# shared geometries (rotor/cassette land at 2x world position). Keep sparse off.
-run('optimize',[cli,'optimize',OUT/'speedmax_web_raw.glb',OUT/'speedmax_web.glb','--compress','meshopt','--texture-compress','false','--simplify','false','--instance','false','--join','false','--flatten','false','--palette','false','--sparse','false'])
+# Canonical optimizer preserves named parts and hierarchy; no CLI/glob dependency.
+run('optimize',['node',ROOT/'web/optimize-glb.mjs',OUT/'speedmax_web_raw.glb',OUT/'speedmax_web.glb'])
 run('viewer',['node','build.mjs'],ROOT/'web',{'GLB':str(OUT/'speedmax_web.glb'),'BIKE_PROFILE':str(ROOT/m['viewer_profile'])})
 shutil.copy2(ROOT/'web/dist/index.html',ROOT/m['deliverables']['viewer'])
 blend('render',MASTER,'blender/museum_scene.py',[OUT,str(args.samples),*(['none'] if args.skip_renders else [])])

@@ -106,7 +106,7 @@ test('mobile shell keeps the canonical five-tab menu and only shows Close when a
 });
 
 test('Now tab routes to Home behavior and Admin Assets stays a generated, Me-only capability',()=>{
-  assert.match(shell,/\[data-tab=home\]'\)\.onclick=now/);
+  assert.match(shell,/\[data-tab=home\]'\)\.onclick=routes\.home/);
   assert.match(shell,/renderAdminAssets/);
   assert.match(admin,/app\/admin-assets\.json/);
   for(const source of ['museum/catalog/products.json','museum/world/rooms.json','museum/world/brand_rooms.json','museum/world/decorations.json']){

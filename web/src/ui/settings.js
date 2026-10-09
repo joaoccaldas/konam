@@ -59,14 +59,16 @@ export function initSettings({ profile, QUALITY, AVATARS, activeQuality, onQuali
         el('p', { class: 'set-note' }, 'For now these are in-app nudges only. Opening one can earn a small, one-time XP reward. No push permission is requested yet.')),
       el('section', {}, el('h4', {}, 'Account & sync'),
         sync?.available
-          ? el('div', { class: 'set-row' }, el('span', {}, p.sync ? `Signed in as ${p.sync.email}` : `Cloud backup for existing accounts. Public email sign-in is unavailable.`), el('button', { type: 'button', class: 'btn ghost', onclick: () => sync.start() }, 'Open account'))
-          : el('p', { class: 'set-note' }, 'Public email sign-in is unavailable. Your profile stays on this device.')),
+          ? el('div', { class: 'set-row' }, el('span', {}, p.sync ? `Signed in as ${p.sync.email}` : `Sign in to back up your Kona across devices.`), el('button', { type: 'button', class: 'btn ghost', onclick: () => sync.start() }, 'Open account'))
+          : el('p', { class: 'set-note' }, 'Your profile stays on this device. Account access is optional.')),
       el('section', {}, el('h4', {}, 'Privacy & data'),
+        el('div', { class:'set-row' }, el('span', {}, 'Anonymous usage analytics'), seg('Analytics', p.analytics?'on':'off', [['off','Off'],['on','On']], v=>profile.set({analytics:v==='on'}))),
+        el('p', { class:'set-note' }, 'Off by default. When enabled on the public website, session-only usage and coarse error categories help improve Kona.m. Switching off clears the analytics session on this device.'),
         el('p', {class:'set-note'}, 'Device deletion does not remove your cloud backup or account. Manage a saved backup from Progress. ', el('a',{href:'privacy.html'},'Privacy & data notice'), ' · ', el('a',{href:'credits.html'},'Photo credits')),
         el('div', { class: 'set-row' },
           el('button', { type: 'button', class: 'btn ghost', onclick: () => { const b = new Blob([exportAppState()], { type: 'application/json' }); const u=URL.createObjectURL(b); const a = el('a', { href: u, download: 'kona-app-local-data.json' }); document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),0); } }, 'Export device data'),
           el('button', { type: 'button', class: 'btn ghost danger', onclick: () => { const s=appStateSummary(); if (confirm(`Delete all ${s.records} app records from this device? This includes profile, passport, finds, setup and local preferences.`)) { eraseAppState(); location.reload(); } } }, 'Delete device data'))),
-      el('p', { class: 'set-foot' }, PRODUCT_NAME+' · local-first beta. No account required, no analytics. Export and delete cover all app-owned browser data.')));
+      el('p', { class: 'set-foot' }, PRODUCT_NAME+' · local-first beta. No account required. Analytics is optional and off by default. Export and delete cover app-owned device and session data.')));
     if(oldIndex>=0) focusable()[oldIndex]?.focus({preventScroll:true});
   }
   function open() { returnFocus=document.activeElement; draw(); sheet.hidden = false; document.body.classList.add('settings-open'); sheet.querySelector('input,button')?.focus({ preventScroll: true }); }

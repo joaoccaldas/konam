@@ -19,7 +19,7 @@ test('User Studio keeps personal depth while global content stays in primary sur
   assert.match(raceSelf,/race-self-controls/);
 });
 test('five-tab app shell remains the only top-level map and Home means Home',()=>{
-  assert.match(shell,/\[data-tab=home\]'\)\.onclick=now/);
+  assert.match(shell,/\[data-tab=home\]'\)\.onclick=routes\.home/);
   for(const tab of ['home','discover','garage','plan','me']) assert.match(shell,new RegExp('data-tab="'+tab+'"'));
   assert.equal((shell.match(/<button[^>]*data-tab=\"/g)||[]).length,5);
 });

@@ -10,6 +10,10 @@ const binaryExt=/\.(?:glb|blend|png|jpe?g|webp|gif|ico|gz|apk|woff2?|ttf|otf|was
 const definitionFiles=new Set(['.github/workflows/release-security.yml','tools/scan_private_data.mjs','tools/scan_public_surface.mjs','tools/lib/privacy-patterns.mjs','config/privacy-exceptions.json','web/test/privacy-scanners.test.mjs']);
 const exceptions=loadExceptions();
 const used=new Set();
+// Validate owner-approved public operator identities, which the public scanner checks.
+for(const e of exceptions.filter(e=>e.scope==='public-surface'&&e.kind==='private-contributor-name')){
+  if(e.file==='privacy.html'&&fs.existsSync(e.file)&&decodeForScan(fs.readFileSync(e.file,'utf8')).includes(e.value))used.add(e);
+}
 const findings=[];
 for(const file of files){
   if(binaryExt.test(file) || definitionFiles.has(file)) continue;

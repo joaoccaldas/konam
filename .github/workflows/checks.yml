@@ -12,8 +12,16 @@ permissions:
 
 jobs:
   checks:
+    name: Museum checks
+    needs: museum-journeys
+    if: always()
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
+      - name: Require every 3D journey
+        env:
+          JOURNEY_RESULT: ${{ needs.museum-journeys.result }}
+        run: test "$JOURNEY_RESULT" = success
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -44,7 +52,10 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID || true' EXIT
           for i in {1..20}; do curl -fsS http://127.0.0.1:8744/ >/dev/null && break; sleep 0.5; done
+          CHROME_PATH=/usr/bin/google-chrome node web/audit-remediation-browser.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/p0-journey-smoke.mjs http://127.0.0.1:8744/
+          CHROME_PATH=/usr/bin/google-chrome node web/native-entry-layout-browser.mjs http://127.0.0.1:8744/ --web
+          CHROME_PATH=/usr/bin/google-chrome node web/account-auth-browser.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/studio-launch-audit.mjs http://127.0.0.1:8744
           CHROME_PATH=/usr/bin/google-chrome node web/launch-regression-browser.mjs http://127.0.0.1:8744/
           CHROME_PATH=/usr/bin/google-chrome node web/companion-route-regression.mjs http://127.0.0.1:8744
@@ -55,5 +66,53 @@ jobs:
       - name: Built pages are up to date
         run: |
           node tools/build_pages.mjs
-          git diff --stat --exit-code -- web/src/generated/game-config.js museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json integrations/triathlon-graph.json docs/ROOMS.md '*.html' 'web/dist/*.html' app/kona-core.js app/admin-assets.json app/admin-asset-preview.js app/race-self-stage.js app/collectible-stage.js app/museum-data.js app/hall.js app/studio.js app/studio-catalog.js \
+          git diff --stat --exit-code -- web/src/generated/game-config.js museum/catalog/products.json museum/entry-catalog.json integrations/public-catalog.json integrations/triathlon-graph.json docs/ROOMS.md '*.html' 'web/dist/*.html' app/kona-core.js app/account-auth.js app/admin-assets.json app/admin-assets-ui.js app/admin-asset-preview.js app/race-self-stage.js app/collectible-stage.js app/museum-data.js app/hall.js app/studio.js app/studio-catalog.js sitemap.xml robots.txt llms.txt llms-full.txt integrations/companion/rss.xml \
             || { echo "::error::built pages/bundles are stale: run node tools/build_pages.mjs and commit all generated outputs"; exit 1; }
+
+  museum-journeys:
+    name: 3D journey (${{ matrix.id }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {id: entry-phone, script: museum-entry-browser.mjs, viewport: '390'}
+          - {id: entry-landscape, script: museum-entry-browser.mjs, viewport: '844'}
+          - {id: entry-desktop, script: museum-entry-browser.mjs, viewport: '1440'}
+          - {id: rooms-phone, script: founding-rooms-browser.mjs, viewport: '390'}
+          - {id: rooms-landscape, script: founding-rooms-browser.mjs, viewport: '844'}
+          - {id: inspection-phone, script: inspection-framing-browser.mjs, viewport: '390'}
+          - {id: inspection-landscape, script: inspection-framing-browser.mjs, viewport: '844'}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install
+        run: npm ci --ignore-scripts
+        working-directory: web
+      - name: Stage current runtime
+        run: bash tools/stage_site.sh
+      - name: Real 3D journey
+        env:
+          KONA_TEST_VIEWPORT: ${{ matrix.viewport }}
+          JOURNEY_SCRIPT: ${{ matrix.script }}
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          python3 -m http.server 8744 > /tmp/kona-3d-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8744/ >/dev/null && break; sleep 0.5; done
+          timeout 10m node "web/$JOURNEY_SCRIPT" http://127.0.0.1:8744/
+      - name: Preserve journey evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 3d-${{ matrix.id }}-${{ github.run_id }}
+          path: output/playwright/
+          if-no-files-found: ignore

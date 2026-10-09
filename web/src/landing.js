@@ -5,6 +5,7 @@ import { roomAccess } from './engine/access.js';
 // flagships in an apse facing the ocean. Walk (WASD / tap the floor), look (drag),
 // visit a bike (click / tap / 1–9), then step into its full 3D studio.
 import * as THREE from 'three';
+import { fitPerspectiveBounds, setPerspectiveRegion } from './engine/framing.js';
 import { FONT, SERIF } from './engine/type.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
@@ -20,7 +21,7 @@ import { decorateRoom } from './engine/decoration-props.js';
 import { buildWings } from './engine/wing.js';
 import { renderCard, bikeCard, paintingCard, sculptureCard, photoCard, roomCard } from './engine/card.js';
 import { initMap } from './map.js';
-import { roomOverview, withFutureLevels } from './world/map-model.js';
+import { roomOverview, roomOverviewFov, withFutureLevels } from './world/map-model.js';
 import { renderSettings } from './engine/profile.js';
 import { captureView, shareImage } from './engine/share.js';
 import { buildBrandRoom, loadBrandRoom, makeBrandLoader } from './engine/roomscene.js';
@@ -1106,23 +1107,28 @@ const DOORZ = { champ: DZ, wyld: WZ, pier: -46.5, hween: (HDOOR.z0 + HDOOR.z1) /
 const PIER_IN = [{ x: 1.2, z: -38.6 }, { x: 5.6, z: -38.6 }, { x: 5.4, z: -44.6 }, { x: 5.4, z: -48.4 }];   // round the apse plinth, through the glass door
 const NAVE_LANE = 13.6;                                             // upstairs walking lane: east of the bay plinths (x 11.15), west of the room openings
 const fader = document.getElementById('fade');
+let roomView=null;
+function clearRoomView(){roomView=null;camera.fov=museumFov();camera.updateProjectionMatrix();}
 function teleport(end) {
+  const arrivalPath=path;
   const land = () => {
+    if(path!==arrivalPath)return;
     P.x = end.x; P.z = end.z; P.vx = P.vz = 0;
     P.y = atlas.floorY(P.x, P.z) ?? galleryFloorY(P.x, P.z);
-    if (path?.face) { const fx = path.face.x - P.x, fz = path.face.z - P.z; P.yaw = Math.atan2(-fx, -fz); }
+    if (path?.face) { const fx = path.face.x - P.x, fz = path.face.z - P.z; P.yaw = Math.atan2(-fx, -fz);P.pitch=Math.atan2(path.face.y-(P.y+EYE),Math.hypot(fx,fz)); }
     if (path) path.splice(0, path.length - 1);                       // arrive: the card opens as soon as we face the piece
   };
   if (reduce || !fader) { land(); return; }
   fader.classList.add('on');
   setTimeout(() => { land(); requestAnimationFrame(() => requestAnimationFrame(() => fader.classList.remove('on'))); }, 190);
 }
-function route(to, face, piece) {                                   // aisle first, then the doorway — never a diagonal through the plinths
+function route(to, face, piece, overview=null) {                    // aisle first, then the doorway — never a diagonal through the plinths
+  clearRoomView();roomView=overview;
   const a = roomOf(P.x, P.z), b = roomOf(to.x, to.z);
   const pts = planRoute({ x: P.x, z: P.z, to, fromRoom: a, toRoom: b, doors: DOORZ, pierIn: PIER_IN, naveLane: NAVE_LANE });
   path = pts; path.stuck = 0; path.face = face; path.piece = piece || null;
   const end = pts[pts.length - 1], far = end && (roomOf(end.x, end.z) !== a || Math.hypot(end.x - P.x, end.z - P.z) > 9);
-  if (far && profile.get().travel !== 'walk') teleport(end);
+  if ((far||overview) && profile.get().travel !== 'walk') teleport(end);
 }
 function visit(p) {
   if (current && current !== p && current.exT > 0) setExploded(current, false);
@@ -1425,11 +1431,11 @@ function coachDid(kind) {                                            // the hint
 }
 $('coachOk')?.addEventListener('click', () => coachShow(coachState.k + 1));
 
-function enter() {
+function enter({gallery=false}={}) {
   if (started) return; started = true;
   document.body.classList.add('walking'); $('intro').classList.add('off');
   const coaching = coarse && (() => { try { return localStorage.getItem('speedmax.coach.v1') !== '1'; } catch (_) { return true; } })();
-  const returning = passport.visits > 0 && passport.pose && ['hall', 'champ', 'wyld', 'pier', 'hween'].includes(passport.pose.region)
+  const returning = !gallery && passport.visits > 0 && passport.pose && ['hall', 'champ', 'wyld', 'pier', 'hween'].includes(passport.pose.region)
     && walkable(passport.pose.x, passport.pose.z);
   passport.visits = (passport.visits || 0) + 1;
   try { applyStoredEvent({ type: 'FIRST_VISIT', id: 'FIRST_VISIT:museum' }); } catch (_) { }
@@ -1440,7 +1446,8 @@ function enter() {
     if (!coaching) toast(`Welcome back · Museum Passport ${seen}/${total}`);
   } else {
     if (!coaching) toast(coarse ? 'Walk with the tri-stick · drag to look around · tap any bike' : 'WASD to walk · drag to look · click a bike or press 1–9');
-    path = [{ x: 0, z: .6 }];
+    if(gallery){P.x=0;P.z=2.8;P.y=0;P.yaw=0;P.pitch=-.04;path=null;}
+    else path = [{ x: 0, z: .6 }];
   }
   writePassport(); canvas.focus({ preventScroll: true }); haptic(10); coach();
   if (profile.get().sound && $('soundBtn').getAttribute('aria-pressed') !== 'true') $('soundBtn').click();
@@ -1469,17 +1476,17 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
 {
   const WORDS = Object.fromEntries((window.__ROOMS?.areas || []).map(a => [a.id, a]));
   const AREA_COLOR = { hall: '#eadfca', sanctuary: '#d7c7e6', hween: '#f0a86c', beast: '#ff833d', kona: '#e2b27c', wyld: '#ffc4dd', pier: '#cfe4e2', stair: '#dcd6cb', nave: '#ece6da', ...Object.fromEntries(brandRooms.map(r => [r.desc.id, r.desc.theme?.accent || '#c9a13b'])) };
-  const R = (id, name, sub, rect, floor, color, extra = {}) => ({ id, name, sub, x0: rect.x0, x1: rect.x1, z0: rect.z0, z1: rect.z1, floor, color, ...extra });
+  const R = (id, name, sub, rect, floor, color, extra = {}) => ({ id, name, sub, x0: rect.x0, x1: rect.x1, z0: rect.z0, z1: rect.z1, height:rect.h, floor, color, ...extra });
   const liveAreas = [
     ...['hall', 'sanctuary', 'hween', ...(BEAST_CAVE_REVIEW?['beast']:[]), 'kona', ...(WROOMDATA?['wyld']:[]), ...(pier ? ['pier'] : []), 'stair', 'nave'].map(id => {
       const w = WORDS[id], rect = { hall: HALL, sanctuary: SROOM, hween: HROOM, beast: BROOM, kona: ROOM, wyld: WROOM, pier: pier && { x0: PIER.x0, x1: PIER.x1, z0: PIER.z0, z1: PIER.z1 }, stair: { x0: 7.35, x1: 12.3, z0: .75, z1: 6.55 }, nave: { x0: 7.5, x1: 16.5, z0: 5.55, z1: 27.2 } }[id];
-      return R(id, w?.short || id, w?.sub || '', rect, w?.floor || 'ground', AREA_COLOR[id], id === 'stair' || id === 'nave' ? { layer: 0 } : {});
+      return R(id, w?.short || id, w?.sub || '', rect, w?.floor || 'ground', AREA_COLOR[id], id === 'stair' || id === 'nave' ? { layer: 0 } : id==='kona'?{overview:{to:{x:ROOM.x1-1.4,z:DZ},face:{x:(ROOM.x0+ROOM.x1)/2,y:EYE,z:(ROOM.z0+ROOM.z1)/2}}}:{});
     }),
     ...brandRooms.map(r => R(r.desc.id, r.desc.name, r.desc.kicker || '', r.bounds, 'ground', r.desc.theme?.accent || '#c9a13b')),
-    ...galleries.bays.map(b => R('bay-' + b.id, b.title, b.sub, { x0: 8.4, x1: 14.8, z0: b.z - 1.8, z1: b.z + 1.8 }, 'upper', b.floor, { layer: 1, ink: /^#(1|0)/.test(b.floor) ? '#fbf9f5' : '#12181d', kind: 'bay' })),
-    ...galleries.rooms.map(r => R('room-' + r.id, r.name, r.sub, { x0: 16.5, x1: 25.1, z0: r.z1, z1: r.z0 }, 'upper', r.vein, { layer: 1, ink: '#12181d' })),
-    ...atlas.wings.map(w => R('wing-' + w.id, w.name, w.sub, w.corridor, w.floor, w.corridor.map_color || '#c89b62', { layer: 0 })),
-    ...atlas.rooms.map(r => R('atlas-' + r.wing + '-' + r.id, r.name, r.feature === 'paintshop' ? 'Every livery' : r.feature === 'references' ? 'The photographs' : [r.bikes.length ? `${r.bikes.length} bike${r.bikes.length > 1 ? 's' : ''}` : '', r.art.length ? `${r.art.length} work${r.art.length > 1 ? 's' : ''}` : ''].filter(Boolean).join(' · ') || r.sub, r.rect, 'upper', r.tint, { layer: 1, ink: '#fbf9f5' })),
+    ...galleries.bays.map(b => R('bay-' + b.id, b.title, b.sub, { x0: 8.4, x1: 14.8, z0: b.z - 1.8, z1: b.z + 1.8 }, 'upper', b.floor, { layer: 1, height:4.4, ink: /^#(1|0)/.test(b.floor) ? '#fbf9f5' : '#12181d', kind: 'bay' })),
+    ...galleries.rooms.map(r => R('room-' + r.id, r.name, r.sub, { x0: 16.5, x1: 25.1, z0: r.z1, z1: r.z0 }, 'upper', r.vein, { layer: 1, height:4, ink: '#12181d' })),
+    ...atlas.wings.map(w => R('wing-' + w.id, w.name, w.sub, w.corridor, w.floor, w.corridor.map_color || '#c89b62', { layer: 0, height:w.height })),
+    ...atlas.rooms.map(r => R('atlas-' + r.wing + '-' + r.id, r.name, r.feature === 'paintshop' ? 'Every livery' : r.feature === 'references' ? 'The photographs' : [r.bikes.length ? `${r.bikes.length} bike${r.bikes.length > 1 ? 's' : ''}` : '', r.art.length ? `${r.art.length} work${r.art.length > 1 ? 's' : ''}` : ''].filter(Boolean).join(' · ') || r.sub, r.rect, 'upper', r.tint, { layer: 1, height:atlas.wings.find(w=>w.id===r.wing).height, ink: '#fbf9f5' })),
   ];
   const areas = withFutureLevels(liveAreas);
 
@@ -1490,19 +1497,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     else if(brandRooms.some(r=>r.desc.id===id)) loadBrand();
   }
   function safeOverview(area){
-    const overview=roomOverview(area,{upperY:UPPER+1.6,groundY:EYE});
-    if(!overview) return null;
-    if(walkable(overview.to.x,overview.to.z)) return overview;
-    const cx=(area.x0+area.x1)/2,cz=(area.z0+area.z1)/2;
-    const candidates=[
-      {x:cx,z:cz},
-      {x:area.x0+(area.x1-area.x0)*.25,z:cz},
-      {x:area.x0+(area.x1-area.x0)*.75,z:cz},
-      {x:cx,z:area.z0+(area.z1-area.z0)*.25},
-      {x:cx,z:area.z0+(area.z1-area.z0)*.75},
-    ];
-    const to=candidates.find(p=>walkable(p.x,p.z))||overview.to;
-    return {...overview,to};
+    return roomOverview(area,{upperY:UPPER+EYE,groundY:EYE,isWalkable:walkable,floorAt:(x,z)=>atlas.floorY(x,z)??galleryFloorY(x,z)});
   }
   const accessForRoom=id=>roomAccess(id,{admin:globalThis.__konaAccess?.admin===true});
   const go = id => {
@@ -1514,13 +1509,13 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     tourEnd(false); closeCard(); prepareRoom(id);
     const ov=safeOverview(area); if(!ov) return;
     const face=new THREE.Vector3(ov.face.x,ov.face.y,ov.face.z);
-    route(ov.to,face,null);
+    route(ov.to,face,null,{area,overview:ov});
     path.roomOverview=id;
     document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x.dataset.room===id));
     toast(`${area.name} · room overview`);
   };
   window.__museumGo = go;
-  window.__map = initMap({ areas, go, access:accessForRoom, button: $('mapBtn'), pose: () => ({ x: P.x, z: P.z, yaw: P.yaw, floor: P.y > 3.3 ? 'upper' : 'ground' }) });
+  window.__map = initMap({ areas, go, access:accessForRoom, openFounding:action=>action.kind==='world'?go(action.target):window.__konaShell?.[action.target]?.(), button: $('mapBtn'), pose: () => ({ x: P.x, z: P.z, yaw: P.yaw, floor: P.y > 3.3 ? 'upper' : 'ground' }) });
 
   const where = $('where'); let lastWhere = null, wingHinted = (() => { try { return localStorage.getItem('speedmax.atlas.hint') === '1'; } catch (_) { return false; } })();
   where?.addEventListener('click', () => window.__map.open());
@@ -1550,6 +1545,7 @@ function openCard(p) {
   $('cStats').hidden = !p.stats; partSel = null; highlight(p, null);
   document.querySelectorAll('.plabel').forEach(b => b.classList.remove('on'));
   const exploded = p.exT > 0;
+  document.body.classList.toggle('inspection-overview',exploded);
   $('cMedia').innerHTML = (exploded && p.anchors ? `<div class="c-parts"><small>Parts · tap to read</small><div>${p.anchors.map((a, i) => `<button data-part="${a.id}"><i>${i + 1}</i>${esc(p.parts[a.id].name)}</button>`).join('')}</div></div>` : '')
     + (p.photo ? `<figure class="c-photo"><img src="${esc(p.photo.src)}" alt="${esc(p.name)}, ${esc(p.photo.credit)}" referrerpolicy="no-referrer" onerror="this.closest('figure').remove()"><figcaption><a href="${esc(p.photo.href)}" target="_blank" rel="noopener">${esc(p.photo.credit)} ↗</a></figcaption></figure>` : '')
     + (p.uncertain?.length ? `<details class="c-unc"><summary>What is reconstructed</summary><ul>${p.uncertain.map(u => `<li>${esc(u)}</li>`).join('')}</ul></details>` : '');
@@ -1563,9 +1559,10 @@ function openCard(p) {
   if (p.glb && p.key) $('cActions').insertAdjacentHTML('beforeend', `<a class="btn ghost" href="Studio.html?p=canyon-${p.key === 'cfr' || p.key === 'slx' ? p.key + '-2027' : esc(p.key)}">Paint it<span class="long"> in the studio</span></a>`);
   if ($('cExplode')) $('cExplode').onclick = () => setExploded(p, !(p.exT > 0));
   $('card').classList.add('on'); document.body.classList.add('card-open');
+  if(inspectionFocus?.piece===p)requestAnimationFrame(()=>focusInspection(p));
 }
 function closeCard(keepCurrent) {
-  $('card').classList.remove('on'); document.body.classList.remove('card-open');
+  $('card').classList.remove('on'); document.body.classList.remove('card-open','inspection-overview');
   if (!keepCurrent) { if (exploded) setExploded(exploded, false); current = null; railActive(null); }
 }
 $('cardClose').onclick = () => { tourEnd(false); closeCard(); };
@@ -1579,7 +1576,34 @@ function labelled(p) {
   if (!p.parts || !p.nodes) return [];
   return LABEL_ORDER.filter(id => p.nodes[id] && p.parts[id]).slice(0, lite ? 10 : 14);
 }
+let inspectionFocus=null;
 let partSel = null, exploded = null;                                 // the one bike currently apart
+function inspectionViewport(){
+  const W=innerWidth,H=innerHeight,pad=16;
+  const top=Math.min(H*.4,Math.max(80,$('konaWorld').querySelector('header').getBoundingClientRect().bottom+12));
+  let bottom=H-16,right=W-16;
+  const card=$('card').getBoundingClientRect();
+  if($('card').classList.contains('on')){if(card.width>W*.7)bottom=Math.min(bottom,card.top-12);else right=Math.min(right,card.left-12);}
+  const nav=document.querySelector('.kona-bottom-nav')?.getBoundingClientRect();if(nav&&nav.top>H/2)bottom=Math.min(bottom,nav.top-12);
+  return {x:pad,y:top,width:Math.max(80,right-pad),height:Math.max(80,bottom-top),fullWidth:W,fullHeight:H};
+}
+function roomViewport(){
+  const region=inspectionViewport(),rail=$('rail').getBoundingClientRect();
+  if(rail.top>region.y)region.height=Math.max(80,Math.min(region.height,rail.top-region.y-12));
+  return region;
+}
+function focusInspection(p){
+  if(!p?.inspection)return;
+  const previous=inspectionFocus?.previous||{x:P.x,z:P.z,yaw:P.yaw,pitch:P.pitch};
+  const bounds=p.inspection.measureAtProgress(1,()=>new THREE.Box3().setFromObject(p.bike));
+  const center=bounds.getCenter(new THREE.Vector3()),direction=new THREE.Vector3(P.x-center.x,0,P.z-center.z).normalize();direction.y=.12;
+  camera.fov=coarse?78:museumFov();
+  fitPerspectiveBounds(camera,{target:new THREE.Vector3(),update(){}},bounds,{direction:direction.toArray(),padding:1.08,region:inspectionViewport()});
+  if(!walkable(camera.position.x,camera.position.z)){camera.fov=museumFov();camera.far=700;camera.clearViewOffset();return;}
+  P.x=camera.position.x;P.z=camera.position.z;P.vx=P.vz=0;path=null;
+  P.yaw=Math.atan2(P.x-center.x,P.z-center.z);P.pitch=Math.atan2(center.y-camera.position.y,Math.hypot(center.x-P.x,center.z-P.z));
+  inspectionFocus={piece:p,previous,eyeOffset:camera.position.y-P.y-EYE};camera.far=700;
+}
 function setExploded(p, on) {
   if (!p?.bike) return;
   if (on && exploded && exploded !== p) setExploded(exploded, false);
@@ -1593,9 +1617,10 @@ function setExploded(p, on) {
       return { id, node: n, local: n.worldToLocal(box.getCenter(wp).clone()) };
     });
     $('labels').innerHTML = p.anchors.map((a, i) => `<button class="plabel" data-part="${a.id}"><i>${i + 1}</i><span>${esc(p.parts[a.id].name)}</span></button>`).join('');
-  } else { $('labels').innerHTML = ''; p.anchors = null; highlight(p, null); }
+  } else { if(inspectionFocus?.piece===p){Object.assign(P,inspectionFocus.previous);inspectionFocus=null;camera.fov=museumFov();camera.far=700;camera.clearViewOffset();}document.body.classList.remove('inspection-overview');$('labels').innerHTML = ''; p.anchors = null; highlight(p, null); }
   $('labels').classList.toggle('on', on);
   if (current === p && $('card').classList.contains('on') && !partSel) openCard(p);
+  if(on)focusInspection(p);
 }
 const hlMats = new Map();
 function highlight(p, id) {
@@ -1610,7 +1635,8 @@ function highlight(p, id) {
 }
 function openPart(p, id) {
   const info = p.parts?.[id]; if (!info) return;
-  partSel = id; highlight(p, id);
+  partSel = id;document.body.classList.remove('inspection-overview');highlight(p, id);
+  if(inspectionFocus?.piece===p)requestAnimationFrame(()=>focusInspection(p));
   document.querySelectorAll('.plabel').forEach(b => b.classList.toggle('on', b.dataset.part === id));
   $('cYears').textContent = `${p.name} · ${info.group || 'part'}`;
   $('cName').textContent = info.name;
@@ -1649,7 +1675,7 @@ canvas.addEventListener('pointermove', e => {
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.moved = Math.max(drag.moved, Math.hypot(dx, dy));
     const k = coarse ? .0068 : .0044;
     P.yaw = drag.yaw + dx * k; P.pitch = clamp(drag.pitch + dy * k * .8, -.9, .7);
-    if (drag.moved > 6) { if (tour.on) tourEnd(false); path = null; if (drag.moved > 60) coachDid('look'); }
+    if (drag.moved > 6) { clearRoomView();if (tour.on) tourEnd(false); path = null; if (drag.moved > 60) coachDid('look'); }
   } else if (started && !coarse) hover = { x: e.clientX, y: e.clientY };
 });
 canvas.addEventListener('pointerup', e => {
@@ -1691,8 +1717,8 @@ function nudge(f) { const nx = P.x - Math.sin(P.yaw) * f, nz = P.z - Math.cos(P.
 addEventListener('keydown', e => {
   if (e.target.closest?.('input,textarea,select,a')) return;
   const k = e.key.toLowerCase();
-  if (!started) { if (k === 'enter' && !$('enterBtn').disabled) { e.preventDefault(); enter(); } return; }
-  if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'shift', 'q', 'e'].includes(k)) { keys.add(k); path = null; tourEnd(false); if (k.startsWith('arrow')) e.preventDefault(); }
+  if (!started) { if (k === 'enter' && $('enterBtn') && !$('enterBtn').disabled) { e.preventDefault(); enter(); } return; }
+  if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'shift', 'q', 'e'].includes(k)) { if(roomView)clearRoomView();keys.add(k); path = null; tourEnd(false); if (k.startsWith('arrow')) e.preventDefault(); }
   if (k >= '1' && k <= '9' && PIECES[+k - 1]) visit(PIECES[+k - 1]);
   if (k === 'escape') { if (partSel && current) openCard(current); else closeCard(); }
   if (k === 'x' && current?.bike) setExploded(current, !(current.exT > 0));
@@ -1746,7 +1772,7 @@ function resize() {
   renderer.setSize(w, h, false); camera.aspect = w / h;
   camera.fov = museumFov(); camera.updateProjectionMatrix();
 }
-addEventListener('resize', resize); resize();
+addEventListener('resize',()=>{resize();if(inspectionFocus)focusInspection(inspectionFocus.piece);}); resize();
 let last = performance.now(), shift = 0;
 function frame(now) {
   requestAnimationFrame(frame);
@@ -1766,6 +1792,7 @@ function frame(now) {
   const sp = (keys.has('shift') ? 5.8 : 3.35) * (joy.on ? Math.min(1, Math.hypot(joy.x, joy.y)) * 1.08 : 1);
   let wx = 0, wz = 0, following = false;
   if (Math.hypot(ix, iz) > .08) {
+    if(roomView)clearRoomView();
     const s = Math.sin(P.yaw), c = Math.cos(P.yaw), l = Math.max(1e-3, Math.hypot(ix, iz));
     wx = (-s * iz + c * ix) / l * sp; wz = (-c * iz - s * ix) / l * sp;
     if (current) { if (current.exT > 0) setExploded(current, false); closeCard(); }
@@ -1783,7 +1810,7 @@ function frame(now) {
     const want = Math.atan2(-fx, -fz), dyaw = ((want - P.yaw + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
     const wantPitch = Math.atan2(path.face.y - (P.y + EYE), Math.hypot(fx, fz));
     P.yaw += dyaw * (1 - Math.exp(-dt * 5.6)); P.pitch += (wantPitch - P.pitch) * (1 - Math.exp(-dt * 4.8));
-    if (!path.length && Math.abs(dyaw) < .02) { const pc = path.piece, ch = path.champ, wy = path.wyld, pr = path.pier, hw = path.hween, sa = path.sanctuary, gy = path.gallery, kn = path.kona, ax = path.atlas, ar = path.art, br = path.brand; path = null; if (ax) openAtlas(ax); if (ar) openArt(ar); if (hw) openHween(); if (sa) openSanctuary(sa); if (gy) openGallery(gy); if (kn) openKona(kn); if (pc) openCard(pc); if (ch) openChamp(ch); if (wy) openWyld(wy); if (br) openBrand(br); if (pr) pr.kind === 'finale' ? openFinale() : openYear(pr); }
+    if (!path.length && Math.abs(dyaw) < .02 && Math.abs(wantPitch-P.pitch)<.02) { const pc = path.piece, ch = path.champ, wy = path.wyld, pr = path.pier, hw = path.hween, sa = path.sanctuary, gy = path.gallery, kn = path.kona, ax = path.atlas, ar = path.art, br = path.brand; path = null; if (ax) openAtlas(ax); if (ar) openArt(ar); if (hw) openHween(); if (sa) openSanctuary(sa); if (gy) openGallery(gy); if (kn) openKona(kn); if (pc) openCard(pc); if (ch) openChamp(ch); if (wy) openWyld(wy); if (br) openBrand(br); if (pr) pr.kind === 'finale' ? openFinale() : openYear(pr); }
   } else if (path && !path.length) path = null;
   const k = 1 - Math.exp(-dt * 15); P.vx += (wx - P.vx) * k; P.vz += (wz - P.vz) * k;
   const nx = P.x + P.vx * dt, nz = P.z + P.vz * dt;
@@ -1811,12 +1838,14 @@ function frame(now) {
   const wantY = atlas.floorY(P.x, P.z) ?? galleryFloorY(P.x, P.z);
   P.y += (wantY - P.y) * (1 - Math.exp(-dt * 8));
   const yaw = P.yaw + idle * Math.sin(t * .13) * .1, pitch = P.pitch + idle * Math.sin(t * .1) * .015;
-  camera.position.set(P.x, P.y + EYE + (reduce ? 0 : Math.sin(bob) * .045 * Math.min(1, moving)), P.z);
+  camera.position.set(P.x, P.y + EYE + (inspectionFocus?.eyeOffset||0) + (reduce ? 0 : Math.sin(bob) * .045 * Math.min(1, moving)), P.z);
   fwd.set(-Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), -Math.cos(yaw) * Math.cos(pitch));
   camera.lookAt(look.copy(camera.position).add(fwd));
   const cardOn = $('card').classList.contains('on'), W = innerWidth, H = innerHeight;
   shift += ((cardOn ? 1 : 0) - shift) * (1 - Math.exp(-dt * 4));
-  if (shift > .002) { const dx = small ? 0 : W * .17 * shift, dy = small ? H * .23 * shift : 0; camera.setViewOffset(W + 2 * dx, H + 2 * dy, 2 * dx, 2 * dy, W, H); }
+  if(inspectionFocus){setPerspectiveRegion(camera,inspectionViewport());}
+  else if(roomView){const region=roomViewport();camera.fov=roomOverviewFov(roomView.area,roomView.overview,{...region,minFov:museumFov(),maxFov:coarse?135:85});setPerspectiveRegion(camera,region);}
+  else if (shift > .002) { const dx = small ? 0 : W * .17 * shift, dy = small ? H * .23 * shift : 0; camera.setViewOffset(W + 2 * dx, H + 2 * dy, 2 * dx, 2 * dy, W, H); }
   else if (camera.view?.enabled) camera.clearViewOffset();
   // hover (desktop): halo + name tag
   let hot = null;
@@ -1951,19 +1980,34 @@ async function shareView(title) {
 $('shareBtn')?.addEventListener('click', () => shareView($('card').classList.contains('on') ? $('cName').textContent : ''));
 const worldMore=$('worldMoreMenu'),worldMoreBtn=$('worldMoreBtn');
 $('backKonaBtn')?.addEventListener('click',()=>window.__konaShell?.now?.());
+function closeWorldMenu({focus=false}={}) {
+  if(worldMore)worldMore.hidden=true;
+  worldMoreBtn?.setAttribute('aria-expanded','false');
+  if(focus)worldMoreBtn?.focus({preventScroll:true});
+}
 worldMoreBtn?.addEventListener('click',()=>{
   const open=worldMore?.hidden!==false;
   if(worldMore)worldMore.hidden=!open;
   worldMoreBtn.setAttribute('aria-expanded',String(open));
+  if(open)worldMore?.querySelector('button')?.focus({preventScroll:true});
 });
-worldMore?.querySelector('[data-world-share]')?.addEventListener('click',()=>{worldMore.hidden=true;worldMoreBtn?.setAttribute('aria-expanded','false');shareView($('card').classList.contains('on') ? $('cName').textContent : '');});
-worldMore?.querySelector('[data-world-tour]')?.addEventListener('click',()=>{worldMore.hidden=true;worldMoreBtn?.setAttribute('aria-expanded','false');tourStart?.();});
-worldMore?.querySelector('[data-world-settings]')?.addEventListener('click',()=>{worldMore.hidden=true;worldMoreBtn?.setAttribute('aria-expanded','false');settingsUI?.open?.();});
-document.addEventListener('click',e=>{if(!worldMore||worldMore.hidden)return;if(e.target.closest('#worldMoreBtn,#worldMoreMenu'))return;worldMore.hidden=true;worldMoreBtn?.setAttribute('aria-expanded','false');});
+worldMore?.querySelector('[data-world-home]')?.addEventListener('click',()=>{closeWorldMenu();window.__konaShell?.now?.();});
+worldMore?.querySelector('[data-world-share]')?.addEventListener('click',()=>{closeWorldMenu({focus:true});shareView($('card').classList.contains('on') ? $('cName').textContent : '');});
+worldMore?.querySelector('[data-world-tour]')?.addEventListener('click',()=>{closeWorldMenu({focus:true});tourStart?.();});
+worldMore?.querySelector('[data-world-settings]')?.addEventListener('click',()=>{closeWorldMenu({focus:true});settingsUI?.open?.();});
+worldMore?.addEventListener('keydown',e=>{
+  const buttons=[...worldMore.querySelectorAll('button')],index=buttons.indexOf(document.activeElement);
+  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeWorldMenu({focus:true});}
+  else if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){
+    e.preventDefault();e.stopPropagation();const next=e.key==='Home'?0:e.key==='End'?buttons.length-1:(index+(e.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length;
+    buttons[next]?.focus();
+  }else if(e.key==='Tab')closeWorldMenu();
+});
+document.addEventListener('click',e=>{if(!worldMore||worldMore.hidden)return;if(e.target.closest('#worldMoreBtn,#worldMoreMenu'))return;closeWorldMenu();});
 $('cardShare')?.addEventListener('click', () => shareView($('cName').textContent));
 const konaShell = window.__konaShell;
 if (!konaShell) throw new Error('KONA consumer Shell authority missing');
 window.__app = { profile, settings: settingsUI, shareView, openArt, openAtlas, konaShell };
 window.__atlas = atlas;
-window.__museum = { P, PIECES, visit, enter, scene, camera, champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
+window.__museum = { P, PIECES, visit, enter, scene, camera, inspectionViewport,roomViewport,get roomView(){return roomView;},get navigating(){return !!path;},get inspectionFocus(){return inspectionFocus;},inspectionBounds:()=>inspectionFocus?.piece?.inspection.measureAtProgress(1,()=>new THREE.Box3().setFromObject(inspectionFocus.piece.bike)), champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
 initArtWorld(window.__museum).catch(e => console.warn('art world', e));

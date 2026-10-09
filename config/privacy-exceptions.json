@@ -17,6 +17,23 @@
       "reason": "about.html is generated from the Field Guide and intentionally mirrors the same public project contact address.",
       "approved_by": "owner (2026-10-03)",
       "added": "2026-10-03"
+    },
+    {
+      "file": "privacy.html",
+      "kind": "personal-email",
+      "value": "joaoccaldas@gmail.com",
+      "reason": "Operator supplied this public support/privacy contact for the beta notice.",
+      "approved_by": "owner (2026-10-05)",
+      "added": "2026-10-05"
+    },
+    {
+      "file": "privacy.html",
+      "kind": "private-contributor-name",
+      "value": "Joao Caldas",
+      "scope": "public-surface",
+      "reason": "Owner explicitly supplied operator identity for publication in the privacy notice.",
+      "approved_by": "owner (2026-10-05)",
+      "added": "2026-10-05"
     }
   ]
 }

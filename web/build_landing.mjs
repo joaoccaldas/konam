@@ -31,6 +31,8 @@ await build({
   target: 'es2020',
   legalComments: 'none',
 });
+await build({entryPoints:[path.join(here,'src/ui/account-auth.js')],bundle:true,format:'esm',minify:true,outfile:path.join(root,'app/account-auth.js'),target:'es2020',legalComments:'none'});
+await build({entryPoints:[path.join(here,'src/ui/admin-assets.js')],bundle:true,format:'esm',minify:true,outfile:path.join(root,'app/admin-assets-ui.js'),target:'es2020',legalComments:'none'});
 await build({
   entryPoints: [path.join(here, 'src/race-self-stage-entry.js')],
   bundle: true,

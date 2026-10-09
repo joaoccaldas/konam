@@ -225,6 +225,10 @@ for(const id of selected){
       await inventory('The Feed');await p.screenshot({path:path.join(out,prefix+'-feed.png')});
       const rss=await p.$('[data-personal-rss]');assert.ok(rss,'RSS affordance missing');
       const href=await rss.evaluate(e=>e.getAttribute('href'));assert.ok(href&&!href.startsWith('javascript:'));
+      await p.$eval('[data-personal-rss]',e=>e.closest('details').open=true);
+      const feedURL=p.url();await click('[data-personal-rss]');await p.waitForFunction(()=>document.querySelector('[data-rss-status]').textContent.includes('Copied'));
+      assert.equal(p.url(),feedURL,'Copying RSS must keep the visitor in the app');assert.equal(await p.evaluate(()=>window.__copiedLink),href);
+      const newsletter=await p.$('.companion-tools a[href*="account=newsletter"]');assert.ok(newsletter,'Branded newsletter signup entry missing');
       await click('.companion-page [data-back]');await waitHome();
     });
     await step('Home Travel route, Plan nav authority, place filters and return-to-Now provenance work',async()=>{

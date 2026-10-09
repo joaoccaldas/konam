@@ -106,7 +106,10 @@ async function capture(vp,state,theme){
    // Canonical touch targets apply to phone captures; desktop mouse controls
    // retain their existing compact layout. Record the threshold with evidence.
    const targetMinimum=touchViewport?48:24;
-   const small=els.map(x=>{const r=x.getBoundingClientRect();return{tag:x.tagName,text:(x.textContent||'').trim().slice(0,50),w:r.width,h:r.height};}).filter(x=>x.w<targetMinimum||x.h<targetMinimum);
+   // Transformed DOMRects can report 48px as 47.99997px. Keep raw evidence,
+   // but tolerate only floating-point rounding, not a subpixel-short control.
+   const targetRoundingTolerance=.001;
+   const small=els.map(x=>{const r=x.getBoundingClientRect();return{tag:x.tagName,text:(x.textContent||'').trim().slice(0,50),w:r.width,h:r.height};}).filter(x=>x.w+targetRoundingTolerance<targetMinimum||x.h+targetRoundingTolerance<targetMinimum);
    const grid=document.querySelector('.finds-grid'),cards=grid?[...grid.querySelectorAll('[data-find]')].slice(0,2):[];
    const collectionGrid=grid?{display:getComputedStyle(grid).display,columns:getComputedStyle(grid).gridTemplateColumns.split(' ').length,sameFirstRow:cards.length===2&&Math.abs(cards[0].getBoundingClientRect().top-cards[1].getBoundingClientRect().top)<1}:null;
    const back=document.querySelector('#konaPanelClose');
@@ -121,7 +124,7 @@ async function capture(vp,state,theme){
    const museumLinks=[...document.querySelectorAll('link[data-style-scope="museum"]')];
    const companionHero=document.querySelector('.companion-hero');
    const reg=document.querySelector('.registration-avatar'),regCopy=document.querySelector('.registration-avatar-copy'),regPreview=document.querySelector('.registration-avatar-preview');
-   const enter=document.getElementById('buildSelf'),product=document.querySelector('#intro.kona-entry .entry-product');
+   const enter=document.getElementById('entryWorld'),product=document.querySelector('#intro.kona-entry .entry-product');
    const er=enter?.getBoundingClientRect?.(),pr=product?.getBoundingClientRect?.();
    const rr=reg?.getBoundingClientRect?.(),rc=regCopy?.getBoundingClientRect?.(),rp=regPreview?.getBoundingClientRect?.();
    return{canonicalRoomCount:document.querySelectorAll('[data-canonical-room-option]').length,canonicalRoomSelectVisible:!!document.querySelector('[data-canonical-room-select]')&&visible(document.querySelector('[data-canonical-room-select]')),canonicalRoomFocusVisible:!!document.querySelector('[data-canonical-room-focus]')&&visible(document.querySelector('[data-canonical-room-focus]')),canonicalRoomOpenText:(document.querySelector('[data-canonical-rooms]')?.innerText||'').slice(0,600),panelBackCovered:backCovered,panelScrollTop:document.querySelector('#konaPanel')?.scrollTop??0,targetMinimum,collectionGrid,museumControlsVisible:els.filter(x=>x.closest('#konaWorld')).length,landing:er?{ctaTop:er.top,ctaBottom:er.bottom,ctaLeft:er.left,ctaRight:er.right,ctaW:er.width,productTop:pr?.top??null,productBottom:pr?.bottom??null,productLeft:pr?.left??null,productRight:pr?.right??null,viewportH:innerHeight}:null,registration:rr&&rc&&rp?{w:rr.width,copyW:rc.width,previewW:rp.width,overlap:Math.max(0,Math.min(rc.right,rp.right)-Math.max(rc.left,rp.left))}:null,stage:sr?{x:sr.x,y:sr.y,w:sr.width,h:sr.height}:null,museumStylesEnabled:museumLinks.filter(x=>!x.disabled).length,companionHeroPosition:companionHero?getComputedStyle(companionHero).position:null,scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,overflowX:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,primaryActions:primary.length,visibleActions:els.length,smallTargets:small.slice(0,20),title:document.title,lang:document.documentElement.lang,introVisible:intro?visible(intro):false,navVisible:nav?visible(nav):false,activeNav,visibleText,tourText};
@@ -154,7 +157,7 @@ for(const r of report){
    if(a.w<900||a.copyW<420||a.previewW<340||a.overlap>1)violations.push(`desktop/${r.theme}: avatar registration grid collapsed ${Math.round(a.w)} total / ${Math.round(a.copyW)} copy / ${Math.round(a.previewW)} preview / ${Math.round(a.overlap)} overlap`);
  }
  if(r.state==='onboarding-tour'&&!/MAKE IT YOURS|Start with your athlete/i.test(r.metrics.tourText))violations.push(`${r.viewport}/${r.theme}: onboarding tour missing`);
- if(r.state==='home'&&!/YOUR RACE SELF/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: Now core surface missing`);
+ if(r.state==='home'&&!/THE 3D MUSEUM/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: Museum hero missing on Home`);
  if(r.state==='home'&&!/race-week cockpit/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: Now purpose is not explicit`);
  if(r.state==='user-studio'&&!/Build the version of you|YOUR ATHLETE|USER STUDIO/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: User Studio content missing`);
  if(r.state==='avatar-editor'&&!/Your character|Minecraft|Customize/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: avatar editor missing`);

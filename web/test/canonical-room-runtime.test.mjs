@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {roomAccess} from '../src/engine/access.js';
 
 const root=new URL('../../',import.meta.url);
 const json=path=>JSON.parse(fs.readFileSync(new URL(path,root),'utf8'));
@@ -37,4 +38,11 @@ test('Discover consumes canonical room truth without a second styling authority'
   assert.match(source,/btn-secondary/);
   assert.doesNotMatch(source,/<style|stylesheet|style=/i);
   assert.doesNotMatch(source,/kona-discover-categories/);
+});
+
+
+test('fresh visitors can enter each founding 3D route and its canonical ID without a level lock',()=>{
+  const rooms=json('world/konam/rooms-v1.json').rooms.filter(room=>room.group==='foundation');
+  const routes=json('world/konam/founding-runtime-v1.json').routes;
+  for(const room of rooms){assert.equal(roomAccess(room.id,{state:{level:1}}).unlocked,true,room.id);const route=routes.find(route=>route.room_id===room.id);if(route.action.kind==='world')assert.equal(roomAccess(route.action.target,{state:{level:1}}).unlocked,true,route.action.target);}
 });

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "checked_at": "2026-10-05T06:09:05.719Z",
+  "checked_at": "2026-10-09T10:20:29.049Z",
   "sources": [
     {
       "id": "https://www.slowtwitch.com/feed/",
@@ -10,8 +10,8 @@
       "feed_url": "https://www.slowtwitch.com/feed/",
       "note": "Triathlon reporting and analysis",
       "status": "ok",
-      "checked_at": "2026-10-05T06:09:04.833Z",
-      "last_success_at": "2026-10-05T06:09:04.833Z"
+      "checked_at": "2026-10-09T10:20:28.759Z",
+      "last_success_at": "2026-10-09T10:20:28.759Z"
     },
     {
       "id": "https://triathlonmagazine.ca/feed/",
@@ -21,8 +21,8 @@
       "feed_url": "https://triathlonmagazine.ca/feed/",
       "note": "Triathlon reporting from Canada",
       "status": "ok",
-      "checked_at": "2026-10-05T06:09:05.582Z",
-      "last_success_at": "2026-10-05T06:09:05.582Z"
+      "checked_at": "2026-10-09T10:20:28.455Z",
+      "last_success_at": "2026-10-09T10:20:28.455Z"
     },
     {
       "id": "https://bigislandnow.com/feed/",
@@ -32,175 +32,397 @@
       "feed_url": "https://bigislandnow.com/feed/",
       "note": "Hawaiʻi Island news, including Kona",
       "status": "ok",
-      "checked_at": "2026-10-05T06:09:03.183Z",
-      "last_success_at": "2026-10-05T06:09:03.183Z"
+      "checked_at": "2026-10-09T10:20:26.997Z",
+      "last_success_at": "2026-10-09T10:20:26.997Z"
     },
     {
       "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
       "name": "Lionel Sanders",
       "kind": "video",
-      "website": "https://www.youtube.com/@Lionel.Sanders",
-      "channel_id": "UC-gct8TB_8l5HsQHBBr8hyQ",
+      "website": "https://www.youtube.com/channel/UC-gct8TB_8l5HsQHBBr8hyQ",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
-      "feed_hosts": [
-        "www.youtube.com"
-      ],
-      "article_hosts": [
-        "www.youtube.com"
-      ],
       "note": "Official athlete channel",
-      "verified_at": "2026-10-01",
-      "status": "stale",
-      "checked_at": "2026-10-05T06:09:05.719Z",
-      "last_success_at": "2026-10-01T08:21:05.781Z"
+      "status": "ok",
+      "checked_at": "2026-10-09T10:20:28.887Z",
+      "last_success_at": "2026-10-09T10:20:28.887Z"
     },
     {
       "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
       "name": "Lucy Charles-Barclay",
       "kind": "video",
-      "website": "https://www.youtube.com/@LucyCharlesBarclay",
-      "channel_id": "UC6PP69DCmBwMCPf9RSSTNTg",
+      "website": "https://www.youtube.com/channel/UC6PP69DCmBwMCPf9RSSTNTg",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
-      "feed_hosts": [
-        "www.youtube.com"
-      ],
-      "article_hosts": [
-        "www.youtube.com"
-      ],
       "note": "Team Charles-Barclay · Lucy & Reece",
-      "verified_at": "2026-10-01",
-      "status": "stale",
-      "checked_at": "2026-10-05T06:09:05.719Z",
-      "last_success_at": "2026-10-01T08:21:05.751Z"
+      "status": "ok",
+      "checked_at": "2026-10-09T10:20:28.867Z",
+      "last_success_at": "2026-10-09T10:20:28.867Z"
     },
     {
       "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
       "name": "Paula Findlay · TTL",
       "kind": "video",
-      "website": "https://www.youtube.com/@ThatTriathlonLife",
-      "channel_id": "UC8Wjskc9fSkYLporjscGIBQ",
+      "website": "https://www.youtube.com/channel/UC8Wjskc9fSkYLporjscGIBQ",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
-      "feed_hosts": [
-        "www.youtube.com"
-      ],
-      "article_hosts": [
-        "www.youtube.com"
-      ],
       "note": "That Triathlon Life · Paula Findlay & Eric Lagerstrom",
-      "verified_at": "2026-10-01",
-      "status": "stale",
-      "checked_at": "2026-10-05T06:09:05.719Z",
-      "last_success_at": "2026-10-01T08:21:05.801Z"
+      "status": "ok",
+      "checked_at": "2026-10-09T10:20:28.908Z",
+      "last_success_at": "2026-10-09T10:20:28.908Z"
     },
     {
       "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
       "name": "Sam Laidlow",
       "kind": "video",
       "website": "https://www.youtube.com/channel/UCP6EsU9T2RykT1quNR5moeg",
-      "channel_id": "UCP6EsU9T2RykT1quNR5moeg",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCP6EsU9T2RykT1quNR5moeg",
-      "feed_hosts": [
-        "www.youtube.com"
-      ],
-      "article_hosts": [
-        "www.youtube.com"
-      ],
       "note": "Official athlete channel",
-      "identity_source": "https://samlaidlow.com/",
-      "verified_at": "2026-10-01",
-      "status": "stale",
-      "checked_at": "2026-10-05T06:09:05.719Z",
-      "last_success_at": "2026-10-01T08:21:05.907Z"
+      "status": "ok",
+      "checked_at": "2026-10-09T10:20:29.029Z",
+      "last_success_at": "2026-10-09T10:20:29.029Z"
     },
     {
       "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
       "name": "Sam Long",
       "kind": "video",
       "website": "https://www.youtube.com/channel/UCuGZGcO5LvIH4u9g_2ZsHGQ",
-      "channel_id": "UCuGZGcO5LvIH4u9g_2ZsHGQ",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
-      "feed_hosts": [
-        "www.youtube.com"
-      ],
-      "article_hosts": [
-        "www.youtube.com"
-      ],
       "note": "Official athlete channel",
-      "identity_source": "https://www.samgolong.com/",
-      "verified_at": "2026-10-01",
-      "status": "stale",
-      "checked_at": "2026-10-05T06:09:05.719Z",
-      "last_success_at": "2026-10-01T08:21:05.944Z"
+      "status": "ok",
+      "checked_at": "2026-10-09T10:20:29.046Z",
+      "last_success_at": "2026-10-09T10:20:29.046Z"
     },
     {
       "id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
       "name": "Jan Frodeno",
       "kind": "video",
       "website": "https://www.youtube.com/channel/UCaxiAhuGz2SvnIYml4B5qMA",
-      "channel_id": "UCaxiAhuGz2SvnIYml4B5qMA",
       "feed_url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
-      "feed_hosts": [
-        "www.youtube.com"
-      ],
-      "article_hosts": [
-        "www.youtube.com"
-      ],
       "note": "Frodeno Going Mental · official podcast",
-      "identity_source": "https://www.frodeno.com/",
-      "verified_at": "2026-10-01",
-      "status": "stale",
-      "checked_at": "2026-10-05T06:09:05.719Z",
-      "last_success_at": "2026-10-01T08:21:05.935Z"
+      "status": "ok",
+      "checked_at": "2026-10-09T10:20:29.037Z",
+      "last_success_at": "2026-10-09T10:20:29.037Z"
     }
   ],
   "items": [
     {
-      "id": "https://bigislandnow.com/2026/10/04/hawaii-county-surf-forecast-for-october-05-2026/",
+      "id": "https://bigislandnow.com/2026/10/08/us-coast-guard-medevacs-crewmember-from-cargo-ship-southeast-of-big-island/",
       "source_id": "https://bigislandnow.com/feed/",
-      "title": "Hawaii County Surf Forecast for October 05, 2026",
-      "url": "https://bigislandnow.com/2026/10/04/hawaii-county-surf-forecast-for-october-05-2026/",
-      "published_at": "2026-10-05T06:00:06.000Z",
+      "title": "US Coast Guard medevacs crewmember from cargo ship southeast of Big Island",
+      "url": "https://bigislandnow.com/2026/10/08/us-coast-guard-medevacs-crewmember-from-cargo-ship-southeast-of-big-island/",
+      "published_at": "2026-10-09T07:09:15.000Z",
       "kind": "kona"
     },
     {
-      "id": "https://bigislandnow.com/2026/10/04/pahoa-woman-charged-with-attempted-murder-after-domestic-incident/",
+      "id": "https://bigislandnow.com/2026/10/08/hawaii-county-weather-forecast-for-october-09-2026/",
       "source_id": "https://bigislandnow.com/feed/",
-      "title": "Pāhoa woman charged with attempted murder after domestic incident",
-      "url": "https://bigislandnow.com/2026/10/04/pahoa-woman-charged-with-attempted-murder-after-domestic-incident/",
-      "published_at": "2026-10-04T23:33:41.000Z",
+      "title": "Hawaii County Weather Forecast for October 09, 2026",
+      "url": "https://bigislandnow.com/2026/10/08/hawaii-county-weather-forecast-for-october-09-2026/",
+      "published_at": "2026-10-09T06:30:11.000Z",
       "kind": "kona"
     },
     {
-      "id": "https://bigislandnow.com/2026/10/04/university-of-hawai%ca%bbi-researchers-unlock-molecular-mechanism-for-how-tilapia-adapt-to-extreme-salinity/",
+      "id": "https://bigislandnow.com/2026/10/08/hawaii-county-surf-forecast-for-october-09-2026/",
       "source_id": "https://bigislandnow.com/feed/",
-      "title": "University of Hawaiʻi researchers unlock molecular mechanism for how tilapia adapt to extreme salinity",
-      "url": "https://bigislandnow.com/2026/10/04/university-of-hawai%ca%bbi-researchers-unlock-molecular-mechanism-for-how-tilapia-adapt-to-extreme-salinity/",
-      "published_at": "2026-10-04T23:00:00.000Z",
+      "title": "Hawaii County Surf Forecast for October 09, 2026",
+      "url": "https://bigislandnow.com/2026/10/08/hawaii-county-surf-forecast-for-october-09-2026/",
+      "published_at": "2026-10-09T06:00:05.000Z",
       "kind": "kona"
     },
     {
-      "id": "https://bigislandnow.com/2026/10/04/mountain-view-man-dead-after-pickup-truck-crashes-into-tree/",
+      "id": "https://www.slowtwitch.com/triathlon/ironman-world-championship-press-conference-takeaways/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "IRONMAN World Championship Press Conference Takeaways",
+      "url": "https://www.slowtwitch.com/triathlon/ironman-world-championship-press-conference-takeaways/",
+      "published_at": "2026-10-09T04:19:49.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/08/ocean-view-man-killed-in-officer-involved-shooting/",
       "source_id": "https://bigislandnow.com/feed/",
-      "title": "Mountain View man dead after pickup truck crashes into tree",
-      "url": "https://bigislandnow.com/2026/10/04/mountain-view-man-dead-after-pickup-truck-crashes-into-tree/",
-      "published_at": "2026-10-04T22:08:51.000Z",
+      "title": "31-year-old killed by police officer in dense brush following foot chase in Ocean View",
+      "url": "https://bigislandnow.com/2026/10/08/ocean-view-man-killed-in-officer-involved-shooting/",
+      "published_at": "2026-10-09T01:39:07.000Z",
       "kind": "kona"
     },
     {
-      "id": "https://bigislandnow.com/2026/10/04/new-youth-led-nonprofit-report-faces-resident-fears-about-hawai%ca%bbis-future-aimed-at-being-base-to-trigger-action/",
+      "id": "https://bigislandnow.com/2026/10/08/2-major-disaster-declaration-approvals-to-help-hawai%ca%bbi-recover-from-recent-storms/",
       "source_id": "https://bigislandnow.com/feed/",
-      "title": "New youth-led nonprofit report faces resident fears about Hawaiʻi&#8217;s future, aimed at being base to trigger action",
-      "url": "https://bigislandnow.com/2026/10/04/new-youth-led-nonprofit-report-faces-resident-fears-about-hawai%ca%bbis-future-aimed-at-being-base-to-trigger-action/",
-      "published_at": "2026-10-04T20:00:00.000Z",
+      "title": "2 major disaster declaration approvals to help Hawaiʻi recover from recent storms",
+      "url": "https://bigislandnow.com/2026/10/08/2-major-disaster-declaration-approvals-to-help-hawai%ca%bbi-recover-from-recent-storms/",
+      "published_at": "2026-10-09T01:18:22.000Z",
       "kind": "kona"
     },
     {
-      "id": "https://bigislandnow.com/2026/10/04/all-hawaiian-airlines-international-departures-from-honolulu-airport-now-check-in-at-terminal-2/",
+      "id": "https://bigislandnow.com/2026/10/08/everything-you-need-to-know-and-more-about-the-2026-ironman-world-championship/",
       "source_id": "https://bigislandnow.com/feed/",
-      "title": "All Hawaiian Airlines international departures from Honolulu airport now check in at Terminal 2",
-      "url": "https://bigislandnow.com/2026/10/04/all-hawaiian-airlines-international-departures-from-honolulu-airport-now-check-in-at-terminal-2/",
-      "published_at": "2026-10-04T18:00:00.000Z",
+      "title": "Everything you need to know about the 2026 Ironman World Championship in Kona",
+      "url": "https://bigislandnow.com/2026/10/08/everything-you-need-to-know-and-more-about-the-2026-ironman-world-championship/",
+      "published_at": "2026-10-09T00:34:11.000Z",
       "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/08/update-portion-of-highway-11-near-miloli%ca%bbi-reopen-to-traffic/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "UPDATE: Portion of Highway 11 near Miloliʻi reopen to traffic",
+      "url": "https://bigislandnow.com/2026/10/08/update-portion-of-highway-11-near-miloli%ca%bbi-reopen-to-traffic/",
+      "published_at": "2026-10-09T00:08:23.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/08/fbi-honolulu-announces-drone-restriction-in-kona-during-ironman-world-championship/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "FBI Honolulu announces drone restriction in Kona during Ironman World Championship",
+      "url": "https://bigislandnow.com/2026/10/08/fbi-honolulu-announces-drone-restriction-in-kona-during-ironman-world-championship/",
+      "published_at": "2026-10-08T23:57:58.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/thursday-in-kona-must-be-time-to-run-in-your-underwear/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Thursday in Kona &#8230; Must be Time to Run in Your Underwear",
+      "url": "https://www.slowtwitch.com/triathlon/thursday-in-kona-must-be-time-to-run-in-your-underwear/",
+      "published_at": "2026-10-08T23:26:00.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/08/hawai%ca%bbi-observes-stop-the-ant-month-throughout-october/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaiʻi observes &#8216;Stop the Ant Month&#8217; throughout October",
+      "url": "https://bigislandnow.com/2026/10/08/hawai%ca%bbi-observes-stop-the-ant-month-throughout-october/",
+      "published_at": "2026-10-08T23:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/solveig-lovseth-knows-just-how-hard-it-is-to-defend-in-kona-shes-happy-to-go-for-it/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Solveig Løvseth Knows Just How Hard it is to Defend in Kona &#8230; She&#8217;s Happy to Go For It",
+      "url": "https://www.slowtwitch.com/triathlon/solveig-lovseth-knows-just-how-hard-it-is-to-defend-in-kona-shes-happy-to-go-for-it/",
+      "published_at": "2026-10-08T22:47:23.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/08/department-of-water-supply-manager-chief-engineer-to-retire-next-month/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Department of Water Supply manager-chief engineer to retire next month",
+      "url": "https://bigislandnow.com/2026/10/08/department-of-water-supply-manager-chief-engineer-to-retire-next-month/",
+      "published_at": "2026-10-08T21:04:03.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/08/queens-north-hawaii-community-hospital-reschedules-worlds-largest-pet-walk-event/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Queen&#8217;s North Hawai&#8217;i Community Hospital reschedules World&#8217;s Largest Pet Walk event",
+      "url": "https://bigislandnow.com/2026/10/08/queens-north-hawaii-community-hospital-reschedules-worlds-largest-pet-walk-event/",
+      "published_at": "2026-10-08T20:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/08/public-invited-to-4th-community-meeting-about-kona-airport-master-plan-update/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Public invited to 4th community meeting about Kona airport master plan update",
+      "url": "https://bigislandnow.com/2026/10/08/public-invited-to-4th-community-meeting-about-kona-airport-master-plan-update/",
+      "published_at": "2026-10-08T18:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/08/5-big-island-men-among-field-of-2500-plus-competing-saturday-during-ironman-world-championship/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Meet the Big Island men competing Saturday during the Ironman World Championship",
+      "url": "https://bigislandnow.com/2026/10/08/5-big-island-men-among-field-of-2500-plus-competing-saturday-during-ironman-world-championship/",
+      "published_at": "2026-10-08T15:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/08/top-10-things-to-do-on-big-island-for-oct-9-15-big-island-metal-bash-waimea-fall-festival-halloween-paint-purr-plus-more/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Top 10 things to do on Big Island for Oct. 9-15: Big Island Metal Bash, Waimea Fall Festival, Halloween Paint &#038; Purr plus more",
+      "url": "https://bigislandnow.com/2026/10/08/top-10-things-to-do-on-big-island-for-oct-9-15-big-island-metal-bash-waimea-fall-festival-halloween-paint-purr-plus-more/",
+      "published_at": "2026-10-08T13:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/hawaii-county-weather-forecast-for-october-08-2026/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaii County Weather Forecast for October 08, 2026",
+      "url": "https://bigislandnow.com/2026/10/07/hawaii-county-weather-forecast-for-october-08-2026/",
+      "published_at": "2026-10-08T06:30:08.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/hawaii-county-surf-forecast-for-october-08-2026/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaii County Surf Forecast for October 08, 2026",
+      "url": "https://bigislandnow.com/2026/10/07/hawaii-county-surf-forecast-for-october-08-2026/",
+      "published_at": "2026-10-08T06:00:05.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/puna-man-charged-with-habitual-dui-driving-with-suspended-or-revoked-license-open-container/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Puna man charged with habitual DUI, driving with suspended or revoked license, open container",
+      "url": "https://bigislandnow.com/2026/10/07/puna-man-charged-with-habitual-dui-driving-with-suspended-or-revoked-license-open-container/",
+      "published_at": "2026-10-08T04:05:20.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/sam-laidlows-shows-his-maturity-and-tech-savvy-during-kona-lead-up/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Sam Laidlow&#8217;s Shows His Maturity (and Tech Savvy) During Kona Lead Up",
+      "url": "https://www.slowtwitch.com/triathlon/sam-laidlows-shows-his-maturity-and-tech-savvy-during-kona-lead-up/",
+      "published_at": "2026-10-08T04:00:00.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/uncertainty-at-kilauea-summit-prompts-safety-closures-at-hawaii-volcanoes-national-park/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Uncertainty at Kīlauea summit prompts safety closures at Hawai‘i Volcanoes National Park",
+      "url": "https://bigislandnow.com/2026/10/07/uncertainty-at-kilauea-summit-prompts-safety-closures-at-hawaii-volcanoes-national-park/",
+      "published_at": "2026-10-08T02:35:47.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/waikoloa-affordable-housing-projected-halted-due-to-infrastructure-and-evacuation-concerns/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Waikōloa affordable housing projected halted due to infrastructure and evacuation concerns",
+      "url": "https://bigislandnow.com/2026/10/07/waikoloa-affordable-housing-projected-halted-due-to-infrastructure-and-evacuation-concerns/",
+      "published_at": "2026-10-08T01:30:24.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/wind-advisory-in-effect-until-thursday-afternoon-for-big-isle-summits/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Wind advisory in effect until Thursday afternoon for Big Isle summits",
+      "url": "https://bigislandnow.com/2026/10/07/wind-advisory-in-effect-until-thursday-afternoon-for-big-isle-summits/",
+      "published_at": "2026-10-08T01:23:50.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/jamie-riddle-explains-his-felt-ia-2-0-set-up-for-kona/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Jamie Riddle Explains His Felt IA 2.0 Set Up for Kona",
+      "url": "https://www.slowtwitch.com/triathlon/jamie-riddle-explains-his-felt-ia-2-0-set-up-for-kona/",
+      "published_at": "2026-10-08T00:59:43.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feature/2026-kona-ironman-world-championships-rookies-who-could-impress/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "2026 Kona Ironman World Championship: Rookies Who Could Impress",
+      "url": "https://triathlonmagazine.ca/feature/2026-kona-ironman-world-championships-rookies-who-could-impress/",
+      "published_at": "2026-10-07T22:48:12.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/the-trek-factory-team-is-ready-for-kona/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "The Trek Factory Team is Ready for Kona",
+      "url": "https://www.slowtwitch.com/triathlon/the-trek-factory-team-is-ready-for-kona/",
+      "published_at": "2026-10-07T22:09:02.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/its-time-to-choose-either-allow-disc-wheels-in-kona-or-regulate-wheel-depth/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "It&#8217;s Time to Choose: Either Allow Disc Wheels in Kona or Regulate Wheel Depth",
+      "url": "https://www.slowtwitch.com/triathlon/its-time-to-choose-either-allow-disc-wheels-in-kona-or-regulate-wheel-depth/",
+      "published_at": "2026-10-07T19:40:00.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/its-safe-sleep-awareness-month-hawai%ca%bbi-department-of-health-has-tips-for-parents-caregivers/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "It&#8217;s Safe Sleep Awareness Month: Hawaiʻi Department of Health has tips for parents, caregivers",
+      "url": "https://bigislandnow.com/2026/10/07/its-safe-sleep-awareness-month-hawai%ca%bbi-department-of-health-has-tips-for-parents-caregivers/",
+      "published_at": "2026-10-07T18:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/kat-matthews-is-this-her-year-to-conquer-kona/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Kat Matthews: Is This Her Year to Conquer Kona?",
+      "url": "https://www.slowtwitch.com/triathlon/kat-matthews-is-this-her-year-to-conquer-kona/",
+      "published_at": "2026-10-07T16:02:05.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/triathletes-flood-alii-drive-for-ironmans-parade-of-nations/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Triathletes flood Ali‘i Drive for Ironman&#8217;s Parade of Nations",
+      "url": "https://bigislandnow.com/2026/10/07/triathletes-flood-alii-drive-for-ironmans-parade-of-nations/",
+      "published_at": "2026-10-07T14:04:18.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/hilo-bay-team-has-been-busy-keeping-dewy-the-buoy-operational-this-active-hurricane-season/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hilo Bay team has been busy keeping Dewy the buoy operational this active hurricane season",
+      "url": "https://bigislandnow.com/2026/10/07/hilo-bay-team-has-been-busy-keeping-dewy-the-buoy-operational-this-active-hurricane-season/",
+      "published_at": "2026-10-07T13:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/07/university-of-hawai%ca%bbi-university-of-massachusetts-partner-for-joint-research-exchanges-and-programs/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "University of Hawaiʻi, University of Massachusetts partner for joint research, exchanges and programs",
+      "url": "https://bigislandnow.com/2026/10/07/university-of-hawai%ca%bbi-university-of-massachusetts-partner-for-joint-research-exchanges-and-programs/",
+      "published_at": "2026-10-07T11:00:00.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/kona-chill-ultra-cool-techs-glacier-tt-cockpit-cooling-kit/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Kona Chill: Ultra Cool Tech’s Glacier TT Cockpit Cooling Kit",
+      "url": "https://www.slowtwitch.com/triathlon/kona-chill-ultra-cool-techs-glacier-tt-cockpit-cooling-kit/",
+      "published_at": "2026-10-07T06:32:00.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://bigislandnow.com/2026/10/06/hawaii-county-weather-forecast-for-october-07-2026/",
+      "source_id": "https://bigislandnow.com/feed/",
+      "title": "Hawaii County Weather Forecast for October 07, 2026",
+      "url": "https://bigislandnow.com/2026/10/06/hawaii-county-weather-forecast-for-october-07-2026/",
+      "published_at": "2026-10-07T06:30:07.000Z",
+      "kind": "kona"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feature/patrick-lange-the-last-dance/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Patrick Lange: The Last Dance at the Kona Ironman World Championship",
+      "url": "https://triathlonmagazine.ca/feature/patrick-lange-the-last-dance/",
+      "published_at": "2026-10-07T05:58:23.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/feature/sam-laidlow-the-person-behind-the-champion/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Sam Laidlow: The Person Behind the Champion",
+      "url": "https://triathlonmagazine.ca/feature/sam-laidlow-the-person-behind-the-champion/",
+      "published_at": "2026-10-07T02:16:33.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.slowtwitch.com/triathlon/blu-and-gustav-two-norwegians-one-kona-goal/",
+      "source_id": "https://www.slowtwitch.com/feed/",
+      "title": "Blu and Gustav: Two Norwegians, One Kona Goal",
+      "url": "https://www.slowtwitch.com/triathlon/blu-and-gustav-two-norwegians-one-kona-goal/",
+      "published_at": "2026-10-06T21:00:00.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://triathlonmagazine.ca/uncategorized/beyond-uci-rules-ekoi-launches-tri-aero-for-long-distance-triathlon/",
+      "source_id": "https://triathlonmagazine.ca/feed/",
+      "title": "Beyond UCI Rules: EKOÏ Launches TRI AERO for Long-Distance Triathlon",
+      "url": "https://triathlonmagazine.ca/uncategorized/beyond-uci-rules-ekoi-launches-tri-aero-for-long-distance-triathlon/",
+      "published_at": "2026-10-06T19:00:31.000Z",
+      "kind": "news"
+    },
+    {
+      "id": "https://www.youtube.com/watch?v=tR9FZv6uDIc",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
+      "title": "Kat Matthews: Why Mindset Alone Won't Win You a Race",
+      "url": "https://www.youtube.com/watch?v=tR9FZv6uDIc",
+      "published_at": "2026-10-05T02:00:17.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/tR9FZv6uDIc/hqdefault.jpg"
     },
     {
       "id": "https://triathlonmagazine.ca/feature/what-a-kona-win-would-mean-for-taylor-knibb-and-the-history-books/",
@@ -211,44 +433,13 @@
       "kind": "news"
     },
     {
-      "id": "https://bigislandnow.com/2026/10/04/nearly-100-customers-still-without-drinking-water-and-sewer-after-lala-damaged-private-punalu%ca%bbu-utility/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Two Kaʻū condo communities deserted after Lala damaged private Punaluʻu utility servicing water, sewer",
-      "url": "https://bigislandnow.com/2026/10/04/nearly-100-customers-still-without-drinking-water-and-sewer-after-lala-damaged-private-punalu%ca%bbu-utility/",
-      "published_at": "2026-10-04T15:00:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/04/online-public-survey-launched-for-puna-alternate-route-study/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Online public survey launched for Puna Alternate Route Study",
-      "url": "https://bigislandnow.com/2026/10/04/online-public-survey-launched-for-puna-alternate-route-study/",
-      "published_at": "2026-10-04T13:00:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/04/public-notified-about-upcoming-military-vehicle-convoys-in-west-hawai%ca%bbi/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Public notified about upcoming military vehicle convoys in West Hawaiʻi",
-      "url": "https://bigislandnow.com/2026/10/04/public-notified-about-upcoming-military-vehicle-convoys-in-west-hawai%ca%bbi/",
-      "published_at": "2026-10-04T11:00:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/hawaii-county-weather-forecast-for-october-04-2026/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Hawaii County Weather Forecast for October 04, 2026",
-      "url": "https://bigislandnow.com/2026/10/03/hawaii-county-weather-forecast-for-october-04-2026/",
-      "published_at": "2026-10-04T06:30:10.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/hawaii-county-surf-forecast-for-october-04-2026/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Hawaii County Surf Forecast for October 04, 2026",
-      "url": "https://bigislandnow.com/2026/10/03/hawaii-county-surf-forecast-for-october-04-2026/",
-      "published_at": "2026-10-04T06:00:04.000Z",
-      "kind": "kona"
+      "id": "https://www.youtube.com/watch?v=5VRI9PuFMmo",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
+      "title": "Final KONA PREP - Still at Home",
+      "url": "https://www.youtube.com/watch?v=5VRI9PuFMmo",
+      "published_at": "2026-10-04T15:00:10.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/5VRI9PuFMmo/hqdefault.jpg"
     },
     {
       "id": "https://triathlonmagazine.ca/feature/who-are-triathlons-top-earners-in-2026-heading-into-kona/",
@@ -259,148 +450,13 @@
       "kind": "news"
     },
     {
-      "id": "https://bigislandnow.com/2026/10/03/free-energy-efficiency-live-webinar-training-series-offered-by-hawai%ca%bbi-state-energy-office/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Free energy efficiency live webinar training series offered by Hawaiʻi State Energy Office",
-      "url": "https://bigislandnow.com/2026/10/03/free-energy-efficiency-live-webinar-training-series-offered-by-hawai%ca%bbi-state-energy-office/",
-      "published_at": "2026-10-04T01:00:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/18-motorists-arrested-for-dui-week-of-sept-14-20-on-big-island-roadways/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "18 motorists arrested for DUI week of Sept. 14-20 on Big Island roadways",
-      "url": "https://bigislandnow.com/2026/10/03/18-motorists-arrested-for-dui-week-of-sept-14-20-on-big-island-roadways/",
-      "published_at": "2026-10-03T23:00:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/police-seek-missing-endangered-teen-ask-public-for-help/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "UPDATE: Police locate missing 16-year-old considered endangered",
-      "url": "https://bigislandnow.com/2026/10/03/police-seek-missing-endangered-teen-ask-public-for-help/",
-      "published_at": "2026-10-03T21:07:51.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/police-investigating-26th-traffic-fatality-of-2026-following-single-vehicle-crash-in-mountain-view/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Police investigating 26th traffic fatality of 2026 following single-vehicle crash in Mountain View",
-      "url": "https://bigislandnow.com/2026/10/03/police-investigating-26th-traffic-fatality-of-2026-following-single-vehicle-crash-in-mountain-view/",
-      "published_at": "2026-10-03T20:21:57.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://www.slowtwitch.com/gravel/why-women-still-need-their-own-start-in-gravel-racing/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "Why Women (Still) Need Their Own Start in Gravel Racing",
-      "url": "https://www.slowtwitch.com/gravel/why-women-still-need-their-own-start-in-gravel-racing/",
-      "published_at": "2026-10-03T19:54:14.000Z",
-      "kind": "news"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/uh-study-of-microplastics-infant-brain-development-receives-3-3m-national-institutes-of-health-grant/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "UH study of microplastics, infant brain development receives $3.3M National Institutes of Health grant",
-      "url": "https://bigislandnow.com/2026/10/03/uh-study-of-microplastics-infant-brain-development-receives-3-3m-national-institutes-of-health-grant/",
-      "published_at": "2026-10-03T19:00:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/everything-you-need-to-know-and-more-about-the-2026-ironman-world-championship/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Everything you need to know about the 2026 Ironman World Championship in Kona",
-      "url": "https://bigislandnow.com/2026/10/03/everything-you-need-to-know-and-more-about-the-2026-ironman-world-championship/",
-      "published_at": "2026-10-03T15:44:43.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/men-women-to-once-again-share-the-field-in-the-ironman-world-championship-in-kona/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Men, women to once again share the field in the Ironman World Championship in Kona",
-      "url": "https://bigislandnow.com/2026/10/03/men-women-to-once-again-share-the-field-in-the-ironman-world-championship-in-kona/",
-      "published_at": "2026-10-03T15:00:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/hawai%ca%bbi-island-ywca-prepares-to-revitalize-downtown-campus-with-modern-preschool/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Hawaiʻi Island YWCA holds groundbreaking for $7 million preschool expansion",
-      "url": "https://bigislandnow.com/2026/10/03/hawai%ca%bbi-island-ywca-prepares-to-revitalize-downtown-campus-with-modern-preschool/",
-      "published_at": "2026-10-03T13:00:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/03/county-adds-weekend-help-for-earthquake-disaster-assistance/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Hawaiʻi County adds weekend help for earthquake disaster assistance",
-      "url": "https://bigislandnow.com/2026/10/03/county-adds-weekend-help-for-earthquake-disaster-assistance/",
-      "published_at": "2026-10-03T11:00:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/02/hawaii-county-weather-forecast-for-october-03-2026/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Hawaii County Weather Forecast for October 03, 2026",
-      "url": "https://bigislandnow.com/2026/10/02/hawaii-county-weather-forecast-for-october-03-2026/",
-      "published_at": "2026-10-03T06:30:10.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/02/hawaii-county-surf-forecast-for-october-03-2026/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Hawaii County Surf Forecast for October 03, 2026",
-      "url": "https://bigislandnow.com/2026/10/02/hawaii-county-surf-forecast-for-october-03-2026/",
-      "published_at": "2026-10-03T06:00:04.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/02/__trashed-7/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Police seek missing Kona man; have you seen the 22-year-old?",
-      "url": "https://bigislandnow.com/2026/10/02/__trashed-7/",
-      "published_at": "2026-10-03T02:25:23.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/02/puna-man-charged-with-murder-indicted-in-connection-with-hawaiian-paradise-park-shooting/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "Puna man charged with murder indicted in connection with Hawaiian Paradise Park shooting",
-      "url": "https://bigislandnow.com/2026/10/02/puna-man-charged-with-murder-indicted-in-connection-with-hawaiian-paradise-park-shooting/",
-      "published_at": "2026-10-03T01:15:21.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://bigislandnow.com/2026/10/02/state-briefs-for-oct-2-updates-and-announcements-from-the-state-of-hawai%ca%bbi/",
-      "source_id": "https://bigislandnow.com/feed/",
-      "title": "State briefs for Oct 2: Updates and announcements from the State of Hawaiʻi",
-      "url": "https://bigislandnow.com/2026/10/02/state-briefs-for-oct-2-updates-and-announcements-from-the-state-of-hawai%ca%bbi/",
-      "published_at": "2026-10-03T00:30:00.000Z",
-      "kind": "kona"
-    },
-    {
-      "id": "https://www.slowtwitch.com/triathlon/we-noticed-boston-set-for-record-entries-ironman-heads-to-romania-and-clash-adds-collegiate-long-course-event/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "We Noticed: Boston Set For Record Entries, IRONMAN Heads to Romania and Clash Adds Collegiate Long-Course Event",
-      "url": "https://www.slowtwitch.com/triathlon/we-noticed-boston-set-for-record-entries-ironman-heads-to-romania-and-clash-adds-collegiate-long-course-event/",
-      "published_at": "2026-10-02T22:41:08.000Z",
-      "kind": "news"
-    },
-    {
-      "id": "https://www.slowtwitch.com/training/apple-watch-ultra-4-is-an-ai-powerhouse-with-fitness-and-health-improvements-but-do-you-need-it/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "Apple Watch Ultra 4 is an AI Powerhouse With Fitness and Health Improvements, But Do You Need it?",
-      "url": "https://www.slowtwitch.com/training/apple-watch-ultra-4-is-an-ai-powerhouse-with-fitness-and-health-improvements-but-do-you-need-it/",
-      "published_at": "2026-10-02T22:37:09.000Z",
-      "kind": "news"
-    },
-    {
-      "id": "https://www.slowtwitch.com/cycling/enve-launches-the-ses-6-7-pro-focused-on-road-racing-glory/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "ENVE Launches the SES 6.7 PRO, Focused on Road Racing Glory",
-      "url": "https://www.slowtwitch.com/cycling/enve-launches-the-ses-6-7-pro-focused-on-road-racing-glory/",
-      "published_at": "2026-10-01T22:11:12.000Z",
-      "kind": "news"
+      "id": "https://www.youtube.com/watch?v=QPTDQ4c4_WM",
+      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
+      "title": "Hard Day In The Life / The Long Way to Kona ep. 2",
+      "url": "https://www.youtube.com/watch?v=QPTDQ4c4_WM",
+      "published_at": "2026-10-03T12:42:24.000Z",
+      "kind": "video",
+      "thumbnail": "https://i.ytimg.com/vi/QPTDQ4c4_WM/hqdefault.jpg"
     },
     {
       "id": "https://triathlonmagazine.ca/feature/conquer-the-kona-heat-dr-dan-plews-on-race-day-pacing-cooling-and-nailing-your-big-island-execution-2/",
@@ -411,27 +467,11 @@
       "kind": "news"
     },
     {
-      "id": "https://www.slowtwitch.com/triathlon/2026-ironman-foundation-laulima-auction-is-live-features-3-kona-slots-and-more/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "2026 IRONMAN Foundation Laulima Auction is Live, Features 3 Kona Slots and More",
-      "url": "https://www.slowtwitch.com/triathlon/2026-ironman-foundation-laulima-auction-is-live-features-3-kona-slots-and-more/",
-      "published_at": "2026-09-30T23:46:30.000Z",
-      "kind": "news"
-    },
-    {
       "id": "https://triathlonmagazine.ca/news/what-is-woven-inside-ironmans-new-initiative-for-women-in-triathlon/",
       "source_id": "https://triathlonmagazine.ca/feed/",
       "title": "What Is Woven? Inside Ironman’s New Initiative for Women in Triathlon",
       "url": "https://triathlonmagazine.ca/news/what-is-woven-inside-ironmans-new-initiative-for-women-in-triathlon/",
       "published_at": "2026-09-30T19:28:28.000Z",
-      "kind": "news"
-    },
-    {
-      "id": "https://www.slowtwitch.com/running/a-tale-of-two-trail-shoes-asics-trabuco-max-5-vs-blazeblast/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "A Tale of Two Trail Shoes: ASICS Trabuco Max 5 vs Blazeblast",
-      "url": "https://www.slowtwitch.com/running/a-tale-of-two-trail-shoes-asics-trabuco-max-5-vs-blazeblast/",
-      "published_at": "2026-09-30T18:17:49.000Z",
       "kind": "news"
     },
     {
@@ -451,30 +491,6 @@
       "kind": "news"
     },
     {
-      "id": "https://www.slowtwitch.com/running/salomons-aero-blaze-4-is-the-personification-of-if-it-aint-broke-dont-fix-it-till-it-is/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "Salomon&#8217;s Aero Blaze 4 is the Personification of &#8220;If It Ain&#8217;t Broke, Don&#8217;t Fix It Till It Is&#8221;",
-      "url": "https://www.slowtwitch.com/running/salomons-aero-blaze-4-is-the-personification-of-if-it-aint-broke-dont-fix-it-till-it-is/",
-      "published_at": "2026-09-29T21:25:00.000Z",
-      "kind": "news"
-    },
-    {
-      "id": "https://www.slowtwitch.com/running/nike-is-betting-big-on-trail-with-a-revamped-acg/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "Nike is Betting Big on Trail With a Revamped ACG",
-      "url": "https://www.slowtwitch.com/running/nike-is-betting-big-on-trail-with-a-revamped-acg/",
-      "published_at": "2026-09-29T20:13:07.000Z",
-      "kind": "news"
-    },
-    {
-      "id": "https://www.slowtwitch.com/cycling/behind-the-scenes-at-canyon-hq/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "Behind the Scenes at Canyon HQ",
-      "url": "https://www.slowtwitch.com/cycling/behind-the-scenes-at-canyon-hq/",
-      "published_at": "2026-09-29T14:39:26.000Z",
-      "kind": "news"
-    },
-    {
       "id": "https://www.youtube.com/watch?v=31ND8Kzvulc",
       "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC6PP69DCmBwMCPf9RSSTNTg",
       "title": "The World Championship Camp",
@@ -482,22 +498,6 @@
       "published_at": "2026-09-29T12:00:07.000Z",
       "kind": "video",
       "thumbnail": "https://i.ytimg.com/vi/31ND8Kzvulc/hqdefault.jpg"
-    },
-    {
-      "id": "https://triathlonmagazine.ca/feature/matt-hauser-wins-by-0-08-seconds-vasco-vilaca-takes-the-world-title-at-wtcs-final-in-pontevedra/",
-      "source_id": "https://triathlonmagazine.ca/feed/",
-      "title": "Matt Hauser Wins by 0.08 Seconds, Vasco Vilaça Takes the World Title at WTCS Final in Pontevedra",
-      "url": "https://triathlonmagazine.ca/feature/matt-hauser-wins-by-0-08-seconds-vasco-vilaca-takes-the-world-title-at-wtcs-final-in-pontevedra/",
-      "published_at": "2026-09-28T22:40:15.000Z",
-      "kind": "news"
-    },
-    {
-      "id": "https://www.slowtwitch.com/triathlon/we-noticed-slowtwitch-team-applications-open-mcnulty-surprises-at-uci-worlds-frodeno-fast-in-berlin-and-more/",
-      "source_id": "https://www.slowtwitch.com/feed/",
-      "title": "We Noticed: Slowtwitch Team Applications Open, McNulty Surprises at UCI Worlds, Frodeno Fast in Berlin and More",
-      "url": "https://www.slowtwitch.com/triathlon/we-noticed-slowtwitch-team-applications-open-mcnulty-surprises-at-uci-worlds-frodeno-fast-in-berlin-and-more/",
-      "published_at": "2026-09-28T20:00:26.000Z",
-      "kind": "news"
     },
     {
       "id": "https://www.youtube.com/watch?v=ZsqWRCrVH08",
@@ -516,30 +516,6 @@
       "published_at": "2026-09-27T15:00:07.000Z",
       "kind": "video",
       "thumbnail": "https://i.ytimg.com/vi/NRVPzDjck-8/hqdefault.jpg"
-    },
-    {
-      "id": "https://triathlonmagazine.ca/feature/untouchable-cassandre-beaugrand-completes-perfect-wtcs-season-in-pontevedra/",
-      "source_id": "https://triathlonmagazine.ca/feed/",
-      "title": "Untouchable: Cassandre Beaugrand Completes Perfect WTCS Season in Pontevedra",
-      "url": "https://triathlonmagazine.ca/feature/untouchable-cassandre-beaugrand-completes-perfect-wtcs-season-in-pontevedra/",
-      "published_at": "2026-09-26T20:33:04.000Z",
-      "kind": "news"
-    },
-    {
-      "id": "https://triathlonmagazine.ca/news/canadian-qualifiers-join-lisa-bentley-in-kona/",
-      "source_id": "https://triathlonmagazine.ca/feed/",
-      "title": "Canadian Qualifiers: Join Lisa Bentley in Kona",
-      "url": "https://triathlonmagazine.ca/news/canadian-qualifiers-join-lisa-bentley-in-kona/",
-      "published_at": "2026-09-26T20:31:16.000Z",
-      "kind": "news"
-    },
-    {
-      "id": "https://triathlonmagazine.ca/feature/breaking-ironman-world-champion-casper-stornes-out-of-kona-after-bike-crash/",
-      "source_id": "https://triathlonmagazine.ca/feed/",
-      "title": "Breaking: Ironman World Champion Casper Stornes Out of Kona After Bike Crash",
-      "url": "https://triathlonmagazine.ca/feature/breaking-ironman-world-champion-casper-stornes-out-of-kona-after-bike-crash/",
-      "published_at": "2026-09-25T19:34:38.000Z",
-      "kind": "news"
     },
     {
       "id": "https://www.youtube.com/shorts/1o70rtj9xjI",
@@ -956,15 +932,6 @@
       "thumbnail": "https://i.ytimg.com/vi/EYaOxFOIm4g/hqdefault.jpg"
     },
     {
-      "id": "https://www.youtube.com/shorts/XTO5cAElMY4",
-      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCaxiAhuGz2SvnIYml4B5qMA",
-      "title": "Demi Vollering: Overcoming Panic on the Bike 🧠🚴‍♀️",
-      "url": "https://www.youtube.com/shorts/XTO5cAElMY4",
-      "published_at": "2026-06-23T09:27:40.000Z",
-      "kind": "video",
-      "thumbnail": "https://i.ytimg.com/vi/XTO5cAElMY4/hqdefault.jpg"
-    },
-    {
       "id": "https://www.youtube.com/watch?v=QCtxPe_ta5s",
       "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
       "title": "When Winning Becomes Your Why",
@@ -1163,15 +1130,6 @@
       "thumbnail": "https://i.ytimg.com/vi/o3k69OFSDB8/hqdefault.jpg"
     },
     {
-      "id": "https://www.youtube.com/watch?v=O7K63LGBZnY",
-      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC8Wjskc9fSkYLporjscGIBQ",
-      "title": "Hip Surgery Is A GO - Tucson Miles While Waiting",
-      "url": "https://www.youtube.com/watch?v=O7K63LGBZnY",
-      "published_at": "2026-03-06T20:05:00.000Z",
-      "kind": "video",
-      "thumbnail": "https://i.ytimg.com/vi/O7K63LGBZnY/hqdefault.jpg"
-    },
-    {
       "id": "https://www.youtube.com/watch?v=U3--NaZNE-8",
       "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UC-gct8TB_8l5HsQHBBr8hyQ",
       "title": "One Workout Won’t Win a Race || 3×5K Benchmark",
@@ -1251,15 +1209,6 @@
       "published_at": "2025-09-22T21:57:06.000Z",
       "kind": "video",
       "thumbnail": "https://i.ytimg.com/vi/K8suFa2PfyQ/hqdefault.jpg"
-    },
-    {
-      "id": "https://www.youtube.com/shorts/2_1aWMuLvOU",
-      "source_id": "https://www.youtube.com/feeds/videos.xml?channel_id=UCuGZGcO5LvIH4u9g_2ZsHGQ",
-      "title": "T-1 Day Till the #ironmanworldchampionship",
-      "url": "https://www.youtube.com/shorts/2_1aWMuLvOU",
-      "published_at": "2025-09-13T10:52:08.000Z",
-      "kind": "video",
-      "thumbnail": "https://i.ytimg.com/vi/2_1aWMuLvOU/hqdefault.jpg"
     },
     {
       "id": "https://www.youtube.com/watch?v=LAibcXSlJn0",

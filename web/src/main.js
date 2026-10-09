@@ -18,6 +18,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import * as TX from './tex.js';
 import { BIKE, PROFILE, GEOMETRY, PARTS, GROUPS, PRESETS, SWATCHES, DECALS, VIEWS } from './data.js';
 import { coarse, desktopViewPhone } from './detect.js';
+import { fitPerspectiveBounds, setPerspectiveRegion } from './engine/framing.js';
 import { createMachineInspection, blenderVectorToThree } from './engine/machine-inspection.js';
 
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
@@ -167,8 +168,6 @@ function tuneStock(m) {
 
 // ------------------------------------------------------------------ load
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-const b64 = s => { const bin = atob(s), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; };
-const GLB = b64(window.__SPEEDMAX_GLB);
 const bike = new THREE.Group(); scene.add(bike);
 const parts = {};            // part id -> node
 const meshesOf = {};         // part id -> meshes (nearest part ancestor)
@@ -179,7 +178,7 @@ let wheelF, wheelR, crankset, chainNode, chain = null, discMesh = null, zippMesh
 function progress(p, label) { $('#loadbar i').style.width = (p * 100).toFixed(0) + '%'; if (label) $('#loadlabel').textContent = label; }
 
 progress(.15, 'Unpacking carbon…');
-loader.parse(GLB.buffer, '', gltf => {
+loader.load(window.__SPEEDMAX_GLB_URL, gltf => {
   progress(.6, 'Laying up materials…');
   const root = gltf.scene;
   bike.add(root);
@@ -228,7 +227,7 @@ loader.parse(GLB.buffer, '', gltf => {
   setTimeout(() => document.body.classList.add('ready'), 250);
   flyTo(coarse ? 'side' : 'hero', 0);
   requestAnimationFrame(tick);
-}, err => { $('#loadlabel').textContent = 'Could not load the model: ' + err.message; console.error(err); });
+}, xhr => { if (xhr.total) progress(.15 + Math.min(.4, xhr.loaded / xhr.total * .4), 'Loading carbon…'); }, err => { $('#loadlabel').textContent = 'Could not load the model: ' + err.message; console.error(err); });
 
 function mapMaterial(m, mesh) {
   switch (m.name) {
@@ -501,9 +500,10 @@ function focusPart(id) {
   const box = new THREE.Box3();
   for (const m of meshesOf[id] || []) if (isShown(m)) box.expandByObject(m);
   if (box.isEmpty()) return;
-  const c = box.getCenter(new THREE.Vector3()), r = Math.max(.08, box.getSize(new THREE.Vector3()).length() * .5);
-  const dir = camera.position.clone().sub(controls.target).normalize();
-  tween(camera.position.clone(), controls.target.clone(), c.clone().addScaledVector(dir, r * 3.2 / Math.tan(camera.fov * Math.PI / 360) * .55), c, 1.1);
+  const oldPosition=camera.position.clone(),oldTarget=controls.target.clone(),direction=oldPosition.clone().sub(oldTarget).normalize();
+  fitPerspectiveBounds(camera,controls,box,{direction:direction.toArray(),padding:1.12,region:inspectionRegion()});
+  const targetPosition=camera.position.clone(),target=controls.target.clone();camera.position.copy(oldPosition);controls.target.copy(oldTarget);
+  tween(oldPosition,oldTarget,targetPosition,target,1.1);
 }
 
 // ------------------------------------------------------------------ camera tween
@@ -512,12 +512,14 @@ function tween(p0, t0, p1, t1, dur = 1.4) { if(reduced){ camera.position.copy(p1
 function flyTo(name, dur = 1.4) {
   const v = name==='lab'?{p:[2.55,1.8,3.7],t:[.15,.87,0]}:VIEWS[name]; if (!v) return;
   const p1 = new THREE.Vector3(...v.p), t1 = new THREE.Vector3(...v.t);
-  if (coarse && name === 'hero') p1.multiplyScalar(1.25);
-  // Desktop view keeps a wide layout, so the portrait pull-back never ran and
-  // the bike sat in the corner. phone-fit is that case; pull exploded further
-  // so the parts clear the bottom dock.
-  const fit = document.documentElement.classList.contains('phone-fit');
-  if (innerWidth < innerHeight || fit) p1.sub(t1).multiplyScalar(fit && name === 'exploded' ? 1.75 : 1.55).add(t1);
+  if(inspection&&['hero','side','exploded'].includes(name)){
+    const oldPosition=camera.position.clone(),oldTarget=controls.target.clone();
+    const bounds=inspection.measureAtProgress(name==='exploded'?Math.max(S.eT,.01):0,root=>new THREE.Box3().setFromObject(root));
+    const distance=fitPerspectiveBounds(camera,controls,bounds,{direction:p1.clone().sub(t1).toArray(),padding:1.12,region:inspectionRegion()});
+    // Fitting an expanded bike can move beyond the original display fog range.
+    if(scene.fog){scene.fog.near=distance+bounds.getSize(new THREE.Vector3()).length()/2;scene.fog.far=scene.fog.near+12;}
+    p1.copy(camera.position);t1.copy(controls.target);camera.position.copy(oldPosition);controls.target.copy(oldTarget);
+  }else if(innerWidth<innerHeight||document.documentElement.classList.contains('phone-fit'))p1.sub(t1).multiplyScalar(1.55).add(t1);
   if (!dur) { camera.position.copy(p1); controls.target.copy(t1); return; }
   tween(camera.position.clone(), controls.target.clone(), p1, t1, dur);
   $$('[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === name));
@@ -698,7 +700,7 @@ function buildUI() {
   $$('[data-mode]').forEach(b => b.onclick = () => setMode(b.dataset.mode));
   $$('[data-view]').forEach(b => b.onclick = () => flyTo(b.dataset.view));
   $$('[data-env]').forEach(b => b.onclick = () => b.dataset.env==='tunnel'?lab?.open():setEnv(b.dataset.env));
-  $('#explode').oninput = e => { S.eT = +e.target.value; if (S.mode !== 'exploded' && S.eT > 0) setMode('exploded', true); if (S.eT === 0 && S.mode === 'exploded') setMode('assembled', true); };
+  $('#explode').oninput = e => { S.eT = +e.target.value; if (S.mode !== 'exploded' && S.eT > 0) setMode('exploded', true); if (S.eT === 0 && S.mode === 'exploded') setMode('assembled', true);else if(S.eT>0)flyTo('exploded',.35); };
   $('#cadence').oninput = e => { S.cadence = +e.target.value; paintRange(e.target); };
   $$('[data-drawer]').forEach(b => b.onclick = () => toggleDrawer(b.dataset.drawer));
   $$('.drawer .x').forEach(b => b.onclick = closeDrawers);
@@ -709,7 +711,7 @@ function buildUI() {
   $('#xrayBtn').onclick = () => { S.xray = !S.xray; $('#xrayBtn').classList.toggle('active', S.xray); applyGhost(); };
   $('#spinBtn').onclick = () => { S.spin = !S.spin; controls.autoRotate = S.spin; controls.autoRotateSpeed = .7; $('#spinBtn').classList.toggle('active', S.spin); };
   $('#shotBtn').onclick = screenshot;
-  $('#glbBtn').onclick = () => download(new Blob([GLB], { type: 'model/gltf-binary' }), 'speedmax_cfr_axs_web.glb');
+  $('#glbBtn').onclick = async () => { try { const res=await fetch(window.__SPEEDMAX_GLB_URL); if(!res.ok) throw new Error('HTTP '+res.status); download(await res.blob(), `speedmax_${BIKE.key||'bike'}_web.glb`); } catch(e) { toast('GLB download unavailable'); console.error(e); } };
   $('#quality').value = S.quality;
   $('#quality').onchange = e => { S.quality = e.target.value; applyQuality(); };
   $('#hint').textContent = coarse ? 'Drag to orbit · pinch to zoom · tap a part' : 'Drag to orbit · scroll to zoom · click any part';
@@ -738,7 +740,8 @@ function setMode(m, fromSlider) {
   road.visible = S.ride;
   $('#ridebox').classList.toggle('on', S.ride);
   const ex = $('#explode'); ex.value = S.eT; paintRange(ex);
-  if (m === 'exploded' && !fromSlider) flyTo('exploded');
+  if (m === 'exploded') flyTo('exploded');
+  else if(m==='assembled')flyTo('hero');
   if (m === 'ride' && !fromSlider) flyTo('drivetrain');
   document.body.classList.add('engaged');
 }
@@ -760,7 +763,17 @@ function applyQuality() {
 
 // ------------------------------------------------------------------ loop
 let shift = 0, shiftT = 0;
+function inspectionRegion(){
+  const W=innerWidth,H=innerHeight,pad=16;
+  let top=pad,bottom=H-pad,right=W-pad;
+  for(const selector of ['header','.global-kona-links']){const e=document.querySelector(selector),r=e?.getBoundingClientRect();if(r&&r.bottom>0&&r.top<H/2)top=Math.max(top,r.bottom+12);}
+  const dock=document.querySelector('.dock')?.getBoundingClientRect();if(dock&&dock.top>H/2)bottom=Math.min(bottom,dock.top-12);
+  const sheet=document.querySelector('.drawer.open')?.getBoundingClientRect();if(sheet){if(sheet.width>W*.7)bottom=Math.min(bottom,sheet.top-12);else right=Math.min(right,sheet.left-12);}
+  return {x:pad,y:Math.min(top,H*.4),width:Math.max(80,right-pad),height:Math.max(80,bottom-Math.min(top,H*.4)),fullWidth:W,fullHeight:H};
+}
 function applyShift() {
+  if(S.mode==='exploded'){setPerspectiveRegion(camera,inspectionRegion());return;}
+
   const w = innerWidth, h = innerHeight;
   // Phones: keep the bike in the free space above any open sheet, so every change is visible.
   // phone-fit is a phone whose layout viewport is still ~980 px.
@@ -776,9 +789,10 @@ function resize() {
   applyShift();
   camera.updateProjectionMatrix();
   composer?.setSize(w, h); composer?.setPixelRatio?.(DPR);
+  if(inspection&&S.mode==='exploded')flyTo('exploded',0);
 }
 addEventListener('resize', resize); resize();
-window.__sm = { scene, camera, controls, parts, S };
+window.__sm = { scene, camera, controls, parts, S, inspectionRegion, inspectionBounds:()=>inspection.measureAtProgress(S.eT,root=>new THREE.Box3().setFromObject(root)), get inspection(){return inspection;} };
 
 let last = performance.now(), fpsAcc = 0, fpsN = 0, autoTuned = false, t0 = performance.now();
 const tmp = new THREE.Vector3();

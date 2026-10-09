@@ -1,15 +1,11 @@
 // Scheduled fallback snapshot. Parsing and URL validation belong to the edge provider.
+import config from '../supabase/functions/companion/public-config.json' with {type:'json'};
 import registry from '../integrations/companion/sources.json' with {type:'json'};
 import {toRSS} from '../supabase/functions/companion/providers.ts';
-// The public adapter is the existing endpoint authority. The old private config file is absent.
-const adapter=await Deno.readTextFile(new URL('../web/src/cloud/supabase-lite.js',import.meta.url));
-const url=adapter.match(/PUBLIC_SUPABASE_URL\s*=\s*['"]([^'"]+)/)?.[1];
-const key=adapter.match(/PUBLIC_SUPABASE_KEY\s*=\s*['"]([^'"]+)/)?.[1];
-if(!url||!key)throw new Error('Public companion endpoint authority not found');
 const path=new URL('../integrations/companion/feed.json',import.meta.url);
 let previous:any={sources:[],items:[]};try{previous=JSON.parse(await Deno.readTextFile(path));}catch{}
 try{
- const response=await fetch(url+'/functions/v1/companion',{method:'POST',headers:{apikey:key,'Content-Type':'application/json'},body:JSON.stringify({sources:registry.sources.map(s=>({url:s.feed_url,kind:s.kind}))}),signal:AbortSignal.timeout(60000)});
+ const response=await fetch(config.url+'/functions/v1/companion',{method:'POST',headers:{apikey:config.publishable_key,'Content-Type':'application/json'},body:JSON.stringify({sources:registry.sources.map(s=>({url:s.feed_url,kind:s.kind}))}),signal:AbortSignal.timeout(60000)});
  if(!response.ok)throw new Error('Feed service HTTP '+response.status);
  const live=await response.json();const sources=[],items=[];
  for(const registered of registry.sources){

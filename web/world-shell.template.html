@@ -7,11 +7,12 @@
   <button id="where" class="where" hidden aria-label="Where you are: open the map"><i></i><span><small></small><b></b></span></button></div>
   <nav>
     <button id="backKonaBtn" aria-label="Back to KONA">← KONA</button>
-    <button id="mapBtn" aria-label="World map" title="Map (M)">Map</button>
+    <button id="mapBtn" aria-label="World map" title="Explore the museum (M)">Explore</button>
     <button id="soundBtn" class="wide" aria-pressed="false" title="Ocean ambience">Sound</button>
-    <button id="worldMoreBtn" aria-label="More world options" aria-expanded="false">More</button>
+    <button id="worldMoreBtn" aria-label="Museum menu" aria-controls="worldMoreMenu" aria-haspopup="menu" aria-expanded="false">Menu</button>
   </nav>
   <div id="worldMoreMenu" class="world-more-menu" hidden role="menu" aria-label="World options">
+    <button type="button" data-world-home role="menuitem">Back to Kona.m</button>
     <button type="button" data-world-share role="menuitem">Share view</button>
     <button type="button" data-world-tour role="menuitem">Guided tour</button>
     <button type="button" data-world-settings role="menuitem">Settings</button>
@@ -20,8 +21,10 @@
 <div id="rail" aria-label="Pieces in the collection"><div class="rail-inner" id="railInner"></div></div>
 
 <aside id="card" aria-live="polite" aria-label="Piece details">
-  <button class="close" id="cardClose" aria-label="Close">×</button>
-  <button class="card-share" id="cardShare" aria-label="Share this exhibit" title="Share">↗</button>
+  <div class="card-controls" role="group" aria-label="Exhibit controls">
+    <button class="card-share" id="cardShare" aria-label="Share this exhibit" title="Share">↗</button>
+    <button class="close" id="cardClose" aria-label="Close">×</button>
+  </div>
   <div class="c-years" id="cYears"></div>
   <h2 id="cName"></h2>
   <div class="c-mat" id="cMat"></div>

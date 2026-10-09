@@ -40,3 +40,56 @@ test('cloud backup deletion uses the server-validated user and keeps device prog
  await deleteCloudBackup();assert.equal(deletes,1);assert.equal(store.getItem('kona.profile.v1'),' {"name":"Local"}'.trim());
 });
 test('cloud backup deletion refuses an unauthenticated caller',async t=>{context(t);globalThis.fetch=async()=>{throw new Error('must not call network')};await assert.rejects(deleteCloudBackup(),/Sign in first/);});
+
+test('password sign-in saves an expiring session but never a plaintext password',async t=>{
+ const store=context(t);const {signInWithPassword}=await import('../src/cloud/supabase-lite.js');
+ globalThis.fetch=async(url,options)=>{assert.match(url,/grant_type=password/);assert.deepEqual(JSON.parse(options.body),{email:'athlete@example.com',password:'test-passphrase-only'});return new Response(JSON.stringify({access_token:'test-only',refresh_token:'test-refresh',expires_in:3600,user:{id:'athlete'}}));};
+ assert.equal((await signInWithPassword(' Athlete@example.com ','test-passphrase-only')).id,'athlete');
+ const session=JSON.parse(store.getItem('kona.supabase.session.v1'));assert.ok(session.expires_at>Date.now()/1000);assert.ok(!JSON.stringify(session).includes('test-passphrase-only'));assert.ok(!exportAppState(store).includes('test-refresh'));
+});
+test('rejected password sign-in and incomplete sessions do not claim success',async t=>{
+ const store=context(t);const {signInWithPassword}=await import('../src/cloud/supabase-lite.js');
+ globalThis.fetch=async()=>new Response('{"error_code":"invalid_credentials","msg":"Invalid login credentials"}',{status:400});await assert.rejects(signInWithPassword('athlete@example.com','incorrect'),e=>e.code==='invalid_credentials');assert.equal(store.getItem('kona.supabase.session.v1'),null);
+ globalThis.fetch=async()=>new Response('{"access_token":"incomplete"}');await assert.rejects(signInWithPassword('athlete@example.com','incorrect'),/incomplete session/);assert.equal(store.getItem('kona.supabase.session.v1'),null);
+});
+test('confirmation-enabled registration stays signed out and uses the hosted callback from native',async t=>{
+ const store=context(t);const {registerAccount,requestPasswordReset,resendConfirmation}=await import('../src/cloud/supabase-lite.js');globalThis.location.href='https://localhost/index.html';
+ globalThis.fetch=async(url,options)=>{assert.equal(new URL(url).searchParams.get('redirect_to'),'https://joaoccaldas.github.io/konam/index.html');assert.equal(JSON.parse(options.body).email,'athlete@example.com');return new Response(url.includes('/signup')?'{"id":"pending-test-user"}':'{}');};
+ assert.deepEqual(await registerAccount('athlete@example.com','memorable-test-words'),{signedIn:false});assert.equal(store.getItem('kona.supabase.session.v1'),null);await requestPasswordReset('athlete@example.com');await resendConfirmation('athlete@example.com');
+ await assert.rejects(registerAccount('athlete@example.com','short'),/12 characters/);
+});
+test('recovery updates require authentication and keep backend failures visible',async t=>{
+ const store=context(t);const {updatePassword,requestPasswordReset}=await import('../src/cloud/supabase-lite.js');await assert.rejects(updatePassword('new-test-passphrase'),/Sign in first/);
+ store.setItem('kona.supabase.session.v1',JSON.stringify({access_token:'test-only',expires_at:Date.now()/1000+3600}));
+ globalThis.fetch=async(url,options)=>{assert.match(url,/\/auth\/v1\/user$/);assert.equal(options.method,'PUT');assert.equal(options.headers.Authorization,'Bearer test-only');return new Response('{"id":"test-user"}');};assert.equal((await updatePassword('new-test-passphrase')).id,'test-user');
+ globalThis.fetch=async()=>new Response('{"msg":"Email delivery failed"}',{status:500});await assert.rejects(requestPasswordReset('athlete@example.com'),/Email delivery failed/);
+});
+test('storage failure strips callback tokens and is reported to the visitor',t=>{
+ context(t);globalThis.localStorage.setItem=()=>{throw new Error('blocked')};globalThis.location.hash='#access_token=test-only&refresh_token=test-refresh';let replaced;globalThis.history={replaceState:(_,__,url)=>replaced=url};assert.throws(consumeAuthCallback,/could not save/);assert.equal(replaced,'/kona/Studio.html');
+});
+
+test('registration records explicit newsletter choice without a second anonymous signup',async t=>{
+ context(t);const {registerAccount}=await import('../src/cloud/supabase-lite.js');const choices=[];
+ globalThis.fetch=async(url,options)=>{assert.match(url,/\/auth\/v1\/signup/);choices.push(JSON.parse(options.body).data.kona_newsletter);return new Response('{"id":"pending"}');};
+ await registerAccount('athlete@example.com','memorable-test-words');await registerAccount('athlete@example.com','memorable-test-words',{newsletter:true});await registerAccount('athlete@example.com','memorable-test-words',{newsletter:'true'});
+ assert.deepEqual(choices.map(x=>x.opt_in),[false,true,false]);assert.ok(choices.every(x=>x.id==='kona-intern'&&x.version===1));
+});
+
+test('newsletter reconciliation is owner-authenticated and cannot undo successful login on failure',async t=>{
+ const store=context(t);const {signInWithPassword}=await import('../src/cloud/supabase-lite.js');let reconciled=0;
+ globalThis.fetch=async(url,options)=>{
+   if(url.includes('grant_type=password'))return new Response(JSON.stringify({access_token:'test-only',refresh_token:'test-refresh',expires_in:3600,user:{id:'owner',user_metadata:{kona_newsletter:{opt_in:true}}}}));
+   assert.match(url,/confirm_registration_newsletter$/);assert.equal(options.headers.Authorization,'Bearer test-only');assert.deepEqual(JSON.parse(options.body),{});reconciled++;return new Response('{}',{status:503});
+ };
+ assert.equal((await signInWithPassword('athlete@example.com','test-passphrase')).id,'owner');assert.equal(reconciled,1);assert.ok(store.getItem('kona.supabase.session.v1'));
+});
+
+test('explicit newsletter consent uses only the authenticated owner and rejects unavailable confirmation',async t=>{
+ const store=context(t);const {subscribeInternNewsletter}=await import('../src/cloud/supabase-lite.js');let calls=0;
+ globalThis.fetch=async(url,options)=>{calls++;assert.match(url,/\/rpc\/subscribe_intern_newsletter$/);assert.equal(options.headers.Authorization,'Bearer test-only');assert.deepEqual(JSON.parse(options.body),{});return new Response('"active"');};
+ await assert.rejects(subscribeInternNewsletter(),/Sign in first/);assert.equal(calls,0);
+ store.setItem('kona.supabase.session.v1',JSON.stringify({access_token:'test-only',expires_at:Date.now()/1000+3600}));
+ assert.equal(await subscribeInternNewsletter(),'active');assert.equal(calls,1);
+ globalThis.fetch=async()=>new Response('"suppressed"');await assert.rejects(subscribeInternNewsletter(),/Could not confirm/);
+ globalThis.fetch=async()=>new Response('{}',{status:503});await assert.rejects(subscribeInternNewsletter(),e=>e.status===503);
+});

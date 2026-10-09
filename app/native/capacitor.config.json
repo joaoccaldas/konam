@@ -3,6 +3,11 @@
   "appName": "Kona.m",
   "webDir": "www",
   "backgroundColor": "#12181d",
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "disable"
+    }
+  },
   "android": {
     "allowMixedContent": false,
     "captureInput": false,

@@ -10,7 +10,7 @@ const error=(node,retry)=>{node.innerHTML='<div class="companion-empty" role="st
 export function renderFeed(root,{back,scope='feed',compact=false,backLabel='User Studio'}={}){
  const controller=new AbortController();
  root.innerHTML='<section class="companion-page" aria-label="'+(compact?'Island updates':'Triathlon Feed')+'">'+(compact?'<h4 class="companion-section-title">The island, in the loop.</h4>':'<button class="companion-back" data-back>← '+esc(backLabel)+'</button>'+heading('THE INTERN · KONA READING ROOM','Kona, in a few minutes.','Triathlon, athlete videos and island news. A dated digest, straight from the sources.'))+
- '<div class="companion-tools"><a href="integrations/companion/rss.xml" data-personal-rss class="companion-button">Subscribe via RSS ↗</a><button class="companion-button" data-refresh>Refresh feed</button></div><div data-feed-content aria-live="polite"><p>Gathering the good stuff…</p></div><div data-subscriptions></div></section>';
+ '<div class="companion-tools"><a href="index.html?account=newsletter" class="companion-button">Get The Intern’s newsletter →</a><button class="companion-button" data-refresh>Refresh feed</button></div><div data-feed-content aria-live="polite"><p>Gathering the good stuff…</p></div><div data-subscriptions></div></section>';
  const page=root.firstElementChild,content=page.querySelector('[data-feed-content]');if(page.querySelector('[data-back]'))page.querySelector('[data-back]').onclick=back;
  let loadRequest=0;let data,fallback,managed=false,kind='all',source='all',query='',limit=18;
  function render(){
