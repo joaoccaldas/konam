@@ -33,7 +33,8 @@
       },
       "tradeable": true,
       "event_only": false,
-      "public": true
+      "public": true,
+      "thumbnail": "assets/entry/finds/lava_stone.png"
     },
     {
       "number": 2,
@@ -51,7 +52,8 @@
       },
       "tradeable": true,
       "event_only": false,
-      "public": true
+      "public": true,
+      "thumbnail": "assets/entry/finds/plumeria.png"
     },
     {
       "number": 3,
@@ -69,7 +71,8 @@
       },
       "tradeable": true,
       "event_only": false,
-      "public": true
+      "public": true,
+      "thumbnail": "assets/entry/finds/cowrie.png"
     },
     {
       "number": 4,
@@ -87,7 +90,8 @@
       },
       "tradeable": true,
       "event_only": false,
-      "public": true
+      "public": true,
+      "thumbnail": "assets/entry/finds/black_coral.png"
     },
     {
       "number": 5,
@@ -105,7 +109,8 @@
       },
       "tradeable": false,
       "event_only": false,
-      "public": true
+      "public": true,
+      "thumbnail": "assets/entry/finds/race_bib.png"
     },
     {
       "number": 6,

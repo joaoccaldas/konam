@@ -16,8 +16,8 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry::after{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(7,17,22,.06),rgba(7,17,22,.14) 44%,rgba(7,17,22,.88))}
 #intro.kona-entry .intro-inner{
   width:min(100%,1320px);min-height:calc(100dvh - 44px);margin:auto;
-  display:grid;grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);grid-template-areas:"copy product" "actions product";grid-template-rows:1fr 1fr;
-  gap:0 clamp(30px,5vw,76px);align-items:center
+  display:grid;grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);grid-template-areas:"copy product" "actions product" "utilities product";grid-template-rows:auto auto auto;
+  gap:0 clamp(30px,5vw,76px);align-items:center;align-content:center
 }
 #intro.kona-entry .entry-copy{grid-area:copy;max-width:590px;align-self:end}
 #intro.kona-entry .entry-mast{display:flex;align-items:center;gap:16px;margin-bottom:20px}
@@ -32,6 +32,8 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry h1 em{font-style:italic;color:var(--brand-action);-webkit-text-fill-color:var(--brand-action)}
 #intro.kona-entry .lede{max-width:31rem;margin:0;color:color-mix(in srgb,var(--brand-mist) 94%,transparent);font:550 clamp(15px,1.2vw,18px)/1.5 var(--brand-font-ui,var(--sans));text-wrap:pretty}
 #intro.kona-entry .entry-actions-wrap{grid-area:actions;max-width:590px;align-self:start}
+#intro.kona-entry .entry-utilities{grid-area:utilities;max-width:590px;min-width:0}
+#intro.kona-entry .entry-trust a{color:var(--brand-mist);text-decoration:underline;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
 #intro.kona-entry .entry-actions{display:flex;align-items:center;gap:10px;margin-top:26px;flex-wrap:wrap}
 #intro.kona-entry .entry-actions .btn{min-height:54px;border-radius:999px;padding-inline:20px}
 #intro.kona-entry .entry-actions .btn.primary{background:var(--brand-action);color:var(--brand-on-action);border-color:var(--brand-action);box-shadow:0 18px 48px rgba(0,0,0,.24)}
@@ -77,6 +79,10 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-race-clock{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0 16px;margin-top:10px;padding:0 4px}
 #intro.kona-entry .entry-race-clock small{color:var(--brand-muted);font:750 9px/1.2 var(--brand-font-ui,var(--sans));letter-spacing:.14em}
 #intro.kona-entry .entry-race-clock strong{color:var(--brand-accent,#ff6427);font:800 11px/1.2 var(--brand-font-ui,var(--sans));letter-spacing:.12em;text-transform:uppercase}
+#intro.kona-entry .entry-race-clock small,#intro.kona-entry .entry-stage-caption span,
+#intro.kona-entry .kona-countdown-options summary{color:color-mix(in srgb,var(--brand-mist) 82%,transparent)}
+#intro.kona-entry .kona-countdown-options[open]{padding:12px;background:var(--brand-surface);color:var(--brand-ink);border-radius:var(--brand-control-radius)}
+#intro.kona-entry .kona-countdown-options[open] summary{color:var(--brand-ink)}
 #intro.kona-entry #loadstate:empty{display:none}
 
 @media(max-width:899px){
@@ -93,7 +99,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
   #intro.kona-entry h1{font-size:clamp(37px,10.6vw,48px);line-height:.88;margin-bottom:10px;max-width:13.2ch}
   #intro.kona-entry .lede{font-size:13.5px;line-height:1.38;max-width:27rem}
   #intro.kona-entry .lede strong{color:var(--brand-mist);font-weight:800}
-  #intro.kona-entry .entry-product{order:3;width:100%;min-height:0;margin-top:22px;padding-top:18px;border-top:1px solid color-mix(in srgb,var(--brand-mist) 14%,transparent)}
+  #intro.kona-entry .entry-product{order:3;width:100%;min-height:0;margin-top:18px;padding-top:0;border-top:0}
   #intro.kona-entry .entry-product-stage{min-height:240px;border-radius:22px}
   #intro.kona-entry .entry-stage-avatar{left:2%;bottom:27%;width:12%}
   #intro.kona-entry .entry-avatar{transform:scale(.92)}
@@ -108,6 +114,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
   #intro.kona-entry .entry-race-clock small{font-size:8px}
   #intro.kona-entry .entry-race-clock strong{font-size:9px}
   #intro.kona-entry .entry-actions-wrap{order:2;width:100%;max-width:none}
+  #intro.kona-entry .entry-utilities{order:4;width:100%;margin-top:16px;padding-top:12px;border-top:1px solid color-mix(in srgb,var(--brand-mist) 14%,transparent)}
   #intro.kona-entry .entry-actions{width:100%;display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
   #intro.kona-entry .entry-actions .btn{min-height:52px}
   #intro.kona-entry #buildSelf{font-size:14px;font-weight:800}
@@ -221,7 +228,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 
 @media (orientation:landscape) and (max-height:520px){
   #intro.kona-entry{min-height:var(--vvh,100dvh);padding:10px max(var(--brand-mobile-gutter),env(safe-area-inset-left),env(safe-area-inset-right)) 10px;overflow:auto}
-  #intro.kona-entry .intro-inner{width:100%;max-width:none;min-height:0;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-areas:"copy product" "actions product";grid-template-rows:auto 1fr;gap:8px 18px;align-items:start}
+  #intro.kona-entry .intro-inner{width:100%;max-width:none;min-height:0;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-areas:"copy product" "actions product" "utilities utilities";grid-template-rows:auto auto auto;gap:8px 18px;align-items:start}
   #intro.kona-entry .entry-copy{grid-area:copy;padding-top:0}
   #intro.kona-entry .entry-mast{margin-bottom:6px}
   #intro.kona-entry h1{font-size:clamp(30px,7vw,44px);line-height:.9;margin-bottom:8px;max-width:11ch}
@@ -266,7 +273,7 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 .onboarding-step-mark span{margin-top:12px;font:800 9px/1 var(--brand-font-data);letter-spacing:.18em;color:var(--brand-mist)}
 .onboarding-question[data-onboarding-tone="credentials"] .onboarding-step-mark strong{color:var(--brand-discovery)}
 .onboarding-question[data-onboarding-tone="energy"] .onboarding-step-mark strong{color:var(--brand-personality)}
-.onboarding-answer-grid button{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto 1fr;column-gap:14px;align-items:end;overflow:hidden;transition:transform .16s ease,border-color .16s ease,background .16s ease}
+.onboarding-answer-grid button{position:relative;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto 1fr;column-gap:14px;align-items:end;overflow:hidden;overflow-wrap:anywhere;transition:transform .16s ease,border-color .16s ease,background .16s ease}
 .onboarding-answer-grid button small{grid-column:1;align-self:start;color:var(--brand-discovery);font:800 9px/1.2 var(--brand-font-data);letter-spacing:.14em}
 .onboarding-answer-grid button b{grid-column:1;align-self:end;font:650 14px/1.35 var(--brand-font-ui);font-weight:650}
 .onboarding-answer-grid button i{grid-column:2;grid-row:1/3;align-self:center;font:400 24px/1 var(--brand-font-editorial);font-style:normal;color:var(--brand-action);transform:translateX(-3px);transition:transform .16s ease}

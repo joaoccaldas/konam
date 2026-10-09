@@ -4,9 +4,10 @@ import { openInviteDialog } from './invite.js';
 import { photoCredit } from './photo-credit.js';
 import { mountCountdown } from './countdown.js';
 import { readGameState } from '../engine/game-state.js';
-import { collectionSummary } from '../engine/items.js';
+import { collectionSummary,findCollection } from '../engine/items.js';
+import { loadCompanion,internEditions,formatDate,sourceState } from './companion-data.js';
 import { avatarItem, normaliseAvatarStyle } from '../engine/avatar.js';
-import { ensureProgression, applyStoredEvent, readProgression } from '../engine/progression.js';
+import { ensureProgression, applyStoredEvent, readProgression, LEVELS } from '../engine/progression.js';
 import { discoveryHorizon } from '../engine/discovery.js';
 import { PRODUCT_NAME } from '../product-meta.js';
 
@@ -34,6 +35,8 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
   const races=Array.isArray(snapshot.race_history)?snapshot.race_history.length:0;
   let progression={level:1,level_name:'Visitor'};try{progression=ensureProgression();}catch(_){ }
   const firstFound=(progression.discoveries||[]).includes('find:shore:lava');
+  const shoreline=findCollection(snapshot).filter(i=>i.model),shoreCount=shoreline.filter(i=>i.collected).length;
+  const nextLevel=LEVELS.find(row=>row.xp>Number(progression.xp||0));
   const meaningfulDiscovery=(progression.discoveries||[]).some(id=>!/^bike:/.test(id));
   const showWorldDepth=admin||meaningfulDiscovery;
   const showHorizon=admin||Number(progression.level||1)>=3;
@@ -54,11 +57,12 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
     '<section class="kona-section artifact artifact--label home-kona-now">'+
       '<div class="kona-section-head"><div><small>KONA NOW · RACE WEEK</small><h3>What is happening?</h3></div><span class="t-data">LIVE + LOCAL</span></div>'+
       '<div class="kona-list">'+
-        '<article><i>NOW</i><div><b>The Intern has been reading everything again.</b><span>Athlete videos, triathlon headlines and island updates, source-grounded and refreshable.</span></div><button type="button" class="btn-text" data-home-feed>Open feed →</button></article>'+
+        '<article><i>READ</i><div><b data-home-feed-title>The Intern’s reading room.</b><span data-home-feed-note>A dated digest of triathlon, athlete videos and island news.</span></div><button type="button" class="btn-text" data-home-feed>Read the brief →</button></article>'+
         '<article><i>KOA</i><div><b>Just landed?</b><span>Flights, roads, race-week essentials, bike help, coffee and useful island stops.</span></div><button type="button" class="btn-text" data-home-travel>Plan Kona →</button></article>'+
 
       '</div><p class="kona-source-note">Freshness and source status are shown inside the Feed. Local listings are independent, not endorsements.</p>'+
     '</section>'+
+    '<section class="artifact artifact--spec home-next"><div><small>YOUR NEXT CHAPTER</small><h3>'+(firstFound?'The shoreline set.':'Your first Find.')+'</h3><p>'+(firstFound?shoreCount+' / '+shoreline.length+' shoreline objects kept. Find the flower, shell and race bib as you explore.':'There’s a small volcanic rock below. Tap it to begin a collection of Kona stories.')+'</p><span class="t-data">LEVEL '+progression.level+' · '+Number(progression.xp||0)+' XP'+(nextLevel?' · '+Math.max(0,nextLevel.xp-Number(progression.xp||0))+' XP TO LEVEL '+nextLevel.level:' · TOP LEVEL')+'</span></div><button type="button" class="btn-secondary" data-home-finds>See your collection →</button></section>'+
     '<section class="home-race-self artifact artifact--label">'+
       '<div class="home-race-self-visual">'+avatarPreview(style)+'</div>'+
       '<div class="home-race-self-copy"><small>YOUR RACE SELF</small><h3>'+esc(goal)+'</h3>'+
@@ -66,7 +70,7 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
         '<div class="home-race-self-actions"><button type="button" class="kona-primary" data-home-self>Open User Studio <span>→</span></button><button type="button" class="kona-link-btn" data-home-garage>Open Garage</button></div>'+
       '</div>'+
     '</section>'+
-    '<section class="kona-section artifact artifact--label home-first-find"><small>YOUR FIRST DETOUR</small><h3>Something small is hiding here.</h3><p>Spot the volcanic rock. Tap it. '+PRODUCT_NAME+' Finds will keep the story.</p><div class="ui-cluster"><span class="t-hand" aria-hidden="true">That suspicious little rock →</span><button type="button" class="btn-icon" data-first-find aria-label="Collect Perfect Volcanic Rock"'+(firstFound?' disabled':'')+'><svg viewBox="0 0 100 70" aria-hidden="true"><path d="M12 52 24 25 47 12 72 18 89 45 70 60 36 64Z" fill="currentColor"/></svg></button></div><p class="kona-source-note" role="status" data-first-find-status>'+(firstFound?'Perfect Volcanic Rock is saved in '+PRODUCT_NAME+' Finds.':'Your first Find is waiting.')+'</p><button type="button" class="btn-text" data-home-finds>Open '+PRODUCT_NAME+' Finds →</button></section>'+
+    '<section class="kona-section artifact artifact--label home-first-find"><small>'+(firstFound?'YOUR FIRST FIND · KEPT':'YOUR FIRST DETOUR')+'</small><h3>'+(firstFound?'Built by fire. Found by you.':'Something small is hiding here.')+'</h3><p>'+(firstFound?'The volcanic rock is saved. Open your shelf to read its story or keep exploring for the rest of the set.':'Spot the volcanic rock. Tap it. '+PRODUCT_NAME+' Finds will keep the story.')+'</p><div class="ui-cluster"><span class="t-hand" aria-hidden="true">'+(firstFound?'One small story, kept.':'That suspicious little rock →')+'</span><button type="button" class="btn-icon" data-first-find aria-label="Collect Perfect Volcanic Rock"'+(firstFound?' disabled':'')+'><svg viewBox="0 0 100 70" aria-hidden="true"><path d="M12 52 24 25 47 12 72 18 89 45 70 60 36 64Z" fill="currentColor"/></svg></button></div><p class="kona-source-note" role="status" data-first-find-status>'+(firstFound?'Perfect Volcanic Rock is saved in '+PRODUCT_NAME+' Finds.':'Your first Find is waiting.')+'</p><button type="button" class="btn-text" data-home-finds>Open '+PRODUCT_NAME+' Finds →</button></section>'+
     (showWorldDepth?'<section class="home-world-hero artifact artifact--photo"><div class="home-world-hero-media"><img src="assets/share/museum.jpg" alt="Kona.m 3D world preview" loading="lazy" decoding="async"></div><div class="home-world-hero-copy"><small>KONA.M · 3D WORLD</small><h3>Then go deeper.</h3><p>The museum, rooms, bikes and hidden details are still here. Enter when you want the world underneath the useful stuff.</p><button type="button" class="kona-primary" data-home-world>Enter the 3D world <span>→</span></button></div></section>':'')+
     (showWorldDepth?'<section class="home-postcard artifact artifact--photo">'+
       '<div class="home-postcard-photo" aria-hidden="true"><img src="assets/kona-years/queen-k.jpg" alt="" loading="lazy" decoding="async"></div>'+
@@ -79,7 +83,14 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
   root.querySelector('[data-home-world]')?.addEventListener('click',()=>openWorld?.());
   root.querySelector('[data-invite-friends]')?.addEventListener('click',openInviteDialog);
   const disposeCount=mountCountdown(root.querySelector('.home-today'),event);
-  root.querySelector('[data-home-finds]')?.addEventListener('click',()=>openCollection?.());
+  const controller=new AbortController();
+  loadCompanion('feed',{signal:controller.signal}).then(data=>{
+    if(controller.signal.aborted)return;const edition=internEditions(data,{limit:1})[0];if(!edition)return;
+    const title=root.querySelector('[data-home-feed-title]'),note=root.querySelector('[data-home-feed-note]');
+    if(title)title.textContent='The Intern · '+formatDate(edition.date);
+    if(note)note.textContent=(data.sources.some(s=>sourceState(s)!=='ok')?'Saved edition · ':'')+edition.story_count+' stories · '+(edition.picks[0]?.title||'A few threads worth following.');
+  }).catch(()=>{});
+  root.querySelectorAll('[data-home-finds]').forEach(button=>button.addEventListener('click',()=>openCollection?.()));
   root.querySelector('[data-first-find]')?.addEventListener('click',e=>{
     const button=e.currentTarget,status=root.querySelector('[data-first-find-status]');
     try{
@@ -87,6 +98,11 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
       const after=applyStoredEvent({type:'FIND_DISCOVERED',id:'first-find:lava',subject:'find:shore:lava'});
       if(!readProgression()?.discoveries.includes('find:shore:lava'))throw new Error('save-failed');
       button.disabled=true;status.textContent='Perfect Volcanic Rock saved in '+PRODUCT_NAME+' Finds. +'+(after.xp-before.xp)+' XP · +'+(after.credits-before.credits)+' KC';
+      const count=shoreline.filter(i=>after.discoveries.includes(i.id)).length,next=LEVELS.find(row=>row.xp>after.xp);
+      root.querySelector('.home-next h3').textContent='The shoreline set.';
+      root.querySelector('.home-next p').textContent=count+' / '+shoreline.length+' shoreline objects kept. Find the flower, shell and race bib as you explore.';
+      root.querySelector('.home-next .t-data').textContent='LEVEL '+after.level+' · '+after.xp+' XP'+(next?' · '+(next.xp-after.xp)+' XP TO LEVEL '+next.level:' · TOP LEVEL');
+      root.querySelector('.home-race-self-copy p').textContent=collectionSummary(readGameState()).total+' collected · '+races+' race'+(races===1?'':'s');
       onStateChange?.();
     }catch{status.textContent='Could not save your Find. Tap the rock to try again.';}
   });
@@ -108,5 +124,5 @@ export function renderHomeSurface(root,{event={},profile,openRaceSelf,openGarage
       button.textContent='Could not save the reward. Tap to try again.';
     }
   });
-  return disposeCount;
+  return ()=>{controller.abort();disposeCount?.();};
 }

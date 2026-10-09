@@ -50,6 +50,7 @@ test('sealed service worker verifies release files and keeps GLBs out of the cor
   assert.ok(!app.core.includes('app/hall.js') && app.files['app/hall.js']);
   assert.ok(!app.core.includes('app/race-self-stage.js') && app.files['app/race-self-stage.js']);
   assert.ok(!app.core.includes('app/world-shell.html') && app.files['app/world-shell.html']);
+  assert.ok(!app.core.includes('app/companion-ui.js') && app.files['app/companion-ui.js'],'optional content UI is lazy and release-verified');
   assert.ok(app.files['app/studio.js'] && app.files['app/studio-catalog.js']);
 
   const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');

@@ -165,6 +165,10 @@ for (const p of PAGES) {
     .map(href => `<link rel="stylesheet" href="${href}">`).join('');
   html = html.replace(/<\/head>/i, `<!--design-system:start-->${fonts}${missing}<!--design-system:end-->\n</head>`);
   html = html.replace(/<!--global-user-studio:start-->[\s\S]*?<!--global-user-studio:end-->\n?/g, '');
+  html = html.replace(/(<body\b[^>]*?)\sdata-kona-layout="[^"]*"/i,'$1');
+  if (['Canyon_Collection.html','privacy.html','credits.html'].includes(p.file)) {
+    html = html.replace(/<body([^>]*)>/i,'<body$1 data-kona-layout="document">');
+  }
   if (!['index.html','about.html','why.html','promo.html'].includes(p.file) && !html.includes('href="index.html?view=me"')) {
     html = html.replace(/<body([^>]*)>/i, match => match + GLOBAL_USER_STUDIO);
   }

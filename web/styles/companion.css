@@ -1,5 +1,17 @@
 /* Companion pages own only .companion-*; all brand values come from brand/. */
 .companion-panel .kona-panel-body{display:block}
+.intern-edition{padding:0 0 24px;border-bottom:1px solid var(--brand-line)}
+.intern-edition-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.intern-edition-head small,.intern-picks small{font:600 10px/1.5 var(--brand-font-data);color:var(--brand-muted)}
+.intern-edition-head h4{font:400 36px/1.1 var(--brand-font-editorial);margin:8px 0}
+.intern-picks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.intern-picks article{min-width:0;padding:20px 0;border-top:1px solid var(--brand-line)}
+.intern-picks h5{font:400 25px/1.15 var(--brand-font-editorial);margin:8px 0;overflow-wrap:anywhere}
+.intern-picks p{font-size:13px;line-height:1.6;color:var(--brand-muted)}
+.intern-picks .btn-text{display:inline-flex;min-height:48px;align-items:center;font-size:12px}
+.intern-archive summary{display:flex;align-items:center;min-height:48px;cursor:pointer;font-size:13px}
+.intern-archive nav{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:520px){.intern-picks{grid-template-columns:1fr}.intern-edition-head h4{font-size:30px}}
 @media(max-width:899px){.kona-panel.companion-panel{padding-inline:max(20px,env(safe-area-inset-left))}}
 @media(max-width:359px){.kona-panel.companion-panel{padding-inline:16px}}
 .companion-page{color:var(--brand-ink);font-family:var(--brand-font-ui);min-width:0;padding-bottom:24px}

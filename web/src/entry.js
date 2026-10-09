@@ -124,7 +124,7 @@ function openMuseum(room) {
 }
 
 initAppShell();
-const shell = initKonaShell({ profile, settings: settingsUI, enter: openMuseum, entryDataReady, openUserStudio:()=>enterApp('me'), featureStyle });
+const shell = initKonaShell({ profile, settings: settingsUI, enter: openMuseum, entryDataReady, openUserStudio:()=>enterApp('me'), featureStyle, loadScript });
 window.__konaShell = shell;
 
 function enterApp(first = 'home') {
@@ -154,6 +154,8 @@ function questHost() {
 
 function paintQuest(step) {
   setEntryMode('quest');
+  intro?.scrollTo({top:0,left:0,behavior:'instant'});
+  window.scrollTo({top:0,left:0,behavior:'instant'});
   const host = questHost();
   if (!host) return;
   host.hidden = false;
@@ -245,4 +247,3 @@ else if (q.get('room') || q.get('map')) openMuseum();
 else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());
 else if (returningVisit && ['home','garage','collection','discover','plan','me','feed','travel'].includes(q.get('view'))) enterApp(q.get('view'));
-

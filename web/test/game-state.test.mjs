@@ -2,6 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readGameState, writeGameState, gameProgress, GAME_STATE_SCHEMA_VERSION } from '../src/engine/game-state.js';
 function memory(seed={}){const m=new Map(Object.entries(seed));return{getItem:k=>m.has(k)?m.get(k):null,setItem:(k,v)=>m.set(k,String(v)),removeItem:k=>m.delete(k),key:i=>[...m.keys()][i]??null,get length(){return m.size;}};}
+test('legacy world Find arrays can round-trip through device backup without deleting the original',()=>{
+ const storage=memory({'speedmax.finds.v1':JSON.stringify(['lava','bib'])});
+ const snapshot=readGameState(storage);
+ assert.deepEqual(snapshot.finds,{lava:true,bib:true});
+ const restored=memory();writeGameState(snapshot,restored);
+ assert.deepEqual(readGameState(restored).finds,snapshot.finds);
+ assert.equal(storage.getItem('speedmax.finds.v1'),'["lava","bib"]');
+});
 test('game state aggregates existing domain stores without deleting them',()=>{const s=memory({'speedmax.profile.v1':JSON.stringify({v:1,name:'Ana'}),'speedmax.passport.v1':JSON.stringify({v:1,stamps:{'bike:a':{at:1}},badges:{collector:1},xp:55,streak:2,best:3}),'speedmax.finds.v1':JSON.stringify({bib:true}),'speedmax.raceSetup.v1':JSON.stringify({v:1,bike:'bike:a'}),'speedmax.garage.v1':JSON.stringify([{id:'g1'}])});const state=readGameState(s);assert.equal(state.schema_version,GAME_STATE_SCHEMA_VERSION);assert.equal(state.profile.name,'Ana');assert.equal(state.progression.xp,55);assert.equal(state.garage.length,1);assert.notEqual(s.getItem('speedmax.passport.v1'),null);});
 test('restore and progress summary are deterministic',()=>{const s=memory();writeGameState({schema_version:1,profile:{v:1,name:'Jo'},progression:{v:1,stamps:{'bike:a':{},'kona:2024':{},'find:bib':{},'part:fork':{}},badges:{first:1},xp:120,streak:4,best:4},finds:{bib:true},race_setup:{v:1,bike:'bike:a'},garage:[{id:'g1'},{id:'g2'}]},s);const p=gameProgress(readGameState(s));assert.deepEqual([p.xp,p.streak,p.stamps,p.badges,p.bikes,p.konaYears,p.hidden,p.parts,p.garage],[120,4,4,1,1,1,1,1,2]);});
 test('unsupported cloud schema is rejected',()=>{assert.throws(()=>writeGameState({schema_version:99}),/Unsupported game state/);});

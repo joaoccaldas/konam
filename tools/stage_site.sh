@@ -10,7 +10,7 @@ node web/build_nor3_review.mjs
 printf '{"sha":"%s","ref":"%s","run_id":"%s","built_at":"%s"}\n' "$GITHUB_SHA" "$GITHUB_REF_NAME" "$GITHUB_RUN_ID" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > _site/release.json
 cp ./*.html manifest.webmanifest sw.js robots.txt sitemap.xml llms.txt llms-full.txt _site/
 mkdir -p _site/app
-cp app/viewport.js app/kona-core.js app/world-shell.html app/race-self-stage.js app/collectible-stage.js app/entry-data.json app/admin-assets.json app/admin-asset-preview.js app/nor3-review.js app/app-manifest.json app/android-version.json app/museum-data.js app/hall.js app/studio.js app/standalone-access.js app/studio-catalog.js _site/app/
+cp app/viewport.js app/kona-core.js app/companion-ui.js app/world-shell.html app/race-self-stage.js app/collectible-stage.js app/entry-data.json app/admin-assets.json app/admin-asset-preview.js app/nor3-review.js app/app-manifest.json app/android-version.json app/museum-data.js app/hall.js app/studio.js app/standalone-access.js app/studio-catalog.js _site/app/
 mkdir -p _site/integrations/companion
 cp integrations/companion/feed.json integrations/companion/rss.xml integrations/companion/travel.json _site/integrations/companion/
 mkdir -p _site/integrations

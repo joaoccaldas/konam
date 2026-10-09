@@ -41,6 +41,11 @@ await build({
   legalComments: 'none',
 });
 await build({
+  entryPoints: [path.join(here,'src/companion-entry.js')],
+  bundle:true,format:'iife',minify:true,
+  outfile:path.join(root,'app/companion-ui.js'),target:'es2020',legalComments:'none',
+});
+await build({
   entryPoints: [path.join(here, 'src/collectible-stage-entry.js')],
   bundle: true,
   format: 'iife',

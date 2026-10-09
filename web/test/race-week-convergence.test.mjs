@@ -6,7 +6,7 @@ const read=p=>fs.readFileSync(new URL('../../'+p,import.meta.url),'utf8');
 
 test('Home keeps current context ahead of optional 3D depth without duplicating Plan',()=>{
   const home=read('web/src/ui/home.js');
-  for(const phrase of ['KONA NOW · RACE WEEK','The Intern has been reading everything again.','Just landed?']) assert.ok(home.includes(phrase),phrase);
+  for(const phrase of ['KONA NOW · RACE WEEK','The Intern’s reading room.','Just landed?']) assert.ok(home.includes(phrase),phrase);
   assert.equal((home.match(/What matters next\./g)||[]).length,0,'Kona Now should not duplicate the hero Plan action');
   assert.ok(home.indexOf('KONA NOW · RACE WEEK')<home.indexOf('KONA.M · 3D WORLD'),'Kona Now must precede optional 3D depth');
   assert.match(home,/data-home-feed/);

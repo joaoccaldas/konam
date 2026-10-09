@@ -8,7 +8,6 @@ import { renderAvatarHome } from './avatar-home.js';
 import { renderCollectionSurface } from './collection.js';
 import { renderDiscoverSurface } from './discover.js';
 import { renderPlanSurface } from './plan.js';
-import { renderFeed, renderTravel } from './companion.js';
 import { renderAdminAssets } from './admin-assets.js';
 import { currentUser, isAdminUser } from '../cloud/supabase-lite.js';
 import { readGameState } from '../engine/game-state.js';
@@ -29,7 +28,7 @@ const icon = name => {
   return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+d+'"/></svg>';
 };
 
-export function initKonaShell({ profile, settings, enter, openUserStudio, featureStyle=async()=>{}, entryDataReady=null }) {
+export function initKonaShell({ profile, settings, enter, openUserStudio, featureStyle=async()=>{}, entryDataReady=null, loadScript }) {
   const facts = () => ({
     event: window.__ENTRY_EVENT || window.__ENTRY_DATA?.event || {},
   });
@@ -173,7 +172,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
       openGarage:garage,
       openDiscover:explore,
       openPlan:plan,
-      openCollection:collection,
+      openCollection:()=>collection('home'),
       openFeed:()=>feed('home'),
       openTravel:()=>travel('home'),
       openWorld:()=>{close();enter?.();},
@@ -216,11 +215,18 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
 
   async function companion(view,origin='studio'){
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
-    await featureStyle('companion','web/styles/companion.css');
+    try{await Promise.all([featureStyle('companion','web/styles/companion.css'),loadScript('app/companion-ui.js')]);}
+    catch{
+      if(request!==studioRequest)return;
+      title.textContent='Quick pit stop';panel.hidden=false;document.body.classList.add('kona-panel-open');
+      body.innerHTML='<section class="kona-section artifact artifact--label"><h3>The reading room could not load.</h3><p>Reconnect and try again. Your main navigation is ready.</p><button class="btn-secondary" type="button" data-companion-retry>Try again</button></section>';
+      body.querySelector('[data-companion-retry]').onclick=()=>companion(view,origin);return;
+    }
     if(request!==studioRequest)return;
-    title.textContent=view==='feed'?'The Feed':'Travel to Kona';eyebrow.textContent=`${PRODUCT_NAME} · EXPLORE MORE`;
+    const {renderFeed,renderTravel}=globalThis.__konaCompanionUI;
+    title.textContent=view==='feed'?'The Intern':'Travel to Kona';eyebrow.textContent=`${PRODUCT_NAME} · EXPLORE MORE`;
     panel.hidden=false;panel.classList.add('companion-panel');panel.scrollTop=0;
-    document.body.classList.add('kona-panel-open');setActive(view==='feed'?'home':'plan');
+    document.body.classList.add('kona-panel-open');setActive(origin==='discover'?'discover':origin==='home'?'home':'me');
     const back=origin==='home'?now:origin==='discover'?explore:raceSelf;
     const backLabel=origin==='home'?'Now':origin==='discover'?'Discover':'User Studio';
     companionReturn=back;
@@ -228,13 +234,14 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
   }
   const feed=(origin='studio')=>companion('feed',origin),travel=(origin='studio')=>companion('travel',origin);
 
-  async function collection(){
+  async function collection(origin='studio'){
     dismissTour();leaveRaceSelf();const request=studioRequest;panel.hidden=true;
     await featureStyle('',null);
     if(request!==studioRequest)return;
     title.textContent='Finds'; eyebrow.textContent=`${PRODUCT_NAME} · STORY COLLECTIBLES`;
-    panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('');
-    disposeStudio=await renderCollectionSurface(body,{admin:accessContext.admin,onBack:raceSelf});
+    panel.hidden=false;document.body.classList.add('kona-panel-open');setActive(origin==='discover'?'discover':origin==='home'?'home':'me');
+    const back=origin==='home'?now:origin==='discover'?explore:raceSelf;
+    disposeStudio=await renderCollectionSurface(body,{admin:accessContext.admin,onBack:back,backLabel:origin==='home'?'Now':origin==='discover'?'Discover':'User Studio',openWorld:()=>walkTo('hall')});
   }
 
   async function garage(){
@@ -285,7 +292,7 @@ export function initKonaShell({ profile, settings, enter, openUserStudio, featur
     if(request!==studioRequest)return;
     title.textContent='Discover'; eyebrow.textContent=`${PRODUCT_NAME} · INTERESTING THINGS`;
     panel.hidden=false;document.body.classList.add('kona-panel-open');setActive('discover');
-    await renderDiscoverSurface(body,{enter:room=>{if(room)return walkTo(room);close();enter?.();},openSurface:target=>({garage,plan,collection,feed:()=>feed('discover'),travel:()=>travel('discover')}[target]?.())});
+    await renderDiscoverSurface(body,{enter:room=>{if(room)return walkTo(room);close();enter?.();},openSurface:target=>({garage,plan,collection:()=>collection('discover'),feed:()=>feed('discover'),travel:()=>travel('discover')}[target]?.())});
     syncNavigation();
     scheduleSurprise('discover');
   }
