@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-09",
+  "environment": "research/3d-core-r1-20261004",
+  "production_modified": false,
+  "findings": [
+    {
+      "id": "meshopt-allocator-cache",
+      "event_date": "2026-10-09",
+      "materiality": "Changes EXP-CLUSTERLOD-001 benchmark controls",
+      "source_quality": "A: merged upstream PR, code and author benchmarks",
+      "confidence": {
+        "merged": 0.99,
+        "transfer": 0.52
+      },
+      "sources": [
+        "https://github.com/zeux/meshoptimizer/pull/1107",
+        "https://github.com/zeux/meshoptimizer/commit/3d8e9b8a2a2b9a5becfc6fbc512307b04207ab5d"
+      ],
+      "evidence": "Experimental meshopt_setAllocatorCache merged at 02:26 UTC. Author benchmark Windows 247 to 220 seconds and Linux 230 to 222 seconds for large cluster preprocessing, with 16 x 32 MiB blocks.",
+      "limitation": "Author-only benchmark, native processing not GPU runtime; cache API experimental and non-thread-safe to configure; up to 512 MiB pool; unproven on our workloads.",
+      "implication": "Add cache ON/OFF to pinned post-v1.3 arm. Measure wall time, RSS, page faults, allocation counts, geometry correctness, and keep runtime FPS separate.",
+      "projects": [
+        "Studio-Kona",
+        "Bellagio",
+        "KONA.m",
+        "Gaudi Nexus"
+      ],
+      "experiment": "EXP-CLUSTERLOD-001",
+      "priority_change": false
+    },
+    {
+      "id": "gaudi-loadpath-vs-vault",
+      "event_date": "2026-10-01",
+      "reviewed_at": "2026-10-09",
+      "materiality": "Changes EXP-GAUDI-PROVENANCE-001 acceptance conditions",
+      "source_quality": "A-: Centre de Recerca Matematica Catalan mathematical exhibition with scholarly bibliography, not primary archival record",
+      "confidence": {
+        "source_statement": 0.99,
+        "application": 0.82
+      },
+      "sources": [
+        "https://www.crm.cat/les-matematiques-de-gaudi/"
+      ],
+      "evidence": "Newly surfaced October 1 exposition distinguishes polyfunicular load paths from definitive vault geometry. Gives catenary, ruled hyperboloid, and double-twist column mathematical teaching fixtures.",
+      "limitation": "Publication predates today; educational geometry does not certify historical dimensions or final design intent.",
+      "implication": "Keep separate provenance labels for force equilibrium, documented geometry, and creative reconstruction. Reject claims that equilibrium simulation alone proves definitive vault shape. Add explicit equation/load residual tests.",
+      "projects": [
+        "Gaudi Nexus",
+        "procedural architecture tooling"
+      ],
+      "experiment": "EXP-GAUDI-PROVENANCE-001",
+      "priority_change": false
+    }
+  ],
+  "watch_only": [
+    {
+      "source": "https://github.com/mrdoob/three.js/pull/34920",
+      "reason": "RangeNode reproducibility merged but current projects have no direct RangeNode references."
+    },
+    {
+      "source": "https://github.com/KhronosGroup/glTF/pull/2669",
+      "reason": "KHR_interactivity schema PR open; no current dependency."
+    }
+  ],
+  "no_other_material_findings": true,
+  "experiments_executed": false
+}
