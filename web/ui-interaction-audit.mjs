@@ -166,13 +166,16 @@ for(const id of selected){
       await p.waitForSelector('.kona-tour');await click('[data-tour-skip]');await p.waitForFunction(()=>!document.querySelector('.kona-tour'));
       await click('[data-home-self]');
     });
-    await step('first Find earns once, all 100 slots and filters work, and Item Studio loads the actual model',async()=>{
+    await step('first Find earns once, owned shelf and paginated 100-slot catalog work, and Item Studio loads the actual model',async()=>{
       await click('[data-studio-home]');await waitHome();
       await click('[data-first-find]');const earned=await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')));
       assert.ok(earned.discoveries.includes('find:shore:lava'));await click('[data-home-finds]');
-      await p.waitForSelector('[data-find]');assert.equal((await p.$$('[data-find]')).length,100);
+      await p.waitForSelector('[data-find]');assert.equal((await p.$$('[data-find]')).length,1,'owned-first shelf shows the collected object');
+      await p.waitForFunction(()=>document.querySelector('.find-thumbnail')?.naturalWidth===320);
       assert.equal(await p.$eval('#konaPanel',e=>e.scrollTop),0,'new collection route must start at its heading');
-      for(const filter of ['hidden','trade','event','all']){await click('[data-find-filter="'+filter+'"]');assert.equal(await p.$eval('[data-find-filter="'+filter+'"]',e=>e.getAttribute('aria-pressed')),'true');assert.ok((await p.$$('[data-find]')).length>0);}
+      for(const filter of ['hidden','all']){await click('[data-find-filter="'+filter+'"]');assert.equal(await p.$eval('[data-find-filter="'+filter+'"]',e=>e.getAttribute('aria-pressed')),'true');assert.equal((await p.$$('[data-find]')).length,12,'catalog starts with a bounded page');}
+      while(await p.$('[data-finds-more]'))await click('[data-finds-more]');
+      assert.equal((await p.$$('[data-find]')).length,100,'all canonical slots remain reachable through pagination');
       await inventory('KONA Finds');await p.screenshot({path:path.join(out,prefix+'-finds.png')});
       await click('[data-find="find:shore:lava"]');assert.match(await text('.find-studio'),/Perfect Volcanic Rock|Its story/);
       await click('[data-view-find]');await p.waitForFunction(()=>document.querySelector('.find-canvas')?.__collectibleStage,{timeout:60000});
@@ -180,7 +183,7 @@ for(const id of selected){
       await click('[data-find-return]');assert.equal(await canvas.evaluate(c=>c.__collectibleStage),false,'return must dispose 3D');
       const hidden=await p.$eval('[data-find]:not(.is-collected)',e=>e.dataset.find);await click('[data-find="'+hidden+'"]');
       assert.match(await text('.find-studio'),/A story still waiting/);assert.equal(await p.$('[data-view-find]'),null,'uncollected details must remain hidden');await click('[data-find-return]');
-      await click('[data-finds-back]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);await click('[data-studio-home]');await waitHome();
+      await click('[data-finds-back]');await waitHome();
       assert.equal(await p.$eval('[data-first-find]',e=>e.disabled),true);
       assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('kona.progression.v1')).xp),earned.xp);
       await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
@@ -231,9 +234,9 @@ for(const id of selected){
       const newsletter=await p.$('.companion-tools a[href*="account=newsletter"]');assert.ok(newsletter,'Branded newsletter signup entry missing');
       await click('.companion-page [data-back]');await waitHome();
     });
-    await step('Home Travel route, Plan nav authority, place filters and return-to-Now provenance work',async()=>{
+    await step('Home Travel route preserves Now navigation, place filters and return provenance',async()=>{
       await click('[data-home-travel]');await p.waitForSelector('.companion-arrival');
-      assert.equal(await p.$eval('[data-tab="plan"]',e=>e.getAttribute('aria-current')),'page');
+      assert.equal(await p.$eval('[data-tab="home"]',e=>e.getAttribute('aria-current')),'page');
       for(const filter of ['bike-service','coffee','ocean','all']){await click('[data-place-filter="'+filter+'"]');assert.equal(await p.$eval('[data-place-filter="'+filter+'"]',e=>e.getAttribute('aria-pressed')),'true');}
       await inventory('Travel');await click('.companion-page > [data-back]');await waitHome();
       await click('[data-home-self]');await p.waitForFunction(()=>document.querySelector('[data-race-self-stage]')?.__studioFrame);
