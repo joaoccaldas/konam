@@ -74,7 +74,7 @@ try{
  });
  assert.equal(restored.disabled,true,'museum styles must be disabled after returning to an app surface');
  assert.notEqual(restored.heroPosition,'fixed');
- assert.match(restored.title||'',/Feed/i);
+ assert.equal(restored.title,'The Intern');
  await page.evaluate(()=>window.__konaShell.now());
  assert.match(await page.$eval('#konaPanelTitle',e=>e.textContent),/Now/i);
 
