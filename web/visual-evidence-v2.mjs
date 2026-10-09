@@ -6,7 +6,7 @@ const out=process.argv[3]||'visual-evidence-v2';fs.mkdirSync(out,{recursive:true
 const chrome=process.env.CHROME_PATH;if(!chrome)throw new Error('CHROME_PATH required');
 const browser=await puppeteer.launch({executablePath:chrome,timeout:90000,headless:'new',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const viewports=[{id:'320',width:320,height:720},{id:'360',width:360,height:640},{id:'390',width:390,height:844},{id:'430',width:430,height:932},{id:'tablet',width:768,height:1024},{id:'landscape-phone',width:844,height:390},{id:'desktop',width:1440,height:900}];
-const states=['landing','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','collection','find-studio','bike-studio'];const report=[];
+const states=['landing','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','collection-owned','collection','find-studio','bike-studio'];const report=[];
 fs.writeFileSync(path.join(out,'candidate.json'),JSON.stringify({source_sha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),source_dirty:!!execFileSync('git',['status','--porcelain'],{encoding:'utf8'}).trim(),bundle_sha256:createHash('sha256').update(fs.readFileSync('app/kona-core.js')).digest('hex'),generated_at:new Date().toISOString()},null,2)+'\n');
 // deterministic storage per capture: seed after origin exists, then reload exactly once.
 async function capture(vp,state,theme){
@@ -62,8 +62,9 @@ async function capture(vp,state,theme){
    await p.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden,{timeout:60000});
    if(state==='home'){
      // Returning users land here. No personal/world 3D should be required.
-   }else if(['collection','find-studio'].includes(state)){
+   }else if(['collection-owned','collection','find-studio'].includes(state)){
      await press('[data-first-find]');await p.waitForFunction(()=>document.querySelector('[data-first-find]')?.disabled);await press('[data-home-finds]');await p.waitForSelector('[data-find]');
+     if(state==='collection')await press('[data-find-filter="all"]');
      if(state==='find-studio'){await press('[data-find="find:shore:lava"]');await p.waitForSelector('.find-studio');}
    }else if(['user-studio','avatar-editor','progress'].includes(state)){
      const switched=await p.evaluate(async()=>{const shell=window.__konaShell;if(!shell?.me)return false;await shell.me();return true;});
@@ -144,7 +145,9 @@ const violations=[];
 for(const r of report){
  // The quick tour is a modal dialog with its own Next/Skip controls, so it intentionally owns the interaction layer while open.
  if(r.metrics.panelBackCovered&&r.state!=='onboarding-tour')violations.push(`${r.viewport}/${r.theme}/${r.state}: panel back is covered`);
- if(r.state==='collection'&&r.metrics.panelScrollTop!==0)violations.push(`${r.viewport}/${r.theme}: new collection route retained old scroll position`);
+ // The owned shelf is the route arrival. The catalog capture follows a real
+ // filter tap, which can legitimately scroll that control into view on phones.
+ if(r.state==='collection-owned'&&r.metrics.panelScrollTop!==0)violations.push(`${r.viewport}/${r.theme}: new collection route retained old scroll position`);
  if(r.metrics.overflowX)violations.push(`${r.viewport}/${r.theme}/${r.state}: horizontal overflow`);
  if(r.state==='landing'&&r.heavyRequests.length)violations.push(`${r.viewport}/${r.theme}: heavy 3D requested on landing`);
  if(r.state==='landing'&&r.viewport!=='desktop'&&r.metrics.landing){const l=r.metrics.landing;if(l.ctaTop<0||l.ctaBottom>l.viewportH)violations.push(`${r.viewport}/${r.theme}: Enter KONA is not fully visible in first viewport`);if(l.ctaW<160)violations.push(`${r.viewport}/${r.theme}: Enter KONA is too narrow`);if(l.productTop!=null&&l.productBottom!=null&&l.productLeft!=null&&l.productRight!=null){const overlapX=Math.min(l.ctaRight,l.productRight)-Math.max(l.ctaLeft,l.productLeft),overlapY=Math.min(l.ctaBottom,l.productBottom)-Math.max(l.ctaTop,l.productTop);if(overlapX>1&&overlapY>1)violations.push(`${r.viewport}/${r.theme}: product teaser overlaps primary decision`);}}

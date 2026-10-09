@@ -151,7 +151,7 @@ function openMuseum(room) {
 }
 
 initAppShell();
-const shell = initKonaShell({ profile, settings: settingsUI, enter: openMuseum, entryDataReady, openUserStudio:()=>enterApp('me'), featureStyle });
+const shell = initKonaShell({ profile, settings: settingsUI, enter: openMuseum, entryDataReady, openUserStudio:()=>enterApp('me'), featureStyle, loadScript });
 window.__konaShell = shell;
 
 function enterApp(first = 'home') {
@@ -181,6 +181,8 @@ function questHost() {
 
 function paintQuest(step) {
   setEntryMode('quest');
+  intro?.scrollTo({top:0,left:0,behavior:'instant'});
+  window.scrollTo({top:0,left:0,behavior:'instant'});
   const host = questHost();
   if (!host) return;
   host.hidden = false;

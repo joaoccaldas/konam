@@ -36,17 +36,31 @@ export async function mountCollectibleStage(canvas,{model,motion='auto'}={}){
   object.traverse(o=>{if(o.isMesh){o.material=o.material?.clone?.()||o.material;o.castShadow=true;}});
   const box=new THREE.Box3().setFromObject(root),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());
   root.position.sub(center);
-  const radius=Math.max(size.x,size.y,size.z,.1);
-  camera.position.set(radius*1.8,radius*.9,radius*2.25);controls.minDistance=radius*.9;controls.maxDistance=radius*5;controls.target.set(0,0,0);
+  // Tiny shoreline meshes need the same framing as larger objects.
+  // Normalize the displayed object, including its centering offset, rather than flooring its size.
+  const span=Math.max(size.x,size.y,size.z,.0001);
+  root.scale.setScalar(1/span);root.position.multiplyScalar(1/span);
+  const radius=1;
+  const view=new THREE.Vector3(1.8,.9,2.25);
+  const thin=['x','y','z'].sort((a,b)=>size[a]-size[b])[0];
+  if(size[thin]/span<.4){view.set(.5,.7,.5);view[thin]=3;}
+  camera.position.copy(view);controls.minDistance=radius*.9;controls.maxDistance=radius*5;controls.target.set(0,0,0);
   const floor=new THREE.Mesh(new THREE.CircleGeometry(radius*1.25,48),new THREE.MeshStandardMaterial({color:0xe8e1d6,roughness:.9,transparent:true,opacity:.7}));
-  floor.rotation.x=-Math.PI/2;floor.position.y=-size.y*.52;scene.add(floor);
+  floor.rotation.x=-Math.PI/2;floor.position.y=-size.y/span*.52;scene.add(floor);
   const reduced=motion==='reduced'||matchMedia('(prefers-reduced-motion: reduce)').matches;
   let disposed=false,last=performance.now();
-  const resize=()=>{const w=Math.max(1,canvas.clientWidth),h=Math.max(1,canvas.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();};
+  const draw=()=>{if(!disposed&&!document.hidden)renderer.render(scene,camera);};
+  controls.enableDamping=!reduced;
+  if(reduced)controls.addEventListener('change',draw);
+  controls.update();
+  const resize=()=>{const w=Math.max(1,canvas.clientWidth),h=Math.max(1,canvas.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();draw();};
   const ro=new ResizeObserver(resize);ro.observe(canvas);resize();
-  renderContext.setAnimationLoop(now=>{if(disposed)return;const dt=Math.min(.05,(now-last)/1000);last=now;controls.update();if(!reduced&&!controls.state?.active)root.rotation.y+=dt*.18;renderer.render(scene,camera);});
+  let interacting=false;
+  const start=()=>{interacting=true;},end=()=>{interacting=false;};
+  controls.addEventListener('start',start);controls.addEventListener('end',end);
+  if(!reduced)renderContext.setAnimationLoop(now=>{if(disposed)return;const dt=Math.min(.05,(now-last)/1000);last=now;controls.update();if(!interacting)root.rotation.y+=dt*.18;draw();});
   canvas.__collectibleStage=true;
   canvas.__collectibleRendererAuthority='shared-r0';
-  return{reset(){camera.position.set(radius*1.8,radius*.9,radius*2.25);controls.target.set(0,0,0);controls.update();},dispose(){disposed=true;renderContext.setAnimationLoop(null);ro.disconnect();controls.dispose();renderContext.dispose();canvas.__collectibleStage=false;delete canvas.__collectibleRendererAuthority;scene.add(gltf.scene);disposeObject3D(scene,{removeFromParent:false});}};
+  return{reset(){camera.position.copy(view);controls.target.set(0,0,0);controls.update();},dispose(){disposed=true;renderContext.setAnimationLoop(null);ro.disconnect();controls.removeEventListener('change',draw);controls.removeEventListener('start',start);controls.removeEventListener('end',end);controls.dispose();renderContext.dispose();canvas.__collectibleStage=false;delete canvas.__collectibleRendererAuthority;scene.add(gltf.scene);disposeObject3D(scene,{removeFromParent:false});}};
   }catch(error){controls.dispose();renderContext.dispose();if(gltf?.scene)scene.add(gltf.scene);disposeObject3D(scene,{removeFromParent:false});throw error;}
 }

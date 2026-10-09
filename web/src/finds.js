@@ -1,8 +1,8 @@
 // Shoreline finds. Small objects left off the aisle — a plumeria, a cowrie, a lava stone,
 // a scrap of black coral, a race bib. They are not on the rail. Tap one to keep it.
 import * as THREE from 'three';
-import { applyStoredEvent } from './engine/progression.js';
-import { readStorage, writeStorage } from './engine/storage.js';
+import { applyStoredEvent, readProgression } from './engine/progression.js';
+import { readStorage,writeStorage } from './engine/storage.js';
 
 export const FINDS = [
   { id: 'plumeria', mesh: 'plumeria', name: 'A plumeria', line: 'Left by the chapel door, the colour of the late light on Aliʻi.', x: 2.35, z: 3.55, y: .02, yaw: .4 },
@@ -12,16 +12,16 @@ export const FINDS = [
   { id: 'bib', mesh: 'race_bib', name: 'A race bib', line: 'In the champions room, face down. The number has worn off. The pin holes have not.', x: -16.6, z: -16.4, y: .02, yaw: .15 },
 ];
 
-
 export function readFinds() {
   try {
     const raw = JSON.parse(readStorage('finds') || '[]');
-    return Array.isArray(raw) ? raw.filter(id => FINDS.some(f => f.id === id)) : [];
+    const discoveries=readProgression()?.discoveries||[];
+    return FINDS.filter(f=>(Array.isArray(raw)?raw.includes(f.id):raw?.[f.id]===true)||discoveries.includes('find:shore:'+f.id)).map(f=>f.id);
   } catch (_) { return []; }
 }
 
 export function writeFinds(ids) {
-  try { writeStorage('finds', JSON.stringify(ids)); } catch (_) { }
+  try { writeStorage('finds', JSON.stringify(Object.fromEntries(ids.map(id=>[id,true])))); } catch (_) { }
 }
 
 export async function buildFinds(ctx) {
@@ -62,11 +62,14 @@ export async function buildFinds(ctx) {
     kept,
     take(spot) {
       if (spot.found) return false;
+      try {
+        applyStoredEvent({ type: 'FIND_DISCOVERED', subject: `find:shore:${spot.id}` });
+        if(!readProgression()?.discoveries.includes(`find:shore:${spot.id}`))return false;
+      } catch (_) { return false; }
       spot.found = true;
       spot.holder.visible = false;
       kept.add(spot.id);
       writeFinds([...kept]);
-      try { applyStoredEvent({ type: 'FIND_DISCOVERED', subject: `find:shore:${spot.id}` }); } catch (_) { /* the object is still kept */ }
       return true;
     },
   };

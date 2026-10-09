@@ -1,16 +1,16 @@
 import {sourceManager} from './companion-manager.js';
 import {subscriptions,liveSubscriptions,travelPlaces,saveTravelPlaces} from './companion-subscriptions.js';
-import {escapeHTML as esc,safeURL,sourceState,filterFeed,formatDate,loadCompanion} from './companion-data.js';
+import {escapeHTML as esc,safeURL,sourceState,filterFeed,formatDate,loadCompanion,internEditions} from './companion-data.js';
 const labels={news:'Triathlon',video:'Athlete videos',kona:'Island news'};
-const internLine=item=>item.excerpt?'<p class="companion-intern"><small>THE INTERN · SOURCE NOTES</small>'+esc(item.excerpt)+'</p>':'';
+const internLine=item=>item.excerpt?'<p class="companion-intern"><small>PUBLISHER EXCERPT</small>'+esc(item.excerpt)+'</p>':'';
 const external=(url,label,cls='')=>safeURL(url)?'<a class="'+cls+'" href="'+esc(safeURL(url))+'" target="_blank" rel="noopener noreferrer">'+esc(label)+' <span aria-hidden="true">↗</span></a>':'';
 const heading=(kicker,title,description)=>'<header class="companion-hero"><small>'+kicker+'</small><h3>'+title+'</h3><p>'+description+'</p></header>';
 const error=(node,retry)=>{node.innerHTML='<div class="companion-empty" role="status"><h4>Quick pit stop.</h4><p>This page could not load. Reconnect and try again; your Studio is still ready.</p><button class="companion-button" data-retry>Try again</button></div>';node.querySelector('[data-retry]').onclick=retry;};
 
 export function renderFeed(root,{back,scope='feed',compact=false,backLabel='User Studio'}={}){
  const controller=new AbortController();
- root.innerHTML='<section class="companion-page" aria-label="'+(compact?'Island updates':'Triathlon Feed')+'">'+(compact?'<h4 class="companion-section-title">The island, in the loop.</h4>':'<button class="companion-back" data-back>← '+esc(backLabel)+'</button>'+heading('THE FEED · SWIM / BIKE / SCROLL','Your rest-day rabbit hole.','Triathlon headlines, athlete cameras and life on the island. Straight from the source.'))+
- '<div class="companion-tools"><a href="index.html?account=newsletter" class="companion-button">Get The Intern’s newsletter →</a><button class="companion-button" data-refresh>Refresh feed</button></div><div data-subscriptions></div><div data-feed-content aria-live="polite"><p>Gathering the good stuff…</p></div></section>';
+ root.innerHTML='<section class="companion-page" aria-label="'+(compact?'Island updates':'Triathlon Feed')+'">'+(compact?'<h4 class="companion-section-title">The island, in the loop.</h4>':'<button class="companion-back" data-back>← '+esc(backLabel)+'</button>'+heading('THE INTERN · KONA READING ROOM','Kona, in a few minutes.','Triathlon, athlete videos and island news. A dated digest, straight from the sources.'))+
+ '<div class="companion-tools"><a href="index.html?account=newsletter" class="companion-button">Get The Intern’s newsletter →</a><button class="companion-button" data-refresh>Refresh feed</button></div><div data-feed-content aria-live="polite"><p>Gathering the good stuff…</p></div><div data-subscriptions></div></section>';
  const page=root.firstElementChild,content=page.querySelector('[data-feed-content]');if(page.querySelector('[data-back]'))page.querySelector('[data-back]').onclick=back;
  let loadRequest=0;let data,fallback,managed=false,kind='all',source='all',query='',limit=18;
  function render(){
@@ -23,19 +23,23 @@ export function renderFeed(root,{back,scope='feed',compact=false,backLabel='User
   page.querySelector('[data-result-count]').textContent=rows.length+' '+(rows.length===1?'story':'stories');
   page.querySelector('[data-more]').hidden=rows.length<=limit;
  }
- async function load(){
-  const request=++loadRequest;
-  const refresh=page.querySelector('[data-refresh]');refresh.disabled=true;
-  try{
-   fallback ||= await loadCompanion('feed',{signal:controller.signal});
-   const defaults=scope==='travel'?fallback.sources.filter(s=>s.kind==='kona'):fallback.sources;
-   if(!managed){sourceManager(page.querySelector('[data-subscriptions]'),{scope,defaults,signal:controller.signal,onChange:()=>{source='all';load();}});managed=true;}
-   const next=await liveSubscriptions(scope,subscriptions(scope,defaults),fallback,controller.signal);if(controller.signal.aborted||request!==loadRequest)return;data=next;
-   const hero=page.querySelector('.companion-hero'),latest=data.items.find(i=>i.kind==='video'&&/^https:\/\/i\.ytimg\.com\/vi\/[\w-]{11}\/hqdefault\.jpg$/.test(i.thumbnail||''));
+ function paintBrief(){
+  if(compact)return;
+  const host=page.querySelector('[data-intern-brief]'),editions=internEditions(data);
+  if(!editions.length){host.innerHTML='<p class="companion-note">The next edition needs dated stories from your sources.</p>';return;}
+  const match=location.hash.match(/^#intern\/(\d{4}-\d{2}-\d{2})$/),edition=editions.find(e=>e.date===(selectedEdition||match?.[1]))||editions[0];
+  selectedEdition=edition.date;
+  host.innerHTML='<div class="intern-edition-head"><div><small>THE INTERN · SOURCE DIGEST</small><h4>'+esc(formatDate(edition.date))+'</h4></div><a class="companion-button" href="index.html?view=feed#intern/'+edition.date+'" data-edition-link>Link to edition</a></div><p class="companion-note">'+edition.story_count+' stories in this edition. '+(data.sources.some(s=>sourceState(s)!=='ok')?'Some sources are delayed; original story dates are retained. ':'')+'Here are a few threads worth following. Excerpts come from the named publishers.</p><div class="intern-picks">'+edition.picks.map(item=>'<article><small>'+esc(labels[item.kind]||'Story')+' · '+esc(item.publisher)+'</small><h5>'+external(item.url,item.title)+'</h5>'+(item.excerpt?'<p>'+esc(item.excerpt)+'</p>':'')+external(item.url,'Read at '+item.publisher,'btn-text')+'</article>').join('')+'</div><details class="intern-archive"><summary>Earlier editions · '+editions.length+'</summary><nav aria-label="Intern editions">'+editions.map(e=>'<button type="button" class="companion-button" data-edition="'+e.date+'" aria-pressed="'+(e.date===edition.date)+'">'+esc(formatDate(e.date))+' · '+e.story_count+' stories</button>').join('')+'</nav></details>';
+  host.querySelectorAll('[data-edition]').forEach(b=>b.onclick=()=>{selectedEdition=b.dataset.edition;paintBrief();});
+ }
+ let selectedEdition=null;
+ function paintData(next){
+  if(controller.signal.aborted)return;data=next;
+  const hero=page.querySelector('.companion-hero'),latest=filterFeed(data).find(i=>i.kind==='video'&&/^https:\/\/i\.ytimg\.com\/vi\/[\w-]{11}\/hqdefault\.jpg$/.test(i.thumbnail||''));
    hero?.querySelector('.companion-lead')?.remove();
    if(hero&&latest)hero.insertAdjacentHTML('beforeend','<a class="companion-lead" href="'+esc(safeURL(latest.url))+'" target="_blank" rel="noopener noreferrer"><img src="'+esc(latest.thumbnail)+'" alt="" loading="lazy" width="480" height="360"><span>Latest from your athletes ↗</span><b>'+esc(latest.title)+'</b></a>');
    const stale=[...new Set([...data.sources.filter(s=>sourceState(s)!=='ok').map(s=>s.feed_url),...(data.errors||[]).map(e=>e.requested_url)])];
-   content.innerHTML='<p class="companion-freshness">'+(data.offline?'Offline copy · ':'')+'Updated '+esc(formatDate(data.checked_at))+' · '+esc(new Intl.DateTimeFormat('en',{hour:'numeric',minute:'2-digit',timeZone:'Pacific/Honolulu'}).format(new Date(data.checked_at)))+' HST. '+(stale.length?stale.length+' source'+(stale.length===1?'':'s')+' delayed; saved items keep their original dates.':'Refresh for new stories. Updates may be up to 10 minutes old.')+'</p>'+
+   content.innerHTML=(compact?'':'<section class="intern-edition artifact artifact--label" data-intern-brief></section><h4 class="companion-section-title">All the stories</h4>')+'<p class="companion-freshness">'+(data.offline?'Offline copy · ':'')+'Updated '+esc(formatDate(data.checked_at))+' · '+esc(new Intl.DateTimeFormat('en',{hour:'numeric',minute:'2-digit',timeZone:'Pacific/Honolulu'}).format(new Date(data.checked_at)))+' HST. '+(stale.length?stale.length+' source'+(stale.length===1?'':'s')+' delayed; saved items keep their original dates.':'Refresh for new stories. Updates may be up to 10 minutes old.')+'</p>'+
     '<div class="companion-filters" role="group" aria-label="Feed categories">'+[['all','All'],['news','Triathlon'],['video','Athletes'],['kona','Kona & island']].map(([id,label])=>'<button data-kind="'+id+'" aria-pressed="'+(kind===id)+'">'+label+'</button>').join('')+'</div>'+
     '<details class="companion-find"><summary>Search & filter sources</summary><div class="companion-search"><label>Find a story<input type="search" data-search placeholder="Athlete, race, coffee…" value="'+esc(query)+'"></label><label>Source<select data-source><option value="all">All sources</option>'+data.sources.map(s=>'<option value="'+esc(s.id)+'"'+(source===s.id?' selected':'')+'>'+esc(s.name)+'</option>').join('')+'</select></label></div></details>'+
     '<p class="companion-meta" data-result-count role="status"></p><div class="companion-feed" data-results></div><button class="companion-button" data-more>One more lap · more stories</button>'+
@@ -43,7 +47,20 @@ export function renderFeed(root,{back,scope='feed',compact=false,backLabel='User
    content.querySelectorAll('[data-kind]').forEach(b=>b.onclick=()=>{kind=b.dataset.kind;limit=18;content.querySelectorAll('[data-kind]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();});
    content.querySelector('[data-search]').oninput=e=>{query=e.target.value;limit=18;render();};
    content.querySelector('[data-source]').onchange=e=>{source=e.target.value;limit=18;render();};
-   content.querySelector('[data-more]').onclick=()=>{limit+=18;render();};render();
+   content.querySelector('[data-more]').onclick=()=>{limit+=18;render();};render();paintBrief();
+ }
+ async function load(){
+  const request=++loadRequest;
+  const refresh=page.querySelector('[data-refresh]');refresh.disabled=true;
+  try{
+   fallback ||= await loadCompanion('feed',{signal:controller.signal});
+   const defaults=scope==='travel'?fallback.sources.filter(s=>s.kind==='kona'):fallback.sources;
+   if(!managed){sourceManager(page.querySelector('[data-subscriptions]'),{scope,defaults,signal:controller.signal,onChange:()=>{source='all';load();}});managed=true;}
+   const selected=subscriptions(scope,defaults),active=new Set(selected.filter(s=>s.enabled!==false).map(s=>s.url));
+   const savedSources=fallback.sources.filter(s=>active.has(s.feed_url)),ids=new Set(savedSources.map(s=>s.id));
+   paintData({...fallback,sources:savedSources,items:fallback.items.filter(i=>ids.has(i.source_id)),offline:true});
+   const next=await liveSubscriptions(scope,selected,fallback,controller.signal);if(controller.signal.aborted||request!==loadRequest)return;
+   paintData(next);
   }catch(e){if(e.name!=='AbortError'){globalThis.__konaAnalytics?.trackRuntimeError?.('companion_load',{subsystem:'companion',surface:scope==='travel'?'travel':'feed'});error(content,load);}}finally{if(request===loadRequest)refresh.disabled=false;}
  }
  page.querySelector('[data-refresh]').onclick=load;load();return ()=>controller.abort();

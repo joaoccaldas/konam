@@ -28,7 +28,8 @@ export async function renderDiscoverSurface(root,{enter,openSurface}={}){
     '<section class="kona-section artifact artifact--label" aria-label="Discover lanes"><div class="kona-section-head"><h3>Where to?</h3><small>FOUR LANES</small></div>'+
       '<div class="ui-cluster"><button class="btn-secondary" type="button" data-discover-jump="rooms">Rooms</button><button class="btn-secondary" type="button" data-discover-jump="machines">Machines</button><button class="btn-secondary" type="button" data-discover-surface="feed">People & stories</button><button class="btn-secondary" type="button" data-discover-surface="travel">Places</button></div></section>'+
     '<section class="kona-section artifact artifact--label" data-canonical-rooms><div class="kona-section-head"><div><small>THE FOUNDING WORLD</small><h3>14 rooms. All open.</h3></div><span class="t-data">14/14 OPEN</span></div>'+
-      '<p>Choose one room. Its identity is canonical; deeper spatial versions reuse the existing world instead of creating a second room system.</p>'+
+      '<p>Choose a room to explore. Each destination tells you whether it opens a page or takes you into 3D.</p>'+
+      '<nav class="ui-grid discover-room-index" aria-label="Founding room directory">'+foundingRooms.map(room=>'<button type="button" class="btn-secondary" data-room-choice="'+esc(room.id)+'"><small>'+room.ordinal+' · '+(room.route.action.kind==='world'?'3D WALK':'PAGE')+'</small><b>'+esc(room.name)+'</b></button>').join('')+'</nav>'+
       '<label class="ui-field"><span>Choose a founding room</span><select class="ui-select" data-canonical-room-select>'+roomOptions+'</select></label>'+
       '<div data-canonical-room-focus aria-live="polite"></div></section>'+
     '<section class="kona-section artifact artifact--label" data-discover-feed><div class="kona-section-head"><h3>Loading machines</h3><small>PUBLIC DATA</small></div></section>'+
@@ -49,7 +50,7 @@ export async function renderDiscoverSurface(root,{enter,openSurface}={}){
     focus.innerHTML=
       '<div class="kona-section-head"><div><small>ROOM '+esc(room.ordinal)+' · FOUNDING</small><h3>'+esc(room.name)+'</h3></div><span class="t-data">OPEN</span></div>'+
       '<p>'+esc(route.description)+'</p>'+
-      '<p class="kona-source-note">Open from launch. Discoveries can reveal progressively, but the room itself is never XP-gated.</p>'+
+      '<p class="kona-source-note">'+(route.action.kind==='world'?'Explore in 3D. Use the main navigation to return to a page.':'Opens a page in Kona.m. Your main navigation stays available.')+'</p>'+
       '<button class="kona-primary" type="button" data-canonical-room-depth="'+esc(room.id)+'">'+esc(route.action.label)+' <span>→</span></button>';
     focus.querySelector('[data-canonical-room-depth]')?.addEventListener('click',()=>{
       if(route.action.kind==='world')enter?.(route.action.target);
@@ -57,6 +58,9 @@ export async function renderDiscoverSurface(root,{enter,openSurface}={}){
     });
   };
   select?.addEventListener('change',()=>renderRoom(select.value));
+  root.querySelectorAll('[data-room-choice]').forEach(button=>button.addEventListener('click',()=>{
+    select.value=button.dataset.roomChoice;renderRoom(select.value);focus.scrollIntoView({block:'start',behavior:'instant'});focus.querySelector('button')?.focus({preventScroll:true});
+  }));
   renderRoom(select?.value||foundingRooms[0]?.id);
 
   const data=await loadPublicCatalog();

@@ -6,7 +6,7 @@ const read=p=>fs.readFileSync(new URL('../../'+p,import.meta.url),'utf8');
 
 test('Home puts the museum before supporting race-week context without duplicating Plan',()=>{
   const home=read('web/src/ui/home.js');
-  for(const phrase of ['KONA NOW · RACE WEEK','The Intern has been reading everything again.','Just landed?']) assert.ok(home.includes(phrase),phrase);
+  for(const phrase of ['KONA NOW · RACE WEEK','The Intern’s reading room.','Just landed?']) assert.ok(home.includes(phrase),phrase);
   assert.equal((home.match(/What matters next\./g)||[]).length,0,'Kona Now should not duplicate the hero Plan action');
   assert.ok(home.indexOf('KONA.M · THE 3D MUSEUM')<home.indexOf('KONA NOW · RACE WEEK'),'Museum must precede supporting content');
   assert.match(home,/data-home-feed/);

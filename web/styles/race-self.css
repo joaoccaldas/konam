@@ -125,7 +125,7 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
 }
 
 /* User Studio mobile menu: all personal destinations remain visible without sideways discovery. */
-@media(max-width:899px){
+@media(max-width:899px) and (min-height:551px){
   .studio-destinations{
     display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
     padding:10px 0 12px;overflow:visible;box-sizing:border-box;border-top:1px solid var(--stage-line);
@@ -148,5 +148,5 @@ body.race-self-open .kona-panel-body{padding:0;max-width:none;width:100%;height:
  .studio-stage-caption small{display:none}
 }
 
-.studio-home{color:var(--stage-ink);min-width:48px;white-space:nowrap}
+.studio-home{color:var(--stage-ink);min-width:48px;flex-shrink:0;padding-inline:8px;white-space:nowrap}
 @media(max-width:340px){.studio-wordmark span{display:none}.studio-heading{gap:8px}}

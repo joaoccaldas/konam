@@ -95,3 +95,34 @@ Required on one exact head SHA:
 ## Result
 
 Deterministic generated outputs were rebuilt and committed by the temporary M1 sync workflow. The temporary sync workflow was then removed so the final candidate can be certified from an owner-authored exact head. Final exact-head CI remains required.
+
+## 2026-10-05 — mobile layout, collection and Intern improvement release
+
+Base: `02a35d2f33daaeb214094caf315d9918577b4b1b`. Scope and measured limitations:
+[full app audit](APP_AUDIT_2026-10-05.md).
+
+Before: mobile overflow/covered controls, weak collection previews and progress,
+secondary destinations with inconsistent return context, title-only feed without
+dated digest, failed snapshot-config reference, Home/world Find ownership mismatch.
+
+After: shared responsive constraints, clearer entry/step scroll reset, owned-first
+collection with derived object thumbnails and explicit 3D, origin-aware navigation,
+next chapter/progression indicators, dated source editions and scheduled review
+artifacts, persisted canonical Find ownership before visual removal. Companion UI
+is loaded on intent; reduced-motion collectible previews avoid idle rendering.
+
+Authorities preserved: brand CSS manifest, existing route IDs and storage adapter,
+legacy progress compatibility, progression rewards, shared rendering kernel,
+public Companion adapter and release gate. No dependency, account/auth/schema,
+hosting-origin or world-renderer authority replacement. No source/asset deletion.
+
+Risks: lazy-loading races/failures, old Find formats, static thumbnail packaging,
+source date/encoding and generated web/native drift. Tests exercise each of these;
+existing P0, install and release certification remain required on the exact SHA.
+The complete world still exceeds scene budgets and video sources remain degraded;
+these are documented limitations, not claims of completed optimization.
+
+Rollback: revert this release commit and rebuild with the canonical builders;
+legacy keys remain readable and no user-state deletion is required. Publication
+is authorized by the user's explicit request to make the changes live. Verify the
+deployed release SHA and production mobile routes after all certification gates.
