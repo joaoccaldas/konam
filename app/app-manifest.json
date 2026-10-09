@@ -1,5 +1,5 @@
 {
- "version": "8af2693ad070",
+ "version": "cef5853d0215",
  "core": [
   "index.html",
   "about.html",
@@ -67,6 +67,8 @@
   "assets/pwa/icon-v3-512.png": "TjJpu7ZmZYrQIO9sWSzdVeBHr2RYy+FWmCyygkZsECs=",
   "assets/pwa/icon-v3-maskable-512.png": "TjJpu7ZmZYrQIO9sWSzdVeBHr2RYy+FWmCyygkZsECs=",
   "assets/pwa/apple-touch-icon-v3.png": "R7r+34dBZMxUezo2xBD34dbHtfTyvjdCViUhs3wRamI=",
+  "world/konam/rooms-v1.json": "OfLOixp+xOaLoQJe/k0OLK+e2jpXKn5xXxR5pktX0Ac=",
+  "world/konam/founding-runtime-v1.json": "hgJKSUEVvdw1Tq6T9wSr66KUrhQLrBKj/AEBrB4vhks=",
   "app/companion-ui.js": "eKoScmfSrHXXdaiwKLNyALP8Zgym4PpSNKHXDrxkAsM=",
   "app/account-auth.js": "RelX8G8z5b010sZS8wW/hIyjeLertSuErwZhB1juNno=",
   "integrations/companion/feed.json": "jeeXrw9ZF+8xGdyonwBkB96tBRDZ8ArmeIkhxD+l0XM=",

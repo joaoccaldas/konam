@@ -51,6 +51,9 @@ test('sealed service worker verifies release files and keeps GLBs out of the cor
   assert.ok(!app.core.includes('app/race-self-stage.js') && app.files['app/race-self-stage.js']);
   assert.ok(!app.core.includes('app/world-shell.html') && app.files['app/world-shell.html']);
   assert.ok(!app.core.includes('app/companion-ui.js') && app.files['app/companion-ui.js'],'optional content UI is lazy and release-verified');
+  for(const file of ['world/konam/rooms-v1.json','world/konam/founding-runtime-v1.json']){
+    assert.ok(app.files[file]&&!app.core.includes(file),file+' is verified and cached on Discover intent');
+  }
   assert.ok(app.files['app/studio.js'] && app.files['app/studio-catalog.js']);
 
   const index = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
