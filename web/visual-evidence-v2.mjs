@@ -145,7 +145,9 @@ const violations=[];
 for(const r of report){
  // The quick tour is a modal dialog with its own Next/Skip controls, so it intentionally owns the interaction layer while open.
  if(r.metrics.panelBackCovered&&r.state!=='onboarding-tour')violations.push(`${r.viewport}/${r.theme}/${r.state}: panel back is covered`);
- if(r.state==='collection'&&r.metrics.panelScrollTop!==0)violations.push(`${r.viewport}/${r.theme}: new collection route retained old scroll position`);
+ // The owned shelf is the route arrival. The catalog capture follows a real
+ // filter tap, which can legitimately scroll that control into view on phones.
+ if(r.state==='collection-owned'&&r.metrics.panelScrollTop!==0)violations.push(`${r.viewport}/${r.theme}: new collection route retained old scroll position`);
  if(r.metrics.overflowX)violations.push(`${r.viewport}/${r.theme}/${r.state}: horizontal overflow`);
  if(r.state==='landing'&&r.heavyRequests.length)violations.push(`${r.viewport}/${r.theme}: heavy 3D requested on landing`);
  if(r.state==='landing'&&r.viewport!=='desktop'&&r.metrics.landing){const l=r.metrics.landing;if(l.ctaTop<0||l.ctaBottom>l.viewportH)violations.push(`${r.viewport}/${r.theme}: Enter KONA is not fully visible in first viewport`);if(l.ctaW<160)violations.push(`${r.viewport}/${r.theme}: Enter KONA is too narrow`);if(l.productTop!=null&&l.productBottom!=null&&l.productLeft!=null&&l.productRight!=null){const overlapX=Math.min(l.ctaRight,l.productRight)-Math.max(l.ctaLeft,l.productLeft),overlapY=Math.min(l.ctaBottom,l.productBottom)-Math.max(l.ctaTop,l.productTop);if(overlapX>1&&overlapY>1)violations.push(`${r.viewport}/${r.theme}: product teaser overlaps primary decision`);}}
