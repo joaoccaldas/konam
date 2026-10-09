@@ -6,7 +6,7 @@ const out=process.argv[3]||'visual-evidence-v2';fs.mkdirSync(out,{recursive:true
 const chrome=process.env.CHROME_PATH;if(!chrome)throw new Error('CHROME_PATH required');
 const browser=await puppeteer.launch({executablePath:chrome,timeout:90000,headless:'new',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const viewports=[{id:'320',width:320,height:720},{id:'360',width:360,height:640},{id:'390',width:390,height:844},{id:'430',width:430,height:932},{id:'tablet',width:768,height:1024},{id:'landscape-phone',width:844,height:390},{id:'desktop',width:1440,height:900}];
-const states=['landing','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','collection','find-studio','bike-studio'];const report=[];
+const states=['landing','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','collection-owned','collection','find-studio','bike-studio'];const report=[];
 fs.writeFileSync(path.join(out,'candidate.json'),JSON.stringify({source_sha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),source_dirty:!!execFileSync('git',['status','--porcelain'],{encoding:'utf8'}).trim(),bundle_sha256:createHash('sha256').update(fs.readFileSync('app/kona-core.js')).digest('hex'),generated_at:new Date().toISOString()},null,2)+'\n');
 // deterministic storage per capture: seed after origin exists, then reload exactly once.
 async function capture(vp,state,theme){
@@ -62,10 +62,9 @@ async function capture(vp,state,theme){
    await p.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden,{timeout:60000});
    if(state==='home'){
      // Returning users land here. No personal/world 3D should be required.
-   }else if(['collection','find-studio'].includes(state)){
+   }else if(['collection-owned','collection','find-studio'].includes(state)){
      await press('[data-first-find]');await p.waitForFunction(()=>document.querySelector('[data-first-find]')?.disabled);await press('[data-home-finds]');await p.waitForSelector('[data-find]');
-     await capture('collection-owned');
-     await press('[data-find-filter="all"]');
+     if(state==='collection')await press('[data-find-filter="all"]');
      if(state==='find-studio'){await press('[data-find="find:shore:lava"]');await p.waitForSelector('.find-studio');}
    }else if(['user-studio','avatar-editor','progress'].includes(state)){
      const switched=await p.evaluate(async()=>{const shell=window.__konaShell;if(!shell?.me)return false;await shell.me();return true;});
