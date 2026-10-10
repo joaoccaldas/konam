@@ -1,0 +1,142 @@
+{
+  "date": "2026-10-10",
+  "as_of": "2026-10-10T08:40:10+02:00",
+  "scope": "Unified 3D R&D evidence-first material delta since 2026-10-09 morning local time",
+  "production_modified": false,
+  "experimental_runs_executed": false,
+  "research_only": true,
+  "findings": [
+    {
+      "id": "blender-collection-import-reload-nonexperimental",
+      "event_date": "2026-10-09",
+      "type": "experiment_design_change",
+      "materiality": "Promotes collection import, reload, and localize behavior to explicit reproducibility controls in EXP-BLENDER-ASSET-AS-CODE-001; does not promote Blender 5.3 to production.",
+      "primary_sources": [
+        "https://github.com/blender/blender/commit/145d210733b82b78480101950989b98d17fad213",
+        "https://github.com/blender/blender/commit/40ccc2edb8a093c0862de88f4dd5b98fcc34fa7",
+        "https://github.com/blender/blender/commit/20ca6d4fc316",
+        "https://devtalk.blender.org/t/2026-06-17-pipeline-i-o-module-meeting/45424"
+      ],
+      "source_quality": "A: merged upstream implementation, removal of the experimental option, and upstream Python import regression tests. June meeting provides prior blocker history, not evidence that all edge cases are solved.",
+      "verified_evidence": [
+        "On Oct 9 Blender implemented Collection Import clear/reload/make_local operators; the reload is specified as clear followed by import.",
+        "On Oct 9 upstream removed the experimental use_collection_importer gate and Blender-v5.3 release branch no longer contains it.",
+        "Earlier on Oct 6 multi-archive-library import landed. This corroborates richer external source handling but not universal dependency fidelity."
+      ],
+      "confidence": {
+        "upstream_status": 0.99,
+        "release_branch_visibility": 0.97,
+        "experiment_relevance": 0.92,
+        "production_maturity": 0.63
+      },
+      "limitation_or_disagreement": [
+        "Commit on development/release branch does not mean Blender 5.3 stable is shipped.",
+        "Clear+reload can change object IDs, reset imported state, or break local overrides; those are test hypotheses, not verified defects.",
+        "Collection import is not the same as text-based node graph source authority; it may solve reproducible asset ingestion without solving source diff/merge."
+      ],
+      "engineering_design_implication": "Expand the asset-as-code experiment into two source-authority axes: diffable procedural definitions and idempotent linked collection ingestion. In a clean Blender 5.3 test environment, import a packaged Gaudi element and a product asset, capture stable semantic object IDs, mesh/material hashes, licensing/provenance and relative dependencies; edit upstream source; reload; validate identity retention, materials, hierarchy, local edits, path portability and reproducibility. Test make_local then verify the result is decoupled. Keep production .blend authority unchanged.",
+      "affected_projects": [
+        "Gaudi Nexus",
+        "KONA.m asset factory",
+        "Bellagio reusable room kits",
+        "Studio-Kona reusable world assets"
+      ],
+      "experiment": {
+        "id": "EXP-BLENDER-ASSET-AS-CODE-001",
+        "mode": "amend-existing",
+        "new_acceptance": [
+          "Relative source paths survive moving fixture to a second checkout.",
+          "Reload after a source revision causes no stale duplicate collections and preserves/explicitly remaps semantic IDs.",
+          "Mesh geometry/material hashes are deterministic for unchanged source; documented diffs match expected revisions.",
+          "Source-level provenance and asset licenses stay attached after reload and make_local.",
+          "Failure leaves a recoverable original and does not mutate production libraries."
+        ]
+      },
+      "priority_change": false
+    },
+    {
+      "id": "meshopt-degenerate-normals-corner-inheritance",
+      "event_date": "2026-10-09",
+      "type": "experiment_acceptance_change",
+      "materiality": "Changes ClusterLOD and generated-product geometry-quality validation to include normals/corner continuity and hard-edge correctness on degenerates, instead of assuming topology/triangle-count checks are sufficient.",
+      "primary_sources": [
+        "https://github.com/zeux/meshoptimizer/commit/b2330430776a95a1545f03fc7bf16927f8cadc59"
+      ],
+      "source_quality": "A: upstream merged code and explicit degenerate-normal regression test. No external performance or visual benchmark.",
+      "verified_evidence": [
+        "meshoptimizer changed corner grouping so degenerate triangles adjacent to a valid triangle inherit normals from the adjacent faces.",
+        "The implementation explicitly avoids treating degenerate triangles as bridges for smoothing across separate nondegenerate surfaces.",
+        "Upstream notes fully degenerate groups and extremely narrow nonzero-area slivers may still produce zero normals; large-index guards were also added."
+      ],
+      "confidence": {
+        "implementation_and_regression": 0.99,
+        "appearance_relevance": 0.88,
+        "actual_project_impact": 0.68
+      },
+      "limitation_or_disagreement": [
+        "This affects normal generation and vertex reindexing quality, not a demonstrated FPS or file-size improvement.",
+        "Behavior on Gaudi, helmet shells, shoes, bikes and procedural room architecture remains unmeasured.",
+        "Hard-edge conservation must be measured because normal inheritance can be visually helpful yet inappropriate across intended creases."
+      ],
+      "engineering_design_implication": "Amend procedural mesh hygiene QA and EXP-CLUSTERLOD-001 to use authored stress meshes plus representative assets containing zero-area/collinear/near-degenerate triangles; compare released v1.3 and pinned post-v1.3 commit for zero/NaN normals, normal discontinuity, hard-edge leakage, reindexed vertex count, geometric fidelity and glTF round-trip appearance. Preserve source geometry and stable release baseline.",
+      "affected_projects": [
+        "Gaudi Nexus",
+        "KONA.m bike/helmet/shoe visualization",
+        "Bellagio/Studio-Kona procedural geometry"
+      ],
+      "experiment": {
+        "id": "EXP-CLUSTERLOD-001",
+        "mode": "amend-existing",
+        "new_acceptance": [
+          "Hard edges remain hard across degenerate bridge triangles.",
+          "Quantify zero and non-finite normals; flag rather than silently repair unrecoverable all-degenerate groups.",
+          "Compare vertex growth after reindexing and rendered normal-buffer diffs, separately from HLOD timings.",
+          "Do not conflate normal-generation improvements with real-time rendering performance."
+        ]
+      },
+      "priority_change": false
+    }
+  ],
+  "watch_only": [
+    {
+      "id": "three-materialx-defaults",
+      "event_date": "2026-10-09",
+      "source": "https://github.com/mrdoob/three.js/commit/d4f1373ea73704daae13281ff7e8c48761e777b3",
+      "reason": "Merged MaterialXLoader nodedef default correctness fix could improve look-development interchange, but direct MaterialX dependency/usage in the active products is not established; record as compatibility regression candidate, not a new priority."
+    },
+    {
+      "id": "gltf-glb-chunk-limit-clarification",
+      "event_date": "2026-10-09",
+      "source": "https://github.com/KhronosGroup/glTF/commit/b43260ee1291134a94b3098d415f54f479a59508",
+      "reason": "Specification wording corrected absolute GLB file-size limit; no evidence of assets approaching multi-GiB single-GLB boundaries; retain small composable assets."
+    },
+    {
+      "id": "three-storage-buffer-stale-references",
+      "event_date": "2026-10-09",
+      "sources": [
+        "https://github.com/mrdoob/three.js/commit/78bfbb8b12cbb65395e90440523ebd937804c05e",
+        "https://github.com/mrdoob/three.js/commit/9681657f760197afa0a680b1e522a4340a6a53f8"
+      ],
+      "reason": "Correctness fixes are relevant to dev-renderer regression checks but do not alter the existing isolated r187 experiment or shipped version selection."
+    },
+    {
+      "id": "gaudi-event-not-results",
+      "event_date": "2026-10-10",
+      "source": "https://gennews.upc.edu/fib-pdipas/email/preview/344",
+      "reason": "Catalan UPC listing for Oct 10 Palau Guell engineering event is an event announcement, not measured new engineering scholarship or primary historical evidence."
+    }
+  ],
+  "no_new_decision_changing_findings": [
+    "Catalan/Spanish Gaudi historical evidence beyond the previously adopted force-vs-documented-geometry distinction",
+    "Computational architectural form-finding / topology optimization",
+    "Three.js released rendering benchmark outcomes",
+    "glTF 2.1 composable external references and world packaging",
+    "KTX2/Basis runtime compatibility",
+    "Product visualization claims specific to watches/bikes/shoes/helmets",
+    "3DGS/NeRF/splat hybrid interoperability beyond the pre-existing experiments",
+    "Sports physics, generic cycling aero/CFD, rolling resistance, wind and terrain",
+    "Human visual perception/perceptual LOD",
+    "AI x 3D controllable generation"
+  ],
+  "program_decision": "No architecture or ranked experiment priority change. Amend two existing experiments and keep production untouched; upstream changes alone are not proof of benchmark benefits."
+}
