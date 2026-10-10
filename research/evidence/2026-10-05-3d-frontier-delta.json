@@ -1,0 +1,178 @@
+{
+  "date": "2026-10-05",
+  "production_modified": false,
+  "scope": "Daily evidence-first 3D frontier decision delta",
+  "findings": [
+    {
+      "id": "GLTF21",
+      "quality": "A",
+      "confidence": 0.96,
+      "decision": "Align semantic registry/package design with glTF 2.1 external assets, stable IDs and node bounds; do not adopt as production baseline until normative status is clear.",
+      "contradiction": "Khronos technical article says schema/spec work is still being finalized while event messaging says glTF 2.1 is here.",
+      "projects": [
+        "konam",
+        "bellagio",
+        "studio-kona",
+        "gaudi-nexus"
+      ],
+      "experiment": "EXP-GLTF21-COMPOSE-001",
+      "sources": [
+        "https://www.khronos.org/blog/introducing-gltf-2.1-with-complex-scenes",
+        "https://www.khronos.org/events/highlights/siggraph-2026"
+      ]
+    },
+    {
+      "id": "MESHOPT13",
+      "quality": "A-",
+      "confidence": 0.94,
+      "decision": "Benchmark meshoptimizer v1.3 clusterlod before investing further in bespoke HLOD/meshlet hierarchy; keep EXT_meshopt_compression as compatibility baseline.",
+      "contradiction": "Several new APIs remain experimental and KHR_meshopt_compression support is not yet as broad as EXT_meshopt_compression.",
+      "projects": [
+        "konam",
+        "bellagio",
+        "studio-kona",
+        "gaudi-nexus"
+      ],
+      "experiment": "EXP-CLUSTERLOD-001",
+      "sources": [
+        "https://github.com/zeux/meshoptimizer/releases"
+      ]
+    },
+    {
+      "id": "THREE_R187",
+      "quality": "B+",
+      "confidence": 0.9,
+      "decision": "Add an isolated r187-dev benchmark lane for instancing/shadows, but keep batching and WebGL fallback as architectural requirements.",
+      "contradiction": "The relevant upstream changes are still open/unreleased; WebGPU does not remove object-count costs.",
+      "projects": [
+        "konam",
+        "bellagio",
+        "studio-kona"
+      ],
+      "experiment": "EXP-THREE-R187-001",
+      "sources": [
+        "https://github.com/mrdoob/three.js/pull/34776",
+        "https://github.com/mrdoob/three.js/pull/34782",
+        "https://github.com/mrdoob/three.js/pull/34787"
+      ]
+    },
+    {
+      "id": "HYBRID_CAPTURE",
+      "quality": "A",
+      "confidence": 0.93,
+      "decision": "Use mesh/proxy + selective Gaussian appearance + semantic anchors as the default research hypothesis for interactive captured environments.",
+      "contradiction": "Pure splats can remain preferable for view synthesis; explicit meshes remain stronger for collision, editing and deterministic interaction.",
+      "projects": [
+        "gaudi-nexus",
+        "bellagio",
+        "studio-kona",
+        "konam"
+      ],
+      "experiment": "EXP-HYBRID-CAPTURE-001",
+      "sources": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Held_MeshSplatting_Differentiable_Rendering_with_Opaque_Meshes_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/WACV2026/html/Cao_OMeGa_Joint_Optimization_of_Explicit_Meshes_and_Gaussian_Splats_for_WACV_2026_paper.html"
+      ]
+    },
+    {
+      "id": "GAUDI_PRIMARY",
+      "quality": "A",
+      "confidence": 0.97,
+      "decision": "Prioritize Catalan Catedra Gaudi/ETSAB primary evidence and label reconstructed features documented, inferred or creative; use Codi Gaudi as a benchmark, not unquestioned ground truth.",
+      "contradiction": "Scientific curation does not make every exhibition reconstruction a primary geometric source.",
+      "projects": [
+        "gaudi-nexus"
+      ],
+      "experiment": "EXP-GAUDI-PROVENANCE-001",
+      "sources": [
+        "https://www.upc.edu/ca/sala-de-premsa/noticies/codi-gaudi-experiencia-immersiva-catedra-gaudi",
+        "https://etsab.upc.edu/ca/actualitat-avisos/noticies/convocatoria-competitiva-per-a-la-seleccio-de-projectes-de-recerca-i-divulgacio-en-el-marc-de-laeip-gaudi-2025-2027"
+      ]
+    },
+    {
+      "id": "BLENDER52",
+      "quality": "A",
+      "confidence": 0.95,
+      "decision": "Use Blender 5.2 LTS as research baseline for new procedural generators; exploit Geometry Bundles for semantic/provenance data but build an API compatibility shim before migration.",
+      "contradiction": "5.2 LTS improves procedural composition but changes Geometry Nodes modifier Python property access.",
+      "projects": [
+        "gaudi-nexus",
+        "konam",
+        "world-tooling"
+      ],
+      "experiment": "EXP-BLENDER52-BUNDLES-001",
+      "sources": [
+        "https://developer.blender.org/docs/release_notes/5.2/geometry_nodes/",
+        "https://developer.blender.org/docs/release_notes/compatibility/"
+      ]
+    },
+    {
+      "id": "GCM_CFD",
+      "quality": "A",
+      "confidence": 0.97,
+      "decision": "Make an open Generic Cyclist Model benchmark the gate before any personalized virtual-wind-tunnel accuracy claim; validate flow field as well as drag.",
+      "contradiction": "Generic models improve reproducibility but do not prove transfer of an optimum to an individual athlete.",
+      "projects": [
+        "konam",
+        "performance-os"
+      ],
+      "experiment": "EXP-GCM-CFD-001",
+      "sources": [
+        "https://link.springer.com/article/10.1007/s12283-025-00537-0"
+      ]
+    },
+    {
+      "id": "PERCEPTUAL_LOD",
+      "quality": "A-/B+",
+      "confidence": 0.84,
+      "decision": "Replace triangle-count-only LOD acceptance with screen-space/perceptual and silhouette/material-weighted tests plus small human A/B gates.",
+      "contradiction": "There is no universal safe decimation percentage; thresholds are content, task and display dependent.",
+      "projects": [
+        "konam",
+        "bellagio",
+        "studio-kona",
+        "gaudi-nexus"
+      ],
+      "experiment": "EXP-PERCEPTUAL-LOD-001",
+      "sources": [
+        "https://arxiv.org/abs/2603.29166",
+        "https://openaccess.thecvf.com/content/WACV2026/html/Zhang_Perceptually_Guided_3DGS_Streaming_and_Rendering_for_Mixed_Reality_WACV_2026_paper.html"
+      ]
+    },
+    {
+      "id": "AI3D_PARTS",
+      "quality": "A",
+      "confidence": 0.91,
+      "decision": "Require semantic parts, material slots, scale and provenance for AI-generated products/worlds; use AI for proxies/material proposals, not as engineering authority.",
+      "contradiction": "Generative benchmark gains do not guarantee CAD accuracy, manufacturability, stable topology or brand fidelity.",
+      "projects": [
+        "konam",
+        "bellagio",
+        "studio-kona",
+        "gaudi-nexus"
+      ],
+      "experiment": "EXP-AI3D-PARTPBR-001",
+      "sources": [
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Wang_WorldGen_From_Text_to_Traversable_and_Interactive_3D_Worlds_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Xu_MeshMosaic_Scaling_Artist_Mesh_Generation_via_Local-to-Global_Assembly_CVPR_2026_paper.html",
+        "https://openaccess.thecvf.com/content/CVPR2026/html/Yeo_MatLat_Material_Latent_Space_for_PBR_Texture_Generation_CVPR_2026_paper.html"
+      ]
+    }
+  ],
+  "no_material_change": [
+    "KTX2/Basis Universal remains baseline",
+    "rolling-resistance/terrain architecture unchanged",
+    "KHR_interactivity remains track-only until ratification"
+  ],
+  "experiment_priority": [
+    "EXP-GCM-CFD-001",
+    "EXP-CLUSTERLOD-001",
+    "EXP-GLTF21-COMPOSE-001",
+    "EXP-HYBRID-CAPTURE-001",
+    "EXP-PERCEPTUAL-LOD-001",
+    "EXP-THREE-R187-001",
+    "EXP-BLENDER52-BUNDLES-001",
+    "EXP-GAUDI-PROVENANCE-001",
+    "EXP-AI3D-PARTPBR-001"
+  ]
+}

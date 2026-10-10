@@ -1,0 +1,740 @@
+{
+  "schema_version": 1,
+  "generated_from_audit_date": "2026-10-04",
+  "purpose": "Cross-repo semantic registry for worlds, rooms, zones and legacy lifecycle. Research authority only until promoted.",
+  "lifecycle_values": [
+    "CANONICAL",
+    "FINAL_CANDIDATE",
+    "LEGACY_SOURCE",
+    "SUPERSEDED",
+    "ARCHIVE_EVIDENCE",
+    "FUTURE_CONFIG"
+  ],
+  "host_types": [
+    "world",
+    "room",
+    "zone",
+    "wing",
+    "passage",
+    "hidden-room",
+    "brand-room",
+    "athlete-room",
+    "installation"
+  ],
+  "worlds": [
+    {
+      "semantic_id": "world:vegas",
+      "name": "Las Vegas",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "lifecycle": "CANONICAL",
+      "host_type": "world",
+      "notes": "Bellagio + Strip + Luxor city world."
+    },
+    {
+      "semantic_id": "world:kona-island",
+      "name": "Kona Island",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "lifecycle": "CANONICAL",
+      "host_type": "world",
+      "notes": "Full outdoor athlete world. Walk/bike/swim/drone."
+    },
+    {
+      "semantic_id": "world:nice-2026",
+      "name": "Nice 2026",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "lifecycle": "FINAL_CANDIDATE",
+      "host_type": "world",
+      "runtime_entry": "preview-v2/nice.html",
+      "notes": "Standalone procedural Nice world in preview-v2."
+    }
+  ],
+  "experiences": [
+    {
+      "semantic_id": "room:konam:hall",
+      "name": "The Queen K Hall",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "hall",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-001",
+        "room-007"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:sanctuary",
+      "name": "The Sanctuary",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "sanctuary",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-014"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:lava-night",
+      "name": "Lava Night",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "hween",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE"
+    },
+    {
+      "semantic_id": "room:konam:kona-champions",
+      "name": "Kona Champions",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "kona",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-005"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:kona-by-year",
+      "name": "Kona by Year",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "pier",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-003"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:secret-collection",
+      "name": "The Secret Collection",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "secret",
+      "host_type": "hidden-room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-014"
+      ]
+    },
+    {
+      "semantic_id": "passage:konam:glass-stair",
+      "name": "The Glass Stair",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "stair",
+      "host_type": "passage",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "passage:konam:gallery-nave",
+      "name": "The Gallery Nave",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "nave",
+      "host_type": "passage",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "zone:konam:st-george-bay",
+      "name": "St. George",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "bay-st-george",
+      "host_type": "zone",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-028"
+      ]
+    },
+    {
+      "semantic_id": "zone:konam:las-vegas-bay",
+      "name": "Las Vegas",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "bay-las-vegas",
+      "host_type": "zone",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-028"
+      ]
+    },
+    {
+      "semantic_id": "zone:konam:nice-bay",
+      "name": "Nice",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "bay-nice",
+      "host_type": "zone",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-028"
+      ]
+    },
+    {
+      "semantic_id": "zone:konam:kona-bay",
+      "name": "Kona",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "bay-kona",
+      "host_type": "zone",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-002",
+        "room-012"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:bio",
+      "name": "Bio",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "room-bio",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:konam:horror",
+      "name": "Horror",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "room-horror",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:konam:alien",
+      "name": "Alien",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "room-alien",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:konam:zombie",
+      "name": "Zombie",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "room-zombie",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "wing:konam:against-the-clock",
+      "name": "Against the Clock",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "wing-against-the-clock",
+      "host_type": "wing",
+      "lifecycle": "CANONICAL",
+      "maps_to": [
+        "room-006"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:against-hour",
+      "name": "The Hour",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-against-the-clock-hour",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:konam:against-monocoque",
+      "name": "Monocoque",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-against-the-clock-mono",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:konam:against-long-course",
+      "name": "Long course",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-against-the-clock-tri",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:konam:against-types",
+      "name": "Types",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-against-the-clock-types",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:konam:against-paint",
+      "name": "Paint shop",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-against-the-clock-paint",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:konam:against-refs",
+      "name": "References",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-against-the-clock-refs",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "wing:konam:kona-light",
+      "name": "Kona Light",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "wing-kona-light",
+      "host_type": "wing",
+      "lifecycle": "LEGACY_SOURCE"
+    },
+    {
+      "semantic_id": "room:konam:kona-light-queen-k",
+      "name": "The Queen K",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-kona-light-queen-k",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-001"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:kona-light-clipons",
+      "name": "Clip-ons",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-kona-light-clipon",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-008"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:kona-light-velodrome",
+      "name": "Velodrome",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-kona-light-velodrome",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE"
+    },
+    {
+      "semantic_id": "room:konam:kona-light-bay",
+      "name": "The Bay",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-kona-light-bay",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-002"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:kona-light-after-dark",
+      "name": "After dark",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-kona-light-after-dark",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-004"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:kona-light-tunnel",
+      "name": "Workshop & tunnel",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "atlas-kona-light-tunnel",
+      "host_type": "room",
+      "lifecycle": "LEGACY_SOURCE",
+      "maps_to": [
+        "room-008",
+        "room-024"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:nike-running",
+      "name": "Nike Running Lab",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "source_id": "nike-running",
+      "host_type": "brand-room",
+      "lifecycle": "CANONICAL",
+      "maps_to": [
+        "room-009",
+        "room-019"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:beast-cave",
+      "name": "Beast Cave",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "cc80c48ada08a634c642561a64ef928f06c626be",
+      "runtime_entry": "?reviewRoom=beast-cave",
+      "host_type": "athlete-room",
+      "lifecycle": "FINAL_CANDIDATE",
+      "maps_to": [
+        "room-026"
+      ],
+      "visual_evidence": "docs/booklet/stills/beast-*"
+    },
+    {
+      "semantic_id": "room:konam:nor3-winter",
+      "name": "NOR // 3 · KONA WINTER",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "cc80c48ada08a634c642561a64ef928f06c626be",
+      "runtime_entry": "?reviewRoom=nor3-winter",
+      "host_type": "athlete-room",
+      "lifecycle": "FINAL_CANDIDATE",
+      "maps_to": [
+        "room-026"
+      ],
+      "visual_evidence": "docs/booklet/stills/nor-*"
+    },
+    {
+      "semantic_id": "room:konam:breitling-kona",
+      "name": "BREITLING × KONA · Finish-Line Atelier",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "cc80c48ada08a634c642561a64ef928f06c626be",
+      "runtime_entry": "?reviewRoom=breitling-kona",
+      "host_type": "brand-room",
+      "lifecycle": "FINAL_CANDIDATE",
+      "maps_to": [
+        "room-027"
+      ],
+      "visual_evidence": "docs/booklet/stills/bk-*"
+    },
+    {
+      "semantic_id": "room:konam:norwegian-engine-old",
+      "name": "NOR // 3 · The Norwegian Engine",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "runtime_entry": "norwegian-engine-review.html",
+      "host_type": "athlete-room",
+      "lifecycle": "SUPERSEDED",
+      "superseded_by": "room:konam:nor3-winter"
+    },
+    {
+      "semantic_id": "room:konam:breitling-old",
+      "name": "Breitling legacy brand room",
+      "source_repo": "joaoccaldas/konam",
+      "source_ref": "main",
+      "runtime_entry": "?room=breitling",
+      "host_type": "brand-room",
+      "lifecycle": "SUPERSEDED",
+      "superseded_by": "room:konam:breitling-kona"
+    },
+    {
+      "semantic_id": "room:bellagio:lobby",
+      "name": "Main Lobby / Fiori di Como",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "interior",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "passage:bellagio:lobby-passage",
+      "name": "Lobby Passage",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "interior",
+      "host_type": "passage",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:bellagio:conservatory",
+      "name": "Conservatory & Botanical Gardens",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "interior",
+      "host_type": "room",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "room:bellagio:lake-como-salon",
+      "name": "Lake Como Salon",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:N:salon",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:dining",
+      "name": "Penthouse Dining",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:N:dining",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:rat-pack-bar",
+      "name": "Rat Pack Bar",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:N:bar",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:fiori-gallery",
+      "name": "Fiori Glass Gallery",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:S:gallery",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:spa",
+      "name": "Penthouse Spa & Indoor Pool",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:S:spa",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:lift-foyer",
+      "name": "Lift Foyer / Kitchen End Block",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:S:end",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:desert-moon-library",
+      "name": "Desert Moon Library",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:W:library",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:master-bedroom",
+      "name": "Master Bedroom",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:W:bedroom",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:master-bath",
+      "name": "Master Bath",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:W:bath",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:dressing",
+      "name": "Dressing Room",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:W:dressing",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "room:bellagio:rotunda",
+      "name": "Rotunda Atrium",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:core",
+      "host_type": "room",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "zone:bellagio:roof-terrace",
+      "name": "Penthouse Roof Terrace",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "penthouse:terrace",
+      "host_type": "zone",
+      "lifecycle": "CANONICAL",
+      "truth_class": "X"
+    },
+    {
+      "semantic_id": "zone:kona:swim-bay",
+      "name": "Swim & Kailua Bay",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z1",
+      "host_type": "zone",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "zone:kona:pier-transition",
+      "name": "Kailua Pier / Transition",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z2",
+      "host_type": "zone",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "zone:kona:dig-me",
+      "name": "Dig Me Beach / Kamakahonu / Ahuʻena Heiau",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z3",
+      "host_type": "zone",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "zone:kona:alii-finish",
+      "name": "Aliʻi Drive Seawall + Finish",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z4",
+      "host_type": "zone",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "zone:kona:palani",
+      "name": "Palani Road",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z5",
+      "host_type": "zone",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "zone:kona:village",
+      "name": "Kailua Village",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z6",
+      "host_type": "zone",
+      "lifecycle": "CANONICAL"
+    },
+    {
+      "semantic_id": "zone:kona:alii-south",
+      "name": "Aliʻi Drive South",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z7",
+      "host_type": "zone",
+      "lifecycle": "FINAL_CANDIDATE"
+    },
+    {
+      "semantic_id": "zone:kona:town-connectors",
+      "name": "Kuakini / Makala / Queen K Town Section",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z8",
+      "host_type": "zone",
+      "lifecycle": "FINAL_CANDIDATE"
+    },
+    {
+      "semantic_id": "zone:kona:queen-k-hawi",
+      "name": "Queen K Lava Corridor → Hāwī",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z9",
+      "host_type": "zone",
+      "lifecycle": "FINAL_CANDIDATE"
+    },
+    {
+      "semantic_id": "zone:kona:energy-lab",
+      "name": "Energy Lab",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z10",
+      "host_type": "zone",
+      "lifecycle": "FINAL_CANDIDATE"
+    },
+    {
+      "semantic_id": "zone:kona:hawi",
+      "name": "Hāwī",
+      "source_repo": "joaoccaldas/studio-kona",
+      "source_ref": "main",
+      "source_id": "Z11",
+      "host_type": "zone",
+      "lifecycle": "FINAL_CANDIDATE"
+    },
+    {
+      "semantic_id": "zone:vegas:luxor-exterior",
+      "name": "Luxor Exterior",
+      "source_repo": "joaoccaldas/bellagio",
+      "source_ref": "main",
+      "source_id": "luxor",
+      "host_type": "zone",
+      "lifecycle": "CANONICAL",
+      "notes": "Pyramid, ziggurat towers, Sphinx, obelisk. No dedicated interior room package found."
+    }
+  ],
+  "canonical_product_rooms": [
+    "room-001",
+    "room-002",
+    "room-003",
+    "room-004",
+    "room-005",
+    "room-006",
+    "room-007",
+    "room-008",
+    "room-009",
+    "room-010",
+    "room-011",
+    "room-012",
+    "room-013",
+    "room-014",
+    "room-015",
+    "room-016",
+    "room-017",
+    "room-018",
+    "room-019",
+    "room-020",
+    "room-021",
+    "room-022",
+    "room-023",
+    "room-024",
+    "room-025",
+    "room-026",
+    "room-027",
+    "room-028"
+  ],
+  "invariants": [
+    "A semantic_id may have at most one active CANONICAL record.",
+    "SUPERSEDED records must name superseded_by.",
+    "FINAL_CANDIDATE records require source_ref pinned to a commit or an explicitly reviewed branch.",
+    "Generated files are not source authority.",
+    "A world is never represented as a room.",
+    "Legacy geometry/evidence may map to multiple canonical product rooms, but active navigation must resolve to one semantic target."
+  ]
+}

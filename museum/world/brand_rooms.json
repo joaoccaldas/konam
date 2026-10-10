@@ -22,7 +22,7 @@
     "z0": -46.6,
     "z1": -64.6
    },
-   "height": 5.0,
+   "height": 5,
    "door": {
     "wall": "west",
     "z0": -49.9,
@@ -36,15 +36,15 @@
      {
       "x": 14.2,
       "y": 3.4,
-      "z": -52.0,
+      "z": -52,
       "color": "#ffe9e0",
       "i": 6,
       "dist": 13
      },
      {
-      "x": 18.0,
+      "x": 18,
       "y": 3.2,
-      "z": -60.0,
+      "z": -60,
       "color": "#e8f0ff",
       "i": 5,
       "dist": 12
@@ -109,42 +109,66 @@
   },
   {
    "id": "breitling",
-   "name": "Breitling \u00b7 Endurance Pro",
+   "name": "Breitling · Endurance Pro",
    "kicker": "Independent chronograph study",
-   "story": "A monumental original chronograph, a 2021\u2192Kona-2026 timeline, and swim / bike / run portals. Independent study; not affiliated with or endorsed by Breitling. No logo, wordmark or product photograph is used.",
+   "story": "A monumental original chronograph, a 2021→Kona-2026 timeline, and swim / bike / run portals. Independent study; not affiliated with or endorsed by Breitling. No logo, wordmark or product photograph is used.",
    "kind": "brand",
    "theme": {
-    "wall": "#0d0f13",
-    "wallRough": 0.9,
+    "wall": "#05070a",
+    "wallRough": 0.62,
     "floor": "basalt",
-    "accent": "#c8102e",
-    "ceil": "#101318",
-    "gloss": 0.75
+    "accent": "#d71920",
+    "ceil": "#07090d",
+    "gloss": 0.88
    },
    "bounds": {
     "x0": 24.5,
     "x1": 36.5,
-    "z0": -18.0,
-    "z1": -30.0
+    "z0": -18,
+    "z1": -30
    },
-   "height": 5.4,
+   "height": 5.8,
    "door": {
     "wall": "west",
-    "z0": -25.0,
-    "z1": -23.0,
+    "z0": -25,
+    "z1": -23,
     "h": 3.6
    },
    "light": {
-    "fillI": 14,
+    "fillI": 8,
     "skyStrip": false,
     "accents": [
      {
       "x": 30.5,
-      "y": 3.6,
-      "z": -24.0,
-      "color": "#ffd9c9",
-      "i": 8,
-      "dist": 15
+      "y": 4.55,
+      "z": -23.2,
+      "color": "#fff2df",
+      "i": 11,
+      "dist": 10
+     },
+     {
+      "x": 28.4,
+      "y": 2.55,
+      "z": -24.9,
+      "color": "#b7d8ff",
+      "i": 7,
+      "dist": 8
+     },
+     {
+      "x": 32.5,
+      "y": 2.35,
+      "z": -24.6,
+      "color": "#ffb18f",
+      "i": 6,
+      "dist": 8
+     },
+     {
+      "x": 30.5,
+      "y": 1.15,
+      "z": -26.2,
+      "color": "#d71920",
+      "i": 4.5,
+      "dist": 7
      }
     ]
    },
@@ -177,9 +201,9 @@
      "station": {
       "kind": "plinth",
       "x": 30.5,
-      "z": -24.0,
-      "rotY": 0.0,
-      "top": 1.1
+      "z": -24,
+      "rotY": 0,
+      "top": 1.2
      },
      "capabilities": [
       "inspect",
