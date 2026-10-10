@@ -116,6 +116,13 @@ legacy progress compatibility, progression rewards, shared rendering kernel,
 public Companion adapter and release gate. No dependency, account/auth/schema,
 hosting-origin or world-renderer authority replacement. No source/asset deletion.
 
+9 October release addendum: the locked build dependency sharp was patched from
+0.35.4 to 0.35.5 after the release audit identified its new librsvg advisory.
+No runtime framework was changed. Production verification then reproduced missing
+Discover registry JSON in the public staging allowlist. Both existing canonical
+files are now explicitly staged and lazy-sealed, including native packaging;
+the mobile journey gate exercises the staged site instead of the full repository.
+
 Risks: lazy-loading races/failures, old Find formats, static thumbnail packaging,
 source date/encoding and generated web/native drift. Tests exercise each of these;
 existing P0, install and release certification remain required on the exact SHA.
