@@ -1,1 +1,82 @@
-{"date":"2026-10-11","status":"research-only"}
+{
+  "week_end": "2026-10-11",
+  "production_modified": false,
+  "ci": [
+    {
+      "run": 38121758305,
+      "state": "blocked_preflight",
+      "finding": "browser-entry script missing"
+    },
+    {
+      "run": 38121758290,
+      "state": "blocked_preflight",
+      "finding": "generated site build changes committed files before visual capture"
+    },
+    {
+      "run": 38121758291,
+      "state": "blocked_preflight",
+      "finding": "built output mismatch before interaction"
+    },
+    {
+      "run": 38121758288,
+      "state": "blocked_preflight",
+      "finding": "runtime not staged; stress run skipped"
+    },
+    {
+      "run": 38121758287,
+      "state": "mixed_failure",
+      "finding": "dependency audit plus separate test-environment/config blockers"
+    },
+    {
+      "run": 38121758298,
+      "state": "pass",
+      "finding": "integration contract"
+    },
+    {
+      "run": 38121758300,
+      "state": "pass",
+      "finding": "release seal"
+    }
+  ],
+  "confidence": [
+    [
+      "bellagio_semantic_adapter",
+      0.94
+    ],
+    [
+      "bellagio_visual_equivalence",
+      0.43
+    ],
+    [
+      "final_rooms_traceable_draft",
+      0.91
+    ],
+    [
+      "final_rooms_production_ready",
+      0.18
+    ],
+    [
+      "older_nor_local_calls_gain",
+      0.88
+    ],
+    [
+      "gaudi_f3_geometric_proof",
+      0.96
+    ],
+    [
+      "studio_kona_streaming_gain",
+      0.25
+    ],
+    [
+      "target_device_preflight_ready",
+      0.27
+    ],
+    [
+      "native_shared_renderer_ready",
+      0.16
+    ]
+  ],
+  "reproducibility_gap": "Benchmark still opens older NOR/Breitling scenes, not final KONA Winter and Finish-Line Atelier.",
+  "research": "Seven daily Oct5-11 upstream deltas refine glTF, Meshopt, Blender import, splats, WebGPU acceptance checks. No controlled cross-project A/B.",
+  "note": "Confidence is evidence-conditioned expert judgment, not statistical probability."
+}
