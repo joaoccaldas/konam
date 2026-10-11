@@ -2,7 +2,7 @@
 
 **Decision: retain the federated architecture.** The week proved better scene identity, release staging, selected visual/performance methods and a few local contracts. It **did not prove a cross-repository shared renderer**, final-room equivalence, measured Studio-Kona streaming gains or competition-approved Gaudí imagery. No production promotion, merge, dependency upgrade or asset replacement follows from this review.
 
-**Evidence classes:** **measured** = an instrumented result on the named scene; **observed** = inspected pixels or a passing contract/CI on a pinned ref; **candidate** = code/manifest exists without an A/B or downstream adoption; **blocked** = preflight prevented the relevant measurement. All confidence values are evidence-conditioned judgments, not statistical probabilities.
+**Integrity correction (11 October):** the proposed R1 benchmark selects older NOR/Breitling generations and PR #114 includes runtime changes despite its documentation-only description. Final-room benchmark results remain invalid until semantic ID checks pass. [Source-and-CI audit](https://github.com/joaoccaldas/konam/blob/research/3d-weekly-20261011/docs/architecture/3D_R1_TARGET_AUDIT_20261011.md).\n\n**Evidence classes:** **measured** = an instrumented result on the named scene; **observed** = inspected pixels or a passing contract/CI on a pinned ref; **candidate** = code/manifest exists without an A/B or downstream adoption; **blocked** = preflight prevented the relevant measurement. All confidence values are evidence-conditioned judgments, not statistical probabilities.
 
 ## Graduation decisions
 
@@ -31,7 +31,7 @@
 
 ## CI/regression: classify failures before optimizing
 
-- **R1 research branch** `research/3d-core-r1-20261004` at [run 38121758305](https://github.com/joaoccaldas/konam/actions/runs/38121758305): 3D journey matrix fails in browser-entry step; [visual 38121758290](https://github.com/joaoccaldas/konam/actions/runs/38121758290) and [UI 38121758291](https://github.com/joaoccaldas/konam/actions/runs/38121758291) stop on dirty generated files; hostile runtime fails before staged stress; release-security [38121758287](https://github.com/joaoccaldas/konam/actions/runs/38121758287) mixes dependency audit and environment/config errors. **Blocked/mixed preflight, not measured 3D regressions.** Integration [38121758298](https://github.com/joaoccaldas/konam/actions/runs/38121758298) and release seal [38121758300](https://github.com/joaoccaldas/konam/actions/runs/38121758300) pass.
+- **R1 research branch** `research/3d-core-r1-20261004` at [run 38121758305](https://github.com/joaoccaldas/konam/actions/runs/38121758305): 3D journey matrix fails at the Real 3D journey CI step (root cause not yet isolated); [visual 38121758290](https://github.com/joaoccaldas/konam/actions/runs/38121758290) and [UI 38121758291](https://github.com/joaoccaldas/konam/actions/runs/38121758291) stop on dirty generated files; hostile runtime fails before staged stress; release-security [38121758287](https://github.com/joaoccaldas/konam/actions/runs/38121758287) mixes dependency audit and environment/config errors. **Blocked/mixed preflight, not measured 3D regressions.** Integration [38121758298](https://github.com/joaoccaldas/konam/actions/runs/38121758298) and release seal [38121758300](https://github.com/joaoccaldas/konam/actions/runs/38121758300) pass.
 - **Final-room recovery** [#124](https://github.com/joaoccaldas/konam/pull/124) *already recovers exact binaries and sources into a draft*, correcting the October 4 assumption that binaries could not be recovered here. Its **latest head** still has visual/UI deterministic-build preflight failures ([visual 37267011458](https://github.com/joaoccaldas/konam/actions/runs/37267011458)); passing earlier interim SHAs do not certify its current head. Do not merge/promote.
 - **Independent weekly synthesis branch** `research/3d-weekly-20261011` has six green Museum checks; latest [38151213132](https://github.com/joaoccaldas/konam/actions/runs/38151213132) exercises seven journeys. This isolates a *branch-specific* preflight problem; it does **not** prove R1, recovered-room or cross-host visual equivalence.
 - Bellagio room-hub/Pages latest green; [Canyon research security job](https://github.com/joaoccaldas/canyonmuseum/actions/runs/37220493702) fails its web dependency audit though other research gates passed; Studio-Kona has no new measured world A/B this week.
@@ -61,7 +61,7 @@ Score is a **heuristic**, not empirical probability: `information gain (1–5) �
 | Gaudí visual competition approval | n/a | **.20** | Improved V3 frames; F3 and detail still fail |
 | Gaudí portable asset export integrity | n/a | **.93** | 58/58 glTF-valid, source/anchors recorded |
 | Studio-Kona unloading *measured* benefit | .25 | **.20** | Only implementation and baseline plan, no A/B |
-| Target-device/preflight program readiness | .27 | **.34** | Weekly branch passes; R1 and recovery blocked |
+| Target-device/preflight program readiness | .27 | **.25** | Green weekly app journeys, but final-scene R1 harness targets legacy and recovery preflight is blocked |
 | Native shared renderer ready | .16 | **.12** | Adapter is not a shared renderer |
 | Multi-repo AssetSpec compatibility | n/a | **.62** | Canyon mapping and KONA/Gaudí schemas; no consumer migration |
 
