@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-11",
+  "branch": "research/3d-weekly-20261011",
+  "production_modified": false,
+  "scope": "R1 research PR source and CI verification",
+  "claim": "R1 final-room benchmark harness uses legacy NOR and Breitling targets and does not verify final semantic identities.",
+  "evidence": [
+    "https://github.com/joaoccaldas/konam/pull/114",
+    "https://github.com/joaoccaldas/konam/pull/124",
+    "https://github.com/joaoccaldas/konam/actions/runs/38121758305",
+    "https://github.com/joaoccaldas/konam/actions/runs/38121758290",
+    "https://github.com/joaoccaldas/konam/actions/runs/38151213132"
+  ],
+  "code_paths": [
+    "web/3d-benchmark-r1.mjs",
+    "web/src/engine/roomscene.js",
+    "museum/world/brand_rooms.json"
+  ],
+  "observed_target_mismatch": {
+    "nor_legacy": "norwegian-engine-review.html",
+    "breitling_legacy": "__museumGo('breitling')",
+    "final_ids": [
+      "room:konam:nor3-winter",
+      "room:konam:beast-cave",
+      "room:konam:breitling-kona"
+    ]
+  },
+  "scope_violation": "PR #114 describes documentation-only changes although it also modifies renderer behavior and room descriptors, unmerged.",
+  "ci": {
+    "38121758305": "Seven jobs fail in Real 3D journey step; root cause not proven by job summaries.",
+    "38121758290": "Generated file clean-tree check fails before capture.",
+    "38151213132": "Seven weekly app journeys pass; not the final-scene benchmark."
+  },
+  "decision": "Block any final-room benchmark graduation. Add semantic identity checks and isolate runtime edits from research-only docs.",
+  "confidence": [
+    {
+      "id": "r1_correct_final_room_benchmark_validity",
+      "current": 0.08,
+      "scale": "evidence-conditioned judgment"
+    },
+    {
+      "id": "r1_docs_only_claim_valid",
+      "current": 0.05,
+      "scale": "evidence-conditioned judgment"
+    },
+    {
+      "id": "target_device_preflight_ready_for_final_rooms",
+      "current": 0.25,
+      "scale": "evidence-conditioned judgment"
+    }
+  ]
+}
