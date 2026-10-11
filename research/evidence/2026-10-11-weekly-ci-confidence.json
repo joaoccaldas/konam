@@ -1,82 +1,350 @@
 {
+  "schema_version": 2,
+  "week_start": "2026-10-04",
   "week_end": "2026-10-11",
+  "reviewed_as_of": "2026-10-11T15:45:00Z",
+  "scope": "Unified 3D R&D weekly evidence and decision audit, research branch only",
   "production_modified": false,
+  "production_merge_performed": false,
+  "evidence_definitions": {
+    "measured": "Benchmark run and evidence on named scene, pinned ref, known device and fixed conditions",
+    "observed": "Code, inspected pixels or passing scoped CI contract",
+    "candidate": "Implementation or design exists without controlled transfer/benchmark",
+    "blocked_preflight": "Test did not reach the behavioral/visual benchmark",
+    "mixed_failure": "Separate dependency, configuration and/or environmental failures in same workflow"
+  },
+  "projects": {
+    "konam": {
+      "default_branch_last_relevant_commit": "29245e73f099b1f8a4ad27bbdb33d3216679a03f",
+      "change": "Staged Discover room-registry 404 fixed in merged #135. PRs #123/#124 remain unmerged draft, different branches.",
+      "evidence": [
+        "https://github.com/joaoccaldas/konam/pull/135",
+        "https://github.com/joaoccaldas/konam/pull/124",
+        "https://github.com/joaoccaldas/konam/pull/123"
+      ]
+    },
+    "nor3": {
+      "change": "Older Norwegian Engine candidate #107: 666->113 desktop calls, 352->95 phone calls, browser errors 1->0; not proof for final NOR KONA WINTER.",
+      "classification": "measured_local",
+      "evidence": [
+        "https://github.com/joaoccaldas/konam/pull/107"
+      ]
+    },
+    "beast_cave": {
+      "change": "Exact final room binary/source candidate recovered in #124; current-head visual and interaction evidence unproven.",
+      "classification": "candidate",
+      "evidence": [
+        "https://github.com/joaoccaldas/konam/pull/124"
+      ]
+    },
+    "breitling": {
+      "change": "Exact final room asset/source candidate recovered in #124; macro realism and cross-host equivalence unproven.",
+      "classification": "candidate",
+      "evidence": [
+        "https://github.com/joaoccaldas/konam/pull/124"
+      ]
+    },
+    "bellagio": {
+      "change": "Merged #5 adds in-world room index/semantic IDs and same-origin embedded KONA packages. Room hub contract and Pages deploy green; not native shared rendering.",
+      "classification": "observed_adapter",
+      "evidence": [
+        "https://github.com/joaoccaldas/bellagio/pull/5",
+        "https://github.com/joaoccaldas/bellagio/actions/runs/37259420286",
+        "https://github.com/joaoccaldas/bellagio/actions/runs/37262683176"
+      ]
+    },
+    "gaudi": {
+      "change": "9/9 site rays and 54 sampled shadow rays checked; visual pilot V3 corrects obstructed arrival/market yet fails full quality; derived 2-level design resolves floor/roof geometry, 1,644.296m² slab not certified GFA; 58 Khronos-valid GLBs.",
+      "classification": "mixed_observed_and_candidate",
+      "evidence": [
+        "https://github.com/joaoccaldas/ai/pull/100",
+        "https://github.com/joaoccaldas/ai/pull/101",
+        "https://github.com/joaoccaldas/ai/blob/codex/gaudi-visual-quality-20261005/projects/gaudi-nexus/docs/VISUAL_REFINEMENT_2026-10-09.md",
+        "https://github.com/joaoccaldas/ai/blob/codex/gaudi-visual-quality-20261005/projects/gaudi-nexus/docs/ARCHITECTURE_COORDINATION_V2_2026-10-09.md"
+      ]
+    },
+    "studio_kona": {
+      "change": "#54 unmerged code separates cold geometry from semantic place state; #55 isolated baseline contract; no measured A/B.",
+      "classification": "candidate_unmeasured",
+      "evidence": [
+        "https://github.com/joaoccaldas/studio-kona/pull/54",
+        "https://github.com/joaoccaldas/studio-kona/pull/55"
+      ]
+    },
+    "canyonmuseum": {
+      "change": "AssetSpec provenance mapping #162 research draft only; web dependency audit red, interaction/museum tests pass. Do not copy KONA deployment back to source repo.",
+      "classification": "candidate_mapping",
+      "evidence": [
+        "https://github.com/joaoccaldas/canyonmuseum/pull/162",
+        "https://github.com/joaoccaldas/canyonmuseum/actions/runs/37220493702"
+      ]
+    },
+    "rawdogging": {
+      "change": "No default-branch changes in period; remains documented successor of rawdog3d.",
+      "classification": "inactive_period",
+      "evidence": [
+        "https://github.com/joaoccaldas/rawdogging"
+      ]
+    },
+    "rawdog3d": {
+      "change": "Archived project, do not treat as current runtime seed.",
+      "classification": "archive_only",
+      "evidence": [
+        "https://github.com/joaoccaldas/rawdog3d/blob/main/README.md"
+      ]
+    },
+    "blockscreateworld": {
+      "change": "Historical Canvas2D 2025 project with no recent 3D runtime changes.",
+      "classification": "historical_only",
+      "evidence": [
+        "https://github.com/joaoccaldas/blockscreateworld"
+      ]
+    }
+  },
   "ci": [
     {
+      "repo": "konam",
+      "branch": "research/3d-core-r1-20261004",
       "run": 38121758305,
+      "workflow": "Museum checks",
       "state": "blocked_preflight",
-      "finding": "browser-entry script missing"
+      "finding": "3D journey browser-entry script fails across 7 matrix jobs",
+      "evidence": "https://github.com/joaoccaldas/konam/actions/runs/38121758305"
     },
     {
+      "repo": "konam",
+      "branch": "research/3d-core-r1-20261004",
       "run": 38121758290,
+      "workflow": "Visual evidence V2",
       "state": "blocked_preflight",
-      "finding": "generated site build changes committed files before visual capture"
+      "finding": "Build changes committed generated outputs before visual capture",
+      "evidence": "https://github.com/joaoccaldas/konam/actions/runs/38121758290"
     },
     {
+      "repo": "konam",
+      "branch": "research/3d-core-r1-20261004",
       "run": 38121758291,
+      "workflow": "UI interaction evidence",
       "state": "blocked_preflight",
-      "finding": "built output mismatch before interaction"
+      "finding": "Generated outputs mismatch before interaction",
+      "evidence": "https://github.com/joaoccaldas/konam/actions/runs/38121758291"
     },
     {
+      "repo": "konam",
+      "branch": "research/3d-core-r1-20261004",
       "run": 38121758288,
+      "workflow": "Hostile runtime gate",
       "state": "blocked_preflight",
-      "finding": "runtime not staged; stress run skipped"
+      "finding": "Runtime not staged, stress execution skipped",
+      "evidence": "https://github.com/joaoccaldas/konam/actions/runs/38121758288"
     },
     {
+      "repo": "konam",
+      "branch": "research/3d-core-r1-20261004",
       "run": 38121758287,
+      "workflow": "Release security gate",
       "state": "mixed_failure",
-      "finding": "dependency audit plus separate test-environment/config blockers"
+      "finding": "Dependency audit and environment/configuration failures; separate before diagnosis",
+      "evidence": "https://github.com/joaoccaldas/konam/actions/runs/38121758287"
     },
     {
+      "repo": "konam",
+      "branch": "research/3d-core-r1-20261004",
       "run": 38121758298,
+      "workflow": "Integration contract",
       "state": "pass",
-      "finding": "integration contract"
+      "evidence": "https://github.com/joaoccaldas/konam/actions/runs/38121758298"
     },
     {
+      "repo": "konam",
+      "branch": "research/3d-core-r1-20261004",
       "run": 38121758300,
+      "workflow": "App release seal",
       "state": "pass",
-      "finding": "release seal"
+      "evidence": "https://github.com/joaoccaldas/konam/actions/runs/38121758300"
+    },
+    {
+      "repo": "konam",
+      "branch": "recovery/final-rooms-20261004",
+      "run": 37267011458,
+      "workflow": "Visual evidence V2",
+      "state": "blocked_preflight",
+      "finding": "Latest head fails clean generated outputs, interim older green runs not evidence of latest head",
+      "evidence": "https://github.com/joaoccaldas/konam/actions/runs/37267011458"
+    },
+    {
+      "repo": "konam",
+      "branch": "research/3d-weekly-20261011",
+      "run": 38151213132,
+      "workflow": "Museum checks",
+      "state": "pass",
+      "finding": "Seven 3D journeys green on separate weekly research branch only",
+      "evidence": "https://github.com/joaoccaldas/konam/actions/runs/38151213132"
+    },
+    {
+      "repo": "bellagio",
+      "branch": "fix/lab-wing-final-room-authority-20261004",
+      "run": 37259420286,
+      "workflow": "Bellagio room hub contract",
+      "state": "pass",
+      "evidence": "https://github.com/joaoccaldas/bellagio/actions/runs/37259420286"
+    },
+    {
+      "repo": "bellagio",
+      "branch": "main",
+      "run": 37262683176,
+      "workflow": "Pages build and deployment",
+      "state": "pass",
+      "evidence": "https://github.com/joaoccaldas/bellagio/actions/runs/37262683176"
+    },
+    {
+      "repo": "canyonmuseum",
+      "branch": "research/asset-contract-r1-20261004",
+      "run": 37220493702,
+      "workflow": "Release security gate",
+      "state": "measured_fail",
+      "finding": "Web dependency audit fails; secret/privacy and Android shell audit pass",
+      "evidence": "https://github.com/joaoccaldas/canyonmuseum/actions/runs/37220493702"
     }
   ],
   "confidence": [
-    [
-      "bellagio_semantic_adapter",
-      0.94
-    ],
-    [
-      "bellagio_visual_equivalence",
-      0.43
-    ],
-    [
-      "final_rooms_traceable_draft",
-      0.91
-    ],
-    [
-      "final_rooms_production_ready",
-      0.18
-    ],
-    [
-      "older_nor_local_calls_gain",
-      0.88
-    ],
-    [
-      "gaudi_f3_geometric_proof",
-      0.96
-    ],
-    [
-      "studio_kona_streaming_gain",
-      0.25
-    ],
-    [
-      "target_device_preflight_ready",
-      0.27
-    ],
-    [
-      "native_shared_renderer_ready",
-      0.16
-    ]
+    {
+      "id": "bellagio_semantic_adapter",
+      "prior": 0.94,
+      "current": 0.96,
+      "rationale": "Merged #5 + contract & Pages green"
+    },
+    {
+      "id": "bellagio_visual_equivalence",
+      "prior": 0.43,
+      "current": 0.36,
+      "rationale": "Same-origin adapter proves routing, not final scene visual/interaction parity"
+    },
+    {
+      "id": "final_rooms_traceable_draft",
+      "prior": 0.91,
+      "current": 0.97,
+      "rationale": "Exact recovered source and binary blobs locked on draft #124"
+    },
+    {
+      "id": "final_rooms_production_ready",
+      "prior": 0.18,
+      "current": 0.14,
+      "rationale": "Nonmergeable draft and current-head evidence preflight red"
+    },
+    {
+      "id": "older_nor_local_calls_gain",
+      "prior": 0.88,
+      "current": 0.91,
+      "rationale": "Instrumented older-NOR benchmark; final NOR Winter still unproven"
+    },
+    {
+      "id": "gaudi_f3_geometric_proof",
+      "prior": 0.96,
+      "current": 0.97,
+      "rationale": "9 site ray and 54 shadow ray receipts, geometry-only"
+    },
+    {
+      "id": "gaudi_final_visual_approval",
+      "prior": null,
+      "current": 0.2,
+      "rationale": "V3 camera correction improved images, F3/municipal hero still insufficient"
+    },
+    {
+      "id": "gaudi_asset_export_integrity",
+      "prior": null,
+      "current": 0.93,
+      "rationale": "58/58 Khronos-validated GLBs, anchors and hashes, no runtime evidence"
+    },
+    {
+      "id": "gaudi_coordinated_architecture_candidate",
+      "prior": null,
+      "current": 0.82,
+      "rationale": "Derived roof/slab/stair candidate passes limited invariants, not certified GFA/egress"
+    },
+    {
+      "id": "studio_kona_streaming_gain",
+      "prior": 0.25,
+      "current": 0.2,
+      "rationale": "Unmerged implementation without controlled A/B"
+    },
+    {
+      "id": "target_device_preflight_ready",
+      "prior": 0.27,
+      "current": 0.34,
+      "rationale": "Separate weekly branch green, R1/recovery branches still blocked"
+    },
+    {
+      "id": "native_shared_renderer_ready",
+      "prior": 0.16,
+      "current": 0.12,
+      "rationale": "No native cross-host parity; Bellagio currently an embed adapter"
+    },
+    {
+      "id": "multi_repo_asset_spec_compatibility",
+      "prior": null,
+      "current": 0.62,
+      "rationale": "Schemas/mapping exist without multi-consumer tested migration"
+    }
   ],
-  "reproducibility_gap": "Benchmark still opens older NOR/Breitling scenes, not final KONA Winter and Finish-Line Atelier.",
-  "research": "Seven daily Oct5-11 upstream deltas refine glTF, Meshopt, Blender import, splats, WebGPU acceptance checks. No controlled cross-project A/B.",
-  "note": "Confidence is evidence-conditioned expert judgment, not statistical probability."
+  "experiments_ranked": [
+    {
+      "rank": 1,
+      "id": "EXP-PREFLIGHT-001",
+      "name": "Exact final scene provenance and staged release/benchmark preflight",
+      "information_gain": 5,
+      "project_leverage": 5,
+      "effort": 1,
+      "risk": 2,
+      "score": 12.5,
+      "gate": "Correct final scene and assets, clean generated outputs and browser evidence on phone portrait, landscape and desktop before timing"
+    },
+    {
+      "rank": 2,
+      "id": "EXP-PORTABILITY-PARITY-001",
+      "name": "KONA versus Bellagio final-room same-origin parity",
+      "information_gain": 5,
+      "project_leverage": 4,
+      "effort": 2,
+      "risk": 2,
+      "score": 5,
+      "gate": "All 3 pinned final-room identities, identical-camera screenshots, interactions and renderer metrics pass before any native engine extraction"
+    },
+    {
+      "rank": 3,
+      "id": "EXP-RESIDENCY-AB-001",
+      "name": "Studio-Kona resident vs cold unload route replay",
+      "information_gain": 5,
+      "project_leverage": 5,
+      "effort": 3,
+      "risk": 2,
+      "score": 4.166666666666667,
+      "gate": "Measured useful memory benefit and stable p95/p99, zero state loss, no unacceptable visible LOD pop/traversal stalls"
+    }
+  ],
+  "promoted": [
+    "bellagio_in_world_semantic_adapter_not_shared_renderer",
+    "konam_staged_registry_publish_contract",
+    "gaudi_semantic_rebuild_verification_pattern",
+    "local_instancing_and_placement_patterns_only"
+  ],
+  "rejected": [
+    "wholesale_divergent_branch_merge",
+    "older_room_url_as_final_room_proof",
+    "three_full_bike_clones_inside_older_nor",
+    "byte_identical_blender_rebuild_gate",
+    "low_roof_for_4_5m_upper_floor",
+    "green_render_job_as_visual_quality_approval"
+  ],
+  "stop_defer": [
+    "production_merges",
+    "new_room_creation_before_exact_room_certification",
+    "duplicate_canyon_konam_runtime_or_release_owner",
+    "new_monorepo_or_shared_renderer_extraction",
+    "webgpu_gltf21_blender53_tech_upgrades",
+    "unmeasured_hlod_clusterlod_ktx2_splat_crossrepo_promotion",
+    "new_gaudi_cosmetic_assets_before_site_and_A1_visual_closure"
+  ],
+  "source_daily_deltas": "https://github.com/joaoccaldas/konam/tree/research/3d-core-r1-20261004/research/evidence",
+  "note": "Confidence scores and experiment rankings are bounded expert judgments, not statistics. Workflows on separate branches do not prove current final-room runtime parity."
 }
