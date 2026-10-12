@@ -90,8 +90,8 @@ export async function renderProgressSurface(root,{settings,admin=false}={}) {
 
   const user=await currentUser().catch(()=>null);
   if(!user){
-    status.textContent='Public email sign-in is unavailable until production email delivery is configured. Progress stays on this device.';
-    account.insertAdjacentHTML('beforeend','<p><a href="privacy.html">Privacy & data</a></p>');
+    status.textContent='Sign in to back up your Kona across devices. Your progress stays private on this device until you choose to save it.';
+    account.insertAdjacentHTML('beforeend','<p><a class="kona-primary" href="index.html?account=login">Sign in / Create account →</a></p><p><a href="privacy.html">Privacy & data</a></p>');
     return;
   }
 

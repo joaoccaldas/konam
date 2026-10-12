@@ -30,34 +30,31 @@
 </head>
 <body>
 <section id="intro" class="kona-entry">
-  <div class="entry-media" aria-hidden="true"><img src="assets/kona-years/queen-k.jpg" alt="" decoding="async" fetchpriority="high"></div>
+  <div class="entry-media" aria-hidden="true"><img src="assets/entry/museum-hero.webp" alt="" decoding="async" fetchpriority="high"></div>
+  <header class="entry-header">
+    <div class="entry-mast"><span class="eyebrow">Kona.m</span><span class="entry-event">THE 3D MUSEUM · KAILUA-KONA · BETA</span></div>
+    <div id="entryWhy"></div>
+  </header>
   <div class="intro-inner">
     <div class="entry-copy">
-      <div class="entry-mast"><span class="eyebrow">Kona.m</span><span class="entry-event">YOUR RACE-WEEK COMPANION · KAILUA-KONA · RACE WEEK BETA</span></div>
-      <h1><span>Race the version of yourself</span><em>you haven't met yet.</em></h1>
-      <p class="lede"><strong>Your race-week cockpit for Kona.</strong> Follow the IRONMAN World Championship day by day, build your own triathlete and bike, and unlock 3D rooms as you explore.</p>
-      <ol class="entry-promise" aria-label="What you get">
-        <li><b>Today</b><span><strong>What changed in Kona</strong>Athlete videos, headlines and island updates, each with its source and how fresh it is.</span></li>
-        <li><b>You</b><span><strong>Your athlete and your bike</strong>Make your Race Self, set up your bike and your race. It stays private on this device.</span></li>
-        <li><b>Explore</b><span><strong>Collect and unlock</strong>Finds hidden around race week earn XP; levels open the Canyon Museum and the 3D rooms.</span></li>
-      </ol>
-    </div>
-    <div class="entry-product">
-      <div class="entry-product-stage" id="entryProductStage" aria-label="Preview of your Race Self and bike"></div>
-      <div class="entry-race-clock"><small>IRONMAN WORLD CHAMPIONSHIP</small><strong id="konaCount">Race week</strong></div>
+      <h1><span>Step inside.</span><em>Find your Kona.</em></h1>
+      <p class="lede">Walk the 3D museum on the Kona coast. Get close to the bikes, open their stories and take a detour.</p>
     </div>
     <div class="entry-actions-wrap">
       <div class="entry-actions">
-        <button class="btn primary" id="buildSelf" type="button">Enter Kona.m <span aria-hidden="true">→</span></button>
-        <button class="btn ghost entry-peek" id="entryPeek" type="button">Just show me today’s Kona</button>
+        <button class="btn primary" id="entryWorld" type="button">Enter the 3D museum <span aria-hidden="true">→</span></button>
       </div>
-      <div class="entry-trust"><span>No account required</span><span>Private on this device</span></div>
-      <p class="entry-story-note">Curious how this began? <a href="why.html">Read Why Kona →</a></p>
-      <nav class="entry-links" aria-label="More about Kona.m"><a class="entry-about" href="about.html">What is Kona.m?</a><button class="btn text" id="entryInstall" type="button">Install app</button><a href="privacy.html">Privacy</a><a href="credits.html">Credits</a></nav>
-      <p class="entry-global-note"><strong>Kona triathlon, from anywhere.</strong> Explore race week, the IRONMAN® World Championship, 3D bikes and triathlon stories whether you train in Brazil, Sweden, Dubai, Europe or somewhere else entirely.</p>
+      <p class="entry-depth-note">Explore freely. No account or setup needed.</p>
+      <p id="loadstate" data-museum-status role="status" aria-live="polite"></p>
+      <div class="entry-trust">
+        <button class="btn text" id="buildSelf" type="button">Build your Kona</button><button class="btn text" id="entrySignIn" type="button">Sign in / Create account</button>
+        <button class="btn text" id="entryInstall" type="button">Install app</button>
+      </div>
+    </div>
+    <div class="entry-notes">
+      <p class="entry-story-note"><a href="about.html">What is Kona.m?</a> · <a href="privacy.html">Privacy & data</a> · <a href="credits.html">Credits</a></p>
       <p class="entry-legal-note">Independent project. Not affiliated with or endorsed by IRONMAN, World Triathlon Corporation, Canyon or any featured athlete or brand.</p>
     </div>
-    <div id="loadstate" aria-live="polite"></div>
   </div>
 </section>
 

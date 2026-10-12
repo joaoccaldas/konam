@@ -71,13 +71,21 @@ h2:first-child{margin-top:0}
 #loader div{width:220px;text-align:center;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 #loader i{display:block;height:2px;background:var(--accent);width:0;margin-top:14px;transition:width .3s}
 .toggle-panel{display:none}
-@media (max-width:820px){
+@media (max-width:820px),(pointer:coarse){
  .top{padding:14px 16px}.title p{display:none}
  .panel{left:0;right:0;top:auto;bottom:0;width:auto;height:46vh;border-radius:22px 22px 0 0;transform:translateY(calc(100% - 52px));transition:transform .3s}
  .panel.open{transform:none}
  .toggle-panel{display:block;border:0;background:transparent;padding:12px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
  .dock{left:16px;right:16px;bottom:64px;max-width:none}
  .range input{width:90px}
+ .chip,.range,.back,.toggle-panel,.tabs button{min-height:48px}
+}
+@media (orientation:landscape) and (max-height:540px) and (pointer:coarse){
+ .top{padding:12px 16px}.title{display:flex;align-items:center;gap:12px;max-width:calc(100vw - 240px)}
+ .title .eyebrow,.title p{display:none}.title h1{margin:0;font-size:20px;line-height:1.12}.title h1 br{display:none}
+ .dock{bottom:60px;flex-wrap:nowrap;overflow-x:auto;align-items:center;gap:6px;padding:2px 0}
+ .dock>*{flex:0 0 auto}.chip{padding:9px 12px}
+ .panel{height:70dvh}.panel .toggle-panel{flex:0 0 48px}.panel:not(.open){transform:translateY(calc(100% - 48px))}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 html.phone-fit .top{zoom:var(--fit);left:0;right:auto;width:calc(100vw / var(--fit));padding:14px 16px}
@@ -89,6 +97,13 @@ html.phone-fit .toggle-panel{display:block;border:0;background:transparent;paddi
 html.phone-fit .dock{zoom:var(--fit);left:8px;right:auto;bottom:calc(64px);max-width:calc((100vw - 16px) / var(--fit));flex-wrap:nowrap;overflow-x:auto}
 html.phone-fit .chip{flex:0 0 auto}
 html.phone-fit #loader div{zoom:var(--fit)}
+
+/* Details must wrap within their own sheet, including long part names. */
+.drawer,.panel,#card{overflow-wrap:anywhere}
+.drawer img,.panel img{max-width:100%;height:auto;object-fit:contain}
+.parts button{min-width:0;white-space:normal}
+.parts small{max-width:45%;overflow-wrap:anywhere}
+.kv{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
 </style>
 </head>
 <body>

@@ -10,7 +10,7 @@ test('Why Kona is globally reachable without replacing the five primary tabs',()
   const hardener=read('tools/harden_pages.mjs');
   const css=read('web/styles/system.css');
 
-  assert.match(landing,/Curious how this began\? <a href="why\.html">Read Why Kona/);
+  assert.match(landing,/id="entryWhy"/);
   assert.match(shell,/class="kona-why-global" href="why\.html"/);
   assert.match(shell,/class="kona-panel-why" href="why\.html"/);
   assert.doesNotMatch(shell,/data-tab="why"|data-desktop-tab="why"/);

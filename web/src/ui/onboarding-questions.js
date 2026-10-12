@@ -44,6 +44,8 @@ export function renderOnboardingQuestions(host,{onDone,onSkip}={}){
   if(!data.answers||typeof data.answers!=='object'||Array.isArray(data.answers))data.answers={};
   const paint=()=>{
     busy=false;
+    host.closest('#intro')?.scrollTo({top:0,left:0,behavior:'instant'});
+    window.scrollTo({top:0,left:0,behavior:'instant'});
     const q=QUESTIONS[index],answered=QUESTIONS.filter(q=>data.answers[q.id]).length;
     const progress=Math.round((answered/QUESTIONS.length)*100);
     const state=ensureProgression();

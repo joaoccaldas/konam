@@ -48,3 +48,16 @@ test('part lookup climbs from mesh to nearest semantic part',()=>{
   const c=createExplosionController(indexMachine(root));
   assert.equal(c.partOf(mesh),'fork');
 });
+
+
+test('measuring expanded geometry restores the live part positions and target even after failure',()=>{
+  const {root,fork}=fixture(),inspection=createExplosionController(indexMachine(root));
+  inspection.setProgress(.25,{immediate:true});inspection.target=.75;
+  const before=fork.position.clone();
+  const full=inspection.measureAtProgress(1,root=>new THREE.Box3().setFromObject(root));
+  const live=new THREE.Box3().setFromObject(root);
+  assert.ok(full.max.distanceTo(live.max)>1);
+  assert.deepEqual(fork.position.toArray(),before.toArray());assert.equal(inspection.value,.25);assert.equal(inspection.target,.75);
+  assert.throws(()=>inspection.measureAtProgress(1,()=>{throw new Error('measurement failed');}));
+  assert.deepEqual(fork.position.toArray(),before.toArray());assert.equal(inspection.target,.75);
+});

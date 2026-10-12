@@ -6,5 +6,5 @@ test('mobile IA retains five canonical destinations while progressively revealin
   assert.match(shell,/navigationForState/);
   assert.match(shell,/<span>Now<\/span>/);
 });
-test('landing retains one person-first build action',()=>{const n=(landing.match(/id="buildSelf"/g)||[]).length;assert.equal(n,1);});
+test('landing has one dominant museum action and optional athlete setup',()=>{assert.equal((landing.match(/class="btn primary"/g)||[]).length,1);assert.match(landing,/class="btn primary" id="entryWorld"/);assert.match(landing,/class="btn text" id="buildSelf"/);});
 test('landing declares responsive viewport and install manifest',()=>{assert.match(landing,/viewport-fit=cover/);assert.match(landing,/manifest\.webmanifest/);});

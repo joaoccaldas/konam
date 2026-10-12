@@ -6,6 +6,10 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
+      - '.github/workflows/kona-now-freshness.yml'
+      - 'tools/refresh_companion.ts'
+      - 'tools/build_intern_brief.mjs'
+      - 'web/src/ui/companion-data.js'
       - 'tools/check_companion_freshness.mjs'
       - 'integrations/companion/sources.json'
       - 'supabase/functions/companion/**'
@@ -13,6 +17,10 @@ on:
   push:
     branches: [main]
     paths:
+      - '.github/workflows/kona-now-freshness.yml'
+      - 'tools/refresh_companion.ts'
+      - 'tools/build_intern_brief.mjs'
+      - 'web/src/ui/companion-data.js'
       - 'tools/check_companion_freshness.mjs'
       - 'integrations/companion/sources.json'
       - 'supabase/functions/companion/**'
@@ -36,3 +44,19 @@ jobs:
           node-version: 22
       - name: Probe live KONA Now sources
         run: node tools/check_companion_freshness.mjs
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Prepare dated Companion snapshot
+        run: deno run --allow-net --allow-read --allow-write tools/refresh_companion.ts
+      - name: Build reviewable Intern editions
+        run: node tools/build_intern_brief.mjs
+      - name: Keep snapshot and editions for editorial review
+        uses: actions/upload-artifact@v4
+        with:
+          name: intern-source-digest
+          path: |
+            output/intern/
+            integrations/companion/feed.json
+            integrations/companion/rss.xml
+          retention-days: 14

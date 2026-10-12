@@ -21,6 +21,7 @@ try{
   if(width===390||width===1440)await page.screenshot({path:new URL(`landing-${width}.png`,out).pathname});
   await page.click('#buildSelf');
   await page.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden);
+  assert.equal(await page.$eval('.kona-why-global',el=>el.parentElement.id),'konaShell','Shared Why shortcut must return to the app shell');
   await page.evaluate(()=>{
    const mobile=document.querySelector('[data-tab="me"]');
    const desktop=document.querySelector('[data-desktop-tab="me"]');

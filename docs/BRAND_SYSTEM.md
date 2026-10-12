@@ -6,7 +6,7 @@ This is the canonical brand and interface contract for Kona.m. Historical design
 
 **Calm surface. Deep world underneath. Professional where trust matters. Strange where discovery creates memory.**
 
-The interface should feel editorial and human before it feels like software. The 3D world, Studio and museum are optional depth, never the front-door dependency.
+The interface should feel editorial and human before it feels like software. The museum is the hero of the landing page and Home: one explicit action opens the actual 3D gallery, without an account, onboarding or a progression unlock. Load the renderer after that action. Athlete setup, the companion and introductory reading follow the experience.
 
 ## Launch freeze
 

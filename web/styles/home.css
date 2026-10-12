@@ -1,5 +1,10 @@
 /* RC4 Home continuity: calm shell, Race Self as explicit depth. */
 .home-today{min-height:220px}
+.home-next{display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:20px}
+.home-next>div{flex:1 1 220px;min-width:0}
+.home-next h3{font:400 30px/1.05 var(--brand-font-editorial);margin:8px 0}
+.home-next p{color:var(--brand-muted);font-size:13px;line-height:1.5}
+.home-next .t-data{display:block;font-size:11px;line-height:1.6}
 .home-race-self{display:grid;grid-template-columns:112px minmax(0,1fr);gap:16px;align-items:center;padding:18px;border:1px solid var(--brand-line);border-radius:var(--brand-card-radius);background:
   radial-gradient(circle at 12% 18%,color-mix(in srgb,var(--brand-action) 18%,transparent),transparent 32%),
   color-mix(in srgb,var(--brand-surface) 96%,transparent);box-shadow:var(--artifact-shadow)}
@@ -48,4 +53,14 @@
   .home-today h3{margin-bottom:8px}
   .home-purpose{font-size:12.5px;line-height:1.4}
   .home-today .kona-primary{width:100%;justify-content:space-between}
+}
+
+/* Home opens with the museum, including short landscape windows. */
+.home-world-hero [data-museum-status]:empty{display:none}
+.home-world-hero [data-museum-status]{margin:10px 0 0;font-size:12px;color:var(--brand-discovery)}
+@media(orientation:landscape) and (max-height:520px){
+  .home-world-hero,.home-world-hero-copy{min-height:210px}
+  .home-world-hero-copy{padding:18px}
+  .home-world-hero-copy h3{font-size:36px;margin:6px 0}
+  .home-world-hero-copy p{font-size:12px;margin-bottom:10px}
 }

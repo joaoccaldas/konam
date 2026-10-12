@@ -1,4 +1,6 @@
 import { mapBounds, mapFloors } from './world/map-model.js';
+import foundingRegistry from '../../world/konam/rooms-v1.json' with {type:'json'};
+import foundingBridge from '../../world/konam/founding-runtime-v1.json' with {type:'json'};
 import { PRODUCT_NAME } from './product-meta.js';
 // map.js — the museum map. Two floors drawn from the same rectangles the walls are built from,
 // a live "you are here" arrow, and every area one tap away (the walk there is the museum's own route).
@@ -6,13 +8,14 @@ import { PRODUCT_NAME } from './product-meta.js';
 // screen readers and small phones.
 const NS = 'http://www.w3.org/2000/svg';
 
-export function initMap({ areas, pose, go, button, access=()=>({unlocked:true,requiredLevel:1}) }) {
-  const floors = mapFloors(areas);
+export function initMap({ areas, pose, go, button, access=()=>({unlocked:true,requiredLevel:1}),openFounding=()=>{} }) {
+  const floors = ['founding',...mapFloors(areas)];
+  const founding=foundingRegistry.rooms.filter(room=>room.group==='foundation'&&room.launch_visible&&room.unlock_rule==='open').map(room=>({...room,route:foundingBridge.routes.find(route=>route.room_id===room.id)}));
   const root = document.createElement('div');
   root.id = 'map'; root.hidden = true; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Museum map');
-  const floorName=f=>({ground:'Ground floor',upper:'Upper floor',future:'Future levels'}[f]||f);
+  const floorName=f=>({founding:'14 open rooms',ground:'Ground floor',upper:'Upper floor',future:'Future levels'}[f]||f);
   root.innerHTML = `<div class="map-card">
-    <div class="map-head"><div><small>${PRODUCT_NAME} · WORLD MAP</small><h3>Explore the museum</h3><p>Rooms now. Future levels next.</p></div>
+    <div class="map-head"><div><small>${PRODUCT_NAME} · WORLD MAP</small><h3>Explore the museum</h3><p>14 founding rooms. Open from your first visit.</p></div>
       <div class="map-tabs" role="tablist">${floors.map(f => `<button role="tab" data-floor="${f}">${floorName(f)}</button>`).join('')}</div>
       <button class="map-close" aria-label="Close map">×</button></div>
     <div class="map-legend"><span><i class="live"></i>Open now</span><span><i class="future"></i>Future level</span><span><i class="you"></i>You are here</span></div>
@@ -24,6 +27,17 @@ export function initMap({ areas, pose, go, button, access=()=>({unlocked:true,re
   let floor = floors[0], raf = 0;
 
   function draw() {
+    const isFounding=floor==='founding';
+    root.classList.toggle('map-founding',isFounding);
+    root.querySelector('.map-plan').hidden=isFounding;root.querySelector('.map-legend').hidden=isFounding;
+    root.querySelector('.map-foot').textContent=isFounding?'All 14 founding rooms are open. Pick a room to visit.':'Tap an open room for its overview. Future districts remain locked.';
+    if(isFounding){
+      list.innerHTML=founding.map(room=>`<li><button data-founding-id="${room.id}"><span><b>${room.name}</b><small>${room.route.action.kind==='world'?'3D museum':'Kona.m space'} · Open</small></span><span aria-hidden="true">→</span></button></li>`).join('');
+      list.querySelectorAll('button').forEach(button=>button.onclick=()=>{const room=founding.find(room=>room.id===button.dataset.foundingId);close();openFounding(room.route.action);});
+      root.querySelectorAll('.map-tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.floor===floor));
+      return;
+    }
+
     const on = areas.filter(a => a.floor === floor);
     const {minX,maxX,minZ,maxZ}=mapBounds(on,3);
     svg.setAttribute('viewBox', `${minX} ${-maxZ} ${maxX - minX} ${maxZ - minZ}`);            // north (+z) up
@@ -68,10 +82,10 @@ export function initMap({ areas, pose, go, button, access=()=>({unlocked:true,re
   }
   function pick(a) { const gate=access(a.id); if(!gate.unlocked)return; close(); go(a.id); }
   function open() {
-    floor = pose().floor || floor; draw(); root.hidden = false; document.body.classList.add('map-open');
+    floor = 'founding'; draw(); root.hidden = false; document.body.classList.add('map-open');
     cancelAnimationFrame(raf); tick(); root.querySelector('.map-close').focus({ preventScroll: true });
   }
-  function close() { root.hidden = true; document.body.classList.remove('map-open'); cancelAnimationFrame(raf); }
+  function close() { root.hidden = true; document.body.classList.remove('map-open'); cancelAnimationFrame(raf); button?.focus({preventScroll:true}); }
   root.querySelector('.map-close').addEventListener('click', close);
   root.addEventListener('click', e => { if (e.target === root) close(); });
   root.querySelectorAll('.map-tabs button').forEach(b => b.addEventListener('click', () => { floor = b.dataset.floor; draw(); }));
@@ -81,5 +95,5 @@ export function initMap({ areas, pose, go, button, access=()=>({unlocked:true,re
     else if ((e.key === 'm' || e.key === 'M') && !e.metaKey && !e.ctrlKey) root.hidden ? open() : close();
   });
   button?.addEventListener('click', open);
-  return { open, close, here, get isOpen() { return !root.hidden; } };
+  return { open, close, here, get areas(){return areas;}, get isOpen() { return !root.hidden; } };
 }

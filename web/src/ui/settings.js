@@ -59,8 +59,8 @@ export function initSettings({ profile, QUALITY, AVATARS, activeQuality, onQuali
         el('p', { class: 'set-note' }, 'For now these are in-app nudges only. Opening one can earn a small, one-time XP reward. No push permission is requested yet.')),
       el('section', {}, el('h4', {}, 'Account & sync'),
         sync?.available
-          ? el('div', { class: 'set-row' }, el('span', {}, p.sync ? `Signed in as ${p.sync.email}` : `Cloud backup for existing accounts. Public email sign-in is unavailable.`), el('button', { type: 'button', class: 'btn ghost', onclick: () => sync.start() }, 'Open account'))
-          : el('p', { class: 'set-note' }, 'Public email sign-in is unavailable. Your profile stays on this device.')),
+          ? el('div', { class: 'set-row' }, el('span', {}, p.sync ? `Signed in as ${p.sync.email}` : `Sign in to back up your Kona across devices.`), el('button', { type: 'button', class: 'btn ghost', onclick: () => sync.start() }, 'Open account'))
+          : el('p', { class: 'set-note' }, 'Your profile stays on this device. Account access is optional.')),
       el('section', {}, el('h4', {}, 'Privacy & data'),
         el('div', { class:'set-row' }, el('span', {}, 'Anonymous usage analytics'), seg('Analytics', p.analytics?'on':'off', [['off','Off'],['on','On']], v=>profile.set({analytics:v==='on'}))),
         el('p', { class:'set-note' }, 'Off by default. When enabled on the public website, session-only usage and coarse error categories help improve Kona.m. Switching off clears the analytics session on this device.'),

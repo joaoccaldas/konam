@@ -1,0 +1,18 @@
+{
+  "decision": "ADAPT: render the five existing meshes; reuse bike catalog images; printed covers for data-only cards",
+  "source": "assets/kona-years/finds.glb",
+  "generator": "tools/build_find_thumbnails.mjs",
+  "renderer": "web/src/ui/collectible-stage.js through the shared renderer adapter",
+  "rights_state": "original",
+  "truth_classification": "fictional-original-artistic-object",
+  "performance": {
+    "dimensions": [
+      320,
+      240
+    ],
+    "max_bytes_per_preview": 20000,
+    "loading": "lazy static PNG; no grid WebGL"
+  },
+  "validation_status": "local visual review; not independently verified",
+  "notes": "Derived previews, not new collectible identities or room assets."
+}

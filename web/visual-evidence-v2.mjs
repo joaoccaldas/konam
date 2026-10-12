@@ -6,7 +6,7 @@ const out=process.argv[3]||'visual-evidence-v2';fs.mkdirSync(out,{recursive:true
 const chrome=process.env.CHROME_PATH;if(!chrome)throw new Error('CHROME_PATH required');
 const browser=await puppeteer.launch({executablePath:chrome,timeout:90000,headless:'new',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const viewports=[{id:'320',width:320,height:720},{id:'360',width:360,height:640},{id:'390',width:390,height:844},{id:'430',width:430,height:932},{id:'tablet',width:768,height:1024},{id:'landscape-phone',width:844,height:390},{id:'desktop',width:1440,height:900}];
-const states=['landing','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','collection','find-studio','bike-studio'];const report=[];
+const states=['landing','onboarding-profile','avatar-registration','onboarding-tour','home','user-studio','avatar-editor','discover','garage','plan','progress','feed','travel','museum-return-home','collection-owned','collection','find-studio','bike-studio'];const report=[];
 fs.writeFileSync(path.join(out,'candidate.json'),JSON.stringify({source_sha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),source_dirty:!!execFileSync('git',['status','--porcelain'],{encoding:'utf8'}).trim(),bundle_sha256:createHash('sha256').update(fs.readFileSync('app/kona-core.js')).digest('hex'),generated_at:new Date().toISOString()},null,2)+'\n');
 // deterministic storage per capture: seed after origin exists, then reload exactly once.
 async function capture(vp,state,theme){
@@ -62,8 +62,9 @@ async function capture(vp,state,theme){
    await p.waitForFunction(()=>!document.querySelector('#konaPanel')?.hidden,{timeout:60000});
    if(state==='home'){
      // Returning users land here. No personal/world 3D should be required.
-   }else if(['collection','find-studio'].includes(state)){
+   }else if(['collection-owned','collection','find-studio'].includes(state)){
      await press('[data-first-find]');await p.waitForFunction(()=>document.querySelector('[data-first-find]')?.disabled);await press('[data-home-finds]');await p.waitForSelector('[data-find]');
+     if(state==='collection')await press('[data-find-filter="all"]');
      if(state==='find-studio'){await press('[data-find="find:shore:lava"]');await p.waitForSelector('.find-studio');}
    }else if(['user-studio','avatar-editor','progress'].includes(state)){
      const switched=await p.evaluate(async()=>{const shell=window.__konaShell;if(!shell?.me)return false;await shell.me();return true;});
@@ -106,7 +107,10 @@ async function capture(vp,state,theme){
    // Canonical touch targets apply to phone captures; desktop mouse controls
    // retain their existing compact layout. Record the threshold with evidence.
    const targetMinimum=touchViewport?48:24;
-   const small=els.map(x=>{const r=x.getBoundingClientRect();return{tag:x.tagName,text:(x.textContent||'').trim().slice(0,50),w:r.width,h:r.height};}).filter(x=>x.w<targetMinimum||x.h<targetMinimum);
+   // Transformed DOMRects can report 48px as 47.99997px. Keep raw evidence,
+   // but tolerate only floating-point rounding, not a subpixel-short control.
+   const targetRoundingTolerance=.001;
+   const small=els.map(x=>{const r=x.getBoundingClientRect();return{tag:x.tagName,text:(x.textContent||'').trim().slice(0,50),w:r.width,h:r.height};}).filter(x=>x.w+targetRoundingTolerance<targetMinimum||x.h+targetRoundingTolerance<targetMinimum);
    const grid=document.querySelector('.finds-grid'),cards=grid?[...grid.querySelectorAll('[data-find]')].slice(0,2):[];
    const collectionGrid=grid?{display:getComputedStyle(grid).display,columns:getComputedStyle(grid).gridTemplateColumns.split(' ').length,sameFirstRow:cards.length===2&&Math.abs(cards[0].getBoundingClientRect().top-cards[1].getBoundingClientRect().top)<1}:null;
    const back=document.querySelector('#konaPanelClose');
@@ -121,7 +125,7 @@ async function capture(vp,state,theme){
    const museumLinks=[...document.querySelectorAll('link[data-style-scope="museum"]')];
    const companionHero=document.querySelector('.companion-hero');
    const reg=document.querySelector('.registration-avatar'),regCopy=document.querySelector('.registration-avatar-copy'),regPreview=document.querySelector('.registration-avatar-preview');
-   const enter=document.getElementById('buildSelf'),product=document.querySelector('#intro.kona-entry .entry-product');
+   const enter=document.getElementById('entryWorld'),product=document.querySelector('#intro.kona-entry .entry-product');
    const er=enter?.getBoundingClientRect?.(),pr=product?.getBoundingClientRect?.();
    const rr=reg?.getBoundingClientRect?.(),rc=regCopy?.getBoundingClientRect?.(),rp=regPreview?.getBoundingClientRect?.();
    return{canonicalRoomCount:document.querySelectorAll('[data-canonical-room-option]').length,canonicalRoomSelectVisible:!!document.querySelector('[data-canonical-room-select]')&&visible(document.querySelector('[data-canonical-room-select]')),canonicalRoomFocusVisible:!!document.querySelector('[data-canonical-room-focus]')&&visible(document.querySelector('[data-canonical-room-focus]')),canonicalRoomOpenText:(document.querySelector('[data-canonical-rooms]')?.innerText||'').slice(0,600),panelBackCovered:backCovered,panelScrollTop:document.querySelector('#konaPanel')?.scrollTop??0,targetMinimum,collectionGrid,museumControlsVisible:els.filter(x=>x.closest('#konaWorld')).length,landing:er?{ctaTop:er.top,ctaBottom:er.bottom,ctaLeft:er.left,ctaRight:er.right,ctaW:er.width,productTop:pr?.top??null,productBottom:pr?.bottom??null,productLeft:pr?.left??null,productRight:pr?.right??null,viewportH:innerHeight}:null,registration:rr&&rc&&rp?{w:rr.width,copyW:rc.width,previewW:rp.width,overlap:Math.max(0,Math.min(rc.right,rp.right)-Math.max(rc.left,rp.left))}:null,stage:sr?{x:sr.x,y:sr.y,w:sr.width,h:sr.height}:null,museumStylesEnabled:museumLinks.filter(x=>!x.disabled).length,companionHeroPosition:companionHero?getComputedStyle(companionHero).position:null,scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,overflowX:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,primaryActions:primary.length,visibleActions:els.length,smallTargets:small.slice(0,20),title:document.title,lang:document.documentElement.lang,introVisible:intro?visible(intro):false,navVisible:nav?visible(nav):false,activeNav,visibleText,tourText};
@@ -141,7 +145,9 @@ const violations=[];
 for(const r of report){
  // The quick tour is a modal dialog with its own Next/Skip controls, so it intentionally owns the interaction layer while open.
  if(r.metrics.panelBackCovered&&r.state!=='onboarding-tour')violations.push(`${r.viewport}/${r.theme}/${r.state}: panel back is covered`);
- if(r.state==='collection'&&r.metrics.panelScrollTop!==0)violations.push(`${r.viewport}/${r.theme}: new collection route retained old scroll position`);
+ // The owned shelf is the route arrival. The catalog capture follows a real
+ // filter tap, which can legitimately scroll that control into view on phones.
+ if(r.state==='collection-owned'&&r.metrics.panelScrollTop!==0)violations.push(`${r.viewport}/${r.theme}: new collection route retained old scroll position`);
  if(r.metrics.overflowX)violations.push(`${r.viewport}/${r.theme}/${r.state}: horizontal overflow`);
  if(r.state==='landing'&&r.heavyRequests.length)violations.push(`${r.viewport}/${r.theme}: heavy 3D requested on landing`);
  if(r.state==='landing'&&r.viewport!=='desktop'&&r.metrics.landing){const l=r.metrics.landing;if(l.ctaTop<0||l.ctaBottom>l.viewportH)violations.push(`${r.viewport}/${r.theme}: Enter KONA is not fully visible in first viewport`);if(l.ctaW<160)violations.push(`${r.viewport}/${r.theme}: Enter KONA is too narrow`);if(l.productTop!=null&&l.productBottom!=null&&l.productLeft!=null&&l.productRight!=null){const overlapX=Math.min(l.ctaRight,l.productRight)-Math.max(l.ctaLeft,l.productLeft),overlapY=Math.min(l.ctaBottom,l.productBottom)-Math.max(l.ctaTop,l.productTop);if(overlapX>1&&overlapY>1)violations.push(`${r.viewport}/${r.theme}: product teaser overlaps primary decision`);}}
@@ -154,7 +160,7 @@ for(const r of report){
    if(a.w<900||a.copyW<420||a.previewW<340||a.overlap>1)violations.push(`desktop/${r.theme}: avatar registration grid collapsed ${Math.round(a.w)} total / ${Math.round(a.copyW)} copy / ${Math.round(a.previewW)} preview / ${Math.round(a.overlap)} overlap`);
  }
  if(r.state==='onboarding-tour'&&!/MAKE IT YOURS|Start with your athlete/i.test(r.metrics.tourText))violations.push(`${r.viewport}/${r.theme}: onboarding tour missing`);
- if(r.state==='home'&&!/YOUR RACE SELF/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: Now core surface missing`);
+ if(r.state==='home'&&!/THE 3D MUSEUM/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: Museum hero missing on Home`);
  if(r.state==='home'&&!/race-week cockpit/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: Now purpose is not explicit`);
  if(r.state==='user-studio'&&!/Build the version of you|YOUR ATHLETE|USER STUDIO/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: User Studio content missing`);
  if(r.state==='avatar-editor'&&!/Your character|Minecraft|Customize/i.test(r.metrics.visibleText))violations.push(`${r.viewport}/${r.theme}: avatar editor missing`);

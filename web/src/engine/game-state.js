@@ -27,7 +27,7 @@ export function readGameState(storage = globalThis.localStorage) {
     exported_at: new Date().toISOString(),
     profile: profile ? clone(profile) : null,
     progression: clone(passport),
-    finds: clone(finds),
+    finds: clone(Array.isArray(finds)?Object.fromEntries(finds.filter(id=>typeof id==='string').map(id=>[id,true])):finds),
     race_setup: raceSetup ? clone(raceSetup) : null,
     garage: Array.isArray(garage) ? clone(garage) : [],
     progression_engine: readJson('progression', null, storage),

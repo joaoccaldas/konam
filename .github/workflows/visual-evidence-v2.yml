@@ -11,6 +11,10 @@ on:
       - 'world/konam/**'
       - 'assets/**'
       - 'tools/build_pages.mjs'
+      - 'tools/build_app.mjs'
+      - 'tools/stage_site.sh'
+      - 'app/app-manifest.json'
+      - '.github/workflows/visual-evidence-v2.yml'
   workflow_dispatch:
 permissions:
   contents: read
