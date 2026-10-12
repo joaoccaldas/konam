@@ -1096,8 +1096,8 @@ function loadBeastBike() { return beastBikeLoad ||= loadBeastBikeOnce(); }
 async function loadBeastBikeOnce() {
   if (beast?.ownBikes) { beast.useAssets(loader); return; }
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!beast || !cfr?.glb || beast.bikeSpot.bike) return;
-  // phones: the derived 77k-triangle hero (speedmax_web-lite.glb) keeps the room inside its mobile budget (220k)
-  const gltf = await (lite ? loadShared(cfr.glb.replace(/\.glb$/, '-lite.glb')).catch(() => loadShared(cfr.glb)) : loadShared(cfr.glb));
+  // derived levels keep the review rooms inside their budgets: phones the 77k lite (220k room budget), desktop the 134k hero (450k)
+  const gltf = await loadShared(cfr.glb.replace(/\.glb$/, lite ? '-lite.glb' : '-hero.glb')).catch(() => loadShared(cfr.glb));
   if (beast.bikeSpot.bike) return;
   beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
   beast.useAssets(loader);

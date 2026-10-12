@@ -95,7 +95,20 @@ export async function loadDecor(manifest, { group, loader, lite = false, hooks =
 // `keep(o)` returns true for anything that moves, is picked, swaps state or is positioned later — those (and their
 // subtrees) stay untouched, as do instanced, skinned, multi-material and transparent meshes (sorting stays per
 // object). Returns { before, after } mesh counts. Call once, at the end of a room's build.
-export function mergeStatic(group, { keep = () => false } = {}) {
+// byValue: untextured materials with identical settings share a bucket (rooms that build a material per prop).
+// A number instead of true also rounds colours to that step (0-255) and roughness/metalness to step/100:
+// phones can merge near-identical blacks.
+// Opt-in, because a room that later mutates one of those materials would then change every mesh merged with it.
+// decals: transparent meshes that never write depth (floor shadows, washes) may merge per material too.
+const quant = (c, q) => c && (q > 1 ? ['r', 'g', 'b'].map(k => Math.round(c[k] * 255 / q)).join(',') : c.getHex());
+const matKey = (m, byValue) => {
+  const textured = Object.keys(m).some(k => (k === 'map' || k.endsWith('Map')) && m[k]), custom = Object.hasOwn(m, 'onBeforeCompile');
+  if (!byValue || textured || custom || m.isShaderMaterial) return m.uuid;
+  const q = typeof byValue === 'number' ? byValue : 1;
+  const r = v => v == null || q <= 1 ? v : Math.round(v * 100 / q);   // with a tolerance, surface finish folds by the same step (q/100)
+  return [m.type, quant(m.color, q), quant(m.emissive, q), m.emissiveIntensity, r(m.roughness), r(m.metalness), r(m.clearcoat), m.side, m.flatShading, m.vertexColors, m.toneMapped, m.envMapIntensity, m.fog, m.wireframe].join('/');
+};
+export function mergeStatic(group, { keep = () => false, byValue = false, decals = false } = {}) {
   group.updateMatrixWorld(true);
   const count = () => { let n = 0; group.traverse(o => { if (o.isMesh) n++; }); return n; }, before = count();
   const inv = new THREE.Matrix4().copy(group.matrixWorld).invert(), buckets = new Map(), owner = new Map();
@@ -103,8 +116,8 @@ export function mergeStatic(group, { keep = () => false } = {}) {
     for (const c of [...o.children]) {
       if (keep(c)) continue;
       const attrs = c.isMesh ? Object.keys(c.geometry.attributes).filter(n => ['position', 'normal', 'uv'].includes(n)).sort() : [];
-      if (c.isMesh && !c.isInstancedMesh && !c.isSkinnedMesh && !Array.isArray(c.material) && !c.material.transparent && c.visible && !c.children.length && attrs.includes('normal')) {
-        const key = [c.material.uuid, c.castShadow, c.receiveShadow, c.renderOrder, attrs.join()].join('|');
+      if (c.isMesh && !c.isInstancedMesh && !c.isSkinnedMesh && !Array.isArray(c.material) && (!c.material.transparent || (decals && c.material.depthWrite === false)) && c.visible && !c.children.length && attrs.includes('normal')) {
+        const key = [c.material.transparent ? c.material.uuid : matKey(c.material, byValue), c.castShadow, c.receiveShadow, c.renderOrder, attrs.join()].join('|');
         if (!buckets.has(key)) buckets.set(key, { mat: c.material, cast: c.castShadow, recv: c.receiveShadow, order: c.renderOrder, list: [], meshes: [] });
         const b = buckets.get(key); b.list.push(toFloat(c.geometry.clone(), attrs).applyMatrix4(new THREE.Matrix4().multiplyMatrices(inv, c.matrixWorld))); b.meshes.push(c);
       } else walk(c);

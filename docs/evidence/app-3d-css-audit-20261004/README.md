@@ -50,12 +50,12 @@ Reproduce: `node tools/room-evidence.mjs --review world --room hall --areas [--a
 |---|---|---|---|
 | NOR // 3 | 91 meshes · 200k tris ✅ | 89 · 63k ✅ | 0 |
 | Breitling × Kona | 102 · 63k ✅ | 86 · 49k ✅ | 0 |
-| Beast Cave | 231 meshes ❌ (190) · 30k tris | 304 meshes ❌ (110) · **141k tris ✅** (was 1.13M) | 0 |
+| Beast Cave (2026-10-12) | 136 meshes ✅ (was 228) · 214k tris ✅ (was 632k) | 108 meshes ✅ (was 227) · 169k tris ✅ | 0 |
 
-Beast Cave: a race loaded **two** full Speedmaxes into the same spot (present before the audit); now one shared load,
-and phones use the derived 77k-triangle hero (`assets/museum/speedmax_web-lite.glb`). Its remaining breach is mesh
-count — the cave's ~120 small static meshes are not merged per material the way NOR and Breitling are. Next fix:
-merge them with the same `flush()`/`bake` pattern. Breitling's monument now reports `moving`, so its shadow stays
+Beast Cave: a race loaded **two** full Speedmaxes into the same spot (present before the audit); now one shared load.
+The first numbers here were measured without the room package attached (no budget applied); measured against it on
+2026-10-12 the room was over on desktop meshes and triangles and phone meshes. Fixed the same day: see
+`docs/evidence/beast-cave-review-20261003/v7-budget/`. Breitling's monument now reports `moving`, so its shadow stays
 per-frame while the scheduled-shadow saving applies everywhere else.
 
 ### CSS — conflicts fixed, duplicates removed

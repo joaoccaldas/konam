@@ -1,0 +1,41 @@
+{
+ "room": "beast-cave",
+ "package": "world/konam/rooms/beast-cave.room.json",
+ "measured": "2026-10-12",
+ "before": {
+  "desktop": {
+   "room_meshes": 228,
+   "room_triangles": 631730
+  },
+  "phone": {
+   "room_meshes": 227,
+   "room_triangles": 191072
+  }
+ },
+ "after": {
+  "desktop": {
+   "scene_calls": 84,
+   "scene_triangles": 195445,
+   "room_meshes": 136,
+   "room_triangles": 213998,
+   "errors": 0,
+   "budget": {
+    "calls": 190,
+    "triangles": 450000
+   },
+   "within_budget": true
+  },
+  "phone": {
+   "scene_calls": 56,
+   "scene_triangles": 150128,
+   "room_meshes": 108,
+   "room_triangles": 168748,
+   "errors": 0,
+   "budget": {
+    "calls": 110,
+    "triangles": 220000
+   },
+   "within_budget": true
+  }
+ }
+}

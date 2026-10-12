@@ -71,6 +71,10 @@ export function buildBeastCave(ctx) {
   const at = (o,x,y,z) => { o.position.set(x,y,z); group.add(o); return o; };
   const infos=[];
   const info=(mesh,rec)=>{ for(const m of [].concat(mesh)){m.userData.info=rec;pickables.push(m);} infos.push(rec); return rec; };
+  // merge a static sub-assembly in place (one draw per material); merged meshes keep the card, stale parts leave pickables
+  const mergeInto=(sub,rec,keep=()=>false)=>{const parts=[];sub.traverse(o=>{if(o.isMesh)parts.push(o);});mergeStatic(sub,{keep,byValue:true});
+    for(const o of parts)if(!o.parent){const i=pickables.indexOf(o);if(i>=0)pickables.splice(i,1);}
+    if(rec)sub.traverse(o=>{if(o.isMesh&&o.name==='merged-static'&&!o.userData.info){o.userData.info=rec;pickables.push(o);}});};
   const rand = seededRandom(0xBEA57);
 
   // ---------------------------------------------------------------- shell: dark concrete, black ceiling
@@ -226,7 +230,7 @@ export function buildBeastCave(ctx) {
   const rug=new THREE.Mesh(new THREE.PlaneGeometry(4.6,3.0),new THREE.MeshStandardMaterial({map:rugTex,roughness:1,envMapIntensity:.02}));rug.rotation.x=-Math.PI/2;rug.rotation.z=.04;at(rug,heroX-.2,.009,heroZ);rug.receiveShadow=true;
   const matPad=new THREE.Mesh(new THREE.BoxGeometry(2.1,.012,1.0),new THREE.MeshStandardMaterial({color:'#0a0b0c',roughness:.8,envMapIntensity:.1}));
   at(matPad,heroX,.014,heroZ);
-  const sweat=new THREE.MeshPhysicalMaterial({color:'#050506',roughness:.15,metalness:0,clearcoat:.6,clearcoatRoughness:.2,envMapIntensity:.25,transparent:true,opacity:.8});
+  const sweat=new THREE.MeshPhysicalMaterial({color:'#050506',roughness:.15,metalness:0,clearcoat:.6,clearcoatRoughness:.2,envMapIntensity:.25,transparent:true,opacity:.8,depthWrite:false});   // floor drops: no depth write, so they merge as decals
   for(let i=0;i<7;i++){const d=new THREE.Mesh(new THREE.CircleGeometry(.03+rand()*.07,20),sweat);d.rotation.x=-Math.PI/2;d.scale.set(1,.6+rand()*.6,1);at(d,heroX+.15+rand()*.6,.022,heroZ-.25+rand()*.5);}
   const trainer=new THREE.Group();trainer.name='beast-trainer';group.add(trainer);
   const tbox=(n,s,p,m=dark,r=[0,0,0])=>{const o=new THREE.Mesh(new THREE.BoxGeometry(...s),m);o.name=n;o.position.set(...p);o.rotation.set(...r);o.castShadow=!lite;trainer.add(o);return o;};
@@ -338,6 +342,7 @@ export function buildBeastCave(ctx) {
     for(let i=0;i<3;i++){const a=i*Math.PI*2/3,b=new THREE.Mesh(new THREE.BoxGeometry(.12,.28,.012),new THREE.MeshStandardMaterial({color:'#1f2124',roughness:.5,transparent:true,opacity:.9}));b.position.set(Math.cos(a)*.16,Math.sin(a)*.16,0);b.rotation.z=a+Math.PI/2+.35;rotor.add(b);}
     fanRotors.push(rotor);obstacles.push({c:new THREE.Vector3(fx,0,fz),r:.45});
     fan.userData.info=info([cage,motor],{eyebrow:'AIRFLOW',title:'Wind you have to bring yourself.',sub:'Two pedestal fans · aimed at the saddle',text:'Indoors there is no headwind to cool you. The fans are the only weather in the room — and they spin with the watts when someone rides.'});
+    mergeInto(fan,fan.userData.info,o=>o===rotor);                   // base, pole, cage, spokes, motor: ~13 draws → 2; the rotor still spins
   }
 
   const fanBlurMat=new THREE.MeshBasicMaterial({map:canvasTex(256,256,(g,w,h)=>{g.translate(w/2,h/2);for(let k=0;k<5;k++){g.rotate(Math.PI*2/5);const gr=g.createLinearGradient(0,0,w*.45,0);gr.addColorStop(0,'rgba(10,10,12,.55)');gr.addColorStop(1,'rgba(10,10,12,0)');g.fillStyle=gr;g.beginPath();g.moveTo(0,0);g.arc(0,0,w*.46,-.5,.25);g.fill();}}),transparent:true,depthWrite:false,side:THREE.DoubleSide});
@@ -611,8 +616,12 @@ export function buildBeastCave(ctx) {
   // one draw per material for the cave's static shell and props (was ~1 draw per prop: over the room's mesh budget).
   // Everything that moves, is clicked, is swapped by useAssets() or is placed when the bike arrives stays separate.
   const keepers=new Set([trainer,riser,screen,treadmill,floor,sign,...fanGroups]);
-  const mergedStats=mergeStatic(group,{keep:o=>keepers.has(o)||!!o.userData?.info||!!o.userData?.floor||pickables.includes(o)||o.isLight||o.isPoints});
+  const mergedStats=mergeStatic(group,{keep:o=>keepers.has(o)||!!o.userData?.info||!!o.userData?.floor||pickables.includes(o)||o.isLight||o.isPoints,byValue:lite?10:true,decals:true});   // byValue: the cave builds a material per prop (phones also fold near-identical colours); decals: floor shadows
   group.userData.merged=mergedStats;
+  // phones: the package allows micro-props to drop (lod_policy LOD1/micro-props-optional). Glow sprites, light pools and
+  // washes are atmosphere only; the orange coves, the light shaft and anything you can tap stay.
+  const underKeeper=o=>{for(let a=o;a&&a!==group;a=a.parent)if(keepers.has(a)||a.userData?.info)return true;return false;};   // fans (spinning blades), trainer, screen…
+  if(lite){const hold=new Set([coveMat,shaft.material,fanBlurMat]);group.traverse(o=>{if(o.isMesh&&o.visible&&o.material?.transparent&&!hold.has(o.material)&&!o.userData?.info&&!pickables.includes(o)&&!underKeeper(o))o.visible=false;});}
   return {
     group,floor,sign,bikeSpot,infos,mood:BEAST_MOOD,
     get ride(){return ride;},
@@ -631,15 +640,17 @@ export function buildBeastCave(ctx) {
           const d=new THREE.Vector3(heroX-.3-old.position.x,0,heroZ-old.position.z);f.rotation.y=Math.atan2(d.x,d.z);   // the grille (+z) looks at the saddle
           const blur=new THREE.Mesh(new THREE.CircleGeometry(.2,40),fanBlurMat);blur.position.set(0,.28,.12);f.add(blur);fanRotors[k]=blur;
           group.add(f);old.visible=false;f.traverse(o=>{if(o.isMesh&&o!==blur){o.userData.info=old.userData.info;pickables.push(o);}});
+          mergeInto(f,old.userData.info,o=>o===blur);
         });
       }
-      if(treadG){const t=seat(treadG,1.45,Math.PI/2);t.position.copy(treadmill.position);group.add(t);treadmill.visible=false;t.traverse(o=>{if(o.isMesh){o.userData.info=runConsole.userData.info;pickables.push(o);}});}
-      if(trainerG){const t=seat(trainerG,.56,TRAINER_YAW);t.name='beast-trainer-glb';trainer.add(t);for(const c of trainer.children)if(c!==t)c.visible=false;t.traverse(o=>{if(o.isMesh){o.userData.info=trainerInfo;pickables.push(o);}});}
+      if(treadG){const t=seat(treadG,1.45,Math.PI/2);t.position.copy(treadmill.position);group.add(t);treadmill.visible=false;t.traverse(o=>{if(o.isMesh){o.userData.info=runConsole.userData.info;pickables.push(o);}});mergeInto(t,runConsole.userData.info);}
+      if(trainerG){const t=seat(trainerG,.56,TRAINER_YAW);t.name='beast-trainer-glb';trainer.add(t);for(const c of trainer.children)if(c!==t)c.visible=false;t.traverse(o=>{if(o.isMesh){o.userData.info=trainerInfo;pickables.push(o);}});mergeInto(t,trainerInfo);}
     },
     startRide,stopRide,introCard,resultImage,
     hold(on){ if(ride) ride.holding=!!on; },
     setBike(bike,dress){
-      bike.traverse(o=>{if(!o.isMesh)return;o.material=Array.isArray(o.material)?o.material.map(m=>m.clone()):o.material.clone();o.userData.info=bikeSpot.info;o.castShadow=!lite;delete o.userData.piece;pickables.push(o);});
+      const once=new Map(),cl=m=>{const k=m.name||m.uuid;if(!once.has(k))once.set(k,m.clone());return once.get(k);};   // one material per name (the shared loader hands out per-mesh copies), so the bike merges
+      bike.traverse(o=>{if(!o.isMesh)return;o.material=Array.isArray(o.material)?o.material.map(cl):cl(o.material);o.castShadow=!lite;delete o.userData.piece;});
       dress?.(bike);
       const box=new THREE.Box3().setFromObject(bike),c=box.getCenter(new THREE.Vector3());
       bike.position.set(-c.x,-box.min.y,-c.z);
@@ -661,6 +672,9 @@ export function buildBeastCave(ctx) {
         riser.position.set(fa.x,.025,fa.z);
         bikeSpot.cockpit.x=ra.x+.5;
       }else if(rear) rear.visible=false;
+      if(rear)rear.parent?.remove(rear);                              // never shown here: drop it before merging
+      mergeStatic(bike,{byValue:lite?24:false});                     // after orienting (the merge removes the wheel nodes): ~70 parts → one draw per material; phones fold near-identical finishes
+      bike.traverse(o=>{if(o.isMesh){o.userData.info=bikeSpot.info;pickables.push(o);}});
     },
     update(t,reduce,dt=1/60){
       const p=ride?ride.iv.state.power:0;
