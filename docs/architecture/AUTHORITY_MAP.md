@@ -15,6 +15,7 @@ This document names the canonical owners of product truth. If a proposed change 
 | Bike truth | `museum/bike.schema.json` | extend, never fork |
 | Machine inspection | `web/src/engine/machine-inspection.js` | reuse global part/explode semantics |
 | Room dressing / reflections / bike finish | `web/src/engine/decor.js`, `web/src/engine/env-capture.js`, `web/src/engine/bike-materials.js` | bake+instance decor, one local cube capture per room, one bike material upgrade; do not re-implement per room |
+| Reusable props (procedural) | `web/src/engine/decoration-props.js` + `museum/world/decorations.json` | `decorateRoom` (single props), `instancedProps` (one draw per part for every placement: promenade chairs, lamps), `voileMaterial`; register new props in the catalogue with provenance instead of building them inside a room |
 | Product catalog | `museum/catalog/products.json` + generated projections | edit source catalog, regenerate projections |
 | Brand/UI | `docs/BRAND_SYSTEM.md`, `brand/tokens.css`, `web/styles/components.css` | compose existing primitives first |
 | Consumer shell | `web/src/entry.js` + `web/src/ui/kona-shell.js` | do not create a second shell/navigation authority |

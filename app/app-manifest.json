@@ -1,5 +1,5 @@
 {
- "version": "e21e219fabea",
+ "version": "d5544c7da3ed",
  "core": [
   "index.html",
   "about.html",
@@ -77,7 +77,7 @@
   "web/src/about-story.js": "vCNjlw6XXOlJHSrlsf0Vgm5zOLb3488SnBr2Th5fvyk=",
   "web/styles/about.css": "7kgStyRgk+tFcoDrGOAuv+GjGokKxOBQOLYmcTIugKI=",
   "app/world-shell.html": "hm6CqozA1OsVQOaAemt75R0zNT5trIh24Y3q4IndttU=",
-  "app/admin-assets.json": "KLj3Jf3oUO9KcZJxBSJWSUyS53PVT0kV/LIp3ebqvPk=",
+  "app/admin-assets.json": "tsouO4xxzNa9qzLKKPNVg5YxCUOsxZ4l2fDe3DZsbHw=",
   "app/admin-assets-ui.js": "VOg4+RClB+FLLK/vA+5Zjy/A7j9NymgSjHYZVL7CkHM=",
   "app/admin-asset-preview.js": "M7xUJvAtQ4yOnFKybfxmp0dq7tlx1Z9BU/O1ES36Er8=",
   "web/styles/hall-web.css": "/OmrTdetAvlQUqRWnFl4gf+fE1SiOAlqFeiUim+5x0k=",
@@ -90,7 +90,7 @@
   "app/collectible-stage.js": "e6WN+FXPOmLdXJ3/5GT3WfmUpg12Lmwc/L/IcABtLGI=",
   "integrations/ironman-races-2016-2026.json": "P7vUgV+atNEkd1fjhGBhii8UZFqiskskE6hN0bbVE+Q=",
   "app/museum-data.js": "lj6RSSyTWUGMxNQezZ6Vk0LuCQ6p+xkqGohvqpNxg08=",
-  "app/hall.js": "93qT+w84/apR74oMdfg2a8Vjt7UEUkUalB6DuYNzyIw=",
+  "app/hall.js": "DZxMmtd4Kw4HfrXbOJAfWqHj6VJtqyVmt1WM3DtVio4=",
   "app/studio.js": "cXnp0SxwdV97C40S3ZC8zhCde7JV6AnXD5FS57cQchY=",
   "app/standalone-access.js": "njMGmEzWxwZdR4LCvLyTnz4y5feGbhpw4mbQCdDP9kI=",
   "app/studio-catalog.js": "THm+PAp4y6zKclTTX3/3xmqISKwGYFeqWdZu9wAkQDs=",

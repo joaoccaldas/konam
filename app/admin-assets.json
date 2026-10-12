@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
  "generated_by": "tools/build_admin_assets.mjs",
- "count": 108,
+ "count": 110,
  "rooms": [
   {
    "id": "hall",
@@ -2264,6 +2264,66 @@
     "kind": "decoration",
     "floor": "#111820",
     "accent": "#ff6a00",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "decor:promenade-chair",
+   "kind": "decoration",
+   "type": "decoration",
+   "brand": "KONA World",
+   "name": "Promenade tube chair (Nice blue)",
+   "year": "",
+   "category": "Room decoration",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "promenade-chair",
+     "builder"
+    ],
+    [
+     "0",
+     "placements"
+    ]
+   ],
+   "locations": [],
+   "preview": {
+    "kind": "decoration",
+    "floor": "#12181d",
+    "accent": "#20b8d5",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "decor:promenade-lamp",
+   "kind": "decoration",
+   "type": "decoration",
+   "brand": "KONA World",
+   "name": "Cast-iron promenade lamp with glowing globe",
+   "year": "",
+   "category": "Room decoration",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "promenade-lamp",
+     "builder"
+    ],
+    [
+     "0",
+     "placements"
+    ]
+   ],
+   "locations": [],
+   "preview": {
+    "kind": "decoration",
+    "floor": "#12181d",
+    "accent": "#20b8d5",
     "fog": "#0b1116"
    }
   },

@@ -24,7 +24,7 @@ import { lightShaft, motes } from './roomkit.js';
 import { mergeStatic } from './engine/decor.js';
 import { localEnvCapture } from './engine/env-capture.js';
 import { travertineTex, marbleTex, wallWash, normalFrom } from './engine/textures.js';
-import { decorateRoom } from './engine/decoration-props.js';
+import { decorateRoom, instancedProps, voileMaterial } from './engine/decoration-props.js';
 import { framedPainting } from './engine/wing.js';
 import { paintingCard, sculptureCard } from './engine/card.js';
 import PAINTINGS from '../../museum/art/paintings.json' with { type: 'json' };
@@ -138,44 +138,18 @@ export function buildLaidlowNice(ctx) {
     { prop: 'kona-palm', x: 8.3, z: -4.8, height: 2.2, seed: 7 }, { prop: 'kona-palm', x: 31.6, z: -10.9, height: 2.9, seed: 11 }], { group, lite, obstacles, sway, basaltTex: ctx.basaltTex })) g.userData.prop = 'kona-palm';   // the factory adds to the group
 
   // ------------------------------------------------------------ the blue chairs of the Promenade, facing the sea (one InstancedMesh)
-  const chairGeo = (() => { const p = [], RS = lite ? 5 : 8, TS = lite ? 10 : 22;
-    const tube = pts => p.push(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(([x, y, z]) => new THREE.Vector3(x, y, z))), TS, .014, RS).toNonIndexed());
-    for (const sx of [-.25, .25]) {                                   // side frames: front leg up into the armrest, back leg sweeping into the back post
-      tube([[sx, 0, .24], [sx, .3, .23], [sx, .6, .2], [sx, .63, .05], [sx, .64, -.12]]);
-      tube([[sx, 0, -.26], [sx, .32, -.2], [sx, .62, -.3], [sx, .95, -.42]]); }
-    tube([[-.25, .34, .2], [0, .345, .2], [.25, .34, .2]]); tube([[-.25, .3, -.2], [0, .3, -.2], [.25, .3, -.2]]);
-    const slat = (w, len, bend, segs) => { const g = new THREE.BoxGeometry(w, .016, len, 1, 1, segs), q = g.attributes.position; for (let k = 0; k < q.count; k++) { const z = q.getZ(k) / len * 2; q.setY(k, q.getY(k) - bend * (1 - z * z)); } g.computeVertexNormals(); return g.toNonIndexed(); };
-    for (let i = 0; i < 6; i++) { const g = slat(.07, .46, .025, lite ? 3 : 6); g.translate(-.18 + i * .072, .37, 0); g.rotateX(-.06); p.push(g); }                    // a dished seat
-    for (let i = 0; i < 6; i++) { const g = slat(.07, .5, .03, lite ? 3 : 6); g.rotateX(Math.PI / 2 - .4); g.translate(-.18 + i * .072, .72, -.33); p.push(g); }    // a reclined, curved back
-    const g = mergeGeometries(p); g.rotateY(-Math.PI / 2); return g; })();      // faces +x: the sea
   const chairAt = []; for (let i = 0; i < 11; i++) chairAt.push([28.5 + (i % 2) * .5 + rand() * .3, R.z1 + 1.2 + i * (RD - 2.4) / 10, (rand() - .5) * .5]);
-  const chairs = new THREE.InstancedMesh(chairGeo, chairMat, chairAt.length);
-  chairAt.forEach(([x, z, yaw], k) => { M4.compose(V.set(x, 0, z), Q.setFromEuler(EU.set(0, yaw, 0)), S.set(1, 1, 1)); chairs.setMatrixAt(k, M4); }); chairs.castShadow = !lite; chairs.receiveShadow = true; group.add(chairs);
-  const cs0 = ctx.contactShadow ? ctx.contactShadow(.8, .7) : null;        // one soft footprint per chair, one draw for all of them
-  if (cs0) { const csI = new THREE.InstancedMesh(cs0.geometry, cs0.material, chairAt.length); csI.renderOrder = 1;
-    chairAt.forEach(([x, z, yaw], k) => { M4.compose(V.set(x, .006, z), Q.setFromEuler(EU.set(-Math.PI / 2, 0, yaw)), S.set(1, 1, 1)); csI.setMatrixAt(k, M4); }); group.add(csI); }
+  const chairSet = instancedProps('promenade-chair', chairAt.map(([x, z, rotation]) => ({ x, z, rotation })), { lite, contactShadow: ctx.contactShadow, material: () => chairMat });   // the shared chair: one draw for all eleven
+  const chairs = chairSet.meshes.chair; group.add(chairSet.group);
   info(chairs, { model: act => chairsCard(act), eyebrow: 'LES CHAISES BLEUES', title: 'A seat facing the sea.', sub: 'The Promenade des Anglais' });
 
-  // ------------------------------------------------------------ the Promenade's cast-iron lamps along the railing (instanced, emissive globes, no lights)
-  const lampAt = [-5.3, -8.6, -13.1, -16.4], lampGeo = (() => { const p = [];
-    p.push(new THREE.CylinderGeometry(.11, .15, .3, 12).translate(0, .15, 0), new THREE.CylinderGeometry(.04, .06, 2.6, 10).translate(0, 1.6, 0), new THREE.TorusGeometry(.09, .015, 6, 18).rotateX(Math.PI / 2).translate(0, 2.9, 0), new THREE.ConeGeometry(.16, .14, 12).translate(0, 3.32, 0));
-    return mergeGeometries(p.map(g => g.toNonIndexed())); })();
-  const castIron = E(new THREE.MeshStandardMaterial({ color: '#1f2a28', roughness: .45, metalness: .6 }));
-  const lamps = new THREE.InstancedMesh(lampGeo, castIron, lampAt.length), globes = new THREE.InstancedMesh(new THREE.SphereGeometry(.13, 16, 12), new THREE.MeshBasicMaterial({ color: '#ffe3b0', toneMapped: false }), lampAt.length);
-  lampAt.forEach((z, k) => { M4.makeTranslation(RAIL + .05, 0, z); lamps.setMatrixAt(k, M4); M4.makeTranslation(RAIL + .05, 3.1, z); globes.setMatrixAt(k, M4); });
-  lamps.castShadow = !lite; group.add(lamps, globes);
-  const haloT = tex(canvas(128, 128, (g, w, h) => { const gr = g.createRadialGradient(w / 2, h / 2, 2, w / 2, h / 2, w / 2); gr.addColorStop(0, 'rgba(255,220,160,.9)'); gr.addColorStop(1, 'rgba(255,220,160,0)'); g.fillStyle = gr; g.fillRect(0, 0, w, h); }));
-  const halos = new THREE.InstancedMesh(new THREE.PlaneGeometry(.9, .9), new THREE.MeshBasicMaterial({ map: haloT, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }), lampAt.length);
-  lampAt.forEach((z, k) => { M4.compose(V.set(RAIL - .05, 3.1, z), Q.setFromEuler(EU.set(0, -Math.PI / 2, 0)), S.set(1, 1, 1)); halos.setMatrixAt(k, M4); }); group.add(halos);
-  obstacles.push(...lampAt.map(z => ({ c: new THREE.Vector3(RAIL + .05, 0, z), r: .3 })));
+  // ------------------------------------------------------------ the Promenade's cast-iron lamps along the railing (shared prop: instanced, emissive globes, no lights)
+  const lampSet = instancedProps('promenade-lamp', [-5.3, -8.6, -13.1, -16.4].map(z => ({ x: RAIL + .05, z })), { lite, obstacles, material: (name, m) => name === 'post' ? E(m) : m });
+  const { post: lamps, globe: globes, halo: halos } = lampSet.meshes; group.add(lampSet.group);
 
   // ------------------------------------------------------------ voile at the bay's edges, breathing in the sea breeze (vertex shader, two planes)
-  const sheerU = { t: { value: 0 } };
-  const sheerMat = new THREE.MeshStandardMaterial({ color: '#fbf6ee', roughness: 1, transparent: true, opacity: lite ? .5 : .62, side: THREE.DoubleSide, depthWrite: false });
-  sheerMat.onBeforeCompile = sh => { sh.uniforms.uT = sheerU.t; sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uT;')
-    .replace('#include <begin_vertex>', '#include <begin_vertex>\nfloat hang=clamp((2.6-position.y)/5.2,0.,1.);transformed.z+=(sin(position.x*5.+uT*1.3)*.07+sin(position.x*11.-uT*2.1)*.03)*hang*hang+hang*.05;'); };
-  sheerMat.customProgramCacheKey = () => 'laidlow-sheer';
-  for (const z of [R.z0 - .55, R.z1 + .55]) { const g = new THREE.PlaneGeometry(1.1, R.h - .9, lite ? 6 : 14, lite ? 8 : 20); const sh = new THREE.Mesh(g, sheerMat); sh.rotation.y = -Math.PI / 2; sh.position.set(GX - .35, (R.h - .9) / 2, z); sh.renderOrder = 2; group.add(sh); }
+  const voile = voileMaterial({ lite });                                    // shared sheer material: one shader for both sheets
+  for (const z of [R.z0 - .55, R.z1 + .55]) { const sh = voile.sheet(1.1, R.h - .9); sh.rotation.y = -Math.PI / 2; sh.position.set(GX - .35, (R.h - .9) / 2, z); group.add(sh); }
 
   // ------------------------------------------------------------ the blue enamel street sign of Nice, on the pilaster by the bay
   const plaqueMat = new THREE.MeshPhysicalMaterial({ map: tex(canvas(1024, 384, (g, w, h) => { g.fillStyle = '#1d4f9c'; g.fillRect(0, 0, w, h); g.strokeStyle = '#f4f1e8'; g.lineWidth = 14; g.strokeRect(22, 22, w - 44, h - 44);
@@ -407,7 +381,7 @@ export function buildLaidlowNice(ctx) {
     },
     update(t, reduce, dt = 1 / 60) {
       if (envDirty) { envDirty--; if (!envDirty) env.capture(); }
-      bayMat.uniforms.t.value = reduce ? 0 : t; sheerU.t.value = reduce ? 0 : t;
+      bayMat.uniforms.t.value = reduce ? 0 : t; voile.uniform.value = reduce ? 0 : t;
       if (dust && !reduce) dust.step(t);
       if (!reduce) for (const w of sway) { const a = Math.sin(t * .9 + w.phase) * w.amp; w.o.rotation.z = a; w.o.rotation.x = a * .5; }
       return { power: 0, heat: 0, riding: false };

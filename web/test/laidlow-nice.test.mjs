@@ -34,7 +34,9 @@ test('every displayed result is sourced; the investigation is recorded for prese
 test('reuses the canonical Canyon bike, shared primitives and instancing; no new renderer', () => {
   assert.match(room, /import \{ mergeStatic \} from '\.\/engine\/decor\.js'/);
   assert.match(room, /import \{ localEnvCapture \} from '\.\/engine\/env-capture\.js'/);
-  assert.match(room, /new THREE\.InstancedMesh\(chairGeo/);
+  assert.match(room, /instancedProps\('promenade-chair'/);              // shared instanced props, not local copies
+  assert.match(room, /instancedProps\('promenade-lamp'/);
+  assert.match(room, /voileMaterial\(/);
   assert.match(room, /setBike\(bike, dress\)/);
   assert.doesNotMatch(room, /ownBikes: true/);                         // the host loads the museum CFR (lite on phones)
   const m = JSON.parse(read('world/konam/candidates/laidlow-nice-asset-manifest-v1.json'));
