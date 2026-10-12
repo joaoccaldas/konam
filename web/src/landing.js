@@ -16,6 +16,7 @@ import { buildHalloween, hweenWalkable, HDOOR, HROOM } from './halloween.js';
 import { buildBeastCave, beastCaveWalkable, BDOOR, BROOM, beastEvent, eventWhen } from './beast-cave.js';
 import { buildNor3Winter } from './nor3-winter.js';
 import { buildLaidlowNice } from './laidlow-nice.js';
+import { buildKona2026Saturday } from './kona-2026-saturday.js';
 import { buildBreitlingKona } from './breitling-kona.js';
 import { readStorage, writeStorage } from './engine/storage.js';
 import { buildSanctuary, sanctuaryWalkable, SDOOR, SROOM } from './sanctuary.js';
@@ -54,7 +55,8 @@ const WYLD = { pink: '#ff3d8e', blush: '#ff8fbf', lilac: '#e9cde8', mint: '#8fe7
 const NOR3_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'nor3-winter';   // NOR // 3 · Kona Winter builds on the same review footprint
 const BREITLING_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'breitling-kona';   // BREITLING × KONA atelier (same footprint)
 const LAIDLOW_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'laidlow-nice';   // LAIDLOW // NICE · Baie des Anges (same footprint)
-const BEAST_CAVE_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'beast-cave' || NOR3_REVIEW || BREITLING_REVIEW || LAIDLOW_REVIEW;
+const KONA26_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'kona-2026-saturday';   // SATURDAY // ALIʻI · Kona 2026 event room (same footprint)
+const BEAST_CAVE_REVIEW = new URLSearchParams(location.search).get('reviewRoom') === 'beast-cave' || NOR3_REVIEW || BREITLING_REVIEW || LAIDLOW_REVIEW || KONA26_REVIEW;
 // Phone detection must survive a browser's "Desktop view", where pointer and
 // viewport width both lie; detect.js adds the physical-screen signal.
 const coarse = dc;
@@ -884,7 +886,7 @@ const pier = KY ? buildPier({ scene, data: KY, lettering, canvasTex, M, WYLD, FO
 const hween = buildHalloween({ scene, canvasTex, lettering, lightPool, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x0 });
 hall.add(hween.sign);
 const reviewCtx = { scene, renderer, renderCard: m => renderCard(m), canvasTex, lettering, lightPool, contactShadow, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 };
-const beast = BEAST_CAVE_REVIEW ? (NOR3_REVIEW ? buildNor3Winter(reviewCtx) : BREITLING_REVIEW ? buildBreitlingKona(reviewCtx) : LAIDLOW_REVIEW ? buildLaidlowNice(reviewCtx) : buildBeastCave(reviewCtx)) : null;
+const beast = BEAST_CAVE_REVIEW ? (NOR3_REVIEW ? buildNor3Winter(reviewCtx) : BREITLING_REVIEW ? buildBreitlingKona(reviewCtx) : LAIDLOW_REVIEW ? buildLaidlowNice(reviewCtx) : KONA26_REVIEW ? buildKona2026Saturday(reviewCtx) : buildBeastCave(reviewCtx)) : null;
 if (beast) hall.add(beast.sign);
 const sanctuary = buildSanctuary({ scene, lettering, lightPool, FONT, SERIF, lite, coarse, pickables, obstacles });
 sanctuary.sign.position.set(0, SDOOR.h + .7, HALL.z0 - .04); sanctuary.sign.rotation.y = Math.PI; hall.add(sanctuary.sign);
@@ -1587,7 +1589,7 @@ if (KONA.titles.length) $('railInner').insertAdjacentHTML('afterbegin', `<button
 if (WROOMDATA) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip wyld" data-room="wyld" aria-label="WYLD Room"><span class="n">W</span><span><small>4 DYES · MY2027</small><b>WYLD Room</b></span></button>`);
 if (pier) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip pier" data-room="pier" aria-label="The Kona Pier: Kona by Year"><span class="n"><img src="assets/kona-years/y2019.jpg" alt="" loading="lazy"></span><span><small>2014 — 2025</small><b>Kona by Year</b></span></button>`);
 $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip hween" data-room="hween" aria-label="Lava Night, the Halloween room"><span class="n" aria-hidden="true">🎃</span><span><small>HALLOWEEN</small><b>Lava Night</b></span></button>`);
-if (BEAST_CAVE_REVIEW) $('railInner').insertAdjacentHTML('afterbegin', `${LAIDLOW_REVIEW ? '<button class="chip beast" data-room="beast" aria-label="Laidlow Nice review"><span class="n">L</span><span><small>REVIEW · ATHLETE ROOM</small><b>Laidlow // Nice</b></span></button>' : BREITLING_REVIEW ? '<button class="chip beast" data-room="beast" aria-label="Breitling Kona review"><span class="n">B</span><span><small>REVIEW · PARTNER ROOM</small><b>Breitling × Kona</b></span></button>' : NOR3_REVIEW ? '<button class="chip beast" data-room="beast" aria-label="NOR 3 Kona Winter review"><span class="n">N</span><span><small>REVIEW · ATHLETE ROOM</small><b>NOR // 3</b></span></button>' : '<button class="chip beast" data-room="beast" aria-label="Lionel Sanders Beast Cave review"><span class="n">B</span><span><small>REVIEW · ATHLETE ROOM</small><b>Beast Cave</b></span></button>'}`);
+if (BEAST_CAVE_REVIEW) $('railInner').insertAdjacentHTML('afterbegin', `${KONA26_REVIEW ? '<button class="chip beast" data-room="beast" aria-label="Kona 2026 Saturday review"><span class="n">26</span><span><small>REVIEW · EVENT ROOM</small><b>Saturday // Aliʻi</b></span></button>' : LAIDLOW_REVIEW ? '<button class="chip beast" data-room="beast" aria-label="Laidlow Nice review"><span class="n">L</span><span><small>REVIEW · ATHLETE ROOM</small><b>Laidlow // Nice</b></span></button>' : BREITLING_REVIEW ? '<button class="chip beast" data-room="beast" aria-label="Breitling Kona review"><span class="n">B</span><span><small>REVIEW · PARTNER ROOM</small><b>Breitling × Kona</b></span></button>' : NOR3_REVIEW ? '<button class="chip beast" data-room="beast" aria-label="NOR 3 Kona Winter review"><span class="n">N</span><span><small>REVIEW · ATHLETE ROOM</small><b>NOR // 3</b></span></button>' : '<button class="chip beast" data-room="beast" aria-label="Lionel Sanders Beast Cave review"><span class="n">B</span><span><small>REVIEW · ATHLETE ROOM</small><b>Beast Cave</b></span></button>'}`);
 for (const r of [...brandRooms].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip brand" data-room="${esc(r.desc.id)}" aria-label="${esc(r.desc.name)}"><span class="n" style="background:${esc(r.desc.theme?.accent || '#c9a13b')};-webkit-background-clip:text;background-clip:text;color:transparent">${esc(r.desc.name.slice(0, 1))}</span><span><small>${r.products.length} PRODUCT${r.products.length > 1 ? 'S' : ''}</small><b>${esc(r.desc.name)}</b></span></button>`);
 $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip sanctuary" data-room="sanctuary" aria-label="Sanctuary chapel, eight films"><span class="n">S</span><span><small>8 FILMS</small><b>Sanctuary</b></span></button>`);
 for (const w of [...atlas.wings].reverse()) $('railInner').insertAdjacentHTML('afterbegin', `<button class="chip atlas" data-room="wing-${esc(w.id)}" aria-label="${esc(w.name)}: ${esc(w.sub)}"><span class="n" aria-hidden="true">${w.features?.clock ? '⏱' : '✦'}</span><span><small>UPPER FLOOR · ${atlas.rooms.filter(r => r.wing === w.id).reduce((n, r) => n + r.bikes.length + r.art.length, 0)} WORKS</small><b>${esc(w.name)}</b></span></button>`);
@@ -1600,7 +1602,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
   const liveAreas = [
     ...['hall', 'sanctuary', 'hween', ...(BEAST_CAVE_REVIEW?['beast']:[]), 'kona', ...(WROOMDATA?['wyld']:[]), ...(pier ? ['pier'] : []), 'stair', 'nave'].map(id => {
       const w = WORDS[id], rect = { hall: HALL, sanctuary: SROOM, hween: HROOM, beast: BROOM, kona: ROOM, wyld: WROOM, pier: pier && { x0: PIER.x0, x1: PIER.x1, z0: PIER.z0, z1: PIER.z1 }, stair: { x0: 7.35, x1: 12.3, z0: .75, z1: 6.55 }, nave: { x0: 7.5, x1: 16.5, z0: 5.55, z1: 27.2 } }[id];
-      return R(id, w?.short || ({ beast: LAIDLOW_REVIEW ? 'Laidlow // Nice' : BREITLING_REVIEW ? 'Breitling × Kona' : NOR3_REVIEW ? 'NOR // 3' : 'Beast Cave' })[id] || id, w?.sub || ({ beast: LAIDLOW_REVIEW ? 'Baie des Anges · athlete room review' : BREITLING_REVIEW ? 'The Finish-Line Atelier · partner room review' : NOR3_REVIEW ? 'Kona Winter · athlete room review' : 'Lionel Sanders · athlete room review' })[id] || '', rect, w?.floor || 'ground', AREA_COLOR[id], id === 'stair' || id === 'nave' ? { layer: 0 } : id==='kona'?{overview:{to:{x:ROOM.x1-1.4,z:DZ},face:{x:(ROOM.x0+ROOM.x1)/2,y:EYE,z:(ROOM.z0+ROOM.z1)/2}}}:{});
+      return R(id, w?.short || ({ beast: KONA26_REVIEW ? 'Saturday // Aliʻi' : LAIDLOW_REVIEW ? 'Laidlow // Nice' : BREITLING_REVIEW ? 'Breitling × Kona' : NOR3_REVIEW ? 'NOR // 3' : 'Beast Cave' })[id] || id, w?.sub || ({ beast: KONA26_REVIEW ? 'Kona 2026 · event room review' : LAIDLOW_REVIEW ? 'Baie des Anges · athlete room review' : BREITLING_REVIEW ? 'The Finish-Line Atelier · partner room review' : NOR3_REVIEW ? 'Kona Winter · athlete room review' : 'Lionel Sanders · athlete room review' })[id] || '', rect, w?.floor || 'ground', AREA_COLOR[id], id === 'stair' || id === 'nave' ? { layer: 0 } : id==='kona'?{overview:{to:{x:ROOM.x1-1.4,z:DZ},face:{x:(ROOM.x0+ROOM.x1)/2,y:EYE,z:(ROOM.z0+ROOM.z1)/2}}}:{});
     }),
     ...brandRooms.map(r => R(r.desc.id, r.desc.name, r.desc.kicker || '', r.bounds, 'ground', r.desc.theme?.accent || '#c9a13b')),
     ...galleries.bays.map(b => R('bay-' + b.id, b.title, b.sub, { x0: 8.4, x1: 14.8, z0: b.z - 1.8, z1: b.z + 1.8 }, 'upper', b.floor, { layer: 1, height:4.4, ink: /^#(1|0)/.test(b.floor) ? '#fbf9f5' : '#12181d', kind: 'bay' })),
@@ -1627,7 +1629,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     if(!gate.unlocked){toast(`Level ${gate.requiredLevel} · keep exploring to unlock ${area.name}`);return;}
     if (!started) enter();
     tourEnd(false); closeCard(); prepareRoom(id);
-    if (id === 'beast' && beast) { visitBeast(); toast(`${area.name} · ${LAIDLOW_REVIEW ? 'Nice, very nice' : BREITLING_REVIEW ? 'every second of Kona' : NOR3_REVIEW ? 'three lanes' : 'the empty saddle'}`); return; }
+    if (id === 'beast' && beast) { visitBeast(); toast(`${area.name} · ${KONA26_REVIEW ? 'decided in the last mile' : LAIDLOW_REVIEW ? 'Nice, very nice' : BREITLING_REVIEW ? 'every second of Kona' : NOR3_REVIEW ? 'three lanes' : 'the empty saddle'}`); return; }
     const ov=safeOverview(area); if(!ov) return;
     const face=new THREE.Vector3(ov.face.x,ov.face.y,ov.face.z);
     route(ov.to,face,null,{area,overview:ov});
@@ -2052,7 +2054,7 @@ function frame(now) {
     const themeRoom = galleries.update(t, P, reduce, scene, renderer, reg, moodRoom);
     atlas.update(t, dt, P, upstairs, reduce);
     if (audio) {                                                      // the sea fades upstairs; each room brings its own bed
-      roomSound.set(themeRoom?.id || (reg === 'beast' ? (LAIDLOW_REVIEW ? null : NOR3_REVIEW ? 'nor3' : BREITLING_REVIEW ? 'breitling' : 'beast') : reg === 'breitling' ? 'breitling' : null));
+      roomSound.set(themeRoom?.id || (reg === 'beast' ? (LAIDLOW_REVIEW || KONA26_REVIEW ? null : NOR3_REVIEW ? 'nor3' : BREITLING_REVIEW ? 'breitling' : 'beast') : reg === 'breitling' ? 'breitling' : null));
       roomSound.drive?.('beast', beastNow?.power || 0);
       const sea = audioOn ? (upstairs ? .05 : .2) : 0;
       if (sea !== audio.sea) { audio.sea = sea; audio.gain.gain.setTargetAtTime(sea, audio.ctx.currentTime, .8); }
