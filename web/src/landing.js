@@ -1889,11 +1889,11 @@ function frame(now) {
     if (beastVisible) beast.update(t, reduce);
     const hollowVisible = !!hollow && (reg === 'hollow' || (reg === 'hall' && P.z < HHDOOR.z1 + 6 && P.z > HHDOOR.z0 - 6));
     if (hollow) hollow.group.visible = hollowVisible;
-    if (hollowVisible) hollow.update(t, reduce, P); else hollow?.hide();
     hween.group.visible = reg === 'hween' || P.z > -32;
     sanctuary.group.visible = true;                                   // the chapel's walls and roof always draw; upstairs only its bikes are culled
     for (const f of sanctuary.films) if (f.bike) f.bike.visible = reg !== 'gallery';
     const themeRoom = galleries.update(t, P, reduce, scene, renderer, reg);
+    if (hollowVisible) hollow.update(t, reduce, P); else hollow?.hide();   // after the galleries: they own scene.fog.color every frame, and the house must have the last word on it while you are inside
     atlas.update(t, dt, P, upstairs, reduce);
     if (audio) {                                                      // the sea fades upstairs; each room brings its own bed
       roomSound.set(reg === 'hollow' ? 'haunt' : themeRoom?.id || null);

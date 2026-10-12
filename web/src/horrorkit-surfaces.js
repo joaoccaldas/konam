@@ -357,6 +357,34 @@ export function createSurfaces({ canvasTex, size = 1024, seed = 1 }) {
     });
   });
 
+  // the same frame, later: the sitter gone (an empty chair), then the sitter with their back to the painter
+  const portraitAlt = kind => mk('portraitAlt' + kind, () => canvasTex(PORTRAIT.w, PORTRAIT.h, (g, w, h) => {
+    const r = rng(seed + 211 + kind.length);
+    const bg = g.createLinearGradient(0, 0, w, h); bg.addColorStop(0, '#5a4630'); bg.addColorStop(1, '#2a2018'); g.fillStyle = bg; g.fillRect(0, 0, w, h);
+    if (kind === 'chair') {
+      g.fillStyle = '#120d0a'; g.fillRect(w * .3, h * .22, w * .4, h * .5); g.fillRect(w * .26, h * .66, w * .48, h * .06); g.fillRect(w * .3, h * .72, w * .05, h * .24); g.fillRect(w * .65, h * .72, w * .05, h * .24);
+      g.fillStyle = 'rgba(150,120,90,.18)'; g.fillRect(w * .33, h * .26, w * .34, h * .1);                       // a little light left on the chair back
+    } else {
+      g.fillStyle = '#0d0b0b'; g.beginPath(); g.moveTo(0, h); g.bezierCurveTo(w * .02, h * .72, w * .2, h * .66, w * .36, h * .64); g.lineTo(w * .64, h * .64); g.bezierCurveTo(w * .8, h * .66, w * .98, h * .72, w, h); g.closePath(); g.fill();
+      g.fillStyle = '#b8a48e'; g.fillRect(w * .445, h * .5, w * .11, h * .16);
+      g.fillStyle = '#1a110c'; g.beginPath(); g.ellipse(w * .5, h * .38, w * .17, h * .2, 0, 0, 6.3); g.fill(); g.beginPath(); g.ellipse(w * .5, h * .17, w * .08, h * .05, 0, 0, 6.3); g.fill();
+      g.strokeStyle = 'rgba(60,40,28,.6)'; g.lineWidth = 2; for (let k = 0; k < 28; k++) { g.beginPath(); const x = w * (.36 + r() * .28); g.moveTo(x, h * .22); g.quadraticCurveTo(x + (r() - .5) * 20, h * .38, x + (r() - .5) * 28, h * .54); g.stroke(); }
+    }
+    const vig = g.createRadialGradient(w * .5, h * .42, w * .2, w * .5, h * .5, w * .85); vig.addColorStop(0, 'rgba(0,0,0,0)'); vig.addColorStop(1, 'rgba(0,0,0,.72)'); g.fillStyle = vig; g.fillRect(0, 0, w, h);
+    g.strokeStyle = 'rgba(0,0,0,.4)'; g.lineWidth = 1; for (let k = 0; k < 90; k++) walk(g, r, r() * w, r() * h, r() * 6.3, 5 + r() * 9 | 0, 6, 1.4);
+  }));
+
+  // a child's chalk wall: rows of tall figures with arms to their knees, and a tally that never closes
+  const chalk = () => mk('chalk', () => canvasTex(1024, 512, (g, w, h) => {
+    const r = rng(seed + 231); g.clearRect(0, 0, w, h); g.strokeStyle = 'rgba(240,236,220,.95)'; g.lineCap = 'round';
+    for (let i = 0; i < 17; i++) {
+      const x = 50 + i * 56 + (r() - .5) * 12, y0 = 70 + (i % 3) * 18, sc = .85 + r() * .3; g.lineWidth = 5 + r() * 3;
+      g.beginPath(); g.arc(x, y0, 12 * sc, 0, 6.3); g.stroke();
+      g.beginPath(); g.moveTo(x, y0 + 12 * sc); g.lineTo(x, y0 + 120 * sc); g.moveTo(x, y0 + 30 * sc); g.lineTo(x - 22 * sc, y0 + 150 * sc); g.moveTo(x, y0 + 30 * sc); g.lineTo(x + 22 * sc, y0 + 148 * sc); g.moveTo(x, y0 + 120 * sc); g.lineTo(x - 12 * sc, y0 + 200 * sc); g.moveTo(x, y0 + 120 * sc); g.lineTo(x + 12 * sc, y0 + 200 * sc); g.stroke();
+    }
+    g.lineWidth = 4; for (let row = 0; row < 3; row++) for (let grp = 0; grp < 9; grp++) { const x0 = 60 + grp * 100, y0 = 340 + row * 52; for (let i = 0; i < 4; i++) { g.beginPath(); g.moveTo(x0 + i * 14, y0); g.lineTo(x0 + i * 14 + (r() - .5) * 4, y0 + 38); g.stroke(); } if (grp < 8 || row < 2) { g.beginPath(); g.moveTo(x0 - 6, y0 + 32); g.lineTo(x0 + 54, y0 + 6); g.stroke(); } }
+  }, [1, 1]));
+
   // ---------------------------------------------------------------- night outside the windows: bare trees, a hill, one lit window far off
   const storm = () => mk('storm', () => canvasTex(Math.max(512, n), Math.max(256, n / 2), (g, w, h) => {
     const r = rng(seed + 121);
@@ -407,5 +435,5 @@ export function createSurfaces({ canvasTex, size = 1024, seed = 1 }) {
     t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping; return t;
   });
 
-  return { floorboards, marble, wet, wallpaper, wainscot, ceiling, brick, flagstone, runner, rust, sheet, portrait, PORTRAIT, storm, rain, stainedGlass, shade, field };
+  return { portraitAlt, chalk, floorboards, marble, wet, wallpaper, wainscot, ceiling, brick, flagstone, runner, rust, sheet, portrait, PORTRAIT, storm, rain, stainedGlass, shade, field };
 }

@@ -10,9 +10,11 @@
 //  - with reduced motion: no lightning, no flicker, no blackouts, no figure movement, only static dread
 const STANDOFF = 5.2, FLASH_GAP = 13, LOOK_COS = Math.cos(.95);       // ~54 degrees either side of where the visitor is looking
 
-export const ZONES = ['foyer', 'corridor', 'parlor', 'nursery', 'library', 'dining', 'cellar', 'door'];
+export const ZONES = ['foyer', 'corridor', 'parlor', 'nursery', 'library', 'dining', 'cellar', 'sealed', 'door'];
 
-export function createDirector({ zoneOf, lodgerPath, bikePos, sconces = 6, seed = 7 }) {
+//  - hidden things (writing on the wall, a portrait that turns, a hand at the corridor door) only advance a stage while they are
+//    out of the visitor's view; studying the ledger opens the secret in the cellar; the sealed room's figure shows only far from you
+export function createDirector({ zoneOf, lodgerPath, bikePos, watch = {}, sconces = 6, seed = 7 }) {
   let s = seed >>> 0;
   const rand = () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const seen = new Set(), cues = [];
@@ -20,6 +22,7 @@ export function createDirector({ zoneOf, lodgerPath, bikePos, sconces = 6, seed 
     nextFlash: 9 + rand() * 8, flashAt: -99, thunderAt: -1, lastFlash: -99,
     wave: null, chase: null, blackout: null,
     lodger: { i: 0, visible: false, hideUntil: 0, lookT: 0, awayT: 0, x: 0, z: 0 },
+    stage: { writing: 0, portrait: 0, hand: 0 }, lastZone: null, secret: false, ledgerT: 0, sealed: { armed: true, visible: false, lookT: 0, leftAt: 0 },
     slam: { closed: false, since: 0 }, rock: 0, bookFell: false, stingerArmed: true, cellarLeftAt: 0, windGust: 0,
   };
   const cue = (name, delay = 0) => cues.push({ name, delay });
@@ -31,7 +34,7 @@ export function createDirector({ zoneOf, lodgerPath, bikePos, sconces = 6, seed 
 
   function update(t, dt, P, reduce) {
     const zone = zoneOf(P.x, P.z), inside = zone !== 'out';
-    const out = { zone, inside, flash: 0, level: { all: 1, sconce: Array(sconces).fill(1), furnace: 1 }, lodger: null, doorClosed: false, rock: 0, blackout: false, cues: [] };
+    const out = { zone, inside, flash: 0, level: { all: 1, sconce: Array(sconces).fill(1), furnace: 1 }, lodger: null, doorClosed: false, rock: 0, blackout: false, cues: [], stage: { ...st.stage }, secretOpen: st.secret };
     if (!inside) { if (st.lodger.visible) st.lodger.visible = false; return out; }
 
     // ---- lightning: a soft attack and a long decay, never closer together than FLASH_GAP
@@ -89,6 +92,39 @@ export function createDirector({ zoneOf, lodgerPath, bikePos, sconces = 6, seed 
     if (zone === 'library' && st.bookT && !st.bookFell && t > st.bookT && !reduce) { st.bookFell = true; st.bookFall = t; cue('thud'); }
     out.bookFall = st.bookFell ? t - st.bookFall : -1;
 
+    // ---- hidden things change only while they are unseen; with reduced motion they simply stand at their first stage
+    const unseen = pos => !pos || !lookingAt(P, pos[0], pos[1]) || Math.hypot(pos[0] - P.x, pos[1] - P.z) > 16;
+    if (reduce) { st.stage.writing = st.stage.portrait = st.stage.hand = 1; }
+    else if (zone !== st.lastZone) {
+      const bump = (k, max) => { if (st.stage[k] < max && unseen(watch[k])) st.stage[k]++; };
+      if (zone === 'foyer' && st.lastZone) { bump('portrait', 2); bump('hand', 3); }
+      if (zone === 'corridor' && seen.has('wave')) bump('writing', 2);
+      if (zone === 'foyer' && seen.has('wave')) bump('writing', 2);
+      if (zone === 'foyer' && st.lastZone === 'corridor' && st.stage.hand === 0) st.stage.hand = 1;
+    }
+    st.lastZone = zone;
+    out.stage = { ...st.stage };
+
+    // ---- the ledger: study it for a moment and, somewhere in the house, something opens
+    if (zone === 'library' && watch.ledger) {
+      const near = Math.hypot(watch.ledger[0] - P.x, watch.ledger[1] - P.z) < 2.5 && lookingAt(P, watch.ledger[0], watch.ledger[1]);
+      st.ledgerT = near ? st.ledgerT + dt : Math.max(0, st.ledgerT - dt * .5);
+      if (!st.secret && st.ledgerT > 1.6) { st.secret = true; cue('grind', 1.2); }
+    }
+    out.secretOpen = st.secret;
+
+    // ---- the sealed room: its one scare, far from you (never inside the standoff), gone the moment you look
+    const sl = st.sealed;
+    if (zone !== 'sealed') { if (sl.visible) sl.visible = false; sl.leftAt = sl.leftAt || t; if (t - sl.leftAt > 12) sl.armed = true; }
+    else {
+      sl.leftAt = 0;
+      const door = watch.sealedDoor || [29.8, -42.6];
+      if (!reduce && sl.armed && !sl.visible && P.z < -47.9 && !lookingAt(P, door[0], door[1])) { sl.visible = true; sl.lookT = 0; sl.armed = false; cue('whisper'); }
+      if (sl.visible) {
+        if (lookingAt(P, door[0], door[1])) { sl.lookT += dt; if (sl.lookT > 1.1) { sl.visible = false; cue('flicker'); st.blackout = { t0: t, len: .55 }; } } else sl.lookT = 0;
+      }
+    }
+
     // ---- the cellar: the machine nobody finished. Reach it and the lights go. The way out is lit for you.
     const nearBike = zone === 'cellar' && Math.hypot(P.x - bikePos[0], P.z - bikePos[1]) < 2.7;
     if (zone === 'cellar') st.cellarLeftAt = t; else if (t - st.cellarLeftAt > 10) st.stingerArmed = true;
@@ -99,6 +135,7 @@ export function createDirector({ zoneOf, lodgerPath, bikePos, sconces = 6, seed 
       else if (a < 9.5) { L.visible = false; L.cellar = false; const b = a - 4.6; for (let i = 0; i < sconces; i++) { const lit = Math.max(0, Math.min(1, (b - (sconces - 1 - i) * .18) * 3)); out.level.sconce[i] = Math.max(out.level.sconce[i], 1) * (1 + .5 * (1 - Math.abs(lit - .5) * 2)); } if (!st.cellar.ran) { st.cellar.ran = true; cue('run'); } }
       else st.cellar = null;
     }
+    if (sl.visible) { L.visible = false; out.lodger = { x: (watch.sealedDoor || [29.8, -42.6])[0], z: (watch.sealedDoor || [29.8, -42.6])[1], face: Math.atan2(P.x - (watch.sealedDoor || [29.8])[0], P.z - (watch.sealedDoor || [0, -42.6])[1]), cellar: true }; out.cues = cues.splice(0); return out; }
     out.lodger = L.visible ? { x: L.x, z: L.z, face: Math.atan2(P.x - L.x, P.z - L.z), cellar: !!L.cellar } : null;
     out.cues = cues.splice(0);                                              // each frame owns its cues; nothing is shared between frames
     return out;

@@ -72,6 +72,7 @@ export function createRoomSound(ctx, out) {
   // One-shots the Hollow House's director asks for. All synthesised; nothing plays unless the visitor opted in to sound.
   const burst = (secs, f, type, v, t0, q = 1) => { const n = noise(secs + .2), fl = filt(type, f, q), e = gain(0); e.gain.setValueAtTime(0, t0); e.gain.linearRampToValueAtTime(v, t0 + .02); e.gain.exponentialRampToValueAtTime(.0001, t0 + secs); n.connect(fl).connect(e).connect(beds.haunt); n.stop(t0 + secs + .2); };
   const CUES = {
+    grind: t => { burst(3.4, 180, 'lowpass', .35, t, 2); burst(2.6, 70, 'lowpass', .4, t + .3); thump(beds.haunt, t + 3.0, .6); },       // stone on stone: something in the house has opened
     slam: t => { burst(.5, 220, 'lowpass', .5, t); thump(beds.haunt, t, .8); },
     thunder: t => { burst(3.2, 140, 'lowpass', .55, t); burst(2.2, 70, 'lowpass', .5, t + .15); },
     whisper: t => { for (let i = 0; i < 3; i++) burst(1.1, 1800 + i * 500, 'bandpass', .05, t + i * .7, 5); },

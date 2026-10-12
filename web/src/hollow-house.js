@@ -25,9 +25,15 @@ export const HHDOOR = { z0: -39.9, z1: -36.9, h: 3.2 };
 const FOY_H = 5.2, COR_H = 3.4, CEL_H = 2.9;
 const CORR = { z0: -39.69, z1: -37.11, zc: -38.4 };                    // corridor interior, z0 is the north (more negative) face
 const BIKE = { x: 31.4, z: -41.2 };
+// The sealed room: behind the cellar's jar shelf, which slides aside once the ledger has been studied (the director decides).
+export const SEALED = { x0: 28.8, x1: 34.8, z0: -45.6, z1: -50.2, h: 2.5 };
+const SDOOR = { a: 29.2, b: 30.4, top: 2.3 };
+let SECRET_OPEN = false;
+export const setSecretOpen = v => { SECRET_OPEN = !!v; };           // walkability follows the shelf: closed, the room does not exist on foot
 const LODGER_PATH = [[26.2, -38.4], [24.2, -38.4], [22.2, -38.4], [20.4, -38.4], [18.8, -38.4], [17.4, -38.4], [16.2, -38.4]].reverse();   // index 0 = nearest the foyer
 
 export function zoneOf(x, z) {
+  if (x > SEALED.x0 && x < SEALED.x1 && z < HHROOM.z1 - .1 && z > SEALED.z1) return 'sealed';
   if (z > HHROOM.z0 + .1 || z < HHROOM.z1 - .1 || x > HHROOM.x1 + .1) return 'out';
   if (x < HHROOM.x0) return x > HHROOM.x0 - 1.2 && z < HHDOOR.z1 && z > HHDOOR.z0 ? 'door' : 'out';
   if (x < 15.0) return 'foyer';
@@ -49,13 +55,14 @@ const RECTS = [
 ];
 export function hollowWalkable(x, z, WALK) {
   if (x > (WALK?.x1 ?? 6.4) - .1 && x < HHROOM.x0 + .75 && z < HHDOOR.z1 - .45 && z > HHDOOR.z0 + .45) return true;
+  if (SECRET_OPEN && [[29.3, 30.3, -46.0, -45.1], [29.0, 34.4, -49.8, -45.9]].some(([a, b, c, d]) => x > a && x < b && z > c && z < d)) return true;
   return RECTS.some(([a, b, c, d]) => x > a && x < b && z > c && z < d);
 }
 
 export function buildHollowHouse(ctx) {
   const { scene, canvasTex, lettering, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX, onCue, loadGLB } = ctx;
   const group = new THREE.Group(); group.name = 'hollowHouseRoom'; scene.add(group);
-  const R = rng(77), Rf = (a, b) => a + R() * (b - a);
+  const R = rng(77), Rf = (a, b) => a + R() * (b - a), one3 = new THREE.Vector3(1, 1, 1);
   const tier = lite ? 'mobile' : 'desktop';
   const S = createSurfaces({ canvasTex, size: lite ? 512 : 1024, seed: 7 });
 
@@ -81,6 +88,7 @@ export function buildHollowHouse(ctx) {
     wpCorr: wp('corr', { base: '#3a2a20', motif: '#5c402c', accent: '#b08a3a', age: .7 }, 'stripe'),
     wpParlor: wp('parlor', { base: '#4a1520', motif: '#80303f', age: .7 }, 'damask'),
     wpNurs: wp('nurs', { base: '#a69868', motif: '#c3b784', age: .55 }, 'nursery'),
+    wpSealed: wp('nurs', { base: '#a69868', motif: '#c3b784', age: .55 }, 'nursery', { color: '#5e564a' }),       // the same paper, kept in the dark
     wpDining: wp('dining', { base: '#1d3940', motif: '#3d7480', age: .7 }, 'damask'),
     brick: surf(() => S.brick(), { roughness: .95, bumpScale: 4 }),
     flags: surf(() => S.flagstone(), { roughness: .95, bumpScale: 3.5 }, () => S.wet('flags', 9, .5)),
@@ -109,10 +117,10 @@ export function buildHollowHouse(ctx) {
   // ------------------------------------------------------------------ batch helpers
   // Intelligent rendering: every static piece is filed under the zone it stands in (by its own centre), each zone is
   // its own group, and per frame only the visitor's zone and the zones they can see into are drawn.
-  const ZONES = ['foyer', 'corridor', 'parlor', 'nursery', 'library', 'dining', 'cellar'];
+  const ZONES = ['foyer', 'corridor', 'parlor', 'nursery', 'library', 'dining', 'cellar', 'sealed'];
   const zg = Object.fromEntries(ZONES.map(z => { const g = new THREE.Group(); g.name = 'hh-zone-' + z; group.add(g); return [z, g]; }));
   const clampTo = (v, a, b) => Math.min(b, Math.max(a, v));
-  const zoneKey = (x, z) => zoneOf(clampTo(x, HHROOM.x0 + .05, HHROOM.x1 - .05), clampTo(z, HHROOM.z1 + .05, HHROOM.z0 - .05));   // things outside the shell (night views, rain, the hall-side wall) belong to the nearest zone
+  const zoneKey = (x, z) => (x > SEALED.x0 && x < SEALED.x1 && z < HHROOM.z1 - .1 && z > SEALED.z1) ? 'sealed' : zoneOf(clampTo(x, HHROOM.x0 + .05, HHROOM.x1 - .05), clampTo(z, HHROOM.z1 + .05, HHROOM.z0 - .05));   // things outside the shell (night views, rain, the hall-side wall) belong to the nearest zone
   const zadd = o => { zg[zoneKey(o.position.x, o.position.z)].add(o); return o; };
   const batches = Object.fromEntries(ZONES.map(z => [z, new GeoBatch()]));
   const B = {
@@ -122,10 +130,11 @@ export function buildHollowHouse(ctx) {
   // Culling must never open a hole to the hall's sky: each doorway into a zone that can be hidden gets a black panel just
   // inside it, drawn only while that zone is culled (a room you have not entered reads as dark, which is the point).
   const plugBatches = Object.fromEntries(ZONES.map(z => [z, new GeoBatch()])), plugGroups = Object.fromEntries(ZONES.map(z => { const g = new THREE.Group(); g.name = 'hh-plug-' + z; group.add(g); return [z, g]; }));
-  const plug = (zone, x, z, w, ry) => plugBatches[zone].add('plug', new THREE.PlaneGeometry(w, 3.4), xf(x, 1.7, z, ry), 0);
-  plug('foyer', 14.4, -38.4, 2.9, Math.PI / 2); plug('cellar', 27.6, -38.4, 2.0, -Math.PI / 2);
-  plug('parlor', 17.2, -36.6, 1.6, Math.PI); plug('nursery', 24.4, -36.6, 1.6, Math.PI); plug('library', 18.6, -40.2, 1.6, 0); plug('dining', 23.2, -40.2, 1.6, 0);
-  const SEES = { foyer: ['corridor', 'cellar'], corridor: ['foyer', 'cellar'], parlor: ['corridor', 'nursery'], nursery: ['corridor', 'parlor'], library: ['corridor', 'dining'], dining: ['corridor', 'library'], cellar: ['corridor'] };   // who can be seen from where
+  const plug = (zone, x, z, w, h, ry) => plugBatches[zone].add('plug', new THREE.PlaneGeometry(w, h), xf(x, h / 2, z, ry), 0);   // wall to wall and floor to ceiling: at a shallow angle nothing can be seen round its edge
+  { const mid = (HHROOM.z0 + HHROOM.z1) / 2, depth = HHROOM.z0 - HHROOM.z1;
+    plug('sealed', 31.8, -46.3, SEALED.x1 - SEALED.x0, SEALED.h, 0); plug('foyer', 14.4, mid, depth, FOY_H, Math.PI / 2); plug('cellar', 27.6, mid, depth, CEL_H, -Math.PI / 2);
+    plug('parlor', 17.995, -36.6, 5.79, COR_H, Math.PI); plug('nursery', 24.0, -36.6, 5.78, COR_H, Math.PI); plug('library', 17.995, -40.2, 5.79, COR_H, 0); plug('dining', 24.0, -40.2, 5.78, COR_H, 0); }
+  const SEES = { foyer: ['corridor', 'cellar'], corridor: ['foyer', 'cellar'], parlor: ['corridor', 'nursery'], nursery: ['corridor', 'parlor'], library: ['corridor', 'dining'], dining: ['corridor', 'library'], cellar: ['corridor'], sealed: ['cellar'] };   // who can be seen from where
   const bx = (k, w, h, d, x, y, z, ry = 0, tile = 1) => B.box(k, w, h, d, xf(x, y, z, ry), tile);
   const cyl = (k, r1, r2, h, x, y, z, seg = 14, tile = 0) => B.add(k, new THREE.CylinderGeometry(r1, r2, h, seg), xf(x, y, z), tile);
   const lathe = (k, pts, x, y, z, seg = 16, tile = 0, ry = 0) => B.add(k, new THREE.LatheGeometry(pts.map(([r, h]) => new THREE.Vector2(r, h)), seg), xf(x, y, z, ry), tile);
@@ -158,6 +167,9 @@ export function buildHollowHouse(ctx) {
     if (dado) { const rail = (p0, p1) => axis === 'x' ? bx('wood', .05, .07, p1 - p0, c + facing * .025, dado + .035, (p0 + p1) / 2, 0, 1.2) : bx('wood', p1 - p0, .07, .05, (p0 + p1) / 2, dado + .035, c + facing * .025, 0, 1.2); let k = a0; for (const o of [...open].sort((p, q) => p.a - q.a)) { if (o.sill) continue; rail(k, o.a); k = o.b; } rail(k, a1); }
     const skirt = (p0, p1) => axis === 'x' ? bx('wood', .05, .16, p1 - p0, c + facing * .025, .08, (p0 + p1) / 2, 0, 1.2) : bx('wood', p1 - p0, .16, .05, (p0 + p1) / 2, .08, c + facing * .025, 0, 1.2);
     let k = a0; for (const o of [...open].sort((p, q) => p.a - q.a)) { if (o.sill) continue; skirt(k, o.a); k = o.b; } skirt(k, a1);
+    // crown moulding where wall meets ceiling: a profile that catches the lantern and gives every room a real edge
+    if (axis === 'x') { bx('wood', .07, .12, a1 - a0, c + facing * .035, h - .06, (a0 + a1) / 2, 0, 1.2); bx('wood', .12, .05, a1 - a0, c + facing * .06, h - .13, (a0 + a1) / 2, 0, 1.2); }
+    else { bx('wood', a1 - a0, .12, .07, (a0 + a1) / 2, h - .06, c + facing * .035, 0, 1.2); bx('wood', a1 - a0, .05, .12, (a0 + a1) / 2, h - .13, c + facing * .06, 0, 1.2); }
   }
   const door = (a, b, top = 2.3) => ({ a, b, top });
   const win = (a, b, sill = .95, top = 2.75) => ({ a, b, top, sill });
@@ -205,11 +217,19 @@ export function buildHollowHouse(ctx) {
   wall('x', 20.89, Z1, -39.91, COR_H, -1, 'wain', { open: [conN] }); wall('x', 21.11, Z1, -39.91, COR_H, 1, 'wpDining', { dado: .95, open: [conN] }); trimOpening('x', 21.0, conN);
   wall('x', 15.11, -36.89, Z0, COR_H, 1, 'wpParlor', { dado: .95 }); wall('x', 15.11, Z1, -39.91, COR_H, 1, 'wain');
   wall('x', 26.89, -36.89, Z0, COR_H, -1, 'wpNurs', { dado: .95 }); wall('x', 26.89, Z1, -39.91, COR_H, -1, 'wpDining', { dado: .95 });
+  // thresholds: the wall between two rooms is 0.22 m thick and no room owns the floor under it, so the hall's sea showed through
+  for (const [x0, x1, z0, z1] of [[16.6, 17.8, -37.11, -36.89], [23.8, 25.0, -37.11, -36.89], [18.0, 19.2, -39.91, -39.69], [22.6, 23.8, -39.91, -39.69], [20.89, 21.11, -34.75, -33.65], [20.89, 21.11, -42.85, -41.75],
+    [14.89, 15.11, CORR.z0, CORR.z1], [26.89, 27.11, -39.2, -37.6], [SDOOR.a, SDOOR.b, Z1 - .02, Z1 + .26]]) floorQ('boards', x0, x1, z0, z1, 2);
   // CELLAR
   const cellDoor = door(-39.2, -37.6, 2.5);
   floorQ('flags', 27.11, X1, Z0, Z1, 2); ceilQ(27.11, X1, Z0, Z1, CEL_H);
   wall('x', 27.11, Z1, Z0, CEL_H, 1, 'brick', { open: [cellDoor], tile: 1.2}); wall('x', 26.89, Z1, Z0, COR_H, -1, 'wpCorr', { dado: .95, open: [cellDoor] }); trimOpening('x', 27.0, cellDoor, .3);
-  wall('x', X1, Z1, Z0, CEL_H, -1, 'brick', { tile: 1.2 }); wall('z', Z0, 27.11, X1, CEL_H, -1, 'brick', { tile: 1.2 }); wall('z', Z1, 27.11, X1, CEL_H, 1, 'brick', { tile: 1.2 });
+  wall('x', X1, Z1, Z0, CEL_H, -1, 'brick', { tile: 1.2 }); wall('z', Z0, 27.11, X1, CEL_H, -1, 'brick', { tile: 1.2 }); wall('z', Z1, 27.11, X1, CEL_H, 1, 'brick', { tile: 1.2, open: [door(SDOOR.a, SDOOR.b, SDOOR.top)] }); trimOpening('z', Z1 + .04, door(SDOOR.a, SDOOR.b, SDOOR.top), .3);
+  // THE SEALED ROOM: a child's bedroom kept exactly as it was
+  floorQ('boards', SEALED.x0, SEALED.x1, SEALED.z1, SEALED.z0, 2); ceilQ(SEALED.x0, SEALED.x1, SEALED.z1, SEALED.z0, SEALED.h);
+  wall('z', SEALED.z0 - .02, SEALED.x0, SEALED.x1, SEALED.h, -1, 'wpSealed', { dado: .9, open: [door(SDOOR.a, SDOOR.b, SDOOR.top)] });
+  wall('z', SEALED.z1, SEALED.x0, SEALED.x1, SEALED.h, 1, 'wpSealed', { dado: .9 });
+  wall('x', SEALED.x0, SEALED.z1, SEALED.z0, SEALED.h, 1, 'wpSealed', { dado: .9 }); wall('x', SEALED.x1, SEALED.z1, SEALED.z0, SEALED.h, -1, 'wpSealed', { dado: .9 });
   // hall-side reveal + the corridor's dead end beyond the door
   bx('wood', .3, .12, 3.4, X0 - .02, HHDOOR.h + .06, (HHDOOR.z0 + HHDOOR.z1) / 2, 0, 1.2);
 
@@ -243,12 +263,13 @@ export function buildHollowHouse(ctx) {
   sheetAt([[0, 0, .9, .9, .75], [0, -.38, .9, .16, 1.1]], 9.6, -34.0, 1.2); sheetAt([[0, 0, .9, .9, .75], [0, -.38, .9, .16, 1.1]], 13.4, -34.2, 1.9);
   obstacles.push({ c: new THREE.Vector3(9.6, 0, -34.0), r: .75 }, { c: new THREE.Vector3(13.4, 0, -34.2), r: .75 }, { box: [9.4, 11.0, Z0 - .5, Z0] }, { box: [12.4, 13.2, Z0 - .5, Z0] });
   // portraits (eyes follow) and the stained window over the stair
-  const portraits = [];
+  const portraits = [], pms = [], alt = {};
+  later(() => { alt.chair = S.portraitAlt('chair'); alt.back = S.portraitAlt('back'); });
   const frameMesh = (w, h, x, y, z, ry) => { const f = .06; for (const [bw, bh, ox, oy] of [[w + f * 2, f, 0, h / 2 + f / 2], [w + f * 2, f, 0, -h / 2 - f / 2], [f, h, -w / 2 - f / 2, 0], [f, h, w / 2 + f / 2, 0]]) { const c = Math.cos(ry), s = Math.sin(ry); bx('brass', bw, bh, .05, x + c * ox, y + oy, z - s * ox, ry, 0); } };
   const PW = .62, PH = .775;
   const pSpots = [[X0 + .03, 1.75, -43.6, Math.PI / 2], [X0 + .03, 1.75, -41.6, Math.PI / 2], [X0 + .03, 1.75, -35.2, Math.PI / 2], [X0 + .03, 1.75, -33.2, Math.PI / 2], [9.2, 2.1, Z0 - .03, Math.PI], [13.8, 2.1, Z0 - .03, Math.PI], [19.5, 1.8, -37.14, Math.PI], [24.0, 1.8, -39.66, 0]];
   pSpots.forEach(([x, y, z, ry], i) => {
-    const pm = new THREE.MeshBasicMaterial({ color: '#0c0a08', fog: true }); later(() => { pm.map = S.portrait(i); pm.color.set('#7c7468'); pm.needsUpdate = true; });   // lit by the dark: painted, not lamp-lit
+    const pm = new THREE.MeshBasicMaterial({ color: '#0c0a08', fog: true }); pms[i] = pm; later(() => { pm.map = S.portrait(i); pm.color.set('#7c7468'); pm.needsUpdate = true; });   // lit by the dark: painted, not lamp-lit
     const m = new THREE.Mesh(new THREE.PlaneGeometry(PW, PH), pm);
     m.position.set(x, y, z); m.rotation.y = ry; m.userData.portrait = true; zadd(m); pickables.push(m); frameMesh(PW, PH, x, y, z, ry); portraits.push({ x, y, z, ry });
   });
@@ -258,8 +279,8 @@ export function buildHollowHouse(ctx) {
   const beams = [];
   winList.forEach(w => {
     const mid = (w.a + w.b) / 2, wd = w.b - w.a, h = w.y1 - w.y0;
-    plane('night', wd + 1.2, h + .6, mid, (w.y0 + w.y1) / 2, w.c + w.dir * 1.4, w.dir > 0 ? 0 : Math.PI, 0, 0);
-    plane('rain', wd + .4, h + .2, mid, (w.y0 + w.y1) / 2, w.c + w.dir * .12, w.dir > 0 ? 0 : Math.PI, 0, 0);
+    plane('night', wd + 1.2, h + .6, mid, (w.y0 + w.y1) / 2, w.c + w.dir * .45, w.dir > 0 ? Math.PI : 0, 0, 0);
+    plane('rain', wd + .4, h + .2, mid, (w.y0 + w.y1) / 2, w.c + w.dir * .12, w.dir > 0 ? Math.PI : 0, 0, 0);
     bx('wood', .05, h, .1, mid, (w.y0 + w.y1) / 2, w.c + w.dir * .02); bx('wood', wd, .05, .1, mid, (w.y0 + w.y1) / 2 + h * .12, w.c + w.dir * .02);
     if (w.big) { const g = new THREE.Mesh(new THREE.PlaneGeometry(wd, h), M.stained); g.position.set(mid, (w.y0 + w.y1) / 2, w.c + .04); zadd(g); }
     for (const k of [0, 1]) B.add('beam', new THREE.PlaneGeometry(wd * .8, w.big ? 4.4 : 2.9), xf(mid + (k ? .2 : -.2), (w.big ? 2.0 : 1.2), w.c - w.dir * (w.big ? 1.1 : .75), k ? .28 : -.28));
@@ -405,19 +426,70 @@ export function buildHollowHouse(ctx) {
   bx('wood', 1.9, .5, .9, BIKE.x, .25, BIKE.z, 0, 1.2); obstacles.push({ box: [BIKE.x - 1.2, BIKE.x + 1.2, BIKE.z - .8, BIKE.z + .8] });
   { const m = new THREE.Mesh(drapeGeometry([[0, .5, .8, .6, .34], [0, .78, .6, .3, .5]], { rand: R, flare: .5 }), M.sheet); m.position.set(BIKE.x, .5, BIKE.z + .1); zadd(m); }   // pulled back over the rear wheel; the rest of the machine is bare
   // shelves of jars, a coal heap, chains, the tally on the south wall
-  bx('wood', 3.6, .05, .34, 31.0, 1.0, Z1 + .2, 0, 1.2); bx('wood', 3.6, .05, .34, 31.0, 1.55, Z1 + .2, 0, 1.2); bx('wood', 3.6, .05, .34, 31.0, 2.1, Z1 + .2, 0, 1.2);
-  for (let i = 0; i < 22; i++) B.add('glass', new THREE.CylinderGeometry(.06, .06, .2, 10), xf(29.3 + (i % 11) * .33, (i < 11 ? 1.13 : 1.68), Z1 + .2), 0);
+  for (const y of [1.0, 1.55, 2.1]) bx('wood', 2.4, .05, .34, 31.6, y, Z1 + .2, 0, 1.2);
+  for (let i = 0; i < 14; i++) B.add('glass', new THREE.CylinderGeometry(.06, .06, .2, 10), xf(30.7 + (i % 7) * .33, (i < 7 ? 1.13 : 1.68), Z1 + .2), 0);
+  const secretDoor = new THREE.Group(); secretDoor.position.set(29.8, 0, Z1 + .2); zadd(secretDoor);       // a shelf of jars that is also a door
+  { const sb = new GeoBatch();
+    for (const y of [1.0, 1.55, 2.1]) sb.add('wood', new THREE.BoxGeometry(1.2, .05, .34), xf(0, y, 0), 1.2);
+    for (const dx of [-.6, .6]) sb.add('wood', new THREE.BoxGeometry(.05, 2.3, .34), xf(dx, 1.15, 0), 1.2);
+    sb.add('wood', new THREE.BoxGeometry(1.2, 2.3, .03), xf(0, 1.15, -.15), 1.2);
+    for (let i = 0; i < 8; i++) sb.add('glass', new THREE.CylinderGeometry(.06, .06, .2, 10), xf(-.45 + (i % 4) * .3, i < 4 ? 1.13 : 1.68, 0));
+    sb.build({ wood: M.wood, glass: M.glass }, secretDoor); }
+  const sec = { k: 0 };
   for (let i = 0; i < 14; i++) B.add('iron', new THREE.SphereGeometry(.22 + R() * .2, 6, 5), xf(34.2 + R() * .9, .15 + R() * .1, -44.6 + R() * .9, R() * 6), 1);
   const tally = new THREE.Mesh(new THREE.PlaneGeometry(4.0, 4.0), new THREE.MeshBasicMaterial({ map: scrawlTex('#cfc6b0', 13), transparent: true, opacity: .5, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 })); tally.position.set(31.5, 1.45, Z0 - .02); tally.rotation.y = Math.PI; tally.scale.set(.9, .55, 1); zadd(tally);
   const skeleton = makeSkeleton({ lite, bone: '#cfc8b4', eye: '#444', glow: '#000' }); skeleton.position.set(34.6, 0, -33.6); skeleton.rotation.y = -Math.PI / 2 + .25; skeleton.scale.setScalar(1.05); zadd(skeleton); obstacles.push({ c: new THREE.Vector3(34.6, 0, -33.6), r: .5 });
   for (const sgn of [0, 1]) { const g = new THREE.Mesh(new THREE.CylinderGeometry(.012, .012, CEL_H - 1.4), M.iron); g.position.set(33.8 + sgn * .7, (CEL_H + 1.4) / 2, -33.1); zadd(g); }
 
+  const infos = [];
+  const info = (mesh, eyebrow, title, sub, text) => { const rec = { eyebrow, title, sub, text }; mesh.userData.info = rec; pickables.push(mesh); infos.push(rec); return rec; };
+  // ------------------------------------------------------------------ THE SEALED ROOM: a child's room kept exactly as it was
+  const tvData = new Uint8Array(64 * 48 * 4), tvTex = new THREE.DataTexture(tvData, 64, 48);                  // a television that has only ever shown static
+  tvTex.colorSpace = THREE.SRGBColorSpace; tvTex.magFilter = tvTex.minFilter = THREE.NearestFilter; tvTex.needsUpdate = true;
+  let tvSeed = 12345; const tvNoise = () => { for (let i = 0; i < tvData.length; i += 4) { tvSeed = (tvSeed * 1103515245 + 12345) >>> 0; const v = 60 + (tvSeed >>> 24) * .6; tvData[i] = v; tvData[i + 1] = v * 1.02; tvData[i + 2] = v * 1.1; tvData[i + 3] = 255; } tvTex.needsUpdate = true; };
+  tvNoise();
+  {
+    bx('wood', 1.0, .3, 2.0, 33.9, .15, -48.9, 0, 1.2); bx('cloth', .92, .14, 1.9, 33.9, .37, -48.9, 0, 1); bx('wood', 1.0, .75, .06, 33.9, .62, -49.95, 0, 1.2);   // bed, mattress, headboard
+    bx('porcelain', .5, .12, .3, 33.9, .49, -49.5);                                                                                                          // pillow
+    sheetAt([[0, 0, .92, 1.1, .1]], 33.9, -48.55, 0);                                                                                                         // blanket, turned back
+    bx('wood', .9, .05, .5, 31.8, .6, -49.85, 0, 1.2); for (const [dx, dz] of [[-.4, -.2], [.4, -.2], [-.4, .2], [.4, .2]]) bx('wood', .05, .6, .05, 31.8 + dx, .3, -49.85 + dz, 0, 1.2);
+    bx('wood', .7, .5, .46, 31.8, .87, -49.85, 0, 1.2);                                                                                                       // the set
+    chairGeo(31.8, -48.0, 0);                                                                                                                                 // a chair, facing it
+    sheetAt([[0, 0, .5, .5, .55], [0, .13, .42, .24, 1.12]], 31.8, -48.05, 0);                                                                                 // and someone under a sheet, watching
+    bx('wood', .5, .28, .2, 29.9, .58, -49.4, .3, 1.2); bx('wood', .22, .22, .16, 29.65, .8, -49.55, .3, 1.2); for (const dx of [-.18, .18]) for (const dz of [-.06, .06]) bx('wood', .04, .36, .04, 29.9 + dx, .2, -49.4 + dz, .3, 1.2);   // rocking horse
+    for (let i = 0; i < 7; i++) bx('wood', .1, .1, .1, 30.2 + R() * 2.6, .05, -47.0 - R() * 1.6, R() * 3, 1);                                                // blocks
+  }
+  const tvScreen = new THREE.Mesh(new THREE.PlaneGeometry(.46, .34), new THREE.MeshBasicMaterial({ map: tvTex, toneMapped: false, fog: false })); tvScreen.position.set(31.8, .9, -49.61); zadd(tvScreen);
+  const chalkWall = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.7), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 })); chalkWall.position.set(28.81, 1.4, -48.0); chalkWall.rotation.y = Math.PI / 2; zadd(chalkWall);
+  later(() => { chalkWall.material.map = S.chalk(); chalkWall.material.opacity = 1; chalkWall.material.needsUpdate = true; });
+  const bedHit = new THREE.Mesh(new THREE.BoxGeometry(1.0, .7, 2.0), new THREE.MeshBasicMaterial({ visible: false })); bedHit.position.set(33.9, .4, -48.9); zadd(bedHit);
+  info(tvScreen, 'THE SET', 'It only shows this room.', 'Sealed room · a television', 'The picture is static, and under the static, if you hold still, the room. The chair in front of it has been sat in for a very long time. Fiction; nothing here is about anyone real.');
+  info(bedHit, 'THE BED', 'Made. Warm. Waiting.', 'Sealed room · a child\'s bed', 'Nothing else in the house is clean. This is the one room somebody kept, and the tally on its wall is the only count in the house that stops.');
+  info(chalkWall, 'THE DRAWINGS', 'They are all the same height.', 'Sealed room · chalk', 'A child drew the same tall figure again and again, then the tally, then stopped. Nobody in the house will say which came first.');
+  obstacles.push({ box: [33.3, 34.5, -49.95, -47.9] }, { box: [31.3, 32.4, -50.0, -49.4] }, { c: new THREE.Vector3(31.8, 0, -48.0), r: .5 }, { c: new THREE.Vector3(29.9, 0, -49.4), r: .45 });
+  src({ x: 31.5, y: 2.1, z: -47.6, base: 3.4, color: '#ffc46b', flicker: 'bulb', range: 6, prio: .7 });
+  src({ x: 31.8, y: 1.15, z: -49.2, base: 2.2, color: '#9fb8ff', flicker: 'bulb', range: 4, prio: .8 });
+
+  // ------------------------------------------------------------------ HIDDEN THINGS: they only change while nobody is looking
+  const writing = [['ONE MORE LAP', 21.4, 1.75, 2.6], ['AGAIN. AGAIN.', 25.0, 1.35, 2.0]].map(([text, x, y, w]) => {
+    const t = canvasTex(512, 128, (g, cw, ch) => { g.clearRect(0, 0, cw, ch); g.fillStyle = '#5a0c14'; g.font = `italic 400 64px ${SERIF}`; g.textBaseline = 'middle'; g.shadowColor = 'rgba(70,0,10,.9)'; g.shadowBlur = 5; g.fillText(text, 14, ch / 2);
+      g.shadowBlur = 0; for (let i = 0; i < 9; i++) { const dx = 20 + i * 52 + (i * 37 % 11), len = 14 + (i * 53 % 38); g.fillRect(dx, ch / 2 + 22, 2, len); } }, null, true);
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, w / 4), new THREE.MeshBasicMaterial({ map: t, color: '#9a8a86', transparent: true, opacity: 0, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }));
+    m.position.set(x, y, CORR.z0 + .02); zadd(m); return m;
+  });
+  const handMat = std({ color: '#d9cfbe', roughness: .7 });
+  const mkHand = (zJamb, dir, y) => { const g = new THREE.Group(); g.position.set(14.93, y, zJamb); g.scale.setScalar(1.5); zadd(g); g.visible = false;
+    const cap = new THREE.CapsuleGeometry(.011, .07, 3, 6);
+    for (let i = 0; i < 4; i++) { const fy = (i - 1.5) * .03 + (i === 3 ? -.005 : 0);
+      const f = new THREE.Mesh(cap, handMat); f.rotation.x = Math.PI / 2; f.position.set(0, fy, dir * .06); g.add(f);
+      const tip = new THREE.Mesh(cap, handMat); tip.scale.set(.9, .7, .9); tip.rotation.x = Math.PI / 2 + dir * .55; tip.position.set(0, fy - .008, dir * .125); g.add(tip); }
+    g.userData = { zJamb, dir }; return g; };
+  const hands = { south: mkHand(CORR.z1, -1, 1.18), north: mkHand(CORR.z0, 1, 1.08) };     // fingers hooked round the corridor doorway's jambs
+
   // cobwebs in the ceiling corners of every room
   { const pts = []; for (const [cx, cz, sx, sz, h] of [[X0, Z0, 1, -1, FOY_H], [14.9, Z1, -1, 1, FOY_H], [15.1, -36.89, 1, -1, COR_H], [26.89, -31.3, -1, 1, COR_H], [15.1, Z1, 1, 1, COR_H], [26.89, -39.91, -1, 1, COR_H], [27.11, Z0, 1, -1, CEL_H], [X1, Z1, -1, 1, CEL_H], [20.89, -36.89, -1, 1, COR_H]]) pts.push(...cobwebPoints(new THREE.Vector3(cx, h, cz), sx, sz, { R: 1.2 }));
     group.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: '#b9b6c4', transparent: true, opacity: .4 }))); }
 
-  const infos = [];
-  const info = (mesh, eyebrow, title, sub, text) => { const rec = { eyebrow, title, sub, text }; mesh.userData.info = rec; pickables.push(mesh); infos.push(rec); return rec; };
   // ------------------------------------------------------------------ REUSE: the museum's own Art World pieces (existing, registered assets)
   // Paintings and sculptures that already ship with the museum (museum/art/*.json carries their provenance: AI-generated,
   // Higgsfield). They are lit by the house's lights like anything else, so the same pieces read differently in the dark.
@@ -449,6 +521,15 @@ export function buildHollowHouse(ctx) {
       }
       artLoaded = true;
     } finally { artLoading = false; }
+  }
+
+  // ------------------------------------------------------------------ paper everywhere: one instanced draw of loose pages across the floors
+  {
+    const n = lite ? 60 : 130, papers = new THREE.InstancedMesh(new THREE.PlaneGeometry(.2, .28), std({ color: '#cfc6ae', roughness: 1, side: THREE.DoubleSide }), n);
+    const spots = [[7.9, 14.4, -45.0, -31.8], [15.2, 27.2, -39.2, -37.6], [15.7, 20.3, -36.3, -31.8], [21.7, 26.3, -36.3, -31.8], [15.7, 20.3, -45.0, -40.5], [21.7, 26.3, -45.0, -40.5], [27.9, 34.7, -45.0, -31.8]];
+    const m = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(), v = new THREE.Vector3(), c = new THREE.Color();
+    for (let i = 0; i < n; i++) { const [x0, x1, z0, z1] = spots[(i * 7 + (R() * 3 | 0)) % spots.length]; v.set(x0 + R() * (x1 - x0), .004 + (i % 5) * .0012, z0 + R() * (z1 - z0)); q.setFromEuler(e.set(-Math.PI / 2 + (R() - .5) * .12, 0, R() * 6.28)); papers.setMatrixAt(i, m.compose(v, q, one3)); papers.setColorAt(i, c.set('#cfc6ae').multiplyScalar(.55 + R() * .45)); }
+    group.add(papers);
   }
 
   // ------------------------------------------------------------------ build the static shell
@@ -509,10 +590,10 @@ export function buildHollowHouse(ctx) {
   bikeSpot.info = { eyebrow: 'THE MACHINE', title: 'Speedmax CFR, never finished', sub: 'KONA.m Halloween livery · original', text: 'A MY2027 Speedmax CFR in a cold, pale museum-made finish, left under a sheet at the bottom of a house that remembers. The paint is ours for the night, not a Canyon colourway. The way back up is lit for you.' };
 
   // ------------------------------------------------------------------ the director, the atmosphere, and the per-frame update
-  const dir = createDirector({ zoneOf, lodgerPath: LODGER_PATH, bikePos: [BIKE.x, BIKE.z], sconces: 6 });
+  const dir = createDirector({ zoneOf, lodgerPath: LODGER_PATH, bikePos: [BIKE.x, BIKE.z], sconces: 6, watch: { writing: [21.4, CORR.z0], portrait: [pSpots[2][0], pSpots[2][2]], hand: [14.93, CORR.z1], ledger: [18.7, -42.6], sealedDoor: [29.8, -42.6] } });
   const atmo = createAtmosphere(scene);
   const pm4 = new THREE.Matrix4(), pq = new THREE.Quaternion(), pe = new THREE.Euler(), pv = new THREE.Vector3(), sv = new THREE.Vector3(), one = new THREE.Vector3(1, 1, 1);
-  let last = 0;
+  let last = 0, tvTick = -1;
   const flickerAt = (f, t, reduce) => reduce ? 1 : .86 + Math.sin(t * 8.2 + f.ph) * .08 + Math.sin(t * 15.7 + f.ph * 2) * .05;
 
   function update(t, reduce, P) {
@@ -520,8 +601,17 @@ export function buildHollowHouse(ctx) {
     const fx = dir.update(t, dt, P, reduce), inside = fx.inside;
     atmo.update(dt, inside, { color: '#040307', near: 1.2, far: lite ? 17 : 23 });
     { const here = fx.zone === 'out' || fx.zone === 'door' ? null : fx.zone, show = new Set(here ? [here, ...SEES[here]] : ['foyer', 'corridor', 'cellar']);
+      if (here === 'cellar' && sec.k > .02) show.add('sealed');
       if (here === 'corridor') for (const [room, dx] of [['parlor', 17.2], ['nursery', 24.4], ['library', 18.6], ['dining', 23.2]]) if (Math.abs(P.x - dx) < 3.4) show.add(room);   // only the rooms whose door you are near
       for (const z of ZONES) { zg[z].visible = show.has(z); plugGroups[z].visible = !show.has(z); } }
+    // hidden things take their stage; the secret door slides; the set hisses
+    sec.k += ((fx.secretOpen ? 1 : 0) - sec.k) * (1 - Math.exp(-dt * (reduce ? 30 : 1.1)));
+    secretDoor.position.x = 29.8 - 1.8 * sec.k; setSecretOpen(sec.k > .9);
+    writing[0].material.opacity += ((fx.stage.writing > 0 ? .85 : 0) - writing[0].material.opacity) * (1 - Math.exp(-dt * 1.2));
+    writing[1].material.opacity += ((fx.stage.writing > 1 ? .85 : 0) - writing[1].material.opacity) * (1 - Math.exp(-dt * 1.2));
+    if (pms[2] && pms[2].map && alt.chair) { pms[2].userData.base ||= pms[2].map; const want = [pms[2].userData.base, alt.chair, alt.back][fx.stage.portrait]; if (pms[2].map !== want) { pms[2].map = want; pms[2].needsUpdate = true; } }
+    for (const h of [hands.south, hands.north]) { const stage = fx.stage.hand, on = h === hands.south ? stage > 0 : stage > 2, reach = [0, .045, .11, .17][stage]; h.visible = on; if (on) h.position.z = h.userData.zJamb + h.userData.dir * (reach - .16); }
+    if (fx.zone === 'sealed' && !reduce && ((t * 12) | 0) !== tvTick) { tvTick = (t * 12) | 0; tvNoise(); }
     const fl = fx.flash, lv = fx.level.all;
     const base = inside ? 1 : 1.7;                                      // seen from the hall the house glimmers; inside it is as dark as it is meant to be
     interior.ambient.value.setRGB(.085 * base * lv + .3 * fl, .08 * base * lv + .33 * fl, .12 * base * lv + .46 * fl);
@@ -563,7 +653,7 @@ export function buildHollowHouse(ctx) {
       const c = Math.cos(p.ry), s = Math.sin(p.ry), nx = Math.sin(p.ry), nz = Math.cos(p.ry), dx = P.x - p.x, dz = P.z - p.z, d = Math.max(.6, Math.hypot(dx, dz));
       const offR = THREE.MathUtils.clamp(((dx * c - dz * s) / d) * .016, -.012, .012), offU = THREE.MathUtils.clamp(((1.55 - p.y) / d) * .016, -.008, .008);
       [0, 1].forEach(k => { const lx = (S.PORTRAIT[k ? 'eyeR' : 'eyeL'][0] - .5) * PW + offR, ly = (.5 - S.PORTRAIT[k ? 'eyeR' : 'eyeL'][1]) * PH + offU;
-        pv.set(p.x + c * lx + nx * .005, p.y + ly, p.z - s * lx + nz * .005); pq.setFromEuler(pe.set(0, p.ry, 0)); pupils.setMatrixAt(i * 2 + k, pm4.compose(pv, pq, one)); });
+        pv.set(p.x + c * lx + nx * .005, p.y + ly, p.z - s * lx + nz * .005); pq.setFromEuler(pe.set(0, p.ry, 0)); pupils.setMatrixAt(i * 2 + k, i === 2 && fx.stage.portrait > 0 ? pm4.makeScale(0, 0, 0) : pm4.compose(pv, pq, one)); });
     });
     pupils.instanceMatrix.needsUpdate = true;
     // the book that leaves its shelf

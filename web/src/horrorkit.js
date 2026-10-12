@@ -144,8 +144,8 @@ export function createAtmosphere(scene) {
     get k() { return k; },
     update(dt, inside, { color = '#050408', near = 1.5, far = 24 } = {}) {
       const to = inside ? 1 : 0;
-      if (k === to) return;
-      k += (to - k) * (1 - Math.exp(-dt * (inside ? 7 : 5)));
+      if (k === to && !inside) return;                                  // settled outside: nothing to do. Settled inside the fog is re-asserted every frame,
+      if (k !== to) k += (to - k) * (1 - Math.exp(-dt * (inside ? 7 : 5)));   // because another system (galleries.js) rewrites fog.color each frame
       if (Math.abs(to - k) < .002) k = to;
       if (!scene.fog) return;
       saved ||= { color: scene.fog.color.clone(), near: scene.fog.near, far: scene.fog.far };

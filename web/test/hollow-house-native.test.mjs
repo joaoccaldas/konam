@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createDirector } from '../src/hollow-director.js';
-import { zoneOf, hollowWalkable, HHROOM, HHDOOR } from '../src/hollow-house.js';
+import { zoneOf, hollowWalkable, setSecretOpen, SEALED, HHROOM, HHDOOR } from '../src/hollow-house.js';
 import * as THREE from 'three';
 import { shieldedChunks, createAtmosphere, GeoBatch, xf, createLightPool, drapeGeometry } from '../src/horrorkit.js';
 
@@ -230,7 +230,7 @@ test('haunt sound bed and every director cue construct and fire against a WebAud
   const rs = createRoomSound(ctx, node());
   try {
     rs.set('haunt');
-    const cues = ['slam', 'thunder', 'whisper', 'drip', 'thud', 'flicker', 'musicbox', 'stinger', 'heartbeat', 'run'];
+    const cues = ['grind', 'slam', 'thunder', 'whisper', 'drip', 'thud', 'flicker', 'musicbox', 'stinger', 'heartbeat', 'run'];
     for (const c of cues) assert.doesNotThrow(() => rs.cue(c, .1), c);
     assert.doesNotThrow(() => rs.cue('not-a-cue'));
     rs.set(null); assert.doesNotThrow(() => rs.cue('slam'), 'cues are ignored when the haunt bed is not the active room');
@@ -260,4 +260,79 @@ test('rooms are culled by a graph that never opens a hole to the hall', () => {
   for (const [z, seen] of Object.entries(SEES)) for (const o of seen) assert.ok(SEES[o], `${z} sees unknown zone ${o}`);
   // every doorway into a zone that can be culled has a plug: foyer, cellar, and the four rooms
   for (const z of ['foyer', 'cellar', 'parlor', 'nursery', 'library', 'dining']) assert.match(room, new RegExp(`plug\\('${z}'`), `${z} doorway needs a plug`);
+});
+
+// ---------------------------------------------------------------- hidden components
+const WATCH = { writing: [21.4, -39.69], portrait: [7.38, -35.2], hand: [14.93, -37.11], ledger: [18.7, -42.6], sealedDoor: [29.8, -42.6] };
+const mk2 = () => createDirector({ zoneOf, lodgerPath: LODGER, bikePos: [31.4, -41.2], sconces: 6, watch: WATCH });
+const facing = (P, x, z) => { P.yaw = Math.atan2(-(x - P.x), -(z - P.z)); };
+
+test('the sealed room is a real zone that exists on foot only once the secret has opened', () => {
+  assert.equal(zoneOf(31, -48), 'sealed'); assert.equal(zoneOf(31, -44), 'cellar'); assert.equal(zoneOf(40, -48), 'out');
+  const WALK = { x1: 6.4 };
+  setSecretOpen(false); assert.equal(hollowWalkable(31, -48, WALK), false); assert.equal(hollowWalkable(29.8, -45.5, WALK), false);
+  setSecretOpen(true);
+  try {
+    assert.ok(hollowWalkable(29.8, -45.5, WALK) && hollowWalkable(31, -48, WALK));
+    const step = .25, key = (x, z) => Math.round(x / step) + ',' + Math.round(z / step), seen = new Set(), q = [[8.5, -38.4]];
+    while (q.length) { const [x, z] = q.pop(); const k = key(x, z); if (seen.has(k) || !hollowWalkable(x, z, WALK)) continue; seen.add(k); for (const [dx, dz] of [[step, 0], [-step, 0], [0, step], [0, -step]]) q.push([x + dx, z + dz]); }
+    for (const [n, x, z] of [['sealed room', 31, -48.4], ['by the bed', 33.6, -47.4], ['by the television', 31.8, -49.2]]) assert.ok(seen.has(key(x, z)), n + ' must be reachable once open');
+    for (let x = SEALED.x0 + .3; x < SEALED.x1 - .3; x += .4) for (let z = SEALED.z1 + .3; z < SEALED.z0 - .5; z += .4) if (hollowWalkable(x, z, WALK)) assert.equal(zoneOf(x, z), 'sealed');
+  } finally { setSecretOpen(false); }
+});
+
+test('hidden things advance only while unseen, and a stare holds them still', () => {
+  // run a loop foyer -> corridor -> foyer repeatedly; once looking away, once staring at the portrait
+  const walk = stare => {
+    const d = mk2(), P = { x: 9, z: -38.4, yaw: 0 }; let t = 0;
+    const step = (x, z, seconds, look) => { P.x = x; P.z = z; if (look) facing(P, ...look); else P.yaw = 0; for (let i = 0; i < seconds * 30; i++) { d.update(t, 1 / 30, P, false); t += 1 / 30; } };
+    step(9, -38.4, 2); step(16, -38.4, 6, [26, -38.4]);                                   // enter the corridor, the lights go
+    for (let lap = 0; lap < 4; lap++) { step(11, -38.4, 1.5, stare ? WATCH.portrait : null); step(17, -38.4, 6, [26, -38.4]); }
+    return d.state.stage;
+  };
+  const away = walk(false), stared = walk(true);
+  assert.ok(away.portrait >= 1 && away.hand >= 1 && away.writing >= 1, 'things should happen when you look away: ' + JSON.stringify(away));
+  assert.ok(away.portrait <= 2 && away.hand <= 3 && away.writing <= 2, 'stages are capped');
+  assert.equal(stared.portrait, 0, 'the portrait must not turn while it is being watched');
+});
+
+test('hidden things stand still, not absent, under reduced motion', () => {
+  const d = mk2(), P = { x: 9, z: -38.4, yaw: 0 };
+  const o = d.update(0, 1 / 30, P, true);
+  assert.deepEqual(o.stage, { writing: 1, portrait: 1, hand: 1 });
+});
+
+test('studying the ledger opens the secret; glancing at it does not', () => {
+  const glance = mk2(), P = { x: 17.6, z: -42.0, yaw: 0 }; let t = 0, cues = [];
+  for (let i = 0; i < 300; i++) { P.yaw = i % 60 < 12 ? (facing(P, ...WATCH.ledger), P.yaw) : Math.PI; const o = glance.update(t, 1 / 30, P, false); cues.push(...o.cues); t += 1 / 30; }
+  assert.equal(glance.state.secret, false, 'a glance must not open it');
+  const study = mk2(); t = 0; cues = []; facing(P, ...WATCH.ledger);
+  for (let i = 0; i < 120; i++) { const o = study.update(t, 1 / 30, P, false); cues.push(...o.cues); t += 1 / 30; }
+  assert.equal(study.state.secret, true); assert.ok(cues.some(c => c.name === 'grind'), 'the shelf is heard');
+  const o = study.update(t, 1 / 30, { x: 9, z: -38.4, yaw: 0 }, false); assert.equal(o.secretOpen, true, 'it stays open');
+});
+
+test('the sealed room figure appears only far from you, never inside the standoff, and goes when you look', () => {
+  const d = mk2(), P = { x: 31, z: -48.6, yaw: 0 }; let t = 0, appeared = false, minDist = 99, vanished = false;
+  d.state.secret = true;
+  for (let i = 0; i < 90; i++) { const o = d.update(t, 1 / 30, { ...P, z: -49.0 }, false); if (o.lodger) { appeared = true; minDist = Math.min(minDist, Math.hypot(o.lodger.x - 31, o.lodger.z + 49.0)); } t += 1 / 30; }
+  assert.ok(appeared, 'it should be there when you turn around'); assert.ok(minDist >= d.STANDOFF, 'inside the standoff: ' + minDist);
+  const Q = { x: 31, z: -49.0, yaw: 0 }; facing(Q, ...WATCH.sealedDoor);
+  for (let i = 0; i < 60; i++) { const o = d.update(t, 1 / 30, Q, false); if (!o.lodger) vanished = true; t += 1 / 30; }
+  assert.ok(vanished, 'looking at it makes it go');
+});
+
+test('the host updates the house after the galleries, which rewrite scene.fog.color every frame', () => {
+  const g = landing.indexOf('galleries.update(t, P, reduce, scene, renderer, reg)'), h = landing.indexOf('hollow.update(t, reduce, P)');
+  assert.ok(g > 0 && h > 0, 'both updates exist');
+  assert.ok(h > g, 'if the house updates first, its dark fog colour is overwritten by the hall daylight tint and distant things fade to white');
+  assert.match(read('web/src/galleries.js'), /scene\.fog\.color\.copy/, 'the reason this ordering matters still exists');
+});
+
+test('inside the house the fog stays dark even when another system rewrites the fog colour every frame', () => {
+  const scene = { fog: new THREE.Fog('#e6eef0', 70, 420) }, atmo = createAtmosphere(scene), day = new THREE.Color('#e6eef0');
+  for (let i = 0; i < 200; i++) { scene.fog.color.copy(day); atmo.update(1 / 30, true, { color: '#040307' }); }   // galleries.js does exactly this each frame
+  assert.equal(scene.fog.color.getHexString(), '040307');
+  for (let i = 0; i < 200; i++) { scene.fog.color.copy(day); atmo.update(1 / 30, false); }
+  assert.equal(scene.fog.color.getHexString(), 'e6eef0'); assert.equal(scene.fog.far, 420);
 });
