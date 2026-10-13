@@ -1,0 +1,137 @@
+{
+  "date": "2026-10-13",
+  "compared_with": "2026-10-12",
+  "branch": "research/3d-core-r1-20261004",
+  "scope": "evidence-first daily materiality filter; no production writes",
+  "production_modified": false,
+  "experiments_executed": false,
+  "significance": "One new upstream change modifies the Three.js research benchmark; one retrospective Blender documentation correction narrows the asset-reload experiment. No production promotion or priority reordering.",
+  "findings": [
+    {
+      "id": "three-r187-tsl-function-layout-dedup-20261012",
+      "event_date": "2026-10-12",
+      "merged_at_utc": "2026-10-12T22:14:34Z",
+      "materiality": "New upstream evidence separates JS-side shader construction cost from GPU pipeline compilation and can change the design of the existing renderer benchmark.",
+      "source_quality": "A for merged Three.js implementation/PR diff; B for author-supplied synthetic benchmark; no measurement on our scenes",
+      "sources": [
+        "https://github.com/mrdoob/three.js/pull/34848",
+        "https://github.com/mrdoob/three.js/commit/a98e02eae60b5f21171163128247255e59ea236d"
+      ],
+      "evidence": "In TSL function layouts nested includes previously regenerated for each call path. Merged change deduplicates by builder/stage, provides optional parameter handling, and adds test cases. Author reports 682 -> 33 FunctionNode.generate calls in an all-MaterialX-noises shader, and depth-12 nested-layout shader-build work 3.87ms -> 0.40ms. Author states generated shaders are byte-identical for the tested configuration.",
+      "confidence": {
+        "merged_implementation": 0.99,
+        "mechanism": 0.96,
+        "reported_benchmark_accurate_for_test": 0.85,
+        "performance_transfer_to_our_current_production": 0.24,
+        "experiment_value": 0.8
+      },
+      "contradictions_and_limits": [
+        "The 3.87 to 0.40ms gain is CPU-side build time for a specific nested-layout stress test, NOT a GPU frame-time, shader-driver compile, or KONA load-time result.",
+        "Current main code searches in konam, bellagio and studio-kona show no explicit WebGPURenderer or THREE.TSL usage; immediate production benefit is unproven.",
+        "Optimized code is in Three.js dev/r187 milestone, not proof that a stable released renderer includes it."
+      ],
+      "engineering": "Revise EXP-THREE-R187-001 to benchmark CPU TSL graph-generation time, generated shader identity/size, GPU pipeline compile time, warm/cold first-frame latency, correctness, and mobile behavior separately. Include synthetic deep nested layouts and a real Bellagio/KONA material only after isolating them in a research harness. Never infer FPS gain from shader-build microbenchmarks.",
+      "affected_projects": [
+        "Shared renderer research",
+        "Bellagio cinematic material research",
+        "KONA.m product-material research",
+        "Gaudí procedural material research"
+      ],
+      "isolated_experiment": "EXP-THREE-R187-001",
+      "isolated_experiment_created": false,
+      "priority_change": false
+    },
+    {
+      "id": "blender-53-collection-importer-usd-only-constraint",
+      "event_date": "2026-10-10",
+      "discovered": "2026-10-13",
+      "retrospective": true,
+      "materiality": "Corrects an over-broad assumption in the existing externally reloaded collection experiment before it is specified around unsupported direct GLB collection importing.",
+      "source_quality": "A: official Blender 5.3 Pipeline & I/O developer release notes",
+      "sources": [
+        "https://developer.blender.org/docs/release_notes/5.3/pipeline_io/",
+        "https://github.com/blender/blender/commit/145d210733b82b78480101950989b98d17fad213"
+      ],
+      "evidence": "Blender's Collection Importer currently supports USD only. It can store import settings on collections in .blend projects, and reload/clear/make-local operations were added, but this does not establish glTF/GLB collection-import reload support.",
+      "confidence": {
+        "documented_format_constraint": 0.99,
+        "experiment_relevance": 0.94,
+        "current_compatibility_impact": 0.7
+      },
+      "contradictions_and_limits": [
+        "glTF import and export functionality exists separately in Blender; 'USD-only collection importer' does not imply Blender cannot import GLB.",
+        "Blender 5.3 is development/release-note track as of this date; do not infer stable production maturity.",
+        "The 2026-10-10 evidence report described collection reload generically; it did not demonstrate a GLB reload round trip."
+      ],
+      "engineering": "Amend EXP-BLENDER-ASSET-AS-CODE-001: use USD for native linked/reloaded Collection Importer cases; treat glTF/GLB export as a separate browser-delivery round-trip; record source format, collection asset identity and transform, mapping to GLB semantic IDs, edit conflict policy, and rebuild determinism. No central source-authority migration.",
+      "affected_projects": [
+        "Gaudí / Living Threshold",
+        "KONA asset factory",
+        "Bellagio",
+        "Studio-Kona"
+      ],
+      "isolated_experiment": "EXP-BLENDER-ASSET-AS-CODE-001",
+      "isolated_experiment_created": false,
+      "priority_change": false
+    }
+  ],
+  "watch_only": [
+    {
+      "event_date": "2026-10-12",
+      "source": "https://github.com/mrdoob/three.js/pull/34970",
+      "reason": "Confirmed fix for shared TextureSource among multi-render-target attachments. Code inspection of konam and bellagio main found WebGLRenderTarget for postprocessing but no multi-attachment count, so project incidence not established. Add MRT case only if planned hybrid renderer uses multiple attachments."
+    },
+    {
+      "event_date": "2026-10-12",
+      "source": "https://github.com/mrdoob/three.js/pull/34969",
+      "reason": "WebGPU canvas target GPU depth/color resource disposal now explicit; no current WebGPU use in searched main branches, so no new isolated experiment."
+    },
+    {
+      "event_date": "2026-10-12",
+      "source": "https://github.com/KhronosGroup/glTF/pull/2675",
+      "reason": "KHR_interactivity clarified interpolation rejects ref types; semantic room interactions remain runtime-owned, so no architecture change."
+    },
+    {
+      "event_date": "2026-09-28",
+      "source": "https://github.com/KhronosGroup/glTF/pull/2610",
+      "reason": "KHR_materials_retroreflection is only release candidate; promising for night cycling/high-vis visuals, but no validated project need or browser support. Retrospective, not a new October 13 event."
+    }
+  ],
+  "code_search_checks": [
+    {
+      "repo": "joaoccaldas/konam",
+      "ref": "main",
+      "file": "web/src/main.js",
+      "evidence": "WebGLRenderTarget(1,1,...) in EffectComposer; no explicit WebGPURenderer or THREE.TSL search hits."
+    },
+    {
+      "repo": "joaoccaldas/bellagio",
+      "ref": "main",
+      "file": "web/src/main.js",
+      "evidence": "WebGLRenderTarget(1,1,...) in EffectComposer; no explicit WebGPURenderer or THREE.TSL search hits."
+    },
+    {
+      "repo": "joaoccaldas/studio-kona",
+      "ref": "main",
+      "evidence": "No explicit WebGPURenderer or THREE.TSL search hits in indexed main search."
+    }
+  ],
+  "no_decision_changing_evidence_in": [
+    "Catalan and Spanish Gaudí scholarship",
+    "computational architecture and structural form finding",
+    "Meshopt/KTX2/clusterLOD",
+    "product visualization/watch/bike/shoe/helmet",
+    "photogrammetry/NeRF/mesh-splat reconstruction",
+    "cyclist CFD/rolling resistance/wind/terrain",
+    "human perception/perceptual resolution",
+    "AI x 3D"
+  ],
+  "status": "Existing priority order unchanged. Scientific GCM-CFD remains first; ClusterLOD second; splat interop third. Focus on executing project-grounded benchmarks rather than promoting upstream microbenchmarks. No release upgrades, shared-renderer centralization or production changes.",
+  "evidence_gaps": [
+    "No real KONA/Bellagio TSL material benchmark run.",
+    "No USD reload -> GLB stable-ID round-trip run.",
+    "No Three.js upstream dev build validated on mobile.",
+    "No new measured visual-quality delta."
+  ],
+  "research_only": true
+}
