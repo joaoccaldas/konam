@@ -1,0 +1,48 @@
+{
+ "schema_version": 1,
+ "id": "studio-nor3-disc-tri",
+ "type": "bike",
+ "brand": "Studio design",
+ "model": "Winter lane tri study",
+ "representation": "concept",
+ "source_records": [
+  "museum/atlas/bikes.json"
+ ],
+ "generator": "blender",
+ "generator_script": "blender/atlas_build.py",
+ "detail": "hero",
+ "tris": 39348,
+ "bytes": 305428,
+ "semantic_parts": [
+  "accent",
+  "aerobar",
+  "axle",
+  "basebar",
+  "bottle",
+  "brake",
+  "cassette",
+  "chain",
+  "chainring",
+  "crank",
+  "derailleur",
+  "disc",
+  "fork",
+  "frame",
+  "hub",
+  "pad",
+  "pedal",
+  "rim",
+  "saddle",
+  "seatpost",
+  "spokes",
+  "stem",
+  "storage",
+  "tyre"
+ ],
+ "lods": [
+  "bike.glb",
+  "bike-lite.glb"
+ ],
+ "notes": "Built from its own skeleton in museum/atlas/bikes.json. Unbranded.",
+ "compression": "EXT_meshopt_compression"
+}

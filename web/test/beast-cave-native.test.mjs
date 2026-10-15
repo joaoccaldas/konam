@@ -41,5 +41,57 @@ test('Beast Cave candidate is canonical Athlete Rooms child with local implement
 test('Beast Cave procedural material is deterministic and avoids copied UI',()=>{
   assert.match(room,/seededRandom/);
   assert.doesNotMatch(room,/Math\.random/);
-  assert.match(room,/original KONA\.m training visualization, not a copied Zwift screen/);
+  assert.match(room,/original KONA\.m route study[\s\S]*No third-party training-app screens or route art are reproduced/);
+});
+
+test('Beast Cave keeps its own footprint, no door and no third-party brand inside',async()=>{
+  const brand=JSON.parse(fs.readFileSync(new URL('../../museum/world/brand_rooms.json',import.meta.url),'utf8'));
+  const { BROOM, beastCaveWalkable }=await import('../src/beast-cave.js');
+  for(const r of brand.rooms){const b=r.bounds;assert.equal(BROOM.x0<b.x1&&BROOM.x1>b.x0&&BROOM.z1<b.z0&&BROOM.z0>b.z1,false,r.id);}
+  const WALK={x0:-6.4,x1:6.4};
+  for(let x=BROOM.x0+1;x<BROOM.x1-1;x+=.5) assert.equal(beastCaveWalkable(x,BROOM.z1-.3,WALK),false,`walkable through the south wall at x=${x}`);
+  assert.doesNotMatch(room,/breitling|zwift-room|BUILD THIS CAVE|current_eu_price/i);
+  assert.doesNotMatch(landing,/BLINK/);
+});
+
+test('the interval is shareable, keeps a personal best through storage.js and invents no athlete line',()=>{
+  assert.match(room,/function resultImage/);
+  assert.match(landing,/readStorage\('athleteRoomBests'\)/);
+  assert.match(landing,/writeStorage\('athleteRoomBests'/);
+  assert.match(landing,/This slot stays empty until Lionel Sanders chooses to ride the interval/);
+});
+
+test('Beast Cave facts are sourced and the Zwift card stays unofficial',()=>{
+  const facts=JSON.parse(fs.readFileSync(new URL('../../pitch/lionel-sanders/career-facts-v1.json',import.meta.url),'utf8'));
+  for(const f of [...facts.facts,facts.gap,facts.title]) assert.ok(f.sources?.length&&f.sources.every(u=>/^https:\/\//.test(u)),f.id);
+  assert.equal(facts.gap.value,'2:27');
+  assert.doesNotMatch(room,/affiliate[^']*href|impact\.com/i);
+});
+
+test('Lionel-on-Zwift content is sourced from public Zwift pages and claims no partnership',async()=>{
+  const facts=JSON.parse(fs.readFileSync(new URL('../../pitch/lionel-sanders/career-facts-v1.json',import.meta.url),'utf8'));
+  const z=facts.zwift;
+  for(const k of ['hour','quote','watopia','level','event','channel','music']) assert.ok(z[k]?.sources?.length&&z[k].sources.every(u=>/^https:\/\//.test(u)),k);
+  assert.match(z.note,/no sponsorship or partnership is claimed/);
+  assert.match(room,/Not affiliated with, endorsed by or sponsored by Lionel Sanders, Zwift or any brand/);
+});
+
+test('the TV only plays a clip when a rights reference is recorded',async()=>{
+  const { BEAST_TV }=await import('../src/beast-cave.js');
+  assert.ok(BEAST_TV.clip===null||!!BEAST_TV.rightsRef,'a TV clip needs a rights reference');
+});
+
+test('the room promotes Lionel’s Zwift ride only while it is upcoming or live, linking the official page', async () => {
+  const src = fs.readFileSync(new URL('../src/beast-cave.js', import.meta.url), 'utf8');
+  const facts = JSON.parse(fs.readFileSync(new URL('../../pitch/lionel-sanders/career-facts-v1.json', import.meta.url), 'utf8'));
+  const start = Date.parse(facts.zwift.event.starts);
+  assert.match(facts.zwift.event.url, /^https:\/\/www\.zwift\.com\/events\//);
+  assert.ok(facts.zwift.event.sources.includes(facts.zwift.event.url));
+  // countdown logic, mirrored from the source so the test needs no DOM or Three.js
+  const body = src.slice(src.indexOf('export function beastEvent'), src.indexOf('// a calendar entry'));
+  const beastEvent = new Function('Z', body.replace('export function beastEvent', 'return function beastEvent'))({ event: facts.zwift.event });
+  assert.deepEqual([beastEvent(start - 2 * 864e5 - 5 * 36e5).countdown, beastEvent(start - 90 * 6e4).countdown, beastEvent(start + 60e3).countdown], ['STARTS IN 2 D 5 H', 'STARTS IN 1 H 30 MIN', 'LIVE NOW']);
+  assert.equal(beastEvent(start + 4 * 36e5).active, false, 'promotion stops after the ride');
+  assert.match(src, /NOT AFFILIATED WITH ZWIFT/);
+  assert.doesNotMatch(src, /zwift[-_ ]?logo|\.svg['"].*zwift/i, 'no Zwift logo is drawn or loaded');
 });

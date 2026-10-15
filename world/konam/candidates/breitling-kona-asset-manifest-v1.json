@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "room_id": "breitling-kona",
+  "policy": "reuse-first",
+  "assets": [
+    {
+      "asset_id": "endurance-pro-study",
+      "kind": "watch",
+      "decision": "CREATE",
+      "why_not_reuse": "The existing assets/multibrand/breitling-watch study is a generic ~7k-triangle puck with no inspectable parts; the room's centrepiece needs a part-tagged, explodable chronograph built from the public specification.",
+      "generator": "blender/watch_build.py + tools/pack-glb.mjs",
+      "runtime_ref": [
+        "assets/watches/endurance-pro-study/watch.glb",
+        "assets/watches/endurance-pro-study/watch-lite.glb"
+      ],
+      "sha256": "bf891b518bac907b05b87a01458d3ef278dc5d7988c8d8aa89250b747f302b71",
+      "tris": {
+        "hero": 16576,
+        "lite": 6148
+      },
+      "representation": "geometry-study",
+      "rights": "original-kona-m (subject: Breitling; no marks)",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "kona-sunset-plate",
+      "kind": "backdrop-image",
+      "decision": "REUSE",
+      "runtime_ref": "assets/rooms/nor3-winter/kona-winter-plate-2048.webp",
+      "source_ref": "world/konam/candidates/nor3-winter-asset-manifest-v1.json",
+      "rights": "generated-unbranded-rights-review",
+      "lifecycle": "candidate"
+    }
+  ],
+  "constraints": {
+    "brand_logo": false,
+    "ironman_mark": false,
+    "product_photography": false,
+    "copied_brand_ui": false
+  },
+  "procedural": "lava floor with shader fissures, race-clock ring shader, dais, vitrines, typography, plaques — original KONA.m code"
+}

@@ -1,0 +1,28 @@
+{
+ "review": "transition-pier",
+ "measured_at": "2026-10-15T16:06:55.426Z",
+ "desktop": {
+  "scene_calls": 98,
+  "scene_triangles": 100070,
+  "room_meshes": 54,
+  "room_triangles": 94720,
+  "errors": 0,
+  "budget": {
+   "calls": 190,
+   "triangles": 450000
+  },
+  "within_budget": true
+ },
+ "phone": {
+  "scene_calls": 81,
+  "scene_triangles": 169918,
+  "room_meshes": 70,
+  "room_triangles": 168292,
+  "errors": 0,
+  "budget": {
+   "calls": 110,
+   "triangles": 220000
+  },
+  "within_budget": true
+ }
+}

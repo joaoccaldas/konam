@@ -1,0 +1,21 @@
+{
+ "schema_version": 1,
+ "id": "studio-xl-tri",
+ "type": "bike",
+ "brand": "Studio design",
+ "model": "XL triathlon bike",
+ "representation": "concept",
+ "source_records": [
+  "museum/atlas/bikes.json"
+ ],
+ "generator": "blender",
+ "generator_script": "blender/atlas_build.py",
+ "detail": "standard",
+ "tris": 8572,
+ "bytes": 85660,
+ "semantic_parts": null,
+ "lods": [
+  "bike.glb"
+ ],
+ "notes": "Built from its own skeleton in museum/atlas/bikes.json. Unbranded. Meta backfilled by tools/atlas-build-meta.mjs from the build report and the GLB."
+}

@@ -1,0 +1,14 @@
+{
+ "asset": "assets/museum/speedmax_web-hero.glb",
+ "kind": "derived-runtime-lod",
+ "derived_from": "assets/museum/speedmax_web.glb",
+ "rights": "inherits the source asset's rights and provenance; no new geometry or marks",
+ "pipeline": "gltf-transform weld -> simplify --ratio 0.05 --error 0.0002 -> meshopt --level medium (node tools/pack-glb.mjs --lod)",
+ "triangles": 133584,
+ "source_triangles": 509624,
+ "bytes": 828284,
+ "materials": 20,
+ "nodes": 61,
+ "use": "desktop near level (within 5 m) for the canonical CFR in the Laidlow review room; keeps the room inside its 450k desktop budget",
+ "validated": "side-by-side vs source at 1.2 m: indistinguishable; docs/evidence/app-3d-css-audit-20261004/lod/hero-d1.2.png"
+}
