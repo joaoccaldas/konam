@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-15",
+  "purpose": "Small public repo-local technical lookup. Private lessons, cross-project synthesis and recipe indexes are separate explicit local inputs.",
+  "scope": {
+    "publication": "public-repo-only",
+    "source_policy": "Only existing KONA technical contracts; private curation is not bundled or fetched.",
+    "konam_baseline_ref": "29245e73f099b1f8a4ad27bbdb33d3216679a03f",
+    "observed_at": "2026-10-15",
+    "covered_public_repositories": [
+      "konam"
+    ],
+    "limitations": [
+      "This public lookup is deliberately limited to KONA authorities; an empty search is not a cross-project inventory.",
+      "Configure KONA_3D_KNOWLEDGE_MAP locally to search an authorized private map. Do not commit its file or output.",
+      "Existing public Git history can retain older material; this current-tree change does not remove historical copies."
+    ]
+  },
+  "sources": [
+    {
+      "id": "authority",
+      "kind": "repository-file",
+      "repository": "joaoccaldas/konam",
+      "ref": "29245e73f099b1f8a4ad27bbdb33d3216679a03f",
+      "path": "docs/architecture/AUTHORITY_MAP.md",
+      "role": "implementation",
+      "url": "https://github.com/joaoccaldas/konam/blob/29245e73f099b1f8a4ad27bbdb33d3216679a03f/docs/architecture/AUTHORITY_MAP.md",
+      "observed_at": "2026-10-15"
+    },
+    {
+      "id": "room-skill",
+      "kind": "repository-file",
+      "repository": "joaoccaldas/konam",
+      "ref": "29245e73f099b1f8a4ad27bbdb33d3216679a03f",
+      "path": "skills/konam-room-studio/SKILL.md",
+      "role": "implementation",
+      "url": "https://github.com/joaoccaldas/konam/blob/29245e73f099b1f8a4ad27bbdb33d3216679a03f/skills/konam-room-studio/SKILL.md",
+      "observed_at": "2026-10-15"
+    },
+    {
+      "id": "asset-intake",
+      "kind": "repository-file",
+      "repository": "joaoccaldas/konam",
+      "ref": "29245e73f099b1f8a4ad27bbdb33d3216679a03f",
+      "path": "docs/ASSET_INTAKE.md",
+      "role": "implementation",
+      "url": "https://github.com/joaoccaldas/konam/blob/29245e73f099b1f8a4ad27bbdb33d3216679a03f/docs/ASSET_INTAKE.md",
+      "observed_at": "2026-10-15"
+    }
+  ],
+  "records": [
+    {
+      "id": "project:konam",
+      "kind": "project",
+      "title": "KONA.m runtime and product tooling",
+      "summary": "Use the current KONA app, renderer, identity, storage and room authorities.",
+      "status": "active-pointer",
+      "evidence": "source-inspected",
+      "source_ids": [
+        "authority"
+      ],
+      "tags": [
+        "kona",
+        "konam",
+        "museum",
+        "bike",
+        "room"
+      ],
+      "use_when": "Find the existing runtime authority before changing product architecture.",
+      "adoption_gate": "Review the current authority map and relevant release evidence before adoption.",
+      "related_ids": []
+    },
+    {
+      "id": "workflow:asset-intake",
+      "kind": "workflow",
+      "title": "Existing asset intake",
+      "summary": "Follow the existing repository procedure and its source authority.",
+      "status": "active-pointer",
+      "evidence": "source-inspected",
+      "source_ids": [
+        "asset-intake"
+      ],
+      "tags": [
+        "asset",
+        "intake",
+        "bike",
+        "product"
+      ],
+      "use_when": "Before adding or adapting an asset or room.",
+      "adoption_gate": "Complete the existing procedure and destination-specific evidence gates.",
+      "related_ids": [
+        "project:konam"
+      ]
+    },
+    {
+      "id": "workflow:room-intake",
+      "kind": "workflow",
+      "title": "Existing room workflow",
+      "summary": "Follow the existing repository procedure and its source authority.",
+      "status": "active-pointer",
+      "evidence": "source-inspected",
+      "source_ids": [
+        "room-skill"
+      ],
+      "tags": [
+        "room",
+        "host",
+        "manifest",
+        "intake"
+      ],
+      "use_when": "Before adding or adapting an asset or room.",
+      "adoption_gate": "Complete the existing procedure and destination-specific evidence gates.",
+      "related_ids": [
+        "project:konam"
+      ]
+    }
+  ],
+  "model_occurrences": []
+}

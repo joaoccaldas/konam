@@ -43,6 +43,7 @@ Current engineering/product documentation:
 7. [Operations](docs/OPERATIONS.md)
 8. [Decisions](docs/DECISIONS.md)
 9. [Repository hygiene](docs/REPOSITORY_HYGIENE.md)
+10. [3D technical lookup](docs/architecture/3D_KNOWLEDGE_MAP.md) - repo-local authorities and explicit local configuration for private knowledge used by the pre-create inventory
 
 Historical audits and handovers are evidence, not current product truth.
 

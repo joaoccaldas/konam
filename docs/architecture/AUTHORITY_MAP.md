@@ -19,7 +19,8 @@ This document names the canonical owners of product truth. If a proposed change 
 | Consumer shell | `web/src/entry.js` + `web/src/ui/kona-shell.js` | do not create a second shell/navigation authority |
 | World renderer/player | `web/src/landing.js` | rooms plug in through approved adapters |
 | Renderer authority freeze | `config/renderer-authority-v1.json` + `tools/authority-hygiene.mjs` | do not add a renderer constructor outside the explicit inventory; production entries must have a kernel migration disposition |
-| Shared renderer kernel | Wave 2 target: `web/src/render/` (not implemented yet) | migrate one bounded consumer at a time; do not create a parallel renderer stack |
+| Shared renderer kernel | `web/src/render/` + `config/renderer-authority-v1.json` | bounded consumers already use the kernel; follow the inventory for remaining migrations and preserve visual/performance parity |
+| Technical knowledge lookup | `tools/3d-knowledge.mjs` + repo-local `docs/architecture/3D_KNOWLEDGE_MAP.json` | private curation is an explicit local input through `KONA_3D_KNOWLEDGE_MAP`; never copy it into the public tree; the lookup does not own assets, rooms, runtime state or evidence promotion |
 | Build outputs | source files + deterministic builders | never hand-edit generated bundles as authority |
 | Release truth | exact-SHA CI + evidence | branch existence is not production authority |
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import {loadKnowledge, resolveKnowledgePaths, validateKnowledge, searchKnowledge, findModelOccurrences} from './3d-knowledge.mjs';
 
 const ROOT=path.resolve(import.meta.dirname,'..');
 const kind=(process.argv[2]||'').toLowerCase();
@@ -48,6 +49,34 @@ console.log('query:',query);
 console.log('authority: docs/architecture/AUTHORITY_MAP.md');
 console.log('decision order: REUSE -> ADAPT -> RESTYLE -> COMPOSE -> CREATE');
 console.log('');
+// Curated cross-project pointers supplement existing product authorities.
+// A broken map fails visibly instead of silently discarding accumulated lessons.
+let knowledge,knowledgePaths;
+try{
+  knowledgePaths=resolveKnowledgePaths(ROOT);
+  knowledge=loadKnowledge(ROOT,knowledgePaths.mapPath);
+}catch{
+  console.error('Configured 3D knowledge could not be loaded. No fallback was used; check the explicit local input.');
+  process.exit(1);
+}
+if(knowledgePaths.configured)console.log('Configured local knowledge is active. Keep its results in the authorized local context.');
+const knowledgeErrors=validateKnowledge(knowledge,{root:ROOT});
+if(knowledgeErrors.length){
+  console.error('3D knowledge map invalid: '+knowledgeErrors.join('; '));
+  process.exit(1);
+}
+const knowledgeHits=searchKnowledge(knowledge,query,{limit:5});
+const sourceHits=['asset','product','room'].includes(kind)?findModelOccurrences(knowledge,query,{limit:5}):[];
+if(knowledgeHits.length||sourceHits.length){
+  console.log('Related cross-project knowledge (pointers, not promotion approval):');
+  for(const hit of knowledgeHits){
+    console.log(' - '+hit.id+' ['+hit.status+'; '+hit.evidence+']: '+hit.title);
+    console.log('   gate: '+hit.adoption_gate);
+    console.log('   source: '+hit.sources[0].url);
+  }
+  for(const hit of sourceHits)console.log(' - source-location: '+hit.repository+'@'+hit.ref+':'+hit.path+' [rights/acceptance not established]');
+  console.log('');
+}
 if(!matches.length){
   console.log('No likely existing match found in canonical search locations.');
   console.log('CREATE is not automatically approved: inspect the authority files above before adding a new object.');
