@@ -106,7 +106,7 @@ if (flag('metrics') || flag('metrics-only')) {
     console.log(name, JSON.stringify(receipt[name]));
     await page.close();
   }
-  fs.mkdirSync(out, { recursive: true }); fs.writeFileSync(path.join(out, 'metrics.json'), JSON.stringify({ review, measured_at: new Date().toISOString(), ...receipt }, null, 2));
+  fs.mkdirSync(out, { recursive: true }); fs.writeFileSync(path.join(out, 'metrics.json'), JSON.stringify({ review, measured_at: new Date().toISOString(), browser_version: await browser.version(), renderer: 'software WebGL / SwiftShader', frame_time_measured: false, ...receipt }, null, 2));
 }
 await browser.close(); server.close();
 process.exit(failed ? 1 : 0);

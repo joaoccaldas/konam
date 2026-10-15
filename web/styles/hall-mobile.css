@@ -2,6 +2,8 @@
    Edit phone width, coarse pointer, short landscape and html.phone-fit here.
    Desktop hall chrome: hall-web.css
    html.phone-fit is required: a phone in Desktop view reports ~980px, so max-width queries never run. */
+/* The open story/inspection card owns attention; walking hints resume after it closes. */
+body.card-open #coach{display:none}
 @media (max-width:760px){#tourPill{font-size:12px;gap:6px;padding-left:12px}#tourPill b{display:none}body.touring header .logo,body.touring header nav{opacity:0;pointer-events:none}}
 @media (max-width:760px){
   .c-years{font-size:11.5px;letter-spacing:.2em}.c-mat{font-size:12px}.c-note{font-size:15px!important;line-height:1.65}
