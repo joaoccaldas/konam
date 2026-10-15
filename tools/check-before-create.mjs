@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
-import {loadKnowledge, validateKnowledge, searchKnowledge, findModelOccurrences} from './3d-knowledge.mjs';
+import {loadKnowledge, resolveKnowledgePaths, validateKnowledge, searchKnowledge, findModelOccurrences} from './3d-knowledge.mjs';
 
 const ROOT=path.resolve(import.meta.dirname,'..');
 const kind=(process.argv[2]||'').toLowerCase();
@@ -51,7 +51,15 @@ console.log('decision order: REUSE -> ADAPT -> RESTYLE -> COMPOSE -> CREATE');
 console.log('');
 // Curated cross-project pointers supplement existing product authorities.
 // A broken map fails visibly instead of silently discarding accumulated lessons.
-const knowledge=loadKnowledge(ROOT);
+let knowledge,knowledgePaths;
+try{
+  knowledgePaths=resolveKnowledgePaths(ROOT);
+  knowledge=loadKnowledge(ROOT,knowledgePaths.mapPath);
+}catch{
+  console.error('Configured 3D knowledge could not be loaded. No fallback was used; check the explicit local input.');
+  process.exit(1);
+}
+if(knowledgePaths.configured)console.log('Configured local knowledge is active. Keep its results in the authorized local context.');
 const knowledgeErrors=validateKnowledge(knowledge,{root:ROOT});
 if(knowledgeErrors.length){
   console.error('3D knowledge map invalid: '+knowledgeErrors.join('; '));

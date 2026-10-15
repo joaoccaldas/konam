@@ -20,7 +20,7 @@ This document names the canonical owners of product truth. If a proposed change 
 | World renderer/player | `web/src/landing.js` | rooms plug in through approved adapters |
 | Renderer authority freeze | `config/renderer-authority-v1.json` + `tools/authority-hygiene.mjs` | do not add a renderer constructor outside the explicit inventory; production entries must have a kernel migration disposition |
 | Shared renderer kernel | `web/src/render/` + `config/renderer-authority-v1.json` | bounded consumers already use the kernel; follow the inventory for remaining migrations and preserve visual/performance parity |
-| Public technical knowledge lookup | `docs/architecture/3D_KNOWLEDGE_MAP.json` + `tools/3d-knowledge.mjs` | follow pinned source authorities and adoption gates; this curated projection does not own assets, rooms, private knowledge, runtime state or evidence promotion |
+| Technical knowledge lookup | `tools/3d-knowledge.mjs` + repo-local `docs/architecture/3D_KNOWLEDGE_MAP.json` | private curation is an explicit local input through `KONA_3D_KNOWLEDGE_MAP`; never copy it into the public tree; the lookup does not own assets, rooms, runtime state or evidence promotion |
 | Build outputs | source files + deterministic builders | never hand-edit generated bundles as authority |
 | Release truth | exact-SHA CI + evidence | branch existence is not production authority |
 
