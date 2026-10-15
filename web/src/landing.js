@@ -1530,7 +1530,7 @@ $('tourBtn')?.addEventListener('click', tourStart);
 $('tourPause')?.addEventListener('click', () => { tour.paused = !tour.paused; $('tourPause').textContent = tour.paused ? 'Resume' : 'Pause'; });
 $('tourNext')?.addEventListener('click', () => tourGo(tour.i + 1));
 $('tourStop')?.addEventListener('click', () => tourEnd(false));
-function haptic(ms = 8) { try { if (coarse) navigator.vibrate?.(ms); } catch (_) { } }
+function haptic(ms = 8) { try { if (coarse && navigator.userActivation?.hasBeenActive !== false) navigator.vibrate?.(ms); } catch (_) { } }   // only after a tap: Chrome blocks (and logs) vibration before any user gesture
 
 // ------------------------------------------------------------------ first visit on a phone: three quick coach marks
 const coachState = { k: -1, steps: [] };
