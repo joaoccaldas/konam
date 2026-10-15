@@ -3,23 +3,28 @@ on:
   push:
     branches: [main]
   pull_request:
-    paths:
-      - 'web/src/**'
-      - 'web/styles/**'
-      - 'web/landing.template.html'
-      - 'museum/**'
-      - 'world/konam/**'
-      - 'assets/**'
-      - 'tools/build_pages.mjs'
-      - 'tools/build_app.mjs'
-      - 'tools/stage_site.sh'
-      - 'app/app-manifest.json'
-      - '.github/workflows/visual-evidence-v2.yml'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  scope:
+    name: Visual scope
+    runs-on: ubuntu-latest
+    outputs:
+      run_visual: ${{ steps.scope.outputs.run_visual }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: scope
+        run: node tools/visual-evidence-scope.mjs
   evidence:
+    needs: scope
+    # Keep all seven required matrix names even for nonvisual changes.
+    # A failed scope check runs the full matrix; it cannot silently waive evidence.
+    if: ${{ !cancelled() }}
+    env:
+      RUN_VISUAL: ${{ needs.scope.result != 'success' || needs.scope.outputs.run_visual != 'false' }}
     strategy:
       fail-fast: false
       matrix:
@@ -27,25 +32,35 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - name: Report documented nonvisual scope
+        if: env.RUN_VISUAL == 'false'
+        run: echo 'Required viewport check reported; browser capture is unnecessary for the documented nonvisual change scope.'
       - uses: actions/checkout@v4
+        if: env.RUN_VISUAL == 'true'
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
+        if: env.RUN_VISUAL == 'true'
         with:
           node-version: '22'
           cache: npm
           cache-dependency-path: web/package-lock.json
       - run: npm ci --ignore-scripts
+        if: env.RUN_VISUAL == 'true'
         working-directory: web
       - run: node tools/build_pages.mjs
+        if: env.RUN_VISUAL == 'true'
       - run: git diff --exit-code -- app '*.html' web/dist
+        if: env.RUN_VISUAL == 'true'
       - name: Start local site
+        if: env.RUN_VISUAL == 'true'
         run: |
           python3 -m http.server 8754 > /tmp/kona-http.log 2>&1 &
           echo $! > /tmp/kona-http.pid
           for i in {1..30}; do curl -fsS http://127.0.0.1:8754/ >/dev/null && exit 0; sleep 1; done
           exit 1
       - name: Capture visual matrix
+        if: env.RUN_VISUAL == 'true'
         env:
           CHROME_PATH: /usr/bin/google-chrome
           AUDIT_VIEWPORT: ${{ matrix.viewport }}
@@ -53,7 +68,7 @@ jobs:
           node web/visual-evidence-v2.mjs http://127.0.0.1:8754/ visual-evidence-v2
           node tools/score-visual-evidence.mjs visual-evidence-v2
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && env.RUN_VISUAL == 'true'
         with:
           name: visual-evidence-v2-${{ matrix.viewport }}-${{ github.event.pull_request.head.sha || github.sha }}
           path: visual-evidence-v2/
