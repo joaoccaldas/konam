@@ -1,30 +1,134 @@
-// Canonical server/editorial renderer for the existing Gmail newsletter.
-// Never import recipient records into the public app or commit prepared editions.
+import fs from 'node:fs';
+
+const TEMPLATE=fs.readFileSync(new URL('./template.html',import.meta.url),'utf8');
+const APP_ORIGIN='https://joaoccaldas.github.io/konam/';
+const RAW_ORIGIN='https://raw.githubusercontent.com/joaoccaldas/konam/main/';
+
 const escape=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-const text=(value,name,max=3000)=>{
+const text=(value,name,max=3000,{optional=false}={})=>{
+  if(optional&&(value===undefined||value===null||String(value).trim()===''))return '';
   if(typeof value!=='string'||!value.trim()||value.length>max)throw new Error('Invalid '+name);
   return value.trim();
 };
 function date(value){
-  if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value)||new Date(value+'T00:00:00Z').toISOString().slice(0,10)!==value)throw new Error('Invalid publication date');
+  if(typeof value!=='string'||value.length!==10||value[4]!=='-'||value[7]!=='-'||!/^\d+$/.test(value.slice(0,4)+value.slice(5,7)+value.slice(8,10))||new Date(value+'T00:00:00Z').toISOString().slice(0,10)!==value)throw new Error('Invalid publication date');
   return value;
 }
+function https(value,name){
+  const url=new URL(value);
+  if(url.protocol!=='https:'||url.username||url.password||url.hash)throw new Error('Invalid '+name);
+  return url.href;
+}
+function resolveUrl(value,name,base){
+  const source=text(value,name,500);
+  if(source.startsWith('/')||source.includes('..'))throw new Error('Invalid '+name);
+  let url;
+  try{url=new URL(source,base)}catch{throw new Error('Invalid '+name)}
+  if(url.protocol!=='https:'||url.username||url.password||url.hash)throw new Error('Invalid '+name);
+  return url.href;
+}
+function repoAsset(value,name,{raw=false}={}){
+  return resolveUrl(value,name,raw?RAW_ORIGIN:APP_ORIGIN);
+}
+function repoPage(value,name){
+  return resolveUrl(value,name,APP_ORIGIN);
+}
+function emailImage(source,{width,height,fit='cover',background='f4efe7',quality=90}={}){
+  const url=new URL('https://images.weserv.nl/');
+  url.searchParams.set('url',source.replace(/^https:\/\//,''));
+  url.searchParams.set('output','jpg');
+  url.searchParams.set('q',String(quality));
+  url.searchParams.set('bg',background);
+  if(width)url.searchParams.set('w',String(width));
+  if(height)url.searchParams.set('h',String(height));
+  url.searchParams.set('fit',fit);
+  return url.href;
+}
+function fill(template,replacements){
+  let out=template;
+  for(const [key,value] of Object.entries(replacements))out=out.replaceAll('{{'+key+'}}',value);
+  return out;
+}
+function renderStory(story,index){
+  const intern=story.intern?'<div style="font-family:\'Comic Sans MS\',\'Bradley Hand\',cursive;font-size:13px;line-height:1.25;margin-top:7px;color:#282f36;">'+escape(story.intern)+'</div>':'';
+  return '<tr><td style="padding:14px 0;border-top:1px solid #b8b0a7;background:#f4efe7;">'
+    +'<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f4efe7;"><tr>'
+    +'<td width="29%" valign="middle" style="padding-right:14px;background:#f4efe7;">'
+    +'<img src="'+escape(story.image)+'" alt="" width="185" style="display:block;width:100%;height:auto;border:0;border-radius:12px;background:#e6e9ed;">'
+    +'</td><td width="71%" valign="middle" style="background:#f4efe7;">'
+    +'<div class="meta" style="font-size:10px;letter-spacing:.1em;color:#00a7c7;margin-bottom:5px;">'
+    +String(index+1).padStart(2,'0')+' / '+escape(story.category)+' · '+escape(story.published_at)+' · '+escape(story.source)+'</div>'
+    +'<div class="story-title" style="font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:27px;font-weight:900;line-height:1.02;letter-spacing:-.02em;margin-bottom:5px;">'+escape(story.headline)+'</div>'
+    +'<div class="story-copy" style="font-size:14px;line-height:1.35;color:#282f36;margin-bottom:7px;">'+escape(story.summary)+'</div>'
+    +'<a href="'+escape(story.url)+'" style="color:#ff6a00;font-weight:800;text-decoration:none;">READ →</a>'
+    +intern+'</td></tr></table></td></tr>';
+}
+
 export function prepareNewsletter(input){
   const edition=date(input.edition_date);
   if(!Array.isArray(input.stories)||input.stories.length!==3)throw new Error('Exactly three verified stories are required');
+
+  const bike=input.bike;
+  if(!bike||bike.verified!==true)throw new Error('A verified Bike of the Day is required');
+  const bikeId=text(bike.id,'bike id',120);
+  const bikeName=text(bike.name||bike.label,'bike name',160);
+  const bikeBrand=text(bike.brand||'KONA.m','bike brand',80);
+  const bikeYear=bike.year===null||bike.year===undefined?'':String(bike.year);
+  if(bikeYear&&!/^\d{4}$/.test(bikeYear))throw new Error('Invalid bike year');
+  const bikeImage=repoAsset(bike.image,'bike image');
+  const bikeGlb=repoAsset(bike.glb,'bike GLB',{raw:true});
+  const bikeView=repoPage(bike.viewer_url||bike.viewer,'bike viewer');
+  if(!/\.(?:webp|png|jpe?g)$/i.test(new URL(bikeImage).pathname))throw new Error('Bike preview must be a real image asset');
+  if(!/\.glb$/i.test(new URL(bikeGlb).pathname))throw new Error('Bike download must be a GLB asset');
+
   const urls=new Set();
   const stories=input.stories.map(story=>{
     const published=date(story.published_at),age=(Date.parse(edition)-Date.parse(published))/86400000;
     if(age<0||age>7)throw new Error('Story is outside the verified seven-day fallback window');
-    const url=new URL(story.url);
-    if(url.protocol!=='https:'||url.username||url.password||url.hash||urls.has(url.href))throw new Error('Invalid or duplicate canonical URL');
-    urls.add(url.href);
+    const url=https(story.url,'canonical URL');
+    if(urls.has(url))throw new Error('Invalid or duplicate canonical URL');
+    urls.add(url);
     if(story.verified!==true)throw new Error('Source facts and publication date must be verified before rendering');
-    return {category:text(story.category,'category',50),published_at:published,source:text(story.source,'source',120),url:url.href,headline:text(story.headline,'headline',200),summary:text(story.summary,'summary'),intern:text(story.intern,'Intern note',600),verified:true};
+    return {
+      category:text(story.category,'category',50),
+      published_at:published,
+      source:text(story.source,'source',120),
+      url,
+      headline:text(story.headline,'headline',140),
+      summary:text(story.summary,'summary',280),
+      intern:text(story.intern,'Intern note',180,{optional:true}),
+      image:emailImage(repoAsset(story.image,'story image'),{width:520,height:340,fit:'cover',background:'e6e9ed',quality:88}),
+      verified:true
+    };
   });
-  const intro=text(input.intro,'intro',1000),currently=text(input.intern_currently,'Intern currently',800);
-  const published=new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(edition+'T00:00:00Z'));
-  const storyHTML=stories.map((s,index)=>`<tr><td style="padding:24px 0;border-top:1px solid #d8d0c7"><p style="font-size:11px;letter-spacing:.1em;color:#00a7c7">${String(index+1).padStart(2,'0')} / ${escape(s.category)} · ${escape(s.published_at)} · ${escape(s.source)}</p><h2 style="font:30px/1.1 Georgia,serif">${escape(s.headline)}</h2><p style="font-size:16px;line-height:1.65">${escape(s.summary)}</p><p style="font:16px/1.45 'Bradley Hand',cursive">The Intern: ${escape(s.intern)}</p><a href="${escape(s.url)}" style="display:inline-block;background:#ff6a00;color:#080b0e;text-decoration:none;font-weight:bold;padding:12px 16px;border-radius:999px">READ ORIGINAL →</a></td></tr>`).join('');
-  const html=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kona.m · The Intern</title></head><body style="margin:0;background:#f4efe7;color:#080b0e;font-family:Manrope,Arial,sans-serif"><table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;word-break:break-word"><tr><td style="padding:8px 0 22px;border-bottom:1px solid #d8d0c7;font:34px Georgia,serif">Kona<span style="color:#ff6a00">.</span>m</td></tr><tr><td style="padding:30px 0"><p style="font-size:11px;letter-spacing:.1em;color:#00a7c7">THE INTERN READ THE INTERNET · ${escape(published.toUpperCase())}</p><h1 style="font:44px/1.05 Georgia,serif">Three things worth your time today.</h1><p style="font-size:16px;line-height:1.6">${escape(intro)}</p></td></tr>${storyHTML}<tr><td style="padding:20px;background:#efe6e8"><p style="font-size:11px;color:#ff2d6d;letter-spacing:.1em">THE INTERN, CURRENTLY</p><p style="font-size:16px;line-height:1.6">${escape(currently)}</p></td></tr><tr><td align="center" style="padding:30px 0"><p style="font:22px Georgia,serif">Race the version of yourself <em>you haven’t met yet.</em></p><p style="font-size:12px">You chose The Intern’s Kona.m newsletter. <a href="{{UNSUBSCRIBE_URL}}" style="color:#080b0e">Unsubscribe</a> · <a href="https://joaoccaldas.github.io/konam/privacy.html" style="color:#080b0e">Privacy & data</a></p></td></tr></table></td></tr></table></body></html>`;
-  return {id:'intern-'+edition,subject:'Kona.m — The Intern read the internet · '+published,html,stories};
+
+  const intro=text(input.intro,'intro',180);
+  const currently=text(input.intern_currently,'Intern currently',220);
+  const published=new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(edition+'T00:00:00Z')).toUpperCase();
+  const yearLabel=bikeYear?' · '+bikeYear:'';
+  const bikeDek=text(input.bike_dek||(`${bikeBrand} ${bikeName}${yearLabel}. A real bike from the KONA.m 3D collection.`),'bike dek',180);
+
+  const html=fill(TEMPLATE,{
+    PUBLISHED:escape(published),
+    INTRO:escape(intro),
+    BIKE_IMAGE:escape(emailImage(bikeImage,{width:1200,height:700,fit:'contain',background:'eee5da',quality:92})),
+    BIKE_ALT:escape(`KONA.m ${bikeName}${yearLabel} real 3D asset`),
+    BIKE_NAME:escape(bikeName+yearLabel),
+    BIKE_DEK:escape(bikeDek),
+    BIKE_VIEW_URL:escape(bikeView),
+    BIKE_GLB_URL:escape(bikeGlb),
+    STORIES:stories.map(renderStory).join(''),
+    INTERN_CURRENTLY:escape(currently)
+  });
+
+  if(!html.includes('{{UNSUBSCRIBE_URL}}'))throw new Error('Missing unsubscribe placeholder');
+  if(/{{(?:PUBLISHED|INTRO|BIKE_|STORIES|INTERN_)/.test(html))throw new Error('Unresolved newsletter template placeholder');
+
+  return {
+    id:'intern-'+edition,
+    subject:'Kona.m — The Intern read the internet · '+published,
+    html,
+    bike:{id:bikeId,name:bikeName,brand:bikeBrand,year:bike.year??null,image:bikeImage,email_image:emailImage(bikeImage,{width:1200,height:700,fit:'contain',background:'eee5da',quality:92}),glb:bikeGlb,viewer_url:bikeView,verified:true},
+    stories
+  };
 }
