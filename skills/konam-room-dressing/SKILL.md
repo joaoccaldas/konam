@@ -19,7 +19,7 @@ Dressing is data. A room's movable things live in `world/konam/rooms/<room>.deco
 
 - several placements of one item = instancing for free (one draw per material for all copies)
 - `kind: bike` loads `assets/atlas/<ref>/bike.glb` (`bike-lite.glb` on phones), hub-aligned; `kind: glb` scales to `height`
-- `lite: "skip"` drops an item on phones; `lite_ref` swaps a lighter file
+- `lite: "skip"` drops an item on phones; `lite_ref` swaps a lighter file; `lite: "full"` keeps the same bike on phones (atlas studies are already ~8k triangles)
 - the room can derive layout from the manifest (NOR // 3 reads its lanes from `lane-bikes`), so moving one line moves a whole station
 - `shots` are the evidence cameras
 

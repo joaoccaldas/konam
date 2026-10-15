@@ -79,7 +79,7 @@ export async function loadDecor(manifest, { group, loader, lite = false, hooks =
   for (const item of manifest.items || []) {
     if (lite && item.lite === 'skip') continue;
     try {
-      const url = item.kind === 'bike' ? bikeUrl(item.ref, lite) : (lite && item.lite_ref) || item.ref;
+      const url = item.kind === 'bike' ? bikeUrl(item.ref, lite && item.lite !== 'full') : (lite && item.lite_ref) || item.ref;   // lite: 'full' = already phone-weight (atlas studies ~8k tris)
       const root = (await loader.loadAsync(url)).scene;
       const baked = bake(root, { align: item.kind === 'bike' ? 'bike' : null, height: item.height || null, keep: item.kind === 'bike' ? ['position', 'normal'] : ['position', 'normal', 'uv'] });
       const meshes = instance(baked, item.at, { group, castShadow: item.cast_shadow !== false && !lite,

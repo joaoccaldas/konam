@@ -1,0 +1,21 @@
+{
+ "schema": "place-facts-v1",
+ "subject": "Transition at the IRONMAN World Championship, Kailua-Kona",
+ "verified_on": "2026-10-12",
+ "editorial": "KONA.m independent room. Facts below are sourced; race-craft notes are general, not the rules of any specific race.",
+ "sources": {
+  "big_island_guide_2026": "https://bigislandguide.com/2026-ironman-world-championship-in-kona"
+ },
+ "facts": [
+  { "id": "swim-start", "line": "The swim starts in Kailua Bay: the pro men at 6:20 am and the pro women at 6:30 am (2026).", "sources": ["big_island_guide_2026"] },
+  { "id": "pier-transition", "line": "The bike leaves directly from the Kailua Pier transition area, and the run starts from the same transition point.", "sources": ["big_island_guide_2026"] },
+  { "id": "finish", "line": "The finish line is on Aliʻi Drive.", "sources": ["big_island_guide_2026"] }
+ ],
+ "race_craft": [
+  { "id": "t1-t2", "line": "T1 is the change from swim to bike; T2 is the change from bike to run. The clock keeps running through both." },
+  { "id": "mount-line", "line": "Most races mark a line you must cross on foot before you get on the bike, and another where you get off." },
+  { "id": "bags", "line": "Long-distance races often hand each athlete gear bags for the bike and the run instead of a box beside the bike." },
+  { "id": "practice", "line": "Transitions are practised like any other discipline: the same order every time, nothing new on race day." }
+ ],
+ "rights": { "endorsement": false, "likeness_used": false, "event_marks_used": false, "note": "Bikes are anonymous KONA.m atlas studies, not any athlete's equipment." }
+}
