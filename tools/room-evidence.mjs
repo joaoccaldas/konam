@@ -15,6 +15,7 @@ import path from 'node:path';
 import http from 'node:http';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+import { isVibrationActivationNotice } from './lib/browser-console-policy.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2), arg = (k, d) => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; }, flag = k => argv.includes(`--${k}`);
@@ -39,7 +40,10 @@ let failed = false;
 
 async function open(viewport, mobile = false, clock = false) {
   const page = await browser.newPage(); await page.setViewport({ ...viewport, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: 1 }); page.setDefaultTimeout(600000);
-  const errors = []; page.on('pageerror', e => errors.push(e.message)); page.on('console', m => { if (m.type() === 'error' && !/CERT|vibrate|net::ERR/.test(m.text())) errors.push(m.text().slice(0, 200)); });
+  const errors = [], warnings = []; page.on('pageerror', e => errors.push(e.message)); page.on('console', m => { if (m.type() === 'error') {
+    if (isVibrationActivationNotice(m.text()) || /CERT|net::ERR/.test(m.text())) warnings.push(m.text().slice(0, 200));
+    else errors.push(m.text().slice(0, 200));
+  } });
   if (clock) await page.evaluateOnNewDocument(() => { window.__vt = performance.now(); const raf = window.requestAnimationFrame.bind(window); window.__raf = raf; window.requestAnimationFrame = cb => raf(() => cb(window.__vt)); performance.now = () => window.__vt; });
   await page.goto(base, { waitUntil: 'load' });
   if (review === 'world') await page.waitForFunction(() => window.__museum?.scene, { timeout: 600000 });   // --review world: any place in the public world
@@ -48,7 +52,7 @@ async function open(viewport, mobile = false, clock = false) {
     await page.waitForFunction(() => window.__museum.beast.bikeSpot?.bike || window.__museum.beast.ownBikes, { timeout: 180000 }).catch(() => console.warn('no bike after 180 s'));   // host-loaded bikes count in the receipt
   }
   await new Promise(r => setTimeout(r, 6000));
-  return { page, errors };
+  return { page, errors, warnings };
 }
 const place = (page, [x, z, drop, lx, ly, lz]) => page.evaluate(([x, z, drop, lx, ly, lz]) => { const m = window.__museum; m.halt(); Object.assign(m.P, { x, z, drop, vx: 0, vz: 0 }); const eye = 1.6 + drop; m.P.yaw = Math.atan2(-(lx - x), -(lz - z)); m.P.pitch = Math.atan2(ly - eye, Math.hypot(lx - x, lz - z)); }, [x, z, drop, lx, ly, lz]);
 
@@ -91,13 +95,13 @@ if (flag('metrics') || flag('metrics-only')) {
   const hero = allShots.hero || Object.values(allShots)[0];
   const receipt = {};
   for (const [name, vp, mobile, budgetKey] of [['desktop', { width: 1440, height: 900 }, false, 'desktop'], ['phone', { width: 390, height: 844 }, true, 'mobile']]) {
-    const { page, errors } = await open(vp, mobile);
+    const { page, errors, warnings } = await open(vp, mobile);
     if (hero) await place(page, hero); await new Promise(r => setTimeout(r, 5000));
     const r = await page.evaluate(() => { const m = window.__museum, ren = m.renderer; ren.info.autoReset = true; ren.render(m.scene, m.camera); const i = ren.info.render; let meshes = 0, tris = 0;
       m.beast.group.traverse(o => { if (o.isMesh && o.visible) { meshes++; const g = o.geometry, n = (g.index ? g.index.count : g.attributes.position.count) / 3; tris += n * (o.isInstancedMesh ? o.count : 1); } });
       return { scene_calls: i.calls, scene_triangles: i.triangles, room_meshes: meshes, room_triangles: Math.round(tris) }; });
     const b = budgets?.[budgetKey], ok = !b || (r.room_meshes <= b.max_room_draw_calls && r.room_triangles <= b.max_room_triangles);
-    receipt[name] = { ...r, errors: errors.length, budget: b ? { calls: b.max_room_draw_calls, triangles: b.max_room_triangles } : null, within_budget: ok };
+    receipt[name] = { ...r, errors: errors.length, warnings, budget: b ? { calls: b.max_room_draw_calls, triangles: b.max_room_triangles } : null, within_budget: ok };
     if (!ok || errors.length) failed = true;
     console.log(name, JSON.stringify(receipt[name]));
     await page.close();

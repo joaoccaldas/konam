@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import puppeteer from 'puppeteer-core';
+import {isVibrationActivationNotice} from '../tools/lib/browser-console-policy.mjs';
 
 const base=process.argv[2]||'http://127.0.0.1:8765/';
 const root=path.resolve(import.meta.dirname,'..');
@@ -17,8 +18,11 @@ const browser=await puppeteer.launch({
 async function open(viewport,label){
   const page=await browser.newPage();
   await page.setViewport(viewport);
-  const errors=[];
-  page.on('console',m=>{if(m.type()==='error')errors.push('console: '+m.text())});
+  const errors=[],warnings=[];
+  page.on('console',m=>{if(m.type()==='error'){
+    if(isVibrationActivationNotice(m.text()))warnings.push('browser-policy: '+m.text());
+    else errors.push('console: '+m.text());
+  }});
   page.on('pageerror',e=>errors.push('pageerror: '+e.message));
   page.on('response',res=>{if(res.status()>=400)errors.push('http '+res.status()+': '+res.url())});
   const url=new URL(base);
@@ -36,9 +40,9 @@ async function open(viewport,label){
     url:location.href
   }));
   await page.screenshot({path:path.join(out,label+'.png'),fullPage:false});
-  fs.writeFileSync(path.join(out,label+'.json'),JSON.stringify({state,errors},null,2)+'\n');
+  fs.writeFileSync(path.join(out,label+'.json'),JSON.stringify({state,errors,warnings},null,2)+'\n');
   await page.close();
-  return {label,state,errors};
+  return {label,state,errors,warnings};
 }
 
 const results=[];

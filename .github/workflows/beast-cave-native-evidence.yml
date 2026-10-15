@@ -44,6 +44,7 @@ jobs:
           for i in {1..30}; do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
           node web/beast-cave-native-evidence.mjs http://127.0.0.1:8765/
       - name: Verify candidate room budgets
+        if: ${{ !cancelled() }}
         env:
           CHROME_PATH: /usr/bin/google-chrome
         run: node tools/room-evidence.mjs --review beast-cave --package world/konam/rooms/beast-cave.room.json --metrics-only --out docs/evidence/beast-cave-native/budgets
