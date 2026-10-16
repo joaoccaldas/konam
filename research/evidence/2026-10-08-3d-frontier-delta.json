@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-08",
+  "production_modified": false,
+  "material_findings": [
+    {
+      "title": "Three.js tiled shadows merged into dev",
+      "event_date": "2026-10-07",
+      "source_quality": "A: merged upstream PR and code",
+      "sources": [
+        "https://github.com/mrdoob/three.js/pull/34787",
+        "https://github.com/mrdoob/three.js/commit/badd4320c2f39151be5721368cc977e73efe4d21",
+        "https://github.com/mrdoob/three.js/pull/34850"
+      ],
+      "evidence": "For a 3840x2160 PCF fullscreen receiver on M1 with shadow maps pre-rendered, maintainer reports 2x2: 8.71 to 7.06 ms; 4x4: 16.02 to 7.06 ms; 8x8: 169.68 to 7.11 ms. Merged October 7. Separate WebGPU depth-view bug fix merged first.",
+      "contradiction": "Review established old path already performed one PCF filter per fragment; gains are from eliminating redundant tile transforms/tests, not avoiding 16 filter passes. Numbers are a single-device GPU microbenchmark, not our mobile or end-to-end workloads.",
+      "confidence": {
+        "merge_status": 0.99,
+        "experiment_relevance": 0.95,
+        "project_speedup_transfer": 0.5
+      },
+      "implication": "Amend EXP-THREE-R187-001: compare pinned released vs dev, ordinary shadows vs 2x2/4x4/8x8 tiled shadows; isolate shader sampling from shadow rendering costs.",
+      "affected_projects": [
+        "konam",
+        "bellagio",
+        "studio-kona",
+        "gaudi-nexus"
+      ],
+      "isolated_experiment": "EXP-THREE-R187-001",
+      "priority_effect": "No priority reorder."
+    },
+    {
+      "title": "Instanced WebGPU node-build optimization split after correctness review",
+      "event_date": "2026-10-06",
+      "source_quality": "A: upstream status and review",
+      "sources": [
+        "https://github.com/mrdoob/three.js/pull/34776",
+        "https://github.com/mrdoob/three.js/pull/34819",
+        "https://github.com/mrdoob/three.js/pull/34820"
+      ],
+      "evidence": "Original PR #34776 is closed without merge, following review of incorrect morph target, RangeNode and velocity/TAA behavior. Replacement #34819 and dependent velocity follow-up #34820 remain open October 8.",
+      "contradiction": "Earlier 1,316 to 142 shader-build and ~30s to ~5s compilation figures are upstream author's benchmark estimates, not production validation. Tests must not treat the original PR as a shipped implementation.",
+      "confidence": {
+        "status": 0.99,
+        "experiment_relevance": 0.97,
+        "project_speedup_transfer": 0.4
+      },
+      "implication": "Separate dev baseline, candidate #34819, and velocity-enabled #34820 for EXP-THREE-R187-001. Cover differing instance counts, RangeNode, morph targets, TAA velocity, instance colors, and screenshot correctness.",
+      "affected_projects": [
+        "konam",
+        "bellagio",
+        "studio-kona"
+      ],
+      "isolated_experiment": "EXP-THREE-R187-001",
+      "priority_effect": "No priority reorder."
+    }
+  ],
+  "no_other_material_promotions": "Targeted check covered Catalan/Spanish Gaudi scholarship, computational form-finding, Blender, Khronos glTF and KTX, meshoptimizer, product visualization, capture/splats, sports physics, perceptual LOD, and AI 3D. No additional material change was substantiated.",
+  "action_status": "Research evidence only; no experiments run, no production touched."
+}
