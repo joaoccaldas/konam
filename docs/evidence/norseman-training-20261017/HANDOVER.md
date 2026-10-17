@@ -1,7 +1,7 @@
 # Fjord to Summit — a Norseman training room (handover, 2026-10-17)
 
-Branch `feature/norseman-training-room` in worktree `~/Developer/konam-norseman`, cut from the recovery runtime
-(`konam-room-recovery`, 363848c) that serves the portfolio's concept rooms. Not pushed, not deployed.
+Branch `feature/norseman-training-room` in its own worktree, cut from the recovery runtime
+(recovery branch, 363848c) that serves the portfolio's concept rooms. Not pushed, not deployed.
 
 Open locally: serve the repo root and visit `index.html?reviewRoom=norseman-training` (same host, cards, navigation and
 `room=beast` slot as NOR // 3, Beast Cave and Breitling × KONA).
@@ -11,17 +11,19 @@ Open locally: serve the repo root and visit `index.html?reviewRoom=norseman-trai
 An 8.4 m timber-and-concrete training hall, glazed on two sides:
 
 - **South glass:** the real head of the Hardangerfjord at Eidfjord, where the swim lands, seen from the water.
-- **East glass:** the real Gaustatoppen, seen from 3 km to the south, where the run ends.
+- **East glass:** the real Gaustatoppen, seen from about 2.5 km west-south-west (a viewpoint chosen from the data for a clear line of sight; the summit stands 18.5° above the horizon), where the run ends.
 - **Skylight:** over the profile ridge.
 
 Inside:
 
 - **Swim:** a 21 m cold lap pool runs along the fjord glass at the fjord's own waterline, with a ferry ramp at its head. The wetsuit rack and a sourced water-temperature post sit beside it.
-- **Spine:** the course profile, sculpted in stone, climbs to a summit cairn against the mountain.
+- **Spine:** the course profile as a stacked contour model (one slate slab per 100 m, oak every 500 m) climbs to a summit cairn against the mountain, with a light line tracing the true profile.
 - **Bike:** a road-triathlon bike on a climbing trainer with a fan and a session screen, plus a second bike on the work stand.
 - **Run:** an incline treadmill facing the mountain, with a hill-session screen.
 - **North wall:** the crew table and the mandatory summit backpack, an example training week, and the black and white finisher tops.
-- **Light:** a low dawn sun through the east glass lays the mullion shadows down the hall.
+- **Light:** a low dawn sun through the east glass lays the mullion shadows down the hall, with light shafts through each east bay.
+- **Recovery:** a lit Nordic sauna in the south-east corner, a few steps from the cold pool.
+- **Detail:** a working swim pace clock over the pool head, a swim shelf, spare wheels and a helmet, a strength corner, and poles with a headlamp by the treadmill.
 
 ## Reused vs new
 
@@ -33,7 +35,9 @@ Inside:
 | Trainer frame, riser, bottles, suit extrusion, rock generator, water/floor approach | ADAPT | `nor3-winter.js` |
 | Terrain pipeline | ADAPT | bellagio `tools/build_geo_world.py` (St. George) without its satellite imagery → `tools/build_norseman_terrain.py` |
 | Window portal (`engine/terrain-portal.js`) | NEW primitive | Needed because the Breitling room sits behind the south wall and the Secret Collection behind the east wall; reusable by any room |
-| Terrain data (Eidfjord, Gaustatoppen; 132 KB each) | NEW data | Terrain Tiles z12; Norway terrain data © Kartverket, CC BY 4.0 |
+| Terrain data (Eidfjord, Gaustatoppen; 296 KB each) | NEW data | Terrain Tiles z13, 385×385; Norway terrain data © Kartverket, CC BY 4.0 |
+| Fjord mirror | REUSE | three's `Water.js` (desktop); a plain water material on phones |
+| Terrain self-shadow | NEW | baked at load in `terrain-portal.js` (march to the sun over the heightfield) |
 | Profile ridge, hall, pool, gear/crew/week/tops | NEW / COMPOSE | procedural, original, unbranded |
 
 No new GLB files. Full decisions: `world/konam/candidates/norseman-training-asset-manifest-v1.json`.
@@ -54,19 +58,19 @@ No new GLB files. Full decisions: `world/konam/candidates/norseman-training-asse
 - The authority, brand, repo hygiene, public-surface privacy and `validate-bikes` checks all pass.
 - `tools/build_pages.mjs` and `tools/build_app.mjs` were rebuilt and the generated `app/` and `sw.js` are committed. `sitemap.xml` is left alone because only its date changes.
 - Visual evidence (this folder): desktop 1440×900 (10 shots), phone 390×844 (4) and landscape 844×390 (2), captured with `web/norseman-training-evidence.mjs`. No page errors. `runtime-summary.json` has the numbers:
-  - desktop: 99 room meshes, 77k triangles (budget 190 / 450k)
-  - phone: 95 meshes, 60k triangles (budget 110 / 220k), 60 fps in headless Chrome
+  - desktop: 119 room meshes, 86k triangles (budget 190 / 450k)
+  - phone: 109 meshes, 70k triangles (budget 110 / 220k), 60 fps in headless Chrome
 
 ## Known limits
 
 - **Headless harness:** the existing software-GL harness (`final-room-recovery-evidence.mjs`, now listing this room) times out on this Mac, so the hardware-GL script was used. It has not been run in CI or on a real phone.
 - **Portal cost:**
-  - The window portal is an extra render pass of about 264k terrain triangles on desktop and about 66k on phones (half-resolution target).
+  - The window portal is an extra render pass of about 590k terrain triangles plus about 12k trees and a fjord mirror on desktop, and about 66k triangles on phones (half-resolution target, no mirror).
   - It is not counted in the room budget above, which counts only the room group.
   - The phone figure of 60 fps was measured in headless Chrome, not on a device.
-- **Desktop frame rate:** desktop fps (~30 headless) is dominated by the host scene (about 1,450 calls for the whole museum), as with the other review rooms.
-- **Terrain resolution:** the 95 m grid smooths the summit (1,858 m in the data against 1,883 m mapped). The terrain is shaded by rule, not imagery, and trees are simple instanced cones.
-- **Parallax lag:** window reflections in the floor use a gradient fallback rather than the real view.
+- **Desktop frame rate:** desktop fps is about 11 in headless Chrome. The host scene (about 1,500 calls for the whole museum) plus the landscape and its fjord mirror carry that cost. It needs a check on a real GPU and browser; the mirror resolution and tree count are the levers.
+- **Terrain resolution:** the grid still smooths the summit slightly (1,867 m in the data against 1,883 m mapped). The terrain is shaded by rule, not imagery, and the trees are low-poly instanced spruce.
+- **Reflections:** floor, glass and pool reflections capture the real landscape once, through the env capture, so they don't update as clouds drift.
 - **Ridge shape:** the ridge's run end is steep by design (1,880 m over the last stretch) and reads as a sharp summit.
 - **Phone assets:** the bike study has no `bike-lite.glb`, so phones load the 172 KB full bike.
 

@@ -23,7 +23,7 @@ SITES = [
     # The finish: Gaustatoppen and the valley below it.
     {'id': 'gaustatoppen', 'label': 'Gaustatoppen', 'bbox': {'west': 8.43, 'east': 8.87, 'south': 59.75, 'north': 59.96}, 'anchor': {'lat': 59.8539, 'lon': 8.6489}},
 ]
-ZOOM, GRID = 12, 257
+ZOOM, GRID = 13, 385
 
 def lon2x(lon, z): return (lon + 180.0) / 360.0 * 2 ** z
 def lat2y(lat, z): return (1 - math.asinh(math.tan(math.radians(lat))) / math.pi) / 2 * 2 ** z

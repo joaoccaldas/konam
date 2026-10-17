@@ -69,9 +69,9 @@
         "assets/rooms/norseman-training/eidfjord.bin",
         "assets/rooms/norseman-training/eidfjord.json"
       ],
-      "bytes": 132098,
+      "bytes": 296450,
       "generator": "tools/build_norseman_terrain.py",
-      "source": "Terrain Tiles (Mapzen/Tilezen, AWS Open Data) z12, 257×257 grid",
+      "source": "Terrain Tiles (Mapzen/Tilezen, AWS Open Data) z13, 385×385 grid (~47–64 m per cell real)",
       "rights": "Norway terrain data © Kartverket, CC BY 4.0 — attribution shown in the room and its cards",
       "why_not_reuse": "No Norwegian terrain existed in the estate; the St. George pipeline was reused without its satellite imagery.",
       "lifecycle": "candidate"
@@ -84,9 +84,9 @@
         "assets/rooms/norseman-training/gaustatoppen.bin",
         "assets/rooms/norseman-training/gaustatoppen.json"
       ],
-      "bytes": 132098,
+      "bytes": 296450,
       "generator": "tools/build_norseman_terrain.py",
-      "source": "Terrain Tiles (Mapzen/Tilezen, AWS Open Data) z12, 257×257 grid",
+      "source": "Terrain Tiles (Mapzen/Tilezen, AWS Open Data) z13, 385×385 grid (~47–64 m per cell real)",
       "rights": "Norway terrain data © Kartverket, CC BY 4.0",
       "lifecycle": "candidate"
     },
@@ -105,16 +105,31 @@
       "source": "procedural-three",
       "why_not_reuse": "No course-profile object existed; the NOR fjord relief is decorative ridges, not a profile with sourced anchors.",
       "rights": "original; anchor heights sourced",
-      "lifecycle": "candidate"
+      "lifecycle": "candidate",
+      "note": "Stacked contour model: one slate slab per 100 m of height, oak every 500 m, a light line tracing the profile."
     },
     {
-      "asset_id": "hall-pool-gear-crew-tops-week",
+      "asset_id": "hall-pool-sauna-gear",
       "kind": "installation",
       "decision": "COMPOSE",
       "source": "procedural-three",
-      "note": "Timber/concrete hall, cold lap pool with caustics, ferry ramp, gear wall, crew table, routine board, finisher tops. Pool water and floor approaches adapted from NOR // 3.",
+      "note": "Board-formed concrete and glulam hall, cold lap pool with caustics, ferry ramp, pace clock, Nordic sauna, swim shelf, wheel rack and helmet, strength corner, crew table, routine board, finisher tops, sun shafts. Pool water and floor approaches adapted from NOR // 3.",
       "rights": "original, unbranded",
       "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "fjord-mirror",
+      "kind": "engine",
+      "decision": "REUSE",
+      "source_ref": "three/examples/jsm/objects/Water.js",
+      "note": "Desktop only, inside the portal scene; the east terrain sits on layer 1 so the mirror skips it. Phones use a plain water material."
+    },
+    {
+      "asset_id": "terrain-self-shadow",
+      "kind": "engine",
+      "decision": "NEW",
+      "source_ref": "web/src/engine/terrain-portal.js (terrainGeometry sun option)",
+      "note": "Baked at load by marching each vertex toward the sun over the heightfield; replaces a runtime shadow pass that failed intermittently in headless Chrome."
     }
   ],
   "constraints": {

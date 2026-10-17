@@ -26,9 +26,10 @@ import { BROOM, BDOOR } from './beast-cave.js';
 import { loadDecor } from './engine/decor.js';
 import { localEnvCapture } from './engine/env-capture.js';
 import { createTerrainPortal, terrainGeometry, terrainHeightAt, terrainMaterial } from './engine/terrain-portal.js';
-import { motes, lightShaft, mistTex } from './roomkit.js';
+import { Water } from 'three/examples/jsm/objects/Water.js';
+import { motes, mistTex } from './roomkit.js';
 
-export const NORSEMAN_MOOD = Object.freeze({ exposure: 1.0, hemi: .22, sun: .0, fog: { near: 34, far: 150 }, fogColor: new THREE.Color('#aab4be') });
+export const NORSEMAN_MOOD = Object.freeze({ exposure: .92, hemi: .06, sun: .0, fog: { near: 30, far: 140 }, fogColor: new THREE.Color('#8f9aa5') });
 export const NORSEMAN_TERRAIN = Object.freeze({ dir: 'assets/rooms/norseman-training/', sites: ['eidfjord', 'gaustatoppen'] });
 
 const rng = (seed = 0x2E05E) => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
@@ -50,7 +51,7 @@ const heightAt = (leg, km) => { const p = LEGS[leg].pts; for (let i = 1; i < p.l
 // The two real views. Each viewpoint (lat/lon) is placed on a room point; map bearing `bearing` points out of its window.
 const VIEWS = {
   eidfjord: { lat: 60.4660, lon: 7.0625, view: { x: 19.6, z: -11.0, y0: -.12, e0: 0, k: .1, bearing: 272, fwd: [0, -1], right: [-1, 0] }, snowline: 1450, treeline: 780 },
-  gaustatoppen: { lat: 59.82677, lon: 8.6489, view: { x: 21.0, z: -9.4, y0: -.3, e0: null, k: .1, bearing: 0, fwd: [1, 0], right: [0, 1] }, snowline: 1700, treeline: 960 },
+  gaustatoppen: { lat: 59.8426, lon: 8.61018, view: { x: 21.0, z: -9.4, y0: -.3, e0: null, k: .1, bearing: 60, fwd: [1, 0], right: [0, 1] }, snowline: 1700, treeline: 960 },
 };
 
 export function buildNorsemanTraining(ctx) {
@@ -59,7 +60,7 @@ export function buildNorsemanTraining(ctx) {
   const R = BROOM, RW = R.x1 - R.x0, RD = R.z0 - R.z1, CX = (R.x0 + R.x1) / 2, CZ = (R.z0 + R.z1) / 2, H = 8.4;
   const SZ = -12.0;                                                     // the ridge's centre line
   const SOUTH = { x0: 8.3, x1: 30.4 }, EAST = { z0: -14.2, z1: -4.6 }, POOL = { x0: 9.1, x1: 30.2, z0: R.z1 + .04, z1: -15.3, y: -.12 };
-  const SUN = new THREE.Vector3(1, .2, .55).normalize();               // toward the sun: low, through the east glass
+  const SUN = new THREE.Vector3(1, .14, .42).normalize();              // toward the sun: very low, straight through the east glass
   const rand = rng();
   const infos = [], info = (mesh, rec) => { for (const m of [].concat(mesh)) { m.userData.info = rec; pickables.push(m); } infos.push(rec); return rec; };
   const envMats = [], E = m => { envMats.push(m); return m; };
@@ -86,8 +87,13 @@ export function buildNorsemanTraining(ctx) {
   const concreteR = canvas(512, 512, (g, w, h) => { g.fillStyle = '#6a6a6a'; g.fillRect(0, 0, w, h); const r = rng(9);
     for (let i = 0; i < 40; i++) { const x = r() * w, y = r() * h; g.strokeStyle = `rgba(30,30,30,${.15 + r() * .2})`; g.lineWidth = 6 + r() * 20; g.beginPath(); g.arc(x, y, 30 + r() * 90, r() * 6, r() * 6 + 1.5); g.stroke(); } });
   const FT = 3.0;
-  const floorMat = E(new THREE.MeshPhysicalMaterial({ map: tex(concreteC, true, [1, 1]), roughnessMap: tex(concreteR, false, [1, 1]), color: '#ffffff', roughness: .55, metalness: 0, clearcoat: .35, clearcoatRoughness: .3, envMapIntensity: .55 }));
-  const wallConcrete = new THREE.MeshStandardMaterial({ map: tex(concreteC, true, [RW / 4, H / 4]), color: '#a7a39d', roughness: .88, envMapIntensity: .3 });
+  const floorMat = E(new THREE.MeshPhysicalMaterial({ map: tex(concreteC, true, [1, 1]), roughnessMap: tex(concreteR, false, [1, 1]), color: '#b8b4ad', roughness: .5, metalness: 0, clearcoat: .6, clearcoatRoughness: .12, envMapIntensity: .8 }));
+  const boardC = canvas(1024, 1024, (g, w, h) => { g.drawImage(concreteC, 0, 0); const r = rng(13);       // board-formed: 15 cm planks, grain, tie holes
+    for (let y = 0; y < h; y += 64) { const v = r() * 18 - 9; g.fillStyle = `rgba(${120 + v},${116 + v},${110 + v},.18)`; g.fillRect(0, y, w, 64); g.fillStyle = 'rgba(30,28,26,.35)'; g.fillRect(0, y, w, 2);
+      for (let i = 0; i < 26; i++) { g.strokeStyle = `rgba(40,36,32,${.04 + r() * .06})`; g.lineWidth = 1; const yy = y + 4 + r() * 56; g.beginPath(); g.moveTo(0, yy); g.bezierCurveTo(w * .3, yy + (r() - .5) * 6, w * .7, yy + (r() - .5) * 6, w, yy); g.stroke(); } }
+    for (const [x, y] of [[128, 192], [640, 192], [128, 704], [640, 704]]) { const gr = g.createRadialGradient(x, y, 2, x, y, 14); gr.addColorStop(0, 'rgba(20,18,16,.85)'); gr.addColorStop(1, 'rgba(20,18,16,0)'); g.fillStyle = gr; g.fillRect(x - 14, y - 14, 28, 28); } });
+  const boardBump = tex(boardC, false, [RW / 3.2, H / 3.2]);
+  const wallConcrete = new THREE.MeshStandardMaterial({ map: tex(boardC, true, [RW / 3.2, H / 3.2]), bumpMap: boardBump, bumpScale: 1.2, color: '#7e7a73', roughness: .9, envMapIntensity: .25 });
   const grainC = (base, seed) => canvas(256, 1024, (g, w, h) => { g.fillStyle = base; g.fillRect(0, 0, w, h); const r = rng(seed);
     for (let i = 0; i < 90; i++) { const x = r() * w; g.strokeStyle = `rgba(${r() < .5 ? '40,24,12' : '255,230,200'},${.04 + r() * .08})`; g.lineWidth = .6 + r() * 2.2; g.beginPath(); g.moveTo(x, 0); for (let y = 0; y <= h; y += 32) g.lineTo(x + Math.sin(y * .01 + i) * 5, y); g.stroke(); } });
   const oak = E(new THREE.MeshStandardMaterial({ map: tex(grainC('#8a6544', 21), true, [1, 1]), color: '#ffffff', roughness: .62, metalness: 0, envMapIntensity: .4 }));
@@ -213,43 +219,34 @@ export function buildNorsemanTraining(ctx) {
   for (let i = 0; i < 3; i++) put(towelMat, new RoundedBoxGeometry(.42, .07, .34, 3, .03), 14.6 + i * .55, .52 + (i === 1 ? .06 : 0), -14.55, 0, (i - 1) * .1, 0);
   obstacles.push({ box: [13.3, 18.7, -14.85, -14.25] });
 
-  // ------------------------------------------------------------ the ridge: the course profile, sculpted in stone
-  // Cross-sections sweep from base to crest; the crest follows the profile, the flanks are broken by noise like weathered rock.
+  // ------------------------------------------------------------ the ridge: the course profile as a stacked contour model
+  // One slate slab per 100 m of height, each cut to where the profile stands above its top; an oak slab every 500 m to
+  // read by; slabs narrow as they rise. A light line traces the true profile just above the steps.
   const strata = { t: { value: 0 } };
-  const ridgeMat = E(new THREE.MeshStandardMaterial({ color: '#5a5d61', roughness: .8, metalness: .02, bumpMap: graniteBump, bumpScale: 1.4, envMapIntensity: .45 }));
-  ridgeMat.onBeforeCompile = sh => {
-    sh.uniforms.uT = strata.t;
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vW;').replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvW = (modelMatrix * vec4(transformed, 1.)).xyz;');
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vW; uniform float uT;')
-      .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
-      { float m = (vW.y - ${BASE.toFixed(3)}) / ${VSCALE.toFixed(6)};
-        float line = smoothstep(.9, 0., abs(mod(m + 100., 200.) - 100.) / 1.4) * step(20., m);
-        float warm = smoothstep(${LEGS.bike.x0.toFixed(1)}, ${LEGS.run.x1.toFixed(1)}, vW.x);
-        diffuseColor.rgb *= .82 + .18 * smoothstep(0., 2.6, vW.y);
-        totalEmissiveRadiance += mix(vec3(.4,.65,1.), vec3(1.,.66,.34), warm) * line * .3; }`);
-  };
-  ridgeMat.customProgramCacheKey = () => 'norseman-strata';
-  const ridgeGeo = leg => {
-    const L = LEGS[leg], N = 160, M = 14, wB = 1.45, wT = .36, pos = [], uv = [], idx = [], crest = [];
-    const total = L.x1 - L.x0 + (L.back || 0);
-    for (let i = 0; i <= N; i++) {
-      const xx = L.x0 + total * i / N, km = Math.min(L.km, (xx - L.x0) / (L.x1 - L.x0) * L.km);
-      let y = yOf(heightAt(leg, km)); if (xx > L.x1) { const u = (xx - L.x1) / L.back; y = y * (1 - Math.pow(u, 2.2)); }
-      y = Math.max(.02, y); crest.push(new THREE.Vector3(xx, y + .015, SZ));
-      for (let j = 0; j <= M; j++) { const a = j / M * Math.PI, sa = Math.sin(a), wHere = wT + (wB - wT) * (1 - Math.pow(sa, .55));
-        const rough = (noise1(xx * 2.3 + j * 1.7, j) - .5) * .09 * sa + (noise1(xx * 9.1, j * 3) - .5) * .025;
-        pos.push(xx + (noise1(j * 5 + xx * 3, 7) - .5) * .03, y * Math.pow(sa, .3), SZ - Math.cos(a) * (wHere / 2 + rough)); uv.push(xx / 1.5, j / M * 1.2); }
+  const slate = E(new THREE.MeshStandardMaterial({ color: '#2f3236', roughness: .62, metalness: .05, bumpMap: graniteBump, bumpScale: .8, envMapIntensity: .6 }));
+  const slateLight = E(new THREE.MeshStandardMaterial({ color: '#3f4348', roughness: .66, metalness: .05, bumpMap: graniteBump, bumpScale: .8, envMapIntensity: .6 }));
+  const elevAt = (leg, x) => { const L = LEGS[leg]; if (x <= L.x1) return heightAt(leg, Math.max(0, (x - L.x0) / (L.x1 - L.x0) * L.km)); const u = Math.min(1, (x - L.x1) / L.back); return heightAt(leg, L.km) * (1 - Math.pow(u, 2.2)); };
+  const crests = [], STEP = .02, LAYER = 100, T = LAYER * VSCALE;
+  for (const leg of ['bike', 'run']) {
+    const L = LEGS[leg], x1 = L.x1 + (L.back || 0), crest = [];
+    for (let x = L.x0; x <= x1 + 1e-6; x += STEP * 4) crest.push(new THREE.Vector3(x, yOf(elevAt(leg, x)) + .012, SZ));
+    crests.push(crest);
+    for (let k = 0; k * LAYER < SUMMIT_M; k++) {
+      const top = (k + 1) * LAYER, depth = 1.5 - k * .046, mat = (k + 1) % 5 === 0 ? oak : k % 2 ? slate : slateLight;
+      let start = null;
+      for (let x = L.x0; x <= x1 + STEP; x += STEP) {
+        const on = x <= x1 && elevAt(leg, x) >= top;
+        if (on && start === null) start = x;
+        if (!on && start !== null) { const len = x - start; if (len > .03) put(mat, new RoundedBoxGeometry(len, T - .004, depth, 1, .006), start + len / 2, BASE + k * T + T / 2, SZ); start = null; }
+      }
     }
-    for (let i = 0; i < N; i++) for (let j = 0; j < M; j++) { const a = i * (M + 1) + j, b = a + M + 1; idx.push(a, b, a + 1, a + 1, b, b + 1); }
-    for (const i of [0, N]) { const c = pos.length / 3, x = pos[i * (M + 1) * 3]; pos.push(x, 0, SZ); uv.push(0, 0); for (let j = 0; j < M; j++) { const a = i * (M + 1) + j; idx.push(...(i ? [c, a, a + 1] : [c, a + 1, a])); } }
-    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx); g.computeVertexNormals();
-    return { g, crest };
-  };
-  const crests = [];
-  for (const leg of ['bike', 'run']) { const { g, crest } = ridgeGeo(leg), m = new THREE.Mesh(g, ridgeMat); m.castShadow = !lite; m.receiveShadow = true; group.add(m); crests.push(crest);
-    info(m, { model: act => profileCard(leg, act), eyebrow: leg === 'bike' ? 'THE PROFILE · BIKE' : 'THE PROFILE · RUN', title: leg === 'bike' ? '180 km over the plateau.' : '42.2 km, then up.', sub: 'Anchors sourced · line between them interpreted', text: 'Tap for what is fact and what is drawn.' });
-    obstacles.push({ box: [LEGS[leg].x0 - .15, LEGS[leg].x1 + (LEGS[leg].back || 0) + .15, SZ - .75, SZ + .75] }); }
-  box(granite, LEGS.run.x1 + LEGS.run.back - LEGS.bike.x0 + .4, .05, 1.6, (LEGS.bike.x0 + LEGS.run.x1 + LEGS.run.back) / 2, .025, SZ);      // a low granite plinth under the ridge
+    put(oak, new RoundedBoxGeometry(x1 - L.x0 + .1, BASE, 1.62, 1, .01), (L.x0 + x1) / 2, BASE / 2, SZ);   // oak plinth
+    const pick = new THREE.Mesh(new THREE.BoxGeometry(x1 - L.x0, 1.6, 1.5), new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false })); pick.position.set((L.x0 + x1) / 2, .8, SZ); group.add(pick);
+    info(pick, { model: act => profileCard(leg, act), eyebrow: leg === 'bike' ? 'THE PROFILE · BIKE' : 'THE PROFILE · RUN', title: leg === 'bike' ? '180 km over the plateau.' : '42.2 km, then up.', sub: 'Anchors sourced · line between them interpreted', text: 'One slab per 100 m of height.' });
+    obstacles.push({ box: [L.x0 - .15, x1 + .15, SZ - .85, SZ + .85] });
+  }
+  // a light line under the plinth lip, so the model floats a little
+  box(ledWarm, LEGS.run.x1 + LEGS.run.back - LEGS.bike.x0, .01, .01, (LEGS.bike.x0 + LEGS.run.x1 + LEGS.run.back) / 2, .012, SZ + .815);
   // the light line along the crest: cold over the bike, warm over the run, a pulse that travels to the summit
   const lineMat = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: { t: strata.t },
     vertexShader: 'varying float vX;void main(){vX=(modelMatrix*vec4(position,1.)).x;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
@@ -261,12 +258,12 @@ export function buildNorsemanTraining(ctx) {
   facts.profile.anchors.filter(a => a.leg !== 'swim').forEach(a => {
     const x = xOf(a.leg, a.km), top = yOf(heightAt(a.leg, a.km));
     put(brushed, new THREE.CylinderGeometry(.008, .008, .55, 6), x, top + .27, SZ); put(ledWarm, new THREE.SphereGeometry(.024, 10, 8), x, top + .55, SZ);
-    for (const s of [-1, 1]) { const lab = lettering(1.5, .3, g => { g.fillStyle = 'rgba(236,240,245,.92)'; g.font = `600 .085px ${FONT}`; g.letterSpacing = '.012px'; g.fillText(a.label, .02, .13);
+    for (const s of lite ? [1] : [-1, 1]) { const lab = lettering(1.5, .3, g => { g.fillStyle = 'rgba(236,240,245,.92)'; g.font = `600 .085px ${FONT}`; g.letterSpacing = '.012px'; g.fillText(a.label, .02, .13);
         g.fillStyle = 'rgba(236,240,245,.5)'; g.font = `500 .052px ${FONT}`; g.fillText(`${a.leg.toUpperCase()} · KM ${a.km}`, .02, .22); }, 1024);
       lab.rotation.y = s > 0 ? 0 : Math.PI; lab.position.set(x + s * .75, top + .68, SZ + s * .02); group.add(lab); }
   });
   for (const [leg, text] of [['bike', 'BIKE · 180 KM'], ['run', 'RUN · 42.2 KM']]) { const L = LEGS[leg];
-    for (const s of [-1, 1]) { const t = lettering(2.4, .2, g => { g.fillStyle = 'rgba(232,238,245,.75)'; g.font = `700 .1px ${FONT}`; g.letterSpacing = '.03px'; g.fillText(text, .02, .14); }, 1024);
+    for (const s of lite ? [1] : [-1, 1]) { const t = lettering(2.4, .2, g => { g.fillStyle = 'rgba(232,238,245,.75)'; g.font = `700 .1px ${FONT}`; g.letterSpacing = '.03px'; g.fillText(text, .02, .14); }, 1024);
       t.rotation.x = -Math.PI / 2; t.rotation.z = s > 0 ? 0 : Math.PI; t.position.set(L.x0 + 1.4, .052, SZ + s * .95); group.add(t); } }
   { const top = yOf(SUMMIT_M), sx = LEGS.run.x1;                         // a small cairn on the summit
     for (let i = 0; i < 6; i++) { const s = .065 - i * .007; put(granite, rock(s, .6), sx + (rand() - .5) * .04, top + .02 + i * .055, SZ + (rand() - .5) * .04, 0, rand() * 6); } }
@@ -345,7 +342,7 @@ export function buildNorsemanTraining(ctx) {
   for (let i = 0; i < 8; i++) { M4.makeTranslation(crew.x - 1.05 + (i % 4) * .1, .89, crew.z - .1 + (i >> 2) * .12); bottles.setMatrixAt(i, M4); } group.add(bottles);
   const boxC = canvas(256, 128, (g, w, h) => { g.fillStyle = '#c9b48e'; g.fillRect(0, 0, w, h); g.fillStyle = '#2a2219'; g.font = `700 26px ${FONT}`; g.fillText('CREW · BIKE 2', 16, 48); g.font = `500 18px ${FONT}`; g.fillText('food · gels · warm layer', 16, 84); });
   const crate = new THREE.MeshStandardMaterial({ map: tex(boxC), roughness: .9 });
-  for (let i = 0; i < 3; i++) { const b = new THREE.Mesh(new THREE.BoxGeometry(.36, .18, .26), crate); b.position.set(crew.x - .3 + i * .2, .98 + (i === 1 ? .18 : 0), crew.z + (i === 1 ? 0 : .04 * i)); b.rotation.y = (i - 1) * .12; b.castShadow = !lite; group.add(b); }
+  for (let i = 0; i < 3; i++) put(crate, new THREE.BoxGeometry(.36, .18, .26), crew.x - .3 + i * .2, .98 + (i === 1 ? .18 : 0), crew.z + (i === 1 ? 0 : .04 * i), 0, (i - 1) * .12, 0);
   put(new THREE.MeshStandardMaterial({ color: '#2b5e7a', roughness: .5 }), new RoundedBoxGeometry(.6, .42, .4, 3, .05), crew.x + .75, .21, crew.z + .05);
   put(new THREE.MeshStandardMaterial({ color: '#e7edf2', roughness: .4 }), new RoundedBoxGeometry(.62, .04, .42, 3, .02), crew.x + .75, .44, crew.z + .05);
   const pack = new THREE.Group(); pack.position.set(crew.x + .9, 1.75, R.z0 - .22); group.add(pack);
@@ -375,6 +372,72 @@ export function buildNorsemanTraining(ctx) {
     lab.rotation.y = Math.PI; lab.position.set(nx, ny - .78, nz - .04); group.add(lab);
     info([black, white], { model: act => topsCard(act), eyebrow: 'THE FINISH', title: 'Black at the top. White below.', sub: 'Plain studies, no marks', text: 'Tap for how the course splits.' }); }
 
+  // ------------------------------------------------------------ HEAT: a Nordic sauna in the corner, glowing through its glass, beside the cold pool
+  const sauna = { x0: 30.95, x1: R.x1 - .32, z0: -14.75, z1: R.z1 + .32, h: 2.6 };
+  { const charC = canvas(256, 512, (g, w, h) => { g.fillStyle = '#121110'; g.fillRect(0, 0, w, h); const r = rng(61); for (let x = 0; x < w; x += 32) { g.fillStyle = 'rgba(0,0,0,.6)'; g.fillRect(x, 0, 2, h);
+      for (let y = 0; y < h; y += 6) { const v = 14 + r() * 26; g.fillStyle = `rgba(${v},${v - 2},${v - 4},.9)`; g.fillRect(x + 2 + r() * 26, y, 3 + r() * 6, 4 + r() * 4); } } });
+    const charred = new THREE.MeshStandardMaterial({ map: tex(charC, true, [3, 1]), roughness: .95, color: '#ffffff' });
+    const aspen = new THREE.MeshStandardMaterial({ map: tex(grainC('#cfa877', 63), true, [1, 1]), roughness: .7, color: '#ffffff' });
+    const { x0, x1, z0, z1, h } = sauna, sx = (x0 + x1) / 2, sz = (z0 + z1) / 2, d = z0 - z1, w = x1 - x0;
+    box(charred, .1, h, d, x0, h / 2, sz); box(charred, w + .1, .14, d + .1, sx, h + .07, sz);           // west wall and roof (the hall's walls close the rest)
+    box(charred, .5, h, .1, x0 + .25, h / 2, z0); box(charred, .12, h, .1, x1 - .06, h / 2, z0); box(charred, w, .3, .1, sx, h - .15, z0);   // front frame
+    box(charred, .06, h - .3, .08, x0 + 1.45, (h - .3) / 2, z0);                                                                             // door mullion
+    put(new THREE.MeshPhysicalMaterial({ color: '#ffd9b0', roughness: .05, transparent: true, opacity: .16, depthWrite: false }), new THREE.PlaneGeometry(w - .6, h - .3), sx + .19, (h - .3) / 2, z0 - .01, 0, Math.PI, 0);
+    for (const [y, dz, dd] of [[.45, .95, .55], [.9, .4, .55]]) { box(aspen, w - .2, .05, dd, sx + .05, y, z1 + dz); box(aspen, w - .2, y - .05, .04, sx + .05, (y - .05) / 2, z1 + dz - dd / 2 + .02); box(ledWarm, w - .3, .015, .02, sx + .05, y - .04, z1 + dz - dd / 2 + .06); }
+    for (let i = 0; i < 12; i++) box(aspen, .08, .03, d - .2, x0 + .2 + i * (w - .3) / 11, .015, sz);                                      // slatted floor
+    box(steel, .5, .6, .45, x0 + .55, .3, z0 - .55); for (let i = 0; i < 14; i++) put(granite, rock(.05 + rand() * .03, .7), x0 + .4 + rand() * .3, .64 + rand() * .06, z0 - .7 + rand() * .3, 0, rand() * 6);
+    put(ledWarm, new THREE.BoxGeometry(.46, .02, .02), x0 + .55, .58, z0 - .32);
+    const lining = new THREE.MeshStandardMaterial({ map: aspen.map, color: '#ffffff', emissive: '#ff8a3c', emissiveIntensity: .32, roughness: .75 });
+    put(lining, new THREE.PlaneGeometry(w - .2, h - .2), sx, h / 2, z1 + .06); put(lining, new THREE.PlaneGeometry(d - .2, h - .2), x1 - .06, h / 2, sz, 0, -Math.PI / 2, 0); put(lining, new THREE.PlaneGeometry(d - .2, h - .2), x0 + .06, h / 2, sz, 0, Math.PI / 2, 0);
+    const glow = new THREE.PointLight('#ff9448', lite ? 6 : 12, 7, 1.5); glow.position.set(sx, 1.6, sz); group.add(glow);
+    const glowPlane = new THREE.Mesh(new THREE.PlaneGeometry(w - .6, h - .3), new THREE.MeshBasicMaterial({ color: '#ff9d55', transparent: true, opacity: .16, blending: THREE.AdditiveBlending, depthWrite: false }));
+    glowPlane.rotation.y = Math.PI; glowPlane.position.set(sx + .19, (h - .3) / 2, z0 + .02); group.add(glowPlane);
+    const lab = lettering(1.6, .3, g => { g.fillStyle = 'rgba(236,232,226,.85)'; g.font = `600 .1px ${FONT}`; g.letterSpacing = '.03px'; g.fillText('HEAT · COLD · REPEAT', .02, .14); g.letterSpacing = '0px'; g.fillStyle = 'rgba(236,232,226,.5)'; g.font = `500 .055px ${FONT}`; g.fillText('A NORDIC HABIT · NOT RACE OR MEDICAL ADVICE', .02, .24); }, 1024);
+    lab.rotation.y = Math.PI; lab.position.set(x0 + .9, 2.0, z0 - .07); group.add(lab);
+    info(glowPlane, { model: act => saunaCard(act), eyebrow: 'RECOVERY · HEAT', title: 'Heat, then the cold pool.', sub: 'A sauna beside the cold water', text: 'A Nordic habit, not race or medical advice.' });
+    obstacles.push({ box: [x0 - .2, x1 + .3, z1 - .3, z0 + .2] }); }
+
+  // ------------------------------------------------------------ the pace clock over the head of the pool, sweeping real seconds
+  const paceHand = new THREE.Group(), paceSlow = new THREE.Group();
+  { const c = canvas(512, 512, (g, w) => { const C = w / 2; g.fillStyle = '#f2f1ec'; g.beginPath(); g.arc(C, C, C - 4, 0, 7); g.fill(); g.fillStyle = '#16181b';
+      for (let k = 0; k < 60; k++) { const a = k / 60 * Math.PI * 2, r0 = k % 5 ? .86 : .8; g.save(); g.translate(C + Math.sin(a) * C * (r0 + .93) / 2, C - Math.cos(a) * C * (r0 + .93) / 2); g.rotate(a); g.fillRect(-(k % 5 ? 2 : 5), -C * (.93 - r0) / 2, k % 5 ? 4 : 10, C * (.93 - r0)); g.restore(); }
+      g.font = `700 38px ${FONT}`; g.textAlign = 'center'; g.textBaseline = 'middle'; for (let k = 5; k <= 60; k += 5) { const a = k / 60 * Math.PI * 2; g.fillText(String(k), C + Math.sin(a) * C * .64, C - Math.cos(a) * C * .64); }
+      g.font = `600 18px ${FONT}`; g.fillStyle = 'rgba(22,24,27,.55)'; g.fillText('PACE', C, C + C * .3); });
+    const clock = new THREE.Group(); clock.position.set(R.x0 + .36, 2.7, (POOL.z0 + POOL.z1) / 2); clock.rotation.y = Math.PI / 2; group.add(clock);
+    const face = new THREE.Mesh(new THREE.CircleGeometry(.55, 64), new THREE.MeshStandardMaterial({ map: tex(c), roughness: .5 })); clock.add(face);
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(.56, .035, 10, 64), steel); clock.add(rim);
+    const red = new THREE.Mesh(new THREE.BoxGeometry(.012, .5, .008).translate(0, .2, .02), new THREE.MeshBasicMaterial({ color: '#d4202a' })); paceHand.add(red);
+    const blk = new THREE.Mesh(new THREE.BoxGeometry(.018, .36, .008).translate(0, .14, .015), new THREE.MeshBasicMaterial({ color: '#16181b' })); paceSlow.add(blk);
+    clock.add(paceHand); if (!lite) clock.add(paceSlow);                 // phones: the sweep hand only (mesh budget) clock.add(new THREE.Mesh(new THREE.CylinderGeometry(.025, .025, .03, 16).rotateX(Math.PI / 2).translate(0, 0, .03), steel));
+    info(face, { model: act => swimCard(act), eyebrow: 'SWIM · THE CLOCK', title: 'Every lap on the clock.', sub: 'A swim pace clock, running in real seconds', text: 'Interval training, read off the wall.' }); }
+
+  // ------------------------------------------------------------ the clutter of real training: swim gear, wheels and helmet, a strength corner, poles and a lamp
+  { box(oak, 3.2, .04, .38, 11.1, .55, R.z0 - .26); for (const x of [9.6, 12.6]) box(steel, .03, .55, .34, x, .275, R.z0 - .26);
+    const foam = [new THREE.MeshStandardMaterial({ color: '#2f5f78', roughness: .8 }), new THREE.MeshStandardMaterial({ color: '#c9ccc8', roughness: .8 }), new THREE.MeshStandardMaterial({ color: '#d9a84a', roughness: .8 })];
+    for (let i = 0; i < 5; i++) put(foam[i % 3], new RoundedBoxGeometry(.3, .035, .44, 2, .015), 9.95, .59 + i * .036, R.z0 - .26, 0, (rand() - .5) * .1, 0);
+    for (let i = 0; i < 3; i++) { put(foam[1], new THREE.CapsuleGeometry(.055, .1, 4, 10), 10.6 + i * .16, .64, R.z0 - .2, Math.PI / 2, 0, 0); put(foam[0], new THREE.CapsuleGeometry(.05, .08, 4, 10), 10.6 + i * .16, .64, R.z0 - .33, Math.PI / 2, 0, 0); }
+    for (const dx of [0, .14]) { put(neoprene, new RoundedBoxGeometry(.12, .03, .52, 2, .012), 11.6 + dx, .585, R.z0 - .26, 0, .05, 0); put(neoprene, new RoundedBoxGeometry(.11, .07, .14, 2, .02), 11.6 + dx, .62, R.z0 - .12); }
+    put(foam[1], new THREE.SphereGeometry(.06, 12, 8), 12.25, .6, R.z0 - .26, 0, 0, 0, 1.6, .8, 1); }
+  { const spokeC = canvas(256, 256, (g, w) => { const C = w / 2; g.clearRect(0, 0, w, w); g.strokeStyle = 'rgba(205,210,215,.9)'; g.lineWidth = 1.2; for (let k = 0; k < 24; k++) { const a = k / 24 * Math.PI * 2, o = (k % 2 ? 1 : -1) * .12; g.beginPath(); g.moveTo(C + Math.cos(a + o) * 12, C + Math.sin(a + o) * 12); g.lineTo(C + Math.cos(a) * (C - 2), C + Math.sin(a) * (C - 2)); g.stroke(); } });
+    const spokes = new THREE.MeshBasicMaterial({ map: tex(spokeC), transparent: true, depthWrite: false, side: THREE.DoubleSide }), tyre = new THREE.MeshStandardMaterial({ color: '#141414', roughness: .85 }), rim = new THREE.MeshStandardMaterial({ color: '#1b1d20', roughness: .35, metalness: .4 });
+    for (let i = 0; i < 3; i++) { const x = 14.4 + i * .82, y = 2.55 + (i % 2) * .12, z = R.z0 - .16;
+      put(rim, new THREE.TorusGeometry(.3, i === 1 ? .045 : .022, 8, 48), x, y, z); put(tyre, new THREE.TorusGeometry(.33, .014, 6, 48), x, y, z); put(steel, new THREE.CylinderGeometry(.025, .025, .1, 12), x, y, z, Math.PI / 2, 0, 0);
+      put(spokes, new THREE.CircleGeometry(.3, 32), x, y, z); put(brushed, new THREE.CylinderGeometry(.008, .008, .16, 6), x, y + .34, z + .06, Math.PI / 2, 0, 0); }
+    const shellH = new THREE.MeshPhysicalMaterial({ color: '#d6d8da', roughness: .3, clearcoat: 1 });
+    put(shellH, new THREE.SphereGeometry(.15, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), 17.15, 2.3, R.z0 - .2, 0, 0, 0, 1, .82, 1.25);
+    put(steel, new THREE.SphereGeometry(.15, 24, 12, 0, Math.PI * 2, Math.PI / 2, .25), 17.15, 2.3, R.z0 - .2, 0, 0, 0, 1, .82, 1.25);
+    const wl = lettering(2.6, .3, g => { g.fillStyle = 'rgba(232,236,242,.8)'; g.font = `600 .09px ${FONT}`; g.letterSpacing = '.03px'; g.fillText('BIKE · SPARE WHEELS · HELMET', .02, .16); }, 1536);
+    wl.rotation.y = Math.PI; wl.position.set(16.0, 1.9, R.z0 - .1); group.add(wl); }
+  { const mat = new THREE.MeshStandardMaterial({ color: '#1a1c1e', roughness: .95 }), iron = new THREE.MeshStandardMaterial({ color: '#202225', roughness: .55, metalness: .6 });
+    box(mat, 3.4, .02, 1.5, 31.7, .01, -5.9);
+    [[30.4, .14], [30.75, .16], [31.1, .18], [31.5, .2]].forEach(([x, r]) => { put(iron, new THREE.SphereGeometry(r, 20, 14), x, r * .9, -6.25); put(iron, new THREE.TorusGeometry(r * .55, r * .14, 8, 20, Math.PI), x, r * 1.6, -6.25); });
+    put(oak, new RoundedBoxGeometry(.75, .6, .5, 2, .02), 32.6, .3, -6.1, 0, .2, 0);
+    for (let i = 0; i < 2; i++) put(new THREE.MeshStandardMaterial({ color: i ? '#3c4a55' : '#7a3b2e', roughness: .9 }), new THREE.CylinderGeometry(.075, .075, .9, 18), 33.2, .075, -5.5 + i * .2, 0, 0, Math.PI / 2);
+    obstacles.push({ box: [30.0, 33.6, -6.7, -5.1] }); }
+  { const [x, , z] = decor.items.find(d => d.id === 'hill-treadmill').at[0];
+    for (const s of [-1, 1]) put(brushed, new THREE.CylinderGeometry(.009, .006, 1.25, 6), x + 2.25 + s * .05, .6, z - 1.2 - .25, .12 * s, 0, .22);
+    put(steel, new THREE.TorusGeometry(.06, .012, 6, 16), x + 2.42, 1.0, z - 1.2, 0, Math.PI / 2, 0); put(ledWarm, new THREE.CylinderGeometry(.02, .02, .025, 12), x + 2.42, .96, z - 1.25, Math.PI / 2, 0, 0); }
+
   // ------------------------------------------------------------ environmental type, high on the slat wall; the terrain credit over the glass
   const big = lettering(16, 1.3, g => { g.fillStyle = 'rgba(245,240,232,.85)'; g.font = `200 .78px ${FONT}`; g.letterSpacing = '.12px'; g.fillText('FJORD TO SUMMIT', .1, .9);
     g.letterSpacing = '.04px'; g.fillStyle = 'rgba(245,240,232,.5)'; g.font = `500 .16px ${FONT}`; g.fillText('COLD · CLIMB · CLIMB AGAIN · SUMMIT', 8.4, .6); g.fillText('A NORSEMAN TRAINING ROOM · AN INDEPENDENT KONA.M CONCEPT', 8.4, .88); }, 4096);
@@ -399,70 +462,99 @@ export function buildNorsemanTraining(ctx) {
 
   // ------------------------------------------------------------ light: a low dawn sun through the east glass, sky from the south glass and the skylight
   if (!rectLib) { RectAreaLightUniformsLib.init(); rectLib = true; }
-  const sun = new THREE.DirectionalLight('#ffcf9c', lite ? 1.6 : 3.4);
-  sun.target.position.set(24, 0, -10); sun.position.copy(sun.target.position).addScaledVector(SUN, 40); group.add(sun, sun.target);
-  if (!lite) { sun.castShadow = true; const sc = sun.shadow.camera; sc.left = -17; sc.right = 17; sc.top = 12; sc.bottom = -12; sc.near = 5; sc.far = 80; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -.0004; sun.shadow.normalBias = .03; }
-  const skyS = new THREE.RectAreaLight('#a9c4e6', lite ? 3.2 : 2.6, SOUTH.x1 - SOUTH.x0, 5); skyS.position.set((SOUTH.x0 + SOUTH.x1) / 2, 3.4, R.z1 + .2); skyS.lookAt((SOUTH.x0 + SOUTH.x1) / 2, 1.8, R.z0); group.add(skyS);
-  const skyE = new THREE.RectAreaLight('#ffd9b4', lite ? 2.6 : 1.8, EAST.z1 - EAST.z0, 5); skyE.position.set(R.x1 - .2, 3.4, (EAST.z0 + EAST.z1) / 2); skyE.lookAt(R.x0, 1.8, (EAST.z0 + EAST.z1) / 2); group.add(skyE);
-  const skyTop = new THREE.RectAreaLight('#c7d8ee', lite ? 2.2 : 1.6, SKY.x1 - SKY.x0, 1.2); skyTop.position.set((SKY.x0 + SKY.x1) / 2, H - .05, SZ); skyTop.lookAt((SKY.x0 + SKY.x1) / 2, 0, SZ); group.add(skyTop);
-  const fill = new THREE.PointLight('#d8d2c8', lite ? 3 : 2, 30, 1.2); fill.position.set(18, H - 1.2, -7); group.add(fill);
+  const sun = new THREE.DirectionalLight('#ffc994', lite ? 2.2 : 7.5);
+  sun.target.position.set(22, 0, -10); sun.position.copy(sun.target.position).addScaledVector(SUN, 45); group.add(sun, sun.target);
+  if (!lite) { sun.castShadow = true; const sc = sun.shadow.camera; sc.left = -18; sc.right = 18; sc.top = 13; sc.bottom = -13; sc.near = 5; sc.far = 90; sun.shadow.mapSize.set(4096, 4096); sun.shadow.bias = -.00025; sun.shadow.normalBias = .02; }
+  const skyS = new THREE.RectAreaLight('#9fbde4', lite ? 2.4 : 1.5, SOUTH.x1 - SOUTH.x0, 5); skyS.position.set((SOUTH.x0 + SOUTH.x1) / 2, 3.4, R.z1 + .2); skyS.lookAt((SOUTH.x0 + SOUTH.x1) / 2, 1.8, R.z0); group.add(skyS);
+  const skyE = new THREE.RectAreaLight('#ffd2a6', lite ? 2.0 : 1.0, EAST.z1 - EAST.z0, 5); skyE.position.set(R.x1 - .2, 3.4, (EAST.z0 + EAST.z1) / 2); skyE.lookAt(R.x0, 1.8, (EAST.z0 + EAST.z1) / 2); group.add(skyE);
+  const skyTop = new THREE.RectAreaLight('#c7d8ee', lite ? 1.6 : .9, SKY.x1 - SKY.x0, 1.2); skyTop.position.set((SKY.x0 + SKY.x1) / 2, H - .05, SZ); skyTop.lookAt((SKY.x0 + SKY.x1) / 2, 0, SZ); group.add(skyTop);
+  const fill = new THREE.PointLight('#cfc8bd', lite ? 1.6 : .55, 30, 1.2); fill.position.set(18, H - 1.2, -7); group.add(fill);
   const spots = [[rackX, R.z0 - 1, '#f2ead8'], [21.1, R.z0 - 1.4, '#fff1dc'], ...(lite ? [] : [[crew.x, crew.z, '#fff1dc'], [32.35, R.z0 - 1.1, '#ffd9b0'], [trainerAt[0], trainerAt[2], '#f0f2ff']])];
-  spots.forEach(([x, z, col]) => { const s = new THREE.SpotLight(col, lite ? 30 : 40, 9, .45, .6, 1.3); s.position.set(x, H - .9, z); s.target.position.set(x, .8, z); group.add(s, s.target); });
-  if (!lite) for (const z of [-12.5, -9.6, -6.8]) { const shaft = lightShaft({ top: .9, bottom: 2.2, height: 16, color: '#ffd9a8', opacity: .045 });
-    shaft.position.set(R.x1 - .2, 4.6, z); shaft.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), SUN); group.add(shaft); }
+  spots.forEach(([x, z, col]) => { const s = new THREE.SpotLight(col, lite ? 26 : 22, 9, .42, .65, 1.3); s.position.set(x, H - .9, z); s.target.position.set(x, .8, z); group.add(s, s.target); });
+  // shafts of sun through each east bay: prisms swept along the sun, fading with distance and broken by drifting dust
+  const beamMat = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.FrontSide, uniforms: { t: strata.t, k: { value: lite ? .05 : .085 } },
+    vertexShader: 'attribute float along;varying float vA;varying vec3 vW,vN,vV;void main(){vA=along;vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;vN=normalize(mat3(modelMatrix)*normal);vV=normalize(cameraPosition-w.xyz);gl_Position=projectionMatrix*viewMatrix*w;}',
+    fragmentShader: `uniform float t,k;varying float vA;varying vec3 vW,vN,vV;
+      float h(vec3 p){return fract(sin(dot(p,vec3(12.9898,78.233,37.719)))*43758.5453);}
+      float n(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(h(i),h(i+vec3(1,0,0)),f.x),mix(h(i+vec3(0,1,0)),h(i+vec3(1,1,0)),f.x),f.y),mix(mix(h(i+vec3(0,0,1)),h(i+vec3(1,0,1)),f.x),mix(h(i+vec3(0,1,1)),h(i+vec3(1,1,1)),f.x),f.y),f.z);}
+      void main(){float fall=pow(1.-vA,1.5)*smoothstep(.1,.28,vA);float streak=.45+.55*smoothstep(.2,.9,sin(vW.z*7.+vW.y*1.3)*.5+.5);float rim=pow(abs(dot(vN,vV)),.8);
+        float dust=.65+.35*n(vW*1.3+vec3(t*.05,t*.02,0.));gl_FragColor=vec4(vec3(1.,.82,.6)*k*fall*rim*dust*streak,1.);}` });
+  { const geos = [], n = 4, back = SUN.clone().multiplyScalar(-24);
+    for (let i = 0; i < n; i++) { const za = EAST.z0 + (EAST.z1 - EAST.z0) * i / n + .1, zb = EAST.z0 + (EAST.z1 - EAST.z0) * (i + 1) / n - .1, x = R.x1 - .14;
+      const g = new THREE.BoxGeometry(1, 1, 1), p = g.attributes.position, along = new Float32Array(p.count);
+      for (let k = 0; k < p.count; k++) { const u = p.getX(k) + .5, y = p.getY(k) + .5, z = p.getZ(k) + .5; along[k] = u;
+        p.setXYZ(k, x + back.x * u, .15 + (H - 1.0) * y + back.y * u, za + (zb - za) * z + back.z * u); }
+      g.setAttribute('along', new THREE.BufferAttribute(along, 1)); g.computeVertexNormals(); geos.push(g); }
+    if (!lite) { const beams = new THREE.Mesh(mergeGeometries(geos), beamMat); beams.renderOrder = 3; beams.frustumCulled = false; group.add(beams); } }
 
   // ------------------------------------------------------------ the landscape behind the glass (portal scene)
-  const L = portal.scene;
-  const SUN_P = new THREE.Vector3(.5, .2, .85).normalize();                // low, from the right of the mountain: side light on its face
-  const skyMat = new THREE.ShaderMaterial({ side: THREE.BackSide, depthWrite: false, fog: false, uniforms: { sun: { value: SUN_P } },
+  const L = portal.scene, TIME = { value: 0 };
+  const SUN_P = new THREE.Vector3(-.6, .16, .62).normalize();              // low dawn sun behind the visitor's right shoulder: alpenglow on the faces
+  const skyMat = new THREE.ShaderMaterial({ side: THREE.BackSide, depthWrite: false, fog: false, uniforms: { sun: { value: SUN_P }, t: TIME, clouds: { value: 1 } },
     vertexShader: 'varying vec3 vD;void main(){vD=normalize(position);vec4 p=projectionMatrix*modelViewMatrix*vec4(position,1.);gl_Position=p.xyww;}',
-    fragmentShader: `uniform vec3 sun;varying vec3 vD;void main(){float h=max(vD.y,0.);float s=max(dot(vD,sun),0.);
-      vec3 zen=vec3(.13,.24,.42),hor=vec3(.66,.74,.84),warm=vec3(1.,.72,.48);
-      vec3 c=mix(hor,zen,pow(h,.45));c=mix(c,warm,pow(s,6.)*(1.-h)*.85);c+=vec3(1.,.85,.6)*pow(s,900.)*8.+vec3(1.,.7,.45)*pow(s,40.)*.35;
-      c=mix(c,vec3(.35,.4,.45),smoothstep(0.,-.2,vD.y));gl_FragColor=vec4(c,1.);}` });
-  const skyDome = new THREE.Mesh(new THREE.SphereGeometry(5200, 32, 16), skyMat); skyDome.frustumCulled = false; skyDome.renderOrder = -1; L.add(skyDome);
-  L.fog = new THREE.FogExp2('#aebbc6', lite ? .0004 : .00032);
-  L.add(new THREE.HemisphereLight('#b9cde6', '#3a3326', .65));
-  const pSun = new THREE.DirectionalLight('#ffd6a8', 4.2); pSun.target.position.set(200, 0, -200); pSun.position.copy(SUN_P).multiplyScalar(2000).add(pSun.target.position); L.add(pSun, pSun.target);
-  if (!lite) { pSun.castShadow = true; const sc = pSun.shadow.camera; sc.left = -1700; sc.right = 1700; sc.top = 1700; sc.bottom = -1700; sc.near = 100; sc.far = 4500; pSun.shadow.mapSize.set(4096, 4096); pSun.shadow.bias = -.0006; pSun.shadow.normalBias = 2; }
+    fragmentShader: `uniform vec3 sun;uniform float t,clouds;varying vec3 vD;
+      float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+      float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+1.),f.x),f.y);}
+      float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<6;i++){s+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return s;}
+      void main(){float hgt=max(vD.y,0.);float s=max(dot(vD,sun),0.);
+        vec3 zen=vec3(.10,.19,.36),hor=vec3(.70,.74,.78),warm=vec3(1.,.66,.40);
+        vec3 c=mix(hor,zen,pow(hgt,.5));c=mix(c,warm,pow(s,5.)*(1.-hgt)*.9);
+        if(clouds>.5&&vD.y>0.){vec2 uv=vD.xz/(vD.y+.06)*.55+vec2(t*.004,t*.0015);float d=fbm(uv*1.4);float cov=smoothstep(.5,.78,d)*smoothstep(0.,.18,vD.y);
+          float lit=pow(s,3.)*.9+.25;vec3 cc=mix(vec3(.42,.46,.52),vec3(1.,.83,.64),clamp(lit,0.,1.))*(1.-.35*smoothstep(.7,.95,d));c=mix(c,cc,cov*.85);}
+        c+=vec3(1.,.86,.62)*pow(s,1200.)*14.+vec3(1.,.72,.46)*pow(s,24.)*.45;
+        c=mix(c,vec3(.30,.34,.38),smoothstep(0.,-.18,vD.y));gl_FragColor=vec4(c,1.);}` });
+  const skyDome = new THREE.Mesh(new THREE.SphereGeometry(5200, 48, 24), skyMat); skyDome.frustumCulled = false; skyDome.renderOrder = -1; L.add(skyDome);
+  L.fog = new THREE.FogExp2('#9fb0c2', lite ? .0003 : .00024);
+  L.add(new THREE.HemisphereLight('#a9bede', '#353025', .62));
+  const pSun = new THREE.DirectionalLight('#ffd9b0', 4.4); pSun.target.position.set(200, 0, -200); pSun.position.copy(SUN_P).multiplyScalar(2400).add(pSun.target.position); L.add(pSun, pSun.target);
   const keepSouth = [new THREE.Plane(new THREE.Vector3(0, 0, -1), R.z1 - .05), new THREE.Plane(new THREE.Vector3(-1, 0, -1).normalize(), (R.x1 + R.z1) / Math.SQRT2)];
   const keepEast = [new THREE.Plane(new THREE.Vector3(1, 0, 0), -(R.x1 - .05)), new THREE.Plane(new THREE.Vector3(1, 0, 1).normalize(), -(R.x1 + R.z1) / Math.SQRT2)];
-  // the fjord: one sheet of cold water at the pool's own level, reflecting the sky
-  const fjordN = tex(waterN, false, [260, 260]);
-  const fjord = new THREE.Mesh(new THREE.PlaneGeometry(9000, 9000), new THREE.MeshStandardMaterial({ color: '#08161c', roughness: .22, metalness: 0, envMapIntensity: .12, normalMap: fjordN, normalScale: new THREE.Vector2(.5, .5), clippingPlanes: keepSouth }));
-  fjord.rotation.x = -Math.PI / 2; fjord.position.set(0, POOL.y - .01, 0); fjord.receiveShadow = !lite; L.add(fjord);
-  if (renderer) { const pm = new THREE.PMREMGenerator(renderer), sk = new THREE.Scene(); sk.add(new THREE.Mesh(skyDome.geometry, skyMat)); L.environment = pm.fromScene(sk, 0, 1, 6000).texture; L.environmentIntensity = .45; pm.dispose(); }
-  // a car ferry far down the fjord, decks lit for the start (interpretation)
+  if (renderer) { const pm = new THREE.PMREMGenerator(renderer), sk = new THREE.Scene(), m = skyMat.clone(); m.uniforms.clouds.value = 0; sk.add(new THREE.Mesh(skyDome.geometry, m)); L.environment = pm.fromScene(sk, 0, 1, 6000).texture; L.environmentIntensity = .4; pm.dispose(); }
+  // the fjord: cold water at the pool's own level. On desktop a true mirror, so the valley walls stand in it.
+  const fjordN = tex(waterN, false, [1, 1]); fjordN.wrapS = fjordN.wrapT = THREE.RepeatWrapping;
+  const fjordShape = new THREE.Shape([[-5000, -R.z1 + .05], [R.x1, -R.z1 + .05], [5000, -R.z1 + 5000 - R.x1], [5000, 7000], [-5000, 7000]].map(([x, y]) => new THREE.Vector2(x, y)));
+  let fjord;
+  if (!lite) { fjord = new Water(new THREE.ShapeGeometry(fjordShape), { textureWidth: 640, textureHeight: 640, waterNormals: fjordN, sunDirection: SUN_P.clone(), sunColor: 0xffd2a0, waterColor: 0x0b1d24, distortionScale: 1.4, fog: true });
+    fjord.material.uniforms.size.value = 5; }
+  else { const fN = tex(waterN, false, [260, 260]); fjord = new THREE.Mesh(new THREE.ShapeGeometry(fjordShape), new THREE.MeshStandardMaterial({ color: '#08161c', roughness: .22, metalness: 0, envMapIntensity: .2, normalMap: fN, normalScale: new THREE.Vector2(.5, .5) })); }
+  fjord.rotation.x = -Math.PI / 2; fjord.position.set(0, POOL.y - .01, 0); L.add(fjord);
+  // a car ferry working the fjord, decks lit (interpretation)
   const ferry = new THREE.Group(); { const hull = new THREE.MeshStandardMaterial({ color: '#1d2a35', roughness: .6 }), top = new THREE.MeshStandardMaterial({ color: '#e8e8e4', roughness: .6 }), lamp = new THREE.MeshBasicMaterial({ color: '#ffd59a', toneMapped: false });
     const m = (g, mat, x, y, z) => { const o = new THREE.Mesh(g, mat); o.position.set(x, y, z); ferry.add(o); };
     m(new THREE.BoxGeometry(2.0, .9, 10), hull, 0, .2, 0); m(new THREE.BoxGeometry(1.9, .7, 6.5), top, 0, 1.0, -.4); m(new THREE.BoxGeometry(1.4, .45, 2), top, 0, 1.55, -.9); m(new THREE.BoxGeometry(.2, .9, .2), hull, 0, 2.2, -.9);
     for (let i = 0; i < 9; i++) m(new THREE.BoxGeometry(.05, .05, .05), lamp, (i % 2 ? -1 : 1) * .96, 1.05, -3.2 + i * .75); }
-  ferry.position.set(26, POOL.y, -260); ferry.rotation.y = .1; L.add(ferry);
+  ferry.position.set(30, POOL.y, -300); L.add(ferry);
+  // low cloud lying in the valleys
   const mists = [];
-  { const mt = mistTex(51); mt.repeat.set(1, 1);
-    for (let i = 0; i < (lite ? 3 : 6); i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: mt, color: '#e6ecf2', transparent: true, opacity: .55, depthWrite: false }));
-      sp.scale.set(420 + rand() * 300, 70 + rand() * 40, 1); const south = i % 2 === 0; sp.position.set(south ? -60 + rand() * 160 : 300 + rand() * 400, 25 + rand() * 50, south ? -200 - rand() * 500 : -120 + rand() * 260); L.add(sp); mists.push(sp); } }
+  { const mt = mistTex(51);
+    for (let i = 0; i < (lite ? 4 : 10); i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: mt, color: '#e9eef3', transparent: true, opacity: .5 + rand() * .25, depthWrite: false }));
+      const south = i % 3 !== 2; sp.scale.set(south ? 300 + rand() * 360 : 500 + rand() * 400, south ? 40 + rand() * 50 : 30 + rand() * 20, 1);   // valley cloud in the fjord; in the east only far beyond, low
+      sp.position.set(south ? -120 + rand() * 260 : 900 + rand() * 700, south ? 18 + rand() * 60 : -20 + rand() * 20, south ? -150 - rand() * 600 : (rand() < .5 ? -1 : 1) * (350 + rand() * 300)); sp.material.opacity *= south ? 1 : .6; L.add(sp); mists.push(sp); } }
+  // spruce: three tiers and a trunk, instanced
+  const spruce = mergeGeometries([[.5, 1.0, .55], [.4, .85, 1.05], [.27, .7, 1.48]].map(([r, h, y]) => new THREE.ConeGeometry(r, h, 7, 1).translate(0, y, 0).toNonIndexed())
+    .concat([new THREE.CylinderGeometry(.05, .06, .4, 5).translate(0, .2, 0).toNonIndexed()]).map(g => { g.deleteAttribute('uv'); return g; }));
   let terrainReady = false;
   async function loadTerrain() {
     const base = NORSEMAN_TERRAIN.dir;
     const sites = await Promise.all(NORSEMAN_TERRAIN.sites.map(async id => { const [meta, buf] = await Promise.all([fetch(base + id + '.json').then(r => r.json()), fetch(base + id + '.bin').then(r => r.arrayBuffer())]); return { id, meta, heights: new Uint16Array(buf) }; }));
     for (const { id, meta, heights } of sites) {
       const v = VIEWS[id], view = { ...v.view }; if (view.e0 === null) view.e0 = terrainHeightAt(meta, heights, v.lat, v.lon);
-      const g = terrainGeometry(meta, heights, { lat: v.lat, lon: v.lon, view, step: lite ? 2 : 1 });
+      const g = terrainGeometry(meta, heights, { lat: v.lat, lon: v.lon, view, step: lite ? 3 : 1, sun: SUN_P });
       if (id === 'eidfjord') { const p = g.attributes.position, e = g.attributes.elev; for (let i = 0; i < p.count; i++) if (e.getX(i) < .6) p.setY(i, POOL.y - 3); p.needsUpdate = true; g.computeVertexNormals(); }
-      const keep = id === 'eidfjord' ? keepSouth : keepEast;
-      const t = new THREE.Mesh(g, terrainMaterial({ clippingPlanes: keep, snowline: v.snowline, treeline: v.treeline })); t.castShadow = t.receiveShadow = !lite; L.add(t);
-      // forest: instanced conifers on gentle ground below the treeline, within a few hundred metres of the glass (1 : 10)
-      const pos = g.attributes.position, el = g.attributes.elev, nor = g.attributes.normal, want = lite ? 1400 : 5200, at = [];
+      const keep = id === 'eidfjord' ? keepSouth : keepEast, layer = id === 'eidfjord' ? 0 : 1;   // layer 1: not drawn in the fjord's mirror
+      const t = new THREE.Mesh(g, terrainMaterial({ clippingPlanes: keep, snowline: v.snowline, treeline: v.treeline, time: TIME, sun: SUN_P })); t.layers.set(layer); L.add(t);
+      // forest on gentle ground below the treeline, clumped by noise, out to about 12 km (1 : 10)
+      const pos = g.attributes.position, el = g.attributes.elev, nor = g.attributes.normal, want = (lite ? 1 : 4) * (id === 'eidfjord' ? 2200 : 1000), at = [];
       for (let tries = 0; at.length < want && tries < want * 40; tries++) { const i = Math.floor(rand() * pos.count), e = el.getX(i);
-        if (e < 8 || e > v.treeline - 60 - rand() * 160 || nor.getY(i) < .82) continue; const x = pos.getX(i), z = pos.getZ(i), d = Math.hypot(x - 21, z + 11);
-        if (d < 20 || d > 900 || keep.some(pl => pl.distanceToPoint(V.set(x, 0, z)) < 0)) continue; at.push([x + (rand() - .5) * 6, pos.getY(i), z + (rand() - .5) * 6, .7 + rand() * .8]); }
-      const tree = new THREE.InstancedMesh(new THREE.ConeGeometry(.42, 1.8, 6).translate(0, .9, 0), new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, clippingPlanes: keep }), at.length);
+        if (e < 6 || e > v.treeline - 40 - rand() * 180 || nor.getY(i) < .8) continue; const x = pos.getX(i), z = pos.getZ(i), d = Math.hypot(x - 21, z + 11);
+        if (d < 18 || d > 950 || noise1(x * .02, Math.floor(z * .02)) < .35 || keep.some(pl => pl.distanceToPoint(V.set(x, 0, z)) < 0)) continue;
+        at.push([x + (rand() - .5) * 5, pos.getY(i), z + (rand() - .5) * 5, .55 + rand() * .75, g.attributes.sunlit.getX(i)]); }
+      const tree = new THREE.InstancedMesh(spruce, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, clippingPlanes: keep, flatShading: true }), at.length);
       const up = new THREE.Vector3(0, 1, 0), col = new THREE.Color();
-      at.forEach(([x, y, z, s], k) => { M4.compose(V.set(x, y - .1, z), Q.setFromAxisAngle(up, rand() * 6), S.set(s, s * (.9 + rand() * .5), s)); tree.setMatrixAt(k, M4); tree.setColorAt(k, col.setHSL(.28 + rand() * .06, .35, .07 + rand() * .05)); });
-      tree.castShadow = !lite; tree.receiveShadow = !lite; L.add(tree);
+      at.forEach(([x, y, z, s, lit], k) => { M4.compose(V.set(x, y - .12, z), Q.setFromAxisAngle(up, rand() * 6), S.set(s, s * (.85 + rand() * .55), s)); tree.setMatrixAt(k, M4); tree.setColorAt(k, col.setHSL(.27 + rand() * .07, .3 + rand() * .15, (.06 + rand() * .05) * (.45 + .55 * lit))); });
+      tree.layers.set(layer); L.add(tree);
     }
-    terrainReady = true; portal.shadows(2); envDirty = 2;
+    terrainReady = true; envDirty = 3;
   }
 
   // ------------------------------------------------------------ bikes: KONA.m atlas road-triathlon study, instanced ×2 (trainer, stand)
@@ -520,7 +612,7 @@ export function buildNorsemanTraining(ctx) {
   }
   function windowCard(act) {
     return card('THE WINDOWS', 'Two real places, one room.', 'Eidfjord to the south · Gaustatoppen to the east · 1 : 10',
-      'Through the south glass: the head of the Hardangerfjord at Eidfjord, where the swim comes ashore, seen from the water. Through the east glass: Gaustatoppen from about 3 km to the south, where the run ends. The shapes of the land are real elevation data, built at one tenth scale.',
+      'Through the south glass: the head of the Hardangerfjord at Eidfjord, where the swim comes ashore, seen from the water. Through the east glass: Gaustatoppen from about 2.5 km to the west-south-west, where the run ends. The shapes of the land are real elevation data, built at one tenth scale.',
       [fact('start'), fact('summit'), terrainNote, interp('Shading, snow, forest, mist, the sun and the ferry are painted by KONA.m code. The two views are arranged around one room: the real distance between them, and the sun’s true position, are not shown.')], act, nav(act));
   }
   function swimCard(act) {
@@ -542,6 +634,10 @@ export function buildNorsemanTraining(ctx) {
   function weekCard(act) {
     return card('THE ROUTINE · AN EXAMPLE', 'A week built around the climb.', 'Cold swim · hill run · long ride with climbs · ride then run', 'One way a week can lean toward this course: cold water, climbing on the bike, running uphill off the bike, and a real rest day. An example to read, not a plan to follow.',
       [interp('Entirely KONA.m editorial. Not coaching, medical or training advice; build any plan with a qualified coach.')], act);
+  }
+  function saunaCard(act) {
+    return card('RECOVERY · HEAT AND COLD', 'Heat, then the cold pool.', 'A sauna beside the cold water', 'Many Nordic athletes move between heat and cold. Here the sauna sits a few steps from the cold pool and the fjord glass. A KONA.m interpretation of the setting, not a protocol.',
+      [interp('The sauna is set dressing. It is not a race requirement, a training protocol or medical advice; heat and cold exposure carry risks — ask a qualified professional.')], act);
   }
   function topsCard(act) {
     return card('THE FINISH', 'Black at the top. White below.', 'Same distance, two finishes', 'The course splits late in the run. The tops in the niche are plain KONA.m studies in the two colours, with no marks.', [fact('cut'), fact('shirts')], act);
@@ -565,12 +661,16 @@ export function buildNorsemanTraining(ctx) {
     },
     setBike() { /* this room mounts its own instanced bikes in useAssets */ },
     get terrainReady() { return terrainReady; },
+    get landscape() { return { scene: L, portal, fjord }; },         // inspection and evidence tooling
     update(t, reduce, dt = 1 / 60) {
       portal.frame();
-      if (envDirty) { envDirty--; if (!envDirty) envCap.capture(); else if (envDirty === 1 && !envCap.texture) { envCap.capture(); envDirty = 0; } }
+      if (envDirty) { envDirty--; if (!envDirty) portal.capture(() => envCap.capture()); else if (envDirty === 1 && !envCap.texture) { portal.capture(() => envCap.capture()); envDirty = 0; } }
       const tt = reduce ? 0 : t;
       strata.t.value = tt; caust.t.value = tt;
-      nTex.offset.set(tt * .012, tt * .007); nTex2.offset.set(-tt * .009, tt * .011); fjordN.offset.set(tt * .004, -tt * .002);
+      nTex.offset.set(tt * .012, tt * .007); nTex2.offset.set(-tt * .009, tt * .011); TIME.value = tt;
+      { const sec = reduce ? 0 : (Date.now() / 1000) % 60; paceHand.rotation.z = -sec / 60 * Math.PI * 2; paceSlow.rotation.z = -((Date.now() / 60000) % 60) / 60 * Math.PI * 2; }
+      if (fjord.material.uniforms?.time) fjord.material.uniforms.time.value = tt * .35;
+      ferry.position.z = -470 + Math.sin(tt * .006) * 230; ferry.rotation.y = Math.cos(tt * .006) > 0 ? Math.PI : 0;
       if (!reduce) { vapour.step(t); dust.step(t); mists.forEach((m, i) => { m.position.x += Math.sin(t * .05 + i) * .02; }); }
       return { power: 0, heat: 0, riding: false };
     },

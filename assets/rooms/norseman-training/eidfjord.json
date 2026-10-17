@@ -8,8 +8,8 @@
     "south": 60.33,
     "north": 60.53
   },
-  "zoom": 12,
-  "grid": 257,
+  "zoom": 13,
+  "grid": 385,
   "width_m": 24171,
   "height_m": 22115,
   "anchor": {
@@ -21,7 +21,7 @@
     0.3175
   ],
   "min_m": 0.0,
-  "max_m": 1643.7,
+  "max_m": 1646.2,
   "encoding": "uint16 LE decimetres, row-major, north row first",
   "attribution": "Elevation: Terrain Tiles (Mapzen/Tilezen, AWS Open Data). Norway terrain data \u00a9 Kartverket, CC BY 4.0.",
   "source": "https://registry.opendata.aws/terrain-tiles/",
