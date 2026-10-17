@@ -117,7 +117,31 @@ export function terrainHeightAt(meta, heights, lat, lon) {
 }
 
 // Alpine shading by real altitude and slope: forest low, heath, rock on steep ground, lichen plateau, late snow high.
-export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline = 900, time = { value: 0 }, sun = new THREE.Vector3(0, 1, 0), alpen = [snowline - 500, snowline + 200] } = {}) {
+// Aerial perspective shared by everything behind the glass: distance lightens and blues land, trees and water alike,
+// more strongly in the low valley air. Linear colour (the portal renders to a linear target).
+export const AERIAL = Object.freeze({ k: .0009, haze: [.15, .2, .29] });      // ≈ 11 % per real km at 1 : 10; haze at mid-tone, so far ridges go blue, not white
+const aerialGLSL = (pos) => `{ float dist = length(${pos} - cameraPosition);
+  float air = (1. - exp(-dist * ${AERIAL.k.toFixed(6)})) * mix(1., .62, smoothstep(0., 150., ${pos}.y));
+  gl_FragColor.rgb = mix(gl_FragColor.rgb, vec3(${AERIAL.haze.map(v => v.toFixed(3)).join(', ')}), clamp(air, 0., .9)); }`;
+export function withAerial(mat) {
+  const prev = mat.onBeforeCompile, key = mat.customProgramCacheKey?.bind(mat);
+  mat.onBeforeCompile = (sh, r) => {
+    prev?.call(mat, sh, r);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vAirW;')
+      .replace('#include <project_vertex>', '#include <project_vertex>\n{ vec4 aw = vec4(transformed, 1.);\n#ifdef USE_INSTANCING\naw = instanceMatrix * aw;\n#endif\nvAirW = (modelMatrix * aw).xyz; }');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vAirW;')
+      .replace('#include <fog_fragment>', '#include <fog_fragment>\n' + aerialGLSL('vAirW'));
+  };
+  mat.customProgramCacheKey = () => (key ? key() : mat.type) + '-aerial';
+  return mat;
+}
+// The same air for three's Water shader (its world position is `worldPosition`).
+export function aerialWater(water) {
+  water.material.fragmentShader = water.material.fragmentShader.replace('#include <fog_fragment>', '#include <fog_fragment>\n' + aerialGLSL('worldPosition.xyz'));
+  return water;
+}
+
+export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline = 900, time = { value: 0 }, sun = new THREE.Vector3(0, 1, 0), alpen = [snowline - 500, snowline + 200], near = null } = {}) {
   const m = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .94, metalness: 0, clippingPlanes });
   m.onBeforeCompile = sh => {
     sh.uniforms.uTime = time; sh.uniforms.uSun = { value: sun };
@@ -130,19 +154,32 @@ export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline
       float tf(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*tn(p);p*=2.07;a*=.5;}return s;}`)
       .replace('#include <color_fragment>', `
       { float slope = 1. - clamp(vWN.y, 0., 1.);                     // 0 flat … 1 vertical
-        float n1 = tf(vWP.xz * .045), n2 = tf(vWP.xz * .6), n3 = tf(vWP.xz * 3.1);
-        float e = vE + (n1 - .5) * 160.;
-        vec3 forest = mix(vec3(.025,.055,.049), vec3(.06,.10,.079), n2);
-        vec3 heath = mix(vec3(.075,.095,.07), vec3(.13,.14,.10), n2);
-        vec3 lichen = mix(vec3(.22,.22,.17), vec3(.30,.29,.23), n3);
-        vec3 rock = mix(vec3(.17,.17,.18), vec3(.30,.29,.28), n2 * .7 + n3 * .3);
+        float n1 = tf(vWP.xz * .045), n2 = tf(vWP.xz * .6), n3 = tf(vWP.xz * 3.1), n4 = tn(vWP.xz * 9.);
+        float e = vE + (n1 - .5) * 120.;
+        // a treeline with a ragged edge; forest thins on steep ground and in hollows of the noise
+        float tl = ${treeline.toFixed(1)} + (n2 - .5) * 140.;
+        float forestAmt = (1. - smoothstep(tl - 90., tl + 20., e)) * (1. - smoothstep(.5, .68, slope)) * smoothstep(.12, .34, n2 + n1 * .4);
+        // canopy from a distance: dark crowns, lit tops, gaps — a textured band, not paint
+        float crowns = smoothstep(.35, .75, n4) * .7 + smoothstep(.4, .9, n3) * .3;
+        vec3 canopy = mix(vec3(.010,.028,.016), vec3(.035,.075,.035), crowns);
+        ${near ? `// inside the instanced range the trees are real: the ground under them is forest floor, not painted canopy
+        canopy = mix(canopy * vec3(.9, 1.05, .95), canopy, smoothstep(${(near[2] * .75).toFixed(1)}, ${(near[2] * 1.02).toFixed(1)}, length(vWP.xz - vec2(${near[0].toFixed(2)}, ${near[1].toFixed(2)}))));` : ''}
+        vec3 meadow = mix(vec3(.045,.075,.032), vec3(.09,.11,.05), n3);                       // grass and heath below and between stands
+        vec3 heath = mix(vec3(.10,.095,.06), vec3(.16,.14,.09), n2);                           // dwarf birch, heather, above the trees
+        vec3 lichen = mix(vec3(.20,.20,.17), vec3(.29,.28,.23), n3);
+        // scree: grey rock with streaks running down the fall line
+        vec2 fall = normalize(vWN.xz + 1e-4); float streak = tn(vec2(dot(vWP.xz, vec2(-fall.y, fall.x)) * 2.2, dot(vWP.xz, fall) * .25));
+        vec3 rock = mix(vec3(.13,.13,.14), vec3(.33,.32,.31), n2 * .5 + streak * .5);
         vec3 snow = vec3(.86,.89,.93);
-        vec3 c = mix(forest, heath, smoothstep(${(treeline - 220).toFixed(1)}, ${treeline.toFixed(1)}, e));
-        c = mix(c, lichen, smoothstep(${(treeline + 150).toFixed(1)}, ${(treeline + 450).toFixed(1)}, e));
-        c = mix(c, rock, smoothstep(.34, .52, slope + (n2 - .5) * .25));
-        float snowAmt = smoothstep(${(snowline - 60).toFixed(1)}, ${(snowline + 120).toFixed(1)}, e + n2 * 140.) * (1. - smoothstep(.35, .55, slope)) * step(.42, n1 + n3 * .3);
+        vec3 c = mix(meadow, heath, smoothstep(tl - 40., tl + 160., e));
+        c = mix(c, lichen, smoothstep(tl + 220., tl + 520., e));
+        c = mix(c, canopy, forestAmt);
+        c = mix(c, rock, smoothstep(.5, .66, slope + (n2 - .5) * .22) * (1. - forestAmt * .7));
+        // snow above the treeline: in hollows and on the shaded side first
+        float snowAmt = smoothstep(${(snowline - 80).toFixed(1)}, ${(snowline + 140).toFixed(1)}, e + n2 * 160. + (1. - vLit) * 120.) * (1. - smoothstep(.4, .62, slope)) * smoothstep(.36, .5, n1 + n3 * .35);
         c = mix(c, snow, snowAmt);
-        c = mix(c, vec3(.05,.06,.06), smoothstep(6., 0., vE) * .7);    // dark wet rock at the waterline
+        // the shore: dark wet rock and weed for the first metres above the water
+        c = mix(c, vec3(.028,.032,.03), smoothstep(9., 0., vE) * .85);
         // drifting cloud shadows, cast along the sun
         vec2 cs = (vWP.xz - uSun.xz / max(uSun.y, .1) * vWP.y) * .0016 + vec2(uTime * .006, uTime * .0025);
         c *= mix(1., .42, smoothstep(.5, .66, tf(cs)));
@@ -151,6 +188,7 @@ export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline
         float hi = smoothstep(${alpen[0].toFixed(1)}, ${alpen[1].toFixed(1)}, vE);
         c *= mix(vec3(.78, .86, 1.08), mix(vec3(1.), vec3(1.34, 1.0, .86), hi), vLit);
         diffuseColor.rgb = c; }`)
+
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
       { // rock and scree detail the 1:10 grid cannot carry
         vec2 q = vWP.xz * .9; float h0 = tf(q), hx = tf(q + vec2(.15, 0.)), hz = tf(q + vec2(0., .15));
@@ -158,6 +196,6 @@ export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline
         vec3 dW = vec3(h0 - hx + (g0 - gx) * .3, 0., h0 - hz + (g0 - gz) * .3) * .9;
         normal = normalize(normal + (viewMatrix * vec4(dW, 0.)).xyz); }`);
   };
-  m.customProgramCacheKey = () => `terrain-alpine-${snowline}-${treeline}-${alpen.join('-')}`;
-  return m;
+  m.customProgramCacheKey = () => `terrain-alpine-${snowline}-${treeline}-${alpen.join('-')}-${near ? near.join('-') : ''}`;
+  return withAerial(m);
 }

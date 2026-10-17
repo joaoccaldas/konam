@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-17T14:57:30.846Z",
+  "captured_at": "2026-10-17T18:56:30.594Z",
   "renderer": "headless Chrome, ANGLE Metal (hardware)",
   "configs": [
     {
@@ -8,17 +8,19 @@
         1440,
         900
       ],
-      "fps_mean": 16.3,
-      "scene_calls": 1496,
-      "scene_triangles": 6639248,
+      "fps_mean": 60.2,
+      "scene_calls": 1492,
+      "scene_triangles": 6633934,
       "room_meshes": 122,
-      "room_triangles": 86488,
+      "room_triangles": 86416,
       "dpr": 1,
       "budget": {
         "calls": 190,
         "triangles": 450000
       },
-      "within_budget": true,
+      "within_budget": null,
+      "geometry_only_within_budget": true,
+      "performance_status": "unverified: room mesh count is not draw calls; portal, mirror and host passes need complete-frame measurement",
       "errors": []
     },
     {
@@ -27,17 +29,19 @@
         390,
         844
       ],
-      "fps_mean": 60.4,
-      "scene_calls": 99,
-      "scene_triangles": 47836,
+      "fps_mean": 60.2,
+      "scene_calls": 129,
+      "scene_triangles": 44142,
       "room_meshes": 110,
-      "room_triangles": 70504,
+      "room_triangles": 70432,
       "dpr": 1,
       "budget": {
         "calls": 110,
         "triangles": 220000
       },
-      "within_budget": true,
+      "within_budget": null,
+      "geometry_only_within_budget": true,
+      "performance_status": "unverified: room mesh count is not draw calls; portal, mirror and host passes need complete-frame measurement",
       "errors": []
     },
     {
@@ -46,17 +50,19 @@
         844,
         390
       ],
-      "fps_mean": 60.2,
-      "scene_calls": 175,
-      "scene_triangles": 71176,
+      "fps_mean": 60.1,
+      "scene_calls": 192,
+      "scene_triangles": 67048,
       "room_meshes": 110,
-      "room_triangles": 70504,
+      "room_triangles": 70432,
       "dpr": 1,
       "budget": {
         "calls": 110,
         "triangles": 220000
       },
-      "within_budget": true,
+      "within_budget": null,
+      "geometry_only_within_budget": true,
+      "performance_status": "unverified: room mesh count is not draw calls; portal, mirror and host passes need complete-frame measurement",
       "errors": []
     }
   ]

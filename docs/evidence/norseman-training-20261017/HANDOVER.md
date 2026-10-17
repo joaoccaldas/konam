@@ -106,3 +106,34 @@ published copy needs this branch built and published there first; that step need
 ```
 
 The poster can be `desktop-hero.jpg` from this folder, copied as `atlas-norseman.jpg` where the portfolio keeps posters.
+
+## Landscape pass (after fd1f79a)
+
+The interior already read well; the landscape behind the glass looked dated. This pass rebuilt it:
+
+1. **Aerial perspective.** One shared helper (`withAerial` / `aerialWater` in `engine/terrain-portal.js`) lightens and blues terrain, trees and fjord water with distance, more strongly in low valley air. It runs at about 9 % per real kilometre, with the haze at mid-tone so far ridges go blue rather than white. It replaces the scene fog.
+2. **Terrain shading** comes from the real elevation and slope, with no imagery:
+   - a textured conifer canopy band below a ragged treeline
+   - meadow and heath above it, then lichen
+   - grey scree streaked down the fall line on steep faces
+   - snow above the snowline, first in hollows and on the shaded side
+   - dark wet rock for the first metres above the water
+3. **Forest stands, not singles.** There are four silhouettes each of spruce and birch, instanced as 8 meshes per site:
+   - Trees grow in clusters of about 14–60 whose density falls with altitude and slope, up to the treeline. Birch dominates the Eidfjord shore.
+   - About 16,000 trees at Eidfjord and 7,200 at Gaustatoppen on desktop, about 3,200 at Eidfjord on phones.
+   - Beyond the instanced range, the shader's canopy band carries the forest.
+4. **Fjord.** The mirror target is now 1024², with gentler ripple normals, a darker deep-water tint and the same air as the land. The Water.js mirror technique is kept.
+5. **Treeline.** The Gaustatoppen treeline is set to 1,080 m, inside the real Telemark birch-woodland range, which corrects the beige near slopes.
+
+Before/after pairs: `landscape-before-after/` (desktop fjord, hero, mountain, pool; phone fjord, mountain). The before frames are in `before-landscape/`, captured from fd1f79a.
+
+| | room meshes | room triangles | capture fps (mean) |
+|---|---|---|---|
+| desktop before → after | 122 → 122 | 86,416 → 86,416 | 60.3 → 60.2 |
+| phone 390 before → after | 110 → 110 | 70,432 → 70,432 | 60.2 → 60.2 |
+
+- **Full-frame median, same session:** Norseman 71.9, Breitling × KONA 69, NOR // 3 35.8 fps (headless Chrome, ANGLE Metal, 1440×900).
+- **Room budgets:** the fake station light is unchanged, and the room budgets (desktop 190 / 450k, phone 110 / 220k) still hold.
+- **Not in those budgets:** the portal's own triangles (terrain, about 23,000 trees and the mirror) sit outside the room group and are not counted there. They are covered by the full-frame fps above.
+- **Not yet verified:** a real (non-headless) browser and a phone.
+- **Tree count:** the phone tree count is the lever if a device runs slow.
