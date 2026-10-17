@@ -243,6 +243,7 @@ if(shared) paintShared(shared);
 else if (q.get('reviewRoom') === 'beast-cave') openMuseum('beast');
 else if (q.get('reviewRoom') === 'nor3-winter') openMuseum('beast');
 else if (q.get('reviewRoom') === 'breitling-kona') openMuseum('beast');
+else if (q.get('reviewRoom') === 'norseman-training') openMuseum('beast');
 else if (q.get('room') || q.get('map')) openMuseum();
 else if (authReturned && existingRaceIdentity()) enterApp('home');
 else if (authReturned) enterApp('me').then(()=>document.querySelector('[data-race-self-action=progress]')?.click());

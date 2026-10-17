@@ -63,6 +63,11 @@ export function createRoomSound(ctx, out) {
     const wind = noise(), wl = filt('lowpass', 420, .8), wg = gain(.05); lfo(.07, 160, wl.frequency); lfo(.11, .025, wg.gain); wind.connect(wl).connect(wg).connect(g);
     for (const [f, v] of [[55, .03], [82.4, .015]]) { const o = osc('sine', f), og = gain(v); lfo(.04, .008, og.gain); o.connect(og).connect(g); }
   }
+  { // Fjord to Summit: mountain wind high in the room, slow water lapping low
+    const g = bed('norseman');
+    const wind = noise(), wl = filt('lowpass', 520, .7), wg = gain(.045); lfo(.05, 220, wl.frequency); lfo(.09, .02, wg.gain); wind.connect(wl).connect(wg).connect(g);
+    const lap = noise(), ll = filt('lowpass', 180, 1.2), lg = gain(.03); lfo(.23, .02, lg.gain); lap.connect(ll).connect(lg).connect(g);
+  }
   const crackle = setInterval(() => {
     if (ctx.state !== 'running' || active !== 'nor3' || Math.random() < .45) return;
     const t = now() + Math.random() * .2, h = noise(.05), bp = filt('bandpass', 1800 + Math.random() * 2600, 2), e = gain(0);
@@ -117,7 +122,7 @@ export function createRoomSound(ctx, out) {
   }, 280);
 
   return {
-    set(id) {                                                         // id: 'bio' | 'horror' | 'alien' | 'zombie' | 'beast' | 'breitling' | 'nor3' | null
+    set(id) {                                                         // id: 'bio' | 'horror' | 'alien' | 'zombie' | 'beast' | 'breitling' | 'nor3' | 'norseman' | null
       if (id === active) return;
       active = id;
       for (const [k, g] of Object.entries(beds)) g.gain.setTargetAtTime(k === id ? 1 : 0, now(), .8);

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "norseman-training",
+  "status": "independent-concept",
+  "as_of": "2026-10-17",
+  "rule": "Only lines below with cls P are shown as fact. Anything else in the room is KONA.m interpretation and is labelled I in its card. No official logo, mark, name styling or photography is used.",
+  "sources": {
+    "wikipedia": "https://en.wikipedia.org/wiki/Norseman_triathlon",
+    "slowtwitch-2025": "https://www.slowtwitch.com/triathlon/norseman-2025-all-you-need-to-know-about-the-worlds-toughest-triathlon/",
+    "nxtri-2024": "https://nxtri.com/2024/07/30/its-norseman-race-week"
+  },
+  "facts": {
+    "start": { "line": "The race starts with a jump from a car ferry into the Hardangerfjord, then a swim to land at Eidfjord.", "sources": ["wikipedia", "slowtwitch-2025", "nxtri-2024"] },
+    "swim": { "line": "Swim 3.8 km.", "value_km": 3.8, "sources": ["nxtri-2024", "slowtwitch-2025"] },
+    "water": { "line": "Race-day water has been between 55 °F and 62 °F (about 13–17 °C) in recent years.", "sources": ["slowtwitch-2025"] },
+    "bike": { "line": "Bike 180 km. The first 40 km climb, to about 1,200 m above sea level.", "value_km": 180, "sources": ["wikipedia", "slowtwitch-2025"] },
+    "bike_climbing": { "line": "Total bike climbing is reported differently by different sources (from about 3,000 m to more than 10,000 ft); the room does not pick one number.", "sources": ["slowtwitch-2025"] },
+    "t2": { "line": "Transition 2 is at Austbygde, about 190 m above sea level.", "value_m": 190, "sources": ["wikipedia", "slowtwitch-2025"] },
+    "run": { "line": "Run 42.2 km. Roughly the first 25 km are flat, to Rjukan; the rest climbs toward Gaustatoppen.", "value_km": 42.2, "sources": ["wikipedia", "slowtwitch-2025"] },
+    "summit": { "line": "Gaustatoppen stands about 1,880 m above sea level.", "value_m": 1880, "sources": ["wikipedia"] },
+    "cut": { "line": "The first 160 athletes to reach the 37 km point are sent up the mountain; the rest finish the same distance on a lower course.", "value_km": 37, "sources": ["nxtri-2024", "slowtwitch-2025"] },
+    "shirts": { "line": "Summit finishers receive a black finisher top; finishers on the lower course receive a white one.", "sources": ["wikipedia", "nxtri-2024", "slowtwitch-2025"] },
+    "crew": { "line": "Athletes must bring their own support crew; the crew also goes up the final climb with them.", "sources": ["wikipedia", "slowtwitch-2025"] },
+    "backpack": { "line": "On the final climb athletes carry a backpack with emergency food and clothing.", "sources": ["wikipedia"] },
+    "field": { "line": "First held in 2003 with 21 starters; today about 250–300 athletes start.", "sources": ["wikipedia", "slowtwitch-2025"] }
+  },
+  "profile": {
+    "rule": "Anchor points are the sourced values above. The line between anchors, the plateau shape and the horizontal spacing are KONA.m interpretation, not GPS data, and not to scale.",
+    "anchors": [
+      { "leg": "swim", "km": 0, "m": 0, "label": "FERRY JUMP", "fact": "start" },
+      { "leg": "swim", "km": 3.8, "m": 0, "label": "T1 · EIDFJORD", "fact": "swim" },
+      { "leg": "bike", "km": 40, "m": 1200, "label": "≈1,200 M AFTER 40 KM", "fact": "bike" },
+      { "leg": "bike", "km": 180, "m": 190, "label": "T2 · AUSTBYGDE ≈190 M", "fact": "t2" },
+      { "leg": "run", "km": 25, "m": 190, "label": "≈25 KM · THE CLIMB BEGINS", "fact": "run" },
+      { "leg": "run", "km": 37, "m": null, "label": "37 KM · FIRST 160 GO UP", "fact": "cut" },
+      { "leg": "run", "km": 42.2, "m": 1880, "label": "GAUSTATOPPEN ≈1,880 M", "fact": "summit" }
+    ]
+  }
+}

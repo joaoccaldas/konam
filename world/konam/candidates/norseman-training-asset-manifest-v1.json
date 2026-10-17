@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "room_id": "norseman-training",
+  "policy": "reuse-first",
+  "assets": [
+    {
+      "asset_id": "road-triathlon-bike-study",
+      "kind": "bike",
+      "decision": "REUSE",
+      "runtime_ref": "assets/atlas/studio-wing-road/bike.glb",
+      "source_ref": "museum/atlas/bikes.json",
+      "bytes": 171712,
+      "why": "Unbranded KONA.m atlas type (wing frame, road triathlon) fits a climbing course without claiming any athlete's or brand's bike; instanced twice with room finishes.",
+      "rights": "original-kona-m",
+      "lifecycle": "approved"
+    },
+    {
+      "asset_id": "curved-treadmill",
+      "kind": "training-equipment",
+      "decision": "REUSE",
+      "runtime_ref": "assets/rooms/beast-cave/hf-curved-treadmill.glb",
+      "source_ref": "world/konam/candidates/beast-cave-asset-manifest-v1.json",
+      "bytes": 483512,
+      "rights": "generated-unbranded (Beast Cave provenance)",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "drum-fan",
+      "kind": "training-equipment",
+      "decision": "REUSE",
+      "runtime_ref": "assets/rooms/beast-cave/hf-drum-fan.glb",
+      "source_ref": "world/konam/candidates/beast-cave-asset-manifest-v1.json",
+      "bytes": 881120,
+      "mobile": "skipped (lite)",
+      "rights": "generated-unbranded (Beast Cave provenance)",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "decor-instancing",
+      "kind": "engine",
+      "decision": "REUSE",
+      "source_ref": "web/src/engine/decor.js",
+      "note": "Unchanged (pinned by the recovery lock). The room loads its bike item with lite=false because no bike-lite exists."
+    },
+    {
+      "asset_id": "water-shader-and-plunge",
+      "kind": "procedural",
+      "decision": "ADAPT",
+      "source_ref": "web/src/nor3-winter.js",
+      "note": "NOR // 3 plunge water re-cut as a world-space shader for the fjord trough and the counter-current pool."
+    },
+    {
+      "asset_id": "trainer-frame-riser-towel-bottles-rock-floor",
+      "kind": "procedural",
+      "decision": "ADAPT",
+      "source_ref": "web/src/nor3-winter.js",
+      "note": "Trainer frame at the rear axle, front riser, bottles, rock generator, slate floor and suit extrusion follow the NOR // 3 builders."
+    },
+    {
+      "asset_id": "mist-and-light-shaft",
+      "kind": "procedural",
+      "decision": "REUSE",
+      "source_ref": "web/src/roomkit.js (motes, lightShaft)"
+    },
+    {
+      "asset_id": "local-reflections",
+      "kind": "engine",
+      "decision": "REUSE",
+      "source_ref": "web/src/engine/env-capture.js"
+    },
+    {
+      "asset_id": "profile-spine",
+      "kind": "installation",
+      "decision": "NEW",
+      "source": "procedural-three",
+      "why_not_reuse": "No existing course-profile object; the NOR fjord relief is decorative ridges, not a profile with sourced anchors.",
+      "tris_estimate": "~6k",
+      "rights": "original; anchor heights sourced",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "summit-backdrop",
+      "kind": "backdrop-image",
+      "decision": "NEW",
+      "source": "procedural-canvas",
+      "why_not_reuse": "The NOR winter plate is a Norway-to-Kona composite; this room needs a mountain dawn and must not use photography.",
+      "rights": "original, painted in code",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "ferry-ramp-pool-gear-crew-tops-week",
+      "kind": "installation",
+      "decision": "COMPOSE",
+      "source": "procedural-three",
+      "rights": "original, unbranded",
+      "lifecycle": "candidate"
+    }
+  ],
+  "constraints": {
+    "official_logo": false,
+    "official_marks": false,
+    "race_photography": false,
+    "athlete_likeness": false
+  },
+  "new_glb_files": 0
+}

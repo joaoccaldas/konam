@@ -30,8 +30,15 @@ const rooms = [
     decor:'world/konam/rooms/breitling-kona.decor.json',
     refPrefix:'bk',
     compare:['hero','monument','low','vitrine','window','clock','exploded2']
+  },
+  {
+    id:'norseman-training',
+    package:'world/konam/rooms/norseman-training.room.json',
+    decor:'world/konam/rooms/norseman-training.decor.json',
+    refPrefix:'ns',
+    compare:['hero','spine','fjord','climb','gear','run','summit','profile']
   }
-];
+].filter(r=>!process.env.ROOMS||process.env.ROOMS.split(',').includes(r.id));
 
 const configs = [
   {id:'desktop', width:1440,height:900,mobile:false,budget:'desktop'},

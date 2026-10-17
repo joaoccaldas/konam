@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "room_id": "norseman-training",
+  "variant": "norseman-training",
+  "runtime": "web/src/norseman-training.js",
+  "coordinates": "host world metres; at = [x, y, z, yawDeg, scale?]; bikes face +z at yaw 0 (yaw 90 = toward the summit wall, +x)",
+  "items": [
+    {
+      "id": "climb-bikes",
+      "kind": "bike",
+      "ref": "studio-wing-road",
+      "at": [
+        [
+          17.2,
+          0.1,
+          -14.7,
+          90
+        ],
+        [
+          22.7,
+          0.24,
+          -15.9,
+          90
+        ]
+      ],
+      "rights_ref": "museum/atlas/bikes.json",
+      "note": "Unbranded KONA.m atlas type study (wing frame, road triathlon). Placement 0 is on the climbing trainer, placement 1 on the work stand. Not any athlete's or brand's bike. No bike-lite exists for this key, so the room loads the 172 KB full study on every device (see useAssets)."
+    },
+    {
+      "id": "climb-fan",
+      "kind": "glb",
+      "ref": "assets/rooms/beast-cave/hf-drum-fan.glb",
+      "height": 0.55,
+      "tint": 0.5,
+      "lite": "skip",
+      "at": [
+        [
+          18.75,
+          0.08,
+          -14.7,
+          270
+        ]
+      ],
+      "rights_ref": "world/konam/candidates/beast-cave-asset-manifest-v1.json"
+    },
+    {
+      "id": "hill-treadmill",
+      "kind": "glb",
+      "ref": "assets/rooms/beast-cave/hf-curved-treadmill.glb",
+      "height": 1.45,
+      "tint": 0.85,
+      "at": [
+        [
+          29.6,
+          0.0,
+          -14.9,
+          90
+        ]
+      ],
+      "rights_ref": "world/konam/candidates/beast-cave-asset-manifest-v1.json",
+      "note": "Reused from the Beast Cave run station, turned as the Beast Cave turns it (a quarter turn) so the runner faces the summit."
+    }
+  ],
+  "shots": {
+    "hero": [
+      9.4,
+      -7.6,
+      0.0,
+      30.0,
+      1.5,
+      -11.6
+    ],
+    "spine": [
+      16.0,
+      -8.4,
+      0.1,
+      33.4,
+      1.4,
+      -11.6
+    ],
+    "fjord": [
+      11.6,
+      -8.4,
+      -0.1,
+      11.0,
+      0.3,
+      -15.2
+    ],
+    "climb": [
+      19.6,
+      -11.4,
+      -0.3,
+      17.2,
+      0.8,
+      -14.7
+    ],
+    "gear": [
+      17.4,
+      -9.0,
+      -0.1,
+      18.0,
+      1.5,
+      -4.0
+    ],
+    "run": [
+      26.4,
+      -12.6,
+      -0.2,
+      29.6,
+      1.0,
+      -15.0
+    ],
+    "summit": [
+      27.6,
+      -8.6,
+      0.0,
+      35.3,
+      2.2,
+      -11.0
+    ],
+    "profile": [
+      21.0,
+      -4.7,
+      0.3,
+      21.0,
+      1.0,
+      -11.6
+    ]
+  }
+}
