@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-17T07:54:25.310Z",
+  "captured_at": "2026-10-17T13:32:07.690Z",
   "renderer": "headless Chrome, ANGLE Metal (hardware)",
   "configs": [
     {
@@ -8,11 +8,11 @@
         1440,
         900
       ],
-      "fps_mean": 23.6,
-      "scene_calls": 1229,
-      "scene_triangles": 5637336,
-      "room_meshes": 85,
-      "room_triangles": 70712,
+      "fps_mean": 29.5,
+      "scene_calls": 1452,
+      "scene_triangles": 6592720,
+      "room_meshes": 99,
+      "room_triangles": 77442,
       "dpr": 1,
       "budget": {
         "calls": 190,
@@ -27,11 +27,11 @@
         390,
         844
       ],
-      "fps_mean": 60.4,
-      "scene_calls": 70,
-      "scene_triangles": 43450,
-      "room_meshes": 83,
-      "room_triangles": 54582,
+      "fps_mean": 60.1,
+      "scene_calls": 95,
+      "scene_triangles": 50912,
+      "room_meshes": 95,
+      "room_triangles": 60092,
       "dpr": 1,
       "budget": {
         "calls": 110,
@@ -47,10 +47,10 @@
         390
       ],
       "fps_mean": 60.1,
-      "scene_calls": 160,
-      "scene_triangles": 57720,
-      "room_meshes": 83,
-      "room_triangles": 54582,
+      "scene_calls": 168,
+      "scene_triangles": 66000,
+      "room_meshes": 95,
+      "room_triangles": 60092,
       "dpr": 1,
       "budget": {
         "calls": 110,

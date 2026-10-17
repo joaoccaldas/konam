@@ -14,7 +14,7 @@
     "review_route": "?reviewRoom=norseman-training"
   },
   "story": {
-    "concept": "Prepare for the fjord and the mountain: cold water, long climbs and a run that ends uphill, laid out either side of a stone ridge that is the course profile, from a ferry ramp to a summit.",
+    "concept": "A timber-and-concrete training hall between two real places: the head of the Hardangerfjord through the south glass, Gaustatoppen through the east. A cold lap pool runs out to the fjord's waterline; the course profile, sculpted in stone, climbs to a summit against the mountain.",
     "loop": "cold → climb → climb again → summit → recover → repeat",
     "editorial_status": "original-copy",
     "facts": "pitch/norseman-training/course-facts-v1.json"
@@ -24,17 +24,20 @@
     "footprint": "review footprint (BROOM)",
     "zones": [
       "threshold",
-      "ferry-ramp-and-fjord",
-      "swim-cold",
-      "profile-spine",
+      "fjord-glass-and-cold-pool",
+      "ferry-ramp",
+      "profile-ridge",
       "bike-climb",
-      "crew-and-backpack",
       "routine-week",
-      "run-hill",
+      "crew-and-backpack",
+      "run-hill-facing-the-mountain",
       "finish-tops",
-      "summit"
+      "mountain-glass",
+      "skylight"
     ],
-    "decor": "world/konam/rooms/norseman-training.decor.json"
+    "decor": "world/konam/rooms/norseman-training.decor.json",
+    "height_m": 8.4,
+    "windows": "engine/terrain-portal.js: real terrain at 1:10 (Eidfjord south, Gaustatoppen east), rendered as a portal pass"
   },
   "assets": {
     "manifest": "world/konam/candidates/norseman-training-asset-manifest-v1.json",
@@ -103,7 +106,7 @@
   "provenance": {
     "concept": "KONA.m editorial concept, independent of the race",
     "facts": "pitch/norseman-training/course-facts-v1.json",
-    "backdrop": "painted in code in web/src/norseman-training.js (no photograph or map)",
+    "backdrop": "real terrain heights (tools/build_norseman_terrain.py; Norway terrain data © Kartverket, CC BY 4.0), shaded in code; no imagery",
     "profile": "anchor heights sourced; shape between anchors interpreted"
   },
   "rights": {

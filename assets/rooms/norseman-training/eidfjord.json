@@ -1,0 +1,29 @@
+{
+  "schema": "konam.norseman-terrain/v1",
+  "id": "eidfjord",
+  "label": "Eidfjord, head of the Hardangerfjord",
+  "bbox": {
+    "west": 6.78,
+    "east": 7.22,
+    "south": 60.33,
+    "north": 60.53
+  },
+  "zoom": 12,
+  "grid": 257,
+  "width_m": 24171,
+  "height_m": 22115,
+  "anchor": {
+    "lat": 60.4665,
+    "lon": 7.0712
+  },
+  "anchor_uv": [
+    0.66182,
+    0.3175
+  ],
+  "min_m": 0.0,
+  "max_m": 1643.7,
+  "encoding": "uint16 LE decimetres, row-major, north row first",
+  "attribution": "Elevation: Terrain Tiles (Mapzen/Tilezen, AWS Open Data). Norway terrain data \u00a9 Kartverket, CC BY 4.0.",
+  "source": "https://registry.opendata.aws/terrain-tiles/",
+  "built_by": "tools/build_norseman_terrain.py"
+}

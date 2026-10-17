@@ -13,8 +13,8 @@ const pkg = JSON.parse(fs.readFileSync(ROOT + '/world/konam/rooms/norseman-train
 const browser = await puppeteer.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', protocolTimeout: 600000, args: ['--enable-webgl', '--ignore-gpu-blocklist', '--use-angle=metal'] });
 const configs = [
   { id: 'desktop', width: 1440, height: 900, mobile: false, budget: 'desktop', shots: Object.keys(decor.shots) },
-  { id: 'phone390', width: 390, height: 844, mobile: true, budget: 'mobile', shots: ['hero', 'spine', 'climb', 'summit'] },
-  { id: 'landscape', width: 844, height: 390, mobile: true, budget: 'mobile', shots: ['hero', 'run'] },
+  { id: 'phone390', width: 390, height: 844, mobile: true, budget: 'mobile', shots: ['hero', 'fjord', 'mountain', 'spine'] },
+  { id: 'landscape', width: 844, height: 390, mobile: true, budget: 'mobile', shots: ['hero', 'pool'] },
 ].filter(c => !only.length || only.includes(c.id));
 const summary = [];
 for (const cfg of configs) {
@@ -29,6 +29,7 @@ for (const cfg of configs) {
   await page.evaluate(() => window.__museumGo('beast'));
   await page.waitForFunction(() => window.__museum?.beast?.group?.visible === true, { timeout: 180000 });
   await page.waitForFunction(() => Boolean(window.__museum?.beast?.bikeSpot?.bike), { timeout: 90000 }).catch(() => errors.push('bike not placed in 90 s'));
+  await page.waitForFunction(() => window.__museum?.beast?.terrainReady === true, { timeout: 120000 }).catch(() => errors.push('terrain not ready in 120 s'));
   await new Promise(r => setTimeout(r, 4000));
   await page.evaluate(() => { document.getElementById('cardClose')?.click(); [...document.querySelectorAll('button')].filter(b => /^Got it$/.test(b.textContent.trim())).forEach(b => b.click()); document.querySelectorAll('.coach,.toast').forEach(e => e.style.display = 'none'); });
   const shot = async name => { const s = decor.shots[name];

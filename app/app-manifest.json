@@ -1,5 +1,5 @@
 {
- "version": "3f4304446a8a",
+ "version": "8904ec1030dd",
  "core": [
   "index.html",
   "about.html",
@@ -83,7 +83,7 @@
   "app/collectible-stage.js": "ar4iHwPCgujYnEvlz4YPRzkxL5iS/Zz1Mf8wulX3L7k=",
   "integrations/ironman-races-2016-2026.json": "P7vUgV+atNEkd1fjhGBhii8UZFqiskskE6hN0bbVE+Q=",
   "app/museum-data.js": "rS1lCjadSFqSMP5hPMitwCSOFrSqfv8JUE6UZ0JN+60=",
-  "app/hall.js": "UbQ3UEtpDQ9rGw7M443wbEk2xFpdnMFSgP9CPR5Phho=",
+  "app/hall.js": "JrPaB9gJ970bj6Co3BLCheSU/OfqK2huN8lsEEWHKFM=",
   "app/studio.js": "Z2DFKSE7wYrOHnFzX3HcTlEVC83Y0SqqvJNXrCHgH5I=",
   "app/standalone-access.js": "cVI6YY7atOLkWX0x9IDlUg46ylQer3XmtS/GxtYOKDA=",
   "app/studio-catalog.js": "Xo4SaU/jvKZzOPxUlD0xTJ8pdJntzMSV8m1QhQP0/9w=",
@@ -264,6 +264,8 @@
   "assets/rooms/beast-cave/hf-trainer.glb": "UwHa8QhI6kcXL9eJROGzIfFdSDyFc1WpNSZZi7omVk8=",
   "assets/rooms/nor3-winter/kona-winter-plate-1024.webp": "zKc0SX0W2kB7IHEtHph3zdtZpjL6Pksy1WXMzMzr1no=",
   "assets/rooms/nor3-winter/kona-winter-plate-2048.webp": "i91bvukRsqdyHjWMNf7lIBLjgd0ZBii6tY27IubR2pY=",
+  "assets/rooms/norseman-training/eidfjord.json": "00II38eCMOXngKHTcboBaxlBtDM2oOmXvYXrhcJV4Go=",
+  "assets/rooms/norseman-training/gaustatoppen.json": "DUzxgyaKAVe/T5YKieLiCsLmZ22gHy1CSwF2EPuq5+I=",
   "assets/share/collection.jpg": "W6lRq4vdhYr3rNejeGLQnYbIlPXgnmvRBkAD6wN8+vo=",
   "assets/share/konam.png": "F8UvxFJ1beRZ1VXDtciBTpmcDKbeDwv1niH675TWHlE=",
   "assets/share/museum.jpg": "MR9MD9E1O+efqEOc6xucgpUDOD9++PbpLjoyrd0S2PU=",

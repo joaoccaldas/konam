@@ -36,7 +36,7 @@ const rooms = [
     package:'world/konam/rooms/norseman-training.room.json',
     decor:'world/konam/rooms/norseman-training.decor.json',
     refPrefix:'ns',
-    compare:['hero','spine','fjord','climb','gear','run','summit','profile']
+    compare:['hero','fjord','pool','mountain','spine','climb','gear','run','summit','ceiling']
   }
 ].filter(r=>!process.env.ROOMS||process.env.ROOMS.split(',').includes(r.id));
 

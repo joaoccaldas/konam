@@ -37,3 +37,15 @@ test('room assets reuse existing files and carry rights references', () => {
   assert.equal(manifest.new_glb_files, 0);
   assert.equal(manifest.constraints.official_logo, false);
 });
+
+test('window terrain is real elevation data with attribution, and the portal stays inside the host renderer', () => {
+  for (const id of ['eidfjord', 'gaustatoppen']) {
+    const meta = json(`assets/rooms/norseman-training/${id}.json`);
+    assert.match(meta.attribution, /Kartverket, CC BY 4\.0/);
+    const bytes = fs.statSync(new URL(`assets/rooms/norseman-training/${id}.bin`, root)).size;
+    assert.equal(bytes, meta.grid * meta.grid * 2, id);
+  }
+  const portal = read('web/src/engine/terrain-portal.js');
+  assert.doesNotMatch(portal, /new\s+THREE\.(WebGLRenderer|PerspectiveCamera)\s*\(/);
+  assert.match(read('web/src/norseman-training.js'), /KARTVERKET, CC BY 4\.0/);
+});

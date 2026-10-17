@@ -43,13 +43,6 @@
       "note": "Unchanged (pinned by the recovery lock). The room loads its bike item with lite=false because no bike-lite exists."
     },
     {
-      "asset_id": "water-shader-and-plunge",
-      "kind": "procedural",
-      "decision": "ADAPT",
-      "source_ref": "web/src/nor3-winter.js",
-      "note": "NOR // 3 plunge water re-cut as a world-space shader for the fjord trough and the counter-current pool."
-    },
-    {
       "asset_id": "trainer-frame-riser-towel-bottles-rock-floor",
       "kind": "procedural",
       "decision": "ADAPT",
@@ -69,29 +62,57 @@
       "source_ref": "web/src/engine/env-capture.js"
     },
     {
-      "asset_id": "profile-spine",
+      "asset_id": "terrain-eidfjord",
+      "kind": "terrain-data",
+      "decision": "NEW",
+      "runtime_ref": [
+        "assets/rooms/norseman-training/eidfjord.bin",
+        "assets/rooms/norseman-training/eidfjord.json"
+      ],
+      "bytes": 132098,
+      "generator": "tools/build_norseman_terrain.py",
+      "source": "Terrain Tiles (Mapzen/Tilezen, AWS Open Data) z12, 257×257 grid",
+      "rights": "Norway terrain data © Kartverket, CC BY 4.0 — attribution shown in the room and its cards",
+      "why_not_reuse": "No Norwegian terrain existed in the estate; the St. George pipeline was reused without its satellite imagery.",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "terrain-gaustatoppen",
+      "kind": "terrain-data",
+      "decision": "NEW",
+      "runtime_ref": [
+        "assets/rooms/norseman-training/gaustatoppen.bin",
+        "assets/rooms/norseman-training/gaustatoppen.json"
+      ],
+      "bytes": 132098,
+      "generator": "tools/build_norseman_terrain.py",
+      "source": "Terrain Tiles (Mapzen/Tilezen, AWS Open Data) z12, 257×257 grid",
+      "rights": "Norway terrain data © Kartverket, CC BY 4.0",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "terrain-portal",
+      "kind": "engine-primitive",
+      "decision": "NEW",
+      "source_ref": "web/src/engine/terrain-portal.js",
+      "why_not_reuse": "Opening the walls would expose neighbouring host rooms (Breitling to the south, Secret Collection to the east). A Reflector-style portal pass shows a separate landscape scene with exact parallax. Reusable by any room that needs a view; adapts bellagio/world-runtime/geo-terrain.js ideas.",
+      "lifecycle": "candidate"
+    },
+    {
+      "asset_id": "profile-ridge",
       "kind": "installation",
       "decision": "NEW",
       "source": "procedural-three",
-      "why_not_reuse": "No existing course-profile object; the NOR fjord relief is decorative ridges, not a profile with sourced anchors.",
-      "tris_estimate": "~6k",
+      "why_not_reuse": "No course-profile object existed; the NOR fjord relief is decorative ridges, not a profile with sourced anchors.",
       "rights": "original; anchor heights sourced",
       "lifecycle": "candidate"
     },
     {
-      "asset_id": "summit-backdrop",
-      "kind": "backdrop-image",
-      "decision": "NEW",
-      "source": "procedural-canvas",
-      "why_not_reuse": "The NOR winter plate is a Norway-to-Kona composite; this room needs a mountain dawn and must not use photography.",
-      "rights": "original, painted in code",
-      "lifecycle": "candidate"
-    },
-    {
-      "asset_id": "ferry-ramp-pool-gear-crew-tops-week",
+      "asset_id": "hall-pool-gear-crew-tops-week",
       "kind": "installation",
       "decision": "COMPOSE",
       "source": "procedural-three",
+      "note": "Timber/concrete hall, cold lap pool with caustics, ferry ramp, gear wall, crew table, routine board, finisher tops. Pool water and floor approaches adapted from NOR // 3.",
       "rights": "original, unbranded",
       "lifecycle": "candidate"
     }
@@ -100,7 +121,8 @@
     "official_logo": false,
     "official_marks": false,
     "race_photography": false,
-    "athlete_likeness": false
+    "athlete_likeness": false,
+    "satellite_or_aerial_imagery": false
   },
   "new_glb_files": 0
 }

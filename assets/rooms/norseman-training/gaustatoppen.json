@@ -1,0 +1,29 @@
+{
+  "schema": "konam.norseman-terrain/v1",
+  "id": "gaustatoppen",
+  "label": "Gaustatoppen",
+  "bbox": {
+    "west": 8.43,
+    "east": 8.87,
+    "south": 59.75,
+    "north": 59.96
+  },
+  "zoom": 12,
+  "grid": 257,
+  "width_m": 24598,
+  "height_m": 23221,
+  "anchor": {
+    "lat": 59.8539,
+    "lon": 8.6489
+  },
+  "anchor_uv": [
+    0.4975,
+    0.50524
+  ],
+  "min_m": 190.7,
+  "max_m": 1857.6,
+  "encoding": "uint16 LE decimetres, row-major, north row first",
+  "attribution": "Elevation: Terrain Tiles (Mapzen/Tilezen, AWS Open Data). Norway terrain data \u00a9 Kartverket, CC BY 4.0.",
+  "source": "https://registry.opendata.aws/terrain-tiles/",
+  "built_by": "tools/build_norseman_terrain.py"
+}
