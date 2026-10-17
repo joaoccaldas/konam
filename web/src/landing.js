@@ -890,7 +890,7 @@ const pier = KY ? buildPier({ scene, data: KY, lettering, canvasTex, M, WYLD, FO
 // ------------------------------------------------------------------ Lava Night: the Halloween room by the entrance
 const hween = buildHalloween({ scene, canvasTex, lettering, lightPool, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x0 });
 hall.add(hween.sign);
-const reviewCtx = { scene, renderer, renderCard: m => renderCard(m), canvasTex, lettering, lightPool, contactShadow, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 };
+const reviewCtx = { scene, renderer, focusRoom: ({ x, z, target }) => { tourEnd(false); closeCard(); route(new THREE.Vector3(x, 0, z), new THREE.Vector3(target.x, target.y, target.z), null, true); }, renderCard: m => renderCard(m), canvasTex, lettering, lightPool, contactShadow, basaltTex, FONT, SERIF, lite, coarse, pickables, obstacles, hallWallX: HALL.x1 };
 const beast = BEAST_CAVE_REVIEW ? (NOR3_REVIEW ? buildNor3Winter(reviewCtx) : BREITLING_REVIEW ? buildBreitlingKona(reviewCtx) : NORSEMAN_REVIEW ? buildNorsemanTraining(reviewCtx) : buildBeastCave(reviewCtx)) : null;
 if (beast) hall.add(beast.sign);
 const sanctuary = buildSanctuary({ scene, lettering, lightPool, FONT, SERIF, lite, coarse, pickables, obstacles });
@@ -1137,19 +1137,19 @@ function teleport(end) {
   const land = () => {
     P.x = end.x; P.z = end.z; P.vx = P.vz = 0;
     P.y = atlas.floorY(P.x, P.z) ?? galleryFloorY(P.x, P.z);
-    if (path?.face) { const fx = path.face.x - P.x, fz = path.face.z - P.z; P.yaw = Math.atan2(-fx, -fz); }
+    if (path?.face) { const fx = path.face.x - P.x, fz = path.face.z - P.z; P.yaw = Math.atan2(-fx, -fz); if (path.direct) P.pitch = Math.atan2(path.face.y - (P.y + EYE), Math.hypot(fx, fz)); }
     if (path) path.splice(0, path.length - 1);                       // arrive: the card opens as soon as we face the piece
   };
   if (reduce || !fader) { land(); return; }
   fader.classList.add('on');
   setTimeout(() => { land(); requestAnimationFrame(() => requestAnimationFrame(() => fader.classList.remove('on'))); }, 190);
 }
-function route(to, face, piece) {                                   // aisle first, then the doorway — never a diagonal through the plinths
+function route(to, face, piece, direct = false) {                                   // aisle first, then the doorway — never a diagonal through the plinths
   const a = roomOf(P.x, P.z), b = roomOf(to.x, to.z);
   const pts = planRoute({ x: P.x, z: P.z, to, fromRoom: a, toRoom: b, doors: DOORZ, east: EAST_DOORS, links: ROOM_LINKS, pierIn: PIER_IN, naveLane: NAVE_LANE });
-  path = pts; path.stuck = 0; path.face = face; path.piece = piece || null;
+  path = pts; path.direct = direct; path.stuck = 0; path.face = face; path.piece = piece || null;
   const end = pts[pts.length - 1], far = end && (roomOf(end.x, end.z) !== a || Math.hypot(end.x - P.x, end.z - P.z) > 9);
-  if (far && profile.get().travel !== 'walk') teleport(end);
+  if (direct || (far && profile.get().travel !== 'walk')) teleport(end);
 }
 function visit(p) {
   if (current && current !== p && current.exT > 0) setExploded(current, false);
@@ -1304,7 +1304,7 @@ function visitBeast() {
   if (!beast) return;
   if (current && current.exT > 0) setExploded(current, false);
   closeCard(); champ = null; loadBeastBike();
-  route(beast.bikeSpot.view, beast.bikeSpot.face, null); path.beast = true;
+  route(beast.bikeSpot.view, beast.bikeSpot.face, null, NORSEMAN_REVIEW); path.beast = true;
   document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x.dataset.room === 'beast'));
 }
 let riding = null;

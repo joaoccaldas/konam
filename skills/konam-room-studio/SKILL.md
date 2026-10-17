@@ -261,3 +261,7 @@ NOR // 3 is the current reference for proving cinematic quality under the shared
 Beast Cave is the second acceptance test: it must feel radically different while reusing the same host architecture.
 
 If Beast Cave requires its own renderer, camera framework, UI shell, storage, progression, bike loader, or inspection engine, stop and refactor the shared system instead.
+
+## Landscape and viewpoint review
+
+For rooms with terrain windows or named camera views, read [the Norseman review](../../docs/NORSEMAN_ART_DIRECTION_2026-10-17.md). It records stale service-worker evidence, obstacle-stalled view actions and a mesh-count/draw-call measurement error. Verify the loaded revision, actual arrival and complete rendering cost before promotion.

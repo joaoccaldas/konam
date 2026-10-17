@@ -11,7 +11,7 @@
 // decimetre heights on a grid, shaded here by altitude, slope and noise — no photograph of any place.
 import * as THREE from 'three';
 
-export function createTerrainPortal({ renderer, lite = false, far = 6000, scale = lite ? .5 : .8 }) {
+export function createTerrainPortal({ renderer, lite = false, far = 6000, scale = lite ? .85 : .8 }) {
   const scene = new THREE.Scene();
   const rt = new THREE.WebGLRenderTarget(4, 4, { type: THREE.HalfFloatType, samples: lite ? 0 : 4 });
   const size = new THREE.Vector2(), res = { value: new THREE.Vector2(1, 1) };
@@ -132,8 +132,8 @@ export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline
       { float slope = 1. - clamp(vWN.y, 0., 1.);                     // 0 flat … 1 vertical
         float n1 = tf(vWP.xz * .045), n2 = tf(vWP.xz * .6), n3 = tf(vWP.xz * 3.1);
         float e = vE + (n1 - .5) * 160.;
-        vec3 forest = mix(vec3(.055,.082,.05), vec3(.10,.13,.07), n2);
-        vec3 heath = mix(vec3(.11,.12,.065), vec3(.17,.16,.09), n2);
+        vec3 forest = mix(vec3(.025,.055,.049), vec3(.06,.10,.079), n2);
+        vec3 heath = mix(vec3(.075,.095,.07), vec3(.13,.14,.10), n2);
         vec3 lichen = mix(vec3(.22,.22,.17), vec3(.30,.29,.23), n3);
         vec3 rock = mix(vec3(.17,.17,.18), vec3(.30,.29,.28), n2 * .7 + n3 * .3);
         vec3 snow = vec3(.86,.89,.93);

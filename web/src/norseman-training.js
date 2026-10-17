@@ -43,7 +43,7 @@ const LEGS = {
   bike: { x0: 12.6, x1: 25.6, km: 180, pts: [[0, 0], [40, 1200], [58, 1080], [78, 1190], [100, 1040], [122, 1150], [142, 960], [160, 610], [180, 190]] },
   run: { x0: 26.6, x1: 33.3, km: 42.2, pts: [[0, 190], [25, 190], [31, 470], [37, 1010], [40, 1380], [41.5, 1800], [42.2, 1880]], back: 1.6 },
 };
-const SUMMIT_M = facts.facts.summit.value_m, VSCALE = 2.6 / SUMMIT_M, BASE = .14;    // 1,880 m → 2.6 m of stone
+const SUMMIT_M = facts.facts.summit.value_m, VSCALE = 1.65 / SUMMIT_M, BASE = .10;    // 1,880 m → 1.65 m of stone
 const yOf = m => BASE + m * VSCALE;
 const xOf = (leg, km) => LEGS[leg].x0 + (LEGS[leg].x1 - LEGS[leg].x0) * km / LEGS[leg].km;
 const heightAt = (leg, km) => { const p = LEGS[leg].pts; for (let i = 1; i < p.length; i++) if (km <= p[i][0]) { const [k0, m0] = p[i - 1], [k1, m1] = p[i]; return m0 + (m1 - m0) * (km - k0) / Math.max(1e-6, k1 - k0); } return p[p.length - 1][1]; };
@@ -142,7 +142,7 @@ export function buildNorsemanTraining(ctx) {
   for (const [w, d, x, z] of [[RW, R.z0 - SKY.z0, CX, (R.z0 + SKY.z0) / 2], [RW, SKY.z1 - R.z1, CX, (SKY.z1 + R.z1) / 2], [SKY.x0 - R.x0, SKY.z0 - SKY.z1, (R.x0 + SKY.x0) / 2, SZ], [R.x1 - SKY.x1, SKY.z0 - SKY.z1, (SKY.x1 + R.x1) / 2, SZ]])
     slab(ceilMat, w, .2, d, x, H + .1, z);
   // glulam beams across the hall every 3.2 m, a light line under each; the skylight runs between them over the ridge
-  for (let x = 9.4; x < R.x1 - .5; x += 3.2) { box(glulam, .24, .78, RD, x, H - .39, CZ); box(ledWarm, .05, .015, RD - 1.2, x, H - .785, CZ); }
+  for (let x = 9.4; x < R.x1 - .5; x += 3.2) { box(glulam, .18, .48, RD, x, H - .24, CZ); box(ledWarm, .035, .015, RD - 1.2, x, H - .485, CZ); }
   box(glulam, RW, .5, .2, CX, H - .25, SKY.z0 + .1); box(glulam, RW, .5, .2, CX, H - .25, SKY.z1 - .1);
   // north wall: vertical oak slats, full height, open where the wall carries kit
   const OPEN = [[9.2, 13.0, 0, 3.6], [19.0, 23.2, 1.4, 3.9], [23.5, 26.3, 0, 3.2], [30.8, 33.9, .4, 3.3]];
@@ -165,8 +165,8 @@ export function buildNorsemanTraining(ctx) {
   const glass = E(new THREE.MeshPhysicalMaterial({ color: '#e8f0f4', roughness: .04, metalness: 0, transparent: true, opacity: .035, envMapIntensity: .5, depthWrite: false }));
   if (!lite) { put(glass, new THREE.PlaneGeometry(SOUTH.x1 - SOUTH.x0, H - .7), (SOUTH.x0 + SOUTH.x1) / 2, (H - .7) / 2, R.z1 + .06);
     put(glass, new THREE.PlaneGeometry(EAST.z1 - EAST.z0, H - .7), R.x1 - .06, (H - .7) / 2, (EAST.z0 + EAST.z1) / 2, 0, -Math.PI / 2, 0); }
-  for (let i = 0, n = 8; i <= n; i++) { const x = SOUTH.x0 + (SOUTH.x1 - SOUTH.x0) * i / n; box(glulam, .12, H - .7 - POOL.y, .26, x, (H - .7 + POOL.y) / 2, R.z1 + .1); }
-  for (let i = 0, n = 4; i <= n; i++) { const z = EAST.z0 + (EAST.z1 - EAST.z0) * i / n; box(glulam, .26, H - .7, .12, R.x1 - .1, (H - .7) / 2, z); }
+  for (let i = 0, n = 4; i <= n; i++) { const x = SOUTH.x0 + (SOUTH.x1 - SOUTH.x0) * i / n; box(glulam, .085, H - .7 - POOL.y, .18, x, (H - .7 + POOL.y) / 2, R.z1 + .1); }
+  for (let i = 0, n = 2; i <= n; i++) { const z = EAST.z0 + (EAST.z1 - EAST.z0) * i / n; box(glulam, .18, H - .7, .085, R.x1 - .1, (H - .7) / 2, z); }
   box(steel, SOUTH.x1 - SOUTH.x0, .06, .3, (SOUTH.x0 + SOUTH.x1) / 2, H - .73, R.z1 + .1); box(steel, .3, .06, EAST.z1 - EAST.z0, R.x1 - .1, H - .73, (EAST.z0 + EAST.z1) / 2);
   box(steel, .3, .06, EAST.z1 - EAST.z0, R.x1 - .1, .03, (EAST.z0 + EAST.z1) / 2);
   info([southWin, eastWin], { model: act => windowCard(act), eyebrow: 'THE WINDOWS', title: 'Two real places, one room.', sub: 'Eidfjord to the south · Gaustatoppen to the east', text: 'Real terrain heights, shaded in code.' });
@@ -232,7 +232,7 @@ export function buildNorsemanTraining(ctx) {
     for (let x = L.x0; x <= x1 + 1e-6; x += STEP * 4) crest.push(new THREE.Vector3(x, yOf(elevAt(leg, x)) + .012, SZ));
     crests.push(crest);
     for (let k = 0; k * LAYER < SUMMIT_M; k++) {
-      const top = (k + 1) * LAYER, depth = 1.5 - k * .046, mat = (k + 1) % 5 === 0 ? oak : k % 2 ? slate : slateLight;
+      const top = (k + 1) * LAYER, depth = .82 - k * .024, mat = (k + 1) % 5 === 0 ? oak : k % 2 ? slate : slateLight;
       let start = null;
       for (let x = L.x0; x <= x1 + STEP; x += STEP) {
         const on = x <= x1 && elevAt(leg, x) >= top;
@@ -240,13 +240,13 @@ export function buildNorsemanTraining(ctx) {
         if (!on && start !== null) { const len = x - start; if (len > .03) put(mat, new RoundedBoxGeometry(len, T - .004, depth, 1, .006), start + len / 2, BASE + k * T + T / 2, SZ); start = null; }
       }
     }
-    put(oak, new RoundedBoxGeometry(x1 - L.x0 + .1, BASE, 1.62, 1, .01), (L.x0 + x1) / 2, BASE / 2, SZ);   // oak plinth
+    put(oak, new RoundedBoxGeometry(x1 - L.x0 + .1, BASE, .90, 1, .01), (L.x0 + x1) / 2, BASE / 2, SZ);   // oak plinth
     const pick = new THREE.Mesh(new THREE.BoxGeometry(x1 - L.x0, 1.6, 1.5), new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false })); pick.position.set((L.x0 + x1) / 2, .8, SZ); group.add(pick);
     info(pick, { model: act => profileCard(leg, act), eyebrow: leg === 'bike' ? 'THE PROFILE · BIKE' : 'THE PROFILE · RUN', title: leg === 'bike' ? '180 km over the plateau.' : '42.2 km, then up.', sub: 'Anchors sourced · line between them interpreted', text: 'One slab per 100 m of height.' });
     obstacles.push({ box: [L.x0 - .15, x1 + .15, SZ - .85, SZ + .85] });
   }
   // a light line under the plinth lip, so the model floats a little
-  box(ledWarm, LEGS.run.x1 + LEGS.run.back - LEGS.bike.x0, .01, .01, (LEGS.bike.x0 + LEGS.run.x1 + LEGS.run.back) / 2, .012, SZ + .815);
+  box(ledWarm, LEGS.run.x1 + LEGS.run.back - LEGS.bike.x0, .01, .01, (LEGS.bike.x0 + LEGS.run.x1 + LEGS.run.back) / 2, .012, SZ + .455);
   // the light line along the crest: cold over the bike, warm over the run, a pulse that travels to the summit
   const lineMat = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: { t: strata.t },
     vertexShader: 'varying float vX;void main(){vX=(modelMatrix*vec4(position,1.)).x;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
@@ -517,8 +517,8 @@ export function buildNorsemanTraining(ctx) {
         c=mix(c,vec3(.30,.34,.38),smoothstep(0.,-.18,vD.y));gl_FragColor=vec4(c,1.);}` });
   const skyDome = new THREE.Mesh(new THREE.SphereGeometry(5200, 48, 24), skyMat); skyDome.frustumCulled = false; skyDome.renderOrder = -1; L.add(skyDome);
   L.fog = new THREE.FogExp2('#9fb0c2', lite ? .0003 : .00024);
-  L.add(new THREE.HemisphereLight('#a9bede', '#353025', .62));
-  const pSun = new THREE.DirectionalLight('#ffd9b0', 4.4); pSun.target.position.set(200, 0, -200); pSun.position.copy(SUN_P).multiplyScalar(2400).add(pSun.target.position); L.add(pSun, pSun.target);
+  L.add(new THREE.HemisphereLight('#a9bede', '#253139', .42));
+  const pSun = new THREE.DirectionalLight('#ffd9b0', 2.8); pSun.target.position.set(200, 0, -200); pSun.position.copy(SUN_P).multiplyScalar(2400).add(pSun.target.position); L.add(pSun, pSun.target);
   const keepSouth = [new THREE.Plane(new THREE.Vector3(0, 0, -1), R.z1 - .05), new THREE.Plane(new THREE.Vector3(-1, 0, -1).normalize(), (R.x1 + R.z1) / Math.SQRT2)];
   const keepEast = [new THREE.Plane(new THREE.Vector3(1, 0, 0), -(R.x1 - .05)), new THREE.Plane(new THREE.Vector3(1, 0, 1).normalize(), -(R.x1 + R.z1) / Math.SQRT2)];
   if (renderer) { const pm = new THREE.PMREMGenerator(renderer), sk = new THREE.Scene(), m = skyMat.clone(); m.uniforms.clouds.value = 0; sk.add(new THREE.Mesh(skyDome.geometry, m)); L.environment = pm.fromScene(sk, 0, 1, 6000).texture; L.environmentIntensity = .4; pm.dispose(); }
@@ -566,9 +566,9 @@ export function buildNorsemanTraining(ctx) {
       plant(Math.round(7000 * k), 520, 520, spr, true); plant(Math.round(3500 * k), v.treeline - 40, 950, spr, false);
       if (id === 'eidfjord') { const tmp = []; plant(Math.round(2200 * k), 160, 420, tmp, true); bir.push(...tmp); }
       const up = new THREE.Vector3(0, 1, 0), col = new THREE.Color();
-      for (const [list, geo, hue, sat, light] of [[spr, spruce, .27, .3, .06], [bir, birch, .23, .32, .095]]) {
+      for (const [list, geo, hue, sat, light] of [[spr, spruce, .38, .28, .045], [bir, birch, .33, .3, .07]]) {
         if (!list.length) continue;
-        const tree = new THREE.InstancedMesh(geo, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, clippingPlanes: keep, flatShading: true }), list.length);
+        const tree = new THREE.InstancedMesh(geo, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, clippingPlanes: keep, flatShading: false }), list.length);
         list.forEach(([x, y, z, s, l], i) => { M4.compose(V.set(x, y - .12, z), Q.setFromAxisAngle(up, rand() * 6), S.set(s, s * (.85 + rand() * .55), s)); tree.setMatrixAt(i, M4); tree.setColorAt(i, col.setHSL(hue + rand() * .06, sat + rand() * .15, (light + rand() * .05) * (.45 + .55 * l))); });
         tree.layers.set(layer); L.add(tree);
       }
@@ -578,9 +578,11 @@ export function buildNorsemanTraining(ctx) {
 
   // ------------------------------------------------------------ bikes: KONA.m atlas road-triathlon study, instanced ×2 (trainer, stand)
   const bikeSpot = { kind: 'beast', pos: new THREE.Vector3(trainerAt[0], 0, trainerAt[2]), rotY: Math.PI / 2, bike: null };
-  const portrait = coarse && innerHeight > innerWidth;
-  bikeSpot.view = portrait ? new THREE.Vector3(10.4, 0, -9.4) : new THREE.Vector3(9.2, 0, -9.0);    // just inside the door: the ridge, the pool, both windows
-  bikeSpot.face = new THREE.Vector3(30, 1.6, -13.2);
+  const arrivalShot = () => decor.shots[coarse && innerHeight > innerWidth ? 'heroPortrait' : 'hero'];
+  Object.defineProperties(bikeSpot, {
+    view: { get() { const s = arrivalShot(); return new THREE.Vector3(s[0], 0, s[1]); } },
+    face: { get() { const s = arrivalShot(); return new THREE.Vector3(s[3], s[4], s[5]); } },
+  });
   const BIKE_COL = ['#24384a', '#c9ced3'];
   [trainerAt, standAt].forEach(([x, y, z], i) => { const pb = new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.2, .7), new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false })); pb.position.set(x, y + .6, z); group.add(pb);
     info(pb, { model: act => bikeCard(act), eyebrow: i ? 'BIKE · THE WORK STAND' : 'BIKE · THE CLIMBING TRAINER', title: i ? 'Gearing for the climbs.' : 'The long ride, indoors.', sub: 'KONA.m road-triathlon study · unbranded', text: 'Not any athlete’s or brand’s bike.' }); });
@@ -623,11 +625,16 @@ export function buildNorsemanTraining(ctx) {
   const back = act => ({ label: 'Back to the room', primary: true, onClick: () => act.close() });
   const card = (eyebrow, title, kicker, lede, list, act, more = []) => ({ kind: 'beast', eyebrow, title, kicker, lede, facts: [...list, disclaimer], actions: [back(act), ...more] });
   const nav = act => [{ label: 'Swim →', onClick: () => ctx.renderCard?.(swimCard(act)) }, { label: 'Bike →', onClick: () => ctx.renderCard?.(bikeCard(act)) }, { label: 'Run →', onClick: () => ctx.renderCard?.(runCard(act)) }];
+  function focus(name, act) {
+    const shot = decor.shots[name];
+    act.close();
+    ctx.focusRoom?.({ x: shot[0], z: shot[1], target: { x: shot[3], y: shot[4], z: shot[5] } });
+  }
   function introCard(act) {
     return { kind: 'beast', eyebrow: 'AN INDEPENDENT ROOM · FJORD TO SUMMIT', title: 'Train for the fjord and the mountain.', kicker: 'Cold water · long climbs · a run that ends uphill',
-      lede: 'A training hall between two real places: the head of the Hardangerfjord through the south glass, Gaustatoppen through the east. A cold lap pool runs out toward the fjord; the stone ridge down the middle is the course profile, climbing to a summit against the mountain. Around it, what you practise for each leg, and the people and kit that get you there.',
+      lede: 'A cold fjord. A long climb. A mountain finish. The room turns the journey into a place to explore: water at the window, a route carved in stone, and bikes ready for the climb.',
       facts: [fact('start'), fact('field'), interp('The ridge is drawn from sourced anchor heights; the shape between them and the horizontal spacing are KONA.m interpretation.'), terrainNote, disclaimer],
-      actions: [{ label: 'Walk the profile →', primary: true, onClick: () => act.close() }, { label: 'The windows', onClick: () => ctx.renderCard?.(windowCard(act)) }, ...nav(act)] };
+      actions: [{ label: 'By the water', primary: true, onClick: () => focus('fjord', act) }, { label: 'Along the climb', onClick: () => focus('spine', act) }, { label: 'Toward the summit', onClick: () => focus('mountain', act) }, { label: 'About the landscape', onClick: () => ctx.renderCard?.(windowCard(act)) }] };
   }
   function windowCard(act) {
     return card('THE WINDOWS', 'Two real places, one room.', 'Eidfjord to the south · Gaustatoppen to the east · 1 : 10',
@@ -664,7 +671,7 @@ export function buildNorsemanTraining(ctx) {
   function profileCard(leg, act) {
     const lines = leg === 'bike' ? [fact('bike'), fact('bike_climbing'), fact('t2')] : [fact('run'), fact('cut'), fact('summit')];
     return card(`THE PROFILE · ${leg.toUpperCase()}`, leg === 'bike' ? '180 km over the plateau.' : '42.2 km, then up.', 'Anchor heights sourced · the line between them drawn',
-      `${facts.profile.rule} Pins on the ridge mark the anchors; each label says what it measures. The swim is the pool beside it.`, [...lines, interp('Vertical scale: 1,880 m = 2.6 m of stone. Horizontal: each leg gets its own stretch of the hall, so the run looks longer than it is next to the bike.')], act, nav(act));
+      `${facts.profile.rule} Pins on the ridge mark the anchors; each label says what it measures. The swim is the pool beside it.`, [...lines, interp('Vertical scale: 1,880 m = 1.65 m of stone. Horizontal: each leg gets its own stretch of the hall, so the run looks longer than it is next to the bike.')], act, nav(act));
   }
 
   return {

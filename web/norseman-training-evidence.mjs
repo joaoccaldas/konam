@@ -32,7 +32,7 @@ for (const cfg of configs) {
   await page.waitForFunction(() => window.__museum?.beast?.terrainReady === true, { timeout: 120000 }).catch(() => errors.push('terrain not ready in 120 s'));
   await new Promise(r => setTimeout(r, 4000));
   await page.evaluate(() => { document.getElementById('cardClose')?.click(); [...document.querySelectorAll('button')].filter(b => /^Got it$/.test(b.textContent.trim())).forEach(b => b.click()); document.querySelectorAll('.coach,.toast').forEach(e => e.style.display = 'none'); });
-  const shot = async name => { const s = decor.shots[name];
+  const shot = async name => { const s = decor.shots[name === 'hero' && cfg.mobile && cfg.height > cfg.width ? 'heroPortrait' : name];
     await page.evaluate(([x, z, drop, lx, ly, lz]) => { const m = window.__museum; m.halt?.(); Object.assign(m.P, { x, z, drop, vx: 0, vz: 0 }); const eye = 1.6 + drop;
       m.P.yaw = Math.atan2(-(lx - x), -(lz - z)); m.P.pitch = Math.atan2(ly - eye, Math.hypot(lx - x, lz - z)); }, s);
     await new Promise(r => setTimeout(r, 1500));
@@ -44,7 +44,7 @@ for (const cfg of configs) {
     return { scene_calls: ri.calls, scene_triangles: ri.triangles, room_meshes: meshes, room_triangles: Math.round(tris), dpr: ren.getPixelRatio() }; });
   const fps = await page.evaluate(async () => { const d = []; let last = performance.now(), s = last; await new Promise(res => { const st = n => { d.push(n - last); last = n; n - s > 2500 ? res() : requestAnimationFrame(st); }; requestAnimationFrame(st); }); return +(1000 / (d.reduce((a, b) => a + b, 0) / d.length)).toFixed(1); });
   const b = pkg.performance[cfg.budget];
-  summary.push({ config: cfg.id, viewport: [cfg.width, cfg.height], fps_mean: fps, ...metrics, budget: { calls: b.max_room_draw_calls, triangles: b.max_room_triangles }, within_budget: metrics.room_meshes <= b.max_room_draw_calls && metrics.room_triangles <= b.max_room_triangles, errors: [...new Set(errors)] });
+  summary.push({ config: cfg.id, viewport: [cfg.width, cfg.height], fps_mean: fps, ...metrics, budget: { calls: b.max_room_draw_calls, triangles: b.max_room_triangles }, within_budget: null, geometry_only_within_budget: metrics.room_triangles <= b.max_room_triangles, performance_status: 'unverified: room mesh count is not draw calls; portal, mirror and host passes need complete-frame measurement', errors: [...new Set(errors)] });
   console.log(JSON.stringify(summary.at(-1)));
   await page.close();
 }
