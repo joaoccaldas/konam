@@ -117,7 +117,7 @@ export function terrainHeightAt(meta, heights, lat, lon) {
 }
 
 // Alpine shading by real altitude and slope: forest low, heath, rock on steep ground, lichen plateau, late snow high.
-export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline = 900, time = { value: 0 }, sun = new THREE.Vector3(0, 1, 0) } = {}) {
+export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline = 900, time = { value: 0 }, sun = new THREE.Vector3(0, 1, 0), alpen = [snowline - 500, snowline + 200] } = {}) {
   const m = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .94, metalness: 0, clippingPlanes });
   m.onBeforeCompile = sh => {
     sh.uniforms.uTime = time; sh.uniforms.uSun = { value: sun };
@@ -147,6 +147,9 @@ export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline
         vec2 cs = (vWP.xz - uSun.xz / max(uSun.y, .1) * vWP.y) * .0016 + vec2(uTime * .006, uTime * .0025);
         c *= mix(1., .42, smoothstep(.5, .66, tf(cs)));
         c *= mix(.38, 1., vLit);                                          // baked self-shadow toward the sun
+        // dawn colour: rose-gold on sunlit high ground (alpenglow), cool blue where the sun does not reach
+        float hi = smoothstep(${alpen[0].toFixed(1)}, ${alpen[1].toFixed(1)}, vE);
+        c *= mix(vec3(.78, .86, 1.08), mix(vec3(1.), vec3(1.34, 1.0, .86), hi), vLit);
         diffuseColor.rgb = c; }`)
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
       { // rock and scree detail the 1:10 grid cannot carry
@@ -155,6 +158,6 @@ export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline
         vec3 dW = vec3(h0 - hx + (g0 - gx) * .3, 0., h0 - hz + (g0 - gz) * .3) * .9;
         normal = normalize(normal + (viewMatrix * vec4(dW, 0.)).xyz); }`);
   };
-  m.customProgramCacheKey = () => `terrain-alpine-${snowline}-${treeline}`;
+  m.customProgramCacheKey = () => `terrain-alpine-${snowline}-${treeline}-${alpen.join('-')}`;
   return m;
 }

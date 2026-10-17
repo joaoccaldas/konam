@@ -21,7 +21,9 @@ Inside:
 - **Bike:** a road-triathlon bike on a climbing trainer with a fan and a session screen, plus a second bike on the work stand.
 - **Run:** an incline treadmill facing the mountain, with a hill-session screen.
 - **North wall:** the crew table and the mandatory summit backpack, an example training week, and the black and white finisher tops.
-- **Light:** a low dawn sun through the east glass lays the mullion shadows down the hall, with light shafts through each east bay.
+- **Light:** a low dawn sun through the east glass lays the mullion shadows down the hall, with light shafts through each east bay. The only computed lights are the shadowed sun and one soft area light from the fjord glass; station light is additive floor pools and wall washes (two draws). Every real light is paid by every lit material in the museum, so this is what keeps the room fast.
+- **Dawn:** alpenglow (rose-gold) on sunlit high ground with cool blue shadows; opposite the low sun, the Earth's shadow and the Belt of Venus on the horizon, under heavier cloud lit from below.
+- **Forest:** a dense spruce band along the fjord shore with birch by the water, thinning with height.
 - **Recovery:** a lit Nordic sauna in the south-east corner, a few steps from the cold pool.
 - **Detail:** a working swim pace clock over the pool head, a swim shelf, spare wheels and a helmet, a strength corner, and poles with a headlamp by the treadmill.
 
@@ -58,8 +60,8 @@ No new GLB files. Full decisions: `world/konam/candidates/norseman-training-asse
 - The authority, brand, repo hygiene, public-surface privacy and `validate-bikes` checks all pass.
 - `tools/build_pages.mjs` and `tools/build_app.mjs` were rebuilt and the generated `app/` and `sw.js` are committed. `sitemap.xml` is left alone because only its date changes.
 - Visual evidence (this folder): desktop 1440×900 (10 shots), phone 390×844 (4) and landscape 844×390 (2), captured with `web/norseman-training-evidence.mjs`. No page errors. `runtime-summary.json` has the numbers:
-  - desktop: 119 room meshes, 86k triangles (budget 190 / 450k)
-  - phone: 109 meshes, 70k triangles (budget 110 / 220k), 60 fps in headless Chrome
+  - desktop: 122 room meshes, 86k triangles (budget 190 / 450k)
+  - phone: 110 meshes, 70k triangles (budget 110 / 220k), 60 fps in headless Chrome
 
 ## Known limits
 
@@ -68,7 +70,11 @@ No new GLB files. Full decisions: `world/konam/candidates/norseman-training-asse
   - The window portal is an extra render pass of about 590k terrain triangles plus about 12k trees and a fjord mirror on desktop, and about 66k triangles on phones (half-resolution target, no mirror).
   - It is not counted in the room budget above, which counts only the room group.
   - The phone figure of 60 fps was measured in headless Chrome, not on a device.
-- **Desktop frame rate:** desktop fps is about 11 in headless Chrome. The host scene (about 1,500 calls for the whole museum) plus the landscape and its fjord mirror carry that cost. It needs a check on a real GPU and browser; the mirror resolution and tree count are the levers.
+- **Desktop frame rate:** the room was profiled feature by feature on the Mac GPU (headless Chrome, ANGLE Metal):
+  - The cost was the lights, not the landscape. Five spotlights, two point lights and three area lights were each paid by every lit material in the museum.
+  - Removing them brought Norseman level with or ahead of Breitling × KONA in the same session (most recently 19.6 against 18 fps, with NOR // 3 at 13.6).
+  - Absolute fps varies with machine load. The host museum (about 1,500 draw calls) sets the ceiling.
+  - It has not been checked in a real, non-headless browser or on a phone.
 - **Terrain resolution:** the grid still smooths the summit slightly (1,867 m in the data against 1,883 m mapped). The terrain is shaded by rule, not imagery, and the trees are low-poly instanced spruce.
 - **Reflections:** floor, glass and pool reflections capture the real landscape once, through the env capture, so they don't update as clouds drift.
 - **Ridge shape:** the ridge's run end is steep by design (1,880 m over the last stretch) and reads as a sharp summit.

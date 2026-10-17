@@ -29,7 +29,7 @@ import { createTerrainPortal, terrainGeometry, terrainHeightAt, terrainMaterial 
 import { Water } from 'three/examples/jsm/objects/Water.js';
 import { motes, mistTex } from './roomkit.js';
 
-export const NORSEMAN_MOOD = Object.freeze({ exposure: .92, hemi: .06, sun: .0, fog: { near: 30, far: 140 }, fogColor: new THREE.Color('#8f9aa5') });
+export const NORSEMAN_MOOD = Object.freeze({ exposure: .96, hemi: .15, sun: .0, fog: { near: 30, far: 140 }, fogColor: new THREE.Color('#8f9aa5') });
 export const NORSEMAN_TERRAIN = Object.freeze({ dir: 'assets/rooms/norseman-training/', sites: ['eidfjord', 'gaustatoppen'] });
 
 const rng = (seed = 0x2E05E) => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
@@ -50,8 +50,8 @@ const heightAt = (leg, km) => { const p = LEGS[leg].pts; for (let i = 1; i < p.l
 
 // The two real views. Each viewpoint (lat/lon) is placed on a room point; map bearing `bearing` points out of its window.
 const VIEWS = {
-  eidfjord: { lat: 60.4660, lon: 7.0625, view: { x: 19.6, z: -11.0, y0: -.12, e0: 0, k: .1, bearing: 272, fwd: [0, -1], right: [-1, 0] }, snowline: 1450, treeline: 780 },
-  gaustatoppen: { lat: 59.8426, lon: 8.61018, view: { x: 21.0, z: -9.4, y0: -.3, e0: null, k: .1, bearing: 60, fwd: [1, 0], right: [0, 1] }, snowline: 1700, treeline: 960 },
+  eidfjord: { lat: 60.4660, lon: 7.0625, view: { x: 19.6, z: -11.0, y0: -.12, e0: 0, k: .1, bearing: 272, fwd: [0, -1], right: [-1, 0] }, snowline: 1450, treeline: 780, alpen: [800, 1500] },
+  gaustatoppen: { lat: 59.8426, lon: 8.61018, view: { x: 21.0, z: -9.4, y0: -.3, e0: null, k: .1, bearing: 60, fwd: [1, 0], right: [0, 1] }, snowline: 1700, treeline: 960, alpen: [1250, 1850] },
 };
 
 export function buildNorsemanTraining(ctx) {
@@ -163,8 +163,8 @@ export function buildNorsemanTraining(ctx) {
   pane(skyPane, SKY.x1 - SKY.x0, SKY.z0 - SKY.z1, (SKY.x0 + SKY.x1) / 2, H + .005, SZ, Math.PI / 2, 0);
   // a whisper of glass in front of each pane: interior reflections, nothing more
   const glass = E(new THREE.MeshPhysicalMaterial({ color: '#e8f0f4', roughness: .04, metalness: 0, transparent: true, opacity: .035, envMapIntensity: .5, depthWrite: false }));
-  put(glass, new THREE.PlaneGeometry(SOUTH.x1 - SOUTH.x0, H - .7), (SOUTH.x0 + SOUTH.x1) / 2, (H - .7) / 2, R.z1 + .06);
-  put(glass, new THREE.PlaneGeometry(EAST.z1 - EAST.z0, H - .7), R.x1 - .06, (H - .7) / 2, (EAST.z0 + EAST.z1) / 2, 0, -Math.PI / 2, 0);
+  if (!lite) { put(glass, new THREE.PlaneGeometry(SOUTH.x1 - SOUTH.x0, H - .7), (SOUTH.x0 + SOUTH.x1) / 2, (H - .7) / 2, R.z1 + .06);
+    put(glass, new THREE.PlaneGeometry(EAST.z1 - EAST.z0, H - .7), R.x1 - .06, (H - .7) / 2, (EAST.z0 + EAST.z1) / 2, 0, -Math.PI / 2, 0); }
   for (let i = 0, n = 8; i <= n; i++) { const x = SOUTH.x0 + (SOUTH.x1 - SOUTH.x0) * i / n; box(glulam, .12, H - .7 - POOL.y, .26, x, (H - .7 + POOL.y) / 2, R.z1 + .1); }
   for (let i = 0, n = 4; i <= n; i++) { const z = EAST.z0 + (EAST.z1 - EAST.z0) * i / n; box(glulam, .26, H - .7, .12, R.x1 - .1, (H - .7) / 2, z); }
   box(steel, SOUTH.x1 - SOUTH.x0, .06, .3, (SOUTH.x0 + SOUTH.x1) / 2, H - .73, R.z1 + .1); box(steel, .3, .06, EAST.z1 - EAST.z0, R.x1 - .1, H - .73, (EAST.z0 + EAST.z1) / 2);
@@ -387,9 +387,8 @@ export function buildNorsemanTraining(ctx) {
     for (let i = 0; i < 12; i++) box(aspen, .08, .03, d - .2, x0 + .2 + i * (w - .3) / 11, .015, sz);                                      // slatted floor
     box(steel, .5, .6, .45, x0 + .55, .3, z0 - .55); for (let i = 0; i < 14; i++) put(granite, rock(.05 + rand() * .03, .7), x0 + .4 + rand() * .3, .64 + rand() * .06, z0 - .7 + rand() * .3, 0, rand() * 6);
     put(ledWarm, new THREE.BoxGeometry(.46, .02, .02), x0 + .55, .58, z0 - .32);
-    const lining = new THREE.MeshStandardMaterial({ map: aspen.map, color: '#ffffff', emissive: '#ff8a3c', emissiveIntensity: .32, roughness: .75 });
+    const lining = new THREE.MeshStandardMaterial({ map: aspen.map, color: '#ffffff', emissiveMap: aspen.map, emissive: '#ff8a3c', emissiveIntensity: .9, roughness: .75 });
     put(lining, new THREE.PlaneGeometry(w - .2, h - .2), sx, h / 2, z1 + .06); put(lining, new THREE.PlaneGeometry(d - .2, h - .2), x1 - .06, h / 2, sz, 0, -Math.PI / 2, 0); put(lining, new THREE.PlaneGeometry(d - .2, h - .2), x0 + .06, h / 2, sz, 0, Math.PI / 2, 0);
-    const glow = new THREE.PointLight('#ff9448', lite ? 6 : 12, 7, 1.5); glow.position.set(sx, 1.6, sz); group.add(glow);
     const glowPlane = new THREE.Mesh(new THREE.PlaneGeometry(w - .6, h - .3), new THREE.MeshBasicMaterial({ color: '#ff9d55', transparent: true, opacity: .16, blending: THREE.AdditiveBlending, depthWrite: false }));
     glowPlane.rotation.y = Math.PI; glowPlane.position.set(sx + .19, (h - .3) / 2, z0 + .02); group.add(glowPlane);
     const lab = lettering(1.6, .3, g => { g.fillStyle = 'rgba(236,232,226,.85)'; g.font = `600 .1px ${FONT}`; g.letterSpacing = '.03px'; g.fillText('HEAT · COLD · REPEAT', .02, .14); g.letterSpacing = '0px'; g.fillStyle = 'rgba(236,232,226,.5)'; g.font = `500 .055px ${FONT}`; g.fillText('A NORDIC HABIT · NOT RACE OR MEDICAL ADVICE', .02, .24); }, 1024);
@@ -466,11 +465,18 @@ export function buildNorsemanTraining(ctx) {
   sun.target.position.set(22, 0, -10); sun.position.copy(sun.target.position).addScaledVector(SUN, 45); group.add(sun, sun.target);
   if (!lite) { sun.castShadow = true; const sc = sun.shadow.camera; sc.left = -18; sc.right = 18; sc.top = 13; sc.bottom = -13; sc.near = 5; sc.far = 90; sun.shadow.mapSize.set(4096, 4096); sun.shadow.bias = -.00025; sun.shadow.normalBias = .02; }
   const skyS = new THREE.RectAreaLight('#9fbde4', lite ? 2.4 : 1.5, SOUTH.x1 - SOUTH.x0, 5); skyS.position.set((SOUTH.x0 + SOUTH.x1) / 2, 3.4, R.z1 + .2); skyS.lookAt((SOUTH.x0 + SOUTH.x1) / 2, 1.8, R.z0); group.add(skyS);
-  const skyE = new THREE.RectAreaLight('#ffd2a6', lite ? 2.0 : 1.0, EAST.z1 - EAST.z0, 5); skyE.position.set(R.x1 - .2, 3.4, (EAST.z0 + EAST.z1) / 2); skyE.lookAt(R.x0, 1.8, (EAST.z0 + EAST.z1) / 2); group.add(skyE);
-  const skyTop = new THREE.RectAreaLight('#c7d8ee', lite ? 1.6 : .9, SKY.x1 - SKY.x0, 1.2); skyTop.position.set((SKY.x0 + SKY.x1) / 2, H - .05, SZ); skyTop.lookAt((SKY.x0 + SKY.x1) / 2, 0, SZ); group.add(skyTop);
-  const fill = new THREE.PointLight('#cfc8bd', lite ? 1.6 : .55, 30, 1.2); fill.position.set(18, H - 1.2, -7); group.add(fill);
-  const spots = [[rackX, R.z0 - 1, '#f2ead8'], [21.1, R.z0 - 1.4, '#fff1dc'], ...(lite ? [] : [[crew.x, crew.z, '#fff1dc'], [32.35, R.z0 - 1.1, '#ffd9b0'], [trainerAt[0], trainerAt[2], '#f0f2ff']])];
-  spots.forEach(([x, z, col]) => { const s = new THREE.SpotLight(col, lite ? 26 : 22, 9, .42, .65, 1.3); s.position.set(x, H - .9, z); s.target.position.set(x, .8, z); group.add(s, s.target); });
+  // Practical light is faked, not computed: every real light here is paid by every lit material in the museum, so the
+  // stations get additive floor pools and wall washes (two draws in all) instead of spot and point lights.
+  const glowT = tex(canvas(128, 128, (g, w, h) => { const gr = g.createRadialGradient(w / 2, h / 2, 2, w / 2, h / 2, w / 2); gr.addColorStop(0, 'rgba(255,255,255,.9)'); gr.addColorStop(.5, 'rgba(255,255,255,.3)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, w, h); }));
+  const washT = tex(canvas(128, 256, (g, w, h) => { const gr = g.createRadialGradient(w / 2, 0, 4, w / 2, 30, h); gr.addColorStop(0, 'rgba(255,255,255,.95)'); gr.addColorStop(.5, 'rgba(255,255,255,.28)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, w, h); }));
+  const poolM = new THREE.MeshBasicMaterial({ map: glowT, color: '#ffe6c4', transparent: true, opacity: lite ? .4 : .36, blending: THREE.AdditiveBlending, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -4 });
+  const washM = new THREE.MeshBasicMaterial({ map: washT, color: '#ffe2bd', transparent: true, opacity: lite ? .52 : .48, blending: THREE.AdditiveBlending, depthWrite: false });
+  for (const [x, z, w, d] of [[rackX, R.z0 - 1.1, 3.6, 2.2], [21.1, R.z0 - 1.3, 4.2, 2.4], [crew.x, crew.z - .2, 3.0, 2.0], [32.35, R.z0 - 1.0, 3.2, 2.0], [trainerAt[0] + .4, trainerAt[2], 3.8, 2.4], [tread[0], tread[2], 3.4, 2.0], [sauna.x0 + 1.8, sauna.z0 - .9, 3.6, 2.2]])
+    put(poolM, new THREE.PlaneGeometry(w, d), x, .006, z, -Math.PI / 2, 0, 0);
+  for (const [x, w] of [[rackX, 3.4], [16.0, 3.6], [21.1, 4.2], [crew.x + .4, 3.2], [32.35, 3.2]]) put(washM, new THREE.PlaneGeometry(w, 4.2), x, H - 3.4, R.z0 - .11, 0, Math.PI, 0);
+  if (!lite) for (let i = 0; i < 3; i++) box(ledWarm, .06, .02, .06, rackX - 1 + i, H - .9, R.z0 - .9);   // the fittings the washes imply (desktop: mesh budget)
+  flush(false);
+
   // shafts of sun through each east bay: prisms swept along the sun, fading with distance and broken by drifting dust
   const beamMat = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.FrontSide, uniforms: { t: strata.t, k: { value: lite ? .05 : .085 } },
     vertexShader: 'attribute float along;varying float vA;varying vec3 vW,vN,vV;void main(){vA=along;vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;vN=normalize(mat3(modelMatrix)*normal);vV=normalize(cameraPosition-w.xyz);gl_Position=projectionMatrix*viewMatrix*w;}',
@@ -496,11 +502,17 @@ export function buildNorsemanTraining(ctx) {
       float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
       float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+1.),f.x),f.y);}
       float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<6;i++){s+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return s;}
-      void main(){float hgt=max(vD.y,0.);float s=max(dot(vD,sun),0.);
-        vec3 zen=vec3(.10,.19,.36),hor=vec3(.70,.74,.78),warm=vec3(1.,.66,.40);
+      void main(){float hgt=max(vD.y,0.);float s=max(dot(vD,sun),0.);float anti=max(dot(vD,-vec3(sun.x,0.,sun.z)/length(sun.xz)),0.);
+        vec3 zen=vec3(.09,.17,.34),hor=vec3(.68,.72,.78),warm=vec3(1.,.66,.40);
         vec3 c=mix(hor,zen,pow(hgt,.5));c=mix(c,warm,pow(s,5.)*(1.-hgt)*.9);
-        if(clouds>.5&&vD.y>0.){vec2 uv=vD.xz/(vD.y+.06)*.55+vec2(t*.004,t*.0015);float d=fbm(uv*1.4);float cov=smoothstep(.5,.78,d)*smoothstep(0.,.18,vD.y);
-          float lit=pow(s,3.)*.9+.25;vec3 cc=mix(vec3(.42,.46,.52),vec3(1.,.83,.64),clamp(lit,0.,1.))*(1.-.35*smoothstep(.7,.95,d));c=mix(c,cc,cov*.85);}
+        // opposite the low sun: the Earth's shadow (blue-grey) on the horizon, the Belt of Venus (rose) just above it
+        float belt=smoothstep(.02,.07,vD.y)*(1.-smoothstep(.1,.24,vD.y)), shadowB=1.-smoothstep(.0,.05,vD.y);
+        c=mix(c,vec3(.93,.70,.70),belt*(.35+.5*anti));c=mix(c,vec3(.42,.48,.60),shadowB*(.3+.5*anti)*step(0.,vD.y));
+        if(clouds>.5&&vD.y>0.){vec2 uv=vD.xz/(vD.y+.05)*.5+vec2(t*.005,t*.002);float d=fbm(uv*1.2),d2=fbm(uv*3.1+7.);
+          float cov=smoothstep(.46,.72,d)*smoothstep(0.,.14,vD.y);float thick=smoothstep(.6,.9,d);
+          vec3 base=mix(vec3(.30,.32,.38),vec3(.52,.50,.56),d2);                 // cloud bodies: cool grey
+          vec3 rim=mix(vec3(1.,.62,.52),vec3(1.,.84,.62),pow(s,2.));              // edges and undersides lit by the low sun
+          vec3 cc=mix(rim*(.75+.25*anti),base,thick*.85);c=mix(c,cc,cov*.92);}
         c+=vec3(1.,.86,.62)*pow(s,1200.)*14.+vec3(1.,.72,.46)*pow(s,24.)*.45;
         c=mix(c,vec3(.30,.34,.38),smoothstep(0.,-.18,vD.y));gl_FragColor=vec4(c,1.);}` });
   const skyDome = new THREE.Mesh(new THREE.SphereGeometry(5200, 48, 24), skyMat); skyDome.frustumCulled = false; skyDome.renderOrder = -1; L.add(skyDome);
@@ -514,8 +526,8 @@ export function buildNorsemanTraining(ctx) {
   const fjordN = tex(waterN, false, [1, 1]); fjordN.wrapS = fjordN.wrapT = THREE.RepeatWrapping;
   const fjordShape = new THREE.Shape([[-5000, -R.z1 + .05], [R.x1, -R.z1 + .05], [5000, -R.z1 + 5000 - R.x1], [5000, 7000], [-5000, 7000]].map(([x, y]) => new THREE.Vector2(x, y)));
   let fjord;
-  if (!lite) { fjord = new Water(new THREE.ShapeGeometry(fjordShape), { textureWidth: 640, textureHeight: 640, waterNormals: fjordN, sunDirection: SUN_P.clone(), sunColor: 0xffd2a0, waterColor: 0x0b1d24, distortionScale: 1.4, fog: true });
-    fjord.material.uniforms.size.value = 5; }
+  if (!lite) { fjord = new Water(new THREE.ShapeGeometry(fjordShape), { textureWidth: 640, textureHeight: 640, waterNormals: fjordN, sunDirection: SUN_P.clone(), sunColor: 0xffd2a0, waterColor: 0x0b1d24, distortionScale: .55, fog: true });
+    fjord.material.uniforms.size.value = 3; }
   else { const fN = tex(waterN, false, [260, 260]); fjord = new THREE.Mesh(new THREE.ShapeGeometry(fjordShape), new THREE.MeshStandardMaterial({ color: '#08161c', roughness: .22, metalness: 0, envMapIntensity: .2, normalMap: fN, normalScale: new THREE.Vector2(.5, .5) })); }
   fjord.rotation.x = -Math.PI / 2; fjord.position.set(0, POOL.y - .01, 0); L.add(fjord);
   // a car ferry working the fjord, decks lit (interpretation)
@@ -533,6 +545,7 @@ export function buildNorsemanTraining(ctx) {
   // spruce: three tiers and a trunk, instanced
   const spruce = mergeGeometries([[.5, 1.0, .55], [.4, .85, 1.05], [.27, .7, 1.48]].map(([r, h, y]) => new THREE.ConeGeometry(r, h, 7, 1).translate(0, y, 0).toNonIndexed())
     .concat([new THREE.CylinderGeometry(.05, .06, .4, 5).translate(0, .2, 0).toNonIndexed()]).map(g => { g.deleteAttribute('uv'); return g; }));
+  const birch = mergeGeometries([new THREE.IcosahedronGeometry(.42, 0).scale(1, 1.5, 1).translate(0, 1.05, 0).toNonIndexed(), new THREE.CylinderGeometry(.035, .045, .6, 5).translate(0, .3, 0).toNonIndexed()].map(g => { g.deleteAttribute('uv'); return g; }));
   let terrainReady = false;
   async function loadTerrain() {
     const base = NORSEMAN_TERRAIN.dir;
@@ -542,17 +555,23 @@ export function buildNorsemanTraining(ctx) {
       const g = terrainGeometry(meta, heights, { lat: v.lat, lon: v.lon, view, step: lite ? 3 : 1, sun: SUN_P });
       if (id === 'eidfjord') { const p = g.attributes.position, e = g.attributes.elev; for (let i = 0; i < p.count; i++) if (e.getX(i) < .6) p.setY(i, POOL.y - 3); p.needsUpdate = true; g.computeVertexNormals(); }
       const keep = id === 'eidfjord' ? keepSouth : keepEast, layer = id === 'eidfjord' ? 0 : 1;   // layer 1: not drawn in the fjord's mirror
-      const t = new THREE.Mesh(g, terrainMaterial({ clippingPlanes: keep, snowline: v.snowline, treeline: v.treeline, time: TIME, sun: SUN_P })); t.layers.set(layer); L.add(t);
-      // forest on gentle ground below the treeline, clumped by noise, out to about 12 km (1 : 10)
-      const pos = g.attributes.position, el = g.attributes.elev, nor = g.attributes.normal, want = (lite ? 1 : 4) * (id === 'eidfjord' ? 2200 : 1000), at = [];
-      for (let tries = 0; at.length < want && tries < want * 40; tries++) { const i = Math.floor(rand() * pos.count), e = el.getX(i);
-        if (e < 6 || e > v.treeline - 40 - rand() * 180 || nor.getY(i) < .8) continue; const x = pos.getX(i), z = pos.getZ(i), d = Math.hypot(x - 21, z + 11);
-        if (d < 18 || d > 950 || noise1(x * .02, Math.floor(z * .02)) < .35 || keep.some(pl => pl.distanceToPoint(V.set(x, 0, z)) < 0)) continue;
-        at.push([x + (rand() - .5) * 5, pos.getY(i), z + (rand() - .5) * 5, .55 + rand() * .75, g.attributes.sunlit.getX(i)]); }
-      const tree = new THREE.InstancedMesh(spruce, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, clippingPlanes: keep, flatShading: true }), at.length);
+      const t = new THREE.Mesh(g, terrainMaterial({ clippingPlanes: keep, snowline: v.snowline, treeline: v.treeline, time: TIME, sun: SUN_P, alpen: v.alpen })); t.layers.set(layer); L.add(t);
+      // forest: a dense band along the shore and lower slopes, thinning with height and distance (1 : 10); birch by the water
+      const pos = g.attributes.position, el = g.attributes.elev, nor = g.attributes.normal, lit = g.attributes.sunlit, spr = [], bir = [];
+      const plant = (want, eMax, dMax, list, near) => { for (let tries = 0; list.length < want && tries < want * 50; tries++) { const i = Math.floor(rand() * pos.count), e = el.getX(i);
+          if (e < 3 || e > eMax - rand() * 120 || nor.getY(i) < (near ? .72 : .8)) continue; const x = pos.getX(i), z = pos.getZ(i), d = Math.hypot(x - 21, z + 11);
+          if (d < 14 || d > dMax || (!near && noise1(x * .02, Math.floor(z * .02)) < .35) || keep.some(pl => pl.distanceToPoint(V.set(x, 0, z)) < 0)) continue;
+          for (let c = 0; c < (near ? 3 : 1) && list.length < want; c++) list.push([x + (rand() - .5) * (near ? 3 : 5), pos.getY(i), z + (rand() - .5) * (near ? 3 : 5), (near ? .45 : .55) + rand() * .75, lit.getX(i)]); } };
+      const k = (lite ? .3 : 1) * (id === 'eidfjord' ? 1 : .5);
+      plant(Math.round(7000 * k), 520, 520, spr, true); plant(Math.round(3500 * k), v.treeline - 40, 950, spr, false);
+      if (id === 'eidfjord') { const tmp = []; plant(Math.round(2200 * k), 160, 420, tmp, true); bir.push(...tmp); }
       const up = new THREE.Vector3(0, 1, 0), col = new THREE.Color();
-      at.forEach(([x, y, z, s, lit], k) => { M4.compose(V.set(x, y - .12, z), Q.setFromAxisAngle(up, rand() * 6), S.set(s, s * (.85 + rand() * .55), s)); tree.setMatrixAt(k, M4); tree.setColorAt(k, col.setHSL(.27 + rand() * .07, .3 + rand() * .15, (.06 + rand() * .05) * (.45 + .55 * lit))); });
-      tree.layers.set(layer); L.add(tree);
+      for (const [list, geo, hue, sat, light] of [[spr, spruce, .27, .3, .06], [bir, birch, .23, .32, .095]]) {
+        if (!list.length) continue;
+        const tree = new THREE.InstancedMesh(geo, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, clippingPlanes: keep, flatShading: true }), list.length);
+        list.forEach(([x, y, z, s, l], i) => { M4.compose(V.set(x, y - .12, z), Q.setFromAxisAngle(up, rand() * 6), S.set(s, s * (.85 + rand() * .55), s)); tree.setMatrixAt(i, M4); tree.setColorAt(i, col.setHSL(hue + rand() * .06, sat + rand() * .15, (light + rand() * .05) * (.45 + .55 * l))); });
+        tree.layers.set(layer); L.add(tree);
+      }
     }
     terrainReady = true; envDirty = 3;
   }
