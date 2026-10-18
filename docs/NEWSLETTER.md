@@ -40,13 +40,19 @@ source verification, exactly-three-story rule and **never send automatically**:
    new edition table is not proof that no story has already been used. Verify facts,
    canonical HTTPS URLs and actual publication dates. No duplicate prior story.
    Do not import an incomplete edition or select unverified filler.
-2. Render using `newsletter/render.mjs` (`prepareNewsletter`) with `edition_date`,
-   `intro`, `intern_currently` and three `stories`. Each story has `category`,
-   `published_at` (YYYY-MM-DD), `source`, `url`, `headline`, `summary`, `intern` and
-   `verified:true` after the editorial checks. The renderer escapes content and
-   preserves the existing sand/lava/sunrise/ocean and Intern visual language.
-   `newsletter/prepare.mjs` can write the private HTML and SQL outside tracked
-   files. Keep the `{{UNSUBSCRIBE_URL}}` placeholder until recipient claiming.
+2. Render using `newsletter/render.mjs` (`prepareNewsletter`) and the fixed
+   `newsletter/template.html`. The automation supplies data; the renderer owns the
+   design. Required input is `edition_date`, `intro`, `intern_currently`, one
+   verified `bike`, and exactly three verified `stories`. The bike must contain a
+   canonical product id/name, repository preview image, GLB path, viewer route and
+   `verified:true`. Each story contains `category`, `published_at` (YYYY-MM-DD),
+   `source`, canonical `url`, real/verified `image`, `headline`, concise
+   `summary`, optional `intern`, and `verified:true`. The renderer enforces the
+   approved mobile-first KONA.m composition: masthead, oversized headline, full-width
+   Bike of the Day hero, compact image-led story rows, Intern strip and minimal footer.
+   It normalizes real KONA.m asset paths into public preview/viewer/GLB URLs, escapes
+   all editorial content, and preserves the `{{UNSUBSCRIBE_URL}}` placeholder until
+   recipient claiming. Do not replace this with ad-hoc daily HTML or AI-generated bike art.
 3. Using the connected Supabase operator tool/service role, insert the edition in
    `newsletter_editions` with its stable date ID. Reuse the existing Gmail operator
    draft for that edition, then set `review_draft_id` to its **draft ID**, not its
