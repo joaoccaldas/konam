@@ -7,17 +7,26 @@ review. Do not create a second schedule, sender, subscriber registry or send job
 ## Registration and consent
 
 `registerAccount` records the unchecked-by-default `kona_newsletter` choice in
-the new Auth signup. The server activates the existing
-`public.newsletter_subscriptions` row only after the Auth-managed email is
-confirmed, and only for an explicit version-1 `kona-intern` choice. An old anonymous
-request is not sufficient. The callback and password login retry deferred
-activation using an authenticated RPC that accepts no caller-supplied identity.
-Withdrawn and suppressed addresses are never reactivated by retries.
+the new Auth signup. A direct explicit newsletter signup is single opt-in and is
+stored as `active` immediately. Confirmed account opt-ins are also activated through
+the authenticated RPC. `suppressed` is always a hard delivery stop. A fresh explicit
+single-opt-in submission may reactivate a previously `unsubscribed` address; passive
+page visits, sign-ins and background retries never do so.
 
 The registry, edition history, unsubscribe tokens and per-recipient draft receipts
 are private. Anonymous and authenticated browser roles cannot read those tables
 or claim newsletter recipients. Recipient queries also recheck the current Auth
 email, so an old address is not used after an account changes its email.
+
+## Dedicated sender invariant
+
+`konamundo@gmail.com` is reserved for the KONA.m newsletter. It may send only a
+validated KONA.m newsletter edition to active subscribers. Do not use this account
+for replies, forwards, outreach, transactional mail, personal mail, ad-hoc test
+messages or visual-validation sends. Validation must use the public fixture or a
+different mailbox. Inbound mail may exist, but any non-newsletter reply must use a
+different authenticated sender. Every newsletter send remains one recipient per
+message with empty CC/BCC and a recipient-specific unsubscribe URL.
 
 ## Existing daily task: subscriber wiring
 
@@ -51,14 +60,14 @@ source verification, exactly-three-story rule and **never send automatically**:
    `newsletter_editions` with its stable date ID. Reuse the existing Gmail operator
    draft for that edition, then set `review_draft_id` to its **draft ID**, not its
    message ID. Re-running the edition must not overwrite existing draft receipts.
-4. Claim up to 25 verified, active recipients:
+4. Claim up to 25 active recipients:
 
    ```sql
    select * from public.claim_newsletter_drafts('intern-YYYY-MM-DD',25);
    ```
 
-   The claim returns private `email`, `subject` and `html`. Pending, withdrawn,
-   suppressed, unverified and already-claimed recipients are excluded. Each HTML
+   The claim returns private `email`, `subject` and `html`. Only `active` rows are
+   eligible; withdrawn, suppressed and already-claimed recipients are excluded. Each HTML
    has the recipient’s real opaque unsubscribe URL; no account sign-in is required.
 5. Use the existing Gmail connector **create_draft**, from the connected public
    project account, `to` the single returned email, with `text/html` content. Do
