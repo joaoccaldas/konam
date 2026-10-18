@@ -1,0 +1,28 @@
+{
+  "review": "kona-2026-saturday",
+  "measured_at": "2026-10-12T05:46:57.168Z",
+  "desktop": {
+    "scene_calls": 127,
+    "scene_triangles": 78066,
+    "room_meshes": 35,
+    "room_triangles": 66374,
+    "errors": 0,
+    "budget": {
+      "calls": 190,
+      "triangles": 450000
+    },
+    "within_budget": true
+  },
+  "phone": {
+    "scene_calls": 48,
+    "scene_triangles": 30924,
+    "room_meshes": 35,
+    "room_triangles": 30222,
+    "errors": 0,
+    "budget": {
+      "calls": 110,
+      "triangles": 220000
+    },
+    "within_budget": true
+  }
+}

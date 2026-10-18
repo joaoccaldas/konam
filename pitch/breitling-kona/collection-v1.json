@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "status": "verify-before-outreach",
+  "commission": {
+    "status": "client-request-reported-by-creator",
+    "note": "The creator reports that Breitling asked for this room. Written approval, brand guidelines and product CAD are still to be recorded here; until then the review build uses the brand name in plain type only — no logo, no IRONMAN mark, no product photography.",
+    "approval_ref": null,
+    "marks_allowed": false
+  },
+  "family": {
+    "name": "Endurance Pro IRONMAN® editions",
+    "movement": "Breitling Caliber 82, thermocompensated SuperQuartz™, COSC-certified; chronograph 1/10th second, 30 minutes; date",
+    "case": "44 mm, 12.5 mm thick; bidirectional bezel with compass scale; sapphire glareproofed both sides; screw-fixed caseback engraved with IRONMAN World Championship branding; 10 bar",
+    "lugs": "22/20 mm",
+    "sources": [
+      "https://www.breitling.com/us-en/watches/professional/endurance-pro/E823105A1M1S1/"
+    ]
+  },
+  "editions": [
+    {
+      "ref": "E823102A1I1S1",
+      "year": 2022,
+      "name": "Endurance Pro IRONMAN® World Championship 2022",
+      "event": "World Championship",
+      "case": "titanium",
+      "dial": "#e3c21a",
+      "strap": "#f2cc12",
+      "accent": "#141414",
+      "limited": 200,
+      "price": "€4,300",
+      "source": "https://www.breitling.com/am-en/watches/professional/endurance-pro-ironmanr-world-championship-2021/E823102A1I1S1/",
+      "verify": [
+        "dial",
+        "accent"
+      ]
+    },
+    {
+      "ref": "E823104A1M1S1",
+      "year": 2024,
+      "name": "Endurance Pro 44 IRONMAN® World Championship 2024",
+      "event": "World Championship",
+      "case": "titanium",
+      "dial": "#2f3236",
+      "strap": "#1f5fbf",
+      "accent": "#3fa9f5",
+      "limited": 500,
+      "price": "US$4,350",
+      "source": "https://www.breitling.com/us-en/watches/professional/endurance-pro/E823104A1M1S1/",
+      "verify": [
+        "accent"
+      ]
+    },
+    {
+      "ref": "E823105A1M1S1",
+      "year": 2025,
+      "name": "Endurance Pro IRONMAN® World Championship 2025",
+      "event": "World Championship",
+      "case": "grade 2 titanium",
+      "dial": "#5d6168",
+      "strap": "#1fb5b0",
+      "accent": "#7fd3ff",
+      "limited": 500,
+      "price": "US$4,350",
+      "story": "Sun-and-sea accents honouring the race's return to Kona.",
+      "source": "https://www.breitling.com/us-en/watches/professional/endurance-pro/E823105A1M1S1/",
+      "verify": []
+    },
+    {
+      "ref": "X823101K1C1S1",
+      "year": 2025,
+      "name": "Endurance Pro 44 IRONMAN® 70.3 World Championship 2025",
+      "event": "70.3 World Championship",
+      "case": "Breitlight®",
+      "dial": "#565a60",
+      "strap": "#5fd6c8",
+      "accent": "#ff8a3c",
+      "limited": 300,
+      "price": "US$3,900",
+      "source": "https://www.breitling.com/us-en/watches/professional/endurance-pro/X823101K1C1S1/",
+      "verify": [
+        "dial"
+      ]
+    },
+    {
+      "ref": "E823108A1B1S1",
+      "year": 2026,
+      "name": "Endurance Pro 44 IRONMAN® World Championship 2026",
+      "event": "World Championship",
+      "case": "titanium",
+      "dial": "#16181b",
+      "strap": "#1d4fa8",
+      "accent": "#7fd3ff",
+      "limited": 500,
+      "price": "US$4,350",
+      "source": "https://www.breitling.com/us-en/watches/professional/endurance-pro/E823108A1B1S1/",
+      "verify": [
+        "dial"
+      ]
+    },
+    {
+      "ref": "E823107A1O1S1",
+      "year": 2026,
+      "name": "Endurance Pro 44 IRONMAN® 70.3 World Championship 2026",
+      "event": "70.3 World Championship",
+      "case": "titanium",
+      "dial": "#5d6168",
+      "strap": "#c8102e",
+      "accent": "#ff5a4f",
+      "limited": 300,
+      "price": "US$4,350",
+      "source": "https://www.breitling.com/us-en/watches/professional/endurance-pro/E823107A1O1S1/",
+      "verify": [
+        "dial"
+      ]
+    }
+  ],
+  "kona": {
+    "line": "Breitling's 2025 World Championship edition carries sun-and-sea accents honouring the race's return to Kona.",
+    "sources": [
+      "https://www.fratellowatches.com/new-breitling-endurance-pro-watches-for-the-ironman/",
+      "https://www.breitling.com/us-en/watches/professional/endurance-pro/E823105A1M1S1/"
+    ]
+  }
+}

@@ -37,6 +37,52 @@ export function createRoomSound(ctx, out) {
     const hum = osc('sawtooth', 120), lp = filt('lowpass', 420), hg = gain(.012); hum.connect(lp).connect(hg).connect(g);
   }
 
+  const drives = {};
+  let beastWatts = 0;
+  { // Beast Cave: concrete room tone, two fans, and a flywheel whose pitch follows the watts
+    const g = bed('beast');
+    const tone = osc('sine', 48), tg = gain(.05); tone.connect(tg).connect(g);
+    const fans = noise(), lp = filt('lowpass', 900, .6), fg = gain(.06); lfo(.31, .01, fg.gain); fans.connect(lp).connect(fg).connect(g);
+    const fly = osc('sawtooth', 70), fbp = filt('bandpass', 420, 3), flyG = gain(0); fly.connect(fbp).connect(flyG).connect(g);
+    const whine = osc('triangle', 520), wg = gain(0); whine.connect(wg).connect(g);
+    drives.beast = w => {                                             // w: watts (0 = empty saddle)
+      beastWatts = w;
+      const k = Math.min(1, w / 400), t = now();
+      fly.frequency.setTargetAtTime(55 + w * .32, t, .15); fbp.frequency.setTargetAtTime(300 + w * 1.4, t, .2);
+      flyG.gain.setTargetAtTime(w ? .05 + k * .1 : 0, t, .2);
+      whine.frequency.setTargetAtTime(380 + w * 1.6, t, .2); wg.gain.setTargetAtTime(w ? .006 + k * .012 : 0, t, .2);
+      fg.gain.setTargetAtTime(.06 + k * .08, t, .4); lp.frequency.setTargetAtTime(900 + k * 900, t, .4);
+    };
+  }
+  { // Breitling: a hall of quiet — a low drone and a crisp tick each second
+    const g = bed('breitling');
+    for (const [f, v] of [[65.4, .05], [98, .025]]) { const o = osc('sine', f), og = gain(v); lfo(.05, .01, og.gain); o.connect(og).connect(g); }
+  }
+  { // NOR // 3 · Kona Winter: wind against the glass, a warm low drone, and the fire's crackle (below)
+    const g = bed('nor3');
+    const wind = noise(), wl = filt('lowpass', 420, .8), wg = gain(.05); lfo(.07, 160, wl.frequency); lfo(.11, .025, wg.gain); wind.connect(wl).connect(wg).connect(g);
+    for (const [f, v] of [[55, .03], [82.4, .015]]) { const o = osc('sine', f), og = gain(v); lfo(.04, .008, og.gain); o.connect(og).connect(g); }
+  }
+  const crackle = setInterval(() => {
+    if (ctx.state !== 'running' || active !== 'nor3' || Math.random() < .45) return;
+    const t = now() + Math.random() * .2, h = noise(.05), bp = filt('bandpass', 1800 + Math.random() * 2600, 2), e = gain(0);
+    e.gain.setValueAtTime(0, t); e.gain.linearRampToValueAtTime(.03 + Math.random() * .03, t + .003); e.gain.exponentialRampToValueAtTime(.0001, t + .04); h.connect(bp).connect(e).connect(beds.nor3);
+  }, 180);
+  const tick = g => {
+    const o = osc('square', 3200), bp = filt('bandpass', 3200, 12), e = gain(0), t = now();
+    e.gain.setValueAtTime(0, t); e.gain.linearRampToValueAtTime(.05, t + .002); e.gain.exponentialRampToValueAtTime(.0001, t + .04);
+    o.connect(bp).connect(e).connect(g); o.stop(t + .05);
+  };
+  // an original four-on-the-floor pulse while someone rides the Beast Cave (trance tempo, synthesised; no samples)
+  let pulseStep = 0;
+  const pulse = setInterval(() => {
+    if (ctx.state !== 'running' || active !== 'beast' || beastWatts <= 0) return;
+    const g = beds.beast, t = now() + .01, step = pulseStep++ % 4;
+    const o = osc('sine', 120), e = gain(0); o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(45, t + .12);
+    e.gain.setValueAtTime(0, t); e.gain.linearRampToValueAtTime(.16, t + .005); e.gain.exponentialRampToValueAtTime(.0001, t + .22); o.connect(e).connect(g); o.stop(t + .25);
+    if (step % 2 === 1) { const h = noise(.1), hp = filt('highpass', 7000), he = gain(0); he.gain.setValueAtTime(0, t + .21); he.gain.linearRampToValueAtTime(.025, t + .215); he.gain.exponentialRampToValueAtTime(.0001, t + .26); h.connect(hp).connect(he).connect(g); h.stop(t + .3); }
+  }, 434);                                                            // ≈138 bpm
+  const ticker = setInterval(() => { if (ctx.state === 'running' && active === 'breitling') tick(beds.breitling); }, 1000);
   const blip = (id, fn) => { if (active === id) fn(beds[id]); };
   const drip = g => {
     const o = osc('sine', 900 + Math.random() * 1400), e = gain(0), t = now();
@@ -71,11 +117,12 @@ export function createRoomSound(ctx, out) {
   }, 280);
 
   return {
-    set(id) {                                                         // id: 'bio' | 'horror' | 'alien' | 'zombie' | null
+    set(id) {                                                         // id: 'bio' | 'horror' | 'alien' | 'zombie' | 'beast' | 'breitling' | 'nor3' | null
       if (id === active) return;
       active = id;
       for (const [k, g] of Object.entries(beds)) g.gain.setTargetAtTime(k === id ? 1 : 0, now(), .8);
     },
-    stop() { clearInterval(timer); },
+    drive(id, value) { drives[id]?.(value); },
+    stop() { clearInterval(timer); clearInterval(ticker); clearInterval(pulse); clearInterval(crackle); },
   };
 }

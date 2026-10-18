@@ -13,6 +13,44 @@
    "name": "Swim / bike / run sculpture",
    "builder": "race-marker",
    "height": 1.2
+  },
+  {
+   "id": "promenade-chair",
+   "name": "Promenade tube chair (Nice blue)",
+   "builder": "promenade-chair",
+   "instanced": true,
+   "footprint": [
+    0.8,
+    0.7
+   ],
+   "radius": 0,
+   "height": 0.95,
+   "provenance": {
+    "origin": "procedural (three.js geometry in web/src/engine/decoration-props.js)",
+    "rights": "KONA.m original; no third-party design or marks",
+    "first_used_in": "laidlow-nice"
+   },
+   "performance": {
+    "draw_calls": "1 for every chair (+1 for all contact shadows)",
+    "lite": "fewer tube and slat segments on phones"
+   }
+  },
+  {
+   "id": "promenade-lamp",
+   "name": "Cast-iron promenade lamp with glowing globe",
+   "builder": "promenade-lamp",
+   "instanced": true,
+   "radius": 0.3,
+   "height": 3.4,
+   "provenance": {
+    "origin": "procedural (three.js geometry in web/src/engine/decoration-props.js)",
+    "rights": "KONA.m original; no third-party design or marks",
+    "first_used_in": "laidlow-nice"
+   },
+   "performance": {
+    "draw_calls": "3 for all lamps (post, globe, halo)",
+    "lights": "none: emissive globe and additive halo only"
+   }
   }
  ],
  "installations": [
@@ -59,6 +97,22 @@
    "layout_manifest": "world/konam/candidates/norwegian-engine-room-layout-v1.json",
    "asset_generator": "blender/norwegian_engine_assets.py",
    "release_state": "candidate-unwired"
+  }
+ ],
+ "materials": [
+  {
+   "id": "voile-sheer",
+   "name": "Voile sheer in a breeze",
+   "builder": "voileMaterial",
+   "source": "web/src/engine/decoration-props.js",
+   "provenance": {
+    "origin": "procedural (three.js geometry in web/src/engine/decoration-props.js)",
+    "rights": "KONA.m original; no third-party design or marks",
+    "first_used_in": "laidlow-nice"
+   },
+   "performance": {
+    "note": "one shared material, vertex-shader sway; hosts advance the time uniform"
+   }
   }
  ]
 }

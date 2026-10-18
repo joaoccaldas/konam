@@ -7,6 +7,35 @@ import { createRequire } from 'node:module';
 const require=createRequire(new URL('../web/package.json',import.meta.url));
 const {build}=require('esbuild'),puppeteer=require('puppeteer-core'),sharp=require('sharp');
 const root=path.resolve(import.meta.dirname,'..');
+const CATALOG=process.argv.includes('--catalog'),FORCE=process.argv.includes('--force');
+const chromeArgs=process.platform==='darwin'?['--use-angle=metal']:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox'];   // CHROME_PATH=<chromium> on Linux/CI
+if(CATALOG){                                                            // --catalog: a side-view preview for every public catalogue bike that lacks one (--force: all)
+ const {entryCatalog}=await import('./lib/entry-catalog.mjs');
+ const products=JSON.parse(fs.readFileSync(path.join(root,'museum/catalog/products.json'),'utf8')).products;
+ const todo=entryCatalog(products).filter(b=>!b.secret&&(FORCE||!fs.existsSync(path.join(root,b.image)))).map(b=>({...b,glb:products.find(p=>p.id===b.id)?.glb})).filter(b=>b.glb);
+ if(!todo.length){console.log('Entry catalog previews: nothing missing.');process.exit(0);}
+ const src=`
+import * as THREE from 'three';import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';import {MeshoptDecoder} from 'three/examples/jsm/libs/meshopt_decoder.module.js';import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
+const W=1200,H=754,renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});renderer.setSize(W,H);renderer.setPixelRatio(1);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1;document.body.append(renderer.domElement);
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(24,W/H,.01,100),pm=new THREE.PMREMGenerator(renderer),env=new RoomEnvironment();scene.environment=pm.fromScene(env).texture;
+const loader=new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+window.renderGlb=async url=>{for(const o of [...scene.children])scene.remove(o);const root=(await loader.loadAsync(url)).scene;root.traverse(o=>{if(o.userData.optional_accessory)o.visible=false});
+ const b=new THREE.Box3().setFromObject(root),c=b.getCenter(new THREE.Vector3()),s=b.getSize(new THREE.Vector3());root.position.sub(c);const wrap=new THREE.Group();wrap.add(root);if(s.z>s.x)wrap.rotation.y=Math.PI/2;scene.add(wrap);
+ wrap.updateMatrixWorld(true);const f=root.getObjectByName('wheel_front'),r=root.getObjectByName('wheel_rear');if(f&&r){const fc=new THREE.Box3().setFromObject(f).getCenter(new THREE.Vector3()),rc=new THREE.Box3().setFromObject(r).getCenter(new THREE.Vector3());if(fc.x<rc.x)wrap.rotation.y+=Math.PI;}
+ const size=new THREE.Box3().setFromObject(wrap).getSize(new THREE.Vector3()),d=Math.max(size.x/(2*Math.tan(THREE.MathUtils.degToRad(12))*W/H),size.y/(2*Math.tan(THREE.MathUtils.degToRad(12))))*1.12;
+ camera.position.set(0,size.y*.04,d);camera.lookAt(0,0,0);renderer.render(scene,camera);return renderer.domElement.toDataURL('image/png');};
+window.ready=true;`;
+ const bundled=await build({stdin:{contents:src,resolveDir:path.join(root,'web'),sourcefile:'entry-catalog-art.js'},bundle:true,format:'esm',write:false});
+ const server=http.createServer((req,res)=>{if(req.url==='/'){res.setHeader('Content-Type','text/html');res.end('<body style="margin:0"><script type="module" src="/render.js"></script>');return;}
+  if(req.url==='/render.js'){res.setHeader('Content-Type','text/javascript');res.end(bundled.outputFiles[0].text);return;}
+  const file=path.resolve(root,'.'+decodeURIComponent(req.url));if(!file.startsWith(root+path.sep)||!fs.existsSync(file)){res.statusCode=404;res.end();return;}fs.createReadStream(file).pipe(res);});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));
+ const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:chromeArgs});
+ try{const page=await browser.newPage();page.on('pageerror',console.error);await page.goto(`http://127.0.0.1:${server.address().port}`);await page.waitForFunction(()=>window.ready,{timeout:120000});
+  for(const b of todo){const png=await page.evaluate(u=>window.renderGlb(u),'/'+b.glb);await sharp(Buffer.from(png.split(',')[1],'base64')).webp({quality:88,alphaQuality:95}).toFile(path.join(root,b.image));console.log('preview',b.image);}
+ }finally{await browser.close();server.close();}
+ process.exit(0);
+}
 const art=JSON.parse(fs.readFileSync(path.join(root,'museum/entry-art.json'),'utf8'));
 const product=JSON.parse(fs.readFileSync(path.join(root,'museum/catalog/products.json'),'utf8')).products.find(p=>p.id===art.product);
 if(!product?.glb)throw new Error('Entry product needs a catalogue GLB');
@@ -43,7 +72,7 @@ const server=http.createServer((req,res)=>{
  const file=path.resolve(root,'.'+decodeURIComponent(req.url));if(!file.startsWith(root+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.statusCode=404;res.end();return;}fs.createReadStream(file).pipe(res);
 });
 await new Promise(r=>server.listen(0,'127.0.0.1',r));
-const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--use-angle=metal']});
+const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:chromeArgs});
 try{
  const page=await browser.newPage();page.on('pageerror',console.error);await page.goto(`http://127.0.0.1:${server.address().port}`);await page.waitForFunction(()=>window.ready,{timeout:60000});
  const dest=path.join(root,'assets/entry');fs.mkdirSync(dest,{recursive:true});
