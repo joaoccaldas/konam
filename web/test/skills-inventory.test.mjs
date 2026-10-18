@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {inventorySkills} from '../../tools/skills-inventory.mjs';
+const fixture=(contents)=>{const root=fs.mkdtempSync(path.join(os.tmpdir(),'skill-fixture-'));for(const [file,text] of Object.entries(contents)){const dest=path.join(root,'skills',file,'SKILL.md');fs.mkdirSync(path.dirname(dest),{recursive:true});fs.writeFileSync(dest,text);}return root;};
+test('valid metadata is discovered but not marked tested',t=>{const root=fixture({one:'---\nname: one\ndescription: Useful\n---\n## Test\nVerify outputs'});t.after(()=>fs.rmSync(root,{recursive:true,force:true}));const r=inventorySkills([{repository:'fixture',root,skillsPath:'skills'}]);assert.equal(r.count,1);assert.equal(r.skills[0].issues.length,0);assert.match(r.skills[0].status,/not-execution-verified/);});
+test('invalid frontmatter is flagged',t=>{const root=fixture({bad:'An undocumented skill'});t.after(()=>fs.rmSync(root,{recursive:true,force:true}));assert.ok(inventorySkills([{repository:'fixture',root,skillsPath:'skills'}]).issues>=3);});
+test('duplicate skill names are flagged',t=>{const root=fixture({a:'---\nname: same\ndescription: A\n---\ntest',b:'---\nname: same\ndescription: B\n---\ntest'});t.after(()=>fs.rmSync(root,{recursive:true,force:true}));const r=inventorySkills([{repository:'fixture',root,skillsPath:'skills'}]);assert.ok(r.skills.every(s=>s.issues.some(i=>i.startsWith('duplicate-name'))));});
+test('absent skills folder gives an honest empty result',()=>{const r=inventorySkills([{repository:'missing',root:'/nonexistent/skill-audit-fixture',skillsPath:'skills'}]);assert.equal(r.count,0);});
