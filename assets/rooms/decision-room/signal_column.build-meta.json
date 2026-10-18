@@ -1,0 +1,43 @@
+{
+ "id": "signal_column",
+ "contract_id": null,
+ "anchor": "base_centre",
+ "representation": "textured-study",
+ "surfaces": {
+  "Stone": "stone"
+ },
+ "provenance": "procedural (bmesh), no scans, no AI-generated geometry",
+ "generator": {
+  "builder": "gen",
+  "module": "interiors",
+  "func": "signal_column",
+  "params": {}
+ },
+ "units": "metres",
+ "up_axis_source": "Z",
+ "up_axis_gltf": "Y",
+ "triangles": 1462,
+ "bbox_m": [
+  [
+   -0.16,
+   -0.16,
+   0.0
+  ],
+  [
+   0.16,
+   0.16,
+   1.45
+  ]
+ ],
+ "semantic_parts": [
+  "signal_column"
+ ],
+ "materials": [
+  "C_SignalAmber",
+  "C_SignalGreen",
+  "C_SignalRed",
+  "S_Stone_stone"
+ ],
+ "bytes": 1354488,
+ "sha256": "04c1359ddfbcaac35dbd458e4a8ffeb282dcfb313b053e52c2cf655938d1b2b6"
+}

@@ -68,6 +68,11 @@ export function createRoomSound(ctx, out) {
     const wind = noise(), wl = filt('lowpass', 520, .7), wg = gain(.045); lfo(.05, 220, wl.frequency); lfo(.09, .02, wg.gain); wind.connect(wl).connect(wg).connect(g);
     const lap = noise(), ll = filt('lowpass', 180, 1.2), lg = gain(.03); lfo(.23, .02, lg.gain); lap.connect(ll).connect(lg).connect(g);
   }
+  { // The Decision Room: a low warm drone and a slow breath of air — quiet enough to think in
+    const g = bed('decision');
+    for (const [f, v] of [[73.4, .028], [110, .012]]) { const o = osc('sine', f), og = gain(v); lfo(.03, .006, og.gain); o.connect(og).connect(g); }
+    const air = noise(), al = filt('lowpass', 300, .7), ag = gain(.018); lfo(.05, .01, ag.gain); air.connect(al).connect(ag).connect(g);
+  }
   const crackle = setInterval(() => {
     if (ctx.state !== 'running' || active !== 'nor3' || Math.random() < .45) return;
     const t = now() + Math.random() * .2, h = noise(.05), bp = filt('bandpass', 1800 + Math.random() * 2600, 2), e = gain(0);
@@ -122,7 +127,7 @@ export function createRoomSound(ctx, out) {
   }, 280);
 
   return {
-    set(id) {                                                         // id: 'bio' | 'horror' | 'alien' | 'zombie' | 'beast' | 'breitling' | 'nor3' | 'norseman' | null
+    set(id) {                                                         // id: 'bio' | 'horror' | 'alien' | 'zombie' | 'beast' | 'breitling' | 'nor3' | 'norseman' | 'decision' | null
       if (id === active) return;
       active = id;
       for (const [k, g] of Object.entries(beds)) g.gain.setTargetAtTime(k === id ? 1 : 0, now(), .8);

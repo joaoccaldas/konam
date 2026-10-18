@@ -1,0 +1,43 @@
+{
+ "id": "data_plinth",
+ "contract_id": null,
+ "anchor": "base_centre",
+ "representation": "textured-study",
+ "surfaces": {
+  "Stone": "stone"
+ },
+ "provenance": "procedural (bmesh), no scans, no AI-generated geometry",
+ "generator": {
+  "builder": "gen",
+  "module": "interiors",
+  "func": "data_plinth",
+  "params": {}
+ },
+ "units": "metres",
+ "up_axis_source": "Z",
+ "up_axis_gltf": "Y",
+ "triangles": 96,
+ "bbox_m": [
+  [
+   -0.55,
+   -0.3,
+   0.0
+  ],
+  [
+   0.55,
+   0.3,
+   0.922
+  ]
+ ],
+ "semantic_parts": [
+  "data_plinth"
+ ],
+ "materials": [
+  "C_DarkChannel",
+  "C_Glass",
+  "C_Screen",
+  "S_Stone_stone"
+ ],
+ "bytes": 1292808,
+ "sha256": "fe52b4fc819e5b9d306eb434ac043c341a1015de63b03a65a8312497959df4b0"
+}

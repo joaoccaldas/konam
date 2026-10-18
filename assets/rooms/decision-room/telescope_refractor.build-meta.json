@@ -1,0 +1,42 @@
+{
+ "id": "telescope_refractor",
+ "contract_id": null,
+ "anchor": "base_centre",
+ "representation": "geometry-study",
+ "surfaces": {},
+ "provenance": "procedural (bmesh), no scans, no AI-generated geometry",
+ "generator": {
+  "builder": "gen",
+  "module": "props",
+  "func": "telescope_refractor",
+  "params": {}
+ },
+ "units": "metres",
+ "up_axis_source": "Z",
+ "up_axis_gltf": "Y",
+ "triangles": 1718,
+ "bbox_m": [
+  [
+   -0.495,
+   -0.814,
+   0.0
+  ],
+  [
+   0.495,
+   0.594,
+   1.877
+  ]
+ ],
+ "semantic_parts": [
+  "telescope_refractor"
+ ],
+ "materials": [
+  "C_Brass",
+  "C_Enamel",
+  "C_Glass",
+  "C_Rubber",
+  "C_Steel"
+ ],
+ "bytes": 36816,
+ "sha256": "f30a695aca5abada6f6abe06a9f5eaef88510c9902fe6d2182baf3cd8d2f617c"
+}

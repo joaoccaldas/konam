@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "room_id": "decision-room",
+  "variant": "decision-room",
+  "runtime": "web/src/decision-room.js",
+  "coordinates": "host world metres; at = [x, y, z, yawDeg, scale?]. Plinth yaw is computed at load so every screen faces the bridge.",
+  "items": [
+    {
+      "id": "scenario-plinths",
+      "kind": "glb",
+      "ref": "data_plinth",
+      "at": [
+        [
+          15.5,
+          0,
+          -5.4,
+          0
+        ],
+        [
+          22.2,
+          0,
+          -5.4,
+          0
+        ],
+        [
+          28.9,
+          0,
+          -5.4,
+          0
+        ]
+      ],
+      "rights_ref": "world/konam/candidates/decision-room-asset-manifest-v1.json",
+      "note": "Volume, price, cost scenarios, west to east."
+    },
+    {
+      "id": "signal-columns",
+      "kind": "glb",
+      "ref": "signal_column",
+      "at": [
+        [
+          16.0,
+          0,
+          -16.3,
+          0,
+          1.5
+        ],
+        [
+          22.2,
+          0,
+          -16.3,
+          0,
+          1.5
+        ],
+        [
+          28.4,
+          0,
+          -16.3,
+          0,
+          1.5
+        ]
+      ],
+      "rights_ref": "world/konam/candidates/decision-room-asset-manifest-v1.json",
+      "note": "Margin, monthly cash use, unpaid invoices, in rule order."
+    },
+    {
+      "id": "mirror",
+      "kind": "glb",
+      "ref": "wall_mirror_moulded",
+      "at": [
+        [
+          35.12,
+          1.0,
+          -9.8,
+          90,
+          2.2
+        ]
+      ],
+      "rights_ref": "world/konam/candidates/decision-room-asset-manifest-v1.json"
+    },
+    {
+      "id": "telescope",
+      "kind": "glb",
+      "ref": "telescope_refractor",
+      "at": [
+        [
+          33.4,
+          0,
+          -15.4,
+          -35,
+          1.0
+        ]
+      ],
+      "rights_ref": "world/konam/candidates/decision-room-asset-manifest-v1.json",
+      "note": "Looking up at the dusk through the clerestory."
+    },
+    {
+      "id": "globe",
+      "kind": "glb",
+      "ref": "globe_on_stand",
+      "at": [
+        [
+          10.4,
+          0,
+          -5.3,
+          20,
+          1.0
+        ]
+      ],
+      "rights_ref": "world/konam/candidates/decision-room-asset-manifest-v1.json"
+    }
+  ],
+  "shots": {
+    "hero": [
+      9.4,
+      -8.0,
+      0.0,
+      30.0,
+      1.4,
+      -11.6
+    ],
+    "heroPortrait": [
+      10.4,
+      -8.4,
+      0.0,
+      28.0,
+      1.2,
+      -11.4
+    ],
+    "bridge": [
+      10.0,
+      -5.4,
+      1.1,
+      25.0,
+      0.6,
+      -12.0
+    ],
+    "plinths": [
+      22.2,
+      -8.6,
+      0.0,
+      22.2,
+      0.85,
+      -5.4,
+      "setScenario:plan"
+    ],
+    "scenario": [
+      10.0,
+      -5.4,
+      1.1,
+      25.0,
+      0.6,
+      -12.0,
+      "setScenario:volume"
+    ],
+    "costs": [
+      10.0,
+      -5.4,
+      1.1,
+      25.0,
+      0.6,
+      -12.0,
+      "setScenario:cost"
+    ],
+    "columns": [
+      22.2,
+      -12.4,
+      0.0,
+      22.2,
+      1.4,
+      -16.3,
+      "resetStress:"
+    ],
+    "stress": [
+      22.2,
+      -12.4,
+      0.0,
+      22.2,
+      1.4,
+      -16.3,
+      "stress:burn"
+    ]
+  },
+  "evidence": {
+    "phone": [
+      "hero",
+      "bridge",
+      "scenario",
+      "columns"
+    ],
+    "landscape": [
+      "hero",
+      "stress"
+    ]
+  }
+}

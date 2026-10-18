@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "id": "decision-room",
+  "status": "invented-example-data",
+  "rule": "Every figure is invented example data for one imaginary product. No company, employer or client data. Numbers are copied from the portfolio finance model and recomputed by web/test/decision-room.test.mjs.",
+  "source": {
+    "model": "HoldingCo-spatial-platform apps/spatial-studio/web/finance-model.js (BASE_PLAN, samplePlan, PLAN_STUDIES, sampleAlerts)",
+    "rules": "joaoccaldas/fp-a-metric-monitor monitor.py at ce782a4 (thresholds as quoted in finance-model.js)"
+  },
+  "base_plan": {
+    "units": 1000,
+    "price": 100,
+    "cost": 60,
+    "fixed": 25000
+  },
+  "scenarios": [
+    {
+      "id": "plan",
+      "label": "The original plan",
+      "units": 1000,
+      "price": 100,
+      "cost": 60,
+      "revenue": 100000,
+      "expenses": 85000,
+      "profit": 15000,
+      "volumeEffect": 0,
+      "priceEffect": 0,
+      "costEffect": 0,
+      "change": 0
+    },
+    {
+      "id": "volume",
+      "label": "Sell 20% more",
+      "units": 1200,
+      "price": 100,
+      "cost": 60,
+      "revenue": 120000,
+      "expenses": 97000,
+      "profit": 23000,
+      "volumeEffect": 8000,
+      "priceEffect": 0,
+      "costEffect": 0,
+      "change": 8000
+    },
+    {
+      "id": "price",
+      "label": "A 5% price cut",
+      "units": 1000,
+      "price": 95,
+      "cost": 60,
+      "revenue": 95000,
+      "expenses": 85000,
+      "profit": 10000,
+      "volumeEffect": 0,
+      "priceEffect": -5000,
+      "costEffect": 0,
+      "change": -5000
+    },
+    {
+      "id": "cost",
+      "label": "Costs rise 10%",
+      "units": 1000,
+      "price": 100,
+      "cost": 66,
+      "revenue": 100000,
+      "expenses": 91000,
+      "profit": 9000,
+      "volumeEffect": 0,
+      "priceEffect": 0,
+      "costEffect": -6000,
+      "change": -6000
+    }
+  ],
+  "alerts": {
+    "rules": [
+      {
+        "id": "margin",
+        "label": "Margin",
+        "breach": "below",
+        "threshold": 25,
+        "unit": "%",
+        "text": "Margin below 25%"
+      },
+      {
+        "id": "burn",
+        "label": "Monthly cash use",
+        "breach": "above",
+        "threshold": 150000,
+        "unit": "EUR",
+        "text": "Monthly cash use above €150,000"
+      },
+      {
+        "id": "receivables",
+        "label": "Unpaid invoices",
+        "breach": "above",
+        "threshold": 40,
+        "unit": "% of revenue",
+        "text": "Unpaid invoices above 40% of revenue"
+      }
+    ],
+    "example_inputs": {
+      "margin": 30,
+      "burn": 145000,
+      "receivables": 34
+    },
+    "example_result": "all within limits",
+    "stress_examples": {
+      "margin": 22,
+      "burn": 162000,
+      "receivables": 46
+    },
+    "stress_note": "Stress values are KONA.m display examples chosen to cross one threshold each; they are not forecasts."
+  }
+}

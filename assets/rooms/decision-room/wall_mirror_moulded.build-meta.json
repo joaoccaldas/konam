@@ -1,0 +1,42 @@
+{
+ "id": "wall_mirror_moulded",
+ "contract_id": null,
+ "anchor": "wall_attachment_centre",
+ "representation": "textured-study",
+ "surfaces": {
+  "Gilt": "gilt"
+ },
+ "provenance": "procedural (bmesh), no scans, no AI-generated geometry",
+ "generator": {
+  "builder": "gen",
+  "module": "interiors",
+  "func": "wall_mirror_moulded",
+  "params": {}
+ },
+ "units": "metres",
+ "up_axis_source": "Z",
+ "up_axis_gltf": "Y",
+ "triangles": 464,
+ "bbox_m": [
+  [
+   -0.36,
+   0.0,
+   -0.51
+  ],
+  [
+   0.36,
+   0.039,
+   0.51
+  ]
+ ],
+ "semantic_parts": [
+  "wall_mirror_moulded"
+ ],
+ "materials": [
+  "C_Backboard",
+  "C_Mirror",
+  "S_Gilt_gilt"
+ ],
+ "bytes": 1779808,
+ "sha256": "a70096c07e3cdb7047c846d70e0912bddd6a8577653a9752980579163225397e"
+}

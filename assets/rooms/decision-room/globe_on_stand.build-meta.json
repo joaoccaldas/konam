@@ -1,0 +1,43 @@
+{
+ "id": "globe_on_stand",
+ "contract_id": null,
+ "anchor": "base_centre",
+ "representation": "textured-study",
+ "surfaces": {
+  "Timber": "oak"
+ },
+ "provenance": "procedural (bmesh), no scans, no AI-generated geometry",
+ "generator": {
+  "builder": "gen",
+  "module": "props",
+  "func": "globe_on_stand",
+  "params": {}
+ },
+ "units": "metres",
+ "up_axis_source": "Z",
+ "up_axis_gltf": "Y",
+ "triangles": 11014,
+ "bbox_m": [
+  [
+   -0.254,
+   -0.254,
+   0.0
+  ],
+  [
+   0.287,
+   0.254,
+   0.888
+  ]
+ ],
+ "semantic_parts": [
+  "globe_on_stand"
+ ],
+ "materials": [
+  "C_Brass",
+  "C_GlobeSea",
+  "C_Graticule",
+  "S_Timber_oak"
+ ],
+ "bytes": 2077892,
+ "sha256": "1eeb53c5f307e6a6e97d65850e1c24dcefaea38e35638dc5890dfc9eef03b365"
+}

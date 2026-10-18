@@ -1,0 +1,10 @@
+{
+  "captured": "2026-10-18",
+  "method": "same browser session, headless Chrome (ANGLE Metal), 1440x900, median frame time over 3 s at a fixed view inside each room",
+  "fps_median": {
+    "breitling-kona": 57.1,
+    "norseman-training": 68.0,
+    "decision-room": 73.0
+  },
+  "note": "Absolute fps varies with machine load; compare within the session. Host museum draw calls set the ceiling."
+}
