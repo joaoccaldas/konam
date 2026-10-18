@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {buildPortfolioProjection} from '../../tools/portfolio-projection.mjs';
+const rooms={rooms:[{id:'nave',name:'Gallery Nave'}]};
+const p=(more={})=>({products:[{id:'bike-1',name:'Example',brand:'Studio',glb:'assets/example.glb',deepStudio:'Studio.html',where:[{id:'nave'},{id:'missing'}],skins:[{id:'dark',name:'Charcoal'}],sources:[{label:'source'}],...more}]});
+test('maps original ID, model, viewer and known placements',()=>{const v=buildPortfolioProjection(p(),rooms);assert.equal(v.cards[0].actions.modelDownload,'assets/example.glb');assert.equal(v.cards[0].placements[1].known,false);});
+test('does not invent previews or rights review',()=>{const v=buildPortfolioProjection(p(),rooms).cards[0];assert.equal(v.preview.status,'unverified');assert.equal(v.provenance.rights,'not-reviewed-in-projection');});
+test('rejects duplicate asset identity',()=>assert.throws(()=>buildPortfolioProjection({products:[p().products[0],p().products[0]]},rooms),/duplicate/));
+test('rejects missing canonical catalogs',()=>assert.throws(()=>buildPortfolioProjection({},rooms),/missing/));
+test('rejects unsafe and remote paths',()=>{const v=buildPortfolioProjection(p({glb:'../../private',deepStudio:'https://evil.example'}),rooms).cards[0];assert.equal(v.actions.modelDownload,null);assert.equal(v.actions.explore,null);});
+test('keeps metadata-only entries without claiming exports',()=>assert.equal(buildPortfolioProjection(p({glb:null,deepStudio:null}),rooms).cards[0].status,'metadata-only'));
