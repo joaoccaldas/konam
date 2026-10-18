@@ -1,0 +1,69 @@
+{
+  "captured_at": "2026-10-17T18:56:30.594Z",
+  "renderer": "headless Chrome, ANGLE Metal (hardware)",
+  "configs": [
+    {
+      "config": "desktop",
+      "viewport": [
+        1440,
+        900
+      ],
+      "fps_mean": 60.2,
+      "scene_calls": 1492,
+      "scene_triangles": 6633934,
+      "room_meshes": 122,
+      "room_triangles": 86416,
+      "dpr": 1,
+      "budget": {
+        "calls": 190,
+        "triangles": 450000
+      },
+      "within_budget": null,
+      "geometry_only_within_budget": true,
+      "performance_status": "unverified: room mesh count is not draw calls; portal, mirror and host passes need complete-frame measurement",
+      "errors": []
+    },
+    {
+      "config": "phone390",
+      "viewport": [
+        390,
+        844
+      ],
+      "fps_mean": 60.2,
+      "scene_calls": 129,
+      "scene_triangles": 44142,
+      "room_meshes": 110,
+      "room_triangles": 70432,
+      "dpr": 1,
+      "budget": {
+        "calls": 110,
+        "triangles": 220000
+      },
+      "within_budget": null,
+      "geometry_only_within_budget": true,
+      "performance_status": "unverified: room mesh count is not draw calls; portal, mirror and host passes need complete-frame measurement",
+      "errors": []
+    },
+    {
+      "config": "landscape",
+      "viewport": [
+        844,
+        390
+      ],
+      "fps_mean": 60.1,
+      "scene_calls": 192,
+      "scene_triangles": 67048,
+      "room_meshes": 110,
+      "room_triangles": 70432,
+      "dpr": 1,
+      "budget": {
+        "calls": 110,
+        "triangles": 220000
+      },
+      "within_budget": null,
+      "geometry_only_within_budget": true,
+      "performance_status": "unverified: room mesh count is not draw calls; portal, mirror and host passes need complete-frame measurement",
+      "errors": []
+    }
+  ]
+}

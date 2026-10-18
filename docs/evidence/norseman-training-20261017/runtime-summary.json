@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-17T18:56:30.594Z",
+  "captured_at": "2026-10-18T01:28:49.360Z",
   "renderer": "headless Chrome, ANGLE Metal (hardware)",
   "configs": [
     {
@@ -8,7 +8,7 @@
         1440,
         900
       ],
-      "fps_mean": 60.2,
+      "fps_mean": 56.4,
       "scene_calls": 1492,
       "scene_triangles": 6633934,
       "room_meshes": 122,

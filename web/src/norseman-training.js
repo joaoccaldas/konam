@@ -530,8 +530,12 @@ export function buildNorsemanTraining(ctx) {
     g.putImageData(im, 0, 0); }), false, [1, 1]); fjordN.wrapS = fjordN.wrapT = THREE.RepeatWrapping;
   const fjordShape = new THREE.Shape([[-5000, -R.z1 + .05], [R.x1, -R.z1 + .05], [5000, -R.z1 + 5000 - R.x1], [5000, 7000], [-5000, 7000]].map(([x, y]) => new THREE.Vector2(x, y)));
   let fjord;
-  if (!lite) { fjord = new Water(new THREE.ShapeGeometry(fjordShape), { textureWidth: 1024, textureHeight: 1024, waterNormals: fjordN, sunDirection: SUN_P.clone(), sunColor: 0xffd2a0, waterColor: 0x040b0f, distortionScale: .28, fog: true });
-    fjord.material.uniforms.size.value = 2.2; aerialWater(fjord); }
+  if (!lite) { fjord = new Water(new THREE.ShapeGeometry(fjordShape), { textureWidth: 1024, textureHeight: 1024, waterNormals: fjordN, sunDirection: SUN_P.clone(), sunColor: 0xffd2a0, waterColor: 0x0a2b2e, distortionScale: .75, fog: true });
+    fjord.material.uniforms.size.value = 2.6; aerialWater(fjord);
+    // cold Norwegian water: the mirrored scene a little darker, less saturated and pulled toward blue-green
+    fjord.material.fragmentShader = fjord.material.fragmentShader.replace('float theta = max( dot( eyeDirection, surfaceNormal ), 0.0 );',
+      'reflectionSample = mix(vec3(dot(reflectionSample, vec3(.299, .587, .114))), reflectionSample, .55) * vec3(.6, .74, .8);\n\t\t\t\t\tfloat theta = max( dot( eyeDirection, surfaceNormal ), 0.0 );')
+      .replace('sunColor * diffuseLight * 0.3', 'sunColor * diffuseLight * 0.025'); }   // no warm 'sun diffuse' on deep water: that read as brown mud
   else { const fN = tex(waterN, false, [260, 260]); fjord = new THREE.Mesh(new THREE.ShapeGeometry(fjordShape), new THREE.MeshStandardMaterial({ color: '#08161c', roughness: .22, metalness: 0, envMapIntensity: .2, normalMap: fN, normalScale: new THREE.Vector2(.5, .5) })); }
   fjord.rotation.x = -Math.PI / 2; fjord.position.set(0, POOL.y - .01, 0); L.add(fjord);
   // a car ferry working the fjord, decks lit (interpretation)
@@ -556,7 +560,15 @@ export function buildNorsemanTraining(ctx) {
     conifer([[.52, .9, .5], [.4, .8, .95], [.26, .7, 1.36]], .35),                                          // broad
     conifer([[.28, .7, .42], [.19, .6, .78]], .25),                                                          // young
     conifer([[.36, .8, .7], [.3, .7, 1.2], [.16, .6, 1.62]], .75, 4, 1)];                                    // old, wind-bent, a bare trunk below
-  const BIRCH = [crown([[.4, 1, 1.45, 0, 1.05]]), crown([[.3, 1, 1.3, -.12, .95], [.28, 1, 1.4, .14, 1.2]]), crown([[.3, .9, 2.0, 0, 1.35]], .8), crown([[.28, 1, 1.1, 0, .72]], .4)];
+  // Birch: a pale trunk and several small leaf clumps, darker underneath (vertex colours; instances only vary brightness).
+  const tint = (g, f) => { const p = g.attributes.position, c = new Float32Array(p.count * 3); for (let i = 0; i < p.count; i++) c.set(f(p.getX(i), p.getY(i), p.getZ(i)), i * 3); g.setAttribute('color', new THREE.BufferAttribute(c, 3)); return g; };
+  const birchTree = (h, n, spread, seed, droop = 1) => { const r = rng(seed), parts = [];
+    parts.push(tint(lean(new THREE.CylinderGeometry(.02, .034, h, 5).translate(0, h / 2, 0).toNonIndexed()), (x, y) => { const k = .34 + .05 * Math.sin(y * 31); return [k, k * .98, k * .93]; }));
+    for (let i = 0; i < n; i++) { const t = i / Math.max(1, n - 1), y = h * (.36 + .58 * t), rad = (.24 - .09 * t) * (.8 + r() * .4), a = r() * 6.283, off = spread * (1 - .6 * t) * (.4 + r() * .6), cy = y;
+      parts.push(tint(lean(new THREE.IcosahedronGeometry(rad, 0).scale(1, .8 * droop, 1).translate(Math.cos(a) * off, cy, Math.sin(a) * off).toNonIndexed()),
+        (x, yy) => { const u = Math.max(0, Math.min(1, (yy - cy + rad) / (2 * rad))); return [.04 + .06 * u, .075 + .1 * u, .028 + .03 * u]; })); }
+    return mergeGeometries(parts); };
+  const BIRCH = [birchTree(1.7, 9, .16, 11), birchTree(1.4, 8, .22, 12), birchTree(1.0, 5, .12, 13), birchTree(2.0, 10, .15, 14, 1.25)];
 
   let terrainReady = false;
   async function loadTerrain() {
@@ -565,7 +577,7 @@ export function buildNorsemanTraining(ctx) {
     for (const { id, meta, heights } of sites) {
       const v = VIEWS[id], view = { ...v.view }; if (view.e0 === null) view.e0 = terrainHeightAt(meta, heights, v.lat, v.lon);
       const g = terrainGeometry(meta, heights, { lat: v.lat, lon: v.lon, view, step: lite ? 3 : 1, sun: SUN_P });
-      if (id === 'eidfjord') { const p = g.attributes.position, e = g.attributes.elev; for (let i = 0; i < p.count; i++) if (e.getX(i) < .6) p.setY(i, POOL.y - 3); p.needsUpdate = true; g.computeVertexNormals(); }
+      if (id === 'eidfjord') { const p = g.attributes.position, e = g.attributes.elev; for (let i = 0; i < p.count; i++) if (e.getX(i) < .6) p.setY(i, POOL.y - .6); p.needsUpdate = true; g.computeVertexNormals(); }   // the shore slopes gently under the water: no cliff seam
       const keep = id === 'eidfjord' ? keepSouth : keepEast, layer = id === 'eidfjord' ? 0 : 1;   // layer 1: not drawn in the fjord's mirror
       const t = new THREE.Mesh(g, terrainMaterial({ clippingPlanes: keep, snowline: v.snowline, treeline: v.treeline, time: TIME, sun: SUN_P, alpen: v.alpen, near: [view.x, view.z, id === 'eidfjord' ? NEAR.eid : NEAR.gau] })); t.layers.set(layer); L.add(t);
       // forest: stands, not singles. Cluster centres fall on gentle ground below a ragged treeline; each stand fills
@@ -589,17 +601,26 @@ export function buildNorsemanTraining(ctx) {
         for (let t = 0; t < n && placed < budget; t++) {
           const a = rand() * 6.283, q = Math.sqrt(rand()) * r, p = at(cx + Math.cos(a) * q, cy + Math.sin(a) * q);
           if (p.e < 2 || p.up < .56 || p.e > tl - rand() * 80 || keep.some(pl => pl.distanceToPoint(V.set(p.x, 0, p.z)) < 0)) continue;
-          const isBirch = shore ? rand() < .55 : rand() < .12 * (1 - p.e / tl), list = isBirch ? bir : spr;
+          const isBirch = rand() < (shore ? .08 : .03), list = isBirch ? bir : spr;
           const hs = (1 - .45 * p.e / tl) * (.6 + rand() * .7);                                                  // smaller toward the treeline
           list[Math.floor(rand() * 4)].push([p.x, p.y, p.z, hs, p.lit]); placed++;
         }
       }
+      { const band = id === 'eidfjord' ? [4, 260] : [v.treeline - 220, v.treeline + 20], want = Math.round((lite ? 450 : 1900) * (id === 'eidfjord' ? 1 : .6));
+        let nb = 0;
+        for (let tries = 0; nb < want && tries < 60000; tries++) {
+          const cx = rand() * (m - 1), cy = rand() * (m - 1), c = at(cx, cy), d = Math.hypot(c.x - vx, c.z - vz);
+          if (d < 14 || d > near || c.e < band[0] || c.e > band[1] || c.up < .66 || keep.some(pl => pl.distanceToPoint(V.set(c.x, 0, c.z)) < 0)) continue;
+          const r = .5 + rand() * .9, n = 6 + Math.round(rand() * 12);
+          for (let t = 0; t < n && nb < want; t++) { const a = rand() * 6.283, q = Math.sqrt(rand()) * r, p = at(cx + Math.cos(a) * q * 1.6, cy + Math.sin(a) * q);   // drifts: longer than wide
+            if (p.e < band[0] - 2 || p.up < .6) continue; bir[Math.floor(rand() * 4)].push([p.x, p.y, p.z, .7 + rand() * .55, p.lit]); nb++; } } }
       const up = new THREE.Vector3(0, 1, 0), col = new THREE.Color();
-      [[spr, SPRUCE, .4, .38, .034], [bir, BIRCH, .28, .38, .06]].forEach(([lists, geos, hue, sat, light]) => lists.forEach((list, vi) => {
+      [[spr, SPRUCE, .4, .38, .034], [bir, BIRCH, 0, 0, 1]].forEach(([lists, geos, hue, sat, light], si) => lists.forEach((list, vi) => {
         if (!list.length) return;
-        const tree = new THREE.InstancedMesh(geos[vi], withAerial(new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, clippingPlanes: keep })), list.length);
+        const tree = new THREE.InstancedMesh(geos[vi], withAerial(new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, clippingPlanes: keep, vertexColors: si === 1 })), list.length);
         list.forEach(([x, y, z, s, l], i) => { M4.compose(V.set(x, y - .1, z), Q.setFromAxisAngle(up, rand() * 6.283), S.set(s * (.85 + rand() * .3), s * (.85 + rand() * .45), s * (.85 + rand() * .3))); tree.setMatrixAt(i, M4);
-          tree.setColorAt(i, col.setHSL(hue + (rand() - .5) * .05, sat + rand() * .12, (light + rand() * .03) * (.5 + .5 * l))); });
+          if (si === 1) { const k = (.75 + rand() * .45) * (.5 + .5 * l); tree.setColorAt(i, col.setRGB(k, k * (.96 + rand() * .08), k * .92)); }   // birch: brightness only; hue lives in the vertex colours
+          else tree.setColorAt(i, col.setHSL(hue + (rand() - .5) * .05, sat + rand() * .12, (light + rand() * .03) * (.5 + .5 * l))); });
         tree.layers.set(layer); L.add(tree);
       }));
     }

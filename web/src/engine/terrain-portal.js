@@ -179,7 +179,8 @@ export function terrainMaterial({ clippingPlanes = [], snowline = 1450, treeline
         float snowAmt = smoothstep(${(snowline - 80).toFixed(1)}, ${(snowline + 140).toFixed(1)}, e + n2 * 160. + (1. - vLit) * 120.) * (1. - smoothstep(.4, .62, slope)) * smoothstep(.36, .5, n1 + n3 * .35);
         c = mix(c, snow, snowAmt);
         // the shore: dark wet rock and weed for the first metres above the water
-        c = mix(c, vec3(.028,.032,.03), smoothstep(9., 0., vE) * .85);
+        c = mix(c, vec3(.028,.032,.03), smoothstep(14., 1.5, vE) * .8);
+        c = mix(c, vec3(.13,.15,.15), smoothstep(.2, .9, vE) * (1. - smoothstep(1.2, 2.6, vE)) * .55);   // a thin wet waterline
         // drifting cloud shadows, cast along the sun
         vec2 cs = (vWP.xz - uSun.xz / max(uSun.y, .1) * vWP.y) * .0016 + vec2(uTime * .006, uTime * .0025);
         c *= mix(1., .42, smoothstep(.5, .66, tf(cs)));

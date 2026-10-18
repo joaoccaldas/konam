@@ -137,3 +137,28 @@ Before/after pairs: `landscape-before-after/` (desktop fjord, hero, mountain, po
 - **Not in those budgets:** the portal's own triangles (terrain, about 23,000 trees and the mirror) sit outside the room group and are not counted there. They are covered by the full-frame fps above.
 - **Not yet verified:** a real (non-headless) browser and a phone.
 - **Tree count:** the phone tree count is the lever if a device runs slow.
+
+## Birch and fjord pass (after 22c2974)
+
+**Birch.** The yellow single-blob "balloons" read as floating in front of the forest. They are replaced by four silhouettes, each built as:
+- a short pale trunk with 5–10 small leaf clumps up it
+- vertex-coloured: darker undersides, green-gold tops and bark (instances vary brightness only)
+- the same aerial perspective as the spruce
+
+They are fewer and grouped in drifts rather than sprinkled through the spruce:
+- along the Eidfjord shore and lower slopes, about 1,900 trees on desktop and 450 on phones
+- in the mountain-birch band just under the Gaustatoppen treeline
+
+**Fjord.** It now reads as cold water:
+- **Colour:** a deep blue-green base (`0x0a2b2e`). Three's Water shader adds a warm "sun diffuse" term, which read as brown mud when looking down at the water; it is cut to a trace.
+- **Reflection:** the mirrored scene is darkened, desaturated and pulled toward blue-green, with a little more ripple distortion to break up the reflected trees. The soft fresnel toward the horizon is Water.js's own.
+- **Shoreline:** the terrain slopes 0.6 m under the water instead of a 3 m cliff, and gets a thin wet waterline instead of a hard seam.
+
+Before/after pairs: `birch-water-before-after/` (desktop fjord, hero, pool, mountain; phone fjord, hero; plus `desktop-fjord-crop.jpg` at full resolution). The before frames are in `before-birch-water/` (22c2974).
+
+| | room meshes | room triangles |
+|---|---|---|
+| desktop before → after | 122 → 122 | 86,416 → 86,416 |
+| phone 390 before → after | 110 → 110 | 70,432 → 70,432 |
+
+Full-frame median, same session (headless Chrome, ANGLE Metal, 1440×900): Norseman 71.9, Breitling × KONA 63.7, NOR // 3 34.7 fps. The lead over Breitling holds. Not published: publishing into the Bellagio kona-rooms runtime waits for the owner's go-ahead after these frames.
