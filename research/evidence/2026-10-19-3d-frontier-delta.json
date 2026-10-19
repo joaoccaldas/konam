@@ -1,0 +1,167 @@
+{
+  "date": "2026-10-19",
+  "compared_with": "2026-10-18",
+  "program": "Unified 3D Frontier R&D",
+  "branch": "research/3d-core-r1-20261004",
+  "methodology": {
+    "threshold": "Promote only findings that materially change experiment acceptance criteria, architecture choices, hypotheses, or project priorities.",
+    "sources": "Primary upstream PR/commit metadata and Khronos specification; project relevance cross-checked against KONA source and documentation.",
+    "evidence_not_model_synthesis": true,
+    "scan_window_utc": "2026-10-16/2026-10-19",
+    "no_production_change": true
+  },
+  "production_modified": false,
+  "experiments_executed": false,
+  "findings": [
+    {
+      "id": "ktx-decode-inflate-input-boundaries-20261019",
+      "title": "Upstream libktx fuzzing and decompression fixes require an adversarial KTX2 ingestion gate",
+      "upstream_dates": [
+        "2026-10-16",
+        "2026-10-17",
+        "2026-10-18"
+      ],
+      "sources": [
+        {
+          "url": "https://github.com/KhronosGroup/KTX-Software/pull/1290",
+          "type": "primary",
+          "event": "range validation, Oct 17"
+        },
+        {
+          "url": "https://github.com/KhronosGroup/KTX-Software/pull/1288",
+          "type": "primary",
+          "event": "BasisLZ global header bounds, Oct 16"
+        },
+        {
+          "url": "https://github.com/KhronosGroup/KTX-Software/pull/1278",
+          "type": "primary",
+          "event": "reject failed ETC1S palette/table decodes, Oct 16"
+        },
+        {
+          "url": "https://github.com/KhronosGroup/KTX-Software/pull/1284",
+          "type": "primary",
+          "event": "ZLIB/Zstd inflated-level buffer-size/padding correctness, Oct 18"
+        },
+        {
+          "url": "https://github.com/KhronosGroup/KTX-Software/pull/1295",
+          "type": "primary",
+          "event": "valid ZLIB streaming-load regression, Oct 18"
+        },
+        {
+          "url": "https://registry.khronos.org/KTX/specs/2.0/ktxspec.v2.html",
+          "type": "official_spec"
+        }
+      ],
+      "source_quality": "A for merged code and explicit repro descriptions; B for safety coverage extrapolation.",
+      "evidence": "Maintainers merged checks after libFuzzer detected out-of-bounds data-range/header reads and invalid ETC1S table failure handling; separate fixes correct ZLIB/Zstd size handling and valid-ZLIB streaming false negatives.",
+      "confidence": {
+        "changes_merged": 0.99,
+        "input_validation_requirement": 0.94,
+        "affected_current_konam_code": 0.34
+      },
+      "contradiction_or_uncertainty": "No exploit or CVE has been established. The bug reports concern libktx paths; no evidence that KONA's browser-side KTX2Loader is affected or that libktx runs in the current production pipeline. Latest public tagged release observed: v5.0.0-rc2 (2026-08-17), preceding these fixes.",
+      "implication": "Before accepting external customer KTX2: sandbox any libktx-based conversion, cap texture/mip/decompressed bytes and time, enforce format/level bounds, and maintain malformed + valid ZLIB/Zstd/BasisLZ/ETC1S fixtures; version-pin converter and test recovery without crashes or hangs.",
+      "affected_projects": [
+        "shared 3D asset factory",
+        "KONA.m product assets",
+        "Studio-Kona",
+        "Bellagio",
+        "Gaudí Nexus"
+      ],
+      "existing_experiments": [
+        "EXP-GLTF21-COMPOSE-001",
+        "EXP-BLENDER-ASSET-AS-CODE-001"
+      ],
+      "isolated_experiment": "Isolated negative-input KTX2 fixture under existing asset-pipeline experiments; no new top-level experiment",
+      "priority_effect": "Promote KTX2 intake safety as a release-gate prerequisite for untrusted external assets, not a reason to change the top three research experiments."
+    },
+    {
+      "id": "ktx-uastc-encoding-flags-20261019",
+      "title": "UASTC quality flag fix invalidates naive compression A/B settings equivalence",
+      "upstream_dates": [
+        "2026-10-17"
+      ],
+      "sources": [
+        {
+          "url": "https://github.com/KhronosGroup/KTX-Software/pull/1283",
+          "type": "primary",
+          "event": "UASTC quality bit-mask and CLI flag handling correction"
+        },
+        {
+          "url": "https://github.com/KhronosGroup/KTX-Software-CTS/pull/86",
+          "type": "primary",
+          "event": "Related conformance tests"
+        }
+      ],
+      "source_quality": "A for merged implementation and code explanation; B for potential difference in quality metrics.",
+      "evidence": "KTX_PACK_UASTC_LEVEL_MASK was 0xF, encompassing a non-quality option bit (8), while ktx CLI quality-setting logic altered non-level flag bits. Upstream changes mask to 0x7 and preserves unrelated flags.",
+      "confidence": {
+        "changes_merged": 0.99,
+        "benchmark_control_implication": 0.94,
+        "impact_on_existing_outputs": 0.28
+      },
+      "contradiction_or_uncertainty": "No project-specific encoder invocation or affected legacy output has been demonstrated; not a measured visual-quality gain. Changes are in upstream development, not verified in a tagged release.",
+      "implication": "For the native Blender KTX2 vs external postprocessing comparison, record exact compressor build, quality level, UASTC options, KTX metadata, bit-for-bit determinism, file size, decoded error, mobile transcode behavior. Avoid mixing before/after tool versions as if encoding parameters were equivalent.",
+      "affected_projects": [
+        "KONA.m watch/bike/helmet product visualization",
+        "Studio-Kona",
+        "Bellagio brand rooms",
+        "Gaudí Nexus"
+      ],
+      "existing_experiments": [
+        "EXP-BLENDER-ASSET-AS-CODE-001",
+        "EXP-GLTF21-COMPOSE-001"
+      ],
+      "isolated_experiment": "One isolated version-pinned encoder A/B fixture inside existing KTX2 comparison; no new top-level experiment",
+      "priority_effect": "Strengthens comparability gate, no portfolio reprioritization."
+    }
+  ],
+  "watch_only": [
+    {
+      "url": "https://github.com/KhronosGroup/KTX-Software/pull/1265",
+      "reason": "Python wheel build support merged Oct 19, but no release of bundled binaries yet; test when published, no current pyktx dependency established."
+    },
+    {
+      "url": "https://github.com/mrdoob/three.js/pull/35075",
+      "reason": "Oct 18 dynamic BatchedMesh velocity-buffer fix. No active BatchedMesh use found in checked KONA/Studio-Kona default branches."
+    },
+    {
+      "url": "https://github.com/mrdoob/three.js/pull/35073",
+      "reason": "Oct 18 GTAO orthographic-camera fix. No active TSL/GTAO pipeline established in current projects."
+    },
+    {
+      "url": "https://github.com/blender/blender/commit/a97809f349142aefe2ec1f3615d4eb04fe25c985",
+      "reason": "Alembic static-mesh animated material import fix; current candidate authoring path emphasizes USD and glTF, not Alembic."
+    }
+  ],
+  "reviewed_without_promotion": [
+    "Catalan/Spanish Gaudí scholarship and historical form-finding",
+    "computational architecture and Blender procedural modeling",
+    "glTF/GLB, Meshopt, LOD/HLOD/meshlets/culling/streaming",
+    "photogrammetry, splats, NeRF/hybrid reconstruction, AI x 3D",
+    "cycling aero/rolling resistance/wind/terrain",
+    "perceptual resolution and material/product visualization"
+  ],
+  "repo_evidence": {
+    "github_branch_existing": true,
+    "committed_records_through": "2026-10-14",
+    "uncommitted_local_records": [
+      "2026-10-15",
+      "2026-10-16",
+      "2026-10-17",
+      "2026-10-18"
+    ],
+    "repository_search": "KONA default branch documentation mentions KTX2 as planned/preferred; code search found no libktx, toktx, basisu, KTX2Loader, or BatchedMesh, so runtime applicability is unverified."
+  },
+  "decisions": {
+    "top_priority_order": [
+      "scientific cycling CFD",
+      "ClusterLOD/geometry processing",
+      "Gaussian splat interoperability"
+    ],
+    "priority_ranking_changed": false,
+    "new_top_level_experiments": 0,
+    "production_upgrade": false,
+    "immediate_next_test": "Build a deliberately bounded malformed/valid KTX2 corpus and compare pre-fix versus patched libktx under resource quotas; separately pin UASTC encoder options for the native-Blender-vs-postprocess test."
+  }
+}
