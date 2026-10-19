@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-04",
+  "source_ref": "cc80c48ada08a634c642561a64ef928f06c626be",
+  "target_base": "main",
+  "status": "blocked-on-selective-recovery",
+  "reason": "Final artistic rooms exist on a divergent branch; current main lacks required source/data/assets.",
+  "rooms": [
+    {
+      "semantic_id": "room:konam:beast-cave",
+      "source_module": "web/src/beast-cave.js",
+      "source_ref": "cc80c48ada08a634c642561a64ef928f06c626be",
+      "current_main_module": "web/src/beast-cave.js",
+      "code_status": "different-newer-final-on-source-ref",
+      "required_missing_on_main": [
+        "web/src/beast-interval.js",
+        "pitch/lionel-sanders/career-facts-v1.json",
+        "assets/rooms/beast-cave/hf-trainer.glb",
+        "assets/rooms/beast-cave/hf-drum-fan.glb",
+        "assets/rooms/beast-cave/hf-curved-treadmill.glb"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:nor3-winter",
+      "source_module": "web/src/nor3-winter.js",
+      "source_ref": "cc80c48ada08a634c642561a64ef928f06c626be",
+      "code_status": "absent-on-main",
+      "required_missing_on_main": [
+        "pitch/norwegian-trio/trio-facts-v1.json",
+        "web/src/engine/decor.js",
+        "web/src/engine/env-capture.js",
+        "world/konam/rooms/nor3-winter.decor.json",
+        "assets/rooms/nor3-winter/kona-winter-plate-2048.webp",
+        "assets/rooms/nor3-winter/kona-winter-plate-1024.webp"
+      ]
+    },
+    {
+      "semantic_id": "room:konam:breitling-kona",
+      "source_module": "web/src/breitling-kona.js",
+      "source_ref": "cc80c48ada08a634c642561a64ef928f06c626be",
+      "code_status": "absent-on-main",
+      "required_missing_on_main": [
+        "pitch/breitling-kona/collection-v1.json",
+        "web/src/engine/decor.js",
+        "web/src/engine/env-capture.js",
+        "assets/watches/endurance-pro-study/watch.glb",
+        "assets/watches/endurance-pro-study/watch-lite.glb"
+      ],
+      "required_present_on_main": [
+        "web/src/engine/machine-inspection.js"
+      ]
+    }
+  ],
+  "recovery_order": [
+    "Recover shared text dependencies first: decor.js, env-capture.js, sourced fact/collection JSON, room decor JSON, interval module.",
+    "Recover binary assets exactly from the final source commit without regeneration.",
+    "Port final room modules onto a fresh branch from current main.",
+    "Reconcile only the necessary landing.js review routing/mood hooks instead of copying the divergent landing.js wholesale.",
+    "Run unit/contract/authority tests.",
+    "Run canonical visual comparison against docs/booklet/stills.",
+    "Run mobile portrait/landscape + desktop performance evidence.",
+    "Only then promote lifecycle from FINAL_CANDIDATE to CANONICAL and repair Bellagio links."
+  ],
+  "non_goals": [
+    "Do not merge the 27 divergent commits wholesale.",
+    "Do not regenerate lost binary room assets from prompts while the exact source branch still exists.",
+    "Do not treat older public review URLs as final."
+  ]
+}

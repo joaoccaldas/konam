@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-12",
+  "compared_with": "2026-10-11",
+  "branch": "research/3d-core-r1-20261004",
+  "research_only": true,
+  "production_modified": false,
+  "experiments_executed": false,
+  "significance": "Two findings revise acceptance criteria of existing experiments. No architecture/promotion/production decision or priority-rank change.",
+  "findings": [
+    {
+      "id": "open3d-020-hybrid-splat-reference-and-io-encoding-contract",
+      "event_date": "2026-09-16",
+      "publication_date": "2026-09-24",
+      "discovered": "2026-10-12",
+      "retrospective": true,
+      "materiality": "Adds an independently maintained offscreen mesh+splat rendering comparator and documented cross-format transform/encoding invariants, reducing risk that browser interoperability tests confuse renderer bugs with serialization defects.",
+      "source_quality": "A: official Open3D v0.20 release and maintained API/renderer documentation",
+      "confidence": {
+        "released_capability": 0.98,
+        "experiment_relevance": 0.88,
+        "portable_project_impact": 0.71
+      },
+      "sources": [
+        "https://github.com/isl-org/Open3D/releases/tag/v0.20.0",
+        "https://www.open3d.org/docs/latest/python_api/open3d.t.io.read_point_cloud.html",
+        "https://www.open3d.org/docs/latest/python_api/open3d.t.io.write_point_cloud.html",
+        "https://www.open3d.org/docs/latest/cpp_api/md__2home_2runner_2work_2_open3_d_2_open3_d_2cpp_2open3d_2visualization_2rendering_2gaussian__splat_2_gaussian_splat_design.html"
+      ],
+      "evidence": "Open3D 0.20 supports Gaussian PLY, SPLAT and SPZ input, mixed mesh/splat compositing with depth occlusion, and offscreen color/depth captures. Tensor input semantics are normalized: PLY/SPZ encode log-scales, SPLAT encodes linear scales; SPZ xyz-w quaternion storage is converted into in-memory w-xyz ordering. Renderer shares mesh depth for splat occlusion.",
+      "contradictions_and_limits": [
+        "This is a retrospectively identified September release, NOT an October 12 upstream release.",
+        "Open3D is an independent comparison renderer, not photographic truth or authoritative correctness oracle.",
+        "No assertion of direct KHR_gaussian_splatting glTF support in Open3D; test KHR decoding in the browser separately.",
+        "Vulkan (Linux/Windows) or Metal (macOS) required for splat renderer; no mobile/WebGL evidence; known platform hangs and splat tile-capacity limits.",
+        "Gaussian splat anisotropic transforms require explicit translate/scale/rotate; an arbitrary 4x4 transform is unsafe for covariance/SH semantics."
+      ],
+      "engineering": "Amend EXP-SPLAT-INTEROP-001: include fixed-camera offscreen Open3D 0.20 color/depth renders as a second implementation for PLY/SPZ+mesh; add synthetic anisotropic splat, front/behind mesh occlusion, log-vs-linear scale and quaternion-order round-trip cases. Compare images and depth; separately test KHR glTF in browser. Record backend, precision, splat cap, GPU and exact version.",
+      "affected_projects": [
+        "Gaudí / Living Threshold",
+        "Bellagio",
+        "Studio-Kona",
+        "KONA.m",
+        "shared reconstruction pipeline"
+      ],
+      "experiment": "EXP-SPLAT-INTEROP-001",
+      "isolated_experiment_created": false,
+      "priority_change": false
+    },
+    {
+      "id": "three-r187-shadow-cache-invalidation-hidden-receiver",
+      "event_date": "2026-10-11",
+      "materiality": "Turns an implicit dynamic lighting-correctness assumption into a reproducible regression scenario for the WebGPU rendering experiment.",
+      "source_quality": "A: merged Three.js dev PR #34949, source diff and upstream reproducer #34942; 10 reported CI checks passed",
+      "confidence": {
+        "merged_implementation": 0.99,
+        "regression_test_relevance": 0.89,
+        "project_incidence": 0.47
+      },
+      "sources": [
+        "https://github.com/mrdoob/three.js/pull/34949",
+        "https://github.com/mrdoob/three.js/issues/34942",
+        "https://github.com/mrdoob/three.js/commit/755f6e48c6865a83ae3e1e512adb3ea9e37a26da"
+      ],
+      "evidence": "Light node survived toggling castShadow while associated shadow nodes were disposed; if the only receiver was hidden, retained render-object cache keys could reference disposed shadow nodes, yielding a null depthTexture failure. The merged fix increments light-node version on shadow disposal and includes it in LightsNode.customCacheKey().",
+      "contradictions_and_limits": [
+        "Merged into Three.js dev/r187 milestone, not proof that a released renderer or current production is affected.",
+        "Code search of current KONA and Bellagio main found no explicit WebGPURenderer invocation; current production incidence is unverified.",
+        "Upstream fix and CI are not a KONA/Bellagio reproduction or performance result."
+      ],
+      "engineering": "Amend EXP-THREE-R187-001 correctness lane: light casts shadow -> hide sole receiver -> disable castShadow -> render -> reenable castShadow -> show receiver. Check no null depthTexture, stable frame output, shader rebuild count and memory; compare pinned release vs r187 dev before upgrading.",
+      "affected_projects": [
+        "KONA.m dynamic room lighting",
+        "Bellagio day/night lighting",
+        "Studio-Kona renderer research"
+      ],
+      "experiment": "EXP-THREE-R187-001",
+      "isolated_experiment_created": false,
+      "priority_change": false
+    }
+  ],
+  "watch_only": [
+    {
+      "source": "https://github.com/mrdoob/three.js/commit/b0ff5d0783d55cf7004678576dc39c7ff2f52668",
+      "event_date": "2026-10-12",
+      "reason": "WebGPU count/dispatchSize mutual-exclusion validation; no evidence of the affected API pair in user projects."
+    },
+    {
+      "source": "https://github.com/blender/blender/commit/8f7aae950179b5daa23bebf36493efdeacc27b6f",
+      "event_date": "2026-10-12",
+      "reason": "Alembic color-attribute name correction, but no established Alembic dependency in the current shared GLB pipeline."
+    }
+  ],
+  "other_scans": "No further decision-changing fresh evidence verified from Catalan/Spanish Gaudí scholarship, form-finding, glTF/KTX2, meshopt/LOD, product visualization, CFD/rolling resistance/wind, perceptual rendering, or AI x 3D in the reviewed sources.",
+  "recommendation": "Keep ranked experiments unchanged. Incorporate Open3D as an optional research comparator and the new Three.js shadow lifecycle test into existing isolated experiments; do not centralize renderer, migrate production, or promote any candidate.",
+  "evidence_gaps": [
+    "No project capture was run in Open3D",
+    "No KONA/Bellagio WebGPU shadow toggle reproducer was run",
+    "No new visual quality or performance benchmark was measured"
+  ]
+}

@@ -1,0 +1,80 @@
+name: 3D Benchmark R1
+
+on:
+  workflow_dispatch:
+    inputs:
+      sample_ms:
+        description: Frame sampling window in milliseconds
+        required: false
+        default: "5000"
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install web dependencies
+        run: npm ci --ignore-scripts --prefix web
+
+      - name: Build deterministic site outputs
+        run: node tools/build_pages.mjs
+
+      - name: Start local server
+        run: |
+          python3 -m http.server 8754 --bind 127.0.0.1 > /tmp/konam-3d-server.log 2>&1 &
+          echo $! > /tmp/konam-3d-server.pid
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:8754/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/konam-3d-server.log
+          exit 1
+
+      - name: Resolve Chrome
+        run: |
+          if command -v google-chrome >/dev/null; then
+            echo "CHROME_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          elif command -v chromium >/dev/null; then
+            echo "CHROME_PATH=$(command -v chromium)" >> "$GITHUB_ENV"
+          else
+            echo "Chrome/Chromium not found"
+            exit 1
+          fi
+
+      - name: Benchmark NOR
+        env:
+          SAMPLE_MS: ${{ inputs.sample_ms }}
+          GIT_SHA: ${{ github.sha }}
+        run: node web/3d-benchmark-r1.mjs nor http://127.0.0.1:8754/ docs/evidence/3d-benchmark-r1/nor
+
+      - name: Benchmark Beast Cave
+        env:
+          SAMPLE_MS: ${{ inputs.sample_ms }}
+          GIT_SHA: ${{ github.sha }}
+        run: node web/3d-benchmark-r1.mjs beast http://127.0.0.1:8754/ docs/evidence/3d-benchmark-r1/beast
+
+      - name: Benchmark Breitling
+        env:
+          SAMPLE_MS: ${{ inputs.sample_ms }}
+          GIT_SHA: ${{ github.sha }}
+        run: node web/3d-benchmark-r1.mjs breitling http://127.0.0.1:8754/ docs/evidence/3d-benchmark-r1/breitling
+
+      - name: Benchmark Museum
+        env:
+          SAMPLE_MS: ${{ inputs.sample_ms }}
+          GIT_SHA: ${{ github.sha }}
+        run: node web/3d-benchmark-r1.mjs museum http://127.0.0.1:8754/ docs/evidence/3d-benchmark-r1/museum
+
+      - name: Upload benchmark evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 3d-benchmark-r1-${{ github.sha }}
+          path: docs/evidence/3d-benchmark-r1/
+          if-no-files-found: error
+          retention-days: 14
