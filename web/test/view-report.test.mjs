@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {createViewSampler,summariseView} from '../src/engine/view-report.js';
+const sample=n=>({roomId:'hall',frameMs:n,cpuWorkMs:2,calls:150,triangles:2000});
+test('reports bounded cadence and costs without claiming GPU timing',()=>{const r=summariseView([sample(10),sample(20),sample(30),sample(40)],{roomId:'hall'});assert.equal(r.summary.frameMs.median,25);assert.equal(r.summary.frameMs.p95,40);assert.equal(r.cadenceFps,40);assert.equal(r.gpuTimingAvailable,false);assert.throws(()=>summariseView([sample(NaN)],{roomId:'hall'}));});
+test('warmup is excluded, samples are finite, and a changed view cannot pass',async()=>{const s=createViewSampler({frames:10,warmup:2});const p=s.start({roomId:'hall'});for(let i=0;i<12;i++)s.observe(sample(i));const r=await p;assert.equal(r.samples,10);assert.equal(r.summary.frameMs.min,2);assert.equal(s.active,false);const changed=s.start({roomId:'hall'});s.observe({...sample(1),roomId:'pier'});await assert.rejects(changed,/view changed/);assert.equal(s.active,false);});

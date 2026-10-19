@@ -16,9 +16,10 @@
     <button type="button" data-world-share role="menuitem">Share view</button>
     <button type="button" data-world-tour role="menuitem">Guided tour</button>
     <button type="button" data-world-settings role="menuitem">Settings</button>
+    <button type="button" data-world-performance role="menuitem">Measure this view</button>
   </div>
 </header>
-<div id="rail" aria-label="Pieces in the collection"><div class="rail-inner" id="railInner"></div></div>
+<div id="rail" aria-label="Pieces in the collection"><div class="rail-controls"><button id="railRooms" type="button" aria-controls="railInner" aria-expanded="false">Rooms</button><button id="railBikes" type="button" aria-controls="railInner" aria-expanded="false">Bikes</button><button id="railMap" type="button">All rooms ↗</button></div><div class="rail-inner" id="railInner" hidden></div></div>
 
 <aside id="card" aria-live="polite" aria-label="Piece details">
   <div class="card-controls" role="group" aria-label="Exhibit controls">

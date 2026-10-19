@@ -343,3 +343,12 @@ body.walking #konaWorld>header{top:calc(64px + env(safe-area-inset-top));padding
 body.walking #konaWorld>header .logo{display:none}
 body.walking #konaWorld>header nav button{min-height:48px}
 body.walking #konaWorld .world-more-menu{top:calc(120px + env(safe-area-inset-top))}
+
+/* The rail is a small disclosure, not a mixed wall of rooms and objects. */
+#rail{flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.rail-controls{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:rgba(251,249,245,.94);pointer-events:auto;box-shadow:0 4px 18px rgba(18,24,29,.08)}
+.rail-controls button{min-height:44px;padding:8px 16px;border-radius:999px;font:600 12px var(--sans);white-space:nowrap}.rail-controls button[aria-expanded="true"]{background:var(--ink);color:var(--paper)}
+#railInner{order:-1;pointer-events:auto;align-items:center;scrollbar-width:thin;max-width:min(100%,960px)}
+#railInner[hidden],#railInner .chip[hidden]{display:none}
+#railInner .chip{height:52px;min-height:52px}#railInner .chip small{white-space:nowrap;max-width:180px;overflow:hidden;text-overflow:ellipsis}
+body.flowing:not(.card-open) #rail:hover,body.flowing:not(.card-open) #rail:focus-within{transform:none}

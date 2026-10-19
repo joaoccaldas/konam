@@ -11,7 +11,7 @@ const STAIR = { x0: 8.55, x1: 11.15, z0: 1.25, z1: 5.45 };
 const NAVE = { x0: 7.5, x1: 16.5, z0: 27.2, z1: 5.55 };
 // All room identity, theme values and decoration references come from the world registry.
 const areas=window.__ROOMS?.areas || [];
-const ROOMS=areas.filter(a=>a.presentation?.kind==='room').map(a=>({...a.presentation,id:a.id.replace('room-',''),name:a.name,sub:a.sub,text:a.text}));
+const ROOMS=areas.filter(a=>a.presentation?.kind==='room').map(a=>({...a.presentation,id:a.id.replace('room-',''),routeId:a.id,name:a.name,sub:a.sub,text:a.text}));
 const BAYS=areas.filter(a=>a.presentation?.kind==='bay').map(a=>({...a.presentation,id:a.id.replace('bay-',''),title:a.name,sub:a.sub,text:a.text}));
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const inTower = (x, z) => x > TOWER.x0 + .35 && x < TOWER.x1 - .35 && z > TOWER.z1 + .25 && z < TOWER.z0 - .3;
