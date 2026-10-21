@@ -1,3 +1,4 @@
+import { createAssetReadiness } from './engine/asset-readiness.js';
 // landing.js — KONA. A sunlit, walkable gallery along "the Queen K":
 import { eventEnabled } from './engine/event-visibility.js';
 import { roomAccess } from './engine/access.js';
@@ -39,6 +40,17 @@ import { readPassportState, savePassportState } from './engine/passport-state.js
 import { applyStoredEvent } from './engine/progression.js';
 import { createMachineInspection, blenderVectorToThree } from './engine/machine-inspection.js';
 
+const roomLoads = createAssetReadiness();
+function loadAll(){return roomLoads.run('hall', loadAllSource);}
+function loadPierBike(){return roomLoads.run('pier', loadPierBikeSource);}
+function loadSanctuaryBikes(){return roomLoads.run('sanctuary', loadSanctuaryBikesSource);}
+function loadThemeBikes(){return roomLoads.run('upper', loadThemeBikesSource);}
+function loadKonaMachines(){return roomLoads.run('kona', loadKonaMachinesSource);}
+function loadHweenBike(){return roomLoads.run('hween', loadHweenBikeSource);}
+function loadBeastBike(){return roomLoads.run('beast', loadBeastBikeSource);}
+function loadWyldBikes(){return roomLoads.run('wyld', loadWyldBikesSource);}
+function loadBrand(){return roomLoads.run('brands', loadBrandSource);}
+function loadWings(){return roomLoads.run('wings', () => atlas.load(loader));}
 const PIECES = window.__PIECES || [];
 const sway = [];                                                     // palm crowns moving in the trade wind
 const spinners = [];                                                 // slowly turning sculptures and hung bikes
@@ -445,7 +457,7 @@ const champs = [];
     const fr = new THREE.Mesh(new THREE.BoxGeometry(w + .22, h + .22, .05), frameM); g.add(fr);
     const mat = new THREE.Mesh(new THREE.PlaneGeometry(w + .16, h + .16), matWhite); mat.position.z = .03; g.add(mat);
     const pic = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: '#d8d2c8' })); pic.position.z = .036; g.add(pic);
-    tl.load(photo.src, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; pic.material.map = t; pic.material.color.set('#ffffff'); pic.material.needsUpdate = true; }, undefined, () => {});
+    tl.load(photo.src, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; pic.material.map = t; pic.material.color.set('#ffffff'); pic.material.needsUpdate = true; }, undefined, () => { pic.material.map = lettering(w, h, g => { g.fillStyle='#31443f';g.font=`500 .065px ${FONT}`;g.fillText('Source photograph unavailable', .08, h*.45);g.font=`400 .04px ${FONT}`;g.fillText('Open the story for the original and credits', .08, h*.56); }, 512).material.map;pic.material.color.set('#ffffff');pic.material.needsUpdate=true; });
     const plate = lettering(Math.max(1.4, w * .9), .2, gg => {
       const W = Math.max(1.4, w * .9);
       gg.fillStyle = '#e9e3d8'; gg.font = `600 .05px ${FONT}`; gg.fillText(caption || '', 0, .07);
@@ -658,7 +670,7 @@ function wyldDisc(bike) {
   const shell = new THREE.Mesh(new THREE.LatheGeometry(prof, 128), new THREE.MeshPhysicalMaterial({ map: dyeTex(1.3, .9, 0), roughness: .26, clearcoat: 1, clearcoatRoughness: .07, envMapIntensity: 1.1 }));
   shell.rotation.x = Math.PI / 2; shell.name = 'wyld_disc'; wheelR.add(shell);
 }
-async function loadWyldBikes() {
+async function loadWyldBikesSource() {
   if (!wyldBikes.length) return;
   const gltf = await loader.loadAsync(WROOMDATA.bike.glb);
   const R = WROOMDATA ? WROOM : null;
@@ -942,14 +954,14 @@ async function loadBike(p) {
 }
 let pierBikeLoading = false, pierOut = false;
 const sideRooms = ['champRoom', 'wyldRoom', ...(BEAST_CAVE_REVIEW?['beastCaveRoom']:[])].map(n => scene.getObjectByName(n)).filter(Boolean);
-async function loadPierBike() {                                       // the current CFR, turning under the finish arch
+async function loadPierBikeSource() {                                       // the current CFR, turning under the finish arch
   if (!pier || pierBikeLoading) return; pierBikeLoading = true;
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!cfr?.glb) return;
   const gltf = await loader.loadAsync(cfr.glb);
   dressBike(gltf.scene, { key: 'cfr', finish: null }); gltf.scene.traverse(o => { o.castShadow = false; });
   pier.setBike(gltf.scene);
 }
-async function loadSanctuaryBikes() {
+async function loadSanctuaryBikesSource() {
   const src = WROOMDATA?.bike?.glb || PIECES.find(p => p.key === 'cfr')?.glb;
   if (!src || sanctuary.films.some(f => f.bike)) return;
   const gltf = await loader.loadAsync(src);
@@ -966,7 +978,7 @@ async function loadSanctuaryBikes() {
   }
 }
 const SKIN = id => (window.__SKINS?.skins || []).find(s => s.id === id);
-async function loadThemeBikes() {
+async function loadThemeBikesSource() {
   const src = PIECES.find(p => p.key === 'cfr')?.glb;
   if (!src) return;
   const gltf = await loader.loadAsync(src);
@@ -996,7 +1008,7 @@ async function loadThemeBikes() {
     });
   }
 }
-async function loadKonaMachines() {
+async function loadKonaMachinesSource() {
   const room = scene.getObjectByName('champRoom'); if (!room || !window.__konaMachines?.length) return;
   for (const spot of window.__konaMachines) {
     if (spot.bike) continue;
@@ -1030,25 +1042,27 @@ function openKona(spot) {
   $('cHall').onclick = () => { closeCard(); route({ x: 0, z: DZ }, null, null); };
   $('card').classList.add('on'); document.body.classList.add('card-open');
 }
-async function loadHweenBike() {
+async function loadHweenBikeSource() {
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!cfr?.glb || hween.piece.bike) return;
   const gltf = await loader.loadAsync(cfr.glb);
   hween.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
   hween.piece.bike.traverse(o => { if (o.isMesh) { o.userData.hween = hween.piece; delete o.userData.piece; } });
 }
-async function loadBeastBike() {
+async function loadBeastBikeSource() {
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!beast || !cfr?.glb || beast.bikeSpot.bike) return;
   const gltf = await loader.loadAsync(cfr.glb);
   beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
 }
-async function loadAll() {
+async function loadAllSource() {
   const order = [...modelled].sort((a, b) => a.pos.distanceTo(start) - b.pos.distanceTo(start));
+  const failures = [];
   for (const p of order) {
-    try { await loadBike(p); } catch (e) { console.warn('bike failed', p.key, e); }
+    try { await loadBike(p); } catch (e) { failures.push(e); console.warn('bike failed', p.key, e); }
     loaded++;
     $('loadstate').innerHTML = loaded < modelled.length ? `Unpacking the collection · ${loaded} / ${modelled.length}<i><b style="width:${loaded / modelled.length * 100}%"></b></i>` : `${modelled.length} bikes on display · ${PIECES.length - modelled.length} lost generations remembered`;
     if (loaded === 1) { const b = $('enterBtn'); if (b && !document.body.classList.contains('walking')) { b.disabled = false; } passportProgress(); }
   }
+  if (failures.length) throw new AggregateError(failures, 'Required hall models unavailable');
 }
 
 // ------------------------------------------------------------------ visitor
@@ -1198,11 +1212,11 @@ function openBrand(p) {
   $('cBrandOut').onclick = () => closeCard();
   $('card').classList.add('on'); document.body.classList.add('card-open');
 }
-function loadBrand() {
+function loadBrandSource() {
   if (brandLoaded || !brandRooms.length) return; brandLoaded = true;
   for (const r of brandRooms) r.spinners = spinners;
   const bl = makeBrandLoader();
-  Promise.all(brandRooms.map(r => loadBrandRoom(r, bl))).catch(e => console.warn('brandRoom load', e));
+  return Promise.all(brandRooms.map(r => loadBrandRoom(r, bl)));
 }
 function openWyld(v) {
   const B = WROOMDATA.bike, P2 = WROOMDATA.palette;
@@ -1435,6 +1449,7 @@ $('coachOk')?.addEventListener('click', () => coachShow(coachState.k + 1));
 function enter({gallery=false}={}) {
   // A deep link has one destination; never restore a different room first.
   const requestedRoom = new URLSearchParams(location.search).get('room');
+  if (requestedRoom) { document.body.classList.add('direct-room-entry'); if (window.parent && window.parent !== window) document.body.classList.add('embedded-room-entry'); }
   if (started) return; started = true;
   document.body.classList.add('walking'); $('intro').classList.add('off');
   const coaching = coarse && (() => { try { return localStorage.getItem('speedmax.coach.v1') !== '1'; } catch (_) { return true; } })();
@@ -1452,7 +1467,7 @@ function enter({gallery=false}={}) {
     if(gallery){P.x=0;P.z=2.8;P.y=0;P.yaw=0;P.pitch=-.04;path=null;}
     else path = [{ x: 0, z: .6 }];
   }
-  writePassport(); canvas.focus({ preventScroll: true }); haptic(10); coach();
+  writePassport(); canvas.focus({ preventScroll: true }); haptic(10); if (!requestedRoom) coach();
   if (profile.get().sound && $('soundBtn').getAttribute('aria-pressed') !== 'true') $('soundBtn').click();
   // Shell load awaits this bundle, so its existing room navigator is ready here.
   // Direct entry does not animate through the hall or depend on a stored travel preference.
@@ -1512,7 +1527,13 @@ $('rail')?.addEventListener('keydown',event=>{if(event.key==='Escape'&&railGroup
   const areas = withFutureLevels(liveAreas);
 
   function prepareRoom(id){
-    if(id==='pier'){pier?.load?.();loadPierBike();}
+    if(id==='hall') loadAll();
+    else if(id==='kona') loadKonaMachines();
+    else if(id==='sanctuary') loadSanctuaryBikes();
+    else if(id==='wyld') loadWyldBikes();
+    else if(id.startsWith('room-')) loadThemeBikes();
+    else if(id.startsWith('atlas-') || id.startsWith('wing-')) loadWings();
+    else if(id==='pier'){pier?.load?.();loadPierBike();}
     else if(id==='hween') loadHweenBike();
     else if(id==='beast' && BEAST_CAVE_REVIEW) loadBeastBike();
     else if(brandRooms.some(r=>r.desc.id===id)) loadBrand();
@@ -1972,14 +1993,14 @@ onFontsReady();
 initAppShell();
 // progressive loading: the hall first (loadAll), then each room in the background, with a quiet status chip
 {
-  const steps = [...(WROOMDATA?[['the WYLD Room',loadWyldBikes]]:[]), ['Lava Night', loadHweenBike], ...(BEAST_CAVE_REVIEW?[['the Beast Cave review', loadBeastBike]]:[]), ['the Sanctuary', loadSanctuaryBikes], ['the Champions room', loadKonaMachines], ['the upper floor', loadThemeBikes], ['the wings', () => atlas.load(loader)], ['the brand rooms', loadBrand]];
+  const steps = [...(WROOMDATA?[['the WYLD Room',loadWyldBikes]]:[]), ['Lava Night', loadHweenBike], ...(BEAST_CAVE_REVIEW?[['the Beast Cave review', loadBeastBike]]:[]), ['the Sanctuary', loadSanctuaryBikes], ['the Champions room', loadKonaMachines], ['the upper floor', loadThemeBikes], ['the wings', loadWings], ['the brand rooms', loadBrand]];
   const chip = $('bgload'), say = t => { if (chip) { chip.hidden = false; chip.querySelector('span').textContent = t; } };
   let chain = loadAll();
   let offline = false;
-  const failed = e => { if (!offline && /fetch|network|load/i.test(String(e?.message || e))) { offline = true; say(navigator.onLine === false ? 'You are offline · rooms will open when you reconnect' : 'Cannot reach the museum files · check the server or your connection'); chip?.classList.add('warn'); } };
+  const failed = e => { if (!offline) { offline = true; say(navigator.onLine === false ? 'You are offline · rooms will open when you reconnect' : 'Cannot reach the museum files · check the server or your connection'); chip?.classList.add('warn'); } };
   addEventListener('online', () => { if (offline) location.reload(); });
   steps.forEach(([label, fn], i) => { chain = chain.then(() => { if (!offline) say(`Opening ${label} · ${i + 1} of ${steps.length}`); return fn(); }).catch(e => { console.warn('rooms', label, e); failed(e); }); });
-  chain.then(() => { if (offline) return; say('Every room is open'); setTimeout(() => { if (chip) chip.hidden = true; }, 2400); });
+  chain.then(() => { if (offline) return; say('Background loading finished · rooms report their own readiness'); setTimeout(() => { if (chip) chip.hidden = true; }, 2400); });
 }
 window.__gallery = galleries;
 // ------------------------------------------------------------------ profile, settings and sharing
@@ -2049,5 +2070,10 @@ const konaShell = window.__konaShell;
 if (!konaShell) throw new Error('KONA consumer Shell authority missing');
 window.__app = { profile, settings: settingsUI, shareView, openArt, openAtlas, konaShell };
 window.__atlas = atlas;
-window.__museum = { directEntryVersion:2,get renderReceipt(){return {serial:frameSerial,roomId:renderedRoomId};}, P, PIECES, visit, enter, scene, camera, inspectionViewport,roomViewport,get roomView(){return roomView;},get navigating(){return !!path;},get inspectionFocus(){return inspectionFocus;},inspectionBounds:()=>inspectionFocus?.piece?.inspection.measureAtProgress(1,()=>new THREE.Box3().setFromObject(inspectionFocus.piece.bike)), champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
+function currentRoomAssets() {
+  const id = renderedRoomId;
+  const key = brandRooms.some(r => r.desc.id === id) ? 'brands' : id?.startsWith('room-') ? 'upper' : id?.startsWith('atlas-') || id?.startsWith('wing-') ? 'wings' : id;
+  return ['hall','pier','sanctuary','upper','kona','hween','beast','wyld','brands','wings'].includes(key) ? roomLoads.state(key) : 'ready';
+}
+window.__museum = { directEntryVersion:2,get renderReceipt(){return {serial:frameSerial,roomId:renderedRoomId,assets:currentRoomAssets()};}, P, PIECES, visit, enter, scene, camera, inspectionViewport,roomViewport,get roomView(){return roomView;},get navigating(){return !!path;},get inspectionFocus(){return inspectionFocus;},inspectionBounds:()=>inspectionFocus?.piece?.inspection.measureAtProgress(1,()=>new THREE.Box3().setFromObject(inspectionFocus.piece.bike)), champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
 initArtWorld(window.__museum).catch(e => console.warn('art world', e));
