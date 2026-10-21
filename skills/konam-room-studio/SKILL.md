@@ -265,3 +265,21 @@ If Beast Cave requires its own renderer, camera framework, UI shell, storage, pr
 ## Landscape and viewpoint review
 
 For rooms with terrain windows or named camera views, read [the Norseman review](../../docs/NORSEMAN_ART_DIRECTION_2026-10-17.md). It records stale service-worker evidence, obstacle-stalled view actions and a mesh-count/draw-call measurement error. Verify the loaded revision, actual arrival and complete rendering cost before promotion.
+
+## Direct room entry and readiness
+
+An embedded room enters once through the host navigator. Do not queue a second
+450/600 ms navigation or restore a different saved room first. The source owns
+camera placement; the wrapper never writes a substitute pose.
+
+Confirm the requested semantic room identity, a submitted frame for that room,
+and completion of its required model promises before revealing the iframe.
+An iframe load event or room label alone is insufficient. Loader failures remain
+unavailable and offer a visible reload path; optional background loading does
+not prove that every room is ready. Keep story cards, coaching and collection
+rails opt-in on direct entry. Preserve the storage adapter and visitor progress.
+
+Validate desktop, portrait and landscape entries, rapid room switching, a missing
+required model and retry. In a destination switcher, keep canonical room names
+when a broad exhibit card aliases the same physical entrance. Test room identity,
+not only the card label. These are browser checks, not headset or human acceptance.

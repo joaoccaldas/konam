@@ -729,12 +729,13 @@ export function buildNorsemanTraining(ctx) {
     group, floor, sign, bikeSpot, infos, mood: NORSEMAN_MOOD, ownBikes: true, introCard,
     async useAssets(loader) {
       if (this._assets) return; this._assets = true;
-      loadTerrain().catch(e => console.warn('norseman terrain', e?.message || e));
+      const terrain = loadTerrain();
       // bikes, fan, treadmill from world/konam/rooms/norseman-training.decor.json. This bike study has no bike-lite.glb,
       // so bikes always load the full (172 KB) study; everything else follows the device's lite policy.
       const split = bike => ({ ...decor, items: decor.items.filter(d => (d.kind === 'bike') === bike) });
       await loadDecor(split(true), { group, loader, lite: false, hooks: decorHooks });
       await loadDecor(split(false), { group, loader, lite, hooks: decorHooks });
+      await terrain;
     },
     setBike() { /* this room mounts its own instanced bikes in useAssets */ },
     get terrainReady() { return terrainReady; },

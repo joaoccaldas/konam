@@ -114,12 +114,12 @@ function openMuseum(room) {
       .then(() => ensureWorldShell())
       .then(() => ensureMuseumData())
       .then(() => loadScript('app/hall.js'))
-      .then(() => window.__museum?.enter?.())
+      .then(() => window.__museum?.enter?.({room}))
       .catch(err => { opening = null; console.warn('museum', err); });
   }
-  if (typeof room === 'string') {
-    opening.then(() => setTimeout(() => window.__museumGo?.(room), 600));
-  }
+  // Initial entry is owned by enter(); no second timed navigation through the hall.
+  if (typeof room === 'string' && window.__museum && document.body.classList.contains('walking'))
+    window.__museumGo?.(room, {instant:true});
   return opening;
 }
 
