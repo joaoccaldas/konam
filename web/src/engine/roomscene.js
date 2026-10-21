@@ -138,7 +138,7 @@ export async function loadBrandRoom(built, loader) {
       holder.traverse(o => { if (o.isMesh && !o.userData.brandProduct) { o.userData.brandProduct = p; } });
       built.group.add(holder); p.model = holder;
       spinnersPush(p, holder);
-    } catch (e) { console.warn('brandRoom: failed to load', p.glb, e); }
+    } catch (e) { console.warn('brandRoom: failed to load', p.glb, e); throw e; }
   }
   function spinnersPush(p, holder) { /* slow turntable handled by the host loop via spinners */ if (p.spin !== false) built.spinners?.push({ o: holder, axis: 'y', speed: .18 }); }
 }
