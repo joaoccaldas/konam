@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {build,write} from '../../tools/synthetic-pump-fixture.mjs';
+test('repeatable and uniquely named semantic assembly',()=>{const a=build(),b=build();assert.equal(a.obj,b.obj);assert.equal(a.stats.length,11);assert.equal(new Set(a.stats.map(x=>x.id)).size,11);});
+test('all OBJ faces reference existing vertices',()=>{const o=build().obj;const v=o.split('\n').filter(x=>x.startsWith('v '));for(const face of o.split('\n').filter(x=>x.startsWith('f ')))for(const val of face.split(' ').slice(1)){assert(Number(val)>=1&&Number(val)<=v.length);}});
+test('invalid resolutions fail closed',()=>{for(const segments of [0,7,11,65,4.2])assert.throws(()=>build({segments}));});
+test('output receipt remains unapproved',()=>{const d=fs.mkdtempSync(path.join(os.tmpdir(),'pump-'));try{const m=write(d);assert.equal(m.approval,false);assert.equal(m.semantic_parts.length,11);assert.equal(fs.readFileSync(path.join(d,'synthetic-pump.obj'),'utf8'),build().obj);}finally{fs.rmSync(d,{recursive:true,force:true});}});
