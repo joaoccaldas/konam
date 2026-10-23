@@ -265,3 +265,39 @@ If Beast Cave requires its own renderer, camera framework, UI shell, storage, pr
 ## Landscape and viewpoint review
 
 For rooms with terrain windows or named camera views, read [the Norseman review](../../docs/NORSEMAN_ART_DIRECTION_2026-10-17.md). It records stale service-worker evidence, obstacle-stalled view actions and a mesh-count/draw-call measurement error. Verify the loaded revision, actual arrival and complete rendering cost before promotion.
+
+## Direct room entry and readiness
+
+An embedded room enters once through the host navigator. Do not queue a second
+450/600 ms navigation or restore a different saved room first. The source owns
+camera placement; the wrapper never writes a substitute pose.
+
+Confirm the requested semantic room identity, a submitted frame for that room,
+and completion of its required model promises before revealing the iframe.
+An iframe load event or room label alone is insufficient. Loader failures remain
+unavailable and offer a visible reload path; optional background loading does
+not prove that every room is ready. Keep story cards, coaching and collection
+rails opt-in on direct entry. Preserve the storage adapter and visitor progress.
+
+Validate desktop, portrait and landscape entries, rapid room switching, a missing
+required model and retry. In a destination switcher, keep canonical room names
+when a broad exhibit card aliases the same physical entrance. Test room identity,
+not only the card label. These are browser checks, not headset or human acceptance.
+
+For the failure cases and source-pinned evidence, read
+[the room-entry validation](../../docs/ROOM_ENTRY_VALIDATION_2026-10-23.md).
+Keep one neutral pending state from the earliest viewport bootstrap through the
+matching room frame. Bound the entire access/data/bundle/asset chain, including
+stalled frames; a late completion must not dismiss an already displayed error.
+Keep other-room prefetch status separate from selected-room readiness.
+
+Terrain and other binary dependencies must be in the sealed lazy manifest.
+Check HTTP status, bounded metadata and payload length before decoding; an HTML
+404 is not terrain. Preserve explicit byte order. Do not raise shell or brand
+budgets to accommodate a loading fix.
+
+A short observation while walking to a destination is not a failed arrival.
+Check actual room/frame identity again and record the observation window.
+Retain rejected camera views and missing rights evidence as open gates even when
+asset readiness passes. A content-only private preview derivative demonstrates
+its own bytes and policy, not native production or physical-device acceptance.

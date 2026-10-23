@@ -15,6 +15,7 @@
     <button type="button" data-world-share role="menuitem">Share view</button>
     <button type="button" data-world-tour role="menuitem">Guided tour</button>
     <button type="button" data-world-settings role="menuitem">Settings</button>
+    <button id="roomCollectionToggle" type="button" role="menuitem" aria-controls="rail" aria-expanded="false" hidden>Browse the collection</button>
   </div>
 </header>
 <div id="rail" aria-label="Pieces in the collection"><div class="rail-inner" id="railInner"></div></div>
@@ -64,3 +65,7 @@
 <p class="credit">Independent study from public references. Not affiliated with or endorsed by Canyon Bicycles. 3D models are visual reconstructions.</p>
 
 </div>
+
+<style>body.direct-room-entry #rail{display:none}body.direct-room-entry.collection-open #rail{display:block}body.direct-room-entry #coach{display:none}</style>
+
+<style>body.embedded-room-entry .kona-why-global,body.embedded-room-entry #bgload,body.embedded-room-entry #konaWorld>header .logo,body.embedded-room-entry #backKonaBtn{display:none}</style>

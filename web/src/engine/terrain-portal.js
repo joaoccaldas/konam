@@ -11,6 +11,42 @@
 // decimetre heights on a grid, shaded here by altitude, slope and noise — no photograph of any place.
 import * as THREE from 'three';
 
+async function terrainBytes(response, maximum) {
+  if (!response.ok) throw new Error(`Terrain request failed (${response.status})`);
+  if (Number(response.headers.get('content-length')) > maximum || !response.body)
+    throw new Error('Terrain response exceeds its byte budget or has no body');
+  const reader=response.body.getReader(), chunks=[];let size=0;
+  try {
+    for (;;) {
+      const {done,value}=await reader.read();if(done)break;
+      size+=value.byteLength;
+      if(size>maximum){await reader.cancel();throw new Error('Terrain response exceeds its byte budget');}
+      chunks.push(value);
+    }
+  } finally { reader.releaseLock(); }
+  const bytes=new Uint8Array(size);let offset=0;
+  for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.byteLength;}
+  return bytes.buffer;
+}
+
+export async function loadTerrainSite(base, id, fetchSource=fetch) {
+  const metadata=await terrainBytes(await fetchSource(base+id+'.json'),16*1024);
+  const meta=JSON.parse(new TextDecoder().decode(metadata)), b=meta?.bbox;
+  if(meta?.schema!=='konam.norseman-terrain/v1' || meta.id!==id
+      || !Number.isInteger(meta.grid) || meta.grid<2 || meta.grid>1025
+      || ![meta.width_m,meta.height_m].every(n=>Number.isFinite(n)&&n>0&&n<=1e6)
+      || !b || ![b.west,b.east,b.south,b.north].every(Number.isFinite)
+      || !(b.west<b.east && b.south<b.north && b.west>=-180 && b.east<=180 && b.south>=-90 && b.north<=90)
+      || meta.encoding!=='uint16 LE decimetres, row-major, north row first')
+    throw new Error('Invalid terrain metadata');
+  const expected=meta.grid*meta.grid*2;
+  const bytes=await terrainBytes(await fetchSource(base+id+'.bin'),expected);
+  if(bytes.byteLength!==expected)throw new Error('Terrain byte length does not match its grid');
+  const view=new DataView(bytes), heights=new Uint16Array(meta.grid*meta.grid);
+  for(let i=0;i<heights.length;i++)heights[i]=view.getUint16(i*2,true);
+  return {id,meta,heights};
+}
+
 export function createTerrainPortal({ renderer, lite = false, far = 6000, scale = lite ? .85 : .8 }) {
   const scene = new THREE.Scene();
   const rt = new THREE.WebGLRenderTarget(4, 4, { type: THREE.HalfFloatType, samples: lite ? 0 : 4 });

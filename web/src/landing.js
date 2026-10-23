@@ -40,7 +40,19 @@ import { coarse as dc, small as ds } from './detect.js';
 import { readPassportState, savePassportState } from './engine/passport-state.js';
 import { applyStoredEvent } from './engine/progression.js';
 import { createMachineInspection, blenderVectorToThree } from './engine/machine-inspection.js';
+import { createAssetReadiness, waitForRoomFrame } from './engine/asset-readiness.js';
 
+const roomLoads = createAssetReadiness();
+function loadAll(){return roomLoads.run('hall', loadAllSource);}
+function loadPierBike(){return roomLoads.run('pier', loadPierBikeSource);}
+function loadSanctuaryBikes(){return roomLoads.run('sanctuary', loadSanctuaryBikesSource);}
+function loadThemeBikes(){return roomLoads.run('upper', loadThemeBikesSource);}
+function loadKonaMachines(){return roomLoads.run('kona', loadKonaMachinesSource);}
+function loadHweenBike(){return roomLoads.run('hween', loadHweenBikeSource);}
+function loadBeastBike(){return roomLoads.run('beast', loadBeastBikeSource);}
+function loadWyldBikes(){return roomLoads.run('wyld', loadWyldBikesSource);}
+function loadBrand(){return roomLoads.run('brands', loadBrandSource);}
+function loadWings(){return roomLoads.run('wings', () => atlas.load(loader));}
 const PIECES = window.__PIECES || [];
 const sway = [];                                                     // palm crowns moving in the trade wind
 const spinners = [];                                                 // slowly turning sculptures and hung bikes
@@ -132,6 +144,7 @@ function walkable(x, z) {
 
 // ------------------------------------------------------------------ renderer
 const canvas = $('hall');
+const entryStatus = $('loadstate');
 let renderer;
 try {
   renderer = new THREE.WebGLRenderer({ canvas, antialias: !lite || devicePixelRatio < 2, powerPreference: 'high-performance' });
@@ -676,7 +689,7 @@ function wyldDisc(bike) {
   const shell = new THREE.Mesh(new THREE.LatheGeometry(prof, 128), new THREE.MeshPhysicalMaterial({ map: dyeTex(1.3, .9, 0), roughness: .26, clearcoat: 1, clearcoatRoughness: .07, envMapIntensity: 1.1 }));
   shell.rotation.x = Math.PI / 2; shell.name = 'wyld_disc'; wheelR.add(shell);
 }
-async function loadWyldBikes() {
+async function loadWyldBikesSource() {
   if (!wyldBikes.length) return;
   const gltf = await loader.loadAsync(WROOMDATA.bike.glb);
   const R = WROOMDATA ? WROOM : null;
@@ -963,14 +976,14 @@ async function loadBike(p) {
 }
 let pierBikeLoading = false, pierOut = false;
 const sideRooms = ['champRoom', 'wyldRoom', ...(BEAST_CAVE_REVIEW?['beastCaveRoom']:[])].map(n => scene.getObjectByName(n)).filter(Boolean);
-async function loadPierBike() {                                       // the current CFR, turning under the finish arch
+async function loadPierBikeSource() {                                       // the current CFR, turning under the finish arch
   if (!pier || pierBikeLoading) return; pierBikeLoading = true;
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!cfr?.glb) return;
   const gltf = await loader.loadAsync(cfr.glb);
   dressBike(gltf.scene, { key: 'cfr', finish: null }); gltf.scene.traverse(o => { o.castShadow = false; });
   pier.setBike(gltf.scene);
 }
-async function loadSanctuaryBikes() {
+async function loadSanctuaryBikesSource() {
   const src = WROOMDATA?.bike?.glb || PIECES.find(p => p.key === 'cfr')?.glb;
   if (!src || sanctuary.films.some(f => f.bike)) return;
   const gltf = await loader.loadAsync(src);
@@ -987,7 +1000,7 @@ async function loadSanctuaryBikes() {
   }
 }
 const SKIN = id => (window.__SKINS?.skins || []).find(s => s.id === id);
-async function loadThemeBikes() {
+async function loadThemeBikesSource() {
   const src = PIECES.find(p => p.key === 'cfr')?.glb;
   if (!src) return;
   const gltf = await loader.loadAsync(src);
@@ -1017,7 +1030,7 @@ async function loadThemeBikes() {
     });
   }
 }
-async function loadKonaMachines() {
+async function loadKonaMachinesSource() {
   const room = scene.getObjectByName('champRoom'); if (!room || !window.__konaMachines?.length) return;
   for (const spot of window.__konaMachines) {
     if (spot.bike) continue;
@@ -1051,27 +1064,42 @@ function openKona(spot) {
   $('cHall').onclick = () => { closeCard(); route({ x: 0, z: DZ }, null, null); };
   $('card').classList.add('on'); document.body.classList.add('card-open');
 }
-async function loadHweenBike() {
+async function loadHweenBikeSource() {
   const cfr = PIECES.find(p => p.key === 'cfr'); if (!cfr?.glb || hween.piece.bike) return;
   const gltf = await loader.loadAsync(cfr.glb);
   hween.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
   hween.piece.bike.traverse(o => { if (o.isMesh) { o.userData.hween = hween.piece; delete o.userData.piece; } });
 }
-async function loadBeastBike() {
-  if (beast?.ownBikes) { beast.useAssets(loader); return; }
-  const cfr = PIECES.find(p => p.key === 'cfr'); if (!beast || !cfr?.glb || beast.bikeSpot.bike) return;
-  const gltf = await loader.loadAsync(cfr.glb);
-  beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
-  beast.useAssets(loader);
+async function loadBeastBikeSource() {
+  if (!beast) return;
+  await (async () => {
+    if (!beast.ownBikes && !beast.bikeSpot.bike) {
+      const cfr = PIECES.find(p => p.key === 'cfr');
+      if (!cfr?.glb) throw new Error('The room bike is unavailable');
+      const gltf = await loader.loadAsync(cfr.glb);
+      beast.setBike(gltf.scene, b => dressBike(b, { key: 'cfr', finish: null }));
+    }
+    const failures = [];
+    const requiredLoader = Object.create(loader);
+    requiredLoader.loadAsync = async (...args) => {
+      try { return await loader.loadAsync(...args); }
+      catch (error) { failures.push(error); throw error; }
+    };
+    await beast.useAssets(requiredLoader);
+    if (failures.length) throw new AggregateError(failures, 'Required review room models unavailable');
+  })();
+  // Shared readiness retains failures until an explicit reload.
 }
-async function loadAll() {
+async function loadAllSource() {
   const order = [...modelled].sort((a, b) => a.pos.distanceTo(start) - b.pos.distanceTo(start));
+  const failures = [];
   for (const p of order) {
-    try { await loadBike(p); } catch (e) { console.warn('bike failed', p.key, e); }
+    try { await loadBike(p); } catch (e) { failures.push(e); console.warn('bike failed', p.key, e); }
     loaded++;
-    $('loadstate').innerHTML = loaded < modelled.length ? `Unpacking the collection · ${loaded} / ${modelled.length}<i><b style="width:${loaded / modelled.length * 100}%"></b></i>` : `${modelled.length} bikes on display · ${PIECES.length - modelled.length} lost generations remembered`;
+    if (!document.documentElement.classList.contains('room-entry-pending')) $('loadstate').innerHTML = loaded < modelled.length ? `Unpacking the collection · ${loaded} / ${modelled.length}<i><b style="width:${loaded / modelled.length * 100}%"></b></i>` : `${modelled.length} bikes on display · ${PIECES.length - modelled.length} lost generations remembered`;
     if (loaded === 1) { const b = $('enterBtn'); if (b && !document.body.classList.contains('walking')) { b.disabled = false; } passportProgress(); }
   }
+  if (failures.length) throw new AggregateError(failures, 'Required hall models unavailable');
 }
 
 // ------------------------------------------------------------------ visitor
@@ -1130,17 +1158,20 @@ const roomOf = (x, z) => {
 const DOORZ = { champ: DZ, wyld: WZ, pier: -46.5, hween: (HDOOR.z0 + HDOOR.z1) / 2, beast: (BDOOR.z0 + BDOOR.z1) / 2, ...Object.fromEntries(brandRooms.map(r => [r.desc.id, r.desc.door ? (r.desc.door.z0 + r.desc.door.z1) / 2 : (r.bounds.z0 + r.bounds.z1) / 2])) };
 const EAST_DOORS = new Set(['beast']);
 const ROOM_LINKS = {};
+let updateRoomLocation = () => {};
 const PIER_IN = [{ x: 1.2, z: -38.6 }, { x: 5.6, z: -38.6 }, { x: 5.4, z: -44.6 }, { x: 5.4, z: -48.4 }];   // round the apse plinth, through the glass door
 const NAVE_LANE = 13.6;                                             // upstairs walking lane: east of the bay plinths (x 11.15), west of the room openings
 const fader = document.getElementById('fade');
-function teleport(end) {
+function teleport(end, instant = false) {
+  const arrivalPath = path;
   const land = () => {
+    if (path !== arrivalPath) return;
     P.x = end.x; P.z = end.z; P.vx = P.vz = 0;
     P.y = atlas.floorY(P.x, P.z) ?? galleryFloorY(P.x, P.z);
     if (path?.face) { const fx = path.face.x - P.x, fz = path.face.z - P.z; P.yaw = Math.atan2(-fx, -fz); if (path.direct) P.pitch = Math.atan2(path.face.y - (P.y + EYE), Math.hypot(fx, fz)); }
     if (path) path.splice(0, path.length - 1);                       // arrive: the card opens as soon as we face the piece
   };
-  if (reduce || !fader) { land(); return; }
+  if (instant || reduce || !fader) { land(); return; }
   fader.classList.add('on');
   setTimeout(() => { land(); requestAnimationFrame(() => requestAnimationFrame(() => fader.classList.remove('on'))); }, 190);
 }
@@ -1218,11 +1249,11 @@ function openBrand(p) {
   $('cBrandOut').onclick = () => closeCard();
   $('card').classList.add('on'); document.body.classList.add('card-open');
 }
-function loadBrand() {
+function loadBrandSource() {
   if (brandLoaded || !brandRooms.length) return; brandLoaded = true;
   for (const r of brandRooms) r.spinners = spinners;
   const bl = makeBrandLoader();
-  Promise.all(brandRooms.map(r => loadBrandRoom(r, bl))).catch(e => console.warn('brandRoom load', e));
+  return Promise.all(brandRooms.map(r => loadBrandRoom(r, bl)));
 }
 function openWyld(v) {
   const B = WROOMDATA.bike, P2 = WROOMDATA.palette;
@@ -1508,11 +1539,13 @@ function coachDid(kind) {                                            // the hint
 }
 $('coachOk')?.addEventListener('click', () => coachShow(coachState.k + 1));
 
-function enter() {
+function enter({room} = {}) {
+  const requestedRoom = room || new URLSearchParams(location.search).get('room');
+  if (requestedRoom) { document.body.classList.add('direct-room-entry'); if (window.parent && window.parent !== window) document.body.classList.add('embedded-room-entry'); }
   if (started) return; started = true;
   document.body.classList.add('walking'); $('intro').classList.add('off');
   const coaching = coarse && (() => { try { return localStorage.getItem('speedmax.coach.v1') !== '1'; } catch (_) { return true; } })();
-  const returning = passport.visits > 0 && passport.pose && ['hall', 'champ', 'wyld', 'pier', 'hween'].includes(passport.pose.region)
+  const returning = !requestedRoom && passport.visits > 0 && passport.pose && ['hall', 'champ', 'wyld', 'pier', 'hween'].includes(passport.pose.region)
     && walkable(passport.pose.x, passport.pose.z);
   passport.visits = (passport.visits || 0) + 1;
   try { applyStoredEvent({ type: 'FIRST_VISIT', id: 'FIRST_VISIT:museum' }); } catch (_) { }
@@ -1525,14 +1558,11 @@ function enter() {
     if (!coaching) toast(coarse ? 'Walk with the tri-stick · drag to look around · tap any bike' : 'WASD to walk · drag to look · click a bike or press 1–9');
     path = [{ x: 0, z: .6 }];
   }
-  writePassport(); canvas.focus({ preventScroll: true }); haptic(10); coach();
+  writePassport(); canvas.focus({ preventScroll: true }); haptic(10); if (requestedRoom && $('roomCollectionToggle')) $('roomCollectionToggle').hidden=false; if (!requestedRoom) coach();
   if (profile.get().sound && $('soundBtn').getAttribute('aria-pressed') !== 'true') $('soundBtn').click();
-  if (!returning && pier && new URLSearchParams(location.search).get('room') === 'pier') setTimeout(() => visitPier(pier.stations[0]), 400);
-  { // app shortcuts and shared links: ?room=<map area id> walks there, ?map=1 opens the map
-    const q = new URLSearchParams(location.search), room = q.get('room');
-    if (room && room !== 'pier' && /^[a-z0-9-]{2,40}$/.test(room)) setTimeout(() => window.__museumGo?.(room), 450);
-    if (q.get('map')) setTimeout(() => window.__map?.open(), 450);
-  }
+  // Deep entry is one synchronous placement, independent of saved travel settings.
+  if (requestedRoom && (!/^[a-z0-9-]{2,40}$/.test(requestedRoom) || !window.__museumGo?.(requestedRoom, {instant:true}))) throw new Error('Requested room is unavailable');
+  if (new URLSearchParams(location.search).get('map')) window.__map?.open();
 }
 if ($('enterBtn') && !document.getElementById('konaShell')) $('enterBtn').onclick = enter;
 
@@ -1567,7 +1597,13 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
   const areas = withFutureLevels(liveAreas);
 
   function prepareRoom(id){
-    if(id==='pier'){pier?.load?.();loadPierBike();}
+    if(id==='hall') loadAll();
+    else if(id==='kona') loadKonaMachines();
+    else if(id==='sanctuary') loadSanctuaryBikes();
+    else if(id==='wyld') loadWyldBikes();
+    else if(id.startsWith('room-')) loadThemeBikes();
+    else if(id.startsWith('atlas-') || id.startsWith('wing-')) loadWings();
+    else if(id==='pier'){pier?.load?.();loadPierBike();}
     else if(id==='hween') loadHweenBike();
     else if(id==='beast' && BEAST_CAVE_REVIEW) loadBeastBike();
     else if(brandRooms.some(r=>r.desc.id===id)) loadBrand();
@@ -1588,35 +1624,37 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     return {...overview,to};
   }
   const accessForRoom=id=>roomAccess(id,{admin:globalThis.__konaAccess?.admin===true});
-  const go = id => {
+  const go = (id, {instant = false} = {}) => {
     const area=liveAreas.find(a=>a.id===id);
-    if(!area) return;
+    if(!area) return false;
     const gate=accessForRoom(id);
-    if(!gate.unlocked){toast(`Level ${gate.requiredLevel} · keep exploring to unlock ${area.name}`);return;}
+    if(!gate.unlocked){toast(`Level ${gate.requiredLevel} · keep exploring to unlock ${area.name}`);return false;}
     if (!started) enter();
     tourEnd(false); closeCard(); prepareRoom(id);
-    if (id === 'beast' && beast) { visitBeast(); toast(`${area.name} · ${BREITLING_REVIEW ? 'every second of Kona' : NOR3_REVIEW ? 'three lanes' : NORSEMAN_REVIEW ? 'fjord to summit' : 'the empty saddle'}`); return; }
-    const ov=safeOverview(area); if(!ov) return;
+    if (id === 'beast' && beast && !instant) { visitBeast(); toast(`${area.name} · ${BREITLING_REVIEW ? 'every second of Kona' : NOR3_REVIEW ? 'three lanes' : NORSEMAN_REVIEW ? 'fjord to summit' : 'the empty saddle'}`); return true; }
+    const ov=id === 'beast' && beast ? {to:beast.bikeSpot.view, face:beast.bikeSpot.face} : safeOverview(area); if(!ov) return;
     const face=new THREE.Vector3(ov.face.x,ov.face.y,ov.face.z);
     route(ov.to,face,null);
     path.roomOverview=id;
+    if (instant) { path.direct = true; teleport(ov.to, true); path = null; }
     document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x.dataset.room===id));
     toast(`${area.name} · room overview`);
+    return true;
   };
   window.__museumGo = go;
   window.__map = initMap({ areas, go, access:accessForRoom, button: $('mapBtn'), pose: () => ({ x: P.x, z: P.z, yaw: P.yaw, floor: P.y > 3.3 ? 'upper' : 'ground' }) });
 
   const where = $('where'); let lastWhere = null, wingHinted = (() => { try { return localStorage.getItem('speedmax.atlas.hint') === '1'; } catch (_) { return false; } })();
   where?.addEventListener('click', () => window.__map.open());
-  setInterval(() => {
+  updateRoomLocation = a => {
     if (!started || !where) return;
-    const a = window.__map.here();
     const id = a?.id || null; if (id === lastWhere) return; lastWhere = id;
     where.hidden = !a;
     if (a) { where.querySelector('b').textContent = a.name; where.querySelector('small').textContent = a.floor === 'upper' ? 'Upper floor' : 'Ground floor'; where.querySelector('i').style.background = a.color; where.classList.remove('pop'); void where.offsetWidth; where.classList.add('pop'); }
     if ((id?.startsWith('atlas') || id?.startsWith('wing')) && !wingHinted) { wingHinted = true; try { localStorage.setItem('speedmax.atlas.hint', '1'); } catch (_) { } toast('Tap any bike or artwork for its story · M opens the world map'); }
-  }, 350);
+  };
 }
+$('roomCollectionToggle')?.addEventListener('click', () => { const open = document.body.classList.toggle('collection-open'); $('roomCollectionToggle').setAttribute('aria-expanded', String(open)); $('worldMoreMenu').hidden=true; $('worldMoreBtn').setAttribute('aria-expanded','false'); });
 $('railInner').addEventListener('click', e => {
   const b = e.target.closest('.chip'); if (!b) return; if (!started) enter(); tourEnd(false); haptic(8);
   if (b.dataset.room) { window.__museumGo?.(b.dataset.room); return; }
@@ -1833,12 +1871,12 @@ function resize() {
   camera.fov = museumFov(); camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize); resize();
-let last = performance.now(), shift = 0;
+let last = performance.now(), shift = 0, frameSerial = 0, renderedRoomId = null;
 function frame(now) {
   requestAnimationFrame(frame);
   // Zero visual cost: pause expensive 3D work when it cannot be seen.
   // Reset the clock while paused so resuming never creates a physics/camera jump.
-  if (document.hidden || document.body.classList.contains('kona-panel-open') || document.body.classList.contains('settings-open')) { last = now; return; }
+  if (document.hidden || entryStatus?.getAttribute('role') === 'alert' || document.body.classList.contains('kona-panel-open') || document.body.classList.contains('settings-open')) { last = now; return; }
   const gap = Math.min(2, (now - last) / 1000);
   const dt = Math.min(.05, (now - last) / 1000); last = now; const t = now / 1000;
   // movement: gentle acceleration, slide along obstacles
@@ -2007,20 +2045,35 @@ function frame(now) {
   if (window.__shaft) window.__shaft.opacity = .045 + Math.sin(t * .35) * .012;   // the shaft breathes with the trade wind
   window.__museumArt?.update?.(dt, t, P, camera, roomOf(P.x, P.z));
   renderer.render(scene, camera);
+  const renderedArea = window.__map?.here();
+  renderedRoomId = renderedArea?.id || null;
+  updateRoomLocation(renderedArea);
+  frameSerial++;
+  // Observable submission evidence, updated only on room/load-state transitions.
+  // This is not a GPU-completion or visual-acceptance signal.
+  const assets = currentRoomAssets();
+  if (canvas.dataset.roomId !== renderedRoomId || canvas.dataset.roomAssets !== assets) {
+    canvas.dataset.roomId = renderedRoomId || '';
+    canvas.dataset.roomIdentity = renderedRoomId === 'beast' ? REVIEW_ROOM_SEMANTIC_ID || 'beast' : renderedRoomId || '';
+    canvas.dataset.roomAssets = assets;
+    canvas.dataset.roomFrameSerial = String(frameSerial);
+  }
 }
 requestAnimationFrame(frame);
 onFontsReady();
 initAppShell();
 // progressive loading: the hall first (loadAll), then each room in the background, with a quiet status chip
 {
-  const steps = [...(WROOMDATA?[['the WYLD Room',loadWyldBikes]]:[]), ['Lava Night', loadHweenBike], ...(BEAST_CAVE_REVIEW?[[BREITLING_REVIEW?'the Breitling × KONA review':NOR3_REVIEW?'the NOR // 3 review':NORSEMAN_REVIEW?'the Fjord to Summit review':'the Beast Cave review', loadBeastBike]]:[]), ['the Sanctuary', loadSanctuaryBikes], ['the Champions room', loadKonaMachines], ['the upper floor', loadThemeBikes], ['the wings', () => atlas.load(loader)], ['the brand rooms', loadBrand]];
-  const chip = $('bgload'), say = t => { if (chip) { chip.hidden = false; chip.querySelector('span').textContent = t; } };
+  const steps = [...(WROOMDATA?[['the WYLD Room',loadWyldBikes]]:[]), ['Lava Night', loadHweenBike], ...(BEAST_CAVE_REVIEW?[[BREITLING_REVIEW?'the Breitling × KONA review':NOR3_REVIEW?'the NOR // 3 review':NORSEMAN_REVIEW?'the Fjord to Summit review':'the Beast Cave review', loadBeastBike]]:[]), ['the Sanctuary', loadSanctuaryBikes], ['the Champions room', loadKonaMachines], ['the upper floor', loadThemeBikes], ['the wings', loadWings], ['the brand rooms', loadBrand]];
+  // A direct visitor already has selected-room readiness; other-room prefetch is not another opening screen.
+  const quiet = BEAST_CAVE_REVIEW || new URLSearchParams(location.search).has('room');
+  const chip = $('bgload'), say = (t, failure = false) => { if (chip && (!quiet || failure)) { chip.hidden = false; chip.querySelector('span').textContent = t; } };
   let chain = loadAll();
   let offline = false;
-  const failed = e => { if (!offline && /fetch|network|load/i.test(String(e?.message || e))) { offline = true; say(navigator.onLine === false ? 'You are offline · rooms will open when you reconnect' : 'Cannot reach the museum files · check the server or your connection'); chip?.classList.add('warn'); } };
+  const failed = e => { if (!offline) { offline = true; say(navigator.onLine === false ? 'Other rooms could not preload · reconnect to explore them' : 'Other rooms could not preload · check your connection', true); chip?.classList.add('warn'); } };
   addEventListener('online', () => { if (offline) location.reload(); });
   steps.forEach(([label, fn], i) => { chain = chain.then(() => { if (!offline) say(`Opening ${label} · ${i + 1} of ${steps.length}`); return fn(); }).catch(e => { console.warn('rooms', label, e); failed(e); }); });
-  chain.then(() => { if (offline) return; say('Every room is open'); setTimeout(() => { if (chip) chip.hidden = true; }, 2400); });
+  chain.then(() => { if (offline) return; say('Background loading finished · the selected room reports its own readiness'); setTimeout(() => { if (chip) chip.hidden = true; }, 2400); });
 }
 window.__gallery = galleries;
 // ------------------------------------------------------------------ profile, settings and sharing
@@ -2067,5 +2120,10 @@ if (!konaShell) throw new Error('KONA consumer Shell authority missing');
 window.__app = { profile, settings: settingsUI, shareView, openArt, openAtlas, konaShell };
 window.__atlas = atlas;
 window.__reviewRoomIdentity = REVIEW_ROOM_SEMANTIC_ID;
-window.__museum = { P, PIECES, visit, enter, scene, camera, champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, reviewRoomIdentity: REVIEW_ROOM_SEMANTIC_ID, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
+function currentRoomAssets() {
+  const id = renderedRoomId;
+  const key = brandRooms.some(r => r.desc.id === id) ? 'brands' : id?.startsWith('room-') ? 'upper' : id?.startsWith('atlas-') || id?.startsWith('wing-') ? 'wings' : id;
+  return ['hall','pier','sanctuary','upper','kona','hween','beast','wyld','brands','wings'].includes(key) ? roomLoads.state(key) : 'ready';
+}
+window.__museum = { directEntryVersion:2, waitForRoomFrame:options=>waitForRoomFrame(()=>window.__museum.renderReceipt,options), get renderReceipt(){return {serial:frameSerial,roomId:renderedRoomId,identity:REVIEW_ROOM_SEMANTIC_ID,assets:currentRoomAssets()};}, P, PIECES, visit, enter, scene, camera, champs, visitChamp, wyldBikes, visitWyld, renderer, tour, tourStart, pier, visitPier, hween, visitHween, beast, reviewRoomIdentity: REVIEW_ROOM_SEMANTIC_ID, pickables, obstacles, loader, halt: () => { path = null; P.vx = P.vz = 0; } };
 initArtWorld(window.__museum).catch(e => console.warn('art world', e));

@@ -25,7 +25,7 @@ import decor from '../../world/konam/rooms/norseman-training.decor.json' with { 
 import { BROOM, BDOOR } from './beast-cave.js';
 import { loadDecor } from './engine/decor.js';
 import { localEnvCapture } from './engine/env-capture.js';
-import { createTerrainPortal, terrainGeometry, terrainHeightAt, terrainMaterial, withAerial, aerialWater } from './engine/terrain-portal.js';
+import { createTerrainPortal, loadTerrainSite, terrainGeometry, terrainHeightAt, terrainMaterial, withAerial, aerialWater } from './engine/terrain-portal.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
 import { motes, mistTex } from './roomkit.js';
 
@@ -573,7 +573,7 @@ export function buildNorsemanTraining(ctx) {
   let terrainReady = false;
   async function loadTerrain() {
     const base = NORSEMAN_TERRAIN.dir;
-    const sites = await Promise.all(NORSEMAN_TERRAIN.sites.map(async id => { const [meta, buf] = await Promise.all([fetch(base + id + '.json').then(r => r.json()), fetch(base + id + '.bin').then(r => r.arrayBuffer())]); return { id, meta, heights: new Uint16Array(buf) }; }));
+    const sites = await Promise.all(NORSEMAN_TERRAIN.sites.map(id => loadTerrainSite(base,id)));
     for (const { id, meta, heights } of sites) {
       const v = VIEWS[id], view = { ...v.view }; if (view.e0 === null) view.e0 = terrainHeightAt(meta, heights, v.lat, v.lon);
       const g = terrainGeometry(meta, heights, { lat: v.lat, lon: v.lon, view, step: lite ? 3 : 1, sun: SUN_P });
@@ -729,12 +729,13 @@ export function buildNorsemanTraining(ctx) {
     group, floor, sign, bikeSpot, infos, mood: NORSEMAN_MOOD, ownBikes: true, introCard,
     async useAssets(loader) {
       if (this._assets) return; this._assets = true;
-      loadTerrain().catch(e => console.warn('norseman terrain', e?.message || e));
       // bikes, fan, treadmill from world/konam/rooms/norseman-training.decor.json. This bike study has no bike-lite.glb,
       // so bikes always load the full (172 KB) study; everything else follows the device's lite policy.
       const split = bike => ({ ...decor, items: decor.items.filter(d => (d.kind === 'bike') === bike) });
-      await loadDecor(split(true), { group, loader, lite: false, hooks: decorHooks });
-      await loadDecor(split(false), { group, loader, lite, hooks: decorHooks });
+      await Promise.all([loadTerrain(), (async()=>{
+        await loadDecor(split(true), { group, loader, lite: false, hooks: decorHooks });
+        await loadDecor(split(false), { group, loader, lite, hooks: decorHooks });
+      })()]);
     },
     setBike() { /* this room mounts its own instanced bikes in useAssets */ },
     get terrainReady() { return terrainReady; },
