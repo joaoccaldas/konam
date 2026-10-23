@@ -15,11 +15,23 @@ test('fast frames recover gradually with cooldown',()=>{
  assert.equal(fill(q,8,8).reason,'increase');
  assert.equal(q.scale,.95);
 });
-test('outliers only matter according to p95',()=>{
+test('nearest-rank p95 excludes one slow frame in twenty',()=>{
  const q=createFrameBudget({windowSize:20,cooldownWindows:0,targetMs:33.33});
  for(let i=0;i<19;i++)q.observe(20);
  const outcome=q.observe(60);
+ // ceil(20 * .95) = 19: the nineteenth ordered sample is still 20ms.
+ assert.equal(outcome.p95,20);
+ assert.equal(outcome.reason,'stable');
+ assert.equal(outcome.scale,1);
+});
+test('nearest-rank p95 includes two slow frames in twenty',()=>{
+ const q=createFrameBudget({windowSize:20,cooldownWindows:0,targetMs:33.33});
+ for(let i=0;i<18;i++)q.observe(20);
+ q.observe(60);
+ const outcome=q.observe(60);
+ assert.equal(outcome.p95,60);
  assert.equal(outcome.reason,'decrease');
+ assert.equal(outcome.scale,.9);
 });
 test('pixel cap bounds high resolution independent of scale',()=>{
  const q=createFrameBudget({maxPixelCount:1_000_000});
