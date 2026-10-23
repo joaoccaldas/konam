@@ -1,6 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
 const manifest=JSON.parse(fs.readFileSync(new URL('../../manifest.webmanifest',import.meta.url),'utf8'));
 const productMeta=JSON.parse(fs.readFileSync(new URL('../../config/product-meta.json',import.meta.url),'utf8'));
+const productMeta=JSON.parse(fs.readFileSync(new URL('../../config/product-meta.json',import.meta.url),'utf8'));
 const android=JSON.parse(fs.readFileSync(new URL('../../app/android-version.json',import.meta.url),'utf8'));
 const androidWorkflow=fs.readFileSync(new URL('../../.github/workflows/android.yml',import.meta.url),'utf8');
 

@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "status": "launch-contract",
+  "privacy_model": "first-party, consent-aware, no advertising identifiers, no fingerprinting",
+  "north_star": {
+    "id": "wari",
+    "name": "Weekly Active Race Identities",
+    "definition": "Distinct locally or account-associated RaceIdentity objects with a meaningful Kona.m action in a rolling 7-day period. Do not count page views alone."
+  },
+  "events": [
+    {
+      "id": "entry_view",
+      "purpose": "funnel",
+      "properties": [
+        "surface",
+        "device_class",
+        "install_mode"
+      ]
+    },
+    {
+      "id": "entry_continue",
+      "purpose": "funnel",
+      "properties": [
+        "mode:guest|signin",
+        "surface"
+      ]
+    },
+    {
+      "id": "race_identity_started",
+      "purpose": "activation",
+      "properties": [
+        "mode"
+      ]
+    },
+    {
+      "id": "race_identity_completed",
+      "purpose": "activation",
+      "properties": [
+        "mode",
+        "has_equipment",
+        "has_goal"
+      ]
+    },
+    {
+      "id": "home_reached",
+      "purpose": "activation",
+      "properties": [
+        "returning",
+        "install_mode"
+      ]
+    },
+    {
+      "id": "discover_opened",
+      "purpose": "engagement",
+      "properties": [
+        "category"
+      ]
+    },
+    {
+      "id": "collectible_acquired",
+      "purpose": "engagement",
+      "properties": [
+        "collectible_id",
+        "method",
+        "room_id"
+      ]
+    },
+    {
+      "id": "room_entered",
+      "purpose": "engagement",
+      "properties": [
+        "room_id",
+        "source"
+      ]
+    },
+    {
+      "id": "garage_equipment_saved",
+      "purpose": "engagement",
+      "properties": [
+        "product_id",
+        "relationship"
+      ]
+    },
+    {
+      "id": "share_invoked",
+      "purpose": "growth",
+      "properties": [
+        "object_type",
+        "method"
+      ]
+    },
+    {
+      "id": "share_return_opened",
+      "purpose": "growth",
+      "properties": [
+        "object_type"
+      ]
+    },
+    {
+      "id": "install_prompt_result",
+      "purpose": "pwa",
+      "properties": [
+        "result"
+      ]
+    },
+    {
+      "id": "auth_backup_started",
+      "purpose": "continuity",
+      "properties": []
+    },
+    {
+      "id": "auth_backup_completed",
+      "purpose": "continuity",
+      "properties": [
+        "merge_result"
+      ]
+    },
+    {
+      "id": "runtime_error",
+      "purpose": "reliability",
+      "properties": [
+        "surface",
+        "error_code"
+      ]
+    },
+    {
+      "id": "webgl_fallback",
+      "purpose": "reliability",
+      "properties": [
+        "surface",
+        "reason"
+      ]
+    },
+    {
+      "id": "release_seen",
+      "purpose": "release",
+      "properties": [
+        "release_id",
+        "install_mode"
+      ]
+    }
+  ],
+  "forbidden_properties": [
+    "email",
+    "name",
+    "precise_location",
+    "raw_free_text",
+    "full_user_agent",
+    "race_result_candidate_name",
+    "advertising_id",
+    "fingerprint"
+  ],
+  "launch_metrics": [
+    "entry_continue / entry_view",
+    "race_identity_completed / race_identity_started",
+    "home_reached / entry_continue",
+    "first_collectible within activated sessions",
+    "share_return_opened / share_invoked",
+    "week-1 return",
+    "runtime_error rate by surface",
+    "webgl_fallback rate by surface",
+    "install acceptance where prompt is eligible"
+  ],
+  "implementation_rule": "Measurement implementation is not allowed to delay launch unless lack of observability prevents safe release. Prefer first-party aggregate endpoint or privacy-safe local export over third-party advertising analytics."
+}
