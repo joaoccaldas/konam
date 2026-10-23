@@ -1,7 +1,6 @@
 // Complement to canonical museum/schemas/asset-manifest.schema.json.
 // Rejects unsubstantiated commercial promotion; does not create asset identity.
 export const DIMENSIONS=Object.freeze(['geometry','materials','topology','performance','interaction','portability','reproducibility','accessibility','visual']);
-const HAS=Object.prototype.hasOwnProperty;
 const nonempty=x=>typeof x==='string'&&x.trim().length>0;
 export function assessAssetEvidence(manifest,review,{commercial=false}={}){
  const failures=[],unknown=[];
@@ -31,5 +30,5 @@ export function assessAssetEvidence(manifest,review,{commercial=false}={}){
  if(commercial&&review.independentApproval!==true)failures.push('independent approval required');
  if(commercial&&(!Array.isArray(review.visualEvidence)||review.visualEvidence.length===0||review.visualEvidence.some(x=>!nonempty(x))))failures.push('visual evidence references required');
  if(commercial&&!complete)failures.push('all scoring dimensions require evidence');
- return {approved:failures.length===0&&(!commercial||complete),score:complete&&failures.every(f=>!f.startsWith('invalid rating'))?Math.round(total/DIMENSIONS.length*20):null,failures,unknown};
+ return {approved:commercial&&failures.length===0&&complete,score:complete&&failures.every(f=>!f.startsWith('invalid rating'))?Math.round(total/DIMENSIONS.length*20):null,failures,unknown};
 }
