@@ -1,20 +1,25 @@
-# Spatial inventory R0 (research-only)
+# Spatial inventory R0: safe, read-only local evidence
+This tool supplements the canonical asset manifest and knowledge system. No parallel catalog, new approval workflow, licensing inference, production write, or automatic deletion.
 
-This optional script supplements, never replaces, the canonical asset contract at `museum/schemas/asset-manifest.schema.json`, `tools/3d-knowledge.mjs` or the authority map. It does not modify registries, create source records, review licensing, discover private repos or approve assets.
-
-## Usage
-
+## Safe invocation
 ```sh
-node tools/spatial-inventory.mjs /path/to/authorized/konam /path/to/authorized/bellagio > /private/output/inventory.json
+node tools/spatial-inventory.mjs /path/to/clean/authorized/konam /path/to/clean/authorized/bellagio > /private/output/inventory.json
 node --test web/test/spatial-inventory.test.mjs
 ```
+Only supply trusted local clones at their Git repository roots. The scanner refuses staged or tracked worktree modifications so asset hashes cannot be falsely attributed to the current HEAD. It rejects symlinked files and symlinked ancestor directories and refuses paths that resolve outside the supplied repository. Untracked files are not inventoried; use separate discovery if those matter. Reports may reveal unpublished filenames, so store them privately.
 
-Use ONLY trusted local clones supplied deliberately by the operator. Output may expose filenames, including unpublished model names: store reports outside public trees. It scans git-tracked files in the CURRENT WORKING TREE; pinned HEAD SHA is recorded but modifications in the checkout may mean file content does not match HEAD. Run from clean, pinned clones for comparable snapshots.
+## Evidence semantics and limits
+`commit` is the pinned Git HEAD, `clean_tracked_worktree` verifies the tracked files were unchanged when examined, and SHA-256 identifies exact byte matches, not authorship, copyright, semantic equivalence, safety, or deletion eligibility. Concurrent checkout mutation during scanning is not eliminated: run on immutable worktrees/clones for higher assurance. A 250 MiB per-file hash threshold skips large files. Git LFS may leave pointer files instead of model bytes; detect/reconcile actual LFS content before considering inventory complete.
 
-A match means identical content bytes, not proof of common authorship, legal rights, correctness, 3D fidelity, or safe deletion. Hashes for files over 250 MiB are skipped. Missing tracked files and symlinks are explicitly marked. The report deliberately sets `rights_assessment=not-performed` and `release_approval=false`.
+`rights_assessment` stays `not-performed`; `release_approval` stays false. No source is promoted to canonical status. No backend, frontend, deployment or asset paths are changed.
 
-## Limitations and next gate
-- No network or cross-account discovery; not a comprehensive asset index.
-- No binary GLB semantic parsing, near-duplicate detection, Blender dependency graph, license resolution, or deployment evidence.
-- Do not feed this report directly into a public knowledge map or product catalog.
-- Next PR should compare manifest-backed assets against occurrences and record verified provenance using existing schema, without silently creating another authority.
+## Learning loop
+Capture scoped baseline SHA and repository list privately; inspect exact-match groups; reconcile provenance with `museum/schemas/asset-manifest.schema.json` using the existing asset intake process; record failures as experiments and cite evidence. Do not publish private cross-project maps to public CI/logs.
+
+## Stress cases
+- Modified/staged tracked content: fail closed instead of emitting misleading HEAD provenance.
+- Intermediate symlink escaping repository: fail closed.
+- Untracked asset: deliberately excluded.
+- Missing tracked file: fail closed.
+- Oversized assets: explicit `hash-skipped-size-limit` state, not duplicate proof.
+- Mutated files during the scan, submodules and Git LFS objects: require independent follow-up; not certified by this implementation.
