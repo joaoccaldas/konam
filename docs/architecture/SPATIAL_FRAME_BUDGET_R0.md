@@ -14,7 +14,8 @@ Adaptive internal resolution with p95-based hysteresis and a framebuffer pixel-c
 
 ## Design
 - Observe bounded active-frame durations; ignore invalid >1000ms or nonpositive values.
-- p95 over a fixed sample window; slower frames reduce resolution in 0.10 increments; sufficiently fast frames recover in 0.05 increments.
+- Nearest-rank p95 over a fixed sample window: sort ascending and take rank `ceil(0.95 * N)` (one-based). Slower frames reduce resolution in 0.10 increments; sufficiently fast frames recover in 0.05 increments.
+- For 20 frames, rank 19 means one slow frame is excluded, but two slow frames affect p95. This is a percentile policy, not a maximum-stall detector; report severe stalls separately in device benchmarks.
 - Cooldown prevents rapid oscillation; floor and ceiling prevent runaway degradation.
 - Hard cap framebuffer pixel count to protect high-DPR screens. Caller must use `setSize` appropriately for its scene.
 - Never apply to production automatically. No analytics/collection, no background service, no new renderer.
