@@ -333,7 +333,7 @@ export function buildWings(ctx, { wings, bikes: BIKES = [], extraRefs = [], pain
         if (contactShadow) { const cs = contactShadow(1.9, .5); cs.rotation.z = Math.PI / 2; cs.position.y = .006; inst.turn.add(cs); }
         applySkin(inst, inst.data.skins[0]);
         h.traverse(o => { if (o.isMesh) { o.userData.wingBike = inst; pickables.push(o); } });
-      } catch (e) { console.warn('wing bike', inst.data.key, e); }
+      } catch (e) { console.warn('wing bike', inst.data.key, e); throw e; }
     }
     for (const s of sculptures) {
       try {
@@ -343,7 +343,7 @@ export function buildWings(ctx, { wings, bikes: BIKES = [], extraRefs = [], pain
         const b4 = new THREE.Box3().setFromObject(g), cc = b4.getCenter(new THREE.Vector3()); g.position.set(-cc.x, -b4.min.y, -cc.z);
         g.traverse(o => { if (o.isMesh) { o.castShadow = false; o.userData.wingArt = s; pickables.push(o); } });
         s.holder.add(g); s.model = g;
-      } catch (e) { console.warn('sculpture', s.data.id, e); }
+      } catch (e) { console.warn('sculpture', s.data.id, e); throw e; }
     }
     if (show) { show.protos = await Promise.all(BIKES.map(b => get(b.key))); setShow(0, 0); }
   }

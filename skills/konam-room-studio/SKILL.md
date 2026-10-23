@@ -283,3 +283,21 @@ Validate desktop, portrait and landscape entries, rapid room switching, a missin
 required model and retry. In a destination switcher, keep canonical room names
 when a broad exhibit card aliases the same physical entrance. Test room identity,
 not only the card label. These are browser checks, not headset or human acceptance.
+
+For the failure cases and source-pinned evidence, read
+[the room-entry validation](../../docs/ROOM_ENTRY_VALIDATION_2026-10-23.md).
+Keep one neutral pending state from the earliest viewport bootstrap through the
+matching room frame. Bound the entire access/data/bundle/asset chain, including
+stalled frames; a late completion must not dismiss an already displayed error.
+Keep other-room prefetch status separate from selected-room readiness.
+
+Terrain and other binary dependencies must be in the sealed lazy manifest.
+Check HTTP status, bounded metadata and payload length before decoding; an HTML
+404 is not terrain. Preserve explicit byte order. Do not raise shell or brand
+budgets to accommodate a loading fix.
+
+A short observation while walking to a destination is not a failed arrival.
+Check actual room/frame identity again and record the observation window.
+Retain rejected camera views and missing rights evidence as open gates even when
+asset readiness passes. A content-only private preview derivative demonstrates
+its own bytes and policy, not native production or physical-device acceptance.

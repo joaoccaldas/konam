@@ -110,12 +110,36 @@ function openMuseum(room) {
   const btn = document.getElementById('enterBtn');
   if (btn && !window.__museum) btn.innerHTML = 'Opening the coast…';
   if (!opening) {
-    opening = Promise.resolve(window.__konaShell?.accessReady)
+    document.documentElement.classList.add('room-entry-pending');
+    intro?.removeAttribute('hidden');
+    const status=document.getElementById('loadstate');
+    const query=new URLSearchParams(location.search),review=query.get('reviewRoom');
+    if(status){status.setAttribute('role','status');status.textContent='Opening the room…';}
+    let deadline;
+    opening = Promise.race([Promise.resolve(window.__konaShell?.accessReady)
       .then(() => ensureWorldShell())
       .then(() => ensureMuseumData())
       .then(() => loadScript('app/hall.js'))
       .then(() => window.__museum?.enter?.({room}))
-      .catch(err => { opening = null; console.warn('museum', err); });
+      .then(() => window.__museum.waitForRoomFrame({
+        room:room || query.get('room') || 'hall',
+        identity:review ? 'room:konam:'+review : null,
+      })),new Promise((_,reject)=>{deadline=setTimeout(()=>reject(new Error('Room opening timed out')),30000);})])
+      .finally(()=>clearTimeout(deadline))
+      .then(() => {
+        document.documentElement.classList.remove('room-entry-pending');
+        intro?.setAttribute('hidden','');
+      })
+      .catch(err => {
+        opening = null;console.warn('museum', err);
+        if(status){
+          status.setAttribute('role','alert');status.replaceChildren();
+          const message=document.createElement('p');message.textContent='The room could not finish opening.';
+          const retry=document.createElement('button');retry.className='btn primary';retry.textContent='Try again';retry.onclick=()=>location.reload();
+          const back=document.createElement('a');back.className='btn text';back.href=location.pathname;back.textContent='Return to Kona';
+          status.append(message,retry,back);
+        }
+      });
   }
   // Initial entry is owned by enter(); no second timed navigation through the hall.
   if (typeof room === 'string' && window.__museum && document.body.classList.contains('walking'))
@@ -239,6 +263,9 @@ function paintShared(draft){
 }
 const q = new URLSearchParams(location.search);
 const shared=decodeShare(q.get('kona'));
+const reviewRooms=new Set(['beast-cave','nor3-winter','breitling-kona','norseman-training']);
+if(shared || (!q.get('room') && !q.get('map') && !reviewRooms.has(q.get('reviewRoom'))))
+  document.documentElement.classList.remove('room-entry-pending');
 if(shared) paintShared(shared);
 else if (q.get('reviewRoom') === 'beast-cave') openMuseum('beast');
 else if (q.get('reviewRoom') === 'nor3-winter') openMuseum('beast');

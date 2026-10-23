@@ -20,7 +20,7 @@ const core = ['index.html', 'about.html', 'credits.html', 'privacy.html', 'web/s
 const lazy = ['integrations/companion/feed.json','integrations/companion/rss.xml','integrations/companion/travel.json','web/src/about-story.js','web/styles/about.css',
   'app/world-shell.html', 'app/admin-assets.json', 'app/admin-asset-preview.js', 'web/styles/hall-web.css', 'web/styles/hall-mobile.css', 'web/styles/studio.css', 'web/styles/experience.css', 'web/styles/passport.css', 'web/styles/collection.css', 'app/race-self-stage.js', 'app/collectible-stage.js', 'integrations/ironman-races-2016-2026.json', 'app/museum-data.js', 'app/hall.js', 'app/studio.js', 'app/standalone-access.js', 'app/studio-catalog.js',
   ...fs.readdirSync(root).filter(f => f.endsWith('.html') && f !== 'index.html' && !f.endsWith('-review.html')),
-  ...walk(path.join(root, 'assets')).map(rel).filter(f => /\.(glb|jpe?g|png|webp|hdr|json)$/i.test(f) && !f.startsWith('assets/kona-years/src/') && (!f.startsWith('assets/reference/') || f.startsWith('assets/reference/paintings/'))),
+  ...walk(path.join(root, 'assets')).map(rel).filter(f => /\.(glb|bin|jpe?g|png|webp|hdr|json)$/i.test(f) && !f.startsWith('assets/kona-years/src/') && (!f.startsWith('assets/reference/') || f.startsWith('assets/reference/paintings/'))),
 ];
 const files = {};
 for (const f of [...core, ...lazy]) {
