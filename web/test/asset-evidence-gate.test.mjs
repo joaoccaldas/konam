@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {assessAssetEvidence,DIMENSIONS} from '../../tools/asset-evidence-gate.mjs';
+const manifest=()=>({id:'sample-bike',schema_version:1,rights_state:'licensed',validation_status:'validated'});
+const review=()=>({assetId:'sample-bike',sourceCommit:'a'.repeat(40),reviewer:'independent-qa',reviewedAt:'2026-10-23',independentApproval:true,visualEvidence:['evidence/preview.png'],scores:Object.fromEntries(DIMENSIONS.map(x=>[x,{rating:4,evidenceType:'automated',evidenceRef:'fixture:'+x}]))});
+test('complete evidence can pass explicit commercial review policy',()=>{const result=assessAssetEvidence(manifest(),review(),{commercial:true});assert.equal(result.approved,true);assert.equal(result.score,80)});
+test('uncleared rights fail even with perfect scores',()=>{const m=manifest();m.rights_state='rights-review';assert.match(assessAssetEvidence(m,review(),{commercial:true}).failures.join(' '),/rights not cleared/)});
+test('missing visual proof and independent approval fail closed',()=>{const r=review();r.visualEvidence=[];r.independentApproval=false;assert.equal(assessAssetEvidence(manifest(),r,{commercial:true}).approved,false)});
+test('unknown scoring dimensions remain unknown, never silently averaged',()=>{const r=review();delete r.scores.geometry;const x=assessAssetEvidence(manifest(),r,{commercial:true});assert.equal(x.score,null);assert.ok(x.unknown.includes('geometry'));assert.equal(x.approved,false)});
+test('fabricated invalid ratings rejected',()=>{const r=review();r.scores.materials.rating=99;const x=assessAssetEvidence(manifest(),r,{commercial:true});assert.equal(x.approved,false);assert.match(x.failures.join(' '),/invalid rating/)});
+test('unverified provenance and asset mismatch rejected',()=>{const r=review();r.sourceCommit='main';r.assetId='different';const x=assessAssetEvidence(manifest(),r);assert.equal(x.approved,false);assert.equal(x.score,80)});
