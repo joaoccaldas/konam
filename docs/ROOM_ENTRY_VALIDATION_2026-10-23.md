@@ -59,3 +59,10 @@ Keep these rooms in review. Existing room-owned showcase poses in the related so
 This is a narrow stacked loading fix against PR #141, not approval to merge the broad parent room branch into main. Parent/main reconciliation, independent review, all-room interaction/exit/retry journeys, installed service-worker updates, physical mobile performance, headset/accessibility checks, rights, missing winter manifest mapping and visual rejection list remain open. No native installation or public deployment occurred.
 
 Rollback through the normal Git revert/PR path for this patch, then rebuild and reseal from the retained base; do not copy minified fragments or remove visitors’ stored progress. Failed and successful evidence must both survive rollback.
+
+
+## CI build-consistency follow-up
+
+At initial commit `34509846f4ac7a919079fee9f8783e17c69739ca`, GitHub release-seal and integration-contract checks passed, while hostile-runtime, interaction and visual jobs stopped before browser execution. Their common cause was generated whitespace drift in the existing Speedmax CFR/SLX HTML pages. A local full `tools/build_pages.mjs` reproduced that drift. The existing generator normalized the two pages; no functional product-page source change or workflow bypass was introduced. Repeated full build plus seal is byte-identical for affected pages and release artifacts.
+
+The resulting sealed release is `01012f8242a8`. Its manifest differs from browser-audited `c8b525ac2048` only for `Speedmax_Museum.html` and `Speedmax_SLX_Museum.html`; entry, hall, terrain and styles are byte-identical. Browser evidence remains pinned to c8b525ac2048, not relabeled as a new capture. The generated room document's unrelated overwritten tail and sitemap timestamps were retained privately and restored from the source commit. CI browser outcomes still require fresh readback on the follow-up commit.
