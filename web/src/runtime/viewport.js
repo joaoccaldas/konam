@@ -1,6 +1,11 @@
 // runtime/viewport.js — the single owner of physical-phone / desktop-site layout context.
 // Runs before CSS to avoid a desktop-layout flash when a phone requests a desktop site.
 (function(){
+  // Presentation only: the entry shell remains the route/access authority.
+  // Mark deep links before CSS paints general onboarding over their destination.
+  const query=new URLSearchParams(location.search);
+  if(query.has('room') || query.has('reviewRoom') || query.has('map'))
+    document.documentElement.classList.add('room-entry-pending');
   function apply(){
     const html=document.documentElement;
     const sw=screen.width||1e5,sh=screen.height||1e5;

@@ -3,8 +3,8 @@ body.entry-landing .kona-bottom-nav,
 body.entry-quest .kona-bottom-nav,
 body.entry-landing .kona-user-menu,
 body.entry-quest .kona-user-menu{display:none!important}
-body.entry-landing #intro,
-body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!important}
+html:not(.room-entry-pending) body.entry-landing #intro,
+html:not(.room-entry-pending) body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!important}
 #intro.kona-entry{
   position:relative;min-height:100dvh;isolation:isolate;overflow:auto;
   background:var(--brand-lava);color:var(--brand-mist);
@@ -308,3 +308,14 @@ body.entry-quest #intro{padding-bottom:max(20px,env(safe-area-inset-bottom))!imp
 #intro.kona-entry .entry-global-note{max-width:36rem;margin:14px 0 0;color:color-mix(in srgb,var(--brand-mist) 88%,transparent);font:550 11px/1.55 var(--brand-font-ui,var(--sans))}
 #intro.kona-entry .entry-global-note strong{color:var(--brand-mist)}
 #intro.kona-entry .entry-legal-note{max-width:38rem;margin:8px 0 0;color:color-mix(in srgb,var(--brand-mist) 62%,transparent);font:500 9px/1.45 var(--brand-font-ui,var(--sans))}
+
+/* One entry state while the requested room's assets and first frame arrive. */
+.room-entry-label{display:none}
+.room-entry-pending #intro.kona-entry{display:flex;align-items:center;justify-content:center;opacity:1;visibility:visible;background:#071116;color:var(--brand-mist,#f4efe7);padding:24px}
+.room-entry-pending #intro.kona-entry::before,.room-entry-pending #intro.kona-entry::after,.room-entry-pending #intro>.entry-media{display:none}
+.room-entry-pending #intro.kona-entry .intro-inner{display:block;margin:auto;text-align:center;width:min(100%,420px);padding:0}
+.room-entry-pending #intro.kona-entry .intro-inner>:not(#loadstate){display:none}
+.room-entry-pending #loadstate{font:500 16px/1.6 var(--brand-font-ui,var(--sans));letter-spacing:0;color:inherit;margin:0;min-height:48px}
+.room-entry-pending .room-entry-label{display:inline}
+.room-entry-pending #loadstate .btn{margin:8px;min-height:44px}
+.room-entry-pending #konaWorld,.room-entry-pending #konaShell,.room-entry-pending .kona-why-global{visibility:hidden}
