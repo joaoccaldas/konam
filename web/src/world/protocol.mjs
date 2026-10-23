@@ -85,3 +85,25 @@ export function createPortalTransition({ fromWorld, portalId, targetWorld, spawn
     spawnId,
   });
 }
+
+/**
+ * Portable *metadata* for product inspection, not a renderer or entitlement.
+ * Sources/rights are assessed by canonical asset intake, never by this contract.
+ */
+export function assertInspectionDescriptor(input) {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new TypeError('inspection descriptor must be an object');
+  const {worldId, entityId, assetId, parts, version} = input;
+  if (version !== 1) throw new TypeError('unsupported inspection descriptor version');
+  for (const [label,value] of Object.entries({worldId,entityId,assetId})) assertStableId(value,label);
+  if (!Array.isArray(parts) || parts.length === 0 || parts.length > 256) throw new TypeError('parts must be a nonempty bounded array');
+  const known = new Set();
+  const safeParts = parts.map((part) => {
+    if (!part || typeof part !== 'object' || Array.isArray(part)) throw new TypeError('part must be an object');
+    const id=assertStableId(part.id,'part.id');
+    if (known.has(id)) throw new TypeError('duplicate inspection part id');
+    known.add(id);
+    if (typeof part.label !== 'string' || !part.label.trim() || part.label.length > 120) throw new TypeError('part label invalid');
+    return Object.freeze({id,label:part.label});
+  });
+  return Object.freeze({version,worldId,entityId,assetId,parts:Object.freeze(safeParts)});
+}
