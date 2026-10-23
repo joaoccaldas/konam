@@ -319,3 +319,6 @@ html:not(.room-entry-pending) body.entry-quest #intro{padding-bottom:max(20px,en
 .room-entry-pending .room-entry-label{display:inline}
 .room-entry-pending #loadstate .btn{margin:8px;min-height:44px}
 .room-entry-pending #konaWorld,.room-entry-pending #konaShell,.room-entry-pending .kona-why-global{visibility:hidden}
+/* Home retains control if the visitor leaves while room assets are pending. */
+.room-entry-pending body.kona-panel-open #intro.kona-entry{display:none}
+.room-entry-pending body.kona-panel-open #konaShell{visibility:visible}

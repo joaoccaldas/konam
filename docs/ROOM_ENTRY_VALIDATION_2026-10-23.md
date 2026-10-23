@@ -66,3 +66,28 @@ Rollback through the normal Git revert/PR path for this patch, then rebuild and 
 At initial commit `34509846f4ac7a919079fee9f8783e17c69739ca`, GitHub release-seal and integration-contract checks passed, while hostile-runtime, interaction and visual jobs stopped before browser execution. Their common cause was generated whitespace drift in the existing Speedmax CFR/SLX HTML pages. A local full `tools/build_pages.mjs` reproduced that drift. The existing generator normalized the two pages; no functional product-page source change or workflow bypass was introduced. Repeated full build plus seal is byte-identical for affected pages and release artifacts.
 
 The resulting sealed release is `01012f8242a8`. Its manifest differs from browser-audited `c8b525ac2048` only for `Speedmax_Museum.html` and `Speedmax_SLX_Museum.html`; entry, hall, terrain and styles are byte-identical. Browser evidence remains pinned to c8b525ac2048, not relabeled as a new capture. The generated room document's unrelated overwritten tail and sitemap timestamps were retained privately and restored from the source commit. CI browser outcomes still require fresh readback on the follow-up commit.
+
+
+## Preserve authored notes outside generated documentation
+
+The Museum CI build-consistency gate also detected a historical fourteen-line authored tail in generated `docs/ROOMS.md`. The original tail is preserved verbatim below and at base bba5c7a; its private preimage is retained. The room registry generator now owns the complete generated document. New authored delivery notes belong here and in the existing room skill, never appended to generated output.
+
+### Historical source tail, verbatim
+
+## Embedded entrance repair · 21 October 2026
+
+The existing world host owns direct entry and camera placement. Registered Atlas
+previews wait for the selected room's rendered receipt and required model load
+state. Direct arrivals keep editorial cards and coaching closed. The collection
+and story remain available through native controls. Source progress is preserved.
+See `skills/konam-room-studio/SKILL.md` for the reusable check sequence.
+
+This is a source repair under review, not public or headset acceptance. Browser
+receipts and captures are retained in the owner's Spatial Studio audit directory
+`ecosystem-fixes-20261021-041728`. Required model failure and retry, exact room
+identity and viewport coverage are tracked separately from artistic acceptance.
+
+
+## Pending-room return to Home regression
+
+Fresh CI at e35f5f2 passed hostile-runtime, all four interaction layouts, seal and integration checks. The full visual matrix then caught a real regression: navigating to Home while world loading was pending left the pending intro visible and the shell hidden. Pending presentation now yields to the existing `kona-panel-open` state: hide the pending intro and reveal the shell while Home is active. This does not create a new route/state owner or dismiss a selected-room failure. The existing CI visual matrix exercises the early return race across themes and viewports; final result must be read at the follow-up head. The new sealed build is `60502a887e98`; earlier room captures retain their original build labels.
