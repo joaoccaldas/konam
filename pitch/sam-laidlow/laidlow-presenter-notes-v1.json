@@ -1,0 +1,10 @@
+{
+ "schema": "presenter-notes-v1",
+ "subject": "Sam Laidlow",
+ "verified_on": "2026-10-05",
+ "visibility": "Presenters only. Never imported by the app, so it is never shipped in a public bundle.",
+ "known_context": {
+  "note": "Not displayed in the room. In October 2023 Laidlow announced an International Testing Agency investigation following concerns raised by private sources; no public outcome or suspension as of verification. Anyone presenting this room should know it.",
+  "sources": ["https://en.wikipedia.org/wiki/Sam_Laidlow"]
+ }
+}

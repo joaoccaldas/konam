@@ -30,7 +30,7 @@ Do not create parallel versions without an explicit architecture PR that updates
 
 ## Rooms and assets
 
-For room/asset work, read `skills/konam-room-studio/SKILL.md`.
+For room/asset work, read `skills/konam-room-studio/SKILL.md`. For decoration and props use `skills/konam-room-dressing/SKILL.md` (`tools/decor.mjs`); for any bike use `skills/konam-bike-forge/SKILL.md` (`blender/atlas_build.py` → `tools/pack-glb.mjs`). Evidence and budgets: `tools/room-evidence.mjs`.
 
 Every new room needs a manifest and lifecycle state. Every reusable/canonical asset needs provenance, rights, performance and validation metadata.
 

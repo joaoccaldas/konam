@@ -12,7 +12,7 @@
     "remote_writes": false
   },
   "counts": {
-    "products": 47,
+    "products": 48,
     "places": 9,
     "events": 1
   },
@@ -810,6 +810,31 @@
         "equip"
       ],
       "asset": "assets/atlas/studio-gravel-aero/bike.glb",
+      "canonical_url": null,
+      "source_records": [
+        "museum/atlas/bikes.json"
+      ],
+      "locations": []
+    },
+    {
+      "schema_version": 1,
+      "id": "atlas-studio-nor3-disc-tri",
+      "object_type": "product",
+      "product_type": "bike",
+      "brand": "Type study",
+      "label": "Winter lane tri study",
+      "family": "superbike",
+      "year": 2026,
+      "public": true,
+      "representation": "provisional",
+      "capabilities": [
+        "inspect",
+        "collect",
+        "share",
+        "customize",
+        "equip"
+      ],
+      "asset": "assets/atlas/studio-nor3-disc-tri/bike.glb",
       "canonical_url": null,
       "source_records": [
         "museum/atlas/bikes.json"

@@ -1,7 +1,7 @@
 {
  "schema_version": 2,
  "generated_by": "tools/build_admin_assets.mjs",
- "count": 107,
+ "count": 110,
  "rooms": [
   {
    "id": "hall",
@@ -1126,6 +1126,27 @@
    "locations": []
   },
   {
+   "id": "atlas-studio-nor3-disc-tri",
+   "kind": "product",
+   "type": "bike",
+   "brand": "Type study",
+   "name": "Winter lane tri study",
+   "family": "superbike",
+   "year": 2026,
+   "category": "triathlon",
+   "material": "",
+   "glb": "assets/atlas/studio-nor3-disc-tri/bike.glb",
+   "image": "",
+   "facts": [
+    {
+     "cls": "I",
+     "text": "A KONA.m studio design for the NOR // 3 room: a generic disc-brake triathlon superbike. Not any athlete's or brand's bike."
+    }
+   ],
+   "stats": [],
+   "locations": []
+  },
+  {
    "id": "edition-film-aero-glam",
    "kind": "product",
    "type": "bike",
@@ -2243,6 +2264,66 @@
     "kind": "decoration",
     "floor": "#111820",
     "accent": "#ff6a00",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "decor:promenade-chair",
+   "kind": "decoration",
+   "type": "decoration",
+   "brand": "KONA World",
+   "name": "Promenade tube chair (Nice blue)",
+   "year": "",
+   "category": "Room decoration",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "promenade-chair",
+     "builder"
+    ],
+    [
+     "0",
+     "placements"
+    ]
+   ],
+   "locations": [],
+   "preview": {
+    "kind": "decoration",
+    "floor": "#12181d",
+    "accent": "#20b8d5",
+    "fog": "#0b1116"
+   }
+  },
+  {
+   "id": "decor:promenade-lamp",
+   "kind": "decoration",
+   "type": "decoration",
+   "brand": "KONA World",
+   "name": "Cast-iron promenade lamp with glowing globe",
+   "year": "",
+   "category": "Room decoration",
+   "material": "",
+   "glb": "",
+   "image": "",
+   "facts": [],
+   "stats": [
+    [
+     "promenade-lamp",
+     "builder"
+    ],
+    [
+     "0",
+     "placements"
+    ]
+   ],
+   "locations": [],
+   "preview": {
+    "kind": "decoration",
+    "floor": "#12181d",
+    "accent": "#20b8d5",
     "fog": "#0b1116"
    }
   },

@@ -1,0 +1,77 @@
+{
+ "schema_version": 1,
+ "room_id": "kona-2026-saturday",
+ "policy": "reuse-first",
+ "constraints": {
+  "athlete_likeness": false,
+  "athlete_marks": false,
+  "ironman_mark": false,
+  "photography": false,
+  "event_marks": false
+ },
+ "procedural": "asphalt road and kerbs, finish carpet with last-mile stencils, truss gantry (one merged mesh), race clock (canvas, alternating the two winning times), winner and top-5 panels (canvas), string lights (instanced), Kailua Bay night shader with pier lights and Hualālai — original KONA.m code",
+ "assets": [
+  {
+   "asset_id": "kona-palm",
+   "kind": "prop",
+   "decision": "REUSE",
+   "source_ref": "museum/world/decorations.json",
+   "runtime_ref": "web/src/engine/decoration-props.js",
+   "rights": "KONA.m original",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "promenade-chair",
+   "kind": "prop",
+   "decision": "REUSE",
+   "why_reuse": "Spectator seating along the kerbs; one instanced draw for every chair.",
+   "source_ref": "museum/world/decorations.json",
+   "runtime_ref": "web/src/engine/decoration-props.js",
+   "rights": "KONA.m original",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "promenade-lamp",
+   "kind": "prop",
+   "decision": "REUSE",
+   "why_reuse": "Street lamps along Aliʻi Drive; emissive globes, no lights.",
+   "source_ref": "museum/world/decorations.json",
+   "runtime_ref": "web/src/engine/decoration-props.js",
+   "rights": "KONA.m original",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "roomkit-motes",
+   "kind": "effect",
+   "decision": "REUSE",
+   "runtime_ref": "web/src/roomkit.js",
+   "rights": "KONA.m original",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "local-env-capture",
+   "kind": "engine",
+   "decision": "REUSE",
+   "runtime_ref": "web/src/engine/env-capture.js",
+   "rights": "KONA.m original",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "merge-static",
+   "kind": "engine",
+   "decision": "REUSE",
+   "runtime_ref": "web/src/engine/decor.js",
+   "rights": "KONA.m original",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "kona-2026-results",
+   "kind": "facts",
+   "decision": "CREATE",
+   "why_create": "New event: no existing facts for the 2026 race.",
+   "runtime_ref": "pitch/kona-2026/kona-2026-results-v1.json",
+   "rights": "facts (names and times), sourced; no photographs",
+   "lifecycle": "candidate"
+  }
+ ]
+}

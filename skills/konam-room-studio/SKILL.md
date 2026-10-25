@@ -261,3 +261,15 @@ NOR // 3 is the current reference for proving cinematic quality under the shared
 Beast Cave is the second acceptance test: it must feel radically different while reusing the same host architecture.
 
 If Beast Cave requires its own renderer, camera framework, UI shell, storage, progression, bike loader, or inspection engine, stop and refactor the shared system instead.
+
+## Native review room playbook (learned on Beast Cave and NOR // 3 · Kona Winter)
+
+The fastest proven path for a cinematic room inside the host world, no renderer fork:
+
+1. **Module + gate.** `web/src/<room>.js` exports `build<Room>(ctx)` returning the host interface `{ group, floor, sign, bikeSpot{view,face,info}, infos, mood, introCard, update(t, reduce, dt), useAssets(loader) }`. Gate it with `?reviewRoom=<id>` in `entry.js` (`openMuseum`) and `landing.js` (`reviewCtx`). It shares the review footprint (`BROOM`/`BDOOR`), walkability, rail chip, culling, mood lerp and sound slot. Keep existing contract patterns intact so other rooms' tests keep passing.
+2. **Story, facts, copy.** One sourced facts file (`pitch/<subject>/...facts-v1.json`), status `verify-before-outreach`. Cards come from it; editorial lines are labelled as the room's. Disclaimers on every card. Check equipment and social claims with sources before the room states them; if a claim can't be verified, make the surface data-driven and flag it.
+3. **Mood.** `mood: { exposure, hemi, sun, fog, fogColor }`; the host lerps into it. Dark rooms want exposure .8–1.0 and lights that come from objects.
+4. **Dress with data.** Movable things in `world/konam/rooms/<id>.decor.json` (`konam-room-dressing`); bikes from the generator (`konam-bike-forge`).
+5. **Efficiency recipe.** Merge static geometry per material; instance repeats (bikes ×3 = one draw per material); one shadow-casting key per cluster; GPU particles; one local cube capture for reflections, limited to the room's layer; canvas textures ≤ 2048 desktop / 1024 phone; phones skip heavy props. The host stops drawing the rest of the world once you are 4 m inside a review room (`sealedRoom` in `landing.js`).
+6. **Evidence loop.** `node tools/room-evidence.mjs --review <id> --metrics` → look at every PNG → fix → repeat. Typical defects caught this way: lanes in the wrong order, text on the back of a fold, a TDZ crash (declare shared helpers before first use), NaN geometry from `Math.pow` of a tiny negative, quantized GLB attributes transformed in place (convert to float first), invisible pick proxies skipped by the host (use `colorWrite: false`), decals carrying third-party marks.
+7. **Commit receipts.** Evidence folder README with renders, metrics and truth/rights notes; asset manifest with hashes; tests for gating, facts sourcing, brand/likeness boundaries and efficiency patterns.

@@ -50,3 +50,5 @@ button,a,[role="button"]{min-height:var(--brand-touch,48px)}
 
 /* Standalone global escape routes stay reachable without covering native experience chrome. */
 .experience-page .global-kona-links{top:calc(max(14px,env(safe-area-inset-top)) + 58px)}
+/* phones: the first-visit tip sits below the global Why Kona / User Studio chips instead of under them */
+@media(max-width:760px){#tut{top:calc(max(14px,env(safe-area-inset-top)) + 58px + var(--brand-touch) + 10px)}}

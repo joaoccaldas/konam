@@ -1,0 +1,89 @@
+{
+ "schema_version": 1,
+ "room_id": "transition-pier",
+ "policy": "reuse-first",
+ "constraints": {
+  "athlete_likeness": false,
+  "athlete_marks": false,
+  "ironman_mark": false,
+  "photography": false,
+  "event_marks": false,
+  "brand_marks": false
+ },
+ "procedural": "concrete pier deck, blue carpet with stencils, mount line, steel racks (one merged mesh), gear bags (instanced, colour per bag), wall and rack signs (canvas), pier steps and water, Kailua Bay dawn shader with swimmers' caps — original KONA.m code",
+ "assets": [
+  {
+   "asset_id": "studio-xl-tri",
+   "kind": "bike",
+   "decision": "REUSE",
+   "why_reuse": "Anonymous KONA.m atlas study (~8k triangles): racked bikes without any brand or athlete claim.",
+   "runtime_ref": "assets/atlas/studio-xl-tri/bike.glb",
+   "source_ref": "assets/atlas/build-report.json",
+   "rights": "KONA.m original study, no third-party marks",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "studio-kona-2030",
+   "kind": "bike",
+   "decision": "REUSE",
+   "why_reuse": "Anonymous KONA.m atlas study (~8k triangles): racked bikes without any brand or athlete claim.",
+   "runtime_ref": "assets/atlas/studio-kona-2030/bike.glb",
+   "source_ref": "assets/atlas/build-report.json",
+   "rights": "KONA.m original study, no third-party marks",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "type-lowpro-650c",
+   "kind": "bike",
+   "decision": "REUSE",
+   "why_reuse": "Anonymous KONA.m atlas study (~8k triangles): racked bikes without any brand or athlete claim.",
+   "runtime_ref": "assets/atlas/type-lowpro-650c/bike.glb",
+   "source_ref": "assets/atlas/build-report.json",
+   "rights": "KONA.m original study, no third-party marks",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "studio-small-650c",
+   "kind": "bike",
+   "decision": "REUSE",
+   "why_reuse": "Anonymous KONA.m atlas study (~8k triangles): racked bikes without any brand or athlete claim.",
+   "runtime_ref": "assets/atlas/studio-small-650c/bike.glb",
+   "source_ref": "assets/atlas/build-report.json",
+   "rights": "KONA.m original study, no third-party marks",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "kona-palm",
+   "kind": "prop",
+   "decision": "REUSE",
+   "source_ref": "museum/world/decorations.json",
+   "rights": "KONA.m original",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "race-marker",
+   "kind": "prop",
+   "decision": "REUSE",
+   "source_ref": "museum/world/decorations.json",
+   "rights": "KONA.m original",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "load-decor",
+   "kind": "engine",
+   "decision": "REUSE",
+   "runtime_ref": "web/src/engine/decor.js",
+   "rights": "KONA.m original",
+   "lifecycle": "candidate"
+  },
+  {
+   "asset_id": "transition-facts",
+   "kind": "facts",
+   "decision": "CREATE",
+   "why_create": "No existing sourced facts about the Kona transition.",
+   "runtime_ref": "pitch/transition/transition-facts-v1.json",
+   "rights": "facts, sourced",
+   "lifecycle": "candidate"
+  }
+ ]
+}

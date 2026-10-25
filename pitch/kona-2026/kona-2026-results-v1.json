@@ -1,0 +1,35 @@
+{
+ "schema": "event-results-v1",
+ "subject": "IRONMAN World Championship, Kailua-Kona, Hawaiʻi",
+ "race_date": "2026-10-10",
+ "verified_on": "2026-10-12",
+ "status": "unofficial",
+ "status_note": "Times as published by NBC Sports two days after the race, marked unofficial there. Replace with the official IRONMAN results when published; splits are not yet available from a source we could read.",
+ "editorial": "KONA.m independent room. Results only; the room's taglines are KONA.m copy, not the athletes' words.",
+ "sources": {
+  "nbc_results": "https://www.nbcsports.com/olympics/news/ironman-kona-world-championship-results-2026",
+  "nbc_report": "https://www.nbcsports.com/olympics/news/ironman-kona-2026-world-championship-taylor-knibb-vincent-luis"
+ },
+ "results": {
+  "women": [
+   { "place": 1, "name": "Taylor Knibb", "nation": "USA", "time": "8:36:29" },
+   { "place": 2, "name": "Laura Philipp", "nation": "GER", "time": "8:39:34" },
+   { "place": 3, "name": "Julie Derron", "nation": "SUI", "time": "8:46:25" },
+   { "place": 4, "name": "Kat Matthews", "nation": "GBR", "time": "8:49:38" },
+   { "place": 5, "name": "Imogen Simmonds", "nation": "SUI", "time": "8:51:44" }
+  ],
+  "men": [
+   { "place": 1, "name": "Vincent Luis", "nation": "FRA", "time": "7:47:27" },
+   { "place": 2, "name": "Gustav Iden", "nation": "NOR", "time": "7:49:03" },
+   { "place": 3, "name": "Matthew Marquardt", "nation": "USA", "time": "7:49:59" },
+   { "place": 4, "name": "Gregory Barnaby", "nation": "FRA", "time": "7:51:02" },
+   { "place": 5, "name": "Pierre le Corre", "nation": "FRA", "time": "7:53:29" }
+  ]
+ },
+ "moments": [
+  { "id": "women-final-mile", "line": "Solveig Løvseth overtook Knibb with five miles left; on Palani Road, about a mile from the finish, she began to wobble and came to a stop with seven tenths of a mile to go. Taylor Knibb passed her in the final mile.", "sources": ["nbc_report"] },
+  { "id": "men-comeback", "line": "Vincent Luis started the marathon 5:34 behind Magnus Ditlev, passed him with just under five miles left and held off Gustav Iden by 95 seconds.", "sources": ["nbc_report"] },
+  { "id": "men-penalty", "line": "Gustav Iden served a three-minute drafting penalty on the bike.", "sources": ["nbc_report"] }
+ ],
+ "rights": { "endorsement": false, "likeness_used": false, "athlete_marks_used": false, "event_marks_used": false, "note": "Names and times are facts. No photographs, no logos, no race-number artwork." }
+}

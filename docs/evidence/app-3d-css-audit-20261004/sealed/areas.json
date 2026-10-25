@@ -1,0 +1,41 @@
+{
+  "measured_at": "2026-10-05T03:40:30.010Z",
+  "rows": [
+    {
+      "id": "hall",
+      "name": "Main hall",
+      "calls": 1342,
+      "triangles": 921604,
+      "lights": 36
+    },
+    {
+      "id": "hween",
+      "name": "Lava Night",
+      "calls": 208,
+      "triangles": 577348,
+      "lights": 36
+    },
+    {
+      "id": "kona",
+      "name": "Champions",
+      "calls": 114,
+      "triangles": 116150,
+      "lights": 36
+    },
+    {
+      "id": "nike-running",
+      "name": "Nike Running Lab",
+      "calls": 49,
+      "triangles": 7662,
+      "lights": 36
+    },
+    {
+      "id": "breitling",
+      "name": "Breitling · Endurance Pro",
+      "calls": 78,
+      "triangles": 18256,
+      "lights": 36
+    }
+  ],
+  "errors": []
+}

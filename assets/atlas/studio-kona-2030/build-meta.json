@@ -1,0 +1,21 @@
+{
+ "schema_version": 1,
+ "id": "studio-kona-2030",
+ "type": "bike",
+ "brand": "Studio design",
+ "model": "Kona concept 2030",
+ "representation": "concept",
+ "source_records": [
+  "museum/atlas/bikes.json"
+ ],
+ "generator": "blender",
+ "generator_script": "blender/atlas_build.py",
+ "detail": "standard",
+ "tris": 9052,
+ "bytes": 85928,
+ "semantic_parts": null,
+ "lods": [
+  "bike.glb"
+ ],
+ "notes": "Built from its own skeleton in museum/atlas/bikes.json. Unbranded. Meta backfilled by tools/atlas-build-meta.mjs from the build report and the GLB."
+}

@@ -1,0 +1,210 @@
+{
+ "schema_version": 1,
+ "room_id": "transition-pier",
+ "variant": "transition-pier",
+ "runtime": "web/src/transition-pier.js",
+ "coordinates": "host world metres; racks, bags, carpet and the pier steps are built in the module; bikes are placed here",
+ "your_slot": [
+  21.3,
+  0.0,
+  -7.6
+ ],
+ "items": [
+  {
+   "id": "rack-studio-xl-tri",
+   "kind": "bike",
+   "ref": "studio-xl-tri",
+   "lite": "full",
+   "at": [
+    [
+     12.6,
+     0.0,
+     -7.6,
+     0
+    ],
+    [
+     18.4,
+     0.0,
+     -7.6,
+     0
+    ],
+    [
+     24.2,
+     0.0,
+     -7.6,
+     0
+    ],
+    [
+     15.5,
+     0.0,
+     -14.1,
+     0
+    ],
+    [
+     21.3,
+     0.0,
+     -14.1,
+     0
+    ]
+   ],
+   "rights_ref": "world/konam/candidates/transition-pier-asset-manifest-v1.json",
+   "note": "anonymous KONA.m atlas study; racked, not ridden"
+  },
+  {
+   "id": "rack-studio-kona-2030",
+   "kind": "bike",
+   "ref": "studio-kona-2030",
+   "lite": "full",
+   "at": [
+    [
+     14.05,
+     0.0,
+     -7.6,
+     180
+    ],
+    [
+     19.85,
+     0.0,
+     -7.6,
+     180
+    ],
+    [
+     25.65,
+     0.0,
+     -7.6,
+     180
+    ],
+    [
+     16.95,
+     0.0,
+     -14.1,
+     180
+    ],
+    [
+     22.75,
+     0.0,
+     -14.1,
+     180
+    ]
+   ],
+   "rights_ref": "world/konam/candidates/transition-pier-asset-manifest-v1.json",
+   "note": "anonymous KONA.m atlas study; racked, not ridden"
+  },
+  {
+   "id": "rack-type-lowpro-650c",
+   "kind": "bike",
+   "ref": "type-lowpro-650c",
+   "lite": "full",
+   "at": [
+    [
+     15.5,
+     0.0,
+     -7.6,
+     0
+    ],
+    [
+     12.6,
+     0.0,
+     -14.1,
+     0
+    ],
+    [
+     18.4,
+     0.0,
+     -14.1,
+     0
+    ],
+    [
+     24.2,
+     0.0,
+     -14.1,
+     0
+    ]
+   ],
+   "rights_ref": "world/konam/candidates/transition-pier-asset-manifest-v1.json",
+   "note": "anonymous KONA.m atlas study; racked, not ridden"
+  },
+  {
+   "id": "rack-studio-small-650c",
+   "kind": "bike",
+   "ref": "studio-small-650c",
+   "lite": "full",
+   "at": [
+    [
+     16.95,
+     0.0,
+     -7.6,
+     180
+    ],
+    [
+     22.75,
+     0.0,
+     -7.6,
+     180
+    ],
+    [
+     14.05,
+     0.0,
+     -14.1,
+     180
+    ],
+    [
+     19.85,
+     0.0,
+     -14.1,
+     180
+    ],
+    [
+     25.65,
+     0.0,
+     -14.1,
+     180
+    ]
+   ],
+   "rights_ref": "world/konam/candidates/transition-pier-asset-manifest-v1.json",
+   "note": "anonymous KONA.m atlas study; racked, not ridden"
+  }
+ ],
+ "shots": {
+  "hero": [
+   9.6,
+   -10.85,
+   -0.05,
+   24.0,
+   1.0,
+   -10.85
+  ],
+  "racks": [
+   18.0,
+   -12.4,
+   -0.15,
+   22.0,
+   0.8,
+   -6.8
+  ],
+  "swim-in": [
+   24.0,
+   -10.85,
+   0.0,
+   35.3,
+   1.4,
+   -10.85
+  ],
+  "bags": [
+   20.0,
+   -9.4,
+   -0.1,
+   20.0,
+   1.2,
+   -4.0
+  ],
+  "slot": [
+   19.6,
+   -9.2,
+   -0.2,
+   21.3,
+   0.7,
+   -7.6
+  ]
+ }
+}

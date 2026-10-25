@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "room_id": "laidlow-nice",
+  "variant": "laidlow-nice",
+  "runtime": "web/src/laidlow-nice.js",
+  "coordinates": "host world metres; architecture, chairs, pebbles and panels are placed in the module from pitch/sam-laidlow/laidlow-facts-v1.json",
+  "items": [],
+  "shots": {
+    "hero": [
+      12.4,
+      -10.45,
+      0.0,
+      19.6,
+      1.1,
+      -10.85
+    ],
+    "monument": [
+      20.6,
+      -11.0,
+      -0.1,
+      21.0,
+      2.7,
+      -4.0
+    ],
+    "records": [
+      21.0,
+      -11.2,
+      -0.15,
+      21.0,
+      2.4,
+      -17.7
+    ],
+    "bay": [
+      24.5,
+      -12.6,
+      0.0,
+      33.5,
+      1.8,
+      -9.0
+    ],
+    "paper": [
+      21.0,
+      -15.2,
+      -0.1,
+      21.0,
+      2.4,
+      -17.7
+    ],
+    "coach": [
+      13.4,
+      -12.4,
+      -0.2,
+      9.1,
+      1.0,
+      -12.4
+    ],
+    "low": [
+      16.6,
+      -12.8,
+      -0.85,
+      19.6,
+      1.0,
+      -10.85
+    ],
+    "promenade": [
+      25.6,
+      -8.8,
+      -0.15,
+      30.0,
+      1.3,
+      -14.8
+    ]
+  }
+}

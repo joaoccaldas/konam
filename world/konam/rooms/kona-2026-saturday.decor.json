@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "room_id": "kona-2026-saturday",
+  "variant": "kona-2026-saturday",
+  "runtime": "web/src/kona-2026-saturday.js",
+  "coordinates": "host world metres; carpet, gantry, panels, chairs and lamps are placed in the module from pitch/kona-2026/kona-2026-results-v1.json",
+  "items": [],
+  "shots": {
+    "hero": [
+      10.2,
+      -10.6,
+      0.0,
+      29.4,
+      2.3,
+      -10.85
+    ],
+    "clock": [
+      24.6,
+      -10.85,
+      0.12,
+      29.4,
+      4.2,
+      -10.85
+    ],
+    "women": [
+      17.0,
+      -9.6,
+      0.0,
+      17.0,
+      2.3,
+      -4.0
+    ],
+    "men": [
+      17.0,
+      -12.1,
+      0.0,
+      17.0,
+      2.3,
+      -17.7
+    ],
+    "kerb": [
+      12.0,
+      -14.2,
+      -0.1,
+      24.0,
+      1.0,
+      -5.5
+    ],
+    "bay": [
+      30.4,
+      -10.85,
+      0.0,
+      35.3,
+      1.6,
+      -10.85
+    ],
+    "last-mile": [
+      9.4,
+      -10.85,
+      -0.32,
+      17.2,
+      0.0,
+      -10.85
+    ]
+  }
+}
