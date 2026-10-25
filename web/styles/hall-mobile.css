@@ -261,3 +261,6 @@ html.phone-fit #card{left:8px;right:auto;width:calc((100vw - 16px)/var(--fit))!i
   .btn.ride-hud__push{min-height:46px}
   .btn.ride-hud__quit{min-height:34px}
 }
+
+/* A translated closed card can become visible across viewport/orientation changes. */
+#card:not(.on){visibility:hidden;pointer-events:none}
