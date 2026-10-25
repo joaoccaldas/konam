@@ -1631,6 +1631,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     if(!gate.unlocked){toast(`Level ${gate.requiredLevel} · keep exploring to unlock ${area.name}`);return false;}
     if (!started) enter();
     tourEnd(false); closeCard(); prepareRoom(id);
+    canvas.setAttribute('aria-label', `${area.name} · interactive 3D room`);
     if (id === 'beast' && beast && !instant) { visitBeast(); toast(`${area.name} · ${BREITLING_REVIEW ? 'every second of Kona' : NOR3_REVIEW ? 'three lanes' : NORSEMAN_REVIEW ? 'fjord to summit' : 'the empty saddle'}`); return true; }
     const ov=id === 'beast' && beast ? {to:beast.bikeSpot.view, face:beast.bikeSpot.face} : safeOverview(area); if(!ov) return;
     const face=new THREE.Vector3(ov.face.x,ov.face.y,ov.face.z);

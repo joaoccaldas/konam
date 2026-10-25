@@ -554,7 +554,7 @@ export function buildNorsemanTraining(ctx) {
   const lean = g => { g.deleteAttribute('uv'); return g; };
   const conifer = (tiers, trunk = .4, sides = 5, skew = 0) => mergeGeometries(tiers.map(([r, h, y], i) => lean(new THREE.ConeGeometry(r, h, sides, 1).translate(skew * i * .03, y, 0).toNonIndexed()))
     .concat([lean(new THREE.CylinderGeometry(.04, .055, trunk, 4).translate(0, trunk / 2, 0).toNonIndexed())]));
-  const crown = (parts, trunk = .6) => mergeGeometries(parts.map(([r, sx, sy, x, y]) => lean(new THREE.IcosahedronGeometry(r, 0).scale(sx, sy, sx).translate(x, y, 0).toNonIndexed()))
+  const crown = (parts, trunk = .6) => mergeGeometries(parts.map(([r, sx, sy, x, y]) => lean(new THREE.IcosahedronGeometry(r, 0).scale(sx, sy, sx).translate(x, y, 0)))
     .concat([lean(new THREE.CylinderGeometry(.028, .04, trunk, 4).translate(0, trunk / 2, 0).toNonIndexed())]));
   const SPRUCE = [conifer([[.34, 1.0, .62], [.27, .9, 1.18], [.19, .8, 1.72], [.1, .55, 2.18]]),          // tall and narrow
     conifer([[.52, .9, .5], [.4, .8, .95], [.26, .7, 1.36]], .35),                                          // broad
@@ -565,7 +565,7 @@ export function buildNorsemanTraining(ctx) {
   const birchTree = (h, n, spread, seed, droop = 1) => { const r = rng(seed), parts = [];
     parts.push(tint(lean(new THREE.CylinderGeometry(.02, .034, h, 5).translate(0, h / 2, 0).toNonIndexed()), (x, y) => { const k = .34 + .05 * Math.sin(y * 31); return [k, k * .98, k * .93]; }));
     for (let i = 0; i < n; i++) { const t = i / Math.max(1, n - 1), y = h * (.36 + .58 * t), rad = (.24 - .09 * t) * (.8 + r() * .4), a = r() * 6.283, off = spread * (1 - .6 * t) * (.4 + r() * .6), cy = y;
-      parts.push(tint(lean(new THREE.IcosahedronGeometry(rad, 0).scale(1, .8 * droop, 1).translate(Math.cos(a) * off, cy, Math.sin(a) * off).toNonIndexed()),
+      parts.push(tint(lean(new THREE.IcosahedronGeometry(rad, 0).scale(1, .8 * droop, 1).translate(Math.cos(a) * off, cy, Math.sin(a) * off)),
         (x, yy) => { const u = Math.max(0, Math.min(1, (yy - cy + rad) / (2 * rad))); return [.04 + .06 * u, .075 + .1 * u, .028 + .03 * u]; })); }
     return mergeGeometries(parts); };
   const BIRCH = [birchTree(1.7, 9, .16, 11), birchTree(1.4, 8, .22, 12), birchTree(1.0, 5, .12, 13), birchTree(2.0, 10, .15, 14, 1.25)];
