@@ -40,6 +40,8 @@ async function nativeUpdateCheck() {
 export function initAppShell() {
   if (window.__appShell) return;
   window.__appShell = true;
+  // Embedded source reviews are online, bounded sessions; never install or cache them.
+  if (new URLSearchParams(location.search).has('reviewRoom')) return;
   if (window.Capacitor?.isNativePlatform?.()) { document.body.classList.add('native'); nativeUpdateCheck(); return; }
   initInstall();
 
