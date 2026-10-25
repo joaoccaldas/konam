@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-11",
+  "compared_with": "2026-10-10",
+  "branch": "research/3d-core-r1-20261004",
+  "research_only": true,
+  "production_modified": false,
+  "experiments_executed": false,
+  "findings": [
+    {
+      "id": "blender-gltf-collection-pivot-mode",
+      "event_date": "2026-10-10",
+      "change": "Amend EXP-GLTF21-COMPOSE-001 and EXP-BLENDER-ASSET-AS-CODE-001.",
+      "source_quality": "A: upstream merged source code",
+      "confidence": {
+        "implementation": 0.99,
+        "project_impact": 0.66
+      },
+      "sources": [
+        "https://github.com/blender/blender/commit/e7ddf4c16ca52d2bcf185ffad675f61da3bf7122"
+      ],
+      "evidence": "Collection glTF exporter replaces at_collection_center boolean with collection_center_mode: WORLD_ORIGIN, CENTER_MASS, OBJECT_POSITION, INSTANCE_OFFSET. Non-world modes adjust root object translations.",
+      "limitations": "Development/5.3 code, not a stable release benchmark. glTF 2.0 exporter, not evidence of glTF 2.1 interoperability.",
+      "engineering": "Version-pin exporter and pivot mode in manifests; round-trip room door anchors, object/world transforms and bounds across all four modes; detect legacy boolean script usage.",
+      "projects": [
+        "KONA.m",
+        "Bellagio",
+        "Studio-Kona",
+        "Gaudi Nexus",
+        "KONA product viewers"
+      ],
+      "experiment": "EXP-GLTF21-COMPOSE-001; EXP-BLENDER-ASSET-AS-CODE-001",
+      "isolated_experiment_created": false,
+      "priority_change": false
+    },
+    {
+      "id": "blender-gltf-instances-animation-extras",
+      "event_date": "2026-10-10",
+      "change": "Add multi-scene GPU-instancing, animation remapping, and semantic extras collision gates to existing export experiments.",
+      "source_quality": "A: upstream merged source diff; B: project applicability",
+      "confidence": {
+        "upstream": 0.99,
+        "project_impact": 0.72
+      },
+      "sources": [
+        "https://github.com/blender/blender/commit/dd3a1f3975b703d27f9b091b99c0ba192c90c826",
+        "https://github.com/blender/blender/commit/5bb3bd7e8ebb0fb09c3cb005cbf412ebd9c28756"
+      ],
+      "evidence": "Blender glTF exporter now removes GPU instance nodes across scenes using old-to-new node maps, fixes animation channel targets, and resolves legacy custom vs system property name conflicts after modifier evaluation.",
+      "limitations": "No project round-trip tests yet; collision resolution can rename extras. No verified exporter speedup.",
+      "engineering": "Test multi-scene instancing with animated non-instanced props, instance transforms/counts, animation targets, old pre-4.2 custom properties, and stable semantic IDs after export.",
+      "projects": [
+        "KONA.m",
+        "Bellagio",
+        "Studio-Kona",
+        "Gaudi Nexus"
+      ],
+      "experiment": "EXP-GLTF21-COMPOSE-001; EXP-BLENDER-ASSET-AS-CODE-001",
+      "isolated_experiment_created": false,
+      "priority_change": false
+    }
+  ],
+  "watch_only": [
+    {
+      "source": "https://github.com/blender/blender/commit/49c44d90eacc3ca88eba832522be4990cf910714",
+      "why": "Point-cloud glTF attributes/radius export fix is not Gaussian splat export."
+    },
+    {
+      "source": "https://github.com/mrdoob/three.js/commit/11738a9d55e502fb484cefffcea3a66dc44e9fe9",
+      "why": "Attribute remapping preserves interleaved and half-float metadata; no new priority."
+    },
+    {
+      "source": "https://github.com/blender/blender/commit/aed2b5972fc25ca8448ceaf8d98957e0065deb2a",
+      "why": "Grid primitive optimization has no relevant published benchmark."
+    }
+  ],
+  "other_scans": "No newly verified decision-changing evidence from Catalan/Spanish Gaudi scholarship; form-finding; Meshopt/KTX2, Three.js/WebGPU, product PBR, NeRF/3DGS, CFD/rolling resistance/wind/terrain, human perception or AI x 3D.",
+  "decision": "Preserve research priorities and production state. Amend existing export-composition and asset-reload experiments; no new architecture or experiment."
+}

@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-14",
+  "branch": "research/3d-core-r1-20261004",
+  "compared_with": "2026-10-13",
+  "production_modified": false,
+  "experiments_executed": false,
+  "findings": [
+    {
+      "id": "gltf-interactivity-ratification-correction",
+      "event_date": "2026-10-13",
+      "original_ratification": "2026-08-28",
+      "source_quality": "A: official Khronos dated event and source specification",
+      "confidence": {
+        "ratification": 0.99,
+        "portable_in_two_reference_viewers": 0.79,
+        "works_in_current_three_js_host": 0.08
+      },
+      "sources": [
+        "https://www.khronos.org/events/practical-introduction-to-interactivity-in-gltf",
+        "https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_interactivity/Specification.adoc",
+        "https://threejs.org/docs/pages/GLTFLoader.html"
+      ],
+      "evidence": "Khronos identifies KHR_interactivity as ratified Aug 28 and names Babylon.js and Khronos SampleViewer as independent implementations; Three.js GLTFLoader docs do not list support.",
+      "contradiction": "Prior daily reports described it as too early. Ratification is mature but not broad browser runtime coverage.",
+      "implication": "Add bounded hover/open/close glTF behavior subcase to EXP-GLTF21-COMPOSE-001; compare reference viewers and Three.js graceful fallback. Do not migrate navigation or permissions.",
+      "projects": [
+        "KONA.m",
+        "Bellagio",
+        "Studio-Kona",
+        "NOR // 3",
+        "Beast Cave"
+      ],
+      "isolated_experiment": "Existing EXP-GLTF21-COMPOSE-001 subcase",
+      "priority_change": "Bounded standards-compatibility validation raised; no portfolio re-ranking."
+    },
+    {
+      "id": "three-r187-wide-gamut-color-matrix",
+      "event_date": "2026-10-13",
+      "source_quality": "A: merged Three.js PR and tests",
+      "confidence": {
+        "fix": 0.99,
+        "current_srgb_project_impact": 0.09,
+        "test_relevance": 0.88
+      },
+      "sources": [
+        "https://github.com/mrdoob/three.js/pull/34952"
+      ],
+      "evidence": "Merged correction of ColorManagement matrix multiplication for Display P3 vs sRGB cross-primaries conversions; author reproduced incorrect WebGL/WebGPU pixel results. Current KONA and Studio-Kona renderers explicitly use sRGB.",
+      "contradiction": "No current production improvement demonstrated; bug does not affect same-primaries sRGB path.",
+      "implication": "Add CPU/GPU sRGB-to-P3 color regression tests to EXP-THREE-R187-001; defer renderer upgrade.",
+      "projects": [
+        "KONA.m product studio",
+        "Bellagio/Breitling",
+        "Studio-Kona"
+      ],
+      "isolated_experiment": "Existing EXP-THREE-R187-001 subcase",
+      "priority_change": false
+    },
+    {
+      "id": "three-r187-tsl-node-intent",
+      "event_date": "2026-10-13",
+      "source_quality": "A: merged PR, B: author benchmark",
+      "confidence": {
+        "merge": 0.99,
+        "benchmark_transfer_to_current_apps": 0.23
+      },
+      "sources": [
+        "https://github.com/mrdoob/three.js/pull/34815"
+      ],
+      "evidence": "Author reports material/node CPU build-time reductions of 28-34%, distinct from Oct 12 layout-dedup work. No active Three.js WebGPU/TSL path established in scanned portfolio main branches.",
+      "contradiction": "No evidence of FPS improvement or project-specific cold-load gain.",
+      "implication": "Extend existing Three.js experiment with graph build/cold frame/GPU pipeline compile separation and correctness tests.",
+      "projects": [
+        "KONA.m",
+        "Bellagio",
+        "Gaudí research"
+      ],
+      "isolated_experiment": "Existing EXP-THREE-R187-001 subcase",
+      "priority_change": false
+    }
+  ],
+  "watch_only": [
+    "https://github.com/KhronosGroup/glTF/pull/2677",
+    "https://github.com/mrdoob/three.js/pull/34983",
+    "https://github.com/mrdoob/three.js/pull/34990"
+  ],
+  "stop_defer": "Do not centralize world behavior, adopt r187/WebGPU in production or claim measured visual gains. Prioritize real-scene experiments over upstream microbenchmarks.",
+  "status": "Top three experiment priority remains CFD > ClusterLOD > splat interoperability. No new isolated experiment created."
+}
