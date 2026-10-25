@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "product": "Kona.m",
+  "date": "2026-10-02",
+  "verdict": "Antigravity is directionally right on scope discipline, identity surgery, physical-device gates and Golden Five focus, but overstates current readiness and introduces some unsupported precision.",
+  "agree": [
+    {
+      "claim": "Scope compression was the major product-management risk.",
+      "why": "The repository contains launch, future rooms, Next100, partner concepts, WebXR/trading/multiplayer ideas and legacy museum systems. M2 correctly separated launch from platform ambition."
+    },
+    {
+      "claim": "English-only launch is the credible choice.",
+      "why": "pt-BR exists as policy/locale metadata but primary runtime copy is not comprehensively locale-driven."
+    },
+    {
+      "claim": "Commercial capability must be separated from signed partnerships.",
+      "why": "This prevents false sponsor/official-status claims and keeps partner architecture reusable."
+    },
+    {
+      "claim": "Founding 141 should mix 3D, editorial, photographic and environmental representations.",
+      "why": "Forcing every artifact into bespoke 3D increases cost and can reduce authenticity."
+    },
+    {
+      "claim": "M3 requires surgical identity convergence, not global replacement.",
+      "why": "Kona is also a place/race domain term; Canyon/Speedmax are real provenance; storage keys are compatibility surfaces."
+    },
+    {
+      "claim": "Golden Five are the right visual QA focus.",
+      "why": "They cover the critical consumer grammar without triggering a broad redesign."
+    },
+    {
+      "claim": "Physical-device background/return, DPR/thermal, touch and cache behavior need explicit testing.",
+      "why": "Headless viewport tests cannot certify Safari/PWA lifecycle, WebGL context recovery or thermal behavior."
+    }
+  ],
+  "disagree_or_qualify": [
+    {
+      "claim": "The codebase is clean.",
+      "assessment": "too strong",
+      "why": "Known debt remains: large landing.js, parallel progression/passport semantics, hall-mobile cascade debt, several renderer lifecycle generations, legacy generated/source coupling."
+    },
+    {
+      "claim": "The 28-room world and 141 taxonomy are sealed.",
+      "assessment": "too strong",
+      "why": "Their data invariants are validated, but content/provenance/production representation and runtime wiring are not fully launch-complete."
+    },
+    {
+      "claim": "Golden Five share the exact same border radiuses and glass blur.",
+      "assessment": "wrong design target",
+      "why": "Kona.m intentionally uses artifact-specific shape grammar. Consistency should come from typography, semantic tokens, spacing, hierarchy and interaction, not identical card radii/glass everywhere."
+    },
+    {
+      "claim": "3-question personalization within 45 seconds.",
+      "assessment": "useful hypothesis, not requirement",
+      "why": "The product plan says onboarding must be optional and skippable. A fixed question count/time target can encourage coercive onboarding. Measure time-to-value and blocker rate instead."
+    },
+    {
+      "claim": "44x44 pt exact touch target.",
+      "assessment": "directionally right but platform-specific wording",
+      "why": "Use the canonical touch-target token and physical-device evidence; CSS px and iOS points are not interchangeable."
+    },
+    {
+      "claim": "Leica of Endurance / luxury illusion.",
+      "assessment": "helpful metaphor, not product requirement",
+      "why": "It can bias toward decorative polish over clarity, accessibility, provenance and performance. The canonical product principle remains calm surface, deep world underneath."
+    }
+  ],
+  "critical_new_findings": [
+    {
+      "id": "SEO-001",
+      "severity": "launch-blocking-if-new-origin-goes-live",
+      "finding": "robots.txt, sitemap.xml, canonical/OG/LLM links still point to https://joaoccaldas.github.io/canyonmuseum/.",
+      "why": "M1 deliberately preserved current public origin until deployment is chosen. Once Kona.m uses a new public URL, these must switch atomically with redirects/compatibility."
+    },
+    {
+      "id": "SEO-002",
+      "severity": "medium",
+      "finding": "No dedicated SEO/LLM source contract exists; harden_pages.mjs is the de facto authority.",
+      "why": "That is workable but should be documented and tested before changing origin."
+    },
+    {
+      "id": "TRACK-001",
+      "severity": "important",
+      "finding": "No analytics/telemetry runtime or analytics documentation exists.",
+      "why": "This is consistent with privacy claims but means WARI, funnel conversion and launch learning cannot currently be measured automatically. Add privacy-preserving first-party event measurement only if it can be done without delaying launch."
+    },
+    {
+      "id": "LLM-001",
+      "severity": "good-with-origin-debt",
+      "finding": "llms.txt and llms-full.txt are substantive, sourced and generated, but still use the Canyon Museum origin.",
+      "why": "Content quality is already unusually strong; origin convergence is the main launch task."
+    },
+    {
+      "id": "SEO-003",
+      "severity": "good",
+      "finding": "index.html already has canonical, OG/Twitter metadata, JSON-LD, robots indexing and LLM alternate link.",
+      "why": "Do not rebuild SEO architecture; centralize origin and verify generated consistency."
+    },
+    {
+      "id": "3D-001",
+      "severity": "important-post-launch",
+      "finding": "Best renderer patterns exist but are inconsistent across older surfaces.",
+      "why": "Do not rewrite before launch; enforce lifecycle/performance contract for new work and converge after launch."
+    }
+  ],
+  "next_order": [
+    "Finish M3 exact-SHA gates and merge only if green.",
+    "Run Golden Five visual/interaction audit against M2 before-state; fix only measured launch defects.",
+    "Execute physical Android/iPhone gate and record unresolved limitations honestly.",
+    "Prove guest→optional-auth state continuity and offline/PWA update behavior.",
+    "Choose canonical production URL/host; then perform one atomic origin/SEO/LLM migration with redirects.",
+    "Add minimal privacy-preserving launch event schema and measurement plan; do not add third-party tracking by default.",
+    "Run deployment + rollback proof on one exact SHA.",
+    "Launch public beta.",
+    "After launch, consolidate progression/state, CSS ownership and renderer lifecycle one bounded subsystem at a time."
+  ]
+}
