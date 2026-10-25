@@ -1591,7 +1591,7 @@ for (const r of [...galleries.rooms].reverse()) $('railInner').insertAdjacentHTM
     ...brandRooms.map(r => R(r.desc.id, r.desc.name, r.desc.kicker || '', r.bounds, 'ground', r.desc.theme?.accent || '#c9a13b')),
     ...galleries.bays.map(b => R('bay-' + b.id, b.title, b.sub, { x0: 8.4, x1: 14.8, z0: b.z - 1.8, z1: b.z + 1.8 }, 'upper', b.floor, { layer: 1, ink: /^#(1|0)/.test(b.floor) ? '#fbf9f5' : '#12181d', kind: 'bay' })),
     ...galleries.rooms.map(r => R('room-' + r.id, r.name, r.sub, { x0: 16.5, x1: 25.1, z0: r.z1, z1: r.z0 }, 'upper', r.vein, { layer: 1, ink: '#12181d' })),
-    ...atlas.wings.map(w => R('wing-' + w.id, w.name, w.sub, w.corridor, w.floor, w.corridor.map_color || '#c89b62', { layer: 0 })),
+    ...atlas.wings.map(w => R('wing-' + w.id, w.name, w.sub, w.corridor, w.floor, w.corridor.map_color || '#c89b62', { layer: 0, overview: w.overview })),
     ...atlas.rooms.map(r => R('atlas-' + r.wing + '-' + r.id, r.name, r.feature === 'paintshop' ? 'Every livery' : r.feature === 'references' ? 'The photographs' : [r.bikes.length ? `${r.bikes.length} bike${r.bikes.length > 1 ? 's' : ''}` : '', r.art.length ? `${r.art.length} work${r.art.length > 1 ? 's' : ''}` : ''].filter(Boolean).join(' · ') || r.sub, r.rect, 'upper', r.tint, { layer: 1, ink: '#fbf9f5' })),
   ];
   const areas = withFutureLevels(liveAreas);

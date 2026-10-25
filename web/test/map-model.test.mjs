@@ -31,3 +31,19 @@ test('world renderer consumes the map model and map navigation uses overview pol
 test('mobile world map is full-screen and map-first',()=>{
  assert.match(mobile,/World map on phones/);assert.match(mobile,/height:100dvh/);assert.match(mobile,/map-plan svg/);
 });
+
+// An authored wing overview must show a gallery from a walkable corridor pose.
+// A wing is a connector, so its rectangle-derived long-axis view need not show exhibits.
+test('Against the Clock keeps a walkable authored arrival aimed into The Hour',()=>{
+ const wing=JSON.parse(fs.readFileSync(new URL('../../museum/world/wings/against-the-clock.json',import.meta.url),'utf8'));
+ const area={id:'wing-'+wing.id,floor:wing.floor,...wing.corridor,overview:wing.overview};
+ const pose=roomOverview(area),gallery=wing.rooms.find(r=>r.id==='hour');
+ assert.ok(pose.to.x>wing.corridor.x0+.3&&pose.to.x<wing.corridor.x1-.3);
+ assert.ok(pose.to.z>gallery.z0+.45&&pose.to.z<gallery.z1-.45);
+ assert.ok(pose.face.x>wing.sides.east.x0&&pose.face.x<wing.sides.east.x1);
+ assert.ok(pose.face.z>gallery.z0&&pose.face.z<gallery.z1);
+ assert.ok(pose.face.y>wing.y&&pose.face.y<wing.y+wing.height);
+ assert.equal(pose.roomId,area.id);
+ const generic=roomOverview({...area,overview:undefined});
+ assert.notDeepEqual(pose,generic); // preserves generic fallback for wings without authored art direction
+});

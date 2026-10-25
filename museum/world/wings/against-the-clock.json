@@ -10,6 +10,7 @@
  "sides": { "east": { "x0": 16.4, "x1": 25.0 }, "west": { "x0": 2.2, "x1": 10.8 } },
  "doors": { "south": { "x0": 11.8, "x1": 15.4, "depth": 1.2 }, "north": { "x0": 11.8, "x1": 15.4 } },
  "south_wall_gap": { "x0": 7.5, "x1": 16.5 },
+ "overview": { "to": { "x": 14.9, "z": 31.5 }, "face": { "x": 21.5, "y": 7.8, "z": 31.5 }, "roomId": "wing-against-the-clock" },
  "features": { "clock": { "z": 49.2, "hanging": true } },
  "rooms": [
   { "id": "hour", "name": "The Hour", "sub": "One rider, sixty minutes", "side": "east", "z0": 27.8, "z1": 35.2, "tint": "#f6c9a8", "wall": "#8a3316", "ink": "#fbf1e6",
