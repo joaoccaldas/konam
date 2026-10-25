@@ -45,3 +45,38 @@ Deno.test('unsubscribe POST updates only the token owner, preserves suppression 
 Deno.test('unsubscribe forms are byte-bounded before any write',async()=>{
   assert.equal((await handler(new Request('https://example.org',{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded','content-length':'1'},body:'unsubscribe='+ 'a'.repeat(2100)}))).status,400);
 });
+
+Deno.test('anonymous repeat signup cannot rewrite suppressed or unsubscribed consent',async()=>{
+  for(const existing of ['suppressed','unsubscribed','active','pending']){
+    let inserts=0,updates=0;
+    const query={ select:()=>query,eq:()=>query,maybeSingle:async()=>({data:{status:existing},error:null}) };
+    const admin={from:(_:string)=>({...query,insert:async()=>{inserts++;return {error:null}},update:()=>{updates++;return query}})};
+    const request=new Request('https://example.org',{method:'POST',headers:{...headers,'content-type':'application/json'},body:JSON.stringify({email:'fictional@example.test'})});
+    const res=await handler(request,{admin:admin as any,quota:async()=> 'allowed' as const});
+    assert.equal(res.status,202);
+    assert.equal(inserts,0);
+    assert.equal(updates,0);
+  }
+});
+
+Deno.test('quota service failure rejects signup without a database operation',async()=>{
+  let touched=false;
+  const admin={from:()=>{touched=true;throw new Error('unexpected database call')}};
+  for(const [quota,status] of [['limited',429],['unavailable',503]] as const){
+    const req=new Request('https://example.org',{method:'POST',headers:{...headers,'content-type':'application/json'},body:JSON.stringify({email:'fictional@example.test'})});
+    const res=await handler(req,{admin:admin as any,quota:async()=>quota});
+    assert.equal(res.status,status);
+  }
+  assert.equal(touched,false);
+});
+
+Deno.test('source code creates only a pending anonymous signup',async()=>{
+  let inserted:any=null;
+  const query={select:()=>query,eq:()=>query,maybeSingle:async()=>({data:null,error:null})};
+  const admin={from:()=>({...query,insert:async(value:any)=>{inserted=value;return {error:null}}})};
+  const req=new Request('https://example.org',{method:'POST',headers:{...headers,'content-type':'application/json'},body:JSON.stringify({email:' Test@Example.Test '})});
+  const res=await handler(req,{admin:admin as any,quota:async()=> 'allowed' as const});
+  assert.equal(res.status,202);
+  assert.equal(inserted?.status,'pending');
+  assert.equal(inserted?.email,'test@example.test');
+});
